@@ -1,0 +1,239 @@
+{
+  "name": "tia-noir",
+  "version": "1.0.0",
+  "description": "Tia Noir Design System — dark, cinematic, keyboard-first infrastructure UI",
+  "components": {
+    "button": {
+      "name": "Button",
+      "description": "Primary action button with terminal, ghost, and variant styles",
+      "files": ["components/Button.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "card": {
+      "name": "Card",
+      "description": "Surface container with optional accent border",
+      "files": ["components/Card.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "badge": {
+      "name": "Badge",
+      "description": "Status/notification badge with variant colors",
+      "files": ["components/Badge.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "status-dot": {
+      "name": "StatusDot",
+      "description": "Online/offline/warning/idle signal indicator",
+      "files": ["components/StatusDot.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "input": {
+      "name": "Input",
+      "description": "Text input with error state support",
+      "files": ["components/Input.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "code-block": {
+      "name": "CodeBlock",
+      "description": "Terminal-style code display with copy action",
+      "files": ["components/CodeBlock.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "stat-card": {
+      "name": "StatCard",
+      "description": "Dashboard metric card with label, value, and change indicator",
+      "files": ["components/StatCard.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "container": {
+      "name": "Container",
+      "description": "Width-constrained content wrapper",
+      "files": ["components/Container.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "noir-glow-background": {
+      "name": "NoirGlowBackground",
+      "description": "Tollerud.no-inspired animated WebGL background with CSS fallback",
+      "files": ["components/NoirGlowBackground.tsx"],
+      "dependencies": ["clsx", "tailwind-merge", "@paper-design/shaders-react"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "kbd": {
+      "name": "Kbd",
+      "description": "Keyboard shortcut chip (Raycast-style)",
+      "files": ["components/Kbd.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "action-row": {
+      "name": "ActionRow",
+      "description": "Command/action item row with icon, label, description, and shortcut",
+      "files": ["components/ActionRow.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": ["kbd"],
+      "type": "components:ui"
+    },
+    "command-menu": {
+      "name": "CommandMenu",
+      "description": "Raycast-style global command palette with search, groups, and keyboard nav",
+      "files": ["components/CommandMenu.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": ["action-row"],
+      "type": "components:ui"
+    },
+    "service-health-card": {
+      "name": "ServiceHealthCard",
+      "description": "Service status card with uptime, response time, and version",
+      "files": ["components/ServiceHealthCard.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": ["status-dot"],
+      "type": "components:ui"
+    },
+    "host-card": {
+      "name": "HostCard",
+      "description": "Server/VM card with CPU, RAM, disk, containers, and IP",
+      "files": ["components/HostCard.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": ["status-dot"],
+      "type": "components:ui"
+    },
+    "docker-stack-card": {
+      "name": "DockerStackCard",
+      "description": "Docker Compose stack overview with per-service health",
+      "files": ["components/DockerStackCard.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": ["status-dot"],
+      "type": "components:ui"
+    },
+    "incident-card": {
+      "name": "IncidentCard",
+      "description": "Severity-graded incident/alert card (critical → info)",
+      "files": ["components/IncidentCard.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "approval-card": {
+      "name": "ApprovalCard",
+      "description": "Pending operation approval card with approve/reject actions",
+      "files": ["components/ApprovalCard.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "action-diff": {
+      "name": "ActionDiff",
+      "description": "Unified diff viewer with line numbers and context toggle",
+      "files": ["components/ActionDiff.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "rollback-plan": {
+      "name": "RollbackPlan",
+      "description": "Ordered rollback step list with execution status",
+      "files": ["components/RollbackPlan.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "log-viewer": {
+      "name": "LogViewer",
+      "description": "Terminal-style scrollable log viewer with search, live follow, and level coloring",
+      "files": ["components/LogViewer.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "alert-inbox": {
+      "name": "AlertInbox",
+      "description": "Alert feed with severity badges, filters, and acknowledge action",
+      "files": ["components/AlertInbox.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": ["incident-card"],
+      "type": "components:ui"
+    },
+    "timeline": {
+      "name": "Timeline",
+      "description": "Vertical activity timeline with status dots, connecting lines, and metadata",
+      "files": ["components/Timeline.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "backup-status-panel": {
+      "name": "BackupStatusPanel",
+      "description": "Backup job overview with per-job status, size, and schedule",
+      "files": ["components/BackupStatusPanel.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": ["status-dot"],
+      "type": "components:ui"
+    },
+    "textarea": {
+      "name": "Textarea",
+      "description": "Multiline text input with label and error state",
+      "files": ["components/Textarea.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "select": {
+      "name": "Select",
+      "description": "Styled native select dropdown with custom chevron",
+      "files": ["components/Select.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "checkbox": {
+      "name": "Checkbox",
+      "description": "Custom-styled checkbox with checkmark SVG and label",
+      "files": ["components/Checkbox.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "switch": {
+      "name": "Switch",
+      "description": "Toggle switch with role=switch accessibility",
+      "files": ["components/Switch.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "radio-group": {
+      "name": "RadioGroup",
+      "description": "Fieldset-based radio group with custom dot indicator",
+      "files": ["components/RadioGroup.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "footer": {
+      "name": "Footer",
+      "description": "Footer bar with Tollerud monogram and branding link",
+      "files": ["components/Footer.tsx"],
+      "dependencies": ["clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "type": "components:ui"
+    }
+  }
+}

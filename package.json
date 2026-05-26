@@ -1,0 +1,33 @@
+{
+  "name": "@tollerud/tia-noir-design-system",
+  "version": "1.0.0",
+  "description": "Tia Noir Design System — dark, monochrome + yellow accent. Noir aesthetic meets modern utility.",
+  "private": true,
+  "main": "tia-preset.js",
+  "style": "globals.css",
+  "scripts": {
+    "preview": "open preview.html"
+  },
+  "peerDependencies": {
+    "@paper-design/shaders-react": "^0.0.76",
+    "react": ">=18",
+    "tailwindcss": "^3.4.0"
+  },
+  "peerDependenciesMeta": {
+    "@paper-design/shaders-react": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "tailwind",
+    "design-system",
+    "dark-theme",
+    "monochrome",
+    "noir",
+    "tia"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.3.29",
+    "@types/react-dom": "^18.3.7"
+  }
+}
