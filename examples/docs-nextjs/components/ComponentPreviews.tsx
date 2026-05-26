@@ -418,14 +418,21 @@ export function TimelinePreviews() {
 /* ────────── ALERT INBOX PREVIEWS ────────── */
 
 export function AlertInboxPreviews() {
-  const alerts: AlertItem[] = [
+  const [alerts, setAlerts] = useState<AlertItem[]>([
     { id: 'a1', title: 'API Gateway unreachable', severity: 'critical', timestamp: '2m ago', service: 'API Gateway', description: '502 errors from all upstream services' },
     { id: 'a2', title: 'Disk at 92%', severity: 'high', timestamp: '15m ago', service: 'Miriam', acknowledged: true },
     { id: 'a3', title: 'Cert expiring', severity: 'medium', timestamp: '1h ago', service: 'Traefik' },
-  ]
+  ])
+
+  function handleAcknowledge(id: string) {
+    setAlerts((prev) =>
+      prev.map((a) => (a.id === id ? { ...a, acknowledged: true } : a))
+    )
+  }
+
   return (
     <PreviewCard title="Inbox">
-      <AlertInbox alerts={alerts} emptyMessage="All clear — no incidents" />
+      <AlertInbox alerts={alerts} emptyMessage="All clear — no incidents" onAcknowledge={handleAcknowledge} />
     </PreviewCard>
   )
 }

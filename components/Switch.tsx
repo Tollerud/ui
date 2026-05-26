@@ -14,41 +14,43 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       <label
         htmlFor={id}
         className={cn(
-          'inline-flex items-center gap-2 cursor-pointer select-none group',
+          'inline-flex items-center gap-2.5 cursor-pointer select-none group',
           'text-sm text-tia-text-primary',
-          props.disabled && 'opacity-50 pointer-events-none',
+          props.disabled && 'opacity-40 pointer-events-none cursor-not-allowed',
           className
         )}
       >
-        <span className="relative inline-flex items-center">
+        {/* Track */}
+        <span
+          className={cn(
+            'relative inline-flex items-center h-5 w-9 flex-shrink-0 rounded-full',
+            'transition-colors duration-200 ease-out',
+            checked ? 'bg-tia-yellow' : 'bg-tia-noir-600',
+            'group-hover:bg-tia-noir-500',
+            checked && 'group-hover:bg-tia-yellow-bright',
+            'peer-focus-visible:outline-2 peer-focus-visible:outline-tia-yellow peer-focus-visible:outline-offset-2'
+          )}
+        >
+          {/* Hidden input (peer) */}
           <input
             ref={ref}
             id={id}
             type="checkbox"
             role="switch"
             checked={checked}
-            className="peer sr-only"
+            className="peer absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
             {...props}
           />
-          {/* Track */}
+          {/* Thumb */}
           <span
             className={cn(
-              'h-5 w-9 rounded-full border transition-colors duration-[200ms]',
-              'bg-tia-surface-raised border-tia-border',
-              'peer-checked:bg-tia-yellow peer-checked:border-tia-yellow',
-              'peer-focus-visible:outline-2 peer-focus-visible:outline-tia-yellow peer-focus-visible:outline-offset-1',
-              'group-hover:border-tia-text-secondary'
+              'block h-3.5 w-3.5 rounded-full shadow-sm',
+              'transition-all duration-200 ease-out',
+              checked
+                ? 'translate-x-[18px] bg-tia-black'
+                : 'translate-x-[3px] bg-tia-white'
             )}
-          >
-            {/* Thumb */}
-            <span
-              className={cn(
-                'block h-4 w-4 rounded-full bg-tia-text-secondary transition-all duration-[200ms]',
-                'mt-[1px] ml-[1px]',
-                checked && 'translate-x-4 bg-tia-noir-black'
-              )}
-            />
-          </span>
+          />
         </span>
         {label && <span>{label}</span>}
       </label>

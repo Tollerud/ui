@@ -614,6 +614,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
   }
   .tia-timeline__dot {
     width: 10px;
@@ -621,6 +622,7 @@
     border-radius: 50%;
     background: var(--tia-noir-500);
     flex-shrink: 0;
+    z-index: 1;
   }
   .tia-timeline__dot--active {
     animation: tia-timeline-pulse 2s infinite;
@@ -632,9 +634,17 @@
   .tia-timeline__line {
     width: 1px;
     flex: 1;
-    min-height: 8px;
-    background: var(--tia-noir-600);
-    margin-top: 4px;
+    min-height: 12px;
+    background: linear-gradient(
+      180deg,
+      var(--tia-noir-600) 0%,
+      var(--tia-noir-600) 80%,
+      transparent 100%
+    );
+  }
+  .tia-timeline:not(.tia-timeline--active) .tia-timeline__dot--active {
+    animation: none;
+    box-shadow: 0 0 6px rgba(232,213,0,0.4);
   }
   .tia-timeline__icon {
     width: 20px;

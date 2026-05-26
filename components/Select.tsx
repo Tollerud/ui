@@ -13,23 +13,26 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, label, error, id, placeholder, options, children, ...props }, ref) => {
     return (
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1.5">
         {label && (
           <label htmlFor={id} className="text-xs font-medium text-tia-text-muted">
             {label}
           </label>
         )}
-        <div className="relative">
+        <div className="relative group">
           <select
             ref={ref}
             id={id}
             className={cn(
-              'font-sans text-base w-full appearance-none px-3 py-2 pr-8 rounded',
-              'bg-tia-surface-raised border',
+              'font-sans text-sm w-full appearance-none px-3 py-2.5 pr-9 rounded-lg',
+              'bg-tia-surface-raised',
               'text-tia-text-primary',
-              'transition-[border-color] duration-[150ms]',
-              'focus:outline-none focus:border-tia-yellow focus:shadow-[0_0_0_1px_#E8D500]',
-              error ? 'border-tia-error' : 'border-tia-border',
+              'transition-all duration-150 ease-out',
+              error
+                ? 'border-tia-error/70 focus:border-tia-error focus:shadow-[0_0_0_1px_#EF4444]'
+                : 'border-tia-border focus:border-tia-yellow focus:shadow-[0_0_0_1px_#E8D500]',
+              'border hover:border-tia-noir-400',
+              'focus:outline-none',
               className
             )}
             {...props}
@@ -49,7 +52,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
           </select>
           {/* Chevron indicator */}
           <svg
-            className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-tia-text-muted"
+            className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-tia-text-muted transition-transform duration-150 group-focus-within:rotate-180"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

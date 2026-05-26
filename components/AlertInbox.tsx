@@ -13,15 +13,10 @@ export interface AlertItem {
 }
 
 export interface AlertInboxProps extends HTMLAttributes<HTMLDivElement> {
-  /** List of alerts */
   alerts: AlertItem[]
-  /** Filter by severity (empty = show all) */
   filterSeverity?: IncidentSeverity | ''
-  /** Called when acknowledge is requested */
   onAcknowledge?: (id: string) => void
-  /** Whether the inbox is loading */
   loading?: boolean
-  /** Empty state message */
   emptyMessage?: string
 }
 
@@ -52,7 +47,10 @@ const AlertInbox = forwardRef<HTMLDivElement, AlertInboxProps>(
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-tia-foreground">Alerts</span>
             {counts.unacknowledged > 0 && (
-              <span className="text-[11px] text-tia-error font-medium">{counts.unacknowledged} unread</span>
+              <span className="inline-flex items-center gap-1 text-[11px] text-tia-error font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-tia-error animate-pulse" />
+                {counts.unacknowledged} unread
+              </span>
             )}
             {counts.critical > 0 && (
               <span className="text-[11px] text-tia-error font-bold">{counts.critical} critical</span>
@@ -77,17 +75,24 @@ const AlertInbox = forwardRef<HTMLDivElement, AlertInboxProps>(
                 acknowledged={alert.acknowledged}
                 className="border-0 rounded-none bg-transparent hover:bg-tia-noir-800/30"
               />
+              {/* Read indicator */}
+              {alert.acknowledged && (
+                <span className="absolute top-3 right-3 text-[10px] font-medium text-tia-text-muted/50">
+                  Read
+                </span>
+              )}
+              {/* Mark as read button */}
               {!alert.acknowledged && onAcknowledge && (
                 <button
                   type="button"
                   onClick={() => onAcknowledge(alert.id)}
                   className={cn(
-                    'absolute top-3 right-3 text-[11px] font-medium px-2 py-0.5 rounded',
-                    'text-tia-text-muted hover:text-tia-foreground hover:bg-tia-noir-700',
-                    'opacity-0 group-hover:opacity-100 transition-opacity'
+                    'absolute top-3 right-3 text-[10px] font-medium px-2 py-0.5 rounded',
+                    'text-tia-yellow/70 hover:text-tia-yellow hover:bg-tia-yellow/10',
+                    'opacity-0 group-hover:opacity-100 transition-opacity duration-150'
                   )}
                 >
-                  Acknowledge
+                  Mark read
                 </button>
               )}
             </div>
