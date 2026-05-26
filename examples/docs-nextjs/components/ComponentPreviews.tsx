@@ -224,10 +224,12 @@ export function BadgePreviews() {
 export function StatusDotPreviews() {
   return (
     <PreviewCard title="Statuses">
-      <StatusDot status="online" />
-      <StatusDot status="offline" />
-      <StatusDot status="warning" />
-      <StatusDot status="idle" />
+      <div className="flex gap-3">
+        <StatusDot status="online" label="Online" />
+        <StatusDot status="offline" label="Offline" />
+        <StatusDot status="warning" label="Warning" />
+        <StatusDot status="idle" label="Idle" />
+      </div>
     </PreviewCard>
   )
 }

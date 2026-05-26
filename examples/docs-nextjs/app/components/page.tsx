@@ -59,7 +59,7 @@ const sections: {
   {
     label: 'Select',
     id: 'select',
-    desc: 'Styled native select dropdown with custom SVG chevron, label, error, and placeholder support.',
+    desc: 'Custom dropdown selector with keyboard navigation (arrows/enter/escape), click-to-select, and click-outside dismiss.',
     preview: SelectPreviews,
   },
   {
@@ -218,7 +218,7 @@ export default function ComponentsPage() {
   return (
     <div className="docs-content">
       <h1>Components</h1>
-      <p>31 React components across form primitives, core UI, layout, atmosphere, command shell, and homelab categories.</p>
+      <p>29 React components across form primitives, core UI, layout, atmosphere, command shell, and homelab categories.</p>
       <p className="text-xs text-tia-text-muted mt-1">
         All components are <code>forwardRef</code> + <code>displayName</code> with full TypeScript types.
       </p>
