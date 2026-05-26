@@ -12,10 +12,10 @@ const sections = [
 export default function DocsHome() {
   return (
     <div>
-      <h1 className="text-2xl font-bold text-tia-foreground mb-2">Tia Noir</h1>
+      <h1 className="text-2xl font-bold text-tia-foreground mb-2">Tollerud Design System</h1>
       <p className="text-sm text-tia-text-secondary mb-8 max-w-xl">
         A dark, cinematic, keyboard-first infrastructure design system with acid-yellow signal color.
-        Designed for Tia — the Tollerud Infrastructure Assistant.
+        Tia Noir is the internal codename — built for Tia, the Tollerud Infrastructure Assistant.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
