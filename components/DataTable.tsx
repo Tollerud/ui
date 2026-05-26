@@ -3,12 +3,13 @@
 import { useState, useMemo, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
-/* ──────────────────── Sortable Data Table ──────────────────── */
+/* ──────────────────── Sortable & Filterable Data Table ──────────────────── */
 
 export interface Column<T> {
   key: string
   label: string
   sortable?: boolean
+  filterable?: boolean
   align?: 'left' | 'center' | 'right'
   width?: string
   render?: (value: unknown, row: T) => ReactNode
@@ -34,13 +35,26 @@ function DataTable<T extends Record<string, unknown>>({
 }: DataTableProps<T>) {
   const [sortKey, setSortKey] = useState<string | null>(null)
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
+  const [filters, setFilters] = useState<Record<string, string>>({})
+
+  const filtered = useMemo(() => {
+    const activeFilters = Object.entries(filters).filter(([, v]) => v.trim() !== '')
+    if (activeFilters.length === 0) return data
+
+    return data.filter((row) =>
+      activeFilters.every(([key, filterValue]) => {
+        const cellValue = String(row[key] ?? '').toLowerCase()
+        return cellValue.includes(filterValue.toLowerCase())
+      })
+    )
+  }, [data, filters])
 
   const sorted = useMemo(() => {
-    if (!sortKey) return data
+    if (!sortKey) return filtered
     const col = columns.find((c) => c.key === sortKey)
-    if (!col?.sortable) return data
+    if (!col?.sortable) return filtered
 
-    return [...data].sort((a, b) => {
+    return [...filtered].sort((a, b) => {
       const aVal = a[sortKey]
       const bVal = b[sortKey]
 
@@ -54,7 +68,7 @@ function DataTable<T extends Record<string, unknown>>({
       const cmp = aStr.localeCompare(bStr, 'nb', { numeric: true })
       return sortDir === 'asc' ? cmp : -cmp
     })
-  }, [data, sortKey, sortDir, columns])
+  }, [filtered, sortKey, sortDir, columns])
 
   const getRowKey = (row: T, i: number): string | number => {
     if (typeof rowKey === 'function') return rowKey(row)
@@ -70,6 +84,21 @@ function DataTable<T extends Record<string, unknown>>({
       setSortDir('asc')
     }
   }
+
+  const updateFilter = (key: string, value: string) => {
+    setFilters((prev) => {
+      const next = { ...prev }
+      if (value.trim() === '') {
+        delete next[key]
+      } else {
+        next[key] = value
+      }
+      return next
+    })
+  }
+
+  const hasActiveFilters = Object.values(filters).some((v) => v.trim() !== '')
+  const filterableColumns = columns.filter((c) => c.filterable)
 
   return (
     <div className={cn('overflow-x-auto rounded-lg border border-tia-border/30', className)}>
@@ -88,7 +117,7 @@ function DataTable<T extends Record<string, unknown>>({
                 style={col.width ? { width: col.width } : undefined}
                 onClick={() => col.sortable && toggleSort(col.key)}
               >
-                <span className="inline-flex items-center gap-1">
+                <span className="inline-flex items-center gap-1.5">
                   {col.label}
                   {col.sortable && sortKey === col.key && (
                     <span className="text-tia-accent">{sortDir === 'asc' ? '↑' : '↓'}</span>
@@ -96,10 +125,57 @@ function DataTable<T extends Record<string, unknown>>({
                   {col.sortable && sortKey !== col.key && (
                     <span className="text-tia-text-muted/30">↕</span>
                   )}
+                  {col.filterable && (
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={cn(
+                        'opacity-40',
+                        filters[col.key] && 'opacity-100 text-tia-yellow'
+                      )}
+                    >
+                      <path d="M4 4h16v2.172a2 2 0 0 1-.586 1.414L15 12v7l-6 2v-8.5L4.52 7.53A2 2 0 0 1 4 6.16V4z" />
+                    </svg>
+                  )}
                 </span>
               </th>
             ))}
           </tr>
+          {/* Filter row — only if at least one column is filterable */}
+          {filterableColumns.length > 0 && (
+            <tr className="border-b border-tia-border/20">
+              {columns.map((col) => (
+                <th
+                  key={`filter-${col.key}`}
+                  className={cn(
+                    'px-1.5 py-1',
+                    col.align === 'right' && 'text-right',
+                    col.align === 'center' && 'text-center',
+                  )}
+                >
+                  {col.filterable ? (
+                    <input
+                      type="text"
+                      placeholder={`Filter ${col.label.toLowerCase()}…`}
+                      value={filters[col.key] ?? ''}
+                      onChange={(e) => updateFilter(col.key, e.target.value)}
+                      className={cn(
+                        'w-full px-2 py-1 text-xs rounded border transition-colors outline-none',
+                        'bg-tia-noir-900/50 border-tia-border/20 text-tia-text-primary placeholder:text-tia-text-muted/40',
+                        'focus:border-tia-yellow/40 focus:ring-1 focus:ring-tia-yellow/20',
+                      )}
+                    />
+                  ) : null}
+                </th>
+              ))}
+            </tr>
+          )}
         </thead>
         <tbody>
           {sorted.length === 0 ? (
@@ -108,7 +184,7 @@ function DataTable<T extends Record<string, unknown>>({
                 colSpan={columns.length}
                 className="px-3 py-8 text-center text-sm text-tia-text-muted"
               >
-                {emptyMessage}
+                {hasActiveFilters ? 'No matching rows' : emptyMessage}
               </td>
             </tr>
           ) : (
@@ -147,4 +223,3 @@ function DataTable<T extends Record<string, unknown>>({
 }
 
 export { DataTable }
-export default DataTable

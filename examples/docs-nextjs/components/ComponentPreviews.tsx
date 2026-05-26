@@ -972,8 +972,8 @@ export function DataTablePreviews() {
   ]
 
   const columns: Column<ServerRow>[] = [
-    { key: 'name', label: 'Server', sortable: true },
-    { key: 'ip', label: 'IP Address' },
+    { key: 'name', label: 'Server', sortable: true, filterable: true },
+    { key: 'ip', label: 'IP Address', filterable: true },
     { key: 'cpu', label: 'CPU', sortable: true, align: 'right' },
     { key: 'mem', label: 'Memory', sortable: true, align: 'right' },
     { key: 'disk', label: 'Disk', sortable: true, align: 'right' },
@@ -982,6 +982,7 @@ export function DataTablePreviews() {
       key: 'status',
       label: 'Status',
       sortable: true,
+      filterable: true,
       align: 'center',
       render: (val) => (
         <span className={cn(
@@ -1006,7 +1007,7 @@ export function DataTablePreviews() {
     <div className="space-y-3 w-full">
       <PreviewCard title="Server inventory">
         <TiaDataTable columns={columns} data={servers} className="w-full" />
-        <p className="text-xs text-tia-text-muted mt-2">Click column headers to sort. Try clicking CPU or Memory.</p>
+        <p className="text-xs text-tia-text-muted mt-2">Click column headers to sort. Type in filter inputs to narrow results — try filtering by server name or status.</p>
       </PreviewCard>
     </div>
   )

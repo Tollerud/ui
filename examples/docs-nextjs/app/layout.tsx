@@ -144,7 +144,7 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
 
   return (
     <body className="bg-tia-black text-tia-foreground antialiased min-h-screen">
-      <TooltipProvider>
+      <TooltipProvider delayDuration={0}>
         <div className="flex min-h-screen">
           {/* Desktop sidebar */}
           <aside className="w-64 flex-shrink-0 border-r border-tia-border/30 bg-tia-noir-950 hidden md:flex flex-col overflow-y-auto">

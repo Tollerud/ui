@@ -2,12 +2,22 @@
 
 import { Toaster as SonnerToaster, type ToasterProps } from 'sonner'
 import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 
 const Toaster = ({ ...props }: ToasterProps) => {
   const { theme = 'dark' } = useTheme()
+  const [mobile, setMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth < 640)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   return (
     <SonnerToaster
+      position={mobile ? 'top-center' : 'top-right'}
       theme={theme as ToasterProps['theme']}
       className="toaster group"
       toastOptions={{

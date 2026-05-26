@@ -1,50 +1,59 @@
 'use client'
 
-import { useState, type ReactNode } from 'react'
+import * as React from 'react'
 import { cn } from '@/lib/utils'
 
+/* ── Device selector button row ──
+   Bumped text size + added responsive variant for mobile. */
 type DeviceSize = 'desktop' | 'tablet' | 'mobile'
 
 const DEVICE_WIDTHS: Record<DeviceSize, number | null> = {
   desktop: null,
   tablet: 768,
   mobile: 375,
-}
+} as const
 
 interface PreviewFrameProps {
-  children: ReactNode
+  children: React.ReactNode
   className?: string
 }
 
 export function PreviewFrame({ children, className }: PreviewFrameProps) {
-  const [device, setDevice] = useState<DeviceSize>('desktop')
-  const maxWidth = DEVICE_WIDTHS[device]
+  const [device, setDevice] = React.useState<DeviceSize>('desktop')
 
   return (
-    <div className={cn('space-y-2', className)}>
+    <div className={cn(
+      'border border-tia-border/30 rounded-lg bg-tia-surface-raised overflow-hidden',
+      className,
+    )}>
       {/* Device toolbar */}
-      <div className="flex items-center gap-1 border border-tia-border/30 rounded-lg p-1 w-fit bg-tia-noir-850">
+      <div className="flex items-center gap-2 border-b border-tia-border/20 p-2">
         {(['desktop', 'tablet', 'mobile'] as DeviceSize[]).map((d) => (
           <button
             key={d}
             onClick={() => setDevice(d)}
             className={cn(
-              'px-3 py-1 rounded-md text-xs font-medium transition-colors',
+              'px-3 py-1.5 rounded-md font-medium transition-colors',
               device === d
-                ? 'bg-tia-accent text-tia-noir-900'
-                : 'text-tia-text-muted hover:text-tia-text-primary hover:bg-tia-surface',
+                ? 'bg-tia-yellow/15 text-tia-yellow ring-1 ring-tia-yellow/40'
+                : 'text-tia-text-primary hover:bg-tia-surface',
             )}
           >
-            {d === 'desktop' ? '🖥 Desktop' : d === 'tablet' ? '📱 Tablet' : '📱 Mobile'}
+            {d === 'desktop' ? '🖥' : d === 'tablet' ? '📱' : '📱'}
+            <span className="ml-1.5">{d.charAt(0).toUpperCase() + d.slice(1)}</span>
           </button>
         ))}
       </div>
-      {/* Preview area */}
+
+      {/* Preview area — responsive max-width wrapper */}
       <div
-        className="transition-all duration-300 ease-in-out overflow-hidden rounded-lg border border-tia-border/20"
-        style={{ maxWidth: maxWidth ? `${maxWidth}px` : '100%' }}
+        className={cn(
+          'transition-all duration-300 ease-in-out overflow-hidden',
+          device === 'mobile' && 'max-w-[375px] mx-auto',
+          device === 'tablet' && 'max-w-[768px] mx-auto',
+        )}
       >
-        <div className="bg-tia-noir-900 p-4">{children}</div>
+        <div className="p-4">{children}</div>
       </div>
     </div>
   )

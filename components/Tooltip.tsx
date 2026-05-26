@@ -6,9 +6,77 @@ import { cn } from '@/lib/utils'
 
 const TooltipProvider = TooltipPrimitive.Provider
 
-const Tooltip = TooltipPrimitive.Root
+/* ── Mobile-friendly Tooltip ──
+   Opens on hover (desktop) AND on click/tap (mobile).
+   Uses React context so the Trigger can toggle Root's open state.
+   Closes on second click/tap or click outside. */
 
-const TooltipTrigger = TooltipPrimitive.Trigger
+type TooltipContextValue = {
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const TooltipContext = React.createContext<TooltipContextValue | null>(null)
+
+function Tooltip({
+  children,
+  defaultOpen,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Root>) {
+  const [internalOpen, setInternalOpen] = React.useState(defaultOpen ?? false)
+  const isControlled = controlledOpen !== undefined
+  const open = isControlled ? controlledOpen : internalOpen
+  const setOpen = isControlled ? (controlledOnOpenChange ?? setInternalOpen) : setInternalOpen
+
+  return (
+    <TooltipContext.Provider value={{ open, setOpen }}>
+      <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props}>
+        {children}
+      </TooltipPrimitive.Root>
+    </TooltipContext.Provider>
+  )
+}
+Tooltip.displayName = 'Tooltip'
+
+const TooltipTrigger = React.forwardRef<
+  React.ComponentRef<typeof TooltipPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>
+>(({ onClick, onTouchStart, children, ...props }, ref) => {
+  const ctx = React.useContext(TooltipContext)
+  const touchFired = React.useRef(false)
+
+  return (
+    <TooltipPrimitive.Trigger
+      ref={ref}
+      onClick={(e) => {
+        // Skip click if this was triggered by a touch (already handled)
+        if (touchFired.current) {
+          touchFired.current = false
+          return
+        }
+        // Toggle tooltip on click — covers mobile where hover doesn't fire
+        if (ctx) {
+          ctx.setOpen((prev) => !prev)
+        }
+        onClick?.(e)
+      }}
+      onTouchStart={(e) => {
+        touchFired.current = true
+        // Open on touch for mobile
+        if (ctx && !ctx.open) {
+          ctx.setOpen(true)
+        }
+        onTouchStart?.(e)
+      }}
+      {...props}
+    >
+      {children}
+    </TooltipPrimitive.Trigger>
+  )
+})
+TooltipTrigger.displayName = 'TooltipTrigger'
 
 const TooltipContent = React.forwardRef<
   React.ComponentRef<typeof TooltipPrimitive.Content>,
