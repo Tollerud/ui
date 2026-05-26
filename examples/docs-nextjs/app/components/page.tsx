@@ -30,6 +30,13 @@ import {
   FooterPreviews,
   NoirGlowBackgroundPreviews,
   CommandMenuPreviews,
+  DialogPreviews,
+  ToastPreviews,
+  TooltipPreviews,
+  TabsPreviews,
+  SkeletonPreviews,
+  ProgressPreviews,
+  EmptyPreviews,
 } from '../../components/ComponentPreviews'
 
 const sections: {
@@ -212,13 +219,55 @@ const sections: {
     desc: 'Keyboard-first command palette for infrastructure actions. Groups, keyboard navigation, composable with ActionRow + Kbd.',
     preview: CommandMenuPreviews,
   },
+  {
+    label: 'Dialog',
+    id: 'dialog',
+    desc: 'Modal dialog with Radix dialog primitives — trigger, overlay, content, header, title, description, and close button.',
+    preview: DialogPreviews,
+  },
+  {
+    label: 'Tooltip',
+    id: 'tooltip',
+    desc: 'Hover tooltip with Radix primitives — trigger, content, arrow, and configurable side offset.',
+    preview: TooltipPreviews,
+  },
+  {
+    label: 'Tabs',
+    id: 'tabs',
+    desc: 'Tab switcher with Radix tabs primitive — list, trigger, content panels with default and line variants.',
+    preview: TabsPreviews,
+  },
+  {
+    label: 'Skeleton',
+    id: 'skeleton',
+    desc: 'Pulse-animated loading placeholder — compose into avatar, text lines, and card skeleton layouts.',
+    preview: SkeletonPreviews,
+  },
+  {
+    label: 'Progress',
+    id: 'progress',
+    desc: 'Determinate progress bar with Radix progress primitive — animated indicator, customizable width.',
+    preview: ProgressPreviews,
+  },
+  {
+    label: 'Toast',
+    id: 'toast',
+    desc: 'Sonner toast notifications — success, error, info, warning variants with optional description text.',
+    preview: ToastPreviews,
+  },
+  {
+    label: 'Empty',
+    id: 'empty',
+    desc: 'Empty state layout — icon, title, description, and content slot for CTAs. Composable sub-components.',
+    preview: EmptyPreviews,
+  },
 ]
 
 export default function ComponentsPage() {
   return (
     <div className="docs-content">
       <h1>Components</h1>
-      <p>29 React components across form primitives, core UI, layout, atmosphere, command shell, and homelab categories.</p>
+      <p>37 React components across form primitives, core UI, layout, atmosphere, command shell, and homelab categories.</p>
       <p className="text-xs text-tia-text-muted mt-1">
         All components are <code>forwardRef</code> + <code>displayName</code> with full TypeScript types.
       </p>

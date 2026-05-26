@@ -4,6 +4,8 @@ import { useState, useEffect, type ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Inter, JetBrains_Mono } from 'next/font/google'
+import { TooltipProvider } from '../../../components/Tooltip'
+import { Toaster } from '../../../components/Toaster'
 import './globals.css'
 
 const inter = Inter({
@@ -119,7 +121,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="description" content="Dark, cinematic, keyboard-first infrastructure design system" />
       </head>
       <body className="bg-tia-black text-tia-foreground antialiased min-h-screen">
-        <div className="flex min-h-screen">
+        <TooltipProvider>
+          <div className="flex min-h-screen">
           {/* Desktop sidebar */}
           <aside className="w-64 flex-shrink-0 border-r border-tia-border/30 bg-tia-noir-950 hidden md:flex flex-col overflow-y-auto">
             <div className="p-5 border-b border-tia-border/20">
@@ -210,7 +213,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </div>
           </main>
         </div>
-      </body>
+        <Toaster />
+        </TooltipProvider>
+        </body>
     </html>
   )
 }

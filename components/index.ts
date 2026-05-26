@@ -88,3 +88,25 @@ export type { RadioGroupProps, RadioProps } from './RadioGroup'
 // ── Layout ──
 export { Footer } from './Footer'
 export type { FooterProps, FooterLabels } from './Footer'
+
+// ── Overlay / Utility ──
+export { Dialog, DialogPortal, DialogOverlay, DialogClose, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from './Dialog'
+export type { } from './Dialog'
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './Tooltip'
+export type { } from './Tooltip'
+
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs'
+export type { } from './Tabs'
+
+export { Skeleton } from './Skeleton'
+export type { } from './Skeleton'
+
+export { Progress } from './Progress'
+export type { } from './Progress'
+
+export { Toaster } from './Toaster'
+export type { } from './Toaster'
+
+export { Empty, EmptyHeader, EmptyIcon, EmptyTitle, EmptyDescription, EmptyContent } from './Empty'
+export type { } from './Empty'

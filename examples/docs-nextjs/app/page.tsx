@@ -3,7 +3,7 @@ import Link from 'next/link'
 const sections = [
   { href: '/getting-started', label: 'Getting Started', desc: 'Install, font setup, conventions, and a basic example' },
   { href: '/foundations', label: 'Foundations', desc: 'Color, typography, motion, and accessibility rules' },
-  { href: '/components', label: 'Components', desc: '29 React components for infrastructure UI' },
+  { href: '/components', label: 'Components', desc: '40 React components for infrastructure UI' },
   { href: '/patterns', label: 'Patterns', desc: 'Dashboard, approval flow, and more' },
   { href: '/brand', label: 'Brand', desc: 'Tia avatar, voice, and Tollerud glow' },
   { href: '/changelog', label: 'Changelog', desc: 'What changed and when' },

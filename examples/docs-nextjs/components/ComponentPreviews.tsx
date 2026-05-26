@@ -44,6 +44,28 @@ import { NoirGlowBackground } from '../../../components/NoirGlowBackground'
 import { CommandMenu } from '../../../components/CommandMenu'
 import type { CommandGroup } from '../../../components/CommandMenu'
 
+// ── Tia Noir ported shadcn components (Radix-based) ──
+import {
+  Dialog as TiaDialog,
+  DialogTrigger as TiaDialogTrigger,
+  DialogContent as TiaDialogContent,
+  DialogHeader as TiaDialogHeader,
+  DialogFooter as TiaDialogFooter,
+  DialogTitle as TiaDialogTitle,
+  DialogDescription as TiaDialogDescription,
+} from '../../../components/Dialog'
+import {
+  Tooltip as TiaTooltip,
+  TooltipContent as TiaTooltipContent,
+  TooltipTrigger as TiaTooltipTrigger,
+  TooltipProvider as TiaTooltipProvider,
+} from '../../../components/Tooltip'
+import { Tabs as TiaTabs, TabsList as TiaTabsList, TabsTrigger as TiaTabsTrigger, TabsContent as TiaTabsContent } from '../../../components/Tabs'
+import { Skeleton as TiaSkeleton } from '../../../components/Skeleton'
+import { Progress as TiaProgress } from '../../../components/Progress'
+import { Empty, EmptyHeader, EmptyIcon, EmptyTitle, EmptyDescription, EmptyContent } from '../../../components/Empty'
+import { toast } from 'sonner'
+
 /* ────────── Preview wrapper ────────── */
 
 function PreviewCard({ title, children }: { title: string; children: ReactNode }) {
@@ -625,6 +647,247 @@ export function CommandMenuPreviews() {
           <p>Groups via <code>CommandGroup[]</code> with keyboard navigation.</p>
           <p>Composes with <code>ActionRow</code> + <code>Kbd</code> under the hood.</p>
         </div>
+      </PreviewCard>
+    </div>
+  )
+}
+
+/* ────────── DIALOG PREVIEWS ────────── */
+
+export function DialogPreviews() {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="space-y-3">
+      <PreviewCard title="Basic">
+        <TiaDialog open={open} onOpenChange={setOpen}>
+          <TiaDialogTrigger asChild>
+            <Button variant="secondary">Open Dialog</Button>
+          </TiaDialogTrigger>
+          <TiaDialogContent>
+            <TiaDialogHeader>
+              <TiaDialogTitle>Confirm deployment</TiaDialogTitle>
+              <TiaDialogDescription>
+                This will deploy v2.4.1 to the production cluster. Are you sure?
+              </TiaDialogDescription>
+            </TiaDialogHeader>
+            <TiaDialogFooter>
+              <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+              <Button variant="primary" onClick={() => { setOpen(false); alert('Deployed!') }}>Deploy</Button>
+            </TiaDialogFooter>
+          </TiaDialogContent>
+        </TiaDialog>
+      </PreviewCard>
+    </div>
+  )
+}
+
+/* ────────── TOOLTIP PREVIEWS ────────── */
+
+export function TooltipPreviews() {
+  return (
+    <TiaTooltipProvider>
+      <div className="space-y-3">
+        <PreviewCard title="Basic">
+          <TiaTooltip>
+            <TiaTooltipTrigger asChild>
+              <span className="inline-block px-3 py-1.5 rounded border border-tia-border/30 text-xs text-tia-text-muted cursor-default">Hover me</span>
+            </TiaTooltipTrigger>
+            <TiaTooltipContent>
+              <p>I&apos;m a Tia Noir tooltip</p>
+            </TiaTooltipContent>
+          </TiaTooltip>
+        </PreviewCard>
+        <PreviewCard title="Placements">
+          <div className="flex gap-2">
+            <TiaTooltip>
+              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tia-noir-800 text-xs cursor-default">Top</span></TiaTooltipTrigger>
+              <TiaTooltipContent side="top">Top tooltip</TiaTooltipContent>
+            </TiaTooltip>
+            <TiaTooltip>
+              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tia-noir-800 text-xs cursor-default">Bottom</span></TiaTooltipTrigger>
+              <TiaTooltipContent side="bottom">Bottom tooltip</TiaTooltipContent>
+            </TiaTooltip>
+            <TiaTooltip>
+              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tia-noir-800 text-xs cursor-default">Left</span></TiaTooltipTrigger>
+              <TiaTooltipContent side="left">Left tooltip</TiaTooltipContent>
+            </TiaTooltip>
+            <TiaTooltip>
+              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tia-noir-800 text-xs cursor-default">Right</span></TiaTooltipTrigger>
+              <TiaTooltipContent side="right">Right tooltip</TiaTooltipContent>
+            </TiaTooltip>
+          </div>
+        </PreviewCard>
+      </div>
+    </TiaTooltipProvider>
+  )
+}
+
+/* ────────── TOAST PREVIEWS ────────── */
+
+export function ToastPreviews() {
+  return (
+    <div className="space-y-3 w-full">
+      <PreviewCard title="Variants">
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => toast.success('Deployment complete')}
+            className="px-3 py-1.5 rounded bg-tia-accent text-tia-noir-900 text-xs font-medium hover:opacity-90 transition-opacity"
+          >
+            Show Success
+          </button>
+          <button
+            onClick={() => toast.error('Connection failed')}
+            className="px-3 py-1.5 rounded bg-tia-error text-white text-xs font-medium hover:opacity-90 transition-opacity"
+          >
+            Show Error
+          </button>
+          <button
+            onClick={() => toast.info('Backup completed')}
+            className="px-3 py-1.5 rounded bg-tia-info text-white text-xs font-medium hover:opacity-90 transition-opacity"
+          >
+            Show Info
+          </button>
+          <button
+            onClick={() => toast.warning('Disk at 85%')}
+            className="px-3 py-1.5 rounded bg-tia-warning text-tia-noir-900 text-xs font-medium hover:opacity-90 transition-opacity"
+          >
+            Show Warning
+          </button>
+        </div>
+        <p className="text-xs text-tia-text-muted mt-2">Click a button to trigger a toast notification. Toasts appear in the top-right corner.</p>
+      </PreviewCard>
+      <PreviewCard title="With Description">
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => toast('System update scheduled', {
+                description: 'v2.4.1 will deploy at 03:00 UTC',
+              })}
+            className="px-3 py-1.5 rounded bg-tia-surface border border-tia-border/30 text-tia-text-primary text-xs font-medium hover:bg-tia-surface-raised transition-colors"
+          >
+            Show Description
+          </button>
+          <button
+            onClick={() => toast('Action required', {
+                description: 'Review 3 pending approvals',
+                action: {
+                  label: 'Review',
+                  onClick: () => console.log('navigate to approvals'),
+                },
+              })}
+            className="px-3 py-1.5 rounded bg-tia-surface border border-tia-border/30 text-tia-text-primary text-xs font-medium hover:bg-tia-surface-raised transition-colors"
+          >
+            Show Action
+          </button>
+        </div>
+      </PreviewCard>
+    </div>
+  )
+}
+
+/* ────────── TABS PREVIEWS ────────── */
+
+export function TabsPreviews() {
+  const [tab, setTab] = useState('overview')
+  return (
+    <PreviewCard title="Server Details">
+      <TiaTabs value={tab} onValueChange={setTab} className="w-full">
+        <TiaTabsList>
+          <TiaTabsTrigger value="overview">Overview</TiaTabsTrigger>
+          <TiaTabsTrigger value="metrics">Metrics</TiaTabsTrigger>
+          <TiaTabsTrigger value="logs">Logs</TiaTabsTrigger>
+        </TiaTabsList>
+        <TiaTabsContent value="overview" className="text-xs text-tia-text-secondary p-2">
+          Host: <code>emma</code> &middot; IP: 10.0.10.10 &middot; Uptime: 42d
+        </TiaTabsContent>
+        <TiaTabsContent value="metrics" className="text-xs text-tia-text-secondary p-2">
+          CPU: 34% &middot; Memory: 6.2/16 GB &middot; Disk: 45%
+        </TiaTabsContent>
+        <TiaTabsContent value="logs" className="text-xs text-tia-text-secondary p-2">
+          Last event: Container app-web restarted at 14:32:12
+        </TiaTabsContent>
+      </TiaTabs>
+    </PreviewCard>
+  )
+}
+
+/* ────────── SKELETON PREVIEWS ────────── */
+
+export function SkeletonPreviews() {
+  return (
+    <div className="space-y-3 w-full">
+      <PreviewCard title="Card skeleton">
+        <div className="space-y-3 p-4 rounded-lg border border-tia-border/30 bg-tia-surface-raised">
+          <TiaSkeleton className="h-4 w-3/4" />
+          <TiaSkeleton className="h-3 w-1/2" />
+          <TiaSkeleton className="h-3 w-full" />
+        </div>
+      </PreviewCard>
+      <PreviewCard title="Metrics skeleton">
+        <div className="grid grid-cols-2 gap-3">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="space-y-2 p-3 rounded-lg border border-tia-border/20 bg-tia-noir-900/50">
+              <TiaSkeleton className="h-3 w-16" />
+              <TiaSkeleton className="h-6 w-20" />
+              <TiaSkeleton className="h-3 w-12" />
+            </div>
+          ))}
+        </div>
+      </PreviewCard>
+    </div>
+  )
+}
+
+/* ────────── PROGRESS PREVIEWS ────────── */
+
+export function ProgressPreviews() {
+  return (
+    <div className="space-y-3 w-full">
+      <PreviewCard title="Values">
+        <div className="space-y-3">
+          <div>
+            <div className="flex justify-between text-xs text-tia-text-muted mb-1"><span>Backup sync</span><span>75%</span></div>
+            <TiaProgress value={75} />
+          </div>
+          <div>
+            <div className="flex justify-between text-xs text-tia-text-muted mb-1"><span>Disk usage</span><span>42%</span></div>
+            <TiaProgress value={42} />
+          </div>
+          <div>
+            <div className="flex justify-between text-xs text-tia-text-muted mb-1"><span>Deployment</span><span>100%</span></div>
+            <TiaProgress value={100} />
+          </div>
+        </div>
+      </PreviewCard>
+    </div>
+  )
+}
+
+/* ────────── EMPTY PREVIEWS ────────── */
+
+export function EmptyPreviews() {
+  return (
+    <div className="space-y-3 w-full">
+      <PreviewCard title="No results">
+        <Empty>
+          <EmptyHeader>
+            <EmptyIcon>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </EmptyIcon>
+            <EmptyTitle>No servers found</EmptyTitle>
+            <EmptyDescription>No servers match your current filters. Try adjusting your search.</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      </PreviewCard>
+      <PreviewCard title="All clear">
+        <Empty>
+          <EmptyHeader>
+            <EmptyIcon>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </EmptyIcon>
+            <EmptyTitle>All clear</EmptyTitle>
+            <EmptyDescription>No incidents reported. Your infrastructure is healthy.</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       </PreviewCard>
     </div>
   )
