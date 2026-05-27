@@ -23,27 +23,27 @@ const ServiceHealthCard = forwardRef<HTMLDivElement, ServiceHealthCardProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border bg-tia-surface-raised p-4',
+          'rounded-lg border bg-tollerud-surface-raised p-4',
           'transition-[border-color] duration-[150ms]',
-          status === 'offline' && 'border-tia-error/40',
-          status === 'warning' && 'border-tia-yellow/30',
-          status === 'online' && 'border-tia-border hover:border-tia-noir-500',
-          status === 'idle' && 'border-tia-border opacity-60',
+          status === 'offline' && 'border-tollerud-error/40',
+          status === 'warning' && 'border-tollerud-yellow/30',
+          status === 'online' && 'border-tollerud-border hover:border-tollerud-noir-500',
+          status === 'idle' && 'border-tollerud-border opacity-60',
           loading && 'animate-pulse',
           className
         )}
         {...props}
       >
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-semibold text-tia-foreground truncate">
+          <span className="text-sm font-semibold text-tollerud-foreground truncate">
             {service}
           </span>
           <StatusDot status={status} />
         </div>
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-tia-text-muted">
-          {uptime && <span>Uptime: <span className="text-tia-text-secondary">{uptime}</span></span>}
-          {responseTime && <span>Response: <span className="text-tia-text-secondary">{responseTime}</span></span>}
-          {version && <span>Version: <span className="text-tia-text-secondary">{version}</span></span>}
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-tollerud-text-muted">
+          {uptime && <span>Uptime: <span className="text-tollerud-text-secondary">{uptime}</span></span>}
+          {responseTime && <span>Response: <span className="text-tollerud-text-secondary">{responseTime}</span></span>}
+          {version && <span>Version: <span className="text-tollerud-text-secondary">{version}</span></span>}
         </div>
       </div>
     )

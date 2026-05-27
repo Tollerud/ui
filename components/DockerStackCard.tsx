@@ -28,11 +28,11 @@ const DockerStackCard = forwardRef<HTMLDivElement, DockerStackCardProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border bg-tia-surface-raised p-4',
+          'rounded-lg border bg-tollerud-surface-raised p-4',
           'transition-[border-color] duration-[150ms]',
-          status === 'offline' && 'border-tia-error/40',
-          status === 'warning' && 'border-tia-yellow/30',
-          status === 'online' && 'border-tia-border hover:border-tia-noir-500',
+          status === 'offline' && 'border-tollerud-error/40',
+          status === 'warning' && 'border-tollerud-yellow/30',
+          status === 'online' && 'border-tollerud-border hover:border-tollerud-noir-500',
           loading && 'animate-pulse',
           className
         )}
@@ -41,23 +41,23 @@ const DockerStackCard = forwardRef<HTMLDivElement, DockerStackCardProps>(
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2 min-w-0">
             <StatusDot status={status} />
-            <span className="font-semibold text-sm text-tia-foreground truncate">
+            <span className="font-semibold text-sm text-tollerud-foreground truncate">
               {name}
             </span>
           </div>
-          <span className="text-xs text-tia-text-muted whitespace-nowrap ml-2">
+          <span className="text-xs text-tollerud-text-muted whitespace-nowrap ml-2">
             {onlineCount}/{services.length} healthy
           </span>
         </div>
         {composePath && (
-          <div className="text-[11px] text-tia-text-muted font-mono mb-2 truncate">
+          <div className="text-[11px] text-tollerud-text-muted font-mono mb-2 truncate">
             {composePath}
           </div>
         )}
         <div className="flex flex-col gap-1">
           {services.map((svc) => (
             <div key={svc.name} className="flex items-center justify-between text-xs">
-              <span className="text-tia-text-secondary truncate">{svc.name}</span>
+              <span className="text-tollerud-text-secondary truncate">{svc.name}</span>
               <StatusDot status={svc.status} />
             </div>
           ))}

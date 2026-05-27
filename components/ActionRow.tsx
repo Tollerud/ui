@@ -60,9 +60,9 @@ const ActionRow = forwardRef<HTMLButtonElement, ActionRowProps>(
           action.onSelect?.()
         }}
         className={cn(
-          'tia-action-row',
-          highlighted && 'tia-action-row--highlighted',
-          (disabled ?? action.disabled) && 'tia-action-row--disabled',
+          'tollerud-action-row',
+          highlighted && 'tollerud-action-row--highlighted',
+          (disabled ?? action.disabled) && 'tollerud-action-row--disabled',
           className
         )}
         role="option"
@@ -71,20 +71,20 @@ const ActionRow = forwardRef<HTMLButtonElement, ActionRowProps>(
         {...props}
       >
         {action.icon && (
-          <span className="tia-action-row__icon">{action.icon}</span>
+          <span className="tollerud-action-row__icon">{action.icon}</span>
         )}
 
-        <span className="tia-action-row__content">
-          <span className="tia-action-row__label">{action.label}</span>
+        <span className="tollerud-action-row__content">
+          <span className="tollerud-action-row__label">{action.label}</span>
           {action.description && (
-            <span className="tia-action-row__description">
+            <span className="tollerud-action-row__description">
               {action.description}
             </span>
           )}
         </span>
 
         {showShortcut && action.shortcut && (
-          <span className="tia-action-row__shortcut">
+          <span className="tollerud-action-row__shortcut">
             <Kbd keys={action.shortcut} size="sm" />
           </span>
         )}

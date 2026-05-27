@@ -53,7 +53,7 @@ const SheetContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed z-50 gap-4 bg-tia-noir-900 border-tia-border/30 p-6 shadow-lg',
+        'fixed z-50 gap-4 bg-tollerud-noir-900 border-tollerud-border/30 p-6 shadow-lg',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         side === 'right' && [
           'inset-y-0 right-0 h-full w-full max-w-md border-l',
@@ -68,7 +68,7 @@ const SheetContent = forwardRef<
       {...props}
     >
       {children}
-      <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-tia-text-muted hover:text-tia-text-primary">
+      <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-tollerud-text-muted hover:text-tollerud-text-primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M18 6 6 18" /><path d="m6 6 12 12" />
         </svg>
@@ -89,7 +89,7 @@ const SheetTitle = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn('text-base font-semibold text-tia-text-primary', className)}
+    className={cn('text-base font-semibold text-tollerud-text-primary', className)}
     {...props}
   />
 ))
@@ -101,7 +101,7 @@ const SheetDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn('text-sm text-tia-text-secondary', className)}
+    className={cn('text-sm text-tollerud-text-secondary', className)}
     {...props}
   />
 ))

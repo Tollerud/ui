@@ -4,18 +4,18 @@ export default function PatternsPage() {
   return (
     <div className="docs-content">
       <h1>Patterns</h1>
-      <p>Tia Noir provides reusable page templates and interaction patterns for common infrastructure tasks.</p>
+      <p>Tollerud Design System provides reusable page templates and interaction patterns for common infrastructure tasks.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
-        <Link href="/patterns/dashboard" className="block p-4 rounded-lg border border-tia-border/40 bg-tia-surface-raised hover:border-tia-yellow/30 transition-colors">
-          <span className="block text-sm font-semibold text-tia-foreground">Dashboard</span>
-          <span className="block text-xs text-tia-text-muted mt-1">
+        <Link href="/patterns/dashboard" className="block p-4 rounded-lg border border-tollerud-border/40 bg-tollerud-surface-raised hover:border-tollerud-yellow/30 transition-colors">
+          <span className="block text-sm font-semibold text-tollerud-foreground">Dashboard</span>
+          <span className="block text-xs text-tollerud-text-muted mt-1">
             Host grid, service health, backup status, alert wall, command palette
           </span>
         </Link>
-        <Link href="/patterns/approval-flow" className="block p-4 rounded-lg border border-tia-border/40 bg-tia-surface-raised hover:border-tia-yellow/30 transition-colors">
-          <span className="block text-sm font-semibold text-tia-foreground">Approval Flow</span>
-          <span className="block text-xs text-tia-text-muted mt-1">
+        <Link href="/patterns/approval-flow" className="block p-4 rounded-lg border border-tollerud-border/40 bg-tollerud-surface-raised hover:border-tollerud-yellow/30 transition-colors">
+          <span className="block text-sm font-semibold text-tollerud-foreground">Approval Flow</span>
+          <span className="block text-xs text-tollerud-text-muted mt-1">
             Action diff, approval card, rollback plan, timeline
           </span>
         </Link>

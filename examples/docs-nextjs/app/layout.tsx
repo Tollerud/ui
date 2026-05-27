@@ -72,8 +72,8 @@ function NavLink({ href, label, active }: { href: string; label: string; active:
       href={href}
       className={`block px-2 py-1.5 text-xs rounded transition-colors ${
         active
-          ? 'bg-tia-yellow/10 text-tia-yellow font-medium'
-          : 'text-tia-text-secondary hover:text-tia-foreground hover:bg-tia-noir-800'
+          ? 'bg-tollerud-yellow/10 text-tollerud-yellow font-medium'
+          : 'text-tollerud-text-secondary hover:text-tollerud-foreground hover:bg-tollerud-noir-800'
       }`}
     >
       {label}
@@ -86,7 +86,7 @@ function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="w-8 h-8 flex items-center justify-center rounded hover:bg-tia-noir-800 transition-colors text-tia-text-secondary hover:text-tia-yellow"
+      className="w-8 h-8 flex items-center justify-center rounded hover:bg-tollerud-noir-800 transition-colors text-tollerud-text-secondary hover:text-tollerud-yellow"
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >
       {theme === 'dark' ? (
@@ -108,7 +108,7 @@ function Sidebar({ pathname, onNav }: { pathname: string; onNav?: () => void }) 
     <nav className="space-y-6">
       {nav.map((section) => (
         <div key={section.label}>
-          <h3 className="text-[11px] font-semibold uppercase tracking-wider text-tia-text-muted mb-2 px-2">
+          <h3 className="text-[11px] font-semibold uppercase tracking-wider text-tollerud-text-muted mb-2 px-2">
             {section.label}
           </h3>
           <ul className="space-y-0.5">
@@ -146,8 +146,8 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
     <TooltipProvider delayDuration={0}>
         <div className="flex min-h-screen">
           {/* Desktop sidebar */}
-          <aside className="w-64 flex-shrink-0 border-r border-tia-border/30 bg-tia-noir-950 hidden md:flex flex-col overflow-y-auto">
-            <div className="p-5 border-b border-tia-border/20">
+          <aside className="w-64 flex-shrink-0 border-r border-tollerud-border/30 bg-tollerud-noir-950 hidden md:flex flex-col overflow-y-auto">
+            <div className="p-5 border-b border-tollerud-border/20">
               <div className="flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-3">
                   <svg width="20" height="22" viewBox="0 0 130 143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="flex-shrink-0">
@@ -162,10 +162,10 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
                     </g>
                   </svg>
                   <div>
-                    <span className="text-sm font-bold text-tia-foreground tracking-tight">
+                    <span className="text-sm font-bold text-tollerud-foreground tracking-tight">
                       Tollerud
                     </span>
-                    <span className="block text-[11px] text-tia-text-muted mt-0.5">
+                    <span className="block text-[11px] text-tollerud-text-muted mt-0.5">
                       Design System
                     </span>
                   </div>
@@ -179,7 +179,7 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
           </aside>
 
           {/* Mobile header bar */}
-          <div className="md:hidden fixed top-0 left-0 right-0 z-50 h-12 bg-tia-noir-950 border-b border-tia-border/30 flex items-center justify-between px-4">
+          <div className="md:hidden fixed top-0 left-0 right-0 z-50 h-12 bg-tollerud-noir-950 border-b border-tollerud-border/30 flex items-center justify-between px-4">
             <Link href="/" className="flex items-center gap-2">
               <svg width="16" height="18" viewBox="0 0 130 143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="flex-shrink-0">
                 <g fill="#FFF200" fillRule="evenodd">
@@ -192,14 +192,14 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
                   </g>
                 </g>
               </svg>
-              <span className="text-sm font-bold text-tia-foreground tracking-tight">Tollerud</span>
-              <span className="text-[11px] text-tia-text-muted">Design</span>
+              <span className="text-sm font-bold text-tollerud-foreground tracking-tight">Tollerud</span>
+              <span className="text-[11px] text-tollerud-text-muted">Design</span>
             </Link>
             <div className="flex items-center gap-2">
               {mounted && <ThemeToggle />}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="w-8 h-8 flex items-center justify-center rounded hover:bg-tia-noir-800 transition-colors text-tia-text-secondary"
+                className="w-8 h-8 flex items-center justify-center rounded hover:bg-tollerud-noir-800 transition-colors text-tollerud-text-secondary"
                 aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               >
                 {mobileMenuOpen ? (
@@ -225,7 +225,7 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
 
           {/* Mobile menu drawer */}
           <aside
-            className={`md:hidden fixed top-12 left-0 bottom-0 z-50 w-72 bg-tia-noir-950 border-r border-tia-border/30 overflow-y-auto transition-transform duration-200 ${
+            className={`md:hidden fixed top-12 left-0 bottom-0 z-50 w-72 bg-tollerud-noir-950 border-r border-tollerud-border/30 overflow-y-auto transition-transform duration-200 ${
               mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
           >
@@ -253,7 +253,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <title>Tollerud Design System</title>
         <meta name="description" content="Dark, cinematic, keyboard-first infrastructure design system" />
       </head>
-      <body className="bg-tia-surface text-tia-foreground antialiased min-h-screen">
+      <body className="bg-tollerud-surface text-tollerud-foreground antialiased min-h-screen">
         <ThemeProvider attribute="class" defaultTheme="dark" storageKey="tollerud-theme">
           <RootLayoutInner>{children}</RootLayoutInner>
         </ThemeProvider>

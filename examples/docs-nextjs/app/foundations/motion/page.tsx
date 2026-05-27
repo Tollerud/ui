@@ -9,10 +9,10 @@ export default function MotionPage() {
   ]
 
   const keyframes = [
-    { name: 'tia-timeline-pulse', usage: 'Active timeline dot' },
-    { name: 'tia-signal-pulse', usage: 'Active agent/command' },
-    { name: 'tia-glow-drift', usage: 'Slow ambient background' },
-    { name: 'tia-reveal-up', usage: 'Panel/card entrance' },
+    { name: 'tollerud-timeline-pulse', usage: 'Active timeline dot' },
+    { name: 'tollerud-signal-pulse', usage: 'Active agent/command' },
+    { name: 'tollerud-glow-drift', usage: 'Slow ambient background' },
+    { name: 'tollerud-reveal-up', usage: 'Panel/card entrance' },
   ]
 
   return (
@@ -74,8 +74,8 @@ export default function MotionPage() {
       <h2>Reduced Motion</h2>
       <pre><code>{`/* In your globals.css */
 @media (prefers-reduced-motion: reduce) {
-  .tia-timeline__dot--active { animation: none; }
-  .tia-cmd__overlay { transition-duration: 0s; }
+  .tollerud-timeline__dot--active { animation: none; }
+  .tollerud-cmd__overlay { transition-duration: 0s; }
 }`}</code></pre>
     </div>
   )

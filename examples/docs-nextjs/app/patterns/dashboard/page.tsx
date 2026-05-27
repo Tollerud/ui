@@ -2,7 +2,7 @@ export default function DashboardPatternPage() {
   return (
     <div className="docs-content">
       <h1>Dashboard</h1>
-      <p>The homelab mission-control dashboard pattern combines multiple Tia Noir components into a cohesive monitoring surface.</p>
+      <p>The homelab mission-control dashboard pattern combines multiple Tollerud Design System components into a cohesive monitoring surface.</p>
 
       <h2>Layout</h2>
       <pre><code>{`<div className="space-y-6">

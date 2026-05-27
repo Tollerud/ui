@@ -15,30 +15,30 @@ const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
         ref={ref}
         className={cn(
           'group relative rounded-lg border p-4',
-          'bg-tia-surface-raised',
+          'bg-tollerud-surface-raised',
           'transition-all duration-200 ease-out',
           'hover:translate-y-[-1px]',
           accent
-            ? 'border-tia-yellow/20 hover:border-tia-yellow/40 hover:shadow-[0_0_20px_rgba(232,213,0,0.08)]'
-            : 'border-tia-border hover:border-tia-noir-500 hover:shadow-[0_4px_12px_rgba(0,0,0,0.3)]',
+            ? 'border-tollerud-yellow/20 hover:border-tollerud-yellow/40 hover:shadow-[0_0_20px_rgba(232,213,0,0.08)]'
+            : 'border-tollerud-border hover:border-tollerud-noir-500 hover:shadow-[0_4px_12px_rgba(0,0,0,0.3)]',
           className
         )}
         {...props}
       >
         {/* Accent top bar */}
         {accent && (
-          <span className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-tia-yellow/60 to-transparent" />
+          <span className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-tollerud-yellow/60 to-transparent" />
         )}
 
         <div className="flex items-start justify-between gap-2">
-          <p className="text-xs font-medium uppercase tracking-wider text-tia-text-muted">
+          <p className="text-xs font-medium uppercase tracking-wider text-tollerud-text-muted">
             {label}
           </p>
           {change && (
             <span
               className={cn(
                 'inline-flex items-center gap-0.5 text-[11px] font-semibold whitespace-nowrap',
-                change.direction === 'up' ? 'text-tia-success' : 'text-tia-error'
+                change.direction === 'up' ? 'text-tollerud-success' : 'text-tollerud-error'
               )}
             >
               <svg
@@ -63,7 +63,7 @@ const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
         <p
           className={cn(
             'text-2xl font-bold tracking-tight mt-1',
-            accent ? 'text-tia-yellow' : 'text-tia-text-primary'
+            accent ? 'text-tollerud-yellow' : 'text-tollerud-text-primary'
           )}
         >
           {value}

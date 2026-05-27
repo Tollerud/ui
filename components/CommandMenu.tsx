@@ -184,21 +184,21 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
     <>
       {/* Overlay */}
       <div
-        className="tia-cmd-overlay"
+        className="tollerud-cmd-overlay"
         onClick={() => onOpenChange(false)}
         aria-hidden="true"
       />
 
       {/* Command Menu */}
       <div
-        className={cn('tia-cmd', className)}
+        className={cn('tollerud-cmd', className)}
         role="listbox"
         aria-label="Command palette"
         onKeyDown={handleKeyDown}
       >
         {/* Search Input */}
-        <div className="tia-cmd__header">
-          <span className="tia-cmd__search-icon">
+        <div className="tollerud-cmd__header">
+          <span className="tollerud-cmd__search-icon">
             <svg
               width="18"
               height="18"
@@ -216,7 +216,7 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
           <input
             ref={inputRef}
             type="text"
-            className="tia-cmd__input"
+            className="tollerud-cmd__input"
             placeholder={placeholder}
             value={query}
             onChange={(e) => {
@@ -229,9 +229,9 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
         </div>
 
         {/* Results */}
-        <div ref={listRef} className="tia-cmd__list">
+        <div ref={listRef} className="tollerud-cmd__list">
           {filteredGroups.length === 0 && (
-            <div className="tia-cmd__empty">{emptyMessage}</div>
+            <div className="tollerud-cmd__empty">{emptyMessage}</div>
           )}
 
           {filteredGroups.map((group, gi) => {
@@ -241,8 +241,8 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
               .reduce((acc, g) => acc + g.items.length, 0)
 
             return (
-              <div key={group.label} className="tia-cmd__group">
-                <div className="tia-cmd__group-label">{group.label}</div>
+              <div key={group.label} className="tollerud-cmd__group">
+                <div className="tollerud-cmd__group-label">{group.label}</div>
                 {group.items.map((item, ii) => {
                   const flatIndex = flatOffset + ii
                   return (
@@ -265,27 +265,27 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
         </div>
 
         {/* Footer hints */}
-        <div className="tia-cmd__footer">
-          <span className="tia-cmd__hint">
-            <span className="tia-kbd tia-kbd--sm">
-              <span className="tia-kbd__key">↑</span>
+        <div className="tollerud-cmd__footer">
+          <span className="tollerud-cmd__hint">
+            <span className="tollerud-kbd tollerud-kbd--sm">
+              <span className="tollerud-kbd__key">↑</span>
             </span>
-            <span className="tia-kbd tia-kbd--sm">
-              <span className="tia-kbd__key">↓</span>
+            <span className="tollerud-kbd tollerud-kbd--sm">
+              <span className="tollerud-kbd__key">↓</span>
             </span>
-            <span className="tia-cmd__hint-text">navigate</span>
+            <span className="tollerud-cmd__hint-text">navigate</span>
           </span>
-          <span className="tia-cmd__hint">
-            <span className="tia-kbd tia-kbd--sm">
-              <span className="tia-kbd__key">↵</span>
+          <span className="tollerud-cmd__hint">
+            <span className="tollerud-kbd tollerud-kbd--sm">
+              <span className="tollerud-kbd__key">↵</span>
             </span>
-            <span className="tia-cmd__hint-text">select</span>
+            <span className="tollerud-cmd__hint-text">select</span>
           </span>
-          <span className="tia-cmd__hint">
-            <span className="tia-kbd tia-kbd--sm">
-              <span className="tia-kbd__key">Esc</span>
+          <span className="tollerud-cmd__hint">
+            <span className="tollerud-kbd tollerud-kbd--sm">
+              <span className="tollerud-kbd__key">Esc</span>
             </span>
-            <span className="tia-cmd__hint-text">close</span>
+            <span className="tollerud-cmd__hint-text">close</span>
           </span>
         </div>
       </div>

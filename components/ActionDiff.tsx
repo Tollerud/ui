@@ -24,9 +24,9 @@ export interface ActionDiffProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const diffStyles = {
-  add:     'bg-tia-success/[0.06] text-tia-success hover:bg-tia-success/[0.10]',
-  remove:  'bg-tia-error/[0.06] text-tia-error hover:bg-tia-error/[0.10]',
-  context: 'text-tia-noir-300',
+  add:     'bg-tollerud-success/[0.06] text-tollerud-success hover:bg-tollerud-success/[0.10]',
+  remove:  'bg-tollerud-error/[0.06] text-tollerud-error hover:bg-tollerud-error/[0.10]',
+  context: 'text-tollerud-noir-300',
 }
 
 const diffPrefix = {
@@ -53,27 +53,27 @@ const ActionDiff = forwardRef<HTMLDivElement, ActionDiffProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border border-tia-border bg-[var(--color-tia-surface-raised)] overflow-hidden',
+          'rounded-lg border border-tollerud-border bg-[var(--color-tollerud-surface-raised)] overflow-hidden',
           loading && 'animate-pulse',
           className
         )}
         {...props}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-2.5 border-b border-tia-border bg-tia-noir-900">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-tollerud-border bg-tollerud-noir-900">
           <div className="flex items-center gap-2 min-w-0">
             {label && (
-              <span className="text-xs font-medium text-tia-foreground font-mono truncate">{label}</span>
+              <span className="text-xs font-medium text-tollerud-foreground font-mono truncate">{label}</span>
             )}
           </div>
           <div className="flex items-center gap-3 text-[11px]">
-            <span className="text-tia-success">+{stats.adds}</span>
-            <span className="text-tia-error">-{stats.rems}</span>
+            <span className="text-tollerud-success">+{stats.adds}</span>
+            <span className="text-tollerud-error">-{stats.rems}</span>
             {hasContext && (
               <button
                 type="button"
                 onClick={() => setShowContext(!showContext)}
-                className="text-tia-text-muted hover:text-tia-foreground transition-colors"
+                className="text-tollerud-text-muted hover:text-tollerud-foreground transition-colors"
               >
                 {showContext ? 'Hide context' : 'Show context'}
               </button>
@@ -96,7 +96,7 @@ const ActionDiff = forwardRef<HTMLDivElement, ActionDiffProps>(
                   {/* Old line number */}
                   <td className={cn(
                     'w-10 text-right px-2 py-px select-none',
-                    'text-tia-noir-500 border-r border-tia-border/30',
+                    'text-tollerud-noir-500 border-r border-tollerud-border/30',
                     'text-[10px] align-top'
                   )}>
                     {line.oldLine ?? ''}
@@ -104,7 +104,7 @@ const ActionDiff = forwardRef<HTMLDivElement, ActionDiffProps>(
                   {/* New line number */}
                   <td className={cn(
                     'w-10 text-right px-2 py-px select-none',
-                    'text-tia-noir-500 border-r border-tia-border/30',
+                    'text-tollerud-noir-500 border-r border-tollerud-border/30',
                     'text-[10px] align-top'
                   )}>
                     {line.newLine ?? ''}

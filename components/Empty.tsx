@@ -47,7 +47,7 @@ const EmptyIcon = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
       <div
         ref={ref}
         className={cn(
-          'flex items-center justify-center w-12 h-12 rounded-full bg-tia-noir-800 text-tia-text-muted mb-2',
+          'flex items-center justify-center w-12 h-12 rounded-full bg-tollerud-noir-800 text-tollerud-text-muted mb-2',
           className
         )}
         {...props}
@@ -65,7 +65,7 @@ const EmptyTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElem
       <h3
         ref={ref}
         className={cn(
-          'text-base font-semibold text-tia-foreground',
+          'text-base font-semibold text-tollerud-foreground',
           className
         )}
         {...props}
@@ -83,7 +83,7 @@ const EmptyDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLPar
       <p
         ref={ref}
         className={cn(
-          'text-sm text-tia-text-secondary max-w-sm',
+          'text-sm text-tollerud-text-secondary max-w-sm',
           className
         )}
         {...props}

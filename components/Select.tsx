@@ -94,7 +94,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     return (
       <div className="flex flex-col gap-1.5" ref={ref}>
         {label && (
-          <label className="text-xs font-medium text-tia-text-muted">
+          <label className="text-xs font-medium text-tollerud-text-muted">
             {label}
           </label>
         )}
@@ -108,23 +108,23 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             aria-expanded={open}
             className={cn(
               'font-sans text-sm w-full flex items-center justify-between px-3 py-2.5 rounded-lg',
-              'bg-tia-surface-raised',
-              'text-tia-text-primary text-left',
+              'bg-tollerud-surface-raised',
+              'text-tollerud-text-primary text-left',
               'transition-all duration-150 ease-out cursor-pointer',
               error
-                ? 'border-tia-error/70 focus:border-tia-error focus:shadow-[0_0_0_1px_#EF4444]'
-                : 'border-tia-border focus:border-tia-yellow focus:shadow-[0_0_0_1px_#E8D500]',
-              'border hover:border-tia-noir-400',
+                ? 'border-tollerud-error/70 focus:border-tollerud-error focus:shadow-[0_0_0_1px_#EF4444]'
+                : 'border-tollerud-border focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_#E8D500]',
+              'border hover:border-tollerud-noir-400',
               'focus:outline-none',
               className
             )}
           >
-            <span className={cn(!selectedOption && 'text-tia-text-muted')}>
+            <span className={cn(!selectedOption && 'text-tollerud-text-muted')}>
               {selectedOption ? selectedOption.label : placeholder || 'Select…'}
             </span>
             <svg
               className={cn(
-                'h-4 w-4 text-tia-text-muted transition-transform duration-150 flex-shrink-0',
+                'h-4 w-4 text-tollerud-text-muted transition-transform duration-150 flex-shrink-0',
                 open && 'rotate-180'
               )}
               fill="none"
@@ -144,13 +144,13 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               role="listbox"
               className={cn(
                 'absolute z-10 left-0 right-0 mt-1 py-1',
-                'rounded-lg border border-tia-border bg-tia-surface-overlay',
+                'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
                 'shadow-[0_8px_24px_rgba(0,0,0,0.4)]',
                 'max-h-60 overflow-y-auto'
               )}
             >
               {options.length === 0 && (
-                <div className="px-3 py-2 text-xs text-tia-text-muted text-center">
+                <div className="px-3 py-2 text-xs text-tollerud-text-muted text-center">
                   No options
                 </div>
               )}
@@ -166,12 +166,12 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                     'w-full text-sm text-left px-3 py-2 transition-colors duration-75',
                     'cursor-pointer',
                     opt.value === value
-                      ? 'text-tia-yellow'
-                      : 'text-tia-text-primary',
+                      ? 'text-tollerud-yellow'
+                      : 'text-tollerud-text-primary',
                     idx === highlightedIdx && !(opt.value === value)
-                      ? 'bg-tia-noir-700'
-                      : 'hover:bg-tia-noir-700/60',
-                    opt.value === value && highlightedIdx === idx && 'bg-tia-noir-700'
+                      ? 'bg-tollerud-noir-700'
+                      : 'hover:bg-tollerud-noir-700/60',
+                    opt.value === value && highlightedIdx === idx && 'bg-tollerud-noir-700'
                   )}
                 >
                   {opt.label}
@@ -181,7 +181,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
           )}
         </div>
         {error && (
-          <p className="text-xs text-tia-error mt-0.5">{error}</p>
+          <p className="text-xs text-tollerud-error mt-0.5">{error}</p>
         )}
       </div>
     )

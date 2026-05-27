@@ -5,7 +5,7 @@ Quickest way to start:
 ```bash
 # In your Next.js project root:
 npm install @paper-design/shaders-react
-cp design-system/tia-preset.js .
+cp design-system/tollerud-preset.js .
 cp design-system/globals.css src/app/
 cp -r design-system/components src/
 ```
@@ -13,9 +13,9 @@ cp -r design-system/components src/
 Then in `tailwind.config.ts`:
 
 ```ts
-import tiaPreset from './tia-preset'
+import tollerudPreset from './tollerud-preset'
 export default {
-  presets: [tiaPreset],
+  presets: [tollerudPreset],
   content: ['./src/**/*.{ts,tsx}'],
 }
 ```

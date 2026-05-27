@@ -1,4 +1,4 @@
-# Tia Noir — Voice & Copy
+# Tollerud Design System — Voice & Copy
 
 ## Tone
 
@@ -77,7 +77,7 @@ language:
 
 | Context | Right | Wrong |
 |---------|-------|-------|
-| Dashboard header | Tia Mission Control | Welcome to your personalized dashboard |
+| Dashboard header | Tollerud Mission Control | Welcome to your personalized dashboard |
 | Empty state | No containers running | There are no containers running at this time |
 | Deploy button | ❯ deploy | Submit deployment request |
 | Error | Port 8080 is in use | We encountered an error while binding the port |

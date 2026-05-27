@@ -15,7 +15,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
         htmlFor={id}
         className={cn(
           'inline-flex items-center gap-2.5 cursor-pointer select-none group',
-          'text-sm text-tia-text-primary',
+          'text-sm text-tollerud-text-primary',
           props.disabled && 'opacity-40 pointer-events-none cursor-not-allowed',
           className
         )}
@@ -25,10 +25,10 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           className={cn(
             'relative inline-flex items-center h-5 w-9 flex-shrink-0 rounded-full',
             'transition-colors duration-200 ease-out',
-            checked ? 'bg-tia-yellow' : 'bg-tia-noir-600',
-            'group-hover:bg-tia-noir-500',
-            checked && 'group-hover:bg-tia-yellow-bright',
-            'peer-focus-visible:outline-2 peer-focus-visible:outline-tia-yellow peer-focus-visible:outline-offset-2'
+            checked ? 'bg-tollerud-yellow' : 'bg-tollerud-noir-600',
+            'group-hover:bg-tollerud-noir-500',
+            checked && 'group-hover:bg-tollerud-yellow-bright',
+            'peer-focus-visible:outline-2 peer-focus-visible:outline-tollerud-yellow peer-focus-visible:outline-offset-2'
           )}
         >
           {/* Hidden input (peer) */}
@@ -47,8 +47,8 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
               'block h-3.5 w-3.5 rounded-full shadow-sm',
               'transition-all duration-200 ease-out',
               checked
-                ? 'translate-x-[18px] bg-tia-black'
-                : 'translate-x-[3px] bg-tia-white'
+                ? 'translate-x-[18px] bg-tollerud-black'
+                : 'translate-x-[3px] bg-tollerud-white'
             )}
           />
         </span>

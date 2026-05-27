@@ -2,7 +2,7 @@ export default function TypographyPage() {
   return (
     <div className="docs-content">
       <h1>Typography</h1>
-      <p>Tia Noir uses Inter for display and body text, and JetBrains Mono for code and terminal elements.</p>
+      <p>Tollerud Design System uses Inter for display and body text, and JetBrains Mono for code and terminal elements.</p>
 
       <h2>Font Stack</h2>
       <pre><code>{`/* Display / Body */
@@ -14,16 +14,16 @@ font-family: 'JetBrains Mono', 'Fira Code', monospace;`}</code></pre>
       <h2>Display Headings</h2>
       <div className="space-y-4 my-4">
         <div>
-          <span className="block text-xs text-tia-text-muted mb-1">Display Primary (70px)</span>
-          <span className="tia-display text-[70px] leading-[0.95]">Dark. Monochrome.</span>
+          <span className="block text-xs text-tollerud-text-muted mb-1">Display Primary (70px)</span>
+          <span className="tollerud-display text-[70px] leading-[0.95]">Dark. Monochrome.</span>
         </div>
         <div>
-          <span className="block text-xs text-tia-text-muted mb-1">Display Secondary (40px)</span>
-          <span className="tia-display--secondary text-[40px]">Yellow where it counts</span>
+          <span className="block text-xs text-tollerud-text-muted mb-1">Display Secondary (40px)</span>
+          <span className="tollerud-display--secondary text-[40px]">Yellow where it counts</span>
         </div>
         <div>
-          <span className="block text-xs text-tia-text-muted mb-1">Display Tertiary (28px)</span>
-          <span className="tia-display--tertiary text-[28px]">Subtle hierarchy</span>
+          <span className="block text-xs text-tollerud-text-muted mb-1">Display Tertiary (28px)</span>
+          <span className="tollerud-display--tertiary text-[28px]">Subtle hierarchy</span>
         </div>
       </div>
 
@@ -42,10 +42,10 @@ font-family: 'JetBrains Mono', 'Fira Code', monospace;`}</code></pre>
       </table>
 
       <h2>Gradient Text</h2>
-      <pre><code>{`<h2 class="bg-gradient-to-r from-tia-yellow via-tia-yellow-bright to-tia-amber bg-clip-text text-transparent">
+      <pre><code>{`<h2 class="bg-gradient-to-r from-tollerud-yellow via-tollerud-yellow-bright to-tollerud-amber bg-clip-text text-transparent">
   Yellow → Acid → Amber
 </h2>`}</code></pre>
-      <div className="bg-gradient-to-r from-tia-yellow via-tia-yellow-bright to-tia-amber bg-clip-text text-transparent text-xl font-bold mt-2">
+      <div className="bg-gradient-to-r from-tollerud-yellow via-tollerud-yellow-bright to-tollerud-amber bg-clip-text text-transparent text-xl font-bold mt-2">
         Yellow → Acid → Amber
       </div>
     </div>

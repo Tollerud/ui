@@ -17,7 +17,7 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
     const [copied, setCopied] = useState(false)
 
     const content = code ? (
-      <code className="text-tia-noir-200">{code}</code>
+      <code className="text-tollerud-noir-200">{code}</code>
     ) : (
       children
     )
@@ -50,7 +50,7 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
           ref={ref}
           className={cn(
             'font-mono text-sm leading-relaxed overflow-x-auto rounded border p-4',
-            'bg-tia-noir-900 border-tia-border text-tia-noir-200',
+            'bg-tollerud-noir-900 border-tollerud-border text-tollerud-noir-200',
             className
           )}
           {...props}
@@ -63,9 +63,9 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             className={cn(
               'absolute top-2 right-2 px-2 py-1 rounded text-xs font-medium',
               'opacity-0 group-hover:opacity-100 transition-all',
-              'bg-tia-noir-800 border border-tia-border/30 text-tia-text-muted',
-              'hover:bg-tia-surface-raised hover:text-tia-text-primary',
-              copied && 'opacity-100 bg-tia-success/15 text-tia-success border-tia-success/40'
+              'bg-tollerud-noir-800 border border-tollerud-border/30 text-tollerud-text-muted',
+              'hover:bg-tollerud-surface-raised hover:text-tollerud-text-primary',
+              copied && 'opacity-100 bg-tollerud-success/15 text-tollerud-success border-tollerud-success/40'
             )}
             aria-label={copied ? 'Copied' : 'Copy code'}
           >

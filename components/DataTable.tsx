@@ -106,16 +106,16 @@ function DataTableInner<T extends Record<string, unknown>>({
   const filterableColumns = columns.filter((c) => c.filterable)
 
   return (
-    <div ref={forwardedRef} className={cn('overflow-x-auto rounded-lg border border-tia-border/30', className)}>
+    <div ref={forwardedRef} className={cn('overflow-x-auto rounded-lg border border-tollerud-border/30', className)}>
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-tia-border/30 bg-tia-noir-900">
+          <tr className="border-b border-tollerud-border/30 bg-tollerud-noir-900">
             {columns.map((col) => (
               <th
                 key={col.key}
                 className={cn(
-                  'px-3 py-2.5 text-xs font-semibold text-tia-text-muted uppercase tracking-wider',
-                  col.sortable && 'cursor-pointer select-none hover:text-tia-text-primary transition-colors',
+                  'px-3 py-2.5 text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider',
+                  col.sortable && 'cursor-pointer select-none hover:text-tollerud-text-primary transition-colors',
                   col.align === 'right' && 'text-right',
                   col.align === 'center' && 'text-center',
                 )}
@@ -125,10 +125,10 @@ function DataTableInner<T extends Record<string, unknown>>({
                 <span className="inline-flex items-center gap-1.5">
                   {col.label}
                   {col.sortable && sortKey === col.key && (
-                    <span className="text-tia-accent">{sortDir === 'asc' ? '↑' : '↓'}</span>
+                    <span className="text-tollerud-accent">{sortDir === 'asc' ? '↑' : '↓'}</span>
                   )}
                   {col.sortable && sortKey !== col.key && (
-                    <span className="text-tia-text-muted/30">↕</span>
+                    <span className="text-tollerud-text-muted/30">↕</span>
                   )}
                   {col.filterable && (
                     <svg
@@ -142,7 +142,7 @@ function DataTableInner<T extends Record<string, unknown>>({
                       strokeLinejoin="round"
                       className={cn(
                         'opacity-40',
-                        filters[col.key] && 'opacity-100 text-tia-yellow'
+                        filters[col.key] && 'opacity-100 text-tollerud-yellow'
                       )}
                     >
                       <path d="M4 4h16v2.172a2 2 0 0 1-.586 1.414L15 12v7l-6 2v-8.5L4.52 7.53A2 2 0 0 1 4 6.16V4z" />
@@ -154,7 +154,7 @@ function DataTableInner<T extends Record<string, unknown>>({
           </tr>
           {/* Filter row — only if at least one column is filterable */}
           {filterableColumns.length > 0 && (
-            <tr className="border-b border-tia-border/20">
+            <tr className="border-b border-tollerud-border/20">
               {columns.map((col) => (
                 <th
                   key={`filter-${col.key}`}
@@ -172,8 +172,8 @@ function DataTableInner<T extends Record<string, unknown>>({
                       onChange={(e) => updateFilter(col.key, e.target.value)}
                       className={cn(
                         'w-full px-2 py-1 text-xs rounded border transition-colors outline-none',
-                        'bg-tia-noir-900/50 border-tia-border/20 text-tia-text-primary placeholder:text-tia-text-muted/40',
-                        'focus:border-tia-yellow/40 focus:ring-1 focus:ring-tia-yellow/20',
+                        'bg-tollerud-noir-900/50 border-tollerud-border/20 text-tollerud-text-primary placeholder:text-tollerud-text-muted/40',
+                        'focus:border-tollerud-yellow/40 focus:ring-1 focus:ring-tollerud-yellow/20',
                       )}
                     />
                   ) : null}
@@ -187,7 +187,7 @@ function DataTableInner<T extends Record<string, unknown>>({
             <tr>
               <td
                 colSpan={columns.length}
-                className="px-3 py-8 text-center text-sm text-tia-text-muted"
+                className="px-3 py-8 text-center text-sm text-tollerud-text-muted"
               >
                 {hasActiveFilters ? 'No matching rows' : emptyMessage}
               </td>
@@ -197,8 +197,8 @@ function DataTableInner<T extends Record<string, unknown>>({
               <tr
                 key={getRowKey(row, i)}
                 className={cn(
-                  'border-b border-tia-border/20 transition-colors',
-                  onRowClick && 'cursor-pointer hover:bg-tia-surface-raised/50',
+                  'border-b border-tollerud-border/20 transition-colors',
+                  onRowClick && 'cursor-pointer hover:bg-tollerud-surface-raised/50',
                 )}
                 onClick={() => onRowClick?.(row)}
               >
@@ -208,7 +208,7 @@ function DataTableInner<T extends Record<string, unknown>>({
                     <td
                       key={col.key}
                       className={cn(
-                        'px-3 py-2.5 text-tia-text-secondary',
+                        'px-3 py-2.5 text-tollerud-text-secondary',
                         col.align === 'right' && 'text-right',
                         col.align === 'center' && 'text-center',
                         'font-mono text-xs',

@@ -1,6 +1,6 @@
-# Tia Noir — Backgrounds
+# Tollerud Design System — Backgrounds
 
-The background system is now a first-class Tia Noir primitive, not just decoration.
+The background system is now a first-class Tollerud Design System primitive, not just decoration.
 
 ## NoirGlowBackground
 
@@ -24,7 +24,7 @@ Source reference:
 />
 ```
 
-Tia version:
+Tollerud DS version:
 
 ```tsx
 import { NoirGlowBackground } from '@/components/ui'
@@ -76,18 +76,18 @@ The component lazy-loads the shader and uses the CSS fallback while loading.
 
 `globals.css` and `tokens.css` both include these classes:
 
-- `.tia-noir-glow-root`
-- `.tia-noir-glow-bg`
-- `.tia-noir-glow-vignette`
-- `.tia-noir-noise`
+- `.tollerud-noir-glow-root`
+- `.tollerud-noir-glow-bg`
+- `.tollerud-noir-glow-vignette`
+- `.tollerud-noir-noise`
 
 Static HTML usage:
 
 ```html
-<div class="tia-noir-glow-root" style="position:absolute;inset:0">
-  <div class="tia-noir-glow-bg"></div>
-  <div class="tia-noir-glow-vignette"></div>
-  <div class="tia-noir-noise"></div>
+<div class="tollerud-noir-glow-root" style="position:absolute;inset:0">
+  <div class="tollerud-noir-glow-bg"></div>
+  <div class="tollerud-noir-glow-vignette"></div>
+  <div class="tollerud-noir-noise"></div>
 </div>
 ```
 

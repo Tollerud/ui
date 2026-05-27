@@ -36,33 +36,33 @@ const AlertInbox = forwardRef<HTMLDivElement, AlertInboxProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border border-tia-border bg-tia-surface-raised overflow-hidden',
+          'rounded-lg border border-tollerud-border bg-tollerud-surface-raised overflow-hidden',
           loading && 'animate-pulse',
           className
         )}
         {...props}
       >
         {/* Header bar */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-tia-border">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-tollerud-border">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-tia-foreground">Alerts</span>
+            <span className="text-sm font-semibold text-tollerud-foreground">Alerts</span>
             {counts.unacknowledged > 0 && (
-              <span className="inline-flex items-center gap-1 text-[11px] text-tia-error font-medium">
-                <span className="w-1.5 h-1.5 rounded-full bg-tia-error animate-pulse" />
+              <span className="inline-flex items-center gap-1 text-[11px] text-tollerud-error font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-tollerud-error animate-pulse" />
                 {counts.unacknowledged} unread
               </span>
             )}
             {counts.critical > 0 && (
-              <span className="text-[11px] text-tia-error font-bold">{counts.critical} critical</span>
+              <span className="text-[11px] text-tollerud-error font-bold">{counts.critical} critical</span>
             )}
           </div>
-          <span className="text-xs text-tia-text-muted">{filtered.length} of {alerts.length}</span>
+          <span className="text-xs text-tollerud-text-muted">{filtered.length} of {alerts.length}</span>
         </div>
 
         {/* Alert list */}
-        <div className="divide-y divide-tia-border/50 max-h-[480px] overflow-y-auto">
+        <div className="divide-y divide-tollerud-border/50 max-h-[480px] overflow-y-auto">
           {filtered.length === 0 && (
-            <div className="px-4 py-8 text-xs text-center text-tia-text-muted">{emptyMessage}</div>
+            <div className="px-4 py-8 text-xs text-center text-tollerud-text-muted">{emptyMessage}</div>
           )}
           {filtered.map((alert) => (
             <div key={alert.id} className="relative group">
@@ -73,11 +73,11 @@ const AlertInbox = forwardRef<HTMLDivElement, AlertInboxProps>(
                 description={alert.description}
                 service={alert.service}
                 acknowledged={alert.acknowledged}
-                className="border-0 rounded-none bg-transparent hover:bg-tia-noir-800/30"
+                className="border-0 rounded-none bg-transparent hover:bg-tollerud-noir-800/30"
               />
               {/* Acknowledged indicator */}
               {alert.acknowledged && (
-                <span className="absolute bottom-2 right-3 text-[10px] font-medium text-tia-text-muted/50">
+                <span className="absolute bottom-2 right-3 text-[10px] font-medium text-tollerud-text-muted/50">
                   Acknowledged
                 </span>
               )}
@@ -88,7 +88,7 @@ const AlertInbox = forwardRef<HTMLDivElement, AlertInboxProps>(
                   onClick={() => onAcknowledge(alert.id)}
                   className={cn(
                     'absolute bottom-2 right-3 text-[10px] font-medium px-2 py-0.5 rounded',
-                    'text-tia-yellow/70 hover:text-tia-yellow hover:bg-tia-yellow/10',
+                    'text-tollerud-yellow/70 hover:text-tollerud-yellow hover:bg-tollerud-yellow/10',
                     'opacity-0 group-hover:opacity-100 transition-opacity duration-150'
                   )}
                 >

@@ -2,33 +2,33 @@ export default function BrandPage() {
   return (
     <div className="docs-content">
       <h1>Brand Guide</h1>
-      <p>Tia Noir has a distinct visual identity rooted in noir aesthetics, acid-yellow signal, and infrastructure-native design.</p>
+      <p>Tollerud Design System has a distinct visual identity rooted in noir aesthetics, acid-yellow signal, and infrastructure-native design.</p>
 
       <h2>Tia Avatar</h2>
       <div className="flex gap-6 items-start my-6">
-        <div className="w-24 h-24 rounded-lg bg-tia-noir-900 border border-tia-border/30 flex items-center justify-center overflow-hidden flex-shrink-0">
-          <img src="/tia-avatar.svg" alt="Tia mascot" className="w-full h-full object-contain" />
+        <div className="w-24 h-24 rounded-lg bg-tollerud-noir-900 border border-tollerud-border/30 flex items-center justify-center overflow-hidden flex-shrink-0">
+          <img src="/tollerud-avatar.svg" alt="Tia mascot" className="w-full h-full object-contain" />
         </div>
         <div>
-          <p className="font-semibold text-tia-foreground">Brand Mascot</p>
+          <p className="font-semibold text-tollerud-foreground">Brand Mascot</p>
           <p className="text-sm mt-1">Tia in a full cel-shaded monochrome gakuran with gold buttons, amber eyes, and a confident wave. The avatar should be used as a brand signature on landing pages, about sections, and loading states.</p>
-          <p className="text-xs text-tia-text-muted mt-2">File: <code>tia-avatar.svg</code></p>
+          <p className="text-xs text-tollerud-text-muted mt-2">File: <code>tollerud-avatar.svg</code></p>
         </div>
       </div>
 
       <h2>Tollerud Monogram</h2>
       <div className="flex gap-6 items-start my-6">
-        <div className="w-24 h-24 rounded-lg bg-tia-noir-900 border border-tia-border/30 flex items-center justify-center overflow-hidden flex-shrink-0">
+        <div className="w-24 h-24 rounded-lg bg-tollerud-noir-900 border border-tollerud-border/30 flex items-center justify-center overflow-hidden flex-shrink-0">
           <img src="/tollerud-logo.svg" alt="Tollerud monogram" className="w-3/5 h-3/5 object-contain" />
         </div>
         <div>
-          <p className="font-semibold text-tia-foreground">Tollerud Monogram</p>
+          <p className="font-semibold text-tollerud-foreground">Tollerud Monogram</p>
           <p className="text-sm mt-1">The stylised <strong>T</strong> — a single, continuous path forming the Tollerud identity mark. Built for dark backgrounds with acid yellow (<code>#FFF200</code>) fill. No outlines, no gradients — pure signal.</p>
-          <p className="text-xs text-tia-text-muted mt-2">Color: <code style={{ color: '#FFF200' }}>#FFF200</code> &middot; File: <code>tollerud-logo.svg</code> &middot; Aspect ratio: ~1:1.1</p>
+          <p className="text-xs text-tollerud-text-muted mt-2">Color: <code style={{ color: '#FFF200' }}>#FFF200</code> &middot; File: <code>tollerud-logo.svg</code> &middot; Aspect ratio: ~1:1.1</p>
         </div>
       </div>
-      <div className="rounded-lg border border-tia-border/30 bg-tia-surface-raised p-4 mb-6">
-        <h4 className="text-xs font-semibold text-tia-text-muted uppercase tracking-wider mb-3">Usage Guidelines</h4>
+      <div className="rounded-lg border border-tollerud-border/30 bg-tollerud-surface-raised p-4 mb-6">
+        <h4 className="text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider mb-3">Usage Guidelines</h4>
         <ul className="space-y-1.5">
           <li><strong>Minimum size</strong> — 20px width. Below that the stroke detail loses legibility.</li>
           <li><strong>Clear space</strong> — preserve at least one &quot;T&quot; width of padding on all sides.</li>
@@ -54,7 +54,7 @@ export default function BrandPage() {
         <li>Command palette backdrop</li>
         <li>Agent-running / processing moments</li>
       </ul>
-      <p>Use the static CSS fallback (<code>.tia-noir-glow-bg</code>) for dashboards and performance-sensitive contexts.</p>
+      <p>Use the static CSS fallback (<code>.tollerud-noir-glow-bg</code>) for dashboards and performance-sensitive contexts.</p>
 
       <h2>Usage Rules</h2>
       <ul>

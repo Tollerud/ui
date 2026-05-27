@@ -28,11 +28,11 @@ export function PreviewFrame({ children, className, code, codeLanguage = 'tsx' }
 
   return (
     <div className={cn(
-      'border border-tia-border/30 rounded-lg bg-tia-surface-raised overflow-hidden',
+      'border border-tollerud-border/30 rounded-lg bg-tollerud-surface-raised overflow-hidden',
       className,
     )}>
       {/* Toolbar: device buttons left, code toggle right */}
-      <div className="flex items-center justify-between border-b border-tia-border/20 p-2">
+      <div className="flex items-center justify-between border-b border-tollerud-border/20 p-2">
         {/* Device selector */}
         <div className="flex items-center gap-1">
           {(['desktop', 'tablet', 'mobile'] as DeviceSize[]).map((d) => (
@@ -42,8 +42,8 @@ export function PreviewFrame({ children, className, code, codeLanguage = 'tsx' }
               className={cn(
                 'px-2.5 py-1.5 rounded-md font-medium transition-colors text-xs',
                 view === 'preview' && device === d
-                  ? 'bg-tia-yellow/15 text-tia-yellow ring-1 ring-tia-yellow/40'
-                  : 'text-tia-text-muted hover:text-tia-foreground hover:bg-tia-surface-hover',
+                  ? 'bg-tollerud-yellow/15 text-tollerud-yellow ring-1 ring-tollerud-yellow/40'
+                  : 'text-tollerud-text-muted hover:text-tollerud-foreground hover:bg-tollerud-surface-hover',
               )}
             >
               {d === 'desktop' ? '🖥' : d === 'tablet' ? '📱' : '📱'}
@@ -55,14 +55,14 @@ export function PreviewFrame({ children, className, code, codeLanguage = 'tsx' }
         {/* Code toggle — only show when code is provided */}
         {code && (
           <div className="flex items-center gap-2">
-            <div className="w-px h-5 bg-tia-border/30" />
+            <div className="w-px h-5 bg-tollerud-border/30" />
             <button
               onClick={() => setView(view === 'code' ? 'preview' : 'code')}
               className={cn(
                 'px-2.5 py-1.5 rounded-md font-medium transition-colors text-xs',
                 view === 'code'
-                  ? 'bg-tia-yellow/15 text-tia-yellow ring-1 ring-tia-yellow/40'
-                  : 'text-tia-text-muted hover:text-tia-foreground hover:bg-tia-surface-hover',
+                  ? 'bg-tollerud-yellow/15 text-tollerud-yellow ring-1 ring-tollerud-yellow/40'
+                  : 'text-tollerud-text-muted hover:text-tollerud-foreground hover:bg-tollerud-surface-hover',
               )}
             >
               {'</>'} Code
@@ -74,8 +74,8 @@ export function PreviewFrame({ children, className, code, codeLanguage = 'tsx' }
       {/* Content area */}
       {view === 'code' && code ? (
         <div className="p-0">
-          <div className="flex items-center justify-between border-b border-tia-border/20 px-3 py-1.5 bg-tia-noir-950/50">
-            <span className="text-[11px] font-medium uppercase tracking-wider text-tia-text-muted">
+          <div className="flex items-center justify-between border-b border-tollerud-border/20 px-3 py-1.5 bg-tollerud-noir-950/50">
+            <span className="text-[11px] font-medium uppercase tracking-wider text-tollerud-text-muted">
               {codeLanguage}
             </span>
           </div>

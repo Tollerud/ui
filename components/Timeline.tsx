@@ -32,7 +32,7 @@ const Timeline = forwardRef<HTMLDivElement, TimelineProps>(
     return (
       <div
         ref={ref}
-        className={cn('tia-timeline', loading && 'animate-pulse', className)}
+        className={cn('tollerud-timeline', loading && 'animate-pulse', className)}
         role="list"
         aria-label="Activity timeline"
         {...props}
@@ -41,41 +41,41 @@ const Timeline = forwardRef<HTMLDivElement, TimelineProps>(
           const isLast = i === items.length - 1
 
           return (
-            <div key={item.id} className="tia-timeline__item" role="listitem">
+            <div key={item.id} className="tollerud-timeline__item" role="listitem">
               {/* Dot column */}
-              <div className="tia-timeline__marker">
-                <div className="tia-timeline__dot-group">
+              <div className="tollerud-timeline__marker">
+                <div className="tollerud-timeline__dot-group">
                   {item.icon ? (
-                    <span className="tia-timeline__icon">{item.icon}</span>
+                    <span className="tollerud-timeline__icon">{item.icon}</span>
                   ) : (
                     <span
                       className={cn(
-                        'tia-timeline__dot',
-                        active && 'tia-timeline__dot--active',
-                        item.status === 'online' && 'bg-tia-success shadow-[0_0_6px_rgba(34,197,94,0.5)]',
-                        item.status === 'offline' && 'bg-tia-error',
-                        item.status === 'warning' && 'bg-tia-yellow shadow-[0_0_6px_rgba(232,213,0,0.5)]',
-                        !item.status && 'bg-tia-noir-500'
+                        'tollerud-timeline__dot',
+                        active && 'tollerud-timeline__dot--active',
+                        item.status === 'online' && 'bg-tollerud-success shadow-[0_0_6px_rgba(34,197,94,0.5)]',
+                        item.status === 'offline' && 'bg-tollerud-error',
+                        item.status === 'warning' && 'bg-tollerud-yellow shadow-[0_0_6px_rgba(232,213,0,0.5)]',
+                        !item.status && 'bg-tollerud-noir-500'
                       )}
                     />
                   )}
-                  {!isLast && <div className="tia-timeline__line" />}
+                  {!isLast && <div className="tollerud-timeline__line" />}
                 </div>
               </div>
 
               {/* Content */}
-              <div className="tia-timeline__content">
+              <div className="tollerud-timeline__content">
                 <div className="flex items-start justify-between gap-2">
-                  <span className="tia-timeline__title">{item.title}</span>
-                  <span className="tia-timeline__time">{item.time}</span>
+                  <span className="tollerud-timeline__title">{item.title}</span>
+                  <span className="tollerud-timeline__time">{item.time}</span>
                 </div>
                 {item.description && (
-                  <p className="tia-timeline__description">{item.description}</p>
+                  <p className="tollerud-timeline__description">{item.description}</p>
                 )}
                 {item.meta && item.meta.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 mt-1">
                     {item.meta.map((m) => (
-                      <span key={m} className="tia-timeline__meta">{m}</span>
+                      <span key={m} className="tollerud-timeline__meta">{m}</span>
                     ))}
                   </div>
                 )}

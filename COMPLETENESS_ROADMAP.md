@@ -1,11 +1,11 @@
-# Tia Noir Design System — Completeness Roadmap
+# Tollerud Design System Design System — Completeness Roadmap
 
 Research pass: 2026-05-25  
 Deep follow-up: see `ULTIMATE_TIA_NOIR_RESEARCH.md` for the next-level direction: Tollerud.no WebGL/noise background, Linear/Raycast/Geist inspiration, command-first shell, and homelab operational components.
 
 ## Current state
 
-Tia Noir already has a strong visual identity:
+Tollerud Design System already has a strong visual identity:
 
 - Dark/noir palette
 - Yellow + amber brand accents
@@ -41,25 +41,25 @@ The local design skill emphasizes accessibility, touch targets, loading states, 
 ### 1. Semantic token layer
 Current tokens are mostly brand/raw values:
 
-- `--tia-yellow`
-- `--tia-noir-900`
-- `--tia-border`
+- `--tollerud-yellow`
+- `--tollerud-noir-900`
+- `--tollerud-border`
 
 Add semantic aliases that components consume:
 
 ```css
---color-background: var(--tia-black);
---color-foreground: var(--tia-white);
---color-card: var(--tia-noir-900);
---color-card-foreground: var(--tia-white);
---color-primary: var(--tia-yellow);
---color-primary-foreground: var(--tia-black);
---color-muted: var(--tia-noir-700);
---color-muted-foreground: var(--tia-noir-200);
---color-border: var(--tia-border);
---color-ring: var(--tia-yellow);
---color-destructive: var(--tia-error);
---color-destructive-foreground: var(--tia-white);
+--color-background: var(--tollerud-black);
+--color-foreground: var(--tollerud-white);
+--color-card: var(--tollerud-noir-900);
+--color-card-foreground: var(--tollerud-white);
+--color-primary: var(--tollerud-yellow);
+--color-primary-foreground: var(--tollerud-black);
+--color-muted: var(--tollerud-noir-700);
+--color-muted-foreground: var(--tollerud-noir-200);
+--color-border: var(--tollerud-border);
+--color-ring: var(--tollerud-yellow);
+--color-destructive: var(--tollerud-error);
+--color-destructive-foreground: var(--tollerud-white);
 ```
 
 Why: this makes the system compatible with shadcn-style components and easier to theme later.
@@ -153,14 +153,14 @@ Rules:
 ### 6. Layout primitives
 Add reusable layout classes/components:
 
-- `.tia-container`
-- `.tia-section`
-- `.tia-stack`
-- `.tia-cluster`
-- `.tia-grid`
-- `.tia-sidebar-layout`
-- `.tia-dashboard-layout`
-- `.tia-split-panel`
+- `.tollerud-container`
+- `.tollerud-section`
+- `.tollerud-stack`
+- `.tollerud-cluster`
+- `.tollerud-grid`
+- `.tollerud-sidebar-layout`
+- `.tollerud-dashboard-layout`
+- `.tollerud-split-panel`
 
 This helps reuse the style across TMC, dashboards, docs pages, and little homelab tools.
 
@@ -170,11 +170,11 @@ Since Mathias builds infra dashboards, this matters.
 Add chart colors:
 
 ```css
---chart-1: var(--tia-yellow);
---chart-2: var(--tia-amber);
---chart-3: var(--tia-success);
---chart-4: var(--tia-info);
---chart-5: var(--tia-error);
+--chart-1: var(--tollerud-yellow);
+--chart-2: var(--tollerud-amber);
+--chart-3: var(--tollerud-success);
+--chart-4: var(--tollerud-info);
+--chart-5: var(--tollerud-error);
 --chart-grid: rgba(245,245,245,0.08);
 --chart-axis: rgba(245,245,245,0.35);
 ```

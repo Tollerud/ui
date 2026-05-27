@@ -1,8 +1,8 @@
 import type { Config } from 'tailwindcss'
-import tiaPreset from '../../tia-preset'
+import tollerudPreset from '../../tollerud-preset'
 
 const config: Config = {
-  presets: [tiaPreset],
+  presets: [tollerudPreset],
   content: [
     './app/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',

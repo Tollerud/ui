@@ -30,16 +30,16 @@ const BackupStatusPanel = forwardRef<HTMLDivElement, BackupStatusPanelProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border border-tia-border bg-tia-surface-raised',
+          'rounded-lg border border-tollerud-border bg-tollerud-surface-raised',
           loading && 'animate-pulse',
           className
         )}
         {...props}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-tia-border">
-          <span className="text-sm font-semibold text-tia-foreground">Backups</span>
-          <div className="flex items-center gap-3 text-[11px] text-tia-text-muted">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-tollerud-border">
+          <span className="text-sm font-semibold text-tollerud-foreground">Backups</span>
+          <div className="flex items-center gap-3 text-[11px] text-tollerud-text-muted">
             {totalSize && <span>{totalSize}</span>}
             {lastFullBackup && <span>Last full: {lastFullBackup}</span>}
           </div>
@@ -48,18 +48,18 @@ const BackupStatusPanel = forwardRef<HTMLDivElement, BackupStatusPanelProps>(
         {/* Job list */}
         <div className="p-1">
           {jobs.length === 0 && (
-            <div className="px-3 py-6 text-xs text-center text-tia-text-muted">No backup jobs configured</div>
+            <div className="px-3 py-6 text-xs text-center text-tollerud-text-muted">No backup jobs configured</div>
           )}
           {jobs.map((job) => (
             <div
               key={job.name}
-              className="flex items-center justify-between px-3 py-2 rounded-md hover:bg-tia-noir-800/50 transition-colors"
+              className="flex items-center justify-between px-3 py-2 rounded-md hover:bg-tollerud-noir-800/50 transition-colors"
             >
               <div className="flex items-center gap-2 min-w-0 flex-1">
                 <StatusDot status={job.status} />
-                <span className="text-xs font-medium text-tia-foreground truncate">{job.name}</span>
+                <span className="text-xs font-medium text-tollerud-foreground truncate">{job.name}</span>
               </div>
-              <div className="flex items-center gap-3 text-[11px] text-tia-text-muted flex-shrink-0 ml-2">
+              <div className="flex items-center gap-3 text-[11px] text-tollerud-text-muted flex-shrink-0 ml-2">
                 {job.size && <span>{job.size}</span>}
                 {job.target && <span className="hidden sm:inline font-mono">{job.target}</span>}
               </div>
@@ -69,8 +69,8 @@ const BackupStatusPanel = forwardRef<HTMLDivElement, BackupStatusPanelProps>(
 
         {/* Footer — schedule summary */}
         {(failed > 0) && (
-          <div className="px-4 py-2 border-t border-tia-border">
-            <span className="text-[11px] text-tia-error">
+          <div className="px-4 py-2 border-t border-tollerud-border">
+            <span className="text-[11px] text-tollerud-error">
               {failed} job{failed !== 1 ? 's' : ''} failed — check logs
             </span>
           </div>

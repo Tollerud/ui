@@ -16,13 +16,13 @@ const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
     return (
       <fieldset ref={ref} className={cn('flex flex-col gap-1', className)}>
         {label && (
-          <legend className="text-xs font-medium text-tia-text-muted mb-1">
+          <legend className="text-xs font-medium text-tollerud-text-muted mb-1">
             {label}
           </legend>
         )}
         <div className="flex flex-col gap-2">{children}</div>
         {error && (
-          <p className="text-xs text-tia-error mt-0.5">{error}</p>
+          <p className="text-xs text-tollerud-error mt-0.5">{error}</p>
         )}
       </fieldset>
     )
@@ -44,7 +44,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
         htmlFor={id}
         className={cn(
           'inline-flex items-center gap-2 cursor-pointer select-none group',
-          'text-sm text-tia-text-primary',
+          'text-sm text-tollerud-text-primary',
           props.disabled && 'opacity-50 pointer-events-none',
           className
         )}
@@ -61,17 +61,17 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
           <span
             className={cn(
               'h-4 w-4 rounded-full border transition-all duration-[150ms]',
-              'bg-tia-surface-raised border-tia-border',
-              'peer-focus-visible:outline-2 peer-focus-visible:outline-tia-yellow',
-              'peer-checked:border-tia-yellow',
-              'group-hover:border-tia-text-secondary',
+              'bg-tollerud-surface-raised border-tollerud-border',
+              'peer-focus-visible:outline-2 peer-focus-visible:outline-tollerud-yellow',
+              'peer-checked:border-tollerud-yellow',
+              'group-hover:border-tollerud-text-secondary',
               'flex items-center justify-center'
             )}
           >
             {/* Inner dot */}
             <span
               className={cn(
-                'h-2 w-2 rounded-full bg-tia-yellow transition-opacity duration-[150ms]',
+                'h-2 w-2 rounded-full bg-tollerud-yellow transition-opacity duration-[150ms]',
                 props.checked ? 'opacity-100' : 'opacity-0'
               )}
             />

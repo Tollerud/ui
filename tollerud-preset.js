@@ -1,12 +1,12 @@
 /**
- * Tia Noir — Tailwind Preset
- *
- * Drop this into any Tailwind project:
- *
- *   // tailwind.config.ts
- *   import tiaPreset from './path/to/tia-preset'
+ * Tollerud Design System — Tailwind Preset
+  *
+  * Drop this into any Tailwind project:
+  *
+  *   // tailwind.config.ts
+  *   import tollerudPreset from './path/to/tollerud-preset'
  *   export default {
- *     presets: [tiaPreset],
+ *     presets: [tollerudPreset],
  *     content: ['your-source-files'],
  *   }
  *
@@ -117,11 +117,11 @@ module.exports = {
 
       // ─── Shadows ───
       boxShadow: {
-        'tia-sm':  '0 1px 2px 0 rgba(0,0,0,0.4)',
+        'tollerud-sm':  '0 1px 2px 0 rgba(0,0,0,0.4)',
         'tia':     '0 1px 3px 0 rgba(0,0,0,0.5), 0 1px 2px -1px rgba(0,0,0,0.3)',
-        'tia-md':  '0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -2px rgba(0,0,0,0.3)',
-        'tia-lg':  '0 10px 15px -3px rgba(0,0,0,0.5), 0 4px 6px -4px rgba(0,0,0,0.3)',
-        'tia-glow':'0 0 15px rgba(232,213,0,0.3), 0 0 30px rgba(232,213,0,0.1)',
+        'tollerud-md':  '0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -2px rgba(0,0,0,0.3)',
+        'tollerud-lg':  '0 10px 15px -3px rgba(0,0,0,0.5), 0 4px 6px -4px rgba(0,0,0,0.3)',
+        'tollerud-glow':'0 0 15px rgba(232,213,0,0.3), 0 0 30px rgba(232,213,0,0.1)',
       },
 
       // ─── Backdrop Blur ───
@@ -131,11 +131,11 @@ module.exports = {
 
       // ─── Background Images ───
       backgroundImage: {
-        'tia-grid': `
+        'tollerud-grid': `
           linear-gradient(rgba(232,213,0,0.03) 1px, transparent 1px),
           linear-gradient(90deg, rgba(232,213,0,0.03) 1px, transparent 1px)
         `,
-        'tia-gradient-bar': `
+        'tollerud-gradient-bar': `
           linear-gradient(90deg,
             transparent,
             #E8D500 35%,
@@ -143,12 +143,12 @@ module.exports = {
             #E8D500 65%,
             transparent)
         `,
-        'tia-gradient-soft': `
+        'tollerud-gradient-soft': `
           linear-gradient(135deg,
             rgba(232,213,0,0.8),
             rgba(255,184,0,0.4))
         `,
-        'tia-noir-glow': `
+        'tollerud-noir-glow': `
           radial-gradient(circle at 0% 0%, rgba(255,255,0,0.72) 0%, rgba(255,232,0,0.38) 16%, transparent 38%),
           radial-gradient(circle at 100% 0%, rgba(255,255,0,0.58) 0%, rgba(255,184,0,0.24) 18%, transparent 40%),
           radial-gradient(circle at 0% 100%, rgba(232,213,0,0.44) 0%, rgba(255,184,0,0.18) 18%, transparent 44%),
@@ -157,20 +157,20 @@ module.exports = {
         `,
       },
       backgroundSize: {
-        'tia-grid': '40px 40px',
+        'tollerud-grid': '40px 40px',
       },
 
       // ─── Animations ───
       animation: {
-        'tia-glow': 'tia-glow 2s ease-in-out infinite alternate',
-        'tia-fade-in': 'tia-fade-in 0.25s ease-out',
+        'tollerud-glow': 'tollerud-glow 2s ease-in-out infinite alternate',
+        'tollerud-fade-in': 'tollerud-fade-in 0.25s ease-out',
       },
       keyframes: {
-        'tia-glow': {
+        'tollerud-glow': {
           '0%':   { boxShadow: '0 0 5px rgba(232,213,0,0.2), 0 0 10px rgba(232,213,0,0.05)' },
           '100%': { boxShadow: '0 0 15px rgba(232,213,0,0.3), 0 0 30px rgba(232,213,0,0.1)' },
         },
-        'tia-fade-in': {
+        'tollerud-fade-in': {
           '0%':   { opacity: '0', transform: 'translateY(4px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
@@ -183,7 +183,7 @@ module.exports = {
         slow:   '350ms',
       },
       transitionTimingFunction: {
-        'tia-ease': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'tollerud-ease': 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },
   },

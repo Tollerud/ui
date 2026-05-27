@@ -1,4 +1,4 @@
-# Ultimate Tia Noir — Research & Direction
+# Ultimate Tollerud Design System — Research & Direction
 
 Research pass: 2026-05-26  
 Scope: make `/home/mathias/tia/design-system/` feel like a complete, modern, production-grade Next.js design system while keeping the Tia/Tollerud identity: noir, monochrome, yellow, technical, warm, and not corporate sludge.
@@ -29,7 +29,7 @@ Scope: make `/home/mathias/tia/design-system/` feel like a complete, modern, pro
 
 ## Executive direction
 
-Tia Noir should become:
+Tollerud Design System should become:
 
 > **A dark, cinematic, keyboard-first infrastructure design system with acid-yellow signal color, granular animated light, dense operational surfaces, and Next.js/shadcn compatibility.**
 
@@ -136,7 +136,7 @@ Cons:
 Ship both:
 
 1. `NoirGlowBackground.tsx` — WebGL/canvas primary.
-2. `.tia-noir-glow-bg` — CSS fallback.
+2. `.tollerud-noir-glow-bg` — CSS fallback.
 3. Static PNG/WebP fallback for reduced motion.
 
 ---
@@ -309,11 +309,11 @@ Borrow:
 
 Tia adaptation:
 
-We already started correctly with `globals.css`, `tia-preset.js`, and TSX components. Next steps:
+We already started correctly with `globals.css`, `tollerud-preset.js`, and TSX components. Next steps:
 
 - Add `components.json` for shadcn-style installs.
 - Add component registry metadata.
-- Use semantic classes in React components more consistently (`bg-primary`, `text-primary-foreground`, etc.) while keeping raw `tia-*` utilities available.
+- Use semantic classes in React components more consistently (`bg-primary`, `text-primary-foreground`, etc.) while keeping raw `tollerud-*` utilities available.
 - Add Radix-based accessible primitives for overlays/menus/dialogs.
 
 ---
@@ -322,7 +322,7 @@ We already started correctly with `globals.css`, `tia-preset.js`, and TSX compon
 
 ## Tier 0 — Brand primitives
 
-These make Tia Noir *Tia Noir*, not just a component kit.
+These make Tollerud Design System *Tollerud Design System*, not just a component kit.
 
 1. `NoirGlowBackground` — WebGL/canvas + CSS fallback.
 2. `TiaAvatar` — mascot wrapper with sizing and background rules.
@@ -411,21 +411,21 @@ These are the real gold.
 
 ## Token expansion plan
 
-Current tokens are good, but ultimate Tia Noir needs richer token groups.
+Current tokens are good, but ultimate Tollerud Design System needs richer token groups.
 
 ### 1. Raw palette
 
 ```css
---tia-acid: #ffff00;           /* Tollerud high-voltage yellow */
---tia-yellow: #e8d500;         /* existing signal yellow */
---tia-amber: #ffb800;
---tia-bone: #f5f2dc;           /* warm text option */
---tia-smoke: #8f8878;
---tia-black: #000000;
---tia-void: #050505;
---tia-ink: #0a0a0a;
---tia-panel: #11110f;
---tia-raised: #181713;
+--tollerud-acid: #ffff00;           /* Tollerud high-voltage yellow */
+--tollerud-yellow: #e8d500;         /* existing signal yellow */
+--tollerud-amber: #ffb800;
+--tollerud-bone: #f5f2dc;           /* warm text option */
+--tollerud-smoke: #8f8878;
+--tollerud-black: #000000;
+--tollerud-void: #050505;
+--tollerud-ink: #0a0a0a;
+--tollerud-panel: #11110f;
+--tollerud-raised: #181713;
 ```
 
 ### 2. Semantic roles
@@ -516,12 +516,12 @@ Tia motion should feel like **instrumentation**, not TikTok confetti.
 
 ### Signature motions
 
-- `tia-glow-drift` — slow ambient background.
-- `tia-signal-pulse` — active command/agent.
-- `tia-scanline` — optional subtle log/terminal effect.
-- `tia-reveal-up` — panels and cards.
-- `tia-command-open` — command menu scale/fade.
-- `tia-status-change` — state transition pulse.
+- `tollerud-glow-drift` — slow ambient background.
+- `tollerud-signal-pulse` — active command/agent.
+- `tollerud-scanline` — optional subtle log/terminal effect.
+- `tollerud-reveal-up` — panels and cards.
+- `tollerud-command-open` — command menu scale/fade.
+- `tollerud-status-change` — state transition pulse.
 
 ---
 
@@ -619,7 +619,7 @@ Create `docs/` or `examples/docs-nextjs/` with Geist-inspired IA:
 
 ## Final vision
 
-The ultimate Tia Noir system should feel like:
+The ultimate Tollerud Design System system should feel like:
 
 - Tollerud.no’s black/yellow animated atmosphere,
 - Linear’s product discipline,

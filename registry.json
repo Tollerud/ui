@@ -1,7 +1,7 @@
 {
-  "name": "tia-noir",
+  "name": "tollerud-noir",
   "version": "1.0.0",
-  "description": "Tia Noir Design System — dark, cinematic, keyboard-first infrastructure UI",
+  "description": "Tollerud Design System — dark, cinematic, keyboard-first infrastructure UI",
   "components": {
     "button": {
       "name": "Button",

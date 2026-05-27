@@ -17,7 +17,7 @@ export interface GlowCardProps {
 function GlowCard({
   children,
   className,
-  glowColor = 'var(--tia-accent, #FFFF00)',
+  glowColor = 'var(--tollerud-accent, #FFFF00)',
   intensity = 0.15,
 }: GlowCardProps) {
   const ref = useRef<HTMLDivElement>(null)

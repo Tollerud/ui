@@ -1,10 +1,10 @@
-# Tia Noir — Keyboard Contract
+# Tollerud Design System — Keyboard Contract
 
-Command-first interaction is a core Tia Noir principle. This document defines the keyboard contracts across all Tia components and interfaces.
+Command-first interaction is a core Tollerud Design System principle. This document defines the keyboard contracts across all Tia components and interfaces.
 
 ## Global shortcuts
 
-These work **everywhere** in a Tia-powered app.
+These work **everywhere** in a Tollerud DS-powered app.
 
 | Shortcut | Action | Component |
 |----------|--------|-----------|

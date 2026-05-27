@@ -1,4 +1,4 @@
-# Tia Noir — Accessibility Guidelines
+# Tollerud Design System — Accessibility Guidelines
 
 ## Color Contrast
 
@@ -47,10 +47,10 @@ Border colors are decorative and exempt from contrast requirements. Never put ye
 
 ```tsx
 // Focus ring — use the utility class
-<button className="tia-focus-ring">Action</button>
+<button className="tollerud-focus-ring">Action</button>
 
 // Tailwind
-<button className="focus-visible:outline-2 focus-visible:outline-tia-yellow focus-visible:outline-offset-2">
+<button className="focus-visible:outline-2 focus-visible:outline-tollerud-yellow focus-visible:outline-offset-2">
   Action
 </button>
 ```

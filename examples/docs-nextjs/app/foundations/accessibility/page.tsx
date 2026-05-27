@@ -14,7 +14,7 @@ export default function AccessibilityPage() {
   return (
     <div className="docs-content">
       <h1>Accessibility</h1>
-      <p>Tia Noir is built with accessibility as a non-negotiable requirement. All interactive components must meet WCAG 2.1 AA at minimum.</p>
+      <p>Tollerud Design System is built with accessibility as a non-negotiable requirement. All interactive components must meet WCAG 2.1 AA at minimum.</p>
 
       <h2>Contract</h2>
       <table>
@@ -26,7 +26,7 @@ export default function AccessibilityPage() {
             <tr key={r.rule}>
               <td>{r.rule}</td>
               <td>{r.standard}</td>
-              <td className={r.status.startsWith('✅') ? 'text-tia-success' : 'text-tia-amber'}>{r.status}</td>
+              <td className={r.status.startsWith('✅') ? 'text-tollerud-success' : 'text-tollerud-amber'}>{r.status}</td>
             </tr>
           ))}
         </tbody>
@@ -34,7 +34,7 @@ export default function AccessibilityPage() {
 
       <h2>Implementation Rules</h2>
       <ul>
-        <li>All interactive elements get a visible yellow focus ring via <code>focus-visible:ring-2 focus-visible:ring-tia-yellow</code>.</li>
+        <li>All interactive elements get a visible yellow focus ring via <code>focus-visible:ring-2 focus-visible:ring-tollerud-yellow</code>.</li>
         <li>Icon-only buttons must have <code>aria-label</code> or <code>aria-labelledby</code>.</li>
         <li>Dialogs and overlays need keyboard trap + <code>Escape</code> to close (built into CommandMenu).</li>
         <li>Status is never conveyed by color alone — each status has a text label or <code>aria-label</code>.</li>
@@ -48,9 +48,9 @@ export default function AccessibilityPage() {
       <pre><code>{`/* Tailwind — apply to all interactive elements */
 focus-visible:outline-none
 focus-visible:ring-2
-focus-visible:ring-tia-yellow
+focus-visible:ring-tollerud-yellow
 focus-visible:ring-offset-2
-focus-visible:ring-offset-tia-ink`}</code></pre>
+focus-visible:ring-offset-tollerud-ink`}</code></pre>
 
       <h2>Reduced Motion Setup</h2>
       <pre><code>{`@media (prefers-reduced-motion: reduce) {

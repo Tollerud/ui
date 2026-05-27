@@ -1,4 +1,4 @@
-# Tia Noir — Component Library
+# Tollerud Design System — Component Library
 
 All components come as CSS classes (in `globals.css` / `tokens.css`) with React `.tsx` examples in `components/`.
 
@@ -25,11 +25,11 @@ See `BACKGROUNDS.md` for install, props, usage rules, and fallback HTML.
 
 | Variant | Class | React Component | Usage |
 |---------|-------|----------------|-------|
-| Primary | `.tia-btn--primary` | `<Button variant="primary">` | Main CTA |
-| Secondary | `.tia-btn--secondary` | `<Button variant="secondary">` | Secondary action |
-| Ghost | `.tia-btn--ghost` | `<Button variant="ghost">` | Low emphasis |
-| Destructive | `.tia-btn--destructive` | `<Button variant="destructive">` | Delete/remove |
-| Terminal | `.tia-btn--terminal` | `<Button variant="terminal">` | Dev tools, CLIs |
+| Primary | `.tollerud-btn--primary` | `<Button variant="primary">` | Main CTA |
+| Secondary | `.tollerud-btn--secondary` | `<Button variant="secondary">` | Secondary action |
+| Ghost | `.tollerud-btn--ghost` | `<Button variant="ghost">` | Low emphasis |
+| Destructive | `.tollerud-btn--destructive` | `<Button variant="destructive">` | Delete/remove |
+| Terminal | `.tollerud-btn--terminal` | `<Button variant="terminal">` | Dev tools, CLIs |
 
 Sizes: `--sm`, `--md`, `--lg`
 
@@ -46,13 +46,13 @@ Sizes: `--sm`, `--md`, `--lg`
 
 | Class | React | Props |
 |-------|-------|-------|
-| `.tia-card` | `<Card>` | — |
-| `.tia-card border-tia-yellow/25` | `<Card accent>` | accent: boolean |
+| `.tollerud-card` | `<Card>` | — |
+| `.tollerud-card border-tollerud-yellow/25` | `<Card accent>` | accent: boolean |
 
 ```jsx
 <Card>
   <h3 className="font-semibold mb-1">Title</h3>
-  <p className="text-tia-text-secondary text-sm">Content</p>
+  <p className="text-tollerud-text-secondary text-sm">Content</p>
 </Card>
 <Card accent>
   <p>Highlighted card with yellow border</p>
@@ -63,12 +63,12 @@ Sizes: `--sm`, `--md`, `--lg`
 
 | Variant | Class | React |
 |---------|-------|-------|
-| Default | `.tia-badge--default` | `<Badge>` |
-| Accent | `.tia-badge--accent` | `<Badge variant="accent">` |
-| Success | `.tia-badge--success` | `<Badge variant="success">` |
-| Error | `.tia-badge--error` | `<Badge variant="error">` |
-| Info | `.tia-badge--info` | `<Badge variant="info">` |
-| Warning | `.tia-badge--warning` | `<Badge variant="warning">` |
+| Default | `.tollerud-badge--default` | `<Badge>` |
+| Accent | `.tollerud-badge--accent` | `<Badge variant="accent">` |
+| Success | `.tollerud-badge--success` | `<Badge variant="success">` |
+| Error | `.tollerud-badge--error` | `<Badge variant="error">` |
+| Info | `.tollerud-badge--info` | `<Badge variant="info">` |
+| Warning | `.tollerud-badge--warning` | `<Badge variant="warning">` |
 
 ```jsx
 <Badge variant="success">Online</Badge>
@@ -102,10 +102,10 @@ Sizes: `--sm`, `--md`, `--lg`
 ## Pill Tag
 
 ```html
-<span class="tia-pill tia-pill--outline">new</span>
-<span class="tia-pill tia-pill--muted">deprecated</span>
-<span class="tia-pill tia-pill--success">stable</span>
-<span class="tia-pill tia-pill--error">critical</span>
+<span class="tollerud-pill tollerud-pill--outline">new</span>
+<span class="tollerud-pill tollerud-pill--muted">deprecated</span>
+<span class="tollerud-pill tollerud-pill--success">stable</span>
+<span class="tollerud-pill tollerud-pill--error">critical</span>
 ```
 
 ## StatCard
@@ -122,7 +122,7 @@ Sizes: `--sm`, `--md`, `--lg`
 
 ```jsx
 <CodeBlock>
-{`$ systemctl status tia-agent
+{`$ systemctl status tollerud-agent
 ● active (running)`}
 </CodeBlock>
 ```
@@ -130,9 +130,9 @@ Sizes: `--sm`, `--md`, `--lg`
 ## Divider
 
 ```html
-<hr class="tia-divider" />
-<hr class="tia-divider--accent" />
-<hr class="tia-accent-bar" />   <!-- gradient -->
+<hr class="tollerud-divider" />
+<hr class="tollerud-divider--accent" />
+<hr class="tollerud-accent-bar" />   <!-- gradient -->
 ```
 
 ## Kbd — Keyboard Shortcut Chip
@@ -149,7 +149,7 @@ Props:
 - `keys: string | string[]` — The keys to display. Separate with `+` for chords.
 - `size?: "sm" | "md"` — Small variant for inline use.
 
-CSS class: `.tia-kbd`, children `.tia-kbd__key`.
+CSS class: `.tollerud-kbd`, children `.tollerud-kbd__key`.
 
 ## ActionRow — Command / Action Item
 
@@ -289,7 +289,7 @@ Prop `severity`: `'critical' | 'high' | 'medium' | 'low' | 'info'`. Dot color an
 ```tsx
 <ApprovalCard
   action="restart_container"
-  description="Restart emma:tia-hermes container"
+  description="Restart emma:tollerud-hermes container"
   source="emma → /hdd/config/tia/compose.yml"
   state="pending"
   timestamp="2026-05-26 14:35"
@@ -400,14 +400,14 @@ Features: per-job status dots, size/target display, failed job warning footer.
 ## Skeleton
 
 ```html
-<div class="tia-skeleton h-4 w-48" />
-<div class="tia-skeleton h-48 w-full" />
+<div class="tollerud-skeleton h-4 w-48" />
+<div class="tollerud-skeleton h-48 w-full" />
 ```
 
 ## Glass Nav
 
 ```html
-<nav class="tia-glass fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6">
+<nav class="tollerud-glass fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6">
   ...
 </nav>
 ```
@@ -415,7 +415,7 @@ Features: per-job status dots, size/target display, failed job warning footer.
 ## Grid Background
 
 ```html
-<section class="tia-grid-bg">
+<section class="tollerud-grid-bg">
   ...
 </section>
 ```
@@ -423,9 +423,9 @@ Features: per-job status dots, size/target display, failed job warning footer.
 ## Display Heading
 
 ```html
-<h1 class="tia-display text-[70px]">Dark. Monochrome.</h1>
-<h2 class="tia-display--secondary text-[40px]">Yellow where it counts</h2>
-<h3 class="tia-display--tertiary text-[28px]">Subtle hierarchy</h3>
+<h1 class="tollerud-display text-[70px]">Dark. Monochrome.</h1>
+<h2 class="tollerud-display--secondary text-[40px]">Yellow where it counts</h2>
+<h3 class="tollerud-display--tertiary text-[28px]">Subtle hierarchy</h3>
 ```
 
 ## Container
@@ -555,7 +555,7 @@ Footer bar with Tollerud monogram and branding link. Ported from `@tollerud/foot
     allRightsReserved: 'All rights reserved.',
   }}
   unstyled
-  className="border-t border-tia-yellow/20 bg-black"
+  className="border-t border-tollerud-yellow/20 bg-black"
 />
 ```
 

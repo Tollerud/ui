@@ -30,14 +30,14 @@ const Kbd = forwardRef<HTMLSpanElement, KbdProps>(
       <span
         ref={ref}
         className={cn(
-          'tia-kbd',
-          size === 'sm' && 'tia-kbd--sm',
+          'tollerud-kbd',
+          size === 'sm' && 'tollerud-kbd--sm',
           className
         )}
         {...props}
       >
         {keyArray.map((key, i) => (
-          <span key={i} className="tia-kbd__key">
+          <span key={i} className="tollerud-kbd__key">
             {key}
           </span>
         ))}

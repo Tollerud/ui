@@ -187,8 +187,8 @@ const options = [
 
 {/* With yellow accent border */}
 <Card accent>
-  <h3 className="text-sm font-semibold text-tia-foreground">Alert</h3>
-  <p className="text-xs text-tia-text-secondary mt-1">
+  <h3 className="text-sm font-semibold text-tollerud-foreground">Alert</h3>
+  <p className="text-xs text-tollerud-text-secondary mt-1">
     Disk usage at 85%
   </p>
 </Card>`,
@@ -408,7 +408,7 @@ const options = [
     code: `<div className="relative h-48 w-full rounded-lg overflow-hidden">
   <NoirGlowBackground />
   <div className="relative z-10 flex items-center justify-center h-full">
-    <span className="text-tia-yellow font-mono text-sm">tollerud.no</span>
+    <span className="text-tollerud-yellow font-mono text-sm">tollerud.no</span>
   </div>
 </div>`,
   },
@@ -463,7 +463,7 @@ const options = [
   <Button variant="primary">Deploy</Button>
 </Tooltip>
 <Tooltip content="CPU temperature" side="right">
-  <span className="text-xs text-tia-text-muted cursor-help">68°C</span>
+  <span className="text-xs text-tollerud-text-muted cursor-help">68°C</span>
 </Tooltip>`,
   },
   {
@@ -592,7 +592,7 @@ const data = [
   <Card>
     <div className="text-center">
       <span className="text-lg font-bold">Embla</span>
-      <p className="text-xs text-tia-text-muted mt-1">10.0.10.11</p>
+      <p className="text-xs text-tollerud-text-muted mt-1">10.0.10.11</p>
     </div>
   </Card>
 </GlowCard>`,
@@ -628,14 +628,14 @@ export default function ComponentsPage() {
     <div className="docs-content">
       <h1>Components</h1>
       <p>42 React components across the system.</p>
-      <p className="text-xs text-tia-text-muted mt-1">
+      <p className="text-xs text-tollerud-text-muted mt-1">
         All components are <code>forwardRef</code> + <code>displayName</code> with full TypeScript types.
       </p>
 
       {sections.map(({ label, id, desc, preview: Preview, code }) => (
         <div key={id} id={id} className="mb-12">
           <h2>{label}</h2>
-          <p className="text-sm text-tia-text-muted mb-4">{desc}</p>
+          <p className="text-sm text-tollerud-text-muted mb-4">{desc}</p>
           {code ? (
             <ComponentShowcase code={code}>
               <Preview />

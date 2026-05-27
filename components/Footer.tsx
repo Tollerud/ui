@@ -61,8 +61,8 @@ export function Footer({
   const footerSurface = unstyled
     ? ''
     : accent
-      ? 'border-t border-tia-yellow/20 bg-tia-yellow/5'
-      : 'border-t border-tia-border bg-tia-noir-900/80'
+      ? 'border-t border-tollerud-yellow/20 bg-tollerud-yellow/5'
+      : 'border-t border-tollerud-border bg-tollerud-noir-900/80'
 
   const innerLayoutClasses =
     layout === 'row'
@@ -72,16 +72,16 @@ export function Footer({
   const logoColor = unstyled
     ? ''
     : accent
-      ? 'text-tia-yellow'
-      : 'text-tia-text-muted'
+      ? 'text-tollerud-yellow'
+      : 'text-tollerud-text-muted'
 
   const textWrapperClasses =
     layout === 'row' ? 'flex-1 text-right ml-4' : 'flex-1 text-center md:text-right md:ml-4'
 
   const textLayoutClasses =
     layout === 'row'
-      ? 'text-sm text-tia-text-secondary inline-flex flex-row items-center justify-end text-right gap-0'
-      : 'text-sm text-tia-text-secondary flex flex-col md:flex-row md:inline gap-0'
+      ? 'text-sm text-tollerud-text-secondary inline-flex flex-row items-center justify-end text-right gap-0'
+      : 'text-sm text-tollerud-text-secondary flex flex-col md:flex-row md:inline gap-0'
 
   return (
     <footer className={cn('w-full pt-4 pb-4', footerSurface, className)} style={style}>
@@ -118,7 +118,7 @@ export function Footer({
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  'underline decoration-tia-yellow decoration-[3px] underline-offset-[4px] hover:opacity-80 transition-opacity',
+                  'underline decoration-tollerud-yellow decoration-[3px] underline-offset-[4px] hover:opacity-80 transition-opacity',
                   classNameLink,
                 )}
                 style={{

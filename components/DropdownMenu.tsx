@@ -19,7 +19,7 @@ const DropdownMenuContent = forwardRef<
       sideOffset={sideOffset}
       className={cn(
         'z-50 min-w-[9rem] overflow-hidden rounded-lg border p-1 shadow-md',
-        'bg-tia-noir-850 border-tia-border/30 text-tia-text-primary',
+        'bg-tollerud-noir-850 border-tollerud-border/30 text-tollerud-text-primary',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
         'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
@@ -43,9 +43,9 @@ const DropdownMenuItem = forwardRef<
     ref={ref}
     className={cn(
       'relative flex cursor-default select-none items-center rounded-md px-2 py-1.5 text-sm outline-none',
-      'text-tia-text-secondary data-[highlighted]:text-tia-text-primary',
+      'text-tollerud-text-secondary data-[highlighted]:text-tollerud-text-primary',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      'data-[highlighted]:bg-tia-surface-raised',
+      'data-[highlighted]:bg-tollerud-surface-raised',
       inset && 'pl-8',
       className
     )}
@@ -60,7 +60,7 @@ const DropdownMenuSeparator = forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={cn('-mx-1 my-1 h-px bg-tia-border/30', className)}
+    className={cn('-mx-1 my-1 h-px bg-tollerud-border/30', className)}
     {...props}
   />
 ))
@@ -74,7 +74,7 @@ const DropdownMenuLabel = forwardRef<
 >(({ className, inset, ...props }, ref) => (
   <DropdownMenuPrimitive.Label
     ref={ref}
-    className={cn('px-2 py-1.5 text-xs font-semibold text-tia-text-muted', inset && 'pl-8', className)}
+    className={cn('px-2 py-1.5 text-xs font-semibold text-tollerud-text-muted', inset && 'pl-8', className)}
     {...props}
   />
 ))

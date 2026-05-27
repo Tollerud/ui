@@ -7,7 +7,7 @@
 - Added **Checkbox** — custom-styled checkbox with checkmark SVG, label, focus-visible ring
 - Added **Switch** — toggle switch with role="switch", animated thumb, label
 - Added **RadioGroup / Radio** — fieldset-based radio group with custom dot indicator, label/error
-- Added **Footer** — ported from `@tollerud/footer` (v1.1.2), uses Tia Noir design tokens, supports `accent` variant, responsive/row layouts, unstyled mode
+- Added **Footer** — ported from `@tollerud/footer` (v1.1.2), uses Tollerud Design System design tokens, supports `accent` variant, responsive/row layouts, unstyled mode
 - 6 new components → total **29 components** now
 
 ## 2026-05-26 — Phase 5: Docs App
@@ -56,21 +56,21 @@
 - **Kbd** — Raycast-style keyboard shortcut chip (`⌘K`, `⌘⇧S`, etc.), 2 sizes.
 - **ActionRow** — Command/action item row with icon, label, description, shortcut, keyboard navigation (`highlighted` prop).
 - **CommandMenu** — Full command palette: search, groups, arrow key nav, `Enter`/`Esc`, auto-focus, body scroll lock, footer hints, custom filter support.
-- **CSS classes**: `.tia-kbd`, `.tia-action-row`, `.tia-cmd`, `.tia-cmd-overlay`, `.tia-cmd__*` — in both `globals.css` and `tokens.css`.
+- **CSS classes**: `.tollerud-kbd`, `.tollerud-action-row`, `.tollerud-cmd`, `.tollerud-cmd-overlay`, `.tollerud-cmd__*` — in both `globals.css` and `tokens.css`.
 - **KEYBOARD.md** — Keyboard contract document: global shortcuts, component contracts, accessibility requirements, implementation rules.
 
 ## 2026-05-26 — NoirGlowBackground
 
 - Ported the real Tollerud.no background source from `MathiasOki/tollerud-landing`.
 - Added `components/NoirGlowBackground.tsx` using `@paper-design/shaders-react` / `GrainGradient`.
-- Added CSS fallback classes: `.tia-noir-glow-root`, `.tia-noir-glow-bg`, `.tia-noir-glow-vignette`, `.tia-noir-noise`.
-- Added acid-yellow token `--tia-acid` / `tia-acid` for Tollerud voltage.
+- Added CSS fallback classes: `.tollerud-noir-glow-root`, `.tollerud-noir-glow-bg`, `.tollerud-noir-glow-vignette`, `.tollerud-noir-noise`.
+- Added acid-yellow token `--tollerud-acid` / `tollerud-acid` for Tollerud voltage.
 - Updated `preview.html` and the Next.js example hero to use the glow background.
 - Added `BACKGROUNDS.md` documentation.
 
 ## 2026-05-25 — v1.0 Next.js Release
 
-- **Tailwind preset** (`tia-preset.js`) — drop into any Next.js project
+- **Tailwind preset** (`tollerud-preset.js`) — drop into any Next.js project
 - **Globals.css** with shadcn-compatible semantic tokens (`--background`, `--primary`, `--ring`, etc.)
 - **React components** — Button, Card, Badge, StatusDot, Input, CodeBlock, StatCard, Container
 - **ACCESSIBILITY.md** — contrast ratios, focus rings, touch targets, reduced motion
@@ -92,12 +92,12 @@ design-system/
 ├── COMPONENTS.md
 ├── VOICE.md
 ├── COMPLETENESS_ROADMAP.md
-├── tia-preset.js           # ← drop-in Tailwind preset
+├── tollerud-preset.js           # ← drop-in Tailwind preset
 ├── tailwind.config.js      # (backward compat)
 ├── tokens.css              # (backward compat)
 ├── globals.css             # ← full semantic tokens + components
 ├── preview.html
-├── tia-avatar.svg
+├── tollerud-avatar.svg
 ├── components/
 │   ├── index.ts
 │   ├── Button.tsx

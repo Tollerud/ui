@@ -42,11 +42,11 @@ export interface LogViewerProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const levelStyles: Record<LogLevel, string> = {
-  debug: 'text-tia-noir-400',
-  trace: 'text-tia-noir-300',
-  info:  'text-tia-foreground',
-  warn:  'text-tia-amber',
-  error: 'text-tia-error',
+  debug: 'text-tollerud-noir-400',
+  trace: 'text-tollerud-noir-300',
+  info:  'text-tollerud-foreground',
+  warn:  'text-tollerud-amber',
+  error: 'text-tollerud-error',
 }
 
 const levelLabels: Record<LogLevel, string> = {
@@ -97,21 +97,21 @@ const LogViewer = forwardRef<HTMLDivElement, LogViewerProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border border-tia-border bg-[var(--color-tia-surface-raised)] overflow-hidden tia-log-viewer',
+          'rounded-lg border border-tollerud-border bg-[var(--color-tollerud-surface-raised)] overflow-hidden tollerud-log-viewer',
           loading && 'animate-pulse',
           className
         )}
         {...props}
       >
         {/* Toolbar */}
-        <div className="flex items-center justify-between px-3 py-2 border-b border-tia-border bg-tia-noir-900">
-          <div className="flex items-center gap-2 text-xs text-tia-text-muted">
+        <div className="flex items-center justify-between px-3 py-2 border-b border-tollerud-border bg-tollerud-noir-900">
+          <div className="flex items-center gap-2 text-xs text-tollerud-text-muted">
             {isFollowing
-              ? <span className="text-tia-yellow font-medium">● Live</span>
-              : <span className="text-tia-noir-400">● Paused</span>}
+              ? <span className="text-tollerud-yellow font-medium">● Live</span>
+              : <span className="text-tollerud-noir-400">● Paused</span>}
             <span>{filteredLines.length} lines</span>
             {lines.length > maxLines && (
-              <span className="text-tia-amber">(showing last {maxLines})</span>
+              <span className="text-tollerud-amber">(showing last {maxLines})</span>
             )}
           </div>
           <div className="flex items-center gap-2">
@@ -122,10 +122,10 @@ const LogViewer = forwardRef<HTMLDivElement, LogViewerProps>(
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search logs…"
                 className={cn(
-                  'w-40 text-[11px] px-2 py-1 rounded bg-tia-noir-800',
-                  'border border-tia-noir-600 text-tia-foreground',
-                  'placeholder:text-tia-noir-400 outline-none',
-                  'focus:border-tia-yellow/50 transition-colors'
+                  'w-40 text-[11px] px-2 py-1 rounded bg-tollerud-noir-800',
+                  'border border-tollerud-noir-600 text-tollerud-foreground',
+                  'placeholder:text-tollerud-noir-400 outline-none',
+                  'focus:border-tollerud-yellow/50 transition-colors'
                 )}
               />
             )}
@@ -140,7 +140,7 @@ const LogViewer = forwardRef<HTMLDivElement, LogViewerProps>(
           style={{ height }}
         >
           {filteredLines.length === 0 && (
-            <div className="flex items-center justify-center h-full text-tia-noir-400 text-xs">
+            <div className="flex items-center justify-center h-full text-tollerud-noir-400 text-xs">
               {search ? 'No matching log lines' : 'No log output'}
             </div>
           )}
@@ -151,17 +151,17 @@ const LogViewer = forwardRef<HTMLDivElement, LogViewerProps>(
               <div
                 key={`${absLineNum}-${i}`}
                 className={cn(
-                  'flex gap-3 hover:bg-[var(--color-tia-surface-hover)] px-1 py-px rounded-sm',
+                  'flex gap-3 hover:bg-[var(--color-tollerud-surface-hover)] px-1 py-px rounded-sm',
                   levelStyles[level]
                 )}
               >
                 {showLineNumbers && (
-                  <span className="text-tia-noir-500 text-right select-none w-8 flex-shrink-0">
+                  <span className="text-tollerud-noir-500 text-right select-none w-8 flex-shrink-0">
                     {absLineNum}
                   </span>
                 )}
                 {showTimestamps && line.timestamp && (
-                  <span className="text-tia-noir-400 flex-shrink-0 select-none">
+                  <span className="text-tollerud-noir-400 flex-shrink-0 select-none">
                     {line.timestamp}
                   </span>
                 )}

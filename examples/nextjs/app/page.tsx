@@ -6,15 +6,15 @@ export default function Home() {
   return (
     <>
       {/* Header */}
-      <nav className="tia-glass fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6">
+      <nav className="tollerud-glass fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6">
         <div className="flex items-center gap-2.5">
           <span className="font-semibold text-[15px] text-white">Tia</span>
           <Badge variant="accent">Noir</Badge>
         </div>
         <div className="ml-auto flex gap-8 text-sm">
-          <a href="#" className="text-tia-text-secondary hover:text-tia-yellow transition-colors">servers</a>
-          <a href="#" className="text-tia-text-secondary hover:text-tia-yellow transition-colors">logs</a>
-          <a href="#" className="text-tia-text-secondary hover:text-tia-yellow transition-colors">config</a>
+          <a href="#" className="text-tollerud-text-secondary hover:text-tollerud-yellow transition-colors">servers</a>
+          <a href="#" className="text-tollerud-text-secondary hover:text-tollerud-yellow transition-colors">logs</a>
+          <a href="#" className="text-tollerud-text-secondary hover:text-tollerud-yellow transition-colors">config</a>
         </div>
       </nav>
 
@@ -23,11 +23,11 @@ export default function Home() {
         <NoirGlowBackground intensity="medium" speed="slow" grain="soft" shape="corners" preserveCenter />
         <Container className="relative z-10">
           <div className="text-center">
-            <h1 className="tia-display text-[clamp(42px,7vw,70px)] mb-2">
+            <h1 className="tollerud-display text-[clamp(42px,7vw,70px)] mb-2">
               Tollerud
-              <span className="tia-gradient-text"> Infrastructure</span>
+              <span className="tollerud-gradient-text"> Infrastructure</span>
             </h1>
-            <p className="text-tia-yellow/65 text-lg mb-8 max-w-xl mx-auto">
+            <p className="text-tollerud-yellow/65 text-lg mb-8 max-w-xl mx-auto">
               / HomeLab mission control. Dark. Reliable. Yellow where it counts.
             </p>
             <div className="flex justify-center gap-3">
@@ -45,7 +45,7 @@ export default function Home() {
       {/* Server Status */}
       <Container className="py-16">
         <div className="flex items-center gap-3 mb-8">
-          <h2 className="tia-display--secondary text-[32px]">Servers</h2>
+          <h2 className="tollerud-display--secondary text-[32px]">Servers</h2>
           <Badge variant="success">{servers.length} online</Badge>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -55,7 +55,7 @@ export default function Home() {
                 <h3 className="font-semibold text-lg">{name}</h3>
                 <StatusDot status="online" />
               </div>
-              <div className="space-y-1 text-sm text-tia-text-secondary">
+              <div className="space-y-1 text-sm text-tollerud-text-secondary">
                 <p>Uptime: 14d 3h 22m</p>
                 <p>CPU: 12% · MEM: 34%</p>
                 <p>Docker: 7 containers</p>
@@ -64,10 +64,10 @@ export default function Home() {
           ))}
         </div>
 
-        <hr className="tia-accent-bar my-16" />
+        <hr className="tollerud-accent-bar my-16" />
 
         {/* Quick Actions */}
-        <h2 className="tia-display--secondary text-[32px] mb-8">Quick Actions</h2>
+        <h2 className="tollerud-display--secondary text-[32px] mb-8">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Card>
             <h3 className="font-semibold mb-3">System</h3>
@@ -104,22 +104,22 @@ export default function Home() {
           </Card>
         </div>
 
-        <hr className="tia-divider my-16" />
+        <hr className="tollerud-divider my-16" />
 
         {/* Terminal Block */}
         <CodeBlock>
-          <span className="text-tia-yellow">❯</span> systemctl status tia-agent<br/>
-          ● tia-agent.service — Tollerud Infrastructure Assistant<br/>
+          <span className="text-tollerud-yellow">❯</span> systemctl status tollerud-agent<br/>
+          ● tollerud-agent.service — Tollerud Infrastructure Assistant<br/>
           &nbsp;&nbsp;&nbsp;Loaded: loaded<br/>
-          &nbsp;&nbsp;&nbsp;Active: <span className="text-tia-success">active (running)</span><br/>
+          &nbsp;&nbsp;&nbsp;Active: <span className="text-tollerud-success">active (running)</span><br/>
           <br/>
-          <span className="text-tia-noir-400 italic">// Dec 25 12:34:01 tia ready — 12 services online</span>
+          <span className="text-tollerud-noir-400 italic">// Dec 25 12:34:01 tia ready — 12 services online</span>
         </CodeBlock>
       </Container>
 
-      <footer className="text-center py-12 border-t border-tia-border text-xs text-tia-text-muted">
+      <footer className="text-center py-12 border-t border-tollerud-border text-xs text-tollerud-text-muted">
         <Container>
-          <p>Tia Noir · Built for the Tollerud Homelab</p>
+          <p>Tollerud DS · Built for the Tollerud Homelab</p>
         </Container>
       </footer>
     </>

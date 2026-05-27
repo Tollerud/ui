@@ -2,11 +2,11 @@ import { type ButtonHTMLAttributes, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
 const variants = {
-  primary: 'bg-tia-yellow text-tia-black border-tia-yellow hover:bg-tia-yellow-bright hover:shadow-tia-glow',
-  secondary: 'bg-transparent text-tia-text-primary border-tia-border hover:border-tia-text-secondary hover:bg-tia-surface-hover',
-  ghost: 'bg-transparent text-tia-text-secondary border-transparent hover:text-tia-text-primary hover:bg-tia-surface-hover',
-  destructive: 'bg-tia-error text-white border-tia-error hover:shadow-[0_0_12px_rgba(239,68,68,0.3)]',
-  terminal: 'font-mono text-tia-yellow border-[rgba(232,213,0,0.25)] bg-transparent before:content-["❯_"] before:opacity-70 hover:border-tia-yellow hover:shadow-tia-glow hover:bg-[rgba(232,213,0,0.05)]',
+  primary: 'bg-tollerud-yellow text-tollerud-black border-tollerud-yellow hover:bg-tollerud-yellow-bright hover:shadow-tollerud-glow',
+  secondary: 'bg-transparent text-tollerud-text-primary border-tollerud-border hover:border-tollerud-text-secondary hover:bg-tollerud-surface-hover',
+  ghost: 'bg-transparent text-tollerud-text-secondary border-transparent hover:text-tollerud-text-primary hover:bg-tollerud-surface-hover',
+  destructive: 'bg-tollerud-error text-white border-tollerud-error hover:shadow-[0_0_12px_rgba(239,68,68,0.3)]',
+  terminal: 'font-mono text-tollerud-yellow border-[rgba(232,213,0,0.25)] bg-transparent before:content-["❯_"] before:opacity-70 hover:border-tollerud-yellow hover:shadow-tollerud-glow hover:bg-[rgba(232,213,0,0.05)]',
 } as const
 
 const sizes = {
@@ -26,7 +26,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         className={cn(
-          'inline-flex items-center justify-center gap-2 font-semibold rounded transition-all duration-[150ms] focus-visible:outline-2 focus-visible:outline-tia-yellow focus-visible:outline-offset-2',
+          'inline-flex items-center justify-center gap-2 font-semibold rounded transition-all duration-[150ms] focus-visible:outline-2 focus-visible:outline-tollerud-yellow focus-visible:outline-offset-2',
           'border cursor-pointer',
           'disabled:opacity-50 disabled:pointer-events-none',
           variants[variant],

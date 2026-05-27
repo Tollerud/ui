@@ -45,7 +45,7 @@ import { NoirGlowBackground } from '../../../components/NoirGlowBackground'
 import { CommandMenu } from '../../../components/CommandMenu'
 import type { CommandGroup } from '../../../components/CommandMenu'
 
-// ── Tia Noir ported shadcn components (Radix-based) ──
+// ── Tollerud Design System ported shadcn components (Radix-based) ──
 import {
   Dialog as TiaDialog,
   DialogTrigger as TiaDialogTrigger,
@@ -91,8 +91,8 @@ import { BentoDashboard as TiaBentoDashboard } from '../../../components/BentoDa
 
 function PreviewCard({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <div className="rounded-lg border border-tia-border/30 bg-tia-surface-raised p-4 space-y-3">
-      <h4 className="text-xs font-semibold text-tia-text-muted uppercase tracking-wider">{title}</h4>
+    <div className="rounded-lg border border-tollerud-border/30 bg-tollerud-surface-raised p-4 space-y-3">
+      <h4 className="text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider">{title}</h4>
       <div className="flex flex-wrap items-center gap-3">{children}</div>
     </div>
   )
@@ -331,8 +331,8 @@ export function StatCardPreviews() {
 export function ContainerPreviews() {
   return (
     <PreviewCard title="Usage">
-      <Container as="section" className="bg-tia-noir-800 rounded p-4">
-        <p className="text-sm text-tia-text-secondary">
+      <Container as="section" className="bg-tollerud-noir-800 rounded p-4">
+        <p className="text-sm text-tollerud-text-secondary">
           Centered max-width container (1100px). Try resizing the browser.
         </p>
       </Container>
@@ -606,15 +606,15 @@ export function NoirGlowBackgroundPreviews() {
   return (
     <div className="space-y-3">
       <PreviewCard title="Default (CSS fallback)">
-        <div className="relative w-full h-[200px] rounded overflow-hidden bg-tia-black">
+        <div className="relative w-full h-[200px] rounded overflow-hidden bg-tollerud-black">
           <NoirGlowBackground forceCssFallback />
           <div className="relative z-10 flex items-center justify-center h-full">
-            <span className="text-tia-yellow font-mono text-sm">❯ Signal backdrop ready</span>
+            <span className="text-tollerud-yellow font-mono text-sm">❯ Signal backdrop ready</span>
           </div>
         </div>
       </PreviewCard>
       <PreviewCard title="Props reference">
-        <div className="text-xs text-tia-text-muted space-y-1">
+        <div className="text-xs text-tollerud-text-muted space-y-1">
           <p><code>intensity</code> — subtle | medium | loud</p>
           <p><code>speed</code> — still | slow | medium | fast</p>
           <p><code>shape</code> — corners | wave | dots | truchet | ripple | blob | sphere</p>
@@ -647,7 +647,7 @@ export function CommandMenuPreviews() {
       <PreviewCard title="Trigger">
         <button
           onClick={() => setOpen(true)}
-          className="px-4 py-2 text-sm border border-tia-border rounded bg-tia-surface-raised text-tia-text-primary hover:border-tia-yellow/50 transition-colors cursor-pointer"
+          className="px-4 py-2 text-sm border border-tollerud-border rounded bg-tollerud-surface-raised text-tollerud-text-primary hover:border-tollerud-yellow/50 transition-colors cursor-pointer"
         >
           ❯ Open command palette
         </button>
@@ -663,7 +663,7 @@ export function CommandMenuPreviews() {
         )}
       </PreviewCard>
       <PreviewCard title="Usage">
-        <div className="text-xs text-tia-text-muted space-y-1">
+        <div className="text-xs text-tollerud-text-muted space-y-1">
           <p>Keyboard-first command palette for infrastructure actions.</p>
           <p>Groups via <code>CommandGroup[]</code> with keyboard navigation.</p>
           <p>Composes with <code>ActionRow</code> + <code>Kbd</code> under the hood.</p>
@@ -711,29 +711,29 @@ export function TooltipPreviews() {
         <PreviewCard title="Basic">
           <TiaTooltip>
             <TiaTooltipTrigger asChild>
-              <span className="inline-block px-3 py-1.5 rounded border border-tia-border/30 text-xs text-tia-text-muted cursor-default">Hover me</span>
+              <span className="inline-block px-3 py-1.5 rounded border border-tollerud-border/30 text-xs text-tollerud-text-muted cursor-default">Hover me</span>
             </TiaTooltipTrigger>
             <TiaTooltipContent>
-              <p>I&apos;m a Tia Noir tooltip</p>
+              <p>I&apos;m a Tollerud Design System tooltip</p>
             </TiaTooltipContent>
           </TiaTooltip>
         </PreviewCard>
         <PreviewCard title="Placements">
           <div className="flex gap-2">
             <TiaTooltip>
-              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tia-noir-800 text-xs cursor-default">Top</span></TiaTooltipTrigger>
+              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tollerud-noir-800 text-xs cursor-default">Top</span></TiaTooltipTrigger>
               <TiaTooltipContent side="top">Top tooltip</TiaTooltipContent>
             </TiaTooltip>
             <TiaTooltip>
-              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tia-noir-800 text-xs cursor-default">Bottom</span></TiaTooltipTrigger>
+              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tollerud-noir-800 text-xs cursor-default">Bottom</span></TiaTooltipTrigger>
               <TiaTooltipContent side="bottom">Bottom tooltip</TiaTooltipContent>
             </TiaTooltip>
             <TiaTooltip>
-              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tia-noir-800 text-xs cursor-default">Left</span></TiaTooltipTrigger>
+              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tollerud-noir-800 text-xs cursor-default">Left</span></TiaTooltipTrigger>
               <TiaTooltipContent side="left">Left tooltip</TiaTooltipContent>
             </TiaTooltip>
             <TiaTooltip>
-              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tia-noir-800 text-xs cursor-default">Right</span></TiaTooltipTrigger>
+              <TiaTooltipTrigger asChild><span className="px-2 py-1 rounded bg-tollerud-noir-800 text-xs cursor-default">Right</span></TiaTooltipTrigger>
               <TiaTooltipContent side="right">Right tooltip</TiaTooltipContent>
             </TiaTooltip>
           </div>
@@ -752,30 +752,30 @@ export function ToastPreviews() {
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => toast.success('Deployment complete')}
-            className="px-3 py-1.5 rounded bg-tia-accent text-tia-noir-900 text-xs font-medium hover:opacity-90 transition-opacity"
+            className="px-3 py-1.5 rounded bg-tollerud-accent text-tollerud-noir-900 text-xs font-medium hover:opacity-90 transition-opacity"
           >
             Show Success
           </button>
           <button
             onClick={() => toast.error('Connection failed')}
-            className="px-3 py-1.5 rounded bg-tia-error text-white text-xs font-medium hover:opacity-90 transition-opacity"
+            className="px-3 py-1.5 rounded bg-tollerud-error text-white text-xs font-medium hover:opacity-90 transition-opacity"
           >
             Show Error
           </button>
           <button
             onClick={() => toast.info('Backup completed')}
-            className="px-3 py-1.5 rounded bg-tia-info text-white text-xs font-medium hover:opacity-90 transition-opacity"
+            className="px-3 py-1.5 rounded bg-tollerud-info text-white text-xs font-medium hover:opacity-90 transition-opacity"
           >
             Show Info
           </button>
           <button
             onClick={() => toast.warning('Disk at 85%')}
-            className="px-3 py-1.5 rounded bg-tia-warning text-tia-noir-900 text-xs font-medium hover:opacity-90 transition-opacity"
+            className="px-3 py-1.5 rounded bg-tollerud-warning text-tollerud-noir-900 text-xs font-medium hover:opacity-90 transition-opacity"
           >
             Show Warning
           </button>
         </div>
-        <p className="text-xs text-tia-text-muted mt-2">Click a button to trigger a toast notification. Toasts appear in the top-right corner.</p>
+        <p className="text-xs text-tollerud-text-muted mt-2">Click a button to trigger a toast notification. Toasts appear in the top-right corner.</p>
       </PreviewCard>
       <PreviewCard title="With Description">
         <div className="flex flex-wrap gap-2">
@@ -783,7 +783,7 @@ export function ToastPreviews() {
             onClick={() => toast('System update scheduled', {
                 description: 'v2.4.1 will deploy at 03:00 UTC',
               })}
-            className="px-3 py-1.5 rounded bg-tia-surface border border-tia-border/30 text-tia-text-primary text-xs font-medium hover:bg-tia-surface-raised transition-colors"
+            className="px-3 py-1.5 rounded bg-tollerud-surface border border-tollerud-border/30 text-tollerud-text-primary text-xs font-medium hover:bg-tollerud-surface-raised transition-colors"
           >
             Show Description
           </button>
@@ -795,7 +795,7 @@ export function ToastPreviews() {
                   onClick: () => console.log('navigate to approvals'),
                 },
               })}
-            className="px-3 py-1.5 rounded bg-tia-surface border border-tia-border/30 text-tia-text-primary text-xs font-medium hover:bg-tia-surface-raised transition-colors"
+            className="px-3 py-1.5 rounded bg-tollerud-surface border border-tollerud-border/30 text-tollerud-text-primary text-xs font-medium hover:bg-tollerud-surface-raised transition-colors"
           >
             Show Action
           </button>
@@ -817,13 +817,13 @@ export function TabsPreviews() {
           <TiaTabsTrigger value="metrics">Metrics</TiaTabsTrigger>
           <TiaTabsTrigger value="logs">Logs</TiaTabsTrigger>
         </TiaTabsList>
-        <TiaTabsContent value="overview" className="text-xs text-tia-text-secondary p-2">
+        <TiaTabsContent value="overview" className="text-xs text-tollerud-text-secondary p-2">
           Host: <code>emma</code> &middot; IP: 10.0.10.10 &middot; Uptime: 42d
         </TiaTabsContent>
-        <TiaTabsContent value="metrics" className="text-xs text-tia-text-secondary p-2">
+        <TiaTabsContent value="metrics" className="text-xs text-tollerud-text-secondary p-2">
           CPU: 34% &middot; Memory: 6.2/16 GB &middot; Disk: 45%
         </TiaTabsContent>
-        <TiaTabsContent value="logs" className="text-xs text-tia-text-secondary p-2">
+        <TiaTabsContent value="logs" className="text-xs text-tollerud-text-secondary p-2">
           Last event: Container app-web restarted at 14:32:12
         </TiaTabsContent>
       </TiaTabs>
@@ -837,7 +837,7 @@ export function SkeletonPreviews() {
   return (
     <div className="space-y-3 w-full">
       <PreviewCard title="Card skeleton">
-        <div className="space-y-3 p-4 rounded-lg border border-tia-border/30 bg-tia-surface-raised">
+        <div className="space-y-3 p-4 rounded-lg border border-tollerud-border/30 bg-tollerud-surface-raised">
           <TiaSkeleton className="h-4 w-3/4" />
           <TiaSkeleton className="h-3 w-1/2" />
           <TiaSkeleton className="h-3 w-full" />
@@ -846,7 +846,7 @@ export function SkeletonPreviews() {
       <PreviewCard title="Metrics skeleton">
         <div className="grid grid-cols-2 gap-3">
           {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="space-y-2 p-3 rounded-lg border border-tia-border/20 bg-tia-noir-900/50">
+            <div key={i} className="space-y-2 p-3 rounded-lg border border-tollerud-border/20 bg-tollerud-noir-900/50">
               <TiaSkeleton className="h-3 w-16" />
               <TiaSkeleton className="h-6 w-20" />
               <TiaSkeleton className="h-3 w-12" />
@@ -866,15 +866,15 @@ export function ProgressPreviews() {
       <PreviewCard title="Values">
         <div className="space-y-3">
           <div>
-            <div className="flex justify-between text-xs text-tia-text-muted mb-1"><span>Backup sync</span><span>75%</span></div>
+            <div className="flex justify-between text-xs text-tollerud-text-muted mb-1"><span>Backup sync</span><span>75%</span></div>
             <TiaProgress value={75} />
           </div>
           <div>
-            <div className="flex justify-between text-xs text-tia-text-muted mb-1"><span>Disk usage</span><span>42%</span></div>
+            <div className="flex justify-between text-xs text-tollerud-text-muted mb-1"><span>Disk usage</span><span>42%</span></div>
             <TiaProgress value={42} />
           </div>
           <div>
-            <div className="flex justify-between text-xs text-tia-text-muted mb-1"><span>Deployment</span><span>100%</span></div>
+            <div className="flex justify-between text-xs text-tollerud-text-muted mb-1"><span>Deployment</span><span>100%</span></div>
             <TiaProgress value={100} />
           </div>
         </div>
@@ -890,21 +890,21 @@ export function GlowCardPreviews() {
     <div className="space-y-3 w-full">
       <PreviewCard title="Cursor-follow glow on host cards">
         <div className="grid grid-cols-2 gap-3 w-full">
-          <TiaGlowCard glowColor="var(--tia-accent, #FFFF00)" intensity={0.12}>
+          <TiaGlowCard glowColor="var(--tollerud-accent, #FFFF00)" intensity={0.12}>
             <HostCard hostname="emma" ip="10.0.10.10" status="online" cpu="34%" memory="6.2/16 GB" disk="45%" uptime="42d" containers={8} />
           </TiaGlowCard>
-          <TiaGlowCard glowColor="var(--tia-error)" intensity={0.08}>
+          <TiaGlowCard glowColor="var(--tollerud-error)" intensity={0.08}>
             <HostCard hostname="iris" ip="10.0.10.12" status="warning" cpu="87%" memory="14.5/16 GB" disk="91%" uptime="14d" />
           </TiaGlowCard>
         </div>
-        <p className="text-xs text-tia-text-muted mt-2">Move your cursor over each card — a subtle glow follows. Configurable color and intensity per card.</p>
+        <p className="text-xs text-tollerud-text-muted mt-2">Move your cursor over each card — a subtle glow follows. Configurable color and intensity per card.</p>
       </PreviewCard>
       <PreviewCard title="Service health with glow">
         <div className="grid grid-cols-2 gap-3 w-full">
           <TiaGlowCard intensity={0.1}>
             <ServiceHealthCard service="API Gateway" status="online" uptime="99.97%" responseTime="42ms" />
           </TiaGlowCard>
-          <TiaGlowCard glowColor="var(--tia-warning)" intensity={0.1}>
+          <TiaGlowCard glowColor="var(--tollerud-warning)" intensity={0.1}>
             <ServiceHealthCard service="PostgreSQL" status="warning" uptime="98.2%" responseTime="12ms" />
           </TiaGlowCard>
         </div>
@@ -944,7 +944,7 @@ export function BentoDashboardPreviews() {
             { title: 'Backup completed', severity: 'info', timestamp: '3h ago', service: 'Rclone', description: 'JottaCloud sync finished — 1.2 GB' },
           ]}
         />
-        <p className="text-xs text-tia-text-muted mt-2">A complete dashboard layout using 8 different Tollerud components. Data-driven and responsive.</p>
+        <p className="text-xs text-tollerud-text-muted mt-2">A complete dashboard layout using 8 different Tollerud components. Data-driven and responsive.</p>
       </PreviewCard>
     </div>
   )
@@ -987,15 +987,15 @@ export function DataTablePreviews() {
       render: (val) => (
         <span className={cn(
           'inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium',
-          val === 'online' && 'bg-tia-accent/15 text-tia-accent',
-          val === 'warning' && 'bg-tia-warning/15 text-tia-warning',
-          val === 'offline' && 'bg-tia-error/15 text-tia-error',
+          val === 'online' && 'bg-tollerud-accent/15 text-tollerud-accent',
+          val === 'warning' && 'bg-tollerud-warning/15 text-tollerud-warning',
+          val === 'offline' && 'bg-tollerud-error/15 text-tollerud-error',
         )}>
           <span className={cn(
             'w-1.5 h-1.5 rounded-full',
-            val === 'online' && 'bg-tia-accent',
-            val === 'warning' && 'bg-tia-warning',
-            val === 'offline' && 'bg-tia-error',
+            val === 'online' && 'bg-tollerud-accent',
+            val === 'warning' && 'bg-tollerud-warning',
+            val === 'offline' && 'bg-tollerud-error',
           )} />
           {val as string}
         </span>
@@ -1007,7 +1007,7 @@ export function DataTablePreviews() {
     <div className="space-y-3 w-full">
       <PreviewCard title="Server inventory">
         <TiaDataTable<ServerRow> columns={columns} data={servers} className="w-full" />
-        <p className="text-xs text-tia-text-muted mt-2">Click column headers to sort. Type in filter inputs to narrow results — try filtering by server name or status.</p>
+        <p className="text-xs text-tollerud-text-muted mt-2">Click column headers to sort. Type in filter inputs to narrow results — try filtering by server name or status.</p>
       </PreviewCard>
     </div>
   )
@@ -1021,7 +1021,7 @@ export function SheetPreviews() {
       <PreviewCard title="Server details (right side)">
         <TiaSheet>
           <TiaSheetTrigger asChild>
-            <button className="px-3 py-1.5 rounded border border-tia-border/30 bg-tia-surface text-xs text-tia-text-primary hover:bg-tia-surface-raised transition-colors">
+            <button className="px-3 py-1.5 rounded border border-tollerud-border/30 bg-tollerud-surface text-xs text-tollerud-text-primary hover:bg-tollerud-surface-raised transition-colors">
               Open server details
             </button>
           </TiaSheetTrigger>
@@ -1030,29 +1030,29 @@ export function SheetPreviews() {
               <TiaSheetTitle>emma.tollerud</TiaSheetTitle>
               <TiaSheetDescription>10.0.10.10 · Ubuntu 24.04 · Uptime: 42d</TiaSheetDescription>
             </TiaSheetHeader>
-            <div className="mt-6 space-y-4 text-sm text-tia-text-secondary">
+            <div className="mt-6 space-y-4 text-sm text-tollerud-text-secondary">
               <div className="grid grid-cols-2 gap-2">
-                <div className="rounded bg-tia-surface-raised p-3">
-                  <div className="text-xs text-tia-text-muted">CPU</div>
-                  <div className="text-base font-semibold text-tia-text-primary">34%</div>
+                <div className="rounded bg-tollerud-surface-raised p-3">
+                  <div className="text-xs text-tollerud-text-muted">CPU</div>
+                  <div className="text-base font-semibold text-tollerud-text-primary">34%</div>
                 </div>
-                <div className="rounded bg-tia-surface-raised p-3">
-                  <div className="text-xs text-tia-text-muted">Memory</div>
-                  <div className="text-base font-semibold text-tia-text-primary">6.2/16 GB</div>
+                <div className="rounded bg-tollerud-surface-raised p-3">
+                  <div className="text-xs text-tollerud-text-muted">Memory</div>
+                  <div className="text-base font-semibold text-tollerud-text-primary">6.2/16 GB</div>
                 </div>
-                <div className="rounded bg-tia-surface-raised p-3">
-                  <div className="text-xs text-tia-text-muted">Disk</div>
-                  <div className="text-base font-semibold text-tia-text-primary">45%</div>
+                <div className="rounded bg-tollerud-surface-raised p-3">
+                  <div className="text-xs text-tollerud-text-muted">Disk</div>
+                  <div className="text-base font-semibold text-tollerud-text-primary">45%</div>
                 </div>
-                <div className="rounded bg-tia-surface-raised p-3">
-                  <div className="text-xs text-tia-text-muted">Containers</div>
-                  <div className="text-base font-semibold text-tia-text-primary">8</div>
+                <div className="rounded bg-tollerud-surface-raised p-3">
+                  <div className="text-xs text-tollerud-text-muted">Containers</div>
+                  <div className="text-base font-semibold text-tollerud-text-primary">8</div>
                 </div>
               </div>
             </div>
           </TiaSheetContent>
         </TiaSheet>
-        <p className="text-xs text-tia-text-muted mt-2">Click to open a slide-in panel with server details. Press Esc or click the X to close.</p>
+        <p className="text-xs text-tollerud-text-muted mt-2">Click to open a slide-in panel with server details. Press Esc or click the X to close.</p>
       </PreviewCard>
     </div>
   )
@@ -1067,7 +1067,7 @@ export function DropdownMenuPreviews() {
       <PreviewCard title="Overflow menu">
         <TiaDropdownMenu open={open} onOpenChange={setOpen}>
           <TiaDropdownMenuTrigger asChild>
-            <button className="px-3 py-1.5 rounded border border-tia-border/30 bg-tia-surface text-xs text-tia-text-primary hover:bg-tia-surface-raised transition-colors">
+            <button className="px-3 py-1.5 rounded border border-tollerud-border/30 bg-tollerud-surface text-xs text-tollerud-text-primary hover:bg-tollerud-surface-raised transition-colors">
               Actions ▾
             </button>
           </TiaDropdownMenuTrigger>
@@ -1088,7 +1088,7 @@ export function DropdownMenuPreviews() {
             </TiaDropdownMenuItem>
           </TiaDropdownMenuContent>
         </TiaDropdownMenu>
-        <p className="text-xs text-tia-text-muted mt-2">Click to open. Items with disabled state, a label group, and separator.</p>
+        <p className="text-xs text-tollerud-text-muted mt-2">Click to open. Items with disabled state, a label group, and separator.</p>
       </PreviewCard>
     </div>
   )

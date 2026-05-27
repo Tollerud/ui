@@ -2,7 +2,7 @@ export default function GettingStartedPage() {
   return (
     <div className="docs-content">
       <h1>Getting Started</h1>
-      <p>Tia Noir is a dark, cinematic, keyboard-first infrastructure design system. Drop it into any Next.js project.</p>
+      <p>Tollerud Design System is a dark, cinematic, keyboard-first infrastructure design system. Drop it into any Next.js project.</p>
 
       <h2>Install Dependencies</h2>
       <pre><code>{`npm install clsx tailwind-merge
@@ -15,9 +15,9 @@ npm install @paper-design/shaders-react
 
       <h2>Copy Files</h2>
       <p>Copy the design system into your project:</p>
-      <pre><code>{`cp -r path/to/tia-noir/globals.css src/app/
-cp -r path/to/tia-noir/components src/components/ui
-cp -r path/to/tia-noir/lib src/lib`}</code></pre>
+      <pre><code>{`cp -r path/to/tollerud-noir/globals.css src/app/
+cp -r path/to/tollerud-noir/components src/components/ui
+cp -r path/to/tollerud-noir/lib src/lib`}</code></pre>
 
       <h2>Font Setup</h2>
       <p>Add Inter + JetBrains Mono via <code>next/font/google</code> in your root layout:</p>
@@ -47,7 +47,7 @@ import { NoirGlowBackground } from '@/components/ui'`}</code></pre>
       <h2>Basic Example</h2>
       <pre><code>{`export default function Page() {
   return (
-    <div className="relative min-h-screen bg-tia-black">
+    <div className="relative min-h-screen bg-tollerud-black">
       <NoirGlowBackground
         intensity="medium"
         speed="slow"
@@ -68,7 +68,7 @@ import { NoirGlowBackground } from '@/components/ui'`}</code></pre>
       <h2>Key Conventions</h2>
       <ul>
         <li><strong>Dark-first</strong> — design starts in the dark. Add <code>class=&quot;dark&quot;</code> to <code>&lt;html&gt;</code>.</li>
-        <li><strong>Yellow is signal</strong> — <code>var(--tia-yellow)</code> / <code>#E8D500</code>. If it's yellow, click it.</li>
+        <li><strong>Yellow is signal</strong> — <code>var(--tollerud-yellow)</code> / <code>#E8D500</code>. If it's yellow, click it.</li>
         <li><strong>Terminal CTAs</strong> — use <code>variant=&quot;terminal&quot;</code> for monospace ❯-prefixed buttons.</li>
         <li><strong>One color pop</strong> — yellow carries the weight. State colors stay muted.</li>
         <li><strong>Sharp corners</strong> — subtle radius, sharp corners for noir feel.</li>

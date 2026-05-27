@@ -35,14 +35,14 @@ const DialogContent = React.forwardRef<
       ref={ref}
       className={cn(
         'fixed top-1/2 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2',
-        'rounded-lg border border-tia-border/30 bg-tia-noir-900 p-6 shadow-xl',
+        'rounded-lg border border-tollerud-border/30 bg-tollerud-noir-900 p-6 shadow-xl',
         'data-[state=open]:animate-none data-[state=closed]:animate-none',
         className
       )}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute top-4 right-4 rounded-sm p-1 text-tia-text-muted hover:text-tia-foreground transition-colors cursor-pointer">
+      <DialogPrimitive.Close className="absolute top-4 right-4 rounded-sm p-1 text-tollerud-text-muted hover:text-tollerud-foreground transition-colors cursor-pointer">
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
@@ -79,7 +79,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn('text-base font-semibold text-tia-foreground', className)}
+    className={cn('text-base font-semibold text-tollerud-foreground', className)}
     {...props}
   />
 ))
@@ -91,7 +91,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn('text-sm text-tia-text-secondary', className)}
+    className={cn('text-sm text-tollerud-text-secondary', className)}
     {...props}
   />
 ))

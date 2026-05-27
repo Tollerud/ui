@@ -10,9 +10,9 @@ npm install clsx tailwind-merge
 npm install @paper-design/shaders-react
 
 # Copy the design system into your project:
-cp -r /path/to/tia-noir/globals.css src/app/
-cp /path/to/tia-noir/tia-preset.js .
-cp -r /path/to/tia-noir/components src/components/ui
+cp -r /path/to/tollerud-noir/globals.css src/app/
+cp /path/to/tollerud-noir/tollerud-preset.js .
+cp -r /path/to/tollerud-noir/components src/components/ui
 ```
 
 ## Tailwind Setup
@@ -20,10 +20,10 @@ cp -r /path/to/tia-noir/components src/components/ui
 ```ts
 // tailwind.config.ts
 import type { Config } from 'tailwindcss'
-import tiaPreset from './tia-preset'
+import tollerudPreset from './tollerud-preset'
 
 const config: Config = {
-  presets: [tiaPreset],
+  presets: [tollerudPreset],
   content: [
     './src/app/**/*.{ts,tsx}',
     './src/components/**/*.{ts,tsx}',
@@ -37,7 +37,7 @@ export default config
 /* src/app/globals.css */
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
-@import "./tia-noir.css";
+@import "./tollerud-noir.css";
 ```
 
 ## Utils

@@ -7,10 +7,10 @@ import { cn } from '@/lib/utils'
 type Status = 'online' | 'offline' | 'warning' | 'idle'
 
 const statusColors: Record<Status, string> = {
-  online: 'bg-tia-success',
-  offline: 'bg-tia-error',
-  warning: 'bg-tia-yellow',
-  idle: 'bg-tia-noir-400',
+  online: 'bg-tollerud-success',
+  offline: 'bg-tollerud-error',
+  warning: 'bg-tollerud-yellow',
+  idle: 'bg-tollerud-noir-400',
 }
 
 const pulseColors: Partial<Record<Status, string>> = {
@@ -20,7 +20,7 @@ const pulseColors: Partial<Record<Status, string>> = {
 }
 
 const animationKeyframes = `
-@keyframes tia-dot-pulse {
+@keyframes tollerud-dot-pulse {
   0%, 100% { box-shadow: 0 0 0 0 var(--pulse-color, rgba(34,197,94,0.5)); }
   50% { box-shadow: 0 0 0 5px var(--pulse-color, rgba(34,197,94,0)); }
 }
@@ -60,11 +60,11 @@ const StatusDot = forwardRef<HTMLSpanElement, StatusDotProps>(
           className={cn(
             'inline-block w-2 h-2 rounded-full',
             statusColors[status],
-            shouldPulse && 'animate-tia-dot-pulse'
+            shouldPulse && 'animate-tollerud-dot-pulse'
           )}
           style={{
             ...(shouldPulse && pulseColor ? ({ '--pulse-color': pulseColor } as React.CSSProperties) : {}),
-            animation: shouldPulse ? 'tia-dot-pulse 2s ease-in-out infinite' : undefined,
+            animation: shouldPulse ? 'tollerud-dot-pulse 2s ease-in-out infinite' : undefined,
           } as React.CSSProperties}
         />
         {label && <span>{label}</span>}

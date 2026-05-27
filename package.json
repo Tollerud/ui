@@ -1,9 +1,9 @@
 {
-  "name": "@tollerud/tia-noir-design-system",
+  "name": "@tollerud/design-system",
   "version": "1.0.0",
-  "description": "Tia Noir Design System — dark, monochrome + yellow accent. Noir aesthetic meets modern utility.",
+  "description": "Tollerud Design System — dark, monochrome + yellow accent. Noir aesthetic meets modern utility.",
   "private": true,
-  "main": "tia-preset.js",
+  "main": "tollerud-preset.js",
   "style": "globals.css",
   "scripts": {
     "preview": "open preview.html"

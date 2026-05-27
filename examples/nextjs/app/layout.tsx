@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
   title: 'Tia App',
-  description: 'Built with Tia Noir Design System',
+  description: 'Built with Tollerud Design System',
 }
 
 export default function RootLayout({

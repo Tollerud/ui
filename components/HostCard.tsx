@@ -29,11 +29,11 @@ const HostCard = forwardRef<HTMLDivElement, HostCardProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border bg-tia-surface-raised p-4',
+          'rounded-lg border bg-tollerud-surface-raised p-4',
           'transition-[border-color] duration-[150ms]',
-          status === 'offline' && 'border-tia-error/40',
-          status === 'warning' && 'border-tia-yellow/30',
-          status === 'online' && 'border-tia-border hover:border-tia-noir-500',
+          status === 'offline' && 'border-tollerud-error/40',
+          status === 'warning' && 'border-tollerud-yellow/30',
+          status === 'online' && 'border-tollerud-border hover:border-tollerud-noir-500',
           loading && 'animate-pulse',
           className
         )}
@@ -42,24 +42,24 @@ const HostCard = forwardRef<HTMLDivElement, HostCardProps>(
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2 min-w-0">
             <StatusDot status={status} />
-            <span className="font-semibold text-sm text-tia-foreground truncate">
+            <span className="font-semibold text-sm text-tollerud-foreground truncate">
               {hostname}
             </span>
           </div>
           {containers !== undefined && (
-            <span className="text-[11px] text-tia-text-muted whitespace-nowrap ml-2">
+            <span className="text-[11px] text-tollerud-text-muted whitespace-nowrap ml-2">
               {containers} container{containers !== 1 ? 's' : ''}
             </span>
           )}
         </div>
         {ip && (
-          <div className="text-xs text-tia-text-muted mb-2 font-mono">{ip}</div>
+          <div className="text-xs text-tollerud-text-muted mb-2 font-mono">{ip}</div>
         )}
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-tia-text-muted">
-          {cpu && <span>CPU: <span className="text-tia-text-secondary">{cpu}</span></span>}
-          {memory && <span>RAM: <span className="text-tia-text-secondary">{memory}</span></span>}
-          {disk && <span>Disk: <span className="text-tia-text-secondary">{disk}</span></span>}
-          {uptime && <span>Up: <span className="text-tia-text-secondary">{uptime}</span></span>}
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-tollerud-text-muted">
+          {cpu && <span>CPU: <span className="text-tollerud-text-secondary">{cpu}</span></span>}
+          {memory && <span>RAM: <span className="text-tollerud-text-secondary">{memory}</span></span>}
+          {disk && <span>Disk: <span className="text-tollerud-text-secondary">{disk}</span></span>}
+          {uptime && <span>Up: <span className="text-tollerud-text-secondary">{uptime}</span></span>}
         </div>
       </div>
     )

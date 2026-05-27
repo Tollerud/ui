@@ -68,9 +68,9 @@ function cx(...classes: Array<string | false | null | undefined>) {
 function CssFallback({ preserveCenter = true, noiseOverlay = true }: Pick<NoirGlowBackgroundProps, "preserveCenter" | "noiseOverlay">) {
   return (
     <>
-      <div className="tia-noir-glow-bg" aria-hidden="true" />
-      {preserveCenter && <div className="tia-noir-glow-vignette" aria-hidden="true" />}
-      {noiseOverlay && <div className="tia-noir-noise" aria-hidden="true" />}
+      <div className="tollerud-noir-glow-bg" aria-hidden="true" />
+      {preserveCenter && <div className="tollerud-noir-glow-vignette" aria-hidden="true" />}
+      {noiseOverlay && <div className="tollerud-noir-noise" aria-hidden="true" />}
     </>
   )
 }
@@ -104,7 +104,7 @@ export function NoirGlowBackground({
   inert = true,
 }: NoirGlowBackgroundProps) {
   const wrapperClassName = cx(
-    "tia-noir-glow-root absolute inset-0 overflow-hidden",
+    "tollerud-noir-glow-root absolute inset-0 overflow-hidden",
     inert && "pointer-events-none",
     className
   )
@@ -135,8 +135,8 @@ export function NoirGlowBackground({
           colors={colors}
         />
       </Suspense>
-      {preserveCenter && <div className="tia-noir-glow-vignette" aria-hidden="true" />}
-      {noiseOverlay && <div className="tia-noir-noise" aria-hidden="true" />}
+      {preserveCenter && <div className="tollerud-noir-glow-vignette" aria-hidden="true" />}
+      {noiseOverlay && <div className="tollerud-noir-noise" aria-hidden="true" />}
     </div>
   )
 }

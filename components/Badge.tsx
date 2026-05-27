@@ -2,12 +2,12 @@ import { type HTMLAttributes, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
 const badgeVariants = {
-  default: 'bg-tia-noir-700 text-tia-text-secondary',
-  accent: 'bg-tia-yellow/15 text-tia-yellow',
-  success: 'bg-tia-success/15 text-tia-success',
-  error: 'bg-tia-error/15 text-tia-error',
-  info: 'bg-tia-info/15 text-tia-info',
-  warning: 'bg-tia-yellow/15 text-tia-warning',
+  default: 'bg-tollerud-noir-700 text-tollerud-text-secondary',
+  accent: 'bg-tollerud-yellow/15 text-tollerud-yellow',
+  success: 'bg-tollerud-success/15 text-tollerud-success',
+  error: 'bg-tollerud-error/15 text-tollerud-error',
+  info: 'bg-tollerud-info/15 text-tollerud-info',
+  warning: 'bg-tollerud-yellow/15 text-tollerud-warning',
 } as const
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {

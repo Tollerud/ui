@@ -35,8 +35,8 @@ export function BentoDashboard({
       {/* Title bar */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold text-tia-text-primary">{title}</h2>
-          <p className="text-xs text-tia-text-muted">
+          <h2 className="text-lg font-semibold text-tollerud-text-primary">{title}</h2>
+          <p className="text-xs text-tollerud-text-muted">
             {hosts.length} hosts · {services.length} services
             {incidents.length > 0 && ` · ${incidents.length} active incident${incidents.length > 1 ? 's' : ''}`}
           </p>
@@ -79,21 +79,21 @@ export function BentoDashboard({
             <SectionLabel>Services</SectionLabel>
             <div className="space-y-2">
               {services.slice(0, 4).map((s, i) => (
-                <div key={s.service ?? i} className="rounded-lg border border-tia-border/20 bg-tia-surface p-3">
+                <div key={s.service ?? i} className="rounded-lg border border-tollerud-border/20 bg-tollerud-surface p-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-tia-text-primary">{s.service}</span>
+                    <span className="text-sm font-medium text-tollerud-text-primary">{s.service}</span>
                     <span className={cn(
                       'text-xs px-1.5 py-0.5 rounded-full font-medium',
-                      s.status === 'online' && 'text-tia-accent bg-tia-accent/10',
-                      s.status === 'warning' && 'text-tia-warning bg-tia-warning/10',
-                      s.status === 'offline' && 'text-tia-error bg-tia-error/10',
-                      s.status === 'idle' && 'text-tia-text-muted bg-tia-noir-800',
+                      s.status === 'online' && 'text-tollerud-accent bg-tollerud-accent/10',
+                      s.status === 'warning' && 'text-tollerud-warning bg-tollerud-warning/10',
+                      s.status === 'offline' && 'text-tollerud-error bg-tollerud-error/10',
+                      s.status === 'idle' && 'text-tollerud-text-muted bg-tollerud-noir-800',
                     )}>
                       {s.status}
                     </span>
                   </div>
                   {s.responseTime && (
-                    <p className="text-xs text-tia-text-muted mt-1">{s.responseTime} response</p>
+                    <p className="text-xs text-tollerud-text-muted mt-1">{s.responseTime} response</p>
                   )}
                 </div>
               ))}
@@ -121,7 +121,7 @@ export function BentoDashboard({
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <p className="text-xs font-semibold text-tia-text-muted uppercase tracking-wider mb-2">{children}</p>
+    <p className="text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider mb-2">{children}</p>
   )
 }
 
@@ -129,16 +129,16 @@ function HostCardComponent({ host }: { host: HostCardProps }) {
   return (
     <div className={cn(
       'rounded-xl border p-4',
-      host.status === 'online' ? 'border-tia-border/30 bg-tia-surface' :
-      host.status === 'warning' ? 'border-tia-warning/30 bg-tia-warning/5' :
-      'border-tia-border/20 bg-tia-surface opacity-70'
+      host.status === 'online' ? 'border-tollerud-border/30 bg-tollerud-surface' :
+      host.status === 'warning' ? 'border-tollerud-warning/30 bg-tollerud-warning/5' :
+      'border-tollerud-border/20 bg-tollerud-surface opacity-70'
     )}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <StatusDotComp status={host.status as 'online' | 'offline' | 'warning'} />
-          <span className="text-sm font-semibold text-tia-text-primary">{host.hostname}</span>
+          <span className="text-sm font-semibold text-tollerud-text-primary">{host.hostname}</span>
         </div>
-        <span className="text-xs text-tia-text-muted font-mono">{host.ip}</span>
+        <span className="text-xs text-tollerud-text-muted font-mono">{host.ip}</span>
       </div>
       <div className="grid grid-cols-2 gap-2 text-xs">
         {host.cpu && <MetricBadge label="CPU" value={host.cpu} />}
@@ -152,13 +152,13 @@ function HostCardComponent({ host }: { host: HostCardProps }) {
 
 function StatCardComponent({ stat }: { stat: StatCardProps }) {
   return (
-    <div className="rounded-lg border border-tia-border/20 bg-tia-surface p-3">
-      <p className="text-xs text-tia-text-muted">{stat.label}</p>
-      <p className="text-lg font-semibold text-tia-text-primary mt-0.5">{stat.value}</p>
+    <div className="rounded-lg border border-tollerud-border/20 bg-tollerud-surface p-3">
+      <p className="text-xs text-tollerud-text-muted">{stat.label}</p>
+      <p className="text-lg font-semibold text-tollerud-text-primary mt-0.5">{stat.value}</p>
       {stat.change && (
         <span className={cn(
           'text-xs font-medium',
-          stat.change.direction === 'up' ? 'text-tia-accent' : 'text-tia-error'
+          stat.change.direction === 'up' ? 'text-tollerud-accent' : 'text-tollerud-error'
         )}>
           {stat.change.value}
         </span>
@@ -171,23 +171,23 @@ function IncidentCardItem({ incident }: { incident: { title: string; severity: I
   return (
     <div className={cn(
       'flex items-start gap-3 rounded-lg border p-3',
-      incident.acknowledged ? 'border-tia-border/10 bg-tia-noir-900/50 opacity-60' : 'border-tia-border/20 bg-tia-surface'
+      incident.acknowledged ? 'border-tollerud-border/10 bg-tollerud-noir-900/50 opacity-60' : 'border-tollerud-border/20 bg-tollerud-surface'
     )}>
       <SeverityDot severity={incident.severity} />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-tia-text-primary truncate">{incident.title}</span>
+          <span className="text-sm font-medium text-tollerud-text-primary truncate">{incident.title}</span>
           {incident.acknowledged && (
-            <span className="text-xs text-tia-text-muted">(acknowledged)</span>
+            <span className="text-xs text-tollerud-text-muted">(acknowledged)</span>
           )}
         </div>
-        <div className="flex items-center gap-2 text-xs text-tia-text-muted mt-0.5">
+        <div className="flex items-center gap-2 text-xs text-tollerud-text-muted mt-0.5">
           <span>{incident.service}</span>
           <span>·</span>
           <span>{incident.timestamp}</span>
         </div>
         {incident.description && (
-          <p className="text-xs text-tia-text-secondary mt-1">{incident.description}</p>
+          <p className="text-xs text-tollerud-text-secondary mt-1">{incident.description}</p>
         )}
       </div>
     </div>
@@ -198,9 +198,9 @@ function StatusDotComp({ status }: { status: 'online' | 'offline' | 'warning' })
   return (
     <span className={cn(
       'inline-block w-2 h-2 rounded-full',
-      status === 'online' && 'bg-tia-accent shadow-[0_0_4px_var(--tia-accent)]',
-      status === 'warning' && 'bg-tia-warning',
-      status === 'offline' && 'bg-tia-error',
+      status === 'online' && 'bg-tollerud-accent shadow-[0_0_4px_var(--tollerud-accent)]',
+      status === 'warning' && 'bg-tollerud-warning',
+      status === 'offline' && 'bg-tollerud-error',
     )} />
   )
 }
@@ -209,20 +209,20 @@ function SeverityDot({ severity }: { severity: IncidentSeverity }) {
   return (
     <span className={cn(
       'inline-block w-2 h-2 rounded-full mt-1 shrink-0',
-      severity === 'critical' && 'bg-tia-error shadow-[0_0_4px_var(--tia-error)]',
-      severity === 'high' && 'bg-tia-warning',
-      severity === 'medium' && 'bg-tia-accent',
-      severity === 'low' && 'bg-tia-text-muted',
-      severity === 'info' && 'bg-tia-info',
+      severity === 'critical' && 'bg-tollerud-error shadow-[0_0_4px_var(--tollerud-error)]',
+      severity === 'high' && 'bg-tollerud-warning',
+      severity === 'medium' && 'bg-tollerud-accent',
+      severity === 'low' && 'bg-tollerud-text-muted',
+      severity === 'info' && 'bg-tollerud-info',
     )} />
   )
 }
 
 function MetricBadge({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded bg-tia-noir-800 px-2 py-1.5">
-      <span className="text-tia-text-muted">{label}</span>
-      <span className="float-right text-tia-text-primary font-mono">{value}</span>
+    <div className="rounded bg-tollerud-noir-800 px-2 py-1.5">
+      <span className="text-tollerud-text-muted">{label}</span>
+      <span className="float-right text-tollerud-text-primary font-mono">{value}</span>
     </div>
   )
 }

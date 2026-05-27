@@ -25,15 +25,15 @@ export interface ApprovalCardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const stateStyles: Record<ApprovalState, string> = {
-  pending:  'border-tia-yellow/30 hover:border-tia-yellow/50',
-  approved: 'border-tia-success/40 opacity-70',
-  rejected: 'border-tia-error/40 opacity-70',
+  pending:  'border-tollerud-yellow/30 hover:border-tollerud-yellow/50',
+  approved: 'border-tollerud-success/40 opacity-70',
+  rejected: 'border-tollerud-error/40 opacity-70',
 }
 
 const stateLabels: Record<ApprovalState, { text: string; cls: string }> = {
-  pending:  { text: 'Awaiting approval', cls: 'text-tia-yellow' },
-  approved: { text: 'Approved', cls: 'text-tia-success' },
-  rejected: { text: 'Rejected', cls: 'text-tia-error' },
+  pending:  { text: 'Awaiting approval', cls: 'text-tollerud-yellow' },
+  approved: { text: 'Approved', cls: 'text-tollerud-success' },
+  rejected: { text: 'Rejected', cls: 'text-tollerud-error' },
 }
 
 const ApprovalCard = forwardRef<HTMLDivElement, ApprovalCardProps>(
@@ -44,7 +44,7 @@ const ApprovalCard = forwardRef<HTMLDivElement, ApprovalCardProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border bg-tia-surface-raised p-4',
+          'rounded-lg border bg-tollerud-surface-raised p-4',
           'transition-all duration-[150ms]',
           stateStyles[state],
           loading && 'animate-pulse',
@@ -53,13 +53,13 @@ const ApprovalCard = forwardRef<HTMLDivElement, ApprovalCardProps>(
         {...props}
       >
         <div className="flex items-center justify-between mb-1.5">
-          <span className="text-sm font-semibold text-tia-foreground truncate">{action}</span>
+          <span className="text-sm font-semibold text-tollerud-foreground truncate">{action}</span>
           <span className={cn('text-[11px] font-medium whitespace-nowrap ml-2', label.cls)}>{label.text}</span>
         </div>
         {description && (
-          <p className="text-xs text-tia-text-secondary mb-1.5 leading-relaxed">{description}</p>
+          <p className="text-xs text-tollerud-text-secondary mb-1.5 leading-relaxed">{description}</p>
         )}
-        <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-[11px] text-tia-text-muted mb-3">
+        <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-[11px] text-tollerud-text-muted mb-3">
           {source && <span className="font-mono">{source}</span>}
           {timestamp && <span>{timestamp}</span>}
         </div>
@@ -71,7 +71,7 @@ const ApprovalCard = forwardRef<HTMLDivElement, ApprovalCardProps>(
               onClick={onApprove}
               className={cn(
                 'flex-1 rounded-md px-3 py-1.5 text-xs font-semibold transition-all',
-                'bg-tia-success text-tia-text-inverse',
+                'bg-tollerud-success text-tollerud-text-inverse',
                 'hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed'
               )}
             >
@@ -83,7 +83,7 @@ const ApprovalCard = forwardRef<HTMLDivElement, ApprovalCardProps>(
               onClick={onReject}
               className={cn(
                 'flex-1 rounded-md px-3 py-1.5 text-xs font-semibold transition-all',
-                'bg-tia-error text-white',
+                'bg-tollerud-error text-white',
                 'hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed'
               )}
             >
