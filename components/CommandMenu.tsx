@@ -58,7 +58,10 @@ export interface CommandMenuProps {
  *   ]}
  * />
  * ```
- */\nconst CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(\n  ({\n  open,
+ */
+const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
+  ({
+  open,
   onOpenChange,
   groups,
   placeholder = 'Type a command…',

@@ -143,8 +143,7 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
   }, [pathname])
 
   return (
-    <body className="bg-tia-black text-tia-foreground antialiased min-h-screen">
-      <TooltipProvider delayDuration={0}>
+    <TooltipProvider delayDuration={0}>
         <div className="flex min-h-screen">
           {/* Desktop sidebar */}
           <aside className="w-64 flex-shrink-0 border-r border-tia-border/30 bg-tia-noir-950 hidden md:flex flex-col overflow-y-auto">
@@ -152,7 +151,7 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
               <div className="flex items-center justify-between">
                 <Link href="/" className="flex items-center gap-3">
                   <svg width="20" height="22" viewBox="0 0 130 143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="flex-shrink-0">
-                    <g fill="#FFF200" fill-rule="evenodd">
+                    <g fill="#FFF200" fillRule="evenodd">
                       <g transform="translate(-86.000000, -109.000000)">
                         <g transform="translate(32.000000, 55.000000)">
                           <g transform="translate(54.000000, 54.000000)">
@@ -183,7 +182,7 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
           <div className="md:hidden fixed top-0 left-0 right-0 z-50 h-12 bg-tia-noir-950 border-b border-tia-border/30 flex items-center justify-between px-4">
             <Link href="/" className="flex items-center gap-2">
               <svg width="16" height="18" viewBox="0 0 130 143" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" className="flex-shrink-0">
-                <g fill="#FFF200" fill-rule="evenodd">
+                <g fill="#FFF200" fillRule="evenodd">
                   <g transform="translate(-86.000000, -109.000000)">
                     <g transform="translate(32.000000, 55.000000)">
                       <g transform="translate(54.000000, 54.000000)">
@@ -244,7 +243,6 @@ function RootLayoutInner({ children }: { children: ReactNode }) {
         </div>
         <Toaster />
       </TooltipProvider>
-    </body>
   )
 }
 
@@ -255,9 +253,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <title>Tollerud Design System</title>
         <meta name="description" content="Dark, cinematic, keyboard-first infrastructure design system" />
       </head>
-      <ThemeProvider attribute="class" defaultTheme="dark" storageKey="tollerud-theme">
-        <RootLayoutInner>{children}</RootLayoutInner>
-      </ThemeProvider>
+      <body className="bg-tia-surface text-tia-foreground antialiased min-h-screen">
+        <ThemeProvider attribute="class" defaultTheme="dark" storageKey="tollerud-theme">
+          <RootLayoutInner>{children}</RootLayoutInner>
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

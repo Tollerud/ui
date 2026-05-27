@@ -23,16 +23,25 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
     )
 
     const handleCopy = useCallback(async () => {
-      // Resolve the text to copy: prefer `code`, then children as string
       const text = code ?? (typeof children === 'string' ? children : '')
       if (!text) return
+
+      // Try clipboard API first, fallback to execCommand for broader compat
       try {
         await navigator.clipboard.writeText(text)
-        setCopied(true)
-        setTimeout(() => setCopied(false), 1500)
       } catch {
-        // clipboard API may be unavailable — silently ignore
+        const textarea = document.createElement('textarea')
+        textarea.value = text
+        textarea.style.position = 'fixed'
+        textarea.style.opacity = '0'
+        document.body.appendChild(textarea)
+        textarea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textarea)
       }
+
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
     }, [code, children])
 
     return (
@@ -53,14 +62,14 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             onClick={handleCopy}
             className={cn(
               'absolute top-2 right-2 px-2 py-1 rounded text-xs font-medium',
-              'opacity-0 group-hover:opacity-100 transition-opacity',
+              'opacity-0 group-hover:opacity-100 transition-all',
               'bg-tia-noir-800 border border-tia-border/30 text-tia-text-muted',
               'hover:bg-tia-surface-raised hover:text-tia-text-primary',
-              copied && 'opacity-100 bg-tia-accent/20 text-tia-accent border-tia-accent/40'
+              copied && 'opacity-100 bg-tia-success/15 text-tia-success border-tia-success/40'
             )}
             aria-label={copied ? 'Copied' : 'Copy code'}
           >
-            {copied ? 'Copied' : 'Copy'}
+            {copied ? '✓ Copied' : 'Copy'}
           </button>
         )}
       </div>

@@ -53,7 +53,7 @@ const ActionDiff = forwardRef<HTMLDivElement, ActionDiffProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border border-tia-border bg-[#0A0A0A] overflow-hidden',
+          'rounded-lg border border-tia-border bg-[var(--color-tia-surface-raised)] overflow-hidden',
           loading && 'animate-pulse',
           className
         )}

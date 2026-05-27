@@ -124,7 +124,7 @@
    Unlayered — placed AFTER @theme so it wins Cascade Layer priority
    ═══════════════════════════ */
 
-.light {
+:root:not(.dark) {
   /* ── Invert noir palette so raw utility classes (bg-tia-noir-*, text-tia-noir-*) work in light mode ── */
   /* NOTE: --color-tia-black and --color-tia-white are NOT inverted — they're true
      black/white retained for text-on-yellow (buttons) and switch thumb contrast */
@@ -388,7 +388,11 @@
   @apply text-sm text-[var(--color-tia-text-secondary)] leading-relaxed mb-4;
 }
 .docs-content code {
-  @apply px-1.5 py-0.5 rounded bg-[var(--color-tia-noir-800)] text-[var(--color-tia-yellow)] text-xs font-mono;
+  @apply px-1.5 py-0.5 rounded text-[var(--color-tia-yellow)] text-xs font-mono;
+}
+:root:not(.dark) .docs-content code {
+  color: var(--color-tia-noir-100);
+  background: var(--color-tia-noir-850);
 }
 .docs-content pre {
   @apply p-4 rounded-lg bg-[var(--color-tia-noir-900)] border border-[var(--color-tia-border)]/30 overflow-x-auto mb-6;

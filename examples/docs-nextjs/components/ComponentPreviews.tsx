@@ -952,7 +952,7 @@ export function BentoDashboardPreviews() {
 
 /* ────────── DATA TABLE PREVIEWS ────────── */
 
-interface ServerRow {
+interface ServerRow extends Record<string, unknown> {
   name: string
   ip: string
   cpu: string
@@ -1006,7 +1006,7 @@ export function DataTablePreviews() {
   return (
     <div className="space-y-3 w-full">
       <PreviewCard title="Server inventory">
-        <TiaDataTable columns={columns} data={servers} className="w-full" />
+        <TiaDataTable<ServerRow> columns={columns} data={servers} className="w-full" />
         <p className="text-xs text-tia-text-muted mt-2">Click column headers to sort. Type in filter inputs to narrow results — try filtering by server name or status.</p>
       </PreviewCard>
     </div>

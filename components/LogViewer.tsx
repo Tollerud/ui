@@ -97,7 +97,7 @@ const LogViewer = forwardRef<HTMLDivElement, LogViewerProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-lg border border-tia-border bg-[#0A0A0A] overflow-hidden tia-log-viewer',
+          'rounded-lg border border-tia-border bg-[var(--color-tia-surface-raised)] overflow-hidden tia-log-viewer',
           loading && 'animate-pulse',
           className
         )}
@@ -151,7 +151,7 @@ const LogViewer = forwardRef<HTMLDivElement, LogViewerProps>(
               <div
                 key={`${absLineNum}-${i}`}
                 className={cn(
-                  'flex gap-3 hover:bg-white/[0.02] px-1 py-px rounded-sm',
+                  'flex gap-3 hover:bg-[var(--color-tia-surface-hover)] px-1 py-px rounded-sm',
                   levelStyles[level]
                 )}
               >

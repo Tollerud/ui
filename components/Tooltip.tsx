@@ -13,7 +13,7 @@ const TooltipProvider = TooltipPrimitive.Provider
 
 type TooltipContextValue = {
   open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setOpen: (open: boolean) => void
 }
 
 const TooltipContext = React.createContext<TooltipContextValue | null>(null)
@@ -32,7 +32,7 @@ function Tooltip({
 
   return (
     <TooltipContext.Provider value={{ open, setOpen }}>
-      <TooltipPrimitive.Root open={open} onOpenChange={setOpen} {...props}>
+      <TooltipPrimitive.Root open={open} onOpenChange={(v: boolean) => setOpen(v)} {...props}>
         {children}
       </TooltipPrimitive.Root>
     </TooltipContext.Provider>
@@ -58,7 +58,7 @@ const TooltipTrigger = React.forwardRef<
         }
         // Toggle tooltip on click — covers mobile where hover doesn't fire
         if (ctx) {
-          ctx.setOpen((prev) => !prev)
+          ctx.setOpen(!ctx.open)
         }
         onClick?.(e)
       }}
