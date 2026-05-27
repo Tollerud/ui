@@ -1,6 +1,7 @@
 "use client"
 
 import {
+  forwardRef,
   type KeyboardEvent,
   useCallback,
   useEffect,
@@ -57,9 +58,7 @@ export interface CommandMenuProps {
  *   ]}
  * />
  * ```
- */
-export function CommandMenu({
-  open,
+ */\nconst CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(\n  ({\n  open,
   onOpenChange,
   groups,
   placeholder = 'Type a command…',
@@ -67,7 +66,7 @@ export function CommandMenu({
   className,
   filter: customFilter,
   onAction,
-}: CommandMenuProps) {
+}: CommandMenuProps, ref) => {
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -290,3 +289,7 @@ export function CommandMenu({
     </>
   )
 }
+)
+CommandMenu.displayName = 'CommandMenu'
+
+export { CommandMenu }

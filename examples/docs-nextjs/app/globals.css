@@ -41,47 +41,6 @@
     --sidebar-border: var(--color-tia-border);
     --sidebar-ring: var(--color-tia-yellow);
   }
-
-  .light {
-    --background: #FAFAFA;
-    --foreground: #1A1A1A;
-    --card: #FFFFFF;
-    --card-foreground: #1A1A1A;
-    --popover: #FFFFFF;
-    --popover-foreground: #1A1A1A;
-    --primary: #E8D500;
-    --primary-foreground: #1A1A1A;
-    --secondary: #E5E5E5;
-    --secondary-foreground: #1A1A1A;
-    --muted: #E5E5E5;
-    --muted-foreground: #666666;
-    --destructive: #EF4444;
-    --destructive-foreground: #FFFFFF;
-    --border: #D4D4D4;
-    --input: #D4D4D4;
-    --ring: #E8D500;
-    --sidebar-background: #FAFAFA;
-    --sidebar-foreground: #1A1A1A;
-    --sidebar-primary: #E8D500;
-    --sidebar-primary-foreground: #1A1A1A;
-    --sidebar-accent: color-mix(in srgb, var(--color-tia-yellow) 10%, transparent);
-    --sidebar-accent-foreground: #E8D500;
-    --sidebar-border: #D4D4D4;
-    --sidebar-ring: #E8D500;
-
-    --color-tia-surface: #F5F5F5;
-    --color-tia-surface-raised: #FFFFFF;
-    --color-tia-surface-overlay: #FFFFFF;
-    --color-tia-surface-hover: #EBEBEB;
-    --color-tia-text-primary: #1A1A1A;
-    --color-tia-text-secondary: #4A4A4A;
-    --color-tia-text-muted: #888888;
-    --color-tia-text-inverse: #F5F5F5;
-    --color-tia-foreground: #1A1A1A;
-    --color-tia-background: #FAFAFA;
-    --color-tia-border: #D4D4D4;
-    --color-tia-border-subtle: #E5E5E5;
-  }
 }
 
 /* ═══════════════════════════
@@ -158,6 +117,70 @@
     0%   { opacity: 0; transform: translateY(4px); }
     100% { opacity: 1; transform: translateY(0); }
   }
+}
+
+/* ═══════════════════════════
+   Tia Noir — Light Mode Override
+   Unlayered — placed AFTER @theme so it wins Cascade Layer priority
+   ═══════════════════════════ */
+
+.light {
+  /* ── Invert noir palette so raw utility classes (bg-tia-noir-*, text-tia-noir-*) work in light mode ── */
+  /* NOTE: --color-tia-black and --color-tia-white are NOT inverted — they're true
+     black/white retained for text-on-yellow (buttons) and switch thumb contrast */
+  --color-tia-black: #0A0A0A;
+  --color-tia-noir-950: #FAFAFA;
+  --color-tia-noir-900: #F0F0F0;
+  --color-tia-noir-850: #E8E8E8;
+  --color-tia-noir-800: #E0E0E0;
+  --color-tia-noir-700: #D4D4D4;
+  --color-tia-noir-600: #B8B8B8;
+  --color-tia-noir-500: #9A9A9A;
+  --color-tia-noir-400: #808080;
+  --color-tia-noir-300: #666666;
+  --color-tia-noir-200: #4A4A4A;
+  --color-tia-noir-100: #333333;
+  --color-tia-noir-50: #252525;
+  --color-tia-white: #F5F5F5;
+
+  --background: #FAFAFA;
+  --foreground: #0A0A0A;
+  --card: #FFFFFF;
+  --card-foreground: #0A0A0A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0A0A0A;
+  --primary: #E8D500;
+  --primary-foreground: #0A0A0A;
+  --secondary: #E5E5E5;
+  --secondary-foreground: #0A0A0A;
+  --muted: #E5E5E5;
+  --muted-foreground: #666666;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #D4D4D4;
+  --input: #D4D4D4;
+  --ring: #E8D500;
+  --sidebar-background: #FAFAFA;
+  --sidebar-foreground: #0A0A0A;
+  --sidebar-primary: #E8D500;
+  --sidebar-primary-foreground: #0A0A0A;
+  --sidebar-accent: color-mix(in srgb, var(--color-tia-yellow) 10%, transparent);
+  --sidebar-accent-foreground: #E8D500;
+  --sidebar-border: #D4D4D4;
+  --sidebar-ring: #E8D500;
+
+  --color-tia-surface: #F5F5F5;
+  --color-tia-surface-raised: #FFFFFF;
+  --color-tia-surface-overlay: #FFFFFF;
+  --color-tia-surface-hover: #EBEBEB;
+  --color-tia-text-primary: #0A0A0A;
+  --color-tia-text-secondary: #333333;
+  --color-tia-text-muted: #666666;
+  --color-tia-text-inverse: #F5F5F5;
+  --color-tia-foreground: #0A0A0A;
+  --color-tia-background: #FAFAFA;
+  --color-tia-border: #D4D4D4;
+  --color-tia-border-subtle: #E5E5E5;
 }
 
 /* ── Tia Noir Component CSS (ported from root globals.css) ── */
@@ -694,4 +717,42 @@
   html {
     @apply font-sans;
   }
+}
+
+/* ═══ Custom Noir Scrollbar ═══ */
+/* Thin, dark scrollbar that blends with the Tia Noir theme */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-tia-noir-600);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-tia-noir-500);
+}
+
+/* LogViewer — extra subtle, monospace-friendly scrollbar */
+.tia-log-viewer::-webkit-scrollbar {
+  width: 6px;
+}
+.tia-log-viewer::-webkit-scrollbar-thumb {
+  background: var(--color-tia-noir-700);
+}
+.tia-log-viewer::-webkit-scrollbar-thumb:hover {
+  background: var(--color-tia-noir-500);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-tia-noir-600) transparent;
 }

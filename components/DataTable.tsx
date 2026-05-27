@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, type ReactNode } from 'react'
+import { useState, useMemo, forwardRef, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── Sortable & Filterable Data Table ──────────────────── */
@@ -25,14 +25,19 @@ export interface DataTableProps<T extends Record<string, unknown>> {
   emptyMessage?: string
 }
 
-function DataTable<T extends Record<string, unknown>>({
+interface DataTableInnerProps<T extends Record<string, unknown>> extends DataTableProps<T> {
+  forwardedRef?: React.Ref<HTMLDivElement>
+}
+
+function DataTableInner<T extends Record<string, unknown>>({
   columns,
   data,
   rowKey,
   onRowClick,
   className,
   emptyMessage = 'No data',
-}: DataTableProps<T>) {
+  forwardedRef,
+}: DataTableInnerProps<T>) {
   const [sortKey, setSortKey] = useState<string | null>(null)
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
   const [filters, setFilters] = useState<Record<string, string>>({})
@@ -101,7 +106,7 @@ function DataTable<T extends Record<string, unknown>>({
   const filterableColumns = columns.filter((c) => c.filterable)
 
   return (
-    <div className={cn('overflow-x-auto rounded-lg border border-tia-border/30', className)}>
+    <div ref={forwardedRef} className={cn('overflow-x-auto rounded-lg border border-tia-border/30', className)}>
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-tia-border/30 bg-tia-noir-900">
@@ -221,5 +226,12 @@ function DataTable<T extends Record<string, unknown>>({
     </div>
   )
 }
+
+const DataTable = forwardRef(<T extends Record<string, unknown>>(
+  props: DataTableProps<T>,
+  ref: React.Ref<HTMLDivElement>
+) => <DataTableInner {...props} forwardedRef={ref} />)
+
+DataTable.displayName = 'DataTable'
 
 export { DataTable }
