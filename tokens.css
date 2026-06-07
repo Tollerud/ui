@@ -355,6 +355,7 @@ code, pre {
 
 /* ── Background Grid ── */
 .tollerud-grid-bg {
+  pointer-events: none;
   background-image:
     linear-gradient(var(--tollerud-grid-color) 1px, transparent 1px),
     linear-gradient(90deg, var(--tollerud-grid-color) 1px, transparent 1px);

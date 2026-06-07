@@ -382,7 +382,7 @@ h1,h2,h3,h4,h5,h6,p { margin: 0; }
 
 .tollerud-grain-gradient { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .tollerud-paper-grain { position: absolute; inset: 0; overflow: hidden; pointer-events: none; background: transparent; }
-.tollerud-paper-grain[data-paper-shader] canvas { z-index: 0; }
+.tollerud-paper-grain[data-paper-shader] canvas { z-index: 0; pointer-events: none; }
 .tollerud-grain-gradient__field {
   position: absolute; inset: -20%;
   filter: blur(8px) saturate(1.1);
@@ -458,6 +458,7 @@ h1,h2,h3,h4,h5,h6,p { margin: 0; }
 }
 
 /* Hero — fluid title + collapsing layout so it never clips on mobile */
+.ds-hero__grid { position: relative; z-index: 2; }
 .ds-hero__copy { position: relative; z-index: 2; max-width: 620px; }
 .ds-hero__copy--scrim {
   margin: -24px -26px;

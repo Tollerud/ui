@@ -131,6 +131,55 @@ function PageFoundations() {
         </div>
       </Section>
 
+      <Section title="Monogram" desc="The Tollerud mark is a single continuous path — a stylised T in acid yellow (#FFF200). There is no separate wordmark; use the monogram everywhere the brand needs to appear at small scale.">
+        <div className="ds-demo ds-themed" style={{ padding: '28px 24px' }}>
+          <div className="ds-row" style={{ gap: 32, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+            {[[96, 'App chrome'], [48, 'Nav / favicon'], [26, 'Inline badge'], [20, 'Minimum']].map(([size, label]) => (
+              <div key={size} style={{ textAlign: 'center' }}>
+                <div style={{ width: size + 24, height: size + 24, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--tollerud-black)', borderRadius: 8, border: '1px solid var(--border)', margin: '0 auto 8px' }}>
+                  <img src="tollerud-logo.svg" alt="" style={{ width: size, height: 'auto' }}/>
+                </div>
+                <span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{size}px · {label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <SubHead>When to use</SubHead>
+        <TokenTable cols={['Context', 'Asset', 'Notes']}
+          rows={[
+            ['Sidebar, topbar, favicon', '<code>tollerud-logo.svg</code>', 'Primary brand mark — always on noir/black'],
+            ['Sign-in panel, auth flows', '<code>tollerud-logo.svg</code>', '26–32px beside product name'],
+            ['Hero / marketing', 'Monogram + wordmark in copy', 'No separate wordmark file — set product name in Inter next to the mark'],
+          ]}/>
+        <SubHead>Clear space & background</SubHead>
+        <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 16px' }}>
+          Preserve at least one T-width of padding on all sides. The monogram is designed for dark surfaces — black, noir-900, or the grain gradient. Never place on white or light backgrounds; contrast breaks and the yellow reads as noise.
+        </p>
+        <div className="ds-grid-2">
+          <div className="tollerud-card ds-themed">
+            <div className="ds-row" style={{ gap: 7, marginBottom: 14, color: 'var(--success)' }}><Icons.checkCircle size={16}/><span style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)' }}>Do</span></div>
+            <div className="ds-col" style={{ gap: 10 }}>
+              {['Place on noir/black backgrounds only', 'Use acid yellow fill as shipped — no recolor', 'Scale proportionally; 20px is the minimum width', 'Pair with Inter for product name when space allows'].map((s, i) =>
+                <span key={i} style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{s}</span>)}
+            </div>
+          </div>
+          <div className="tollerud-card ds-themed">
+            <div className="ds-row" style={{ gap: 7, marginBottom: 14, color: 'var(--destructive)' }}><Icons.xCircle size={16}/><span style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)' }}>Don&apos;t</span></div>
+            <div className="ds-col" style={{ gap: 10 }}>
+              {['Place on white or light card backgrounds', 'Stretch, rotate, outline, or add drop shadows', 'Recolor the fill or use gradients', 'Use as a decorative pattern or watermark'].map((s, i) =>
+                <span key={i} style={{ fontSize: 13, color: 'var(--text-muted)', textDecoration: 'line-through', textDecorationColor: 'rgba(239,68,68,.5)' }}>{s}</span>)}
+            </div>
+          </div>
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <CodeSnippet name="monogram.jsx" code={`// Static asset — same path pattern as sidebar / auth
+<img src="tollerud-logo.svg" alt="Tollerud" style={{ width: 26 }}/>
+
+// Next.js docs site (public/)
+<img src="/tollerud-logo.svg" alt="Tollerud" className="w-6 h-auto" />`}/>
+        </div>
+      </Section>
+
       <Section title="State color" desc="Used sparingly for status only — kept muted so yellow stays the loudest thing on screen.">
         <div className="ds-swatchgrid">
           {state.map(([n, v, t]) => <Swatch key={n} name={n} value={v} varName={t}/>)}
@@ -275,6 +324,54 @@ container: (p) => (
                 <code key={i} className="ds-mono" style={{ fontSize: 13, color: 'var(--text-muted)', textDecoration: 'line-through', textDecorationColor: 'rgba(239,68,68,.5)' }}>{s}</code>)}
             </div>
           </div>
+        </div>
+      </Section>
+
+      <Section title="Tia" desc="Tia — Tollerud Infrastructure Agent — is the brand mascot. Cel-shaded monochrome gakuran, amber eyes, gold buttons. A brand signature, not a UI icon. Use sparingly on landing pages, about sections, agent-running moments and loading states.">
+        <div className="ds-grid-2" style={{ alignItems: 'start' }}>
+          <div className="tollerud-card ds-themed" style={{ padding: 0, overflow: 'hidden' }}>
+            <div className="ds-panel__head"><span className="ds-panel__title">Portrait</span><span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)' }}>tollerud-avatar.svg</span></div>
+            <div style={{ padding: 24, display: 'flex', justifyContent: 'center', background: 'var(--tollerud-black)' }}>
+              <img src="tollerud-avatar.svg" alt="Tia portrait" style={{ width: 160, height: 'auto' }}/>
+            </div>
+            <div style={{ padding: '14px 18px', fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55, borderTop: '1px solid var(--border)' }}>
+              Waist-up wave — the default avatar for nav badges, chat bubbles, and compact brand moments. PNG variant (<code className="ds-mono" style={{ fontSize: 12 }}>tollerud-avatar.png</code>) ships for hero-scale renders with drop shadow.
+            </div>
+          </div>
+          <div className="tollerud-card ds-themed" style={{ padding: 0, overflow: 'hidden' }}>
+            <div className="ds-panel__head"><span className="ds-panel__title">Full figure</span><span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)' }}>tia-full-figure.svg</span></div>
+            <div style={{ padding: '16px 24px', display: 'flex', justifyContent: 'center', background: 'var(--tollerud-black)', maxHeight: 420, overflow: 'hidden' }}>
+              <img src="tia-full-figure.svg" alt="Tia full figure" style={{ height: 380, width: 'auto', objectFit: 'contain', objectPosition: 'top' }}/>
+            </div>
+            <div style={{ padding: '14px 18px', fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55, borderTop: '1px solid var(--border)' }}>
+              Head-to-toe illustration for hero sections, empty states, and onboarding. Keep on dark backgrounds; a subtle yellow drop-shadow reads well over the grain gradient.
+            </div>
+          </div>
+        </div>
+        <div className="ds-grid-2" style={{ marginTop: 16 }}>
+          <div className="tollerud-card ds-themed">
+            <div className="ds-row" style={{ gap: 7, marginBottom: 14, color: 'var(--success)' }}><Icons.checkCircle size={16}/><span style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)' }}>Do</span></div>
+            <div className="ds-col" style={{ gap: 9 }}>
+              {['Use portrait for avatars, chat, and compact UI chrome', 'Use full figure for hero and onboarding moments', 'Place on noir/black or grain-gradient backgrounds', 'One Tia per viewport — she is a signature, not wallpaper'].map((s, i) =>
+                <span key={i} style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{s}</span>)}
+            </div>
+          </div>
+          <div className="tollerud-card ds-themed">
+            <div className="ds-row" style={{ gap: 7, marginBottom: 14, color: 'var(--destructive)' }}><Icons.xCircle size={16}/><span style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)' }}>Don&apos;t</span></div>
+            <div className="ds-col" style={{ gap: 9 }}>
+              {['Use Tia as a generic user avatar or icon substitute', 'Crop below the shoulders on the full-figure asset', 'Place on light backgrounds without a dark scrim', 'Inline the SVG — reference the asset file instead'].map((s, i) =>
+                <span key={i} style={{ fontSize: 13, color: 'var(--text-muted)', textDecoration: 'line-through', textDecorationColor: 'rgba(239,68,68,.5)' }}>{s}</span>)}
+            </div>
+          </div>
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <CodeSnippet name="tia-avatar.jsx" code={`// Portrait — SVG for crisp scaling, PNG for hero glow
+<img src="tollerud-avatar.svg" alt="Tia" style={{ width: 96 }}/>
+<img src="tollerud-avatar.png" alt="Tia" style={{ height: 340,
+  filter: 'drop-shadow(0 0 50px rgba(232,213,0,0.25))' }}/>
+
+// Full figure — always reference the asset file
+<img src="tia-full-figure.svg" alt="Tia" style={{ height: 480, width: 'auto' }}/>`}/>
         </div>
       </Section>
     </div>

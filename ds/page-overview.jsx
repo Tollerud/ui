@@ -13,9 +13,10 @@ function PageOverview({ go }) {
         {bold && (
           <GrainGradientGL/>
         )}
+        {bold && <div className="ds-hero-readable-shadow" aria-hidden="true"/>}
         <div className="tollerud-grid-bg" style={{ position: 'absolute', inset: 0, opacity: bold ? 0.4 : 1, zIndex: 1 }}/>
         <div className="ds-hero__grid" style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24, padding: '52px 48px', alignItems: 'center' }}>
-          <div className={`ds-hero__copy ${bold ? 'ds-hero__copy--scrim' : ''}`}>
+          <div className="ds-hero__copy">
             <div className="ds-row" style={{ gap: 10, marginBottom: 22 }}>
               <span className="tollerud-pill tollerud-pill--outline">v1.0 · noir + yellow</span>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: bold ? 'rgba(245,245,245,0.5)' : 'var(--text-muted)' }}>>60 components · 9 foundations</span>
