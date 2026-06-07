@@ -5,11 +5,25 @@ function DatePicker() {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState(new Date(2026, 5, 1));
   const [sel, setSel] = useState(null);
-  const ref = useRef(null);
+  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const triggerRef = useRef(null);
+  const popRef = useRef(null);
+
   useEffect(() => {
-    const h = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    document.addEventListener('mousedown', h); return () => document.removeEventListener('mousedown', h);
+    const h = e => {
+      if (triggerRef.current && !triggerRef.current.contains(e.target) &&
+          popRef.current && !popRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('mousedown', h);
+    return () => document.removeEventListener('mousedown', h);
   }, []);
+
+  const openPicker = () => {
+    const r = triggerRef.current.getBoundingClientRect();
+    setPos({ top: r.bottom + window.scrollY + 6, left: r.left + window.scrollX });
+    setOpen(o => !o);
+  };
+
   const y = view.getFullYear(), m = view.getMonth();
   const first = new Date(y, m, 1).getDay();
   const days = new Date(y, m + 1, 0).getDate();
@@ -17,14 +31,15 @@ function DatePicker() {
   const cells = []; for (let i = 0; i < (first + 6) % 7; i++) cells.push(null);
   for (let d = 1; d <= days; d++) cells.push(d);
   const fmt = sel ? sel.toLocaleDateString('en', { day: '2-digit', month: 'short', year: 'numeric' }) : '';
+
   return (
-    <div ref={ref} style={{ position: 'relative', width: 280 }}>
-      <button className="tollerud-input ds-row" onClick={() => setOpen(o => !o)} style={{ justifyContent: 'space-between', cursor: 'pointer' }}>
+    <div style={{ width: 280 }}>
+      <button ref={triggerRef} className="tollerud-input ds-row" onClick={openPicker} style={{ justifyContent: 'space-between', cursor: 'pointer', width: '100%' }}>
         <span style={{ color: sel ? 'var(--foreground)' : 'var(--text-muted)' }}>{fmt || 'Pick a date'}</span>
         <Icons.calendar size={15}/>
       </button>
-      {open && (
-        <div className="tollerud-menu ds-themed" style={{ position: 'absolute', top: '100%', left: 0, marginTop: 6, zIndex: 50, padding: 12, width: 256 }}>
+      {open && ReactDOM.createPortal(
+        <div ref={popRef} className="tollerud-menu ds-themed" style={{ position: 'absolute', top: pos.top, left: pos.left, zIndex: 9999, padding: 12, width: 256 }}>
           <div className="ds-row" style={{ justifyContent: 'space-between', marginBottom: 10 }}>
             <button className="ds-iconbtn" style={{ width: 28, height: 28 }} onClick={() => setView(new Date(y, m - 1, 1))}><Icons.chevLeft size={14}/></button>
             <span style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--foreground)' }}>{monthName}</span>
@@ -43,7 +58,8 @@ function DatePicker() {
               ) : <div key={i}/>;
             })}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

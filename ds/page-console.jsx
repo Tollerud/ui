@@ -35,8 +35,8 @@ const LOG_POOL = [
 function r(n) { return Math.floor(Math.random() * n); }
 function clock(d = new Date()) { return d.toTimeString().slice(0, 8); }
 
-/* ── LogViewer — streaming, filterable, searchable log surface ── */
-function LogViewer() {
+/* ── StreamingLogViewer — live auto-scrolling log surface (console page only) ── */
+function StreamingLogViewer() {
   const toast = useToast();
   const [lines, setLines] = useState(() => LOG_SEED.map((l, i) => ({ ...l, id: i, ts: clock(new Date(Date.now() - (LOG_SEED.length - i) * 1400)) })));
   const [follow, setFollow] = useState(true);
@@ -257,7 +257,7 @@ function PageConsole() {
 
       <Section title="Live log stream"
         desc="Streaming output with per-level filtering, search, follow-tail, line numbers and one-click export. Toggle a level chip to mute it; flip Follow to pause auto-scroll.">
-        <LogViewer/>
+        <StreamingLogViewer/>
       </Section>
 
       <Section title="Interactive shell"

@@ -880,9 +880,8 @@ h1,h2,h3,h4,h5,h6,p { margin: 0; }
 .ds-drawer__foot { padding: 14px 18px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
 
 /* ─── Combobox ─── */
-.ds-combobox { position: relative; }
 .ds-combobox__pop {
-  position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: var(--z-dropdown);
+  z-index: 9999;
   background: var(--surface-overlay); border: 1px solid var(--border); border-radius: var(--radius-md, 8px);
   box-shadow: var(--shadow-lg); padding: 5px; max-height: 240px; overflow-y: auto;
   animation: ds-pop-in 140ms var(--motion-ease-out, ease-out);

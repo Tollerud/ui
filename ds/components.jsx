@@ -317,16 +317,26 @@ function Slider({ min = 0, max = 100, defaultValue = 50, onChange }) {
 /* ── Dropdown menu ── */
 function DropdownMenu({ trigger, items }) {
   const [open, setOpen] = useState(false);
-  const ref = useRef(null);
+  const [pos, setPos] = useState({ top: 0, left: 0 });
+  const triggerRef = useRef(null);
+  const menuRef = useRef(null);
   useEffect(() => {
-    const h = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
+    const h = (e) => {
+      if (triggerRef.current && !triggerRef.current.contains(e.target) &&
+          menuRef.current && !menuRef.current.contains(e.target)) setOpen(false);
+    };
     document.addEventListener('mousedown', h); return () => document.removeEventListener('mousedown', h);
   }, []);
+  const openMenu = () => {
+    const r = triggerRef.current.getBoundingClientRect();
+    setPos({ top: r.bottom + window.scrollY + 6, left: r.left + window.scrollX });
+    setOpen(o => !o);
+  };
   return (
-    <span style={{ position: 'relative', display: 'inline-flex' }} ref={ref}>
-      <span onClick={() => setOpen(o => !o)}>{trigger}</span>
-      {open && (
-        <div className="tollerud-menu ds-themed" style={{ position: 'absolute', top: '100%', left: 0, marginTop: 6, zIndex: 50 }}>
+    <span style={{ display: 'inline-flex' }} ref={triggerRef}>
+      <span onClick={openMenu}>{trigger}</span>
+      {open && ReactDOM.createPortal(
+        <div ref={menuRef} className="tollerud-menu ds-themed" style={{ position: 'absolute', top: pos.top, left: pos.left, zIndex: 9999 }}>
           {items.map((it, i) => it.sep
             ? <div key={i} className="tollerud-menu__sep"/>
             : it.label && it.heading
@@ -335,7 +345,8 @@ function DropdownMenu({ trigger, items }) {
                   {it.icon && React.createElement(Icons[it.icon])}{it.label}
                 </button>
           )}
-        </div>
+        </div>,
+        document.body
       )}
     </span>
   );
@@ -581,51 +592,61 @@ function Combobox({ options = [], value, onChange, placeholder = 'Search…', la
   const [q, setQ] = useState('');
   const [active, setActive] = useState(0);
   const [internal, setInternal] = useState(null);
+  const [popPos, setPopPos] = useState({ top: 0, left: 0, width: 0 });
   const wrapRef = useRef(null);
+  const popRef = useRef(null);
   const isCtrl = value !== undefined;
   const selected = isCtrl ? value : internal;
   const selectedLabel = (options.find(o => o.value === selected) || {}).label || '';
   const filtered = q ? options.filter(o => o.label.toLowerCase().includes(q.toLowerCase())) : options;
 
   useEffect(() => {
-    const onDoc = (e) => { if (wrapRef.current && !wrapRef.current.contains(e.target)) { setOpen(false); setQ(''); } };
+    const onDoc = (e) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target) &&
+          popRef.current && !popRef.current.contains(e.target)) { setOpen(false); setQ(''); }
+    };
     document.addEventListener('mousedown', onDoc);
     return () => document.removeEventListener('mousedown', onDoc);
   }, []);
 
+  const openPop = () => {
+    const r = wrapRef.current.getBoundingClientRect();
+    setPopPos({ top: r.bottom + window.scrollY + 6, left: r.left + window.scrollX, width: r.width });
+    setOpen(true);
+  };
+
   const choose = (o) => { if (!isCtrl) setInternal(o.value); onChange && onChange(o.value); setOpen(false); setQ(''); };
   const onKey = (e) => {
-    if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true); setActive(a => Math.min(filtered.length - 1, a + 1)); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (!open) openPop(); setActive(a => Math.min(filtered.length - 1, a + 1)); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(a => Math.max(0, a - 1)); }
-    else if (e.key === 'Enter') { e.preventDefault(); if (open && filtered[active]) choose(filtered[active]); else setOpen(true); }
+    else if (e.key === 'Enter') { e.preventDefault(); if (open && filtered[active]) choose(filtered[active]); else openPop(); }
     else if (e.key === 'Escape') { setOpen(false); setQ(''); }
   };
 
   return (
     <div className="ds-col" style={{ gap: 6 }} ref={wrapRef}>
       {label && <label style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-secondary)' }}>{label}</label>}
-      <div className="ds-combobox">
-        <div className="tollerud-input ds-row" style={{ gap: 8, height: 38, cursor: 'text' }} onClick={() => setOpen(true)}>
-          <Icons.search size={15}/>
-          <input value={open ? q : selectedLabel} onChange={e => { setQ(e.target.value); setOpen(true); setActive(0); }}
-            onFocus={() => setOpen(true)} onKeyDown={onKey}
-            placeholder={selectedLabel || placeholder}
-            style={{ flex: 1, minWidth: 0, background: 'transparent', border: 'none', outline: 'none', color: 'var(--foreground)', fontSize: 13.5 }}/>
-          <Icons.chevDown size={15} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .15s', color: 'var(--text-muted)' }}/>
-        </div>
-        {open && (
-          <div className="ds-combobox__pop ds-themed">
-            {filtered.length === 0 && <div className="ds-combobox__empty">{emptyText}</div>}
-            {filtered.map((o, i) => (
-              <button key={o.value} className="ds-combobox__opt" data-active={i === active} data-selected={o.value === selected}
-                onMouseEnter={() => setActive(i)} onClick={() => choose(o)}>
-                <span>{o.label}</span>
-                {o.value === selected && <Icons.check size={14}/>}
-              </button>
-            ))}
-          </div>
-        )}
+      <div className="tollerud-input ds-row" style={{ gap: 8, height: 38, cursor: 'text' }} onClick={openPop}>
+        <Icons.search size={15}/>
+        <input value={open ? q : selectedLabel} onChange={e => { setQ(e.target.value); if (!open) openPop(); setActive(0); }}
+          onFocus={openPop} onKeyDown={onKey}
+          placeholder={selectedLabel || placeholder}
+          style={{ flex: 1, minWidth: 0, background: 'transparent', border: 'none', outline: 'none', color: 'var(--foreground)', fontSize: 13.5 }}/>
+        <Icons.chevDown size={15} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .15s', color: 'var(--text-muted)' }}/>
       </div>
+      {open && ReactDOM.createPortal(
+        <div ref={popRef} className="ds-combobox__pop ds-themed" style={{ position: 'absolute', top: popPos.top, left: popPos.left, width: popPos.width, zIndex: 9999 }}>
+          {filtered.length === 0 && <div className="ds-combobox__empty">{emptyText}</div>}
+          {filtered.map((o, i) => (
+            <button key={o.value} className="ds-combobox__opt" data-active={i === active} data-selected={o.value === selected}
+              onMouseEnter={() => setActive(i)} onClick={() => choose(o)}>
+              <span>{o.label}</span>
+              {o.value === selected && <Icons.check size={14}/>}
+            </button>
+          ))}
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

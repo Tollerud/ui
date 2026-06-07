@@ -48,7 +48,6 @@ function MotionLab() {
 }
 
 function PageFoundations() {
-  const [density, setDensity] = useState('comfortable');
   const brand = [
     ['Yellow', '#E8D500', '--tollerud-yellow'],
     ['Yellow bright', '#FFFF00', '--tollerud-yellow-bright'],
@@ -250,28 +249,12 @@ function PageFoundations() {
         </Section>
       </div>
 
-      <Section title="Density" desc="Set data-density='compact' on any container to tighten cards, tables, form rows, panel headers and buttons inside it — without touching the components. The default is comfortable.">
-        <div className="ds-row" style={{ marginBottom: 16 }}>
-          <Segmented value={density} onChange={setDensity} options={[{ value: 'comfortable', label: 'Comfortable' }, { value: 'compact', label: 'Compact' }]}/>
-        </div>
-        <div data-density={density}>
-          <div className="ds-grid-2" style={{ gap: 14 }}>
-            <div className="tollerud-card ds-themed">
-              <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--foreground)', marginBottom: 6 }}>Card padding</div>
-              <p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>Compact trims card padding from 24px to 12px and tightens table rows, form rows and panel headers.</p>
-            </div>
-            <div className="tollerud-card ds-themed" style={{ padding: 0, overflow: 'hidden' }}>
-              <div className="ds-panel__head"><span className="ds-panel__title"><Icons.gauge size={15}/>Panel header</span></div>
-              <div style={{ padding: 16 }}>
-                <FormRow label="Auto-restart" hint="Restart on failure."><Switch defaultChecked/></FormRow>
-                <FormRow label="Notifications" hint="Email + webhook."><Switch/></FormRow>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style={{ marginTop: 16 }}>
-          <CodeSnippet name="density.jsx" code={`<div data-density="compact">\n  {/* cards, tables, forms render tighter inside */}\n</div>`}/>
-        </div>
+      <Section title="Density" desc="Two modes: comfortable (default) and compact. Set data-density='compact' on any container, or use density='compact' directly on Card. Live demo → Components.">
+        <TokenTable cols={['Token', 'Effect']} rows={[
+          ['<code>data-density="comfortable"</code>', 'Default. Card padding 24px, table rows 48px, form rows relaxed.'],
+          ['<code>data-density="compact"</code>', 'Card padding 12px, table rows 36px, panel headers 32px, button heights trimmed.'],
+          ['<code>&lt;Card density="compact"&gt;</code>', 'Per-card override — no wrapper needed.'],
+        ]}/>
       </Section>
 
       <Section title="Motion" desc="Quick and confident. Durations stay short; easing does the expressive work. Everything here respects prefers-reduced-motion.">
