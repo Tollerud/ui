@@ -13,9 +13,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
     "paths": {
-      "@/lib/utils": ["lib/utils.ts"]
+      "@/lib/utils": ["./lib/utils.ts"]
     }
   },
   "include": ["components/**/*.ts", "components/**/*.tsx", "lib/**/*.ts", "types/**/*.d.ts"]
