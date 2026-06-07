@@ -1,8 +1,8 @@
-# 🎴 Tollerud Design System
+# Tollerud Design System
 
-A dark, high-contrast design system built around **monochrome + yellow accent**. Noir aesthetic meets modern utility. Made for the Tollerud ecosystem.
+A complete, browsable design system and component library built around **monochrome + yellow accent**. Noir aesthetic meets modern utility.
 
-Inspired by [Graphify Labs](https://graphifylabs.ai/) — terminal aesthetics, frosted glass nav, background grid patterns, and tight display typography.
+**[Live docs →](https://tollerud.github.io/design-system/)** — browse every token, component, and pattern live with copy-paste code.
 
 ## Philosophy
 
