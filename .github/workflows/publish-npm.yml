@@ -43,8 +43,16 @@ jobs:
       - run: npm run build
         if: steps.version_check.outputs.skip == 'false'
 
-      - name: Publish to npm
+      - name: Diagnose npm auth
         if: steps.version_check.outputs.skip == 'false'
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          echo "=== whoami ==="
+          npm whoami || echo "whoami failed"
+          echo "=== token type check ==="
+          npm access ls-packages 2>&1 | head -5 || true
+
+      - name: Publish to npm
+        if: steps.version_check.outputs.skip == 'false'
+        run: |
           npm publish --access public
