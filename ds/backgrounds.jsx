@@ -131,7 +131,8 @@ function BgFrame({ children, h = 260, label }) {
 function GradientReadabilityDemo({ treatment }) {
   const isShadow = treatment === 'shadow';
   const isEdge = treatment === 'edge';
-  const label = isEdge ? 'edge-biased shader' : isShadow ? 'left shadow gradient' : 'copy blur scrim';
+  const isHeroBlur = treatment === 'heroBlur';
+  const label = isEdge ? 'edge-biased shader' : isHeroBlur ? 'full hero blur' : isShadow ? 'left shadow gradient' : 'copy blur scrim';
   return (
     <BgFrame label={label} h={420}>
       {isEdge ? (
@@ -143,9 +144,10 @@ function GradientReadabilityDemo({ treatment }) {
         <GrainGradientGL/>
       )}
       {isShadow && <div className="ds-hero-readable-shadow"/>}
+      {isHeroBlur && <div className="ds-hero-readable-fullblur"/>}
       <div className="tollerud-grid-bg" style={{ position: 'absolute', inset: 0, opacity: 0.25, zIndex: 1 }}/>
       <div className="ds-hero-readable-demo">
-        <div className={isShadow || isEdge ? 'ds-hero-readable-copy' : 'ds-hero-readable-copy ds-hero__copy--scrim'}>
+        <div className={isShadow || isEdge || isHeroBlur ? 'ds-hero-readable-copy' : 'ds-hero-readable-copy ds-hero__copy--scrim'}>
           <div className="ds-row" style={{ gap: 10, marginBottom: 18 }}>
             <span className="tollerud-pill tollerud-pill--outline">v1.0 · noir + yellow</span>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(245,245,245,0.58)' }}>>60 components</span>
@@ -156,6 +158,8 @@ function GradientReadabilityDemo({ treatment }) {
           <p style={{ marginTop: 16, maxWidth: 430, color: 'rgba(245,245,245,0.72)', fontSize: 15.5, lineHeight: 1.55 }}>
             {isEdge
               ? 'The shader is scaled down and shifted toward both edges, leaving calmer negative space behind the text.'
+              : isHeroBlur
+                ? 'The whole hero gets a soft dark glass layer, so the copy reads without creating a separate text panel.'
               : 'The real Paper shader stays visible, while the copy keeps enough contrast to survive bright motion behind it.'}
           </p>
           <div className="ds-row" style={{ gap: 12, marginTop: 22 }}>
@@ -204,9 +208,10 @@ function PageBackgrounds() {
         </BgFrame>
       </Section>
 
-      <Section title="Hero readability treatments" desc="Three ways to keep copy readable over the live grain gradient: a local blur scrim, a broad left-side shadow, or a scaled/offset shader that keeps motion toward the edges.">
+      <Section title="Hero readability treatments" desc="Four ways to keep copy readable over the live grain gradient: a local blur scrim, a full-hero blur, a broad left-side shadow, or a scaled/offset shader that keeps motion toward the edges.">
         <div style={{ display: 'grid', gap: 16 }}>
           <GradientReadabilityDemo treatment="scrim"/>
+          <GradientReadabilityDemo treatment="heroBlur"/>
           <GradientReadabilityDemo treatment="shadow"/>
           <GradientReadabilityDemo treatment="edge"/>
         </div>
