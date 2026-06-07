@@ -1,6 +1,6 @@
-# Tollerud Design System
+# Tollerud User Interface
 
-A complete, browsable design system and component library built around **monochrome + yellow accent**. Noir aesthetic meets modern utility.
+A complete, browsable UI library built around **monochrome + yellow accent**. Noir aesthetic meets modern utility.
 
 **[Live docs →](https://tollerud.github.io/design-system/)** — browse every token, component, and pattern live with copy-paste code.
 

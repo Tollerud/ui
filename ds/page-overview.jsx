@@ -25,7 +25,7 @@ function PageOverview({ go }) {
               Dark. Monochrome.<br/><span className="ds-shimmer">Yellow where it counts.</span>
             </h1>
             <p style={{ marginTop: 20, fontSize: 17, lineHeight: 1.6, color: bold ? 'rgba(245,245,245,0.7)' : 'var(--text-secondary)', maxWidth: 480 }}>
-              A high-contrast design system for tools, dashboards and homelab UIs. Every token, component and pattern — live, themeable, and copy-paste ready.
+              A high-contrast UI library for tools, dashboards and homelab UIs. Every token, component and pattern — live, themeable, and copy-paste ready.
             </p>
             <div className="ds-row" style={{ gap: 12, marginTop: 28 }}>
               <button className="tollerud-btn tollerud-btn--terminal tollerud-btn--lg" onClick={() => go('foundations')}>explore_system</button>

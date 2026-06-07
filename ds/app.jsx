@@ -154,7 +154,7 @@ function App() {
             <img className="ds-sidebar__logo" src="tollerud-logo.svg" alt=""/>
             <div>
               <div className="ds-sidebar__title">Tollerud</div>
-              <div className="ds-sidebar__ver">design system · v1.0</div>
+              <div className="ds-sidebar__ver">user interface · v1.0</div>
             </div>
           </div>
           <nav className="ds-sidebar__nav">
@@ -179,7 +179,7 @@ function App() {
             <button className="ds-iconbtn ds-topbar__menu" onClick={() => setNavOpen(o => !o)} aria-label="Menu" aria-expanded={navOpen}>
               {navOpen ? <Icons.x/> : <Icons.menu/>}
             </button>
-            <img className="ds-topbar__logo" src="tollerud-logo.svg" alt="Tollerud" onClick={() => go('overview')}/>            <span className="ds-topbar__crumb"><span className="ds-topbar__crumb-prefix">Design System <span style={{ opacity: .4, margin: '0 6px' }}>/</span> </span><b>{PAGE_TITLES[route] || 'Overview'}</b></span>
+            <img className="ds-topbar__logo" src="tollerud-logo.svg" alt="Tollerud" onClick={() => go('overview')}/>            <span className="ds-topbar__crumb"><span className="ds-topbar__crumb-prefix">Tollerud UI <span style={{ opacity: .4, margin: '0 6px' }}>/</span> </span><b>{PAGE_TITLES[route] || 'Overview'}</b></span>
             <span className="ds-topbar__spacer"/>
             <button className="ds-topbar__cmd" onClick={() => setCmdOpen(true)} title="Command palette">
               <Icons.search size={14}/>
