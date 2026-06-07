@@ -1,6 +1,6 @@
 {
   "name": "@tollerud/design-system",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tollerud Design System — dark, monochrome + yellow accent. Noir aesthetic meets modern utility.",
   "private": false,
   "type": "module",

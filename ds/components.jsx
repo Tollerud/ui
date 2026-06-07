@@ -321,11 +321,14 @@ function DropdownMenu({ trigger, items }) {
   const triggerRef = useRef(null);
   const menuRef = useRef(null);
   useEffect(() => {
-    const h = (e) => {
+    const close = (e) => {
       if (triggerRef.current && !triggerRef.current.contains(e.target) &&
           menuRef.current && !menuRef.current.contains(e.target)) setOpen(false);
     };
-    document.addEventListener('mousedown', h); return () => document.removeEventListener('mousedown', h);
+    const onScroll = () => setOpen(false);
+    document.addEventListener('mousedown', close);
+    window.addEventListener('scroll', onScroll, true);
+    return () => { document.removeEventListener('mousedown', close); window.removeEventListener('scroll', onScroll, true); };
   }, []);
   const openMenu = () => {
     const r = triggerRef.current.getBoundingClientRect();
@@ -605,8 +608,10 @@ function Combobox({ options = [], value, onChange, placeholder = 'Search…', la
       if (wrapRef.current && !wrapRef.current.contains(e.target) &&
           popRef.current && !popRef.current.contains(e.target)) { setOpen(false); setQ(''); }
     };
+    const onScroll = () => { setOpen(false); setQ(''); };
     document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
+    window.addEventListener('scroll', onScroll, true);
+    return () => { document.removeEventListener('mousedown', onDoc); window.removeEventListener('scroll', onScroll, true); };
   }, []);
 
   const openPop = () => {

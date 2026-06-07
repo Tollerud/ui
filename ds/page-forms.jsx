@@ -14,8 +14,10 @@ function DatePicker() {
       if (triggerRef.current && !triggerRef.current.contains(e.target) &&
           popRef.current && !popRef.current.contains(e.target)) setOpen(false);
     };
+    const onScroll = () => setOpen(false);
     document.addEventListener('mousedown', h);
-    return () => document.removeEventListener('mousedown', h);
+    window.addEventListener('scroll', onScroll, true);
+    return () => { document.removeEventListener('mousedown', h); window.removeEventListener('scroll', onScroll, true); };
   }, []);
 
   const openPicker = () => {

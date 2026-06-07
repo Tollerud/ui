@@ -98,6 +98,19 @@ function PageComponents() {
         </Demo>
       </Section>
 
+      <Section title="Divider" desc="A horizontal rule. Default uses the border token; accent variant draws a short yellow rule for section breaks.">
+        <Demo name="dividers" variant="col" code={`<Divider />
+<Divider accent />`}>
+          <div style={{ width: '100%', maxWidth: 480 }}>
+            <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', marginBottom: 12 }}>Content above the divider</p>
+            <Divider/>
+            <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: '12px 0' }}>Content below the divider</p>
+            <Divider accent/>
+            <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', marginTop: 12 }}>Accent variant — short yellow rule</p>
+          </div>
+        </Demo>
+      </Section>
+
       <Section title="Badge & Pill" desc="Badges label status inline. Pills are tiny mono-flavored tags.">
         <Demo name="badges" variant="center" code={`<Badge variant="accent">New</Badge>
 <Badge variant="success">Online</Badge>
