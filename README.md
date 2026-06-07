@@ -6,7 +6,7 @@ A complete, browsable UI library built around **monochrome + yellow accent**. No
 
 **Requirements:** React ≥ 18 · TypeScript supported (types included) · Tailwind CSS v3 or v4
 
-→ **[Component reference →](COMPONENTS.md)** · **[Setup guide →](GETTING_STARTED.md)** · **[Changelog →](CHANGELOG.md)**
+→ **[Component reference →](COMPONENTS.md)** · **[Setup guide →](GETTING_STARTED.md)** · **[Brand guidelines →](BRAND.md)** · **[Changelog →](CHANGELOG.md)**
 
 ## Philosophy
 
