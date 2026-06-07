@@ -89,11 +89,20 @@ function PageNavOverlays() {
       <PageHeader icon="compass" eyebrow="Navigation & Overlays" title="Navigation & Overlays"
         lede="Wayfinding and floating surfaces — breadcrumbs, pagination, menus, dialogs, toasts and the keyboard-first command palette."/>
 
-      <Section title="Breadcrumb & Segmented" desc="Show location and switch between a small set of views.">
-        <Demo name="breadcrumb" variant="col" code={`<Breadcrumb items={['Servers', 'emma', 'Containers']} />
-<Segmented options={[{value:'grid',label:'Grid'},{value:'list',label:'List'}]} />`}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '8px 0 32px' }}>
+        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Navigation</span>
+        <hr style={{ flex: 1, border: 'none', borderTop: '1px solid var(--border)', margin: 0 }}/>
+      </div>
+
+      <Section title="Breadcrumb" desc="Shows the user's location in the hierarchy. Items are clickable except the last (current).">
+        <Demo name="breadcrumb" variant="col" code={`<Breadcrumb items={['Servers', 'emma', 'Containers']} />`}>
           <Breadcrumb items={['Servers', 'emma', 'Containers']}/>
-          <div className="ds-row" style={{ gap: 14, marginTop: 6 }}>
+        </Demo>
+      </Section>
+
+      <Section title="Segmented control" desc="Switch between a small set of mutually exclusive views.">
+        <Demo name="segmented" variant="center" code={`<Segmented options={[{value:'grid',label:'Grid'},{value:'list',label:'List'}]} />`}>
+          <div className="ds-row" style={{ gap: 14 }}>
             <Segmented options={[{ value: 'grid', label: 'Grid' }, { value: 'list', label: 'List' }, { value: 'graph', label: 'Graph' }]}/>
             <Segmented options={[{ value: '24h', label: '24h' }, { value: '7d', label: '7d' }, { value: '30d', label: '30d' }]}/>
           </div>
@@ -105,6 +114,11 @@ function PageNavOverlays() {
           <Pagination total={7} current={1}/>
         </Demo>
       </Section>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, margin: '8px 0 32px' }}>
+        <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>Overlays</span>
+        <hr style={{ flex: 1, border: 'none', borderTop: '1px solid var(--border)', margin: 0 }}/>
+      </div>
 
       <Section title="Dropdown menu" desc="A floating action menu with sections, icons and separators. Click outside to dismiss.">
         <Demo name="dropdown" variant="center" code={`<DropdownMenu trigger={<Button variant="secondary">Actions ▾</Button>} items={[

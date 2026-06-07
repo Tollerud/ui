@@ -187,18 +187,19 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Combobox & Date picker" desc="Searchable select and a calendar popover — the two controls native HTML handles poorly.">
-        <Demo name="combobox-date" code={`<Combobox options={servers} />
-<DatePicker />`}>
-          <div style={{ width: 280 }}><Combobox options={servers}/></div>
+      <Section title="Date picker" desc="A calendar popover for date selection — the control native HTML handles poorly.">
+        <Demo name="datepicker" variant="col" code={`<DatePicker />`}>
           <DatePicker/>
         </Demo>
       </Section>
 
-      <Section title="File upload & Tags" desc="A drag-and-drop dropzone and a chip-style tag entry.">
+      <Section title="File upload" desc="A drag-and-drop dropzone. Drop files or click to browse; accepted files are listed with a remove button.">
         <Demo name="upload" variant="col" code={`<FileUpload />`}>
           <FileUpload/>
         </Demo>
+      </Section>
+
+      <Section title="Tag input" desc="Chip-style tag entry. Press Enter to add, Backspace to remove the last tag.">
         <Demo name="tags" variant="col" code={`<TagInput />  // Enter to add · Backspace to remove`}>
           <TagInput/>
         </Demo>

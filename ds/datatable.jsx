@@ -161,6 +161,11 @@ function DataTable({
                   </tr>
                 );
               })}
+              {Array.from({ length: Math.max(0, pageSize - pageRows.length) }).map((_, i) => (
+                <tr key={`__spacer_${i}`} aria-hidden="true" style={{ height: 49 }}>
+                  <td colSpan={colSpan}/>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

@@ -131,7 +131,7 @@ function PageComponents() {
         </Demo>
       </Section>
 
-      <Section title="Progress, Skeleton & Avatar" desc="Loading and identity primitives.">
+      <Section title="Progress, Skeleton & Avatar" desc="Loading and identity primitives. Avatar and AvatarGroup stack naturally.">
         <Demo name="progress" variant="col" code={`<Progress value={72} />
 <Skeleton h={14} w="60%" />
 <Avatar name="Tia Tollerud" />`}>
@@ -143,21 +143,42 @@ function PageComponents() {
           </div>
           <div className="ds-row"><Avatar name="Tia Tollerud"/><Avatar name="Emma R" size={44}/><Avatar name="Pia K" size={28}/></div>
         </Demo>
+        <Demo name="avatar-group" variant="center" code={`<AvatarGroup max={4} users={[
+  { name: 'Tia', status: 'online' },
+  { name: 'Emma Pung', status: 'online' },
+  { name: 'Pia Berg', status: 'warning' },
+]} />`}>
+          <AvatarGroup max={4} size={36} users={[
+            { name: 'Tia', status: 'online' },
+            { name: 'Emma Pung', status: 'online' },
+            { name: 'Pia Berg', status: 'warning' },
+            { name: 'Sigrid Vik', status: 'offline' },
+            { name: 'Astrid Lund' },
+            { name: 'Embla Ro' },
+          ]}/>
+        </Demo>
       </Section>
 
-      <Section title="Tooltip & Alert" desc="Tooltips on hover/focus; alerts for inline messaging across tones.">
+      <Section title="Tooltip" desc="Appears on hover and focus. Supports top (default) and bottom placement.">
         <Demo name="tooltip" variant="center" code={`<Tooltip label="⌘K to open">
   <Button variant="secondary">Hover me</Button>
 </Tooltip>`}>
           <Tooltip label="⌘K to open"><Button variant="secondary">Hover me</Button></Tooltip>
           <Tooltip label="Restart container" side="bottom"><Button variant="ghost">Bottom</Button></Tooltip>
         </Demo>
-        <Demo name="alerts" variant="col" code={`<Alert tone="accent" title="Heads up">Yellow signals an action worth noticing.</Alert>
+      </Section>
+
+      <Section title="Alert" desc="Four semantic tones. Pass icon to override the default icon per tone.">
+        <Demo name="alerts" variant="col" code={`<Alert tone="accent"  title="Heads up">Yellow signals an action worth noticing.</Alert>
+<Alert tone="info"    title="Scheduled">Maintenance window at 03:00 UTC.</Alert>
 <Alert tone="success" title="Deployed">emma — hermes v2.0 is live.</Alert>
-<Alert tone="error" title="Connection failed">Could not resolve host — check DNS.</Alert>`}>
-          <Alert tone="accent" title="Heads up">Yellow signals an action worth noticing.</Alert>
+<Alert tone="error"   title="Connection failed">Could not resolve host — check DNS.</Alert>
+<Alert tone="error"   title="Storage full" icon="database">Custom icon via icon prop.</Alert>`}>
+          <Alert tone="accent"  title="Heads up">Yellow signals an action worth noticing.</Alert>
+          <Alert tone="info"    title="Scheduled">Maintenance window at 03:00 UTC. No action needed.</Alert>
           <Alert tone="success" title="Deployed">emma — hermes v2.0 is live.</Alert>
-          <Alert tone="error" title="Connection failed">Could not resolve host — check DNS.</Alert>
+          <Alert tone="error"   title="Connection failed">Could not resolve host — check DNS.</Alert>
+          <Alert tone="error"   title="Storage full" icon="database">Custom icon via the <code>icon</code> prop.</Alert>
         </Demo>
       </Section>
 
@@ -208,16 +229,30 @@ function PageComponents() {
         </Demo>
       </Section>
 
-      <Section title="Panel" desc="A card with a header bar (title + optional actions) and optional footer. The structural workhorse — used by the log viewer, data table, alert inbox and most dashboard surfaces.">
+      <Section title="Panel" desc="A card with a header bar (title + optional actions) and optional footer. Pass a fragment with multiple buttons to actions for a toolbar.">
         <Demo name="panel" variant="col" code={`<Panel title="Compose stack" icon="grid"
   actions={<Button variant="ghost" size="sm">Edit</Button>}
   footer={<span className="ds-mono">compose.yml · 4 services</span>}>
   …content…
+</Panel>
+
+{/* Multiple actions */}
+<Panel title="hermes" icon="server"
+  actions={<>
+    <Button variant="ghost" size="sm">Logs</Button>
+    <Button variant="ghost" size="sm">Restart</Button>
+    <Button variant="destructive" size="sm">Stop</Button>
+  </>}>
+  …content…
 </Panel>`}>
-          <div style={{ width: '100%', maxWidth: 460 }}>
+          <div className="ds-col" style={{ width: '100%', maxWidth: 460, gap: 16 }}>
             <Panel title="Compose stack" icon="grid" actions={<Button variant="ghost" size="sm">Edit</Button>}
               footer={<span className="ds-mono" style={{ fontSize: 12, color: 'var(--text-muted)' }}>compose.yml · 4 services</span>}>
-              <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: 0 }}>Panel body holds any content. The header and footer rules come for free.</p>
+              <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: 0 }}>Single action in the header.</p>
+            </Panel>
+            <Panel title="hermes" icon="server"
+              actions={<><Button variant="ghost" size="sm">Logs</Button><Button variant="ghost" size="sm">Restart</Button><Button variant="destructive" size="sm">Stop</Button></>}>
+              <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: 0 }}>Multiple actions — pass a React fragment to <code>actions</code>.</p>
             </Panel>
           </div>
         </Demo>
@@ -330,26 +365,14 @@ toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' });`}
         </Demo>
       </Section>
 
-      <Section title="Avatar group" desc="Stacked avatars with an overflow count and optional presence dots. For team / collaborator displays.">
-        <Demo name="avatar-group" variant="center" code={`<AvatarGroup max={4} users={[
-  { name: 'Tia', status: 'online' },
-  { name: 'Emma Pung', status: 'online' },
-  { name: 'Pia Berg', status: 'warning' },
-]} />`}>
-          <AvatarGroup max={4} size={36} users={[
-            { name: 'Tia', status: 'online' },
-            { name: 'Emma Pung', status: 'online' },
-            { name: 'Pia Berg', status: 'warning' },
-            { name: 'Sigrid Vik', status: 'offline' },
-            { name: 'Astrid Lund' },
-            { name: 'Embla Ro' },
-          ]}/>
-        </Demo>
-      </Section>
+      <Section title="Density" desc="Two ways to apply compact density: set density='compact' directly on a Card, or wrap a group with data-density='compact' to tighten everything inside.">
+        <Demo name="density" variant="col" code={`{/* Per-card density prop */}
+<Card density="compact">…</Card>
+<Card>…</Card>
 
-      <Section title="Density" desc="Set data-density='compact' on any container to tighten cards, tables, form rows and panels — without touching the components themselves.">
-        <Demo name="density" variant="col" code={`<div data-density="compact">
-  {/* cards, tables, forms inside render tighter */}
+{/* Or wrap a container */}
+<div data-density="compact">
+  {/* all cards, tables, form rows inside are compact */}
 </div>`}>
           <div style={{ width: '100%' }}>
             <div className="ds-row" style={{ marginBottom: 14 }}>
@@ -360,6 +383,10 @@ toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' });`}
                 <Card><div style={{ fontWeight: 600, color: 'var(--foreground)', marginBottom: 6 }}>Card title</div><p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>Padding tightens in compact mode.</p></Card>
                 <Card><FormRow label="Two-factor" hint="TOTP at sign-in."><Switch defaultChecked/></FormRow></Card>
               </div>
+            </div>
+            <div className="ds-row" style={{ gap: 12, marginTop: 12 }}>
+              <Card density="compact" style={{ flex: 1 }}><div style={{ fontWeight: 600, color: 'var(--foreground)', marginBottom: 4 }}>density="compact"</div><p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>Always compact via prop.</p></Card>
+              <Card style={{ flex: 1 }}><div style={{ fontWeight: 600, color: 'var(--foreground)', marginBottom: 4 }}>Default</div><p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0 }}>Comfortable by default.</p></Card>
             </div>
           </div>
         </Demo>

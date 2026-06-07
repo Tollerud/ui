@@ -11,9 +11,11 @@ function Button({ variant = 'primary', size = 'md', children, className = '', ..
 }
 
 /* ── Card ── */
-function Card({ accent, children, className = '', style, ...p }) {
+function Card({ accent, density, children, className = '', style, ...p }) {
   return (
-    <div className={`tollerud-card ${className}`} style={accent ? { borderColor: 'rgba(232,213,0,0.30)', ...style } : style} {...p}>
+    <div className={`tollerud-card ${className}`}
+      data-density={density || undefined}
+      style={accent ? { borderColor: 'rgba(232,213,0,0.30)', ...style } : style} {...p}>
       {children}
     </div>
   );
@@ -115,7 +117,7 @@ function Switch({ label, checked, defaultChecked, disabled, onChange }) {
   return (
     <label style={{ display: 'inline-flex', alignItems: 'center', gap: 10, cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.5 : 1, fontSize: 14, color: 'var(--foreground)' }}>
       <button type="button" role="switch" aria-checked={val} disabled={disabled} onClick={toggle}
-        style={{ width: 38, height: 22, borderRadius: 999, border: 'none', padding: 2, cursor: 'inherit', background: val ? 'var(--tollerud-yellow)' : 'var(--input)', transition: 'background .2s', display: 'inline-flex', alignItems: 'center' }}>
+        style={{ width: 38, height: 22, borderRadius: 999, border: 'none', padding: 2, cursor: disabled ? 'not-allowed' : 'pointer', background: val ? 'var(--tollerud-yellow)' : 'var(--input)', transition: 'background .2s', display: 'inline-flex', alignItems: 'center' }}>
         <span style={{ width: 18, height: 18, borderRadius: '50%', background: val ? '#0A0A0A' : 'var(--card)', transform: val ? 'translateX(16px)' : 'translateX(0)', transition: 'transform .2s var(--motion-ease-out)', boxShadow: '0 1px 2px rgba(0,0,0,.3)' }}/>
       </button>
       {label}
@@ -227,13 +229,13 @@ function Segmented({ options, value, onChange }) {
 function Tooltip({ label, children, side = 'top' }) {
   const [show, setShow] = useState(false);
   const pos = side === 'top'
-    ? { bottom: '100%', left: '50%', transform: 'translateX(-50%)', marginBottom: 7 }
-    : { top: '100%', left: '50%', transform: 'translateX(-50%)', marginTop: 7 };
+    ? { bottom: '100%', left: '50%', transform: `translateX(-50%) translateY(${show ? '0' : '4px'})`, marginBottom: 7 }
+    : { top: '100%', left: '50%', transform: `translateX(-50%) translateY(${show ? '0' : '-4px'})`, marginTop: 7 };
   return (
     <span style={{ position: 'relative', display: 'inline-flex' }}
       onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)} onFocus={() => setShow(true)} onBlur={() => setShow(false)}>
       {children}
-      {show && <span className="tollerud-tooltip" style={pos}>{label}</span>}
+      <span className="tollerud-tooltip" data-visible={show} style={pos}>{label}</span>
     </span>
   );
 }
@@ -532,7 +534,7 @@ function Dialog({ open, onClose, title, description, children, footer }) {
     return () => document.removeEventListener('keydown', h);
   }, [open, onClose]);
   if (!open) return null;
-  return (
+  return ReactDOM.createPortal(
     <div className="tollerud-overlay" onClick={onClose}>
       <div className="tollerud-dialog ds-themed" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true">
         <div className="tollerud-dialog__body">
@@ -542,7 +544,8 @@ function Dialog({ open, onClose, title, description, children, footer }) {
         </div>
         {footer && <div className="tollerud-dialog__foot">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -554,7 +557,7 @@ function Drawer({ open, onClose, side = 'right', title, description, children, f
     return () => document.removeEventListener('keydown', h);
   }, [open, onClose]);
   if (!open) return null;
-  return (
+  return ReactDOM.createPortal(
     <div className="tollerud-overlay" onClick={onClose}>
       <div className={`ds-drawer ds-drawer--${side} ds-themed`} style={{ width }} onClick={e => e.stopPropagation()} role="dialog" aria-modal="true">
         <div className="ds-drawer__head">
@@ -567,7 +570,8 @@ function Drawer({ open, onClose, side = 'right', title, description, children, f
         <div className="ds-drawer__body">{children}</div>
         {footer && <div className="ds-drawer__foot">{footer}</div>}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

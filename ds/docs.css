@@ -91,6 +91,66 @@ html[data-theme="light"] .ds-terminal {
 }
 html[data-theme="light"] .tollerud-code-block .comment { color: #777; }
 
+/* ─── Light mode: yellow-text → deep gold so it passes contrast on white ─── */
+/* Selection */
+html[data-theme="light"] ::selection { background-color: rgba(200,180,0,0.25); color: #15140F; }
+
+/* Terminal button */
+html[data-theme="light"] .tollerud-btn--terminal { color: var(--accent-text); border-color: rgba(138,122,0,0.35); }
+html[data-theme="light"] .tollerud-btn--terminal:hover { border-color: var(--accent-text); background: rgba(138,122,0,0.06); box-shadow: none; }
+html[data-theme="light"] .tollerud-btn--terminal::before { opacity: 1; }
+
+/* Badges / pills */
+html[data-theme="light"] .tollerud-badge--accent { color: var(--accent-text); }
+html[data-theme="light"] .tollerud-badge--warning { color: var(--warning); }
+html[data-theme="light"] .tollerud-pill--outline { color: var(--accent-text); border-color: rgba(138,122,0,0.45); background: rgba(138,122,0,0.06); }
+html[data-theme="light"] .tollerud-pill--muted  { color: var(--accent-text); border-color: rgba(138,122,0,0.25); background: rgba(138,122,0,0.03); opacity: .7; }
+
+/* Nav active icon */
+html[data-theme="light"] .ds-navlink--active .ds-navlink__icon { color: var(--accent-text); }
+
+/* Accordion active chevron */
+html[data-theme="light"] .tollerud-accordion__chev--open { color: var(--accent-text); }
+
+/* Empty state icon */
+html[data-theme="light"] .ds-empty__icon {
+  color: var(--accent-text);
+  background: rgba(138,122,0,0.09);
+  border-color: rgba(138,122,0,0.2);
+}
+
+/* Panel title icon */
+html[data-theme="light"] .ds-panel__title svg { color: var(--accent-text); }
+
+/* Combobox selected */
+html[data-theme="light"] .ds-combobox__opt[data-selected="true"],
+html[data-theme="light"] .ds-combobox__opt svg { color: var(--accent-text); }
+
+/* Price check */
+html[data-theme="light"] .ds-price__check { color: var(--accent-text); }
+
+/* Action row icon */
+html[data-theme="light"] .tollerud-action-row__icon { color: var(--accent-text); }
+
+/* Timeline icon */
+html[data-theme="light"] .tollerud-timeline__icon { color: var(--accent-text); }
+
+/* Stepper active */
+html[data-theme="light"] .ds-wizard__step[data-state="active"] .ds-wizard__num { color: var(--accent-text); border-color: var(--accent-text); }
+html[data-theme="light"] .ds-wizard__bar[data-done="true"] { background: var(--accent-text); }
+
+/* Progress bar */
+html[data-theme="light"] .tollerud-progress__bar { background: var(--accent-text); }
+
+/* Tabs active indicator */
+html[data-theme="light"] .tollerud-tabs--underline .tollerud-tabs__trigger--active { border-bottom-color: var(--accent-text); color: var(--accent-text); }
+
+/* Slider thumb accent */
+html[data-theme="light"] .tollerud-slider::-webkit-slider-thumb { background: var(--accent-text); }
+html[data-theme="light"] .tollerud-slider::-moz-range-thumb { background: var(--accent-text); }
+
+/* Log viewer source column stays on dark bg, no override needed */
+
 /* ─────────────────────────────────────────────────────────────
    Base + smooth theme transition
    ───────────────────────────────────────────────────────────── */
@@ -313,9 +373,9 @@ h1,h2,h3,h4,h5,h6,p { margin: 0; }
   font-size: 12px; font-weight: 500; padding: 5px 9px; border-radius: var(--radius);
   border: 1px solid var(--tollerud-noir-600); white-space: nowrap;
   box-shadow: 0 4px 12px rgba(0,0,0,.4); pointer-events: none;
-  animation: tollerud-fade-up .14s var(--motion-ease-out);
+  opacity: 0; transition: opacity 120ms var(--motion-ease-out), transform 120ms var(--motion-ease-out);
 }
-@keyframes tollerud-fade-up { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
+.tollerud-tooltip[data-visible="true"] { opacity: 1; }
 
 /* Popover / dropdown menu surface */
 .tollerud-menu {
@@ -360,9 +420,10 @@ h1,h2,h3,h4,h5,h6,p { margin: 0; }
 .tollerud-alert__icon { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
 .tollerud-alert__title { font-size: 13.5px; font-weight: 600; color: var(--foreground); }
 .tollerud-alert__msg { font-size: 13px; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
-.tollerud-alert--accent { border-color: rgba(232,213,0,0.3); background: rgba(232,213,0,0.05); }
-.tollerud-alert--error { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.05); }
-.tollerud-alert--success { border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.05); }
+.tollerud-alert--accent  { border-color: rgba(232,213,0,0.3);   background: rgba(232,213,0,0.05);  }
+.tollerud-alert--error   { border-color: rgba(239,68,68,0.3);   background: rgba(239,68,68,0.05);  }
+.tollerud-alert--success { border-color: rgba(34,197,94,0.3);   background: rgba(34,197,94,0.05);  }
+.tollerud-alert--info    { border-color: rgba(59,130,246,0.3);   background: rgba(59,130,246,0.05); }
 
 /* Slider */
 .tollerud-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 999px; background: var(--muted); outline: none; }
