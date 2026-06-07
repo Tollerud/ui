@@ -145,12 +145,27 @@ export function Sidebar() {
 
 The `Footer` component handles the monogram automatically — no manual placement needed.
 
+**Using the full design system** — import from `@tollerud/ui`:
+
 ```tsx
 import { Footer } from '@tollerud/ui'
 
 <Footer />
 <Footer layout="row" />
 <Footer accent />
+```
+
+**Standalone** — if the project doesn't use `@tollerud/ui`, install the footer package on its own (React only, no Tailwind dependency):
+
+```bash
+npm install @tollerud/footer
+```
+
+```tsx
+import { Footer } from '@tollerud/footer'
+
+<Footer />
+<Footer layout="row" labels={{ attribution: 'for Acme AS.' }} />
 ```
 
 See [COMPONENTS.md](COMPONENTS.md#footer) for all `Footer` props.

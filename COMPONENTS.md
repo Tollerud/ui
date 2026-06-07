@@ -853,7 +853,7 @@ Fieldset-based radio group with custom dot indicator.
 
 ## Footer
 
-Footer bar with Tollerud monogram and branding link. Ported from `@tollerud/footer`.
+Footer bar with Tollerud monogram and branding link. The component is re-exported from [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer) — install that package directly if you need the footer without the full design system.
 
 ```tsx
 <Footer />

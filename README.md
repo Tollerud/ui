@@ -8,6 +8,15 @@ A complete, browsable UI library built around **monochrome + yellow accent**. No
 
 → **[Component reference →](COMPONENTS.md)** · **[Setup guide →](GETTING_STARTED.md)** · **[Brand guidelines →](BRAND.md)** · **[Changelog →](CHANGELOG.md)**
 
+## Packages
+
+| Package | Install | Use when |
+|---------|---------|----------|
+| [`@tollerud/ui`](https://www.npmjs.com/package/@tollerud/ui) | `npm install @tollerud/ui` | You want the full design system — components, tokens, Tailwind preset |
+| [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer) | `npm install @tollerud/footer` | You only need the branded footer, with no other design system dependency |
+
+`@tollerud/ui` already re-exports `Footer` internally — install `@tollerud/footer` separately only when you want the footer in a project that doesn't use the full design system.
+
 ## Philosophy
 
 > Clean lines. Sharp contrast. Yellow where it counts.
