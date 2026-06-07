@@ -64,12 +64,15 @@ const LIGHT_BG_PRESETS = [
   { label: 'Warm',      bg: '#FDF8F0', surface: '#FFFFFF' },
 ];
 function useBgPicker(theme) {
-  const key = `tollerud-bg-${theme}`;
   const presets = theme === 'dark' ? DARK_BG_PRESETS : LIGHT_BG_PRESETS;
-  const [bgIdx, setBgIdx] = useState(() => {
-    const saved = localStorage.getItem(key);
-    return saved ? parseInt(saved, 10) : 0;
-  });
+  const [bgIdx, setBgIdx] = useState(0);
+
+  // Reset to default (0) whenever theme changes
+  const prevTheme = useRef(theme);
+  useEffect(() => {
+    if (prevTheme.current !== theme) { setBgIdx(0); prevTheme.current = theme; }
+  }, [theme]);
+
   const idx = Math.min(bgIdx, presets.length - 1);
   useEffect(() => {
     const { bg, surface } = presets[idx];
@@ -77,10 +80,8 @@ function useBgPicker(theme) {
     document.documentElement.style.setProperty('--surface', bg);
     document.documentElement.style.setProperty('--card', surface);
     document.documentElement.style.setProperty('--surface-raised', surface);
-    localStorage.setItem(key, idx);
   }, [idx, theme]);
-  const reset = () => { setBgIdx(0); };
-  return [idx, setBgIdx, presets, reset];
+  return [idx, setBgIdx, presets];
 }
 
 function App() {
@@ -88,7 +89,7 @@ function App() {
   const [theme, toggleTheme] = useTheme();
   const toggleThemeRef = useRef(toggleTheme);
   toggleThemeRef.current = toggleTheme;
-  const [bgIdx, setBgIdx, bgPresets] = useBgPicker(theme);
+  const [bgIdx, setBgIdx, bgPresets] = useBgPicker(theme); // eslint-disable-line
   const [bgPickerOpen, setBgPickerOpen] = useState(false);
   const bgPickerRef = useRef(null);
   const [navOpen, setNavOpen] = useState(false);

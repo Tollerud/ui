@@ -54,7 +54,7 @@ function PageOverview({ go }) {
         {[
           { v: 60, suffix: '+', label: 'Components' },
           { v: 9, suffix: '', label: 'Foundations' },
-          { v: 30, suffix: '+', label: 'Color tokens' },
+          { v: 55, suffix: '+', label: 'Color tokens' },
           { v: 2, suffix: '', label: 'Themes · light & dark' },
         ].map((s, i) => (
           <div className="tollerud-card ds-themed ds-lift" key={i} style={{ textAlign: 'center', padding: '22px 16px' }}>
