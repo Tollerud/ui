@@ -549,12 +549,12 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 0% 0%, rgba(255, 255, 0, 0.72) 0%, rgba(255, 232, 0, 0.38) 16%, transparent 38%),
-    radial-gradient(circle at 100% 0%, rgba(255, 255, 0, 0.58) 0%, rgba(255, 184, 0, 0.24) 18%, transparent 40%),
-    radial-gradient(circle at 0% 100%, rgba(232, 213, 0, 0.44) 0%, rgba(255, 184, 0, 0.18) 18%, transparent 44%),
-    radial-gradient(circle at 100% 100%, rgba(255, 255, 0, 0.34) 0%, transparent 36%),
+    radial-gradient(70% 75% at 100% 0%, hsl(56, 100%, 80%) 0%, transparent 70%),
+    radial-gradient(80% 85% at 0% 100%, hsl(56, 100%, 50%) 0%, transparent 72%),
+    radial-gradient(60% 65% at 0% 0%, hsl(54, 85%, 66%) 0%, transparent 68%),
     #000;
-  filter: saturate(1.1) contrast(1.08);
+  opacity: 0.45;
+  filter: saturate(1.05) contrast(1.02);
   transform: translateZ(0);
   animation: tollerud-noir-glow-drift 32s ease-in-out infinite alternate;
 }

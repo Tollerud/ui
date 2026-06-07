@@ -1,8 +1,9 @@
-/* Tollerud DS — GrainGradientGL: a faithful WebGL recreation of the
-   @paper-design/shaders-react GrainGradient (shape: "corners") used on
-   tollerud.no — intense yellow light pooling from the corners over black,
-   slow organic drift, animated film grain. Falls back to a static CSS
-   gradient if WebGL is unavailable. → window.GrainGradientGL */
+/* Tollerud DS — GrainGradientGL: a WebGL replica of
+   MathiasOki/tollerud-landing app/components/ui/gradient-background.tsx:
+   @paper-design/shaders-react GrainGradient with shape: "corners", black
+   backplate, softness 0.76, intensity 0.45, noise 0, speed 1, and the
+   Tollerud yellow ramp. Falls back to static CSS if WebGL is unavailable.
+   → window.GrainGradientGL */
 
 function hslToRgb(str) {
   const m = /hsl\(\s*([\d.]+)\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%/.exec(str);
@@ -69,9 +70,9 @@ void main(){
 }`;
 
 function GrainGradientGL({
-  colors = ['hsl(54,85%,66%)', 'hsl(56,100%,80%)', 'hsl(56,100%,50%)'],
-  colorBack = 'hsl(0,0%,0%)',
-  softness = 0.76, intensity = 0.6, grain = 0.10, speed = 1,
+  colors = ['hsl(54, 85%, 66%)', 'hsl(56, 100%, 80%)', 'hsl(56, 100%, 50%)'],
+  colorBack = 'hsl(0, 0%, 0%)',
+  softness = 0.76, intensity = 0.45, grain = 0, speed = 1,
   className = '', style,
 }) {
   const ref = useRef(null);
@@ -144,7 +145,7 @@ function GrainGradientGL({
             `radial-gradient(60% 65% at 0% 0%, ${c1} 0%, transparent 68%)`,
           opacity: Math.min(1, intensity + 0.3),
         }}/>
-        <div className="tollerud-grain-gradient__grain"/>
+        {grain > 0 && <div className="tollerud-grain-gradient__grain"/>}
       </div>
     );
   }

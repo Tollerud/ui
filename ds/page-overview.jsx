@@ -11,10 +11,7 @@ function PageOverview({ go }) {
       {/* ── HERO ── */}
       <div className="ds-themed" style={{ position: 'relative', overflow: 'hidden', borderRadius: 14, border: '1px solid var(--border)', ...heroBg, marginBottom: 40 }}>
         {bold && (
-          <>
-            <GrainGradientGL intensity={0.6}/>
-            <div className="tollerud-noir-glow-vignette"/>
-          </>
+          <GrainGradientGL/>
         )}
         <div className="tollerud-grid-bg" style={{ position: 'absolute', inset: 0, opacity: bold ? 0.4 : 1, zIndex: 1 }}/>
         <div className="ds-hero__grid" style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24, padding: '52px 48px', alignItems: 'center' }}>

@@ -78,9 +78,8 @@ function CssFallback({ preserveCenter = true, noiseOverlay = true }: Pick<NoirGl
 /**
  * NoirGlowBackground
  *
- * Tia/Tollerud signature background primitive. The defaults are ported from
- * MathiasOki/tollerud-landing's `GradientBackground`, using Paper Design's
- * `GrainGradient` shader with acid-yellow blooms on black.
+ * Tia/Tollerud signature background primitive. The defaults replicate
+ * MathiasOki/tollerud-landing's `GradientBackground` component.
  *
  * Install dependency in consuming Next.js apps:
  *   npm install @paper-design/shaders-react
@@ -98,13 +97,13 @@ export function NoirGlowBackground({
   softness = 0.76,
   colorBack = "hsl(0, 0%, 0%)",
   colors = ["hsl(54, 85%, 66%)", "hsl(56, 100%, 80%)", "hsl(56, 100%, 50%)"],
-  preserveCenter = true,
-  noiseOverlay = true,
+  preserveCenter = false,
+  noiseOverlay = false,
   forceCssFallback = false,
   inert = true,
 }: NoirGlowBackgroundProps) {
   const wrapperClassName = cx(
-    "tollerud-noir-glow-root absolute inset-0 overflow-hidden",
+    "tollerud-noir-glow-root absolute inset-0 z-0 overflow-hidden",
     inert && "pointer-events-none",
     className
   )

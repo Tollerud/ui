@@ -7,7 +7,7 @@ function HeroBlock({ eyebrow, title, description, actions, media, minHeight = 28
   return (
     <div className="ds-mktcard ds-themed" style={{ position: 'relative', overflow: 'hidden', background: '#000', minHeight }}>
       {intense && typeof GrainGradientGL !== 'undefined'
-        ? <GrainGradientGL intensity={0.62}/>
+        ? <GrainGradientGL/>
         : <div className="tollerud-noir-glow-bg" style={{ opacity: 0.5 }}/>}
       <div className="tollerud-grid-bg" style={{ position: 'absolute', inset: 0, opacity: intense ? 0.25 : 0.5 }}/>
       <div className="ds-hero__grid" style={{ position: 'relative', display: hasMedia ? 'grid' : 'block',

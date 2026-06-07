@@ -97,22 +97,20 @@ function Squares({ direction = 'diagonal', speed = 0.5, borderColor = '#333', sq
 }
 
 /* ───────────────────────────────────────────────────────────────
-   GrainGradient — the live tollerud.no atmosphere. The original is a
-   @paper-design WebGL "corners" grain shader; this recreates the look
-   with layered radial gradients in the corners + an SVG grain overlay
-   and a slow drift. Same yellow palette.
+   GrainGradient — CSS fallback for the tollerud-landing GradientBackground.
+   It mirrors the same black backplate, yellow color ramp, no-noise default,
+   and strongest top-right / bottom-left / top-left corner pools.
    ─────────────────────────────────────────────────────────────── */
-function GrainGradient({ colors = ['hsl(54,85%,66%)', 'hsl(56,100%,80%)', 'hsl(56,100%,50%)'], intensity = 0.6, grain = true, animate = true, className = '', style }) {
+function GrainGradient({ colors = ['hsl(54, 85%, 66%)', 'hsl(56, 100%, 80%)', 'hsl(56, 100%, 50%)'], intensity = 0.45, grain = false, animate = true, className = '', style }) {
   const [c1, c2, c3] = colors;
   const a = intensity;
   return (
     <div className={`tollerud-grain-gradient ${animate ? 'is-animated' : ''} ${className}`} style={style} aria-hidden="true">
       <div className="tollerud-grain-gradient__field" style={{
         background:
-          `radial-gradient(70% 75% at 0% 0%, ${c2} 0%, transparent 70%),` +
-          `radial-gradient(80% 85% at 100% 100%, ${c3} 0%, transparent 72%),` +
-          `radial-gradient(65% 70% at 100% 0%, ${c1} 0%, transparent 68%),` +
-          `radial-gradient(60% 65% at 0% 100%, ${c1} 0%, transparent 70%)`,
+          `radial-gradient(70% 75% at 100% 0%, ${c2} 0%, transparent 70%),` +
+          `radial-gradient(80% 85% at 0% 100%, ${c3} 0%, transparent 72%),` +
+          `radial-gradient(60% 65% at 0% 0%, ${c1} 0%, transparent 68%)`,
         opacity: a,
       }}/>
       {grain && <div className="tollerud-grain-gradient__grain"/>}
@@ -136,9 +134,9 @@ function PageBackgrounds() {
       <PageHeader icon="layers" eyebrow="Backgrounds · ported from tollerud.no" title="Backgrounds"
         lede="The two atmospheres that power the live site, lifted into the system as drop-in components. Move your cursor over the grid — it lights the cell beneath it."/>
 
-      <Section title="Grain gradient · live shader" desc="The real tollerud.no hero atmosphere — a WebGL recreation of the @paper-design 'corners' GrainGradient: intense yellow light pooling from the corners over black, drifting organically with animated film grain. This is the one to reach for on the boldest surfaces.">
+      <Section title="Grain gradient · live shader" desc="A WebGL replica of the tollerud-landing GradientBackground: @paper-design 'corners' GrainGradient, black backplate, three yellow blooms, softness 0.76, intensity 0.45, speed 1 and no shader noise.">
         <BgFrame label="GrainGradientGL · shape: corners · animated" h={300}>
-          <GrainGradientGL intensity={0.62}/>
+          <GrainGradientGL/>
         </BgFrame>
         <div style={{ marginTop: 16 }}>
           <CodeSnippet name="grain-gradient-gl.jsx" code={`<div className="relative">
@@ -146,7 +144,8 @@ function PageBackgrounds() {
     colors={['hsl(54,85%,66%)', 'hsl(56,100%,80%)', 'hsl(56,100%,50%)']}
     colorBack="hsl(0,0%,0%)"
     softness={0.76}
-    intensity={0.62}
+    intensity={0.45}
+    grain={0}
     speed={1}
   />
   <div className="relative z-20">{children}</div>
@@ -154,7 +153,7 @@ function PageBackgrounds() {
         </div>
       </Section>
 
-      <Section title="Grain gradient · CSS fallback" desc="A pure-CSS approximation (layered corner radials + SVG grain) for when WebGL is unavailable or you want a static, zero-cost atmosphere. GrainGradientGL falls back to this automatically.">
+      <Section title="Grain gradient · CSS fallback" desc="A pure-CSS approximation using the same yellow ramp and corner composition for when WebGL is unavailable or you want a static, zero-cost atmosphere. GrainGradientGL falls back to this automatically.">
         <BgFrame label="GrainGradient · CSS only">
           <GrainGradient/>
         </BgFrame>
