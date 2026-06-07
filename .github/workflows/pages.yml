@@ -25,10 +25,17 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Build static site
+        run: |
+          mkdir -p _site
+          cp index.html preview.html globals.css tokens.css _site/
+          cp tollerud-avatar.png tollerud-avatar.svg tollerud-logo.svg _site/
+          cp -R ds _site/ds
+          touch _site/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: _site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
