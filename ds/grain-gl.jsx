@@ -9,6 +9,9 @@ const PAPER_SHADERS_URL = './ds/vendor/paper-shaders/index.js';
 let paperShadersPromise = null;
 
 function loadPaperShaders() {
+  if (window.PaperShaders) {
+    return Promise.resolve(window.PaperShaders);
+  }
   if (!paperShadersPromise) {
     paperShadersPromise = Function('url', 'return import(url)')(PAPER_SHADERS_URL);
   }

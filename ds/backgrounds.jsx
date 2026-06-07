@@ -128,6 +128,35 @@ function BgFrame({ children, h = 260, label }) {
   );
 }
 
+function GradientReadabilityDemo({ treatment }) {
+  const isShadow = treatment === 'shadow';
+  return (
+    <BgFrame label={isShadow ? 'left shadow gradient' : 'copy blur scrim'} h={420}>
+      <GrainGradientGL/>
+      {isShadow && <div className="ds-hero-readable-shadow"/>}
+      <div className="tollerud-grid-bg" style={{ position: 'absolute', inset: 0, opacity: 0.25, zIndex: 1 }}/>
+      <div className="ds-hero-readable-demo">
+        <div className={isShadow ? 'ds-hero-readable-copy' : 'ds-hero-readable-copy ds-hero__copy--scrim'}>
+          <div className="ds-row" style={{ gap: 10, marginBottom: 18 }}>
+            <span className="tollerud-pill tollerud-pill--outline">v1.0 · noir + yellow</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(245,245,245,0.58)' }}>>60 components</span>
+          </div>
+          <h3 style={{ fontSize: 'clamp(30px, 5vw, 46px)', lineHeight: 0.98, letterSpacing: '-0.045em', color: '#F5F5F5', fontWeight: 600 }}>
+            Dark. Monochrome.<br/><span className="ds-shimmer">Yellow where it counts.</span>
+          </h3>
+          <p style={{ marginTop: 16, maxWidth: 430, color: 'rgba(245,245,245,0.72)', fontSize: 15.5, lineHeight: 1.55 }}>
+            The real Paper shader stays visible, while the copy keeps enough contrast to survive bright motion behind it.
+          </p>
+          <div className="ds-row" style={{ gap: 12, marginTop: 22 }}>
+            <button className="tollerud-btn tollerud-btn--terminal tollerud-btn--md">explore_system</button>
+            <button className="tollerud-btn tollerud-btn--secondary tollerud-btn--md" style={{ color: '#F5F5F5', borderColor: 'rgba(245,245,245,0.2)' }}>Components</button>
+          </div>
+        </div>
+      </div>
+    </BgFrame>
+  );
+}
+
 function PageBackgrounds() {
   return (
     <div>
@@ -157,6 +186,13 @@ function PageBackgrounds() {
         <BgFrame label="GrainGradient · CSS only">
           <GrainGradient/>
         </BgFrame>
+      </Section>
+
+      <Section title="Hero readability treatments" desc="Two ways to keep copy readable over the live grain gradient: a local blur scrim around the copy, or a broad left-side shadow that darkens only the text side of the hero.">
+        <div style={{ display: 'grid', gap: 16 }}>
+          <GradientReadabilityDemo treatment="scrim"/>
+          <GradientReadabilityDemo treatment="shadow"/>
+        </div>
       </Section>
 
       <Section title="Animated grid" desc="A scrolling canvas grid that fades to #060606 at the edges and fills the square under the cursor. Direction, speed, cell size and colors are all props.">
