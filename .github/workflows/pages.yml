@@ -29,6 +29,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html preview.html globals.css tokens.css _site/
+          cp CNAME _site/
           cp tollerud-avatar.png tollerud-avatar.svg tollerud-logo.svg _site/
           cp -R ds _site/ds
           touch _site/.nojekyll
