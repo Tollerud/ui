@@ -15,7 +15,7 @@ Tollerud DS is minimal but not cold. It uses a near-black foundation with warm y
 ### npm package (recommended)
 
 ```bash
-npm install @tollerud/design-system clsx tailwind-merge
+npm install @tollerud/ui clsx tailwind-merge
 # Optional — for NoirGlowBackground:
 npm install @paper-design/shaders-react
 ```
@@ -24,14 +24,14 @@ npm install @paper-design/shaders-react
 
 ```ts
 import type { Config } from 'tailwindcss'
-import tollerudPreset from '@tollerud/design-system/preset'
+import tollerudPreset from '@tollerud/ui/preset'
 
 const config: Config = {
   presets: [tollerudPreset],
   content: [
     './app/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
-    './node_modules/@tollerud/design-system/dist/**/*.{js,mjs}',
+    './node_modules/@tollerud/ui/dist/**/*.{js,mjs}',
   ],
 }
 export default config
@@ -40,13 +40,13 @@ export default config
 **CSS** — import tokens and component classes in `app/globals.css`:
 
 ```css
-@import '@tollerud/design-system/globals.css';
+@import '@tollerud/ui/globals.css';
 ```
 
 **Components:**
 
 ```tsx
-import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, NoirGlowBackground } from '@tollerud/design-system'
+import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, NoirGlowBackground } from '@tollerud/ui'
 ```
 
 Publish a new version by creating a GitHub Release; CI runs `npm publish` when `NPM_TOKEN` is configured.
@@ -58,14 +58,14 @@ npm install clsx tailwind-merge
 cp tollerud-preset.js globals.css components/ -r <your-next-project>/
 ```
 
-Then use local paths instead of `@tollerud/design-system` in the snippets above.
+Then use local paths instead of `@tollerud/ui` in the snippets above.
 
 ### Next.js example
 
 That's it. You now have all Tailwind colors (`bg-tollerud-yellow`, `text-tollerud-noir-200`), semantic CSS variables (`--primary`, `--background`, `--ring`), component utilities (`.tollerud-card`, `.tollerud-btn--terminal`), and React components ready to import:
 
 ```tsx
-import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, NoirGlowBackground } from '@tollerud/design-system'
+import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, NoirGlowBackground } from '@tollerud/ui'
 
 <section className="relative overflow-hidden bg-black">
   <NoirGlowBackground intensity="medium" speed="slow" grain="soft" shape="corners" preserveCenter />
@@ -86,7 +86,7 @@ Include `tokens.css` or `globals.css` for CSS custom properties and utility clas
 ```html
 <link rel="stylesheet" href="globals.css">
 <div class="tollerud-card">
-  <h2 style="color: var(--tollerud-yellow)">Tollerud Design System</h2>
+  <h2 style="color: var(--tollerud-yellow)">Tollerud User Interface</h2>
   <button class="tollerud-btn tollerud-btn--primary tollerud-btn--md">Get Started</button>
 </div>
 ```
