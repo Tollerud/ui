@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tollerud Design System</title>
+<link rel="icon" href="tollerud-logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Tailwind Play CDN — configured with the Tollerud palette so demo utilities resolve -->
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+  tailwind.config = {
+    darkMode: ['selector', '[data-theme="dark"]'],
+    theme: {
+      extend: {
+        colors: {
+          tollerud: {
+            yellow: '#E8D500', 'yellow-bright': '#FFFF00', acid: '#FFFF00',
+            'yellow-dim': '#B8A800', amber: '#FFB800', 'amber-glow': '#FF8C00',
+            black: '#0A0A0A', 'noir-900': '#121212', 'noir-800': '#1A1A1A',
+            'noir-700': '#252525', 'noir-600': '#333333', 'noir-500': '#4A4A4A',
+            'noir-400': '#666666', 'noir-300': '#888888', 'noir-200': '#AAAAAA',
+            'noir-100': '#CCCCCC', 'noir-50': '#E5E5E5', white: '#F5F5F5',
+            success: '#22C55E', warning: '#E8D500', error: '#EF4444', info: '#3B82F6',
+          },
+        },
+        fontFamily: {
+          sans: ['Inter', 'system-ui', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+        },
+      },
+    },
+    corePlugins: { preflight: false },
+  };
+</script>
+
+<!-- System tokens + component classes from the repo -->
+<link rel="stylesheet" href="globals.css">
+<!-- Docs chrome, authored light theme, and extended component styles -->
+<link rel="stylesheet" href="ds/docs.css">
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="ds/icons.jsx"></script>
+<script type="text/babel" src="ds/primitives.jsx"></script>
+<script type="text/babel" src="ds/components.jsx"></script>
+<script type="text/babel" src="ds/datatable.jsx"></script>
+<script type="text/babel" src="ds/charts.jsx"></script>
+<script type="text/babel" src="ds/marketing.jsx"></script>
+<script type="text/babel" src="ds/infra.jsx"></script>
+<script type="text/babel" src="ds/motion.jsx"></script>
+<script type="text/babel" src="ds/backgrounds.jsx"></script>
+<script type="text/babel" src="ds/grain-gl.jsx"></script>
+<script type="text/babel" src="ds/page-overview.jsx"></script>
+<script type="text/babel" src="ds/page-foundations.jsx"></script>
+<script type="text/babel" src="ds/page-components.jsx"></script>
+<script type="text/babel" src="ds/page-infra.jsx"></script>
+<script type="text/babel" src="ds/page-forms.jsx"></script>
+<script type="text/babel" src="ds/page-nav-overlays.jsx"></script>
+<script type="text/babel" src="ds/page-charts.jsx"></script>
+<script type="text/babel" src="ds/page-blocks.jsx"></script>
+<script type="text/babel" src="ds/page-patterns.jsx"></script>
+<script type="text/babel" src="ds/page-onboarding.jsx"></script>
+<script type="text/babel" src="ds/page-servers.jsx"></script>
+<script type="text/babel" src="ds/page-console.jsx"></script>
+<script type="text/babel" src="ds/page-settings.jsx"></script>
+<script type="text/babel" src="ds/page-billing.jsx"></script>
+<script type="text/babel" src="ds/page-auth.jsx"></script>
+<script type="text/babel" src="ds/app.jsx"></script>
+</body>
+</html>

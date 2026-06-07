@@ -1,0 +1,283 @@
+/* Tollerud DS — Foundations. → window.PageFoundations */
+
+/* Live, replay-able motion demos */
+function MotionLab() {
+  const [k, setK] = useState(0);
+  const easings = [
+    ['ease-out', 'cubic-bezier(.16,1,.3,1)', 'Entrances — overshoot-free settle'],
+    ['ease-in-out', 'cubic-bezier(.4,0,.2,1)', 'Movement between two states'],
+    ['linear', 'linear', 'Progress, shimmer, marquee'],
+  ];
+  return (
+    <div className="ds-demo ds-themed" style={{ padding: 0 }}>
+      <div style={{ padding: '22px 24px' }}>
+        <div className="ds-row" style={{ justifyContent: 'space-between', marginBottom: 18 }}>
+          <span className="ds-subhead" style={{ margin: 0 }}>Easing curves</span>
+          <button className="ds-demo__btn" onClick={() => setK(k + 1)}><Icons.refresh size={13}/>Replay</button>
+        </div>
+        <div className="ds-col" style={{ gap: 14 }}>
+          {easings.map(([name, curve, use], i) => (
+            <div key={name} className="ds-row" style={{ gap: 16 }}>
+              <span className="ds-mono" style={{ fontSize: 12, color: 'var(--foreground)', width: 92, flexShrink: 0 }}>{name}</span>
+              <div style={{ flex: 1, position: 'relative', height: 28, background: 'var(--muted)', borderRadius: 999 }}>
+                <span key={k} style={{ position: 'absolute', top: 4, left: 4, width: 20, height: 20, borderRadius: '50%', background: 'var(--tollerud-yellow)',
+                  animation: `motionlab-run 1.6s ${curve} ${i * 0.12}s infinite alternate` }}/>
+              </div>
+              <span style={{ fontSize: 12, color: 'var(--text-muted)', width: 230, flexShrink: 0 }}>{use}</span>
+            </div>
+          ))}
+        </div>
+        <div className="ds-section__head" style={{ marginTop: 26, marginBottom: 14 }}><span className="ds-subhead" style={{ margin: 0 }}>Interaction patterns</span></div>
+        <div className="ds-grid-3">
+          <div key={'rev' + k} className="tollerud-card ds-themed" data-reveal style={{ textAlign: 'center', padding: '20px 12px' }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--foreground)' }}>Scroll reveal</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>fade + rise, staggered</div>
+          </div>
+          <div className="tollerud-card ds-themed ds-lift" style={{ textAlign: 'center', padding: '20px 12px', cursor: 'pointer' }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--foreground)' }}>Hover lift</div>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>hover me</div>
+          </div>
+          <div style={{ textAlign: 'center', padding: '14px 12px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+            <button className="tollerud-btn tollerud-btn--terminal tollerud-btn--md">glow_follow</button>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>move cursor over button</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PageFoundations() {
+  const [density, setDensity] = useState('comfortable');
+  const brand = [
+    ['Yellow', '#E8D500', '--tollerud-yellow'],
+    ['Yellow bright', '#FFFF00', '--tollerud-yellow-bright'],
+    ['Yellow dim', '#B8A800', '--tollerud-yellow-dim'],
+    ['Amber', '#FFB800', '--tollerud-amber'],
+    ['Amber glow', '#FF8C00', '--tollerud-amber-glow'],
+  ];
+  const noir = [
+    ['Black', '#0A0A0A', '--tollerud-black'],
+    ['Noir 900', '#121212', '--tollerud-noir-900'],
+    ['Noir 800', '#1A1A1A', '--tollerud-noir-800'],
+    ['Noir 700', '#252525', '--tollerud-noir-700'],
+    ['Noir 600', '#333333', '--tollerud-noir-600'],
+    ['Noir 500', '#4A4A4A', '--tollerud-noir-500'],
+    ['Noir 400', '#666666', '--tollerud-noir-400'],
+    ['Noir 300', '#888888', '--tollerud-noir-300'],
+    ['Noir 200', '#AAAAAA', '--tollerud-noir-200'],
+    ['Noir 100', '#CCCCCC', '--tollerud-noir-100'],
+    ['Noir 50', '#E5E5E5', '--tollerud-noir-50'],
+    ['White', '#F5F5F5', '--tollerud-white'],
+  ];
+  const state = [
+    ['Success', '#22C55E', '--success'],
+    ['Warning', '#E8D500', '--warning'],
+    ['Error', '#EF4444', '--destructive'],
+    ['Info', '#3B82F6', '--info'],
+  ];
+  const semantic = [
+    ['background', 'Page background', 'var(--background)'],
+    ['foreground', 'Primary text', 'var(--foreground)'],
+    ['card', 'Raised surface', 'var(--card)'],
+    ['popover', 'Overlay surface', 'var(--popover)'],
+    ['primary', 'Yellow action', 'var(--primary)'],
+    ['secondary', 'Muted surface', 'var(--secondary)'],
+    ['muted', 'Muted fill', 'var(--muted)'],
+    ['border', 'Hairline border', 'var(--border)'],
+    ['ring', 'Focus ring', 'var(--ring)'],
+  ];
+
+  const typeScale = [
+    ['Display', '56 / 0.98 / -0.045em', 600, 56, 'Dark. Yellow.'],
+    ['Heading 1', '40 / 1.02 / -0.04em', 600, 40, 'Mission control'],
+    ['Heading 2', '28 / 1.1 / -0.025em', 600, 28, 'Service health'],
+    ['Heading 3', '20 / 1.2 / -0.02em', 600, 20, 'Active sessions'],
+    ['Body', '16 / 1.5', 400, 16, 'Direct, technical, warm-but-not-corporate copy.'],
+    ['Small', '14 / 1.5', 400, 14, 'Secondary descriptions and metadata.'],
+    ['Mono', '14 / 1.7', 500, 14, '❯ systemctl status tollerud-agent'],
+  ];
+
+  const radii = [['none', '0'], ['sm', '2px'], ['DEFAULT', '4px'], ['md', '6px'], ['lg', '8px'], ['xl', '12px'], ['2xl', '16px']];
+  const space = [['1', 4], ['2', 8], ['3', 12], ['4', 16], ['6', 24], ['8', 32], ['12', 48], ['16', 64]];
+  const shadows = [
+    ['sm', 'var(--shadow-sm)'],
+    ['md', 'var(--shadow-md)'],
+    ['lg', 'var(--shadow-lg)'],
+    ['xl', 'var(--shadow-xl)'],
+    ['glow', 'var(--shadow-glow)'],
+  ];
+  const motion = [
+    ['fast', '150ms', 'Hover, focus, small toggles'],
+    ['normal', '250ms', 'Most transitions, fades'],
+    ['slow', '350ms', 'Overlays, large movement'],
+    ['ease-out', 'cubic-bezier(.16,1,.3,1)', 'Entrances'],
+    ['ease-in-out', 'cubic-bezier(.4,0,.2,1)', 'Movement'],
+  ];
+
+  return (
+    <div>
+      <PageHeader icon="palette" eyebrow="Foundations" title="Foundations"
+        lede="The atomic decisions every component inherits — color, type, space, depth and motion. All defined as CSS variables that flip cleanly between dark and light."/>
+
+      <Section title="Brand color" desc="Yellow is the only chromatic color in the system. It signals interaction; everything else is monochrome.">
+        <SubHead>Yellow & amber</SubHead>
+        <div className="ds-swatchgrid" style={{ marginBottom: 28 }}>
+          {brand.map(([n, v, t]) => <Swatch key={n} name={n} value={v} varName={t}/>)}
+        </div>
+        <SubHead>Noir scale</SubHead>
+        <div className="ds-swatchgrid">
+          {noir.map(([n, v, t]) => <Swatch key={n} name={n} value={v} varName={t}/>)}
+        </div>
+      </Section>
+
+      <Section title="State color" desc="Used sparingly for status only — kept muted so yellow stays the loudest thing on screen.">
+        <div className="ds-swatchgrid">
+          {state.map(([n, v, t]) => <Swatch key={n} name={n} value={v} varName={t}/>)}
+        </div>
+      </Section>
+
+      <Section title="Semantic tokens" desc="shadcn/ui-compatible aliases. Components reference these — so re-theming is a matter of remapping nine variables.">
+        <TokenTable cols={['Token', 'Role', 'Reference']}
+          rows={semantic.map(([t, r, v]) => [
+            `<code>--${t}</code>`,
+            r,
+            <span className="ds-row" style={{ gap: 8 }}><span style={{ width: 16, height: 16, borderRadius: 4, background: v, border: '1px solid var(--border)' }}/><span className="ds-mono" style={{ fontSize: 12 }}>{v}</span></span>,
+          ])}/>
+      </Section>
+
+      <Section title="Typography" desc="Inter for display and body, JetBrains Mono for code, metrics and terminal moments. Tight tracking on display sizes.">
+        <div className="ds-demo ds-themed">
+          <div style={{ padding: '8px 4px' }}>
+            {typeScale.map(([name, spec, w, size, sample], i) => (
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '150px 1fr', gap: 24, alignItems: 'baseline', padding: '16px 24px', borderBottom: i < typeScale.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--foreground)' }}>{name}</div>
+                  <div className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>{spec}</div>
+                </div>
+                <div style={{ fontSize: Math.min(size, 40), fontWeight: w, letterSpacing: size >= 28 ? '-0.03em' : 0, lineHeight: 1.1, color: 'var(--foreground)', fontFamily: name === 'Mono' ? 'var(--font-mono)' : 'var(--font-sans)', color: name === 'Mono' ? 'var(--tollerud-yellow)' : 'var(--foreground)' }}>{sample}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      <Section title="Spacing" desc="A 4px base grid. These eight steps cover the vast majority of layout.">
+        <div className="ds-col" style={{ gap: 10 }}>
+          {space.map(([n, px]) => (
+            <div key={n} className="ds-row" style={{ gap: 16 }}>
+              <span className="ds-mono" style={{ fontSize: 12, color: 'var(--text-muted)', width: 90 }}>space-{n}</span>
+              <span style={{ height: 14, width: px, background: 'var(--tollerud-yellow)', borderRadius: 2 }}/>
+              <span className="ds-mono" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{px}px</span>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <div className="ds-grid-2" style={{ alignItems: 'start' }}>
+        <Section title="Radius" desc="Subtle by default. Sharp corners hold the noir feel.">
+          <div className="ds-col" style={{ gap: 10 }}>
+            {radii.map(([n, v]) => (
+              <div key={n} className="ds-row" style={{ gap: 14 }}>
+                <span style={{ width: 46, height: 46, background: 'var(--muted)', border: '1.5px solid var(--tollerud-yellow)', borderRadius: v }}/>
+                <div>
+                  <div className="ds-mono" style={{ fontSize: 12.5, color: 'var(--foreground)' }}>radius-{n}</div>
+                  <div className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{v}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="Elevation" desc="A four-tier shadow scale plus a yellow glow — theme-aware (deep in dark, soft in light). Lean on borders first; reach for a shadow only to lift overlays (drawers, popovers, menus) off the page.">
+          <div className="ds-col" style={{ gap: 16 }}>
+            {shadows.map(([n, v]) => (
+              <div key={n} className="ds-row" style={{ gap: 16 }}>
+                <span style={{ width: 64, height: 44, background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 8, boxShadow: v }}/>
+                <span className="ds-mono" style={{ fontSize: 12.5, color: 'var(--foreground)' }}>--shadow-{n}</span>
+              </div>
+            ))}
+          </div>
+        </Section>
+      </div>
+
+      <Section title="Density" desc="Set data-density='compact' on any container to tighten cards, tables, form rows, panel headers and buttons inside it — without touching the components. The default is comfortable.">
+        <div className="ds-row" style={{ marginBottom: 16 }}>
+          <Segmented value={density} onChange={setDensity} options={[{ value: 'comfortable', label: 'Comfortable' }, { value: 'compact', label: 'Compact' }]}/>
+        </div>
+        <div data-density={density}>
+          <div className="ds-grid-2" style={{ gap: 14 }}>
+            <div className="tollerud-card ds-themed">
+              <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--foreground)', marginBottom: 6 }}>Card padding</div>
+              <p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>Compact trims card padding from 24px to 12px and tightens table rows, form rows and panel headers.</p>
+            </div>
+            <div className="tollerud-card ds-themed" style={{ padding: 0, overflow: 'hidden' }}>
+              <div className="ds-panel__head"><span className="ds-panel__title"><Icons.gauge size={15}/>Panel header</span></div>
+              <div style={{ padding: 16 }}>
+                <FormRow label="Auto-restart" hint="Restart on failure."><Switch defaultChecked/></FormRow>
+                <FormRow label="Notifications" hint="Email + webhook."><Switch/></FormRow>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <CodeSnippet name="density.jsx" code={`<div data-density="compact">\n  {/* cards, tables, forms render tighter inside */}\n</div>`}/>
+        </div>
+      </Section>
+
+      <Section title="Motion" desc="Quick and confident. Durations stay short; easing does the expressive work. Everything here respects prefers-reduced-motion.">
+        <TokenTable cols={['Token', 'Value', 'Use for']} rows={motion.map(([t, v, u]) => [`<code>--motion-${t.includes('ease') ? '' : 'duration-'}${t}</code>`, `<span class="ds-mono">${v}</span>`, u])}/>
+        <div style={{ marginTop: 22 }}><MotionLab/></div>
+      </Section>
+
+      <Section title="Iconography" desc="Stroke-based, drawn on a 24px grid at 1.8 stroke weight so they sit evenly with text. Every glyph is a React component taking size + className. Yellow is reserved for interactive icons — most sit in the current text color.">
+        <div className="ds-icon-grid">
+          {Object.keys(Icons).sort().map((name) => {
+            const I = Icons[name];
+            return (
+              <button key={name} className="ds-icon-cell" title={`Icons.${name}`}
+                onClick={() => { navigator.clipboard && navigator.clipboard.writeText(`<Icons.${name} size={18}/>`); }}>
+                <I size={20}/>
+                <span className="ds-icon-cell__name">{name}</span>
+              </button>
+            );
+          })}
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <CodeSnippet name="adding-an-icon.jsx" code={`// 1. Add to ds/icons.jsx — draw on the 24×24 grid, no fills:
+//    <Ico> already sets viewBox, 1.8 stroke, round caps/joins.
+container: (p) => (
+  <Ico {...p}>
+    <path d="M3 8.5 12 4l9 4.5v7L12 20l-9-4.5v-7Z"/>
+    <path d="m3 8.5 9 4.5 9-4.5M12 13v7"/>
+  </Ico>
+),
+
+// 2. Use it anywhere — by component or by name string:
+<Icons.container size={18}/>
+<StatCard icon="container" .../>   // components that take an icon prop`}/>
+        </div>
+      </Section>
+
+      <Section title="Voice" desc="Direct. Technical. Warm-but-not-corporate. Think terminal prompt, not marketing email.">
+        <div className="ds-grid-2">
+          <div className="tollerud-card ds-themed">
+            <div className="ds-row" style={{ gap: 7, marginBottom: 14, color: 'var(--success)' }}><Icons.checkCircle size={16}/><span style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)' }}>Say this</span></div>
+            <div className="ds-col" style={{ gap: 9 }}>
+              {['❯ deploy --env production', 'Open Dashboard', 'Port 8080 is in use', 'emma — deployment complete', 'No alerts — everything looks good'].map((s, i) =>
+                <code key={i} className="ds-mono" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{s}</code>)}
+            </div>
+          </div>
+          <div className="tollerud-card ds-themed">
+            <div className="ds-row" style={{ gap: 7, marginBottom: 14, color: 'var(--destructive)' }}><Icons.xCircle size={16}/><span style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)' }}>Not this</span></div>
+            <div className="ds-col" style={{ gap: 9 }}>
+              {['Submit deployment request', 'Click here to get started', 'Oops! Something went wrong!', 'Your deployment was successful', 'There are no items to display'].map((s, i) =>
+                <code key={i} className="ds-mono" style={{ fontSize: 13, color: 'var(--text-muted)', textDecoration: 'line-through', textDecorationColor: 'rgba(239,68,68,.5)' }}>{s}</code>)}
+            </div>
+          </div>
+        </div>
+      </Section>
+    </div>
+  );
+}
+window.PageFoundations = PageFoundations;

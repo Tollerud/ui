@@ -220,7 +220,7 @@ See `KEYBOARD.md` for full keyboard contract.
 
 ## Homelab / Infrastructure Components
 
-The Tier 2 component set — these make Tia a real infrastructure assistant.
+The Tier 2 component set — these make Tia a real infrastructure assistant. All live in `ds/infra.jsx` and are showcased on the **Infrastructure** page; `HostCard`, `AlertInbox` and `ApprovalCard` also power the Mission Control dashboard. They share a five-level `SEVERITY` scale (`critical · high · medium · low · info`).
 
 ### ServiceHealthCard
 
@@ -313,7 +313,7 @@ States: `pending` (shows Approve/Reject buttons), `approved`, `rejected`.
 />
 ```
 
-Supports `view="unified"`, `showContext` toggle for hiding context lines.
+Renders a unified diff. `showContext` (default true) toggles context lines off to focus on edits. Line shape: `{ type: 'add' | 'remove' | 'context', text, oldLine?, newLine? }`.
 
 ### LogViewer
 
@@ -324,14 +324,22 @@ Supports `view="unified"`, `showContext` toggle for hiding context lines.
     { text: 'Connection refused on port 443', level: 'error', timestamp: '14:32:05', source: 'nginx' },
     { text: 'Health check passed', level: 'info', timestamp: '14:32:10', source: 'hermes' },
   ]}
-  follow={true}
-  searchable={true}
-  showLineNumbers={true}
-  height="300px"
+  follow
+  searchable
+  showLineNumbers
+  height={300}
 />
 ```
 
-Features: level color coding (`debug`→`trace`→`info`→`warn`→`error`), live follow auto-scroll, text search, line count control, performance truncation at `maxLines`.
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `lines` | `{ text, level, timestamp?, source? }[]` | `[]` | Log entries. `level` is one of `trace` `debug` `info` `warn` `error`. |
+| `follow` | `boolean` | `false` | Auto-scroll to the newest line whenever `lines` changes. |
+| `searchable` | `boolean` | `false` | Show a filter input (matches `text` + `source`) with a live match count. |
+| `showLineNumbers` | `boolean` | `false` | Prefix each row with a zero-padded line number. |
+| `height` | `number` | `300` | Scroll-area height in px. |
+
+Level color coding: `trace` (muted) → `debug` (info blue) → `info` (secondary) → `warn` (yellow) → `error` (red, brightened message). Errors carry a colored left border. For a streaming/level-filter/export toolbar on top of it, see the **Logs & Console** build page.
 
 ### AlertInbox
 
@@ -345,7 +353,7 @@ Features: level color coding (`debug`→`trace`→`info`→`warn`→`error`), li
 />
 ```
 
-Features: severity count badges, hover-to-acknowledge, severity filter, scrollable list.
+Features: severity count badges, hover-to-acknowledge, severity filter, scrollable list. Pass `loading` for a skeleton state; shows “No alerts — everything looks good” when empty.
 
 ### Timeline
 
@@ -395,7 +403,309 @@ Step statuses: `pending` `running` `success` `failed` `skipped` — each with di
 />
 ```
 
-Features: per-job status dots, size/target display, failed job warning footer.
+Features: per-job status dots, size/target display, failed job warning footer. Pass `loading` for a skeleton state and `emptyState` (or rely on the default) when no jobs are configured.
+
+## Layout & form components
+
+### Panel
+
+A card with a header bar (title + optional actions) and optional footer — the structural workhorse behind the log viewer, data table, alert inbox and most dashboard surfaces.
+
+```tsx
+<Panel title="Compose stack" icon="grid"
+  actions={<Button variant="ghost" size="sm">Edit</Button>}
+  footer={<span className="ds-mono">compose.yml · 4 services</span>}>
+  …content…
+</Panel>
+```
+
+Props: `title`, `icon` (icon-set name), `actions`, `footer`, `noPadding`, `className`, `style`. CSS: `.ds-panel__head` / `.ds-panel__title` / `.ds-panel__foot`.
+
+### Meter
+
+A labeled progress row that turns red past a hot threshold.
+
+```tsx
+<Meter label="CPU" value={23} valueLabel="23%" />
+<Meter label="Containers" value={28} unlimited valueLabel="28 running" />
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `label` | `string` | — | Left-hand label. |
+| `value` | `number` | — | Current value. |
+| `max` | `number` | `100` | Denominator for the percentage. |
+| `valueLabel` | `string` | — | Overrides the right-hand readout (else `value / max`). |
+| `hot` | `number` | `85` | Percentage past which the bar turns red. |
+| `unlimited` | `boolean` | `false` | Full dimmed bar; shows `value` alone. |
+
+### Stepper
+
+Horizontal step indicator for wizards. Completed steps fill yellow; the current one carries a ring.
+
+```tsx
+<Stepper steps={['Connect host', 'Choose stacks', 'Invite team', 'Finish']} current={1} />
+```
+
+Props: `steps: string[]`, `current` (0-indexed). CSS: `.ds-wizard__*`.
+
+### PasswordInput
+
+A password field with a show/hide toggle and an optional label action (e.g. a "Forgot?" link).
+
+```tsx
+<PasswordInput label="Password" placeholder="••••••••"
+  error={pwError}
+  labelAction={<a href="#">Forgot?</a>} />
+```
+
+Props: `label`, `labelAction`, `error`, `id`, plus all native `<input>` props.
+
+### Spinner
+
+Inline loading spinner; respects reduced-motion.
+
+```tsx
+<Button variant="primary"><Spinner size={14} /> Signing in…</Button>
+```
+
+Props: `size` (px, default 16), `style`. CSS: `.ds-spin`.
+
+### FormRow
+
+Label + hint on the left, control on the right. The canonical settings-form layout; stacks vertically under 560px.
+
+```tsx
+<FormRow label="Two-factor auth" hint="Require a TOTP code at sign-in.">
+  <Switch defaultChecked />
+</FormRow>
+```
+
+Props: `label`, `hint`, `children`. CSS: `.ds-formrow`.
+
+### PricingCard
+
+A single plan tier with optional ribbon, feature list and CTA. Powers the Billing page and the marketing pricing block.
+
+```tsx
+<PricingCard name="Pro" tagline="For a growing fleet"
+  price={12} priceNote="billed monthly" recommended
+  features={['10 hosts', 'Approvals & rollback', 'Priority support']}
+  cta="Upgrade to Pro" />
+```
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `name` / `tagline` | `string` | Title + sub-line. |
+| `price` | `number \| string` | `0`, `'Free'`, `'$12'` render as "Free"; numbers get a `$` prefix. |
+| `period` | `string` | Suffix after the price (default `/mo`). |
+| `priceNote` | `string` | Small line under the amount. |
+| `features` | `string[]` | Checklist. |
+| `recommended` | `boolean` | Accent border + ribbon. |
+| `ribbon` | `string` | Ribbon label (default `Recommended`). |
+| `cta` | `string` | Button label. |
+| `ctaVariant` | `string` | Button variant (defaults by recommended/state). |
+| `ctaDisabled` | `boolean` | Disable the CTA (e.g. current plan). |
+| `onCta` | `fn` | CTA click handler. |
+
+CSS: `.ds-price` and `.ds-price__*`; grid wrapper `.ds-price-grid`.
+
+## Charts
+
+Palette-aware SVG charts in `ds/charts.jsx`. Yellow is the highlight series; everything else stays monochrome. Grid/axis use the `--chart-grid` token, so all four are theme-aware.
+
+```tsx
+<BarChart data={[{ label: 'Mon', value: 12 }, { label: 'Tue', value: 18, accent: true }]} height={180} />
+<AreaChart data={[28, 35, 30, 44, 52]} height={150} />
+<Donut segments={[{ label: 'CPU', value: 40, color: '#E8D500' }, { label: 'Idle', value: 60, color: '#444' }]} size={160} />
+<Sparkline data={[12, 18, 14, 22, 19]} w={84} h={26} color="#E8D500" />
+```
+
+- **BarChart** — `data: { label, value, accent? }[]`, `height`. `accent: true` paints a bar yellow.
+- **AreaChart** — `data: number[]`, `height`. Gradient fill + point markers.
+- **Donut** — `segments: { label, value, color }[]`, `size`. Renders a legend with percentages.
+- **Sparkline** — `data: number[]`, `w`, `h`, `color`. Inline trend line (used in DataTable cells).
+
+## Marketing blocks
+
+Full-width page sections in `ds/marketing.jsx`, used on the Blocks page.
+
+### HeroBlock
+
+A landing hero on the noir glow background. Single-column by default; pass `media` for a two-column layout with a right-hand visual.
+
+```tsx
+<HeroBlock eyebrow="homelab control plane" title="Run your stack like production."
+  description="Deploy, monitor and roll back from one keyboard-first console."
+  actions={<><button className="tollerud-btn tollerud-btn--terminal tollerud-btn--md">deploy --free</button></>}
+  media={<img src="tia.png" alt="" />} />
+```
+
+Props: `eyebrow` (pill text), `title`, `description`, `actions`, `media` (optional right column), `minHeight`, `intense`. Pass `intense` to swap the static noir glow for the live **GrainGradientGL** WebGL shader — the intense animated yellow grain atmosphere from tollerud.no (also used in the Overview "Bold" hero). It falls back to a static CSS gradient where WebGL is unavailable.
+
+### FeatureCard
+
+Icon chip + title + copy. Drop several into a `.ds-grid-3`.
+
+```tsx
+<FeatureCard icon="zap" title="Instant deploys"
+  description="Push a compose file and watch it roll out with health checks." />
+```
+
+Props: `icon` (icon-set name), `title`, `description`.
+
+### CTABand
+
+A centered closing call-to-action with an optional accent bar.
+
+```tsx
+<CTABand title="Ship your homelab like it matters."
+  description="Free for one host. No card, no telemetry, no nonsense."
+  actions={<><Button variant="primary" size="lg">Get started</Button></>} />
+```
+
+Props: `title`, `description`, `actions`, `accentBar` (default true).
+
+## Overlays & data
+
+### Toast
+
+Transient feedback via the `useToast()` hook (provided by `ToastProvider` at the app root). Toasts auto-dismiss and stack bottom-right.
+
+```tsx
+const toast = useToast();
+toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' });
+```
+
+Tones: `success` · `error` · `info` · `accent`. `title` required; `message` optional.
+
+### Drawer / Sheet
+
+A side panel for detail views and slide-over forms. Closes on Esc or overlay click.
+
+```tsx
+<Drawer open={open} onClose={() => setOpen(false)} side="right" title="Host details"
+  description="emma.tollerud.no"
+  footer={<Button variant="primary" size="sm">Connect</Button>}>
+  …content…
+</Drawer>
+```
+
+Props: `open`, `onClose`, `side` (`right` | `left`, default right), `title`, `description`, `children`, `footer`, `width` (default 380).
+
+### Combobox
+
+Searchable single-select with keyboard navigation (↑/↓/Enter/Esc), controlled or uncontrolled.
+
+```tsx
+<Combobox label="Host" value={value} onChange={setValue}
+  options={[{ value: 'emma', label: 'emma.tollerud.no' }, …]}
+  placeholder="Search…" emptyText="No matches" />
+```
+
+Props: `options: { value, label }[]`, `value`, `onChange`, `label`, `placeholder`, `emptyText`.
+
+### AvatarGroup
+
+Stacked avatars with an overflow count and optional presence dots.
+
+```tsx
+<AvatarGroup max={4} size={32} users={[
+  { name: 'Tia', status: 'online' },
+  { name: 'Emma Pung', src: '/emma.jpg', status: 'warning' },
+]} />
+```
+
+Props: `users: { name, src?, status? }[]` (`status`: `online` | `offline` | `warning`), `max` (default 4), `size` (default 32).
+
+## Elevation & density
+
+**Shadow scale** — four theme-aware tiers (deep + low-spread in dark, soft in light): `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl`, plus `--shadow-glow` for the yellow interaction glow. Drawers use `--shadow-xl`, popovers `--shadow-lg`. Lean on borders first; reach for a shadow only to lift overlays off the page.
+
+**Density** — set `data-density="compact"` on any container to tighten cards, table rows, form rows, panel headers and buttons inside it, without changing the components. Default is comfortable.
+
+```html
+<div data-density="compact"> … dense tables / forms … </div>
+```
+
+## EmptyState
+
+For any surface with no data yet, no search results, or an error. Pairs an icon, a one-line headline, a calm explanation and up to two actions. A `compact` variant fits inside cards, tables and panels.
+
+```tsx
+<EmptyState
+  icon="server"
+  title="No hosts connected"
+  description="Connect your first machine and Tia will start watching it."
+  action={<Button variant="primary" size="sm">Connect a host</Button>}
+/>
+<EmptyState compact accent icon="checkCircle" title="All clear" description="No open alerts." />
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `icon` | `string` | `'folder'` | Icon name from the icon set. |
+| `title` | `string` | — | Headline. |
+| `description` | `string` | — | Supporting copy (max ~340px wide). |
+| `action` | `ReactNode` | — | Primary action, usually a `<Button>`. |
+| `secondaryAction` | `ReactNode` | — | Optional second action. |
+| `compact` | `boolean` | `false` | Tighter padding for inline use. |
+| `accent` | `boolean` | `false` | Yellow-tinted surface + border. |
+
+CSS class: `.ds-empty` (with `.ds-empty__icon`, `.ds-empty__title`, `.ds-empty__desc`).
+
+## DataTable
+
+The config-driven table. Pass `rows` + a `columns` spec and opt into search, a filter, selection with bulk actions, per-row menus, pagination and an empty state. It owns all sort / filter / selection / pagination state internally. Powers the **Data Table** build page and the invoice history on **Billing**.
+
+```tsx
+<DataTable
+  rows={hosts}
+  rowKey="id"
+  columns={[
+    { key: 'id', header: 'Host', sortable: true, render: (r) => <HostCell {...r} /> },
+    { key: 'status', header: 'Status', sortable: true, render: (r) => <Badge variant={...}>{r.status}</Badge> },
+    { key: 'cpu', header: 'CPU', align: 'right', sortable: true },
+  ]}
+  searchable
+  searchKeys={['id', 'ip', 'owner']}
+  searchPlaceholder="Search host, ip, owner…"
+  filter={{ key: 'region', allLabel: 'All regions' }}
+  selectable
+  pageSize={5}
+  toolbarRight={<Button variant="terminal" size="sm">add_host</Button>}
+  bulkActions={[
+    { label: 'Restart', icon: 'refresh', variant: 'ghost', onRun: (ids, clear) => { /* … */ clear(); } },
+    { label: 'Stop', icon: 'trash', variant: 'destructive', onRun: (ids, clear) => clear() },
+  ]}
+  rowMenu={(row) => [
+    { label: 'Connect (SSH)', icon: 'external', onSelect: () => {} },
+    { sep: true },
+    { label: 'Stop host', icon: 'trash', onSelect: () => {} },
+  ]}
+  emptyState={<EmptyState icon="search" title="No hosts found" description="Try clearing your filters." />}
+/>
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `rows` | `object[]` | `[]` | Row data. |
+| `rowKey` | `string` | `'id'` | Field used as the unique key + selection id. |
+| `columns` | `Column[]` | `[]` | Column spec — see below. |
+| `searchable` | `boolean` | `false` | Show the search input. |
+| `searchKeys` | `string[]` | all column keys | Which fields the search matches against. |
+| `searchPlaceholder` | `string` | `'Search…'` | Search input placeholder. |
+| `filter` | `{ key, options?, allLabel? }` | — | Segmented filter on one field; `options` defaults to the field's distinct values. |
+| `selectable` | `boolean` | `false` | Row checkboxes + select-all. |
+| `pageSize` | `number` | `8` | Rows per page. |
+| `bulkActions` | `BulkAction[]` | `[]` | Buttons shown when rows are selected; `onRun(ids, clear)`. |
+| `rowMenu` | `(row) => MenuItem[]` | — | Per-row ⋮ dropdown (same item shape as `DropdownMenu`). |
+| `toolbarRight` | `ReactNode` | — | Content pinned to the right of the toolbar (e.g. an add button). |
+| `emptyState` | `ReactNode` | default text | Shown when no rows match. |
+| `loading` | `boolean` | `false` | Render shimmer skeleton rows instead of data. |
+| `skeletonRows` | `number` | `5` | How many skeleton rows while `loading`. |
+
+**Column:** `{ key, header, sortable?, align?: 'left' | 'right', width?, render?: (row) => ReactNode }`. Without `render`, the raw `row[key]` is shown in mono.
 
 ## Skeleton
 
