@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.7 — 2026-06-08 — Button `asChild` + `buttonVariants`
+
+- `Button` now supports an `asChild` prop (via `@radix-ui/react-slot`) — renders its single child element instead of a `<button>`, merging Button's classes/props onto it. Lets you style a `<Link>` (or any other element) as a button without invalid `<a>`-in-`<button>` nesting: `<Button asChild variant="primary"><Link href="/foo">Go</Link></Button>`
+- Exported `buttonVariants({ variant, size, className })` — returns the Button class string directly, for cases where wrapping with `asChild` is awkward
+- Exported `ButtonVariantProps` type
+- Added `@radix-ui/react-slot` as a direct dependency
+
 ## 1.0.6 — 2026-06-08 — Fix brand color docs
 
 - Fixed brand color swatches in `ds/page-foundations.jsx` — "Yellow" now correctly shows `#FFFF00` / `--tollerud-yellow`, "Yellow warm" shows `#E8D500` / `--tollerud-yellow-warm`
