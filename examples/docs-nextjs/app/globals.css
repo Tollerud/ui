@@ -49,8 +49,8 @@
 
 @theme {
   /* ── Brand Colors ── */
-  --color-tollerud-yellow: #E8D500;
-  --color-tollerud-yellow-bright: #FFFF00;
+  --color-tollerud-yellow: #FFFF00;
+  --color-tollerud-yellow-warm: #E8D500;
   --color-tollerud-acid: #FFFF00;
   --color-tollerud-accent: #FFFF00;
   --color-tollerud-yellow-dim: #B8A800;
@@ -416,7 +416,7 @@
   @apply py-2 px-3 text-[var(--color-tollerud-text-secondary)] border-b border-[var(--color-tollerud-border)]/30;
 }
 .docs-link {
-  @apply text-[var(--color-tollerud-yellow)] hover:text-[var(--color-tollerud-yellow-bright)] transition-colors text-sm;
+  @apply text-[var(--color-tollerud-yellow)] hover:text-[var(--color-tollerud-yellow-warm)] transition-colors text-sm;
 }
 .docs-tag {
   @apply inline-flex items-center px-2 py-0.5 text-[11px] font-medium rounded;

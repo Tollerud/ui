@@ -1,7 +1,7 @@
 export default function ColorPage() {
   const swatches = [
-    { name: 'Acid Yellow', hex: '#FFFF00', token: '--tollerud-acid', role: 'High-voltage signal, Tollerud glow' },
-    { name: 'Signal Yellow', hex: '#E8D500', token: '--tollerud-yellow', role: 'Primary actions, links' },
+    { name: 'Signal Yellow', hex: '#FFFF00', token: '--tollerud-yellow', role: 'Primary actions, links, CTAs' },
+    { name: 'Warm Yellow', hex: '#E8D500', token: '--tollerud-yellow-warm', role: 'Secondary yellow, gradients, warm states' },
     { name: 'Amber', hex: '#FFB800', token: '--tollerud-amber', role: 'Warmth, secondary highlights' },
     { name: 'Black', hex: '#0A0A0A', token: '--tollerud-ink', role: 'Default background' },
     { name: 'Void', hex: '#050505', token: '--tollerud-void', role: 'Deepest background' },

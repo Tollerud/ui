@@ -16,8 +16,8 @@
 const palette = {
   tia: {
     // Brand
-    yellow:        '#E8D500',
-    'yellow-bright': '#FFFF00',
+    yellow:        '#FFFF00',
+    'yellow-warm': '#E8D500',
     acid:          '#FFFF00',
     'yellow-dim':  '#B8A800',
     amber:         '#FFB800',
@@ -52,7 +52,7 @@ const palette = {
     // Borders
     border:        '#333333',
     'border-subtle': '#252525',
-    'border-accent': '#E8D500',
+    'border-accent': '#FFFF00',
 
     // States
     success:       '#22C55E',
@@ -61,7 +61,7 @@ const palette = {
     info:          '#3B82F6',
 
     // Shadows
-    glow:          '0 0 15px rgba(232,213,0,0.3), 0 0 30px rgba(232,213,0,0.1)',
+    glow:          '0 0 15px rgba(255,255,0,0.3), 0 0 30px rgba(255,255,0,0.1)',
   },
 }
 
@@ -121,7 +121,7 @@ module.exports = {
         'tia':     '0 1px 3px 0 rgba(0,0,0,0.5), 0 1px 2px -1px rgba(0,0,0,0.3)',
         'tollerud-md':  '0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -2px rgba(0,0,0,0.3)',
         'tollerud-lg':  '0 10px 15px -3px rgba(0,0,0,0.5), 0 4px 6px -4px rgba(0,0,0,0.3)',
-        'tollerud-glow':'0 0 15px rgba(232,213,0,0.3), 0 0 30px rgba(232,213,0,0.1)',
+        'tollerud-glow':'0 0 15px rgba(255,255,0,0.3), 0 0 30px rgba(255,255,0,0.1)',
       },
 
       // ─── Backdrop Blur ───
@@ -132,8 +132,8 @@ module.exports = {
       // ─── Background Images ───
       backgroundImage: {
         'tollerud-grid': `
-          linear-gradient(rgba(232,213,0,0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(232,213,0,0.03) 1px, transparent 1px)
+          linear-gradient(rgba(255,255,0,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,0,0.03) 1px, transparent 1px)
         `,
         'tollerud-gradient-bar': `
           linear-gradient(90deg,
@@ -145,13 +145,13 @@ module.exports = {
         `,
         'tollerud-gradient-soft': `
           linear-gradient(135deg,
-            rgba(232,213,0,0.8),
+            rgba(255,255,0,0.8),
             rgba(255,184,0,0.4))
         `,
         'tollerud-noir-glow': `
           radial-gradient(circle at 0% 0%, rgba(255,255,0,0.72) 0%, rgba(255,232,0,0.38) 16%, transparent 38%),
           radial-gradient(circle at 100% 0%, rgba(255,255,0,0.58) 0%, rgba(255,184,0,0.24) 18%, transparent 40%),
-          radial-gradient(circle at 0% 100%, rgba(232,213,0,0.44) 0%, rgba(255,184,0,0.18) 18%, transparent 44%),
+          radial-gradient(circle at 0% 100%, rgba(255,255,0,0.44) 0%, rgba(255,184,0,0.18) 18%, transparent 44%),
           radial-gradient(circle at 100% 100%, rgba(255,255,0,0.34) 0%, transparent 36%),
           #000
         `,
@@ -167,8 +167,8 @@ module.exports = {
       },
       keyframes: {
         'tollerud-glow': {
-          '0%':   { boxShadow: '0 0 5px rgba(232,213,0,0.2), 0 0 10px rgba(232,213,0,0.05)' },
-          '100%': { boxShadow: '0 0 15px rgba(232,213,0,0.3), 0 0 30px rgba(232,213,0,0.1)' },
+          '0%':   { boxShadow: '0 0 5px rgba(255,255,0,0.2), 0 0 10px rgba(255,255,0,0.05)' },
+          '100%': { boxShadow: '0 0 15px rgba(255,255,0,0.3), 0 0 30px rgba(255,255,0,0.1)' },
         },
         'tollerud-fade-in': {
           '0%':   { opacity: '0', transform: 'translateY(4px)' },

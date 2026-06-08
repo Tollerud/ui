@@ -15,8 +15,8 @@
   :root,
   .dark {
     /* ═══ Brand Tokens ═══ */
-    --tollerud-yellow:         #E8D500;
-    --tollerud-yellow-bright:  #FFFF00;
+    --tollerud-yellow:         #FFFF00;
+    --tollerud-yellow-warm:    #E8D500;
     --tollerud-acid:           #FFFF00; /* Tollerud high-voltage yellow */
     --tollerud-yellow-dim:     #B8A800;
     --tollerud-amber:          #FFB800;
@@ -46,7 +46,7 @@
     --popover:            #1A1A1A;
     --popover-foreground: #F5F5F5;
 
-    --primary:            #E8D500;
+    --primary:            #FFFF00;
     --primary-foreground: #0A0A0A;
 
     --secondary:          #252525;
@@ -72,11 +72,11 @@
 
     --border:             #333333;
     --input:              #333333;
-    --ring:               #E8D500;
+    --ring:               #FFFF00;
     --radius:             0.25rem;
 
     /* ═══ Chart Tokens ═══ */
-    --chart-1:            #E8D500;
+    --chart-1:            #FFFF00;
     --chart-2:            #FFB800;
     --chart-3:            #22C55E;
     --chart-4:            #3B82F6;
@@ -107,7 +107,7 @@
     --shadow-md:    0 4px 12px rgba(0,0,0,0.45);
     --shadow-lg:    0 12px 32px rgba(0,0,0,0.55);
     --shadow-xl:    0 24px 60px rgba(0,0,0,0.65);
-    --shadow-glow:  0 0 15px rgba(232,213,0,0.30);
+    --shadow-glow:  0 0 15px rgba(255,255,0,0.30);
 
     /* ═══ Surface Tokens ═══ */
     --surface:              #0A0A0A;
@@ -245,8 +245,8 @@
     border-color: var(--primary);
   }
   .tollerud-btn--primary:hover {
-    background: var(--tollerud-yellow-bright);
-    box-shadow: var(--shadow-glow, 0 0 15px rgba(232,213,0,0.3));
+    background: var(--tollerud-yellow);
+    box-shadow: var(--shadow-glow, 0 0 15px rgba(255,255,0,0.3));
   }
   .tollerud-btn--secondary {
     background: transparent;
@@ -293,7 +293,7 @@
   }
   .tollerud-btn--terminal:hover {
     border-color: var(--tollerud-yellow);
-    box-shadow: 0 0 15px rgba(232,213,0,0.3), 0 0 30px rgba(232,213,0,0.1);
+    box-shadow: 0 0 15px rgba(255,255,0,0.3), 0 0 30px rgba(255,255,0,0.1);
     background: rgba(232, 213, 0, 0.05);
   }
 
@@ -504,7 +504,7 @@
 
   /* ═══ Glow ═══ */
   .tollerud-glow {
-    box-shadow: 0 0 15px rgba(232,213,0,0.3), 0 0 30px rgba(232,213,0,0.1);
+    box-shadow: 0 0 15px rgba(255,255,0,0.3), 0 0 30px rgba(255,255,0,0.1);
   }
 
   /* ═══ Skeleton ═══ */
@@ -557,7 +557,7 @@
   }
   .tollerud-status--online::before { background: var(--success); box-shadow: 0 0 6px rgba(34,197,94,0.5); }
   .tollerud-status--offline::before { background: var(--destructive); }
-  .tollerud-status--warning::before { background: var(--warning); box-shadow: 0 0 6px rgba(232,213,0,0.5); }
+  .tollerud-status--warning::before { background: var(--warning); box-shadow: 0 0 6px rgba(255,255,0,0.5); }
   .tollerud-status--idle::before { background: var(--tollerud-noir-400); }
 
   /* ═══ Code Block ═══ */
@@ -637,8 +637,8 @@
     animation: tollerud-timeline-pulse 2s infinite;
   }
   @keyframes tollerud-timeline-pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(232,213,0,0.4); }
-    50%      { box-shadow: 0 0 0 6px rgba(232,213,0,0); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,0,0.4); }
+    50%      { box-shadow: 0 0 0 6px rgba(255,255,0,0); }
   }
   .tollerud-timeline__line {
     width: 1px;
@@ -653,7 +653,7 @@
   }
   .tollerud-timeline:not(.tollerud-timeline--active) .tollerud-timeline__dot--active {
     animation: none;
-    box-shadow: 0 0 6px rgba(232,213,0,0.4);
+    box-shadow: 0 0 6px rgba(255,255,0,0.4);
   }
   .tollerud-timeline__icon {
     width: 20px;

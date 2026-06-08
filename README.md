@@ -141,7 +141,8 @@ The design system includes `tollerud-avatar.svg` — a full cel-shaded monochrom
 | Token | Hex | Usage |
 |-------|-----|-------|
 | `--tollerud-yellow` | `#E8D500` | Primary actions, highlights, links |
-| `--tollerud-acid` / `--tollerud-yellow-bright` | `#FFFF00` | Tollerud voltage, shader glow, hover peaks |
+| `--tollerud-acid` / `--tollerud-yellow` | `#FFFF00` | Primary yellow, CTAs, focus, key data |
+| `--tollerud-yellow-warm` | `#E8D500` | Secondary yellow, gradients, warm states |
 | `--tollerud-amber` | `#FFB800` | Warmth accents, secondary highlights |
 | `--tollerud-black` | `#0A0A0A` | Default background |
 | `--tollerud-noir-900` | `#121212` | Card / raised surface |

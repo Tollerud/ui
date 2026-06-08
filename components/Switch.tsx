@@ -27,7 +27,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             'transition-colors duration-200 ease-out',
             checked ? 'bg-tollerud-yellow' : 'bg-tollerud-noir-600',
             'group-hover:bg-tollerud-noir-500',
-            checked && 'group-hover:bg-tollerud-yellow-bright',
+            checked && 'group-hover:bg-tollerud-yellow-warm',
             'peer-focus-visible:outline-2 peer-focus-visible:outline-tollerud-yellow peer-focus-visible:outline-offset-2'
           )}
         >

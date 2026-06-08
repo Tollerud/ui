@@ -5,8 +5,8 @@
 
 :root {
   /* ── Brand ── */
-  --tollerud-yellow:         #E8D500;
-  --tollerud-yellow-bright:  #FFFF00;
+  --tollerud-yellow:         #FFFF00;
+  --tollerud-yellow-warm:    #E8D500;
   --tollerud-acid:           #FFFF00; /* Tollerud high-voltage yellow */
   --tollerud-yellow-dim:     #B8A800;
   --tollerud-amber:          #FFB800;
@@ -41,7 +41,7 @@
   /* ── Borders ── */
   --tollerud-border:         #333333;
   --tollerud-border-subtle:  #252525;
-  --tollerud-border-accent:  #E8D500;
+  --tollerud-border-accent:  #FFFF00;
 
   /* ── States ── */
   --tollerud-success:        #22C55E;
@@ -94,7 +94,7 @@
   --tollerud-shadow:      0 1px 3px 0 rgba(0,0,0,0.5), 0 1px 2px -1px rgba(0,0,0,0.3);
   --tollerud-shadow-md:   0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -2px rgba(0,0,0,0.3);
   --tollerud-shadow-lg:   0 10px 15px -3px rgba(0,0,0,0.5), 0 4px 6px -4px rgba(0,0,0,0.3);
-  --tollerud-shadow-glow: 0 0 15px rgba(232,213,0,0.3), 0 0 30px rgba(232,213,0,0.1);
+  --tollerud-shadow-glow: 0 0 15px rgba(255,255,0,0.3), 0 0 30px rgba(255,255,0,0.1);
 
   /* ── Glass ── */
   --tollerud-glass-bg:       rgba(10, 10, 10, 0.88);
@@ -217,7 +217,7 @@ code, pre {
   border-color: var(--tollerud-yellow);
 }
 .tollerud-btn--primary:hover {
-  background: var(--tollerud-yellow-bright);
+  background: var(--tollerud-yellow);
   box-shadow: var(--tollerud-shadow-glow);
 }
 
@@ -513,8 +513,8 @@ code, pre {
 .tollerud-timeline__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--tollerud-noir-500); flex-shrink: 0; }
 .tollerud-timeline__dot--active { animation: tollerud-timeline-pulse 2s infinite; }
 @keyframes tollerud-timeline-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(232,213,0,.4); }
-  50%      { box-shadow: 0 0 0 6px rgba(232,213,0,0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,0,.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(255,255,0,0); }
 }
 .tollerud-timeline__line { width: 1px; flex: 1; min-height: 8px; background: var(--tollerud-noir-600); margin-top: 4px; }
 .tollerud-timeline__icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; color: var(--tollerud-yellow); }

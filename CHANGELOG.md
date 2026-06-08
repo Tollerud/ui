@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.5 — 2026-06-08 — Yellow token rename + AGENTS.md
+
+**Breaking token changes:**
+- `--tollerud-yellow` is now `#FFFF00` (was `#E8D500`) — the brighter, high-voltage yellow is now the primary accent
+- `--tollerud-yellow-bright` removed — replaced by `--tollerud-yellow-warm: #E8D500` for the warmer secondary yellow
+- Tailwind: `tia.yellow` → `#FFFF00`, `tia.yellow-bright` → renamed to `tia.yellow-warm: #E8D500`
+- All glow `rgba` values updated from `rgba(232,213,0,...)` to `rgba(255,255,0,...)`
+- Semantic tokens `--primary`, `--ring`, `--chart-1`, `--border-accent` updated to `#FFFF00`
+
+**Migration:** replace `tollerud-yellow-bright` → `tollerud-yellow`, and `tollerud-yellow` → `tollerud-yellow-warm` wherever you relied on the old warm `#E8D500` value.
+
+**New files:**
+- Added `AGENTS.md` — cross-tool AI agent guide (Claude Code, Cursor, Copilot, Codex)
+- Added `.github/copilot-instructions.md` — GitHub Copilot native instructions
+
 ## 2026-05-26 — Form Primitives + Footer
 
 - Added **Textarea** — multiline input with label/error support, same pattern as Input

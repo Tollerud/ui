@@ -2,11 +2,11 @@ import { type ButtonHTMLAttributes, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
 const variants = {
-  primary: 'bg-tollerud-yellow text-tollerud-black border-tollerud-yellow hover:bg-tollerud-yellow-bright hover:shadow-tollerud-glow',
+  primary: 'bg-tollerud-yellow text-tollerud-black border-tollerud-yellow hover:bg-tollerud-yellow hover:shadow-tollerud-glow',
   secondary: 'bg-transparent text-tollerud-text-primary border-tollerud-border hover:border-tollerud-text-secondary hover:bg-tollerud-surface-hover',
   ghost: 'bg-transparent text-tollerud-text-secondary border-transparent hover:text-tollerud-text-primary hover:bg-tollerud-surface-hover',
   destructive: 'bg-tollerud-error text-white border-tollerud-error hover:shadow-[0_0_12px_rgba(239,68,68,0.3)]',
-  terminal: 'font-mono text-tollerud-yellow border-[rgba(232,213,0,0.25)] bg-transparent before:content-["❯_"] before:opacity-70 hover:border-tollerud-yellow hover:shadow-tollerud-glow hover:bg-[rgba(232,213,0,0.05)]',
+  terminal: 'font-mono text-tollerud-yellow border-[rgba(255,255,0,0.25)] bg-transparent before:content-["❯_"] before:opacity-70 hover:border-tollerud-yellow hover:shadow-tollerud-glow hover:bg-[rgba(255,255,0,0.05)]',
 } as const
 
 const sizes = {

@@ -42,10 +42,10 @@ font-family: 'JetBrains Mono', 'Fira Code', monospace;`}</code></pre>
       </table>
 
       <h2>Gradient Text</h2>
-      <pre><code>{`<h2 class="bg-gradient-to-r from-tollerud-yellow via-tollerud-yellow-bright to-tollerud-amber bg-clip-text text-transparent">
+      <pre><code>{`<h2 class="bg-gradient-to-r from-tollerud-yellow via-tollerud-yellow-warm to-tollerud-amber bg-clip-text text-transparent">
   Yellow → Acid → Amber
 </h2>`}</code></pre>
-      <div className="bg-gradient-to-r from-tollerud-yellow via-tollerud-yellow-bright to-tollerud-amber bg-clip-text text-transparent text-xl font-bold mt-2">
+      <div className="bg-gradient-to-r from-tollerud-yellow via-tollerud-yellow-warm to-tollerud-amber bg-clip-text text-transparent text-xl font-bold mt-2">
         Yellow → Acid → Amber
       </div>
     </div>
