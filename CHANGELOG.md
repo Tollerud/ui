@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.6 — 2026-06-08 — Fix brand color docs
+
+- Fixed brand color swatches in `ds/page-foundations.jsx` — "Yellow" now correctly shows `#FFFF00` / `--tollerud-yellow`, "Yellow warm" shows `#E8D500` / `--tollerud-yellow-warm`
+- Updated `BRAND.md` — monogram color corrected to `#FFFF00`
+
 ## 1.0.5 — 2026-06-08 — Yellow token rename + AGENTS.md
 
 **Breaking token changes:**

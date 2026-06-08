@@ -49,8 +49,8 @@ function MotionLab() {
 
 function PageFoundations() {
   const brand = [
-    ['Yellow', '#E8D500', '--tollerud-yellow'],
-    ['Yellow bright', '#FFFF00', '--tollerud-yellow-bright'],
+    ['Yellow', '#FFFF00', '--tollerud-yellow'],
+    ['Yellow warm', '#E8D500', '--tollerud-yellow-warm'],
     ['Yellow dim', '#B8A800', '--tollerud-yellow-dim'],
     ['Amber', '#FFB800', '--tollerud-amber'],
     ['Amber glow', '#FF8C00', '--tollerud-amber-glow'],

@@ -2,7 +2,7 @@
 
 ## Monogram
 
-The Tollerud monogram (`tollerud-logo.svg`) is the primary brand mark. It is always yellow (`#E8D500`) on dark backgrounds — never recolored, never outlined, never placed on a light surface without explicit approval.
+The Tollerud monogram (`tollerud-logo.svg`) is the primary brand mark. It is always yellow (`#FFFF00`) on dark backgrounds — never recolored, never outlined, never placed on a light surface without explicit approval.
 
 ```tsx
 import logo from '@tollerud/ui/tollerud-logo.svg'
