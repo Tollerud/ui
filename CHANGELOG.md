@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.8 — 2026-06-08 — Fix: mark package as Client Components for RSC/SSR
+
+**Fixes a breaking issue introduced in earlier versions:** importing *anything* from `@tollerud/ui` — even a plain helper like `buttonVariants` — into a Next.js Server Component crashed at build/runtime. The package is bundled into a single `dist/index.js`/`.cjs` file, and esbuild silently drops module-level `"use client"` directives during bundling, so the bundle was never marked as client code even though it's full of components using hooks (`useState`, `useEffect`, etc.).
+
+- `dist/index.js` and `dist/index.cjs` now start with `'use client'` (injected via a post-build step in `tsup.config.ts`, since esbuild rejects it as a bundling banner) — this correctly tells Next.js's RSC bundler that the whole package is client code
+- Added missing `'use client'` directives to `ActionDiff`, `AlertInbox`, `Select`, and `LogViewer` source files (they used hooks without declaring the boundary — harmless pre-bundling, but good hygiene and required if these are ever built unbundled)
+
+**Migration:** just update to `1.0.8` — no code changes required. Server Components can now safely import from `@tollerud/ui` (you'll just be importing client-bundled code, which is fine for things like `buttonVariants` that are plain functions).
+
 ## 1.0.7 — 2026-06-08 — Button `asChild` + `buttonVariants`
 
 - `Button` now supports an `asChild` prop (via `@radix-ui/react-slot`) — renders its single child element instead of a `<button>`, merging Button's classes/props onto it. Lets you style a `<Link>` (or any other element) as a button without invalid `<a>`-in-`<button>` nesting: `<Button asChild variant="primary"><Link href="/foo">Go</Link></Button>`
