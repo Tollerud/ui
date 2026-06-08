@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1 — 2026-06-09 — Docs: AGENTS.md package update + migration instructions
+
+No component or API changes. Documentation only.
+
+- `AGENTS.md` — added "Updating the npm package" checklist (component checklist, version bump rules, required file updates, build/push steps) and "Fixing copy/paste component patterns" guide (detection, migration, prop drift checks, common patterns table) for agents working in consumer projects
+
 ## 1.1.0 — 2026-06-09 — Fix: Combobox + DatePicker close on window resize
 
 `Combobox` and `DatePicker` rendered their popover as `position: absolute` with no awareness of window resize — if the viewport changed while a popover was open it would stay in place, misaligned from its trigger. Both now close on `window resize`, consistent with the existing close-on-scroll behaviour.
