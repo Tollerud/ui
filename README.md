@@ -224,7 +224,7 @@ design-system/
 ├── KEYBOARD.md               # Keyboard contract and shortcut reference
 ├── VOICE.md                  # Copy guidelines and tone
 ├── COMPLETENESS_ROADMAP.md   # Research and future plans
-├── ULTIMATE_TIA_NOIR_RESEARCH.md # Deep research: Tollerud glow + Linear/Raycast/Geist inspiration
+├── SKILL.md                  # Verified component catalog & gotchas for AI agents
 ├── tollerud-preset.js             # 🏆 Drop-in Tailwind preset
 ├── tailwind.config.js        # (backward compat standalone config)
 ├── globals.css               # 🏆 Semantic tokens + all component classes
