@@ -270,7 +270,15 @@ function PageFoundations() {
           ])}/>
       </Section>
 
-      <Section title="Typography" desc="Inter for display and body, JetBrains Mono for code, metrics and terminal moments. Tight tracking on display sizes.">
+      <Section title="Typography" desc="Inter for display and body, JetBrains Mono for code, metrics and terminal moments. Tight tracking on display sizes. Accent lines can use the shipped .tollerud-display-shimmer sweep on dark surfaces.">
+        <div className="ds-demo ds-themed" style={{ marginBottom: 16 }}>
+          <div style={{ padding: '28px 24px', background: 'var(--tollerud-black)', borderRadius: 8 }}>
+            <h2 className="tollerud-display" style={{ fontSize: 40, color: '#F5F5F5', lineHeight: 0.98 }}>
+              Dark. Monochrome.<br/><span className="tollerud-display-shimmer">Yellow where it counts.</span>
+            </h2>
+            <p className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 12 }}>.tollerud-display-shimmer — from @tollerud/ui/globals.css</p>
+          </div>
+        </div>
         <div className="ds-demo ds-themed">
           <div style={{ padding: '8px 4px' }}>
             {typeScale.map(([name, spec, w, size, sample], i) => (

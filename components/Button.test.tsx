@@ -10,7 +10,10 @@ describe('Button', () => {
 
   it('defaults to secondary variant', () => {
     render(<Button>Cancel</Button>)
-    expect(screen.getByRole('button', { name: 'Cancel' })).toHaveClass('bg-transparent')
+    const btn = screen.getByRole('button', { name: 'Cancel' })
+    expect(btn).toHaveClass('tollerud-btn--secondary')
+    expect(btn.className).toContain('--surface-raised')
+    expect(btn.className).toContain('--border')
   })
 
   it('supports asChild to style a link as a button', () => {

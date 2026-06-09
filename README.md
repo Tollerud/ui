@@ -288,4 +288,5 @@ New additions inspired by [Graphify Labs](https://graphifylabs.ai/):
 | Accent Bar | `.tollerud-accent-bar` | `bg-tollerud-gradient-bar h-[1px]` | Gradient divider bar |
 | Gradient Text | `.tollerud-gradient-text` | `bg-tollerud-gradient-soft bg-clip-text text-transparent` | Yellow → amber gradient text |
 | Display Heading | `.tollerud-display` | `tracking-tightest leading-[0.95] font-semibold text-white` | Tight, impactful display heads |
+| Display Shimmer | `.tollerud-display-shimmer` | — | Animated yellow gradient sweep clipped to hero accent text (dark surfaces) |
 | Section Container | `.tollerud-section` | `max-w-[1100px] mx-auto px-6` | Content width constraint |

@@ -1,11 +1,11 @@
 {
-  "name": "tollerud-noir",
-  "version": "3.1.0",
-  "description": "Tollerud Design System \u2014 dark, cinematic, keyboard-first infrastructure UI",
+  "name": "Tollerud User Interface",
+  "version": "3.1.1",
+  "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
       "name": "Button",
-      "description": "Primary action button with terminal, ghost, and variant styles",
+      "description": "Five variants and three sizes — primary, secondary, ghost, destructive, and terminal. Supports asChild, icons, and loading state",
       "files": [
         "components/Button.tsx"
       ],
@@ -213,7 +213,7 @@
     },
     "incident-card": {
       "name": "IncidentCard",
-      "description": "Severity-graded incident/alert card (critical \u2192 info)",
+      "description": "Severity-graded incident/alert card (critical → info)",
       "files": [
         "components/IncidentCard.tsx"
       ],
@@ -455,7 +455,7 @@
     },
     "bento-dashboard": {
       "name": "BentoDashboard",
-      "description": "Composable bento-grid dashboard layout for hosts, metrics, services, and incidents",
+      "description": "Homelab mission-control bento grid — host cards, metrics, services, and recent incidents",
       "files": [
         "components/BentoDashboard.tsx"
       ],
@@ -463,7 +463,12 @@
         "clsx",
         "tailwind-merge"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "host-card",
+        "stat-card",
+        "service-health-card",
+        "incident-card"
+      ],
       "type": "components:ui"
     },
     "breadcrumb": {
@@ -890,7 +895,7 @@
     },
     "hero-block": {
       "name": "HeroBlock",
-      "description": "Landing hero on noir glow background with optional shader intensity",
+      "description": "Landing hero with noir glow background. Pass intense for live WebGL shader; optional media slot for two-column layout",
       "files": [
         "components/HeroBlock.tsx"
       ],
@@ -921,7 +926,7 @@
     },
     "cta-band": {
       "name": "CTABand",
-      "description": "Closing call-to-action band with optional yellow accent bar",
+      "description": "Centered closing call-to-action with title, description, action row, and optional yellow accent bar",
       "files": [
         "components/CTABand.tsx"
       ],

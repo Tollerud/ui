@@ -330,7 +330,9 @@ Monogram sizing: top bar/sidebar expanded → `h-5`, sidebar collapsed → `h-6`
 
 ```html
 <h1 class="tollerud-display text-[70px]">Dark. Monochrome.</h1>
-<h2 class="tollerud-display--secondary text-[40px]">Yellow where it counts</h2>
+<h2 class="tollerud-display--secondary text-[40px]">
+  <span class="tollerud-display-shimmer">Yellow where it counts</span>
+</h2>
 ```
 
 ### Container

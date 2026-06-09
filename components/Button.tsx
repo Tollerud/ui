@@ -4,8 +4,9 @@ import { cn } from '@/lib/utils'
 
 const variants = {
   primary: 'bg-tollerud-yellow text-tollerud-black border-tollerud-yellow hover:bg-tollerud-yellow hover:shadow-tollerud-glow',
-  secondary: 'bg-transparent text-tollerud-text-primary border-tollerud-border hover:border-tollerud-text-secondary hover:bg-tollerud-surface-hover',
-  ghost: 'bg-transparent text-tollerud-text-secondary border-transparent hover:text-tollerud-text-primary hover:bg-tollerud-surface-hover',
+  secondary:
+    'text-tollerud-text-primary [background:var(--surface-raised,var(--tollerud-surface-raised))] [border-color:var(--border,var(--tollerud-border))] hover:[border-color:var(--text-secondary,var(--tollerud-text-secondary))] hover:[background:var(--surface-hover,var(--tollerud-surface-hover))]',
+  ghost: 'text-tollerud-text-secondary border-transparent hover:text-tollerud-text-primary hover:bg-tollerud-surface-hover',
   destructive: 'bg-tollerud-error text-white border-tollerud-error hover:shadow-[0_0_12px_rgba(239,68,68,0.3)]',
   terminal: 'font-mono text-tollerud-yellow border-[rgba(255,255,0,0.25)] bg-transparent hover:border-tollerud-yellow hover:shadow-tollerud-glow hover:bg-[rgba(255,255,0,0.05)]',
 } as const
@@ -13,9 +14,9 @@ const variants = {
 /** Layer classes from globals-layers.css — ❯ prefix, hover glow, magnetic glow in docs */
 const variantLayers = {
   primary: 'tollerud-btn--primary',
-  secondary: '',
-  ghost: '',
-  destructive: '',
+  secondary: 'tollerud-btn--secondary',
+  ghost: 'tollerud-btn--ghost',
+  destructive: 'tollerud-btn--destructive',
   terminal: 'tollerud-btn--terminal',
 } as const
 

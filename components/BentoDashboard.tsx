@@ -32,7 +32,7 @@ export function BentoDashboard({
   className,
 }: BentoDashboardProps) {
   return (
-    <div className={cn('space-y-4', className)}>
+    <div className={cn('w-full space-y-6', className)}>
       {/* Title bar */}
       <div className="flex items-center justify-between">
         <div>
@@ -59,11 +59,11 @@ export function BentoDashboard({
       )}
 
       {/* Row 2: Metrics + Services — side by side */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-3">
         {metrics.length > 0 && (
-          <div className="lg:col-span-2">
+          <div className="min-w-0 lg:col-span-2">
             <SectionLabel>Metrics</SectionLabel>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {metrics.map((m, i) => (
                 <StatCard key={m.label ?? i} {...m} />
               ))}
@@ -72,7 +72,7 @@ export function BentoDashboard({
         )}
 
         {services.length > 0 && (
-          <div>
+          <div className="min-w-0">
             <SectionLabel>Services</SectionLabel>
             <div className="space-y-2">
               {services.slice(0, 4).map((s, i) => (
@@ -85,9 +85,9 @@ export function BentoDashboard({
 
       {/* Row 3: Incidents — full width */}
       {incidents.length > 0 && (
-        <div>
+        <div className="min-w-0 pt-1">
           <SectionLabel>Recent Incidents</SectionLabel>
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             {incidents.slice(0, 4).map((inc, i) => (
               <IncidentCard key={inc.title + i} {...inc} />
             ))}
@@ -100,7 +100,7 @@ export function BentoDashboard({
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <p className="text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider mb-2">{children}</p>
+    <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-tollerud-text-muted">{children}</p>
   )
 }
 

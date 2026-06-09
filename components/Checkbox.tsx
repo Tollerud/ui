@@ -8,7 +8,7 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
 }
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
-  ({ className, label, id: idProp, checked, ...props }, ref) => {
+  ({ className, label, id: idProp, ...props }, ref) => {
     const autoId = useId()
     const id = idProp ?? autoId
 
@@ -27,7 +27,6 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             ref={ref}
             id={id}
             type="checkbox"
-            checked={checked}
             className="peer sr-only"
             {...props}
           />
@@ -39,15 +38,13 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
               'bg-tollerud-surface-raised border-tollerud-border',
               'peer-focus-visible:outline-2 peer-focus-visible:outline-tollerud-yellow',
               'peer-checked:bg-tollerud-yellow peer-checked:border-tollerud-yellow',
+              'peer-checked:[&_svg]:opacity-100',
               'group-hover:border-tollerud-text-secondary'
             )}
           >
-            {/* Checkmark SVG — visible when checked */}
+            {/* Checkmark SVG — visible when checked (via peer on sibling input) */}
             <svg
-              className={cn(
-                'h-3 w-3 text-tollerud-noir-black transition-opacity duration-[150ms]',
-                checked ? 'opacity-100' : 'opacity-0'
-              )}
+              className="pointer-events-none h-3 w-3 text-tollerud-black opacity-0 transition-opacity duration-[150ms]"
               viewBox="0 0 12 12"
               fill="none"
               aria-hidden="true"

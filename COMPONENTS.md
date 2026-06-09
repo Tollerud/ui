@@ -786,9 +786,21 @@ The config-driven table. Pass `rows` + a `columns` spec and opt into search, a f
 
 ```html
 <h1 class="tollerud-display text-[70px]">Dark. Monochrome.</h1>
-<h2 class="tollerud-display--secondary text-[40px]">Yellow where it counts</h2>
+<h2 class="tollerud-display--secondary text-[40px]">
+  <span class="tollerud-display-shimmer">Yellow where it counts</span>
+</h2>
 <h3 class="tollerud-display--tertiary text-[28px]">Subtle hierarchy</h3>
 ```
+
+## Display shimmer
+
+Animated yellow gradient clipped to text — for hero accent lines and key metrics on **dark surfaces**. Respects `prefers-reduced-motion` (falls back to static `var(--primary)` / `var(--tollerud-yellow)`).
+
+```html
+<span class="tollerud-display-shimmer">Yellow where it counts.</span>
+```
+
+Pair with `.tollerud-display` on the parent heading. Not for body copy or light backgrounds (yellow fails contrast on white).
 
 ## Container
 

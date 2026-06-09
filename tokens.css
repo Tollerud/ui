@@ -42,6 +42,7 @@
   --tollerud-border:         #333333;
   --tollerud-border-subtle:  #252525;
   --tollerud-border-accent:  #FFFF00;
+  --tollerud-shimmer-highlight: #FFFDE6;
 
   /* ── States ── */
   --tollerud-success:        #22C55E;
@@ -222,13 +223,13 @@ code, pre {
 }
 
 .tollerud-btn--secondary {
-  background: transparent;
-  color: var(--tollerud-text-primary);
-  border-color: var(--tollerud-border);
+  background: var(--surface-raised, var(--tollerud-surface-raised));
+  color: var(--foreground, var(--tollerud-text-primary));
+  border-color: var(--border, var(--tollerud-border));
 }
 .tollerud-btn--secondary:hover {
-  border-color: var(--tollerud-text-secondary);
-  background: var(--tollerud-surface-hover);
+  border-color: var(--text-secondary, var(--tollerud-text-secondary));
+  background: var(--surface-hover, var(--tollerud-surface-hover));
 }
 
 .tollerud-btn--ghost {
@@ -351,6 +352,13 @@ code, pre {
 @media (prefers-reduced-motion: reduce) {
   .tollerud-noir-glow-bg,
   .tollerud-noir-noise { animation: none !important; }
+  .tollerud-display-shimmer {
+    animation: none !important;
+    background: none;
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    color: var(--tollerud-yellow);
+  }
 }
 
 /* ── Background Grid ── */
@@ -451,6 +459,22 @@ code, pre {
   letter-spacing: -0.045em;
   line-height: 0.95;
   color: white;
+}
+.tollerud-display-shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--tollerud-yellow) 32%,
+    var(--tollerud-shimmer-highlight) 50%,
+    var(--tollerud-yellow) 68%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: tollerud-display-shimmer 5s linear infinite;
+}
+@keyframes tollerud-display-shimmer {
+  to { background-position: -220% 0; }
 }
 
 /* ── Kbd (Keyboard Shortcut Chip) ── */

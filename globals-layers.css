@@ -141,6 +141,7 @@
       rgba(232, 213, 0, 0.8),
       rgba(255, 184, 0, 0.4)
     );
+    --tollerud-shimmer-highlight: #FFFDE6;
 
     /* ═══ Transition ═══ */
     --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -193,6 +194,13 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+    .tollerud-display-shimmer {
+      animation: none !important;
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      color: var(--primary);
+    }
   }
 }
 
@@ -236,7 +244,7 @@
     box-shadow: var(--shadow-glow, 0 0 15px rgba(255,255,0,0.3));
   }
   .tollerud-btn--secondary {
-    background: transparent;
+    background: var(--surface-raised);
     color: var(--foreground);
     border-color: var(--border);
   }
@@ -595,6 +603,24 @@
   .tollerud-display--tertiary {
     letter-spacing: -0.025em;
     line-height: 1.1;
+  }
+
+  /* Animated yellow sweep clipped to text — pair with .tollerud-display on dark surfaces */
+  .tollerud-display-shimmer {
+    background: linear-gradient(
+      100deg,
+      var(--tollerud-yellow) 32%,
+      var(--tollerud-shimmer-highlight) 50%,
+      var(--tollerud-yellow) 68%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: tollerud-display-shimmer 5s linear infinite;
+  }
+  @keyframes tollerud-display-shimmer {
+    to { background-position: -220% 0; }
   }
 
   /* ═══ Status Indicator ═══ */

@@ -20,7 +20,7 @@ npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
 npm install @paper-design/shaders-react
 ```
 
-As of **v3.1.0**, `Monogram` ships as an inline SVG component (`color`: `yellow` | `black` | `white`). As of **v3.0.0**, the package is **ESM-only** (no CJS `require` entry). As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peers** (not bundled).
+As of **v3.1.1**, `.tollerud-display-shimmer` ships in `globals.css` for animated hero accent text. As of **v3.1.0**, `Monogram` ships as an inline SVG component (`color`: `yellow` | `black` | `white`). As of **v3.0.0**, the package is **ESM-only** (no CJS `require` entry). As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peers** (not bundled).
 
 Apply the Tailwind preset when you need extra utilities from `tollerud-preset.js` — `globals.css` already includes tokens and component layers for v4:
 
@@ -469,7 +469,9 @@ Monogram sizing: top bar/sidebar expanded → `h-5`, collapsed → `h-6`, footer
 <nav class="tollerud-glass fixed top-0 inset-x-0 z-50 h-14 flex items-center px-6">…</nav>
 <section class="tollerud-grid-bg">…</section>
 <h1 class="tollerud-display text-[70px]">Dark. Monochrome.</h1>
-<h2 class="tollerud-display--secondary text-[40px]">Yellow where it counts</h2>
+<h2 class="tollerud-display--secondary text-[40px]">
+  <span class="tollerud-display-shimmer">Yellow where it counts</span>
+</h2>
 <div data-density="compact">…dense tables / forms…</div>
 ```
 

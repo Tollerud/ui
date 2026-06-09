@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "name": "tollerud-noir",
+  "name": "Tollerud User Interface",
   "style": "default",
   "rsc": true,
   "tsx": true,

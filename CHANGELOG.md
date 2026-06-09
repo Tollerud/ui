@@ -7,6 +7,38 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 3.1.1 — 2026-06-09 — Display shimmer, form indicators, and button fixes
+
+Patch release: ships hero text shimmer for consumer apps, fixes secondary/checkbox/radio styling, and polishes docs layout components.
+
+### New utilities
+
+- `.tollerud-display-shimmer` — animated yellow gradient clipped to text; respects `prefers-reduced-motion` (static `var(--primary)` fallback)
+
+### Fixes
+
+- `Button` — secondary variant restores raised surface and border (theme-aware CSS vars); all variants apply layer classes again
+- `Checkbox` — checkmark visible on `defaultChecked` and click via `peer-checked` on the custom indicator
+- `RadioGroup` — wires `value`, `onChange`, and `name` to children; inner dot shows when selected
+- `CTABand` — title and description centered in the band
+- `BentoDashboard` — section spacing and label alignment
+- Docs `PageTOC` — restores `jumpToSection` import for in-page scroll
+
+### Registry
+
+- Top-level `name` → `Tollerud User Interface`; updated description and component metadata for blocks
+
+### Docs
+
+- Overview, Backgrounds, and Foundations Typography use `.tollerud-display-shimmer` (replaces docs-only `.ds-shimmer`)
+- Light theme shimmer and secondary-button token overrides
+
+### Migration
+
+Drop-in. Replace any copied `.ds-shimmer` with `.tollerud-display-shimmer` from `@tollerud/ui/globals.css`.
+
+---
+
 ## 3.1.0 — 2026-06-09 — Monogram component and docs fixes
 
 Restores component styling in the docs site, ships the monogram as an npm component, and renames brand avatar assets.

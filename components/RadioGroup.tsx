@@ -1,6 +1,14 @@
 'use client'
 
-import { type InputHTMLAttributes, forwardRef, useId } from 'react'
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  type InputHTMLAttributes,
+  type ReactElement,
+  forwardRef,
+  useId,
+} from 'react'
 import { cn } from '@/lib/utils'
 
 export interface RadioGroupProps {
@@ -8,12 +16,40 @@ export interface RadioGroupProps {
   label?: string
   /** Error message */
   error?: string
+  /** Controlled selected value */
+  value?: string
+  /** Called with the selected option value */
+  onChange?: (value: string) => void
+  /** Shared name for native radio grouping (auto-generated if omitted) */
+  name?: string
   children?: React.ReactNode
   className?: string
 }
 
 const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
-  ({ label, error, children, className }, ref) => {
+  ({ label, error, value, onChange, name: nameProp, children, className }, ref) => {
+    const autoName = useId()
+    const name = nameProp ?? autoName
+
+    const wired = Children.map(children, (child) => {
+      if (!isValidElement(child)) return child
+      const radio = child as ReactElement<RadioProps>
+      const optionValue = radio.props.value
+      if (optionValue === undefined) return child
+
+      const option = String(optionValue)
+      const checked = value !== undefined ? value === option : radio.props.checked
+
+      return cloneElement(radio, {
+        name,
+        ...(checked !== undefined ? { checked } : {}),
+        onChange: (e) => {
+          radio.props.onChange?.(e)
+          if (e.target.checked) onChange?.(option)
+        },
+      })
+    })
+
     return (
       <fieldset ref={ref} className={cn('flex flex-col gap-1', className)}>
         {label && (
@@ -21,7 +57,7 @@ const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
             {label}
           </legend>
         )}
-        <div className="flex flex-col gap-2">{children}</div>
+        <div className="flex flex-col gap-2">{wired}</div>
         {error && (
           <p className="text-xs text-tollerud-error mt-0.5">{error}</p>
         )}
@@ -36,7 +72,7 @@ export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
 }
 
 const Radio = forwardRef<HTMLInputElement, RadioProps>(
-  ({ className, label, id: idProp, ...props }, ref) => {
+  ({ className, label, id: idProp, checked, ...props }, ref) => {
     const autoId = useId()
     const id = idProp ?? autoId
 
@@ -55,27 +91,23 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
             ref={ref}
             id={id}
             type="radio"
+            {...(checked !== undefined ? { checked } : {})}
             className="peer sr-only"
             {...props}
           />
           {/* Custom radio circle */}
           <span
             className={cn(
-              'h-4 w-4 rounded-full border transition-all duration-[150ms]',
+              'flex h-4 w-4 items-center justify-center rounded-full border transition-all duration-[150ms]',
               'bg-tollerud-surface-raised border-tollerud-border',
               'peer-focus-visible:outline-2 peer-focus-visible:outline-tollerud-yellow',
               'peer-checked:border-tollerud-yellow',
-              'group-hover:border-tollerud-text-secondary',
-              'flex items-center justify-center'
+              'peer-checked:[&>span]:opacity-100',
+              'group-hover:border-tollerud-text-secondary'
             )}
           >
-            {/* Inner dot */}
-            <span
-              className={cn(
-                'h-2 w-2 rounded-full bg-tollerud-yellow transition-opacity duration-[150ms]',
-                props.checked ? 'opacity-100' : 'opacity-0'
-              )}
-            />
+            {/* Inner dot — visible when checked (via peer on sibling input) */}
+            <span className="pointer-events-none h-2 w-2 rounded-full bg-tollerud-yellow opacity-0 transition-opacity duration-[150ms]" />
           </span>
         </span>
         {label && <span>{label}</span>}

@@ -14,14 +14,16 @@ const CTABand = forwardRef<HTMLDivElement, CTABandProps>(
       <div
         ref={ref}
         className={cn(
-          'tollerud-card rounded-xl border border-tollerud-border bg-tollerud-surface px-8 py-11 text-center',
+          'tollerud-card w-full rounded-xl border border-tollerud-border bg-tollerud-surface px-8 py-11 text-center',
           className
         )}
         {...props}
       >
-        <h2 className="tollerud-display text-[30px] text-tollerud-text-primary">{title}</h2>
+        <h2 className="tollerud-display mx-auto max-w-[640px] text-center text-[30px] text-tollerud-text-primary">
+          {title}
+        </h2>
         {description && (
-          <p className="mx-auto mt-3 max-w-[440px] text-[15px] text-tollerud-text-secondary">
+          <p className="mx-auto mt-3 max-w-[440px] text-center text-[15px] text-tollerud-text-secondary">
             {description}
           </p>
         )}

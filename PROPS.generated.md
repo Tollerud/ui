@@ -356,6 +356,9 @@
 
 - `label?: string`
 - `error?: string`
+- `value?: string`
+- `onChange?: (value: string) => void`
+- `name?: string`
 - `children?: React.ReactNode`
 - `className?: string`
 

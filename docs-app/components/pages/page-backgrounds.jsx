@@ -158,7 +158,7 @@ function GradientReadabilityDemo({ treatment }) {
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'rgba(245,245,245,0.58)' }}>{'>'}60 components</span>
           </div>
           <h3 style={{ fontSize: 'clamp(30px, 5vw, 46px)', lineHeight: 0.98, letterSpacing: '-0.045em', color: '#F5F5F5', fontWeight: 600 }}>
-            Dark. Monochrome.<br/><span className="ds-shimmer">Yellow where it counts.</span>
+            Dark. Monochrome.<br/><span className="tollerud-display-shimmer">Yellow where it counts.</span>
           </h3>
           <p style={{ marginTop: 16, maxWidth: 430, color: 'rgba(245,245,245,0.72)', fontSize: 15.5, lineHeight: 1.55 }}>
             {isEdge

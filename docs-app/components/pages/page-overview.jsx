@@ -34,7 +34,7 @@ function PageOverview({ go }) {
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: bold ? 'rgba(245,245,245,0.5)' : 'var(--text-muted)' }}>{'>'}{REGISTRY_COMPONENT_COUNT} registry components · {FOUNDATION_TOPIC_COUNT} foundation topics</span>
             </div>
             <h1 className="ds-hero__title" style={{ fontWeight: 600, letterSpacing: '-0.045em', lineHeight: 0.98, color: bold ? '#F5F5F5' : 'var(--foreground)' }}>
-              Dark. Monochrome.<br/><span className="ds-shimmer">Yellow where it counts.</span>
+              Dark. Monochrome.<br/><span className="tollerud-display-shimmer">Yellow where it counts.</span>
             </h1>
             <p style={{ marginTop: 20, fontSize: 17, lineHeight: 1.6, color: bold ? 'rgba(245,245,245,0.7)' : 'var(--text-secondary)', maxWidth: 480 }}>
               A high-contrast UI library for tools, dashboards and homelab UIs. Every token, component and pattern — live, themeable, and copy-paste ready.
@@ -70,7 +70,7 @@ function PageOverview({ go }) {
           { v: 2, suffix: '', label: 'Themes · light & dark' },
         ].map((s, i) => (
           <div className="tollerud-card ds-themed ds-lift" key={i} style={{ textAlign: 'center', padding: '22px 16px' }}>
-            <div className="ds-shimmer" style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1 }}>
+            <div className="tollerud-display-shimmer" style={{ fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1 }}>
               <CountUp value={s.v} suffix={s.suffix}/>
             </div>
             <div style={{ marginTop: 8, fontSize: 12.5, color: 'var(--text-muted)' }}>{s.label}</div>
