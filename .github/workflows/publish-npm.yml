@@ -5,10 +5,15 @@ on:
     branches: [main]
     paths:
       - 'package.json'
+      - 'package-lock.json'
       - 'components/**'
+      - 'lib/**'
+      - 'types/**'
       - 'globals.css'
       - 'tokens.css'
-      - 'lib/**'
+      - 'tollerud-preset.js'
+      - 'tsup.config.ts'
+      - 'tsconfig.build.json'
   workflow_dispatch:
 
 jobs:
@@ -39,6 +44,9 @@ jobs:
             echo "skip=false" >> $GITHUB_OUTPUT
             echo "Publishing $LOCAL (was $PUBLISHED)."
           fi
+
+      - run: npm run typecheck
+        if: steps.version_check.outputs.skip == 'false'
 
       - run: npm run build
         if: steps.version_check.outputs.skip == 'false'

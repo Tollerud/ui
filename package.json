@@ -52,7 +52,8 @@
   ],
   "scripts": {
     "build": "tsup",
-    "prepublishOnly": "npm run build",
+    "typecheck": "tsc --noEmit -p tsconfig.build.json",
+    "prepublishOnly": "npm run typecheck && npm run build",
     "preview": "open preview.html"
   },
   "peerDependencies": {

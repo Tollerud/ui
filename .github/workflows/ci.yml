@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --legacy-peer-deps
+
+      - run: npm run typecheck
+
+      - run: npm run build
+
+      - name: Verify docs site asset paths
+        run: |
+          grep -oE 'docs/[^"?'\'' ]+\.(jsx|css|js)' index.html | sort -u | while read -r file; do
+            if [ ! -f "$file" ]; then
+              echo "Missing docs asset referenced in index.html: $file"
+              exit 1
+            fi
+          done
