@@ -101,27 +101,9 @@ function slugifySectionTitle(title) {
 
 function Section({ id, title, desc, children }) {
   const sectionId = id || (title ? slugifySectionTitle(title) : undefined);
-  const handleAnchorClick = (e) => {
-    e.preventDefault();
-    if (!sectionId) return;
-    const url = location.href.split('#')[0] + '#' + sectionId;
-    history.pushState(null, '', url);
-    navigator.clipboard?.writeText(url).catch(() => {});
-    const el = document.getElementById(sectionId);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
   return (
     <section className="ds-section" id={sectionId} data-reveal>
-      <div className="ds-section__head">
-        <h2 className="ds-section__title">
-          <span className="ds-section__title-text">{title}</span>
-          {sectionId && (
-            <a href={'#' + sectionId} className="ds-section__anchor" onClick={handleAnchorClick} title="Copy link to section" aria-label={'Copy link to ' + title}>
-              #
-            </a>
-          )}
-        </h2>
-      </div>
+      <div className="ds-section__head"><h2 className="ds-section__title">{title}</h2></div>
       {desc && <p className="ds-section__desc">{desc}</p>}
       {children}
     </section>

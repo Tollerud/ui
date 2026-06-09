@@ -266,10 +266,6 @@ h1,h2,h3,h4,h5,h6,p { margin: 0; }
 .ds-section { margin-top: 56px; scroll-margin-top: 72px; }
 .ds-section__head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; }
 .ds-section__title { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: var(--foreground); }
-.ds-section__title-text { text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--border); }
-.ds-section__anchor { font-size: 16px; font-weight: 500; color: var(--text-muted); text-decoration: none; opacity: 0; transition: opacity 0.15s, color 0.15s; line-height: 1; padding: 2px 4px; border-radius: 4px; margin-left: 6px; }
-.ds-section__title:hover .ds-section__anchor,
-.ds-section__anchor:focus { opacity: 1; color: var(--tollerud-yellow); }
 .ds-section__desc { font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 22px; max-width: 680px; }
 .ds-subhead { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin: 0 0 14px; }
 
