@@ -101,7 +101,7 @@ cp tollerud-preset.js globals.css components/ -r <your-next-project>/
 
 Then use local paths instead of `@tollerud/ui` in the snippets above.
 
-### Next.js example
+### Usage example
 
 That's it. You now have all Tailwind colors (`bg-tollerud-yellow`, `text-tollerud-noir-200`), semantic CSS variables (`--primary`, `--background`, `--ring`), component utilities (`.tollerud-card`, `.tollerud-btn--terminal`), and React components ready to import:
 
@@ -256,14 +256,15 @@ design-system/
 │   ├── Timeline.tsx           # Vertical activity timeline
 │   ├── BackupStatusPanel.tsx  # Backup job overview
 │   └── Container.tsx         # Layout width constraint
-└── examples/
-    └── nextjs/
-        ├── README.md         # Setup instructions
-        ├── tailwind.config.ts # Example config using preset
-        └── app/
-            ├── globals.css   # @import for globals.css
-            ├── layout.tsx    # Root layout with fonts
-            └── page.tsx      # Full dashboard landing page
+├── index.html                # 🏆 Live docs entry (GitHub Pages)
+└── ds/
+    ├── app.jsx               # Shell: sidebar nav, routing, theme toggle
+    ├── components.jsx        # Shared demo primitives
+    ├── page-components.jsx   # Live component gallery + copy-paste code
+    ├── page-foundations.jsx  # Tokens, typography, color
+    ├── page-forms.jsx        # Form controls
+    ├── page-infra.jsx        # Homelab / infra components
+    └── page-*.jsx            # Patterns, blocks, changelog, etc.
 ```
 
 ## Graphify-inspired Components

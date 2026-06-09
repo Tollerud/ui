@@ -381,7 +381,7 @@ npx tsup                                   # verify the bundle builds
 | Component file | `components/ComponentName.tsx` |
 | Named export + type export | `components/index.ts` |
 | Registry entry | `registry.json` — add a `kebab-case` key with `name`, `description`, `files`, `dependencies`, `registryDependencies`, `type: "components:ui"` |
-| Docs preview | `examples/docs-nextjs/components/ComponentPreviews.tsx` (export function) + `examples/docs-nextjs/app/components/page.tsx` (section entry + import) |
+| Docs preview | Add a `<Section>` + `<Demo>` in the relevant `ds/page-*.jsx` (e.g. `ds/page-components.jsx` for core UI). Register new top-level pages in `ds/app.jsx` (`NAV`, `PAGES`, `PAGE_TITLES`). Site entry: `index.html` → `ds/`. |
 
 ### 3. Version bump rules
 

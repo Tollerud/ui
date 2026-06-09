@@ -154,9 +154,15 @@ Individual components can be added via the registry at `registry.json`. The regi
 
 ---
 
-## Full examples
+## Live docs & examples
 
-- **`examples/nextjs/`** — minimal starter showing a homelab dashboard page
-- **`examples/docs-nextjs/`** — full interactive docs site with live component previews
+Interactive demos live in the repo root — not a separate Next.js app:
+
+- **`index.html`** — docs site entry (React + Babel in-browser, Tailwind CDN)
+- **`ds/`** — full SPA: component gallery, foundations, forms, infra patterns, changelog
+
+Run locally: open `index.html` in a browser, or serve the repo root with any static server.
+
+Published at **[tollerud.github.io/design-system](https://tollerud.github.io/design-system/)** via GitHub Pages.
 
 See `README.md` for the complete setup guide and Tailwind v3/v4 instructions.
