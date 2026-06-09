@@ -404,7 +404,7 @@
       "description": "Tollerud monogram SVG with yellow, black, or white fill",
       "files": [
         "components/Monogram.tsx",
-        "lib/monogram.ts"
+        "components/monogram-geometry.ts"
       ],
       "dependencies": [
         "clsx",
