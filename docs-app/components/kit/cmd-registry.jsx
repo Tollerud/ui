@@ -67,7 +67,7 @@ const CMD_SECTION_ENTRIES = [
   ['foundations', 'Brand color', ['yellow', 'palette']],
   ['foundations', 'Monogram', ['logo', 'mark', 'wordmark']],
   ['foundations', 'State color'],
-  ['foundations', 'Semantic tokens', ['shadcn', 'css variables']],
+  ['foundations', 'Semantic tokens', ['css variables', 'semantic tokens']],
   ['foundations', 'Typography', ['font', 'inter']],
   ['foundations', 'Spacing'],
   ['foundations', 'Radius'],

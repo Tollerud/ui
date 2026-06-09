@@ -224,7 +224,7 @@ See [GETTING_STARTED.md](GETTING_STARTED.md) for Tailwind setup and peer depende
 design-system/
 ├── .nvmrc                    # Node 24 for local dev / CI parity
 ├── package.json              # @tollerud/ui — version, exports, scripts
-├── registry.json             # Internal drift manifest (not a public install path)
+├── registry.json             # Repo-only drift manifest (`test:drift`; not in npm tarball)
 ├── CHANGELOG.md              # Version history (synced to docs on build)
 ├── SKILL.md                  # AI agent catalog — source of truth for exports
 ├── COMPONENTS.md             # Human prop reference

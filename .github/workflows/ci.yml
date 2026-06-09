@@ -23,10 +23,9 @@ jobs:
 
       - run: npm run validate
 
-      - name: Verify npm tarball includes registry
+      - name: Verify npm tarball contents
         run: |
           npm pack --dry-run 2>&1 | tee /tmp/pack.txt
-          grep -q 'registry.json' /tmp/pack.txt
           grep -q 'dist/index.js' /tmp/pack.txt
           grep -q 'dist/button.js' /tmp/pack.txt
           grep -q 'globals.css' /tmp/pack.txt

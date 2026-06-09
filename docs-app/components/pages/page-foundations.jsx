@@ -261,7 +261,7 @@ function PageFoundations() {
         </div>
       </Section>
 
-      <Section title="Semantic tokens" desc="shadcn/ui-compatible aliases. Components reference these — so re-theming is a matter of remapping nine variables.">
+      <Section title="Semantic tokens" desc="CSS variable aliases for background, foreground, card, and accent. Components reference these — re-theming is a matter of remapping nine variables.">
         <TokenTable cols={['Token', 'Role', 'Reference']}
           rows={semantic.map(([t, r, v]) => [
             `<code>--${t}</code>`,

@@ -7,6 +7,23 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.0.2 — 2026-06-10 — Repo layout and publish surface cleanup
+
+Patch release: consolidates docs and CI fixtures, stops shipping internal manifests, and clarifies docs copy after the npm-only pivot.
+
+### Changed
+
+- Tarball smoke test moved to `fixtures/consumer/` (was `examples/consumer/`)
+- Docs chrome consolidated under `docs-app/styles/docs.css` (removed top-level `docs/`)
+- `registry.json` kept in the repo for `npm run test:drift` — no longer published in the npm tarball
+- Docs copy: semantic tokens described without shadcn install-path framing
+
+### Removed
+
+- `components.json` — unused after copy-via-shadcn removal
+
+---
+
 ## 4.0.1 — 2026-06-10 — npm-only install path
 
 Patch release: drops copy-via-shadcn registry tooling. Install from the package — barrel or subpath imports.
@@ -62,9 +79,9 @@ Major release: completes the post-v3 roadmap (light gallery, registry CLI, foote
 ### Tooling
 
 - CI and dev tooling on Node 24 + npm 11.16.0 (`.nvmrc`, lockfile guardrails)
-- Dependabot for `docs-app/` and `examples/consumer/`
+- Dependabot for `docs-app/` and `fixtures/consumer/` (moved from `examples/consumer/` in v4.0.2)
 - Removed legacy `preview.html`, completed planning docs, and stale docs artifacts
-- Consumer smoke test auto-syncs tarball version in `examples/consumer/package.json`
+- Consumer smoke test auto-syncs tarball version in `fixtures/consumer/package.json` (path at release: `examples/consumer/`)
 
 ### Migration
 
