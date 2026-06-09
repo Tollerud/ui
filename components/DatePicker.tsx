@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'

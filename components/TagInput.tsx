@@ -1,3 +1,5 @@
+'use client'
+
 import { type KeyboardEvent, useId, useState } from 'react'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'

@@ -1,3 +1,5 @@
+'use client'
+
 import { type DragEvent, useId, useRef, useState } from 'react'
 import { Upload, X, File as FileIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'

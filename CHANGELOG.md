@@ -1,5 +1,32 @@
 # Changelog
 
+## 1.1.3 — 2026-06-09 — Fix: registry deps, source 'use client', React 19 devdep, docs drift
+
+No component API changes. Six quality fixes from a review audit:
+
+**1. registry.json — missing runtime dependencies**
+All icon-using components now list `lucide-react` in their registry entry; `button` lists `@radix-ui/react-slot`; `status-dot` lists `framer-motion`; `dialog` lists `lucide-react`. Affects manual/registry-copy installs only — the npm bundle was already correct.
+
+Entries updated: `button`, `status-dot`, `accordion`, `breadcrumb`, `combobox`, `date-picker`, `dialog`, `file-upload`, `pagination`, `password-input`, `pricing-card`, `stepper`, `tag-input`
+
+**2. Source components — added `'use client'` directive**
+12 hook-using source files were missing the directive. The bundled package was protected by the tsup post-build injection, but copied source files (registry/manual flow) would fail in Next.js App Router.
+
+Added `'use client'` to: `Accordion`, `Avatar`, `Checkbox`, `Combobox`, `DatePicker`, `FileUpload`, `FormRow`, `PasswordInput`, `RadioGroup`, `Slider`, `Switch`, `TagInput`
+
+**3. package.json — aligned React 19 devDependencies**
+`react-dom` dev dep bumped from `^18.3.1` → `^19.2.7` to match `react: ^19.2.7`, eliminating the `ELSPROBLEMS` peer conflict in local dev.
+
+**4. docs Getting Started page — rewritten to npm-package-first**
+Was: manual file-copy instructions, wrong token value (`--tollerud-yellow` = `#E8D500`), old component list (29 components).
+Now: `npm install @tollerud/ui`, Tailwind v3 + v4 snippets, full 61-component import block, correct yellow token docs, RSC safety note.
+
+**5. docs Brand page — corrected monogram color**
+`#FFF200` → `#FFFF00` (two references: description text and inline style). This now matches `BRAND.md`, `SKILL.md`, and the package tokens.
+
+**6. .gitignore — added `*.tsbuildinfo`**
+`examples/docs-nextjs/tsconfig.json` has `"incremental": true`, generating a `.tsbuildinfo` file that was untracked. Suppressed globally.
+
 ## 1.1.2 — 2026-06-09 — Ship AGENTS.md + SKILL.md inside the npm package
 
 `AGENTS.md` and `SKILL.md` are now included in the published package (`files` in `package.json`). After `npm install @tollerud/ui`, both files are available at:

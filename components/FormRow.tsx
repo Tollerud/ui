@@ -1,3 +1,5 @@
+'use client'
+
 import { type HTMLAttributes, forwardRef, useId } from 'react'
 import { cn } from '@/lib/utils'
 

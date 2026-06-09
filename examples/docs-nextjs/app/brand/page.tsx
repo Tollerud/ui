@@ -23,8 +23,8 @@ export default function BrandPage() {
         </div>
         <div>
           <p className="font-semibold text-tollerud-foreground">Tollerud Monogram</p>
-          <p className="text-sm mt-1">The stylised <strong>T</strong> — a single, continuous path forming the Tollerud identity mark. Built for dark backgrounds with acid yellow (<code>#FFF200</code>) fill. No outlines, no gradients — pure signal.</p>
-          <p className="text-xs text-tollerud-text-muted mt-2">Color: <code style={{ color: '#FFF200' }}>#FFF200</code> &middot; File: <code>tollerud-logo.svg</code> &middot; Aspect ratio: ~1:1.1</p>
+          <p className="text-sm mt-1">The stylised <strong>T</strong> — a single, continuous path forming the Tollerud identity mark. Built for dark backgrounds with acid yellow (<code>#FFFF00</code>) fill. No outlines, no gradients — pure signal.</p>
+          <p className="text-xs text-tollerud-text-muted mt-2">Color: <code style={{ color: '#FFFF00' }}>#FFFF00</code> &middot; File: <code>tollerud-logo.svg</code> &middot; Aspect ratio: ~1:1.1</p>
         </div>
       </div>
       <div className="rounded-lg border border-tollerud-border/30 bg-tollerud-surface-raised p-4 mb-6">
