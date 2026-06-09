@@ -541,10 +541,11 @@ CSS: `.ds-price` and `.ds-price__*`; grid wrapper `.ds-price-grid`.
 
 ## Charts
 
-> ⚠️ **Not yet in the `@tollerud/ui` npm package** — this is a docs-site / roadmap component (see [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)). Do not import `BarChart / AreaChart / Donut / Sparkline` from `@tollerud/ui` — it will not resolve. Check [SKILL.md](SKILL.md) for what's actually shipped.
+Palette-aware SVG charts. Yellow is the highlight series; everything else stays monochrome. Grid/axis use the `--chart-grid` token, so all four are theme-aware.
 
-
-Palette-aware SVG charts in `docs/charts.jsx`. Yellow is the highlight series; everything else stays monochrome. Grid/axis use the `--chart-grid` token, so all four are theme-aware.
+```tsx
+import { BarChart, AreaChart, Donut, Sparkline } from '@tollerud/ui'
+```
 
 ```tsx
 <BarChart data={[{ label: 'Mon', value: 12 }, { label: 'Tue', value: 18, accent: true }]} height={180} />
@@ -560,12 +561,13 @@ Palette-aware SVG charts in `docs/charts.jsx`. Yellow is the highlight series; e
 
 ## Marketing blocks
 
-Full-width page sections in `docs/marketing.jsx`, used on the Blocks page.
+Full-width page sections used on the Blocks page.
+
+```tsx
+import { HeroBlock, FeatureCard, CTABand } from '@tollerud/ui'
+```
 
 ### HeroBlock
-
-> ⚠️ **Not yet in the `@tollerud/ui` npm package** — this is a docs-site / roadmap component (see [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)). Do not import `HeroBlock` from `@tollerud/ui` — it will not resolve. Check [SKILL.md](SKILL.md) for what's actually shipped.
-
 
 A landing hero on the noir glow background. Single-column by default; pass `media` for a two-column layout with a right-hand visual.
 
@@ -576,12 +578,9 @@ A landing hero on the noir glow background. Single-column by default; pass `medi
   media={<img src="tia.png" alt="" />} />
 ```
 
-Props: `eyebrow` (pill text), `title`, `description`, `actions`, `media` (optional right column), `minHeight`, `intense`. Pass `intense` to swap the static noir glow for the live **GrainGradientGL** WebGL shader — the intense animated yellow grain atmosphere from tollerud.no (also used in the Overview "Bold" hero). It falls back to a static CSS gradient where WebGL is unavailable.
+Props: `eyebrow` (pill text), `title`, `description`, `actions`, `media` (optional right column), `minHeight`, `intense`. Pass `intense` to render `NoirGlowBackground` with loud intensity (requires `@paper-design/shaders-react` in the host app).
 
 ### FeatureCard
-
-> ⚠️ **Not yet in the `@tollerud/ui` npm package** — this is a docs-site / roadmap component (see [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)). Do not import `FeatureCard` from `@tollerud/ui` — it will not resolve. Check [SKILL.md](SKILL.md) for what's actually shipped.
-
 
 Icon chip + title + copy. Drop several into a `.ds-grid-3`.
 
@@ -590,12 +589,9 @@ Icon chip + title + copy. Drop several into a `.ds-grid-3`.
   description="Push a compose file and watch it roll out with health checks." />
 ```
 
-Props: `icon` (icon-set name), `title`, `description`.
+Props: `icon` (`ReactNode` — pass a Lucide icon or custom element), `title`, `description`.
 
 ### CTABand
-
-> ⚠️ **Not yet in the `@tollerud/ui` npm package** — this is a docs-site / roadmap component (see [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)). Do not import `CTABand` from `@tollerud/ui` — it will not resolve. Check [SKILL.md](SKILL.md) for what's actually shipped.
-
 
 A centered closing call-to-action with an optional accent bar.
 

@@ -8,7 +8,7 @@
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 
-const dir = join(import.meta.dirname, '../docs-app/components')
+const dir = join(import.meta.dirname, '../docs-app/components/pages')
 
 for (const file of readdirSync(dir).filter((f) => f.endsWith('.jsx'))) {
   let src = readFileSync(join(dir, file), 'utf8')

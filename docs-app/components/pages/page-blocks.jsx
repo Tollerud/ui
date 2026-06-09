@@ -1,11 +1,10 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL, CommandMenu } = __p
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL, CommandMenu } = __p
 
 /* Tollerud DS — Blocks page: full-width composed page sections. → window.PageBlocks
-   Block components (HeroBlock, FeatureCard, CTABand, PricingCard) live in
-   docs-app/components/marketing.jsx and @tollerud/ui. */
+   HeroBlock, FeatureCard, CTABand from @tollerud/ui; PricingCard from @tollerud/ui. */
 
 function PageBlocks() {
   return (
@@ -53,6 +52,30 @@ function PageBlocks() {
             <Button variant="primary" size="lg">Get started</Button>
             <Button variant="terminal" size="lg">view_source</Button>
           </>}/>
+      </Section>
+
+      <Section title="Footer" desc="Site footer with monogram lockup and attribution line. Exported from @tollerud/ui (also available as @tollerud/footer).">
+        <Demo name="footer" variant="col" code={`<Footer labels={{ tollerudProject: 'A Tollerud Project', allRightsReserved: 'All rights reserved.' }} />`}>
+          <Footer labels={{ tollerudProject: 'A Tollerud Project', allRightsReserved: 'All rights reserved.' }} />
+        </Demo>
+      </Section>
+
+      <Section title="Bento dashboard" desc="Precomposed homelab overview — host cards, metrics, services and incidents in an asymmetric grid.">
+        <Demo name="bento-dashboard" variant="col" code={`<BentoDashboard
+  title="Mission Control"
+  hosts={[{ hostname: 'emma', ip: '10.0.10.10', status: 'online', cpu: '23%', memory: '6.2/16 GB' }]}
+  metrics={[{ label: 'Active sessions', value: 42, change: { value: '+12%', direction: 'up' } }]}
+  services={[{ service: 'hermes', status: 'online', uptime: '14d', responseTime: '23ms' }]}
+  incidents={[{ title: 'High CPU on emma', severity: 'high', timestamp: '14:32', service: 'emma' }]}
+/>`}>
+          <BentoDashboard
+            title="Mission Control"
+            hosts={[{ hostname: 'emma', ip: '10.0.10.10', status: 'online', cpu: '23%', memory: '6.2/16 GB', disk: '45%', uptime: '14d', containers: 4 }]}
+            metrics={[{ label: 'Active sessions', value: 42, change: { value: '+12%', direction: 'up' } }]}
+            services={[{ service: 'emma.tollerud.no', status: 'online', uptime: '14d 3h', responseTime: '23ms' }]}
+            incidents={[{ title: 'High CPU on emma', severity: 'high', timestamp: '14:32', service: 'emma', description: 'CPU at 92% for 5 min' }]}
+          />
+        </Demo>
       </Section>
     </div>
   );

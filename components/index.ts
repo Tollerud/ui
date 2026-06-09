@@ -198,3 +198,26 @@ export type { FileUploadProps } from './FileUpload'
 
 export { TagInput } from './TagInput'
 export type { TagInputProps } from './TagInput'
+
+// ── Charts ──
+export { BarChart } from './BarChart'
+export type { BarChartProps, BarChartDatum } from './BarChart'
+
+export { AreaChart } from './AreaChart'
+export type { AreaChartProps } from './AreaChart'
+
+export { Donut } from './Donut'
+export type { DonutProps, DonutSegment } from './Donut'
+
+export { Sparkline } from './Sparkline'
+export type { SparklineProps } from './Sparkline'
+
+// ── Marketing blocks ──
+export { HeroBlock } from './HeroBlock'
+export type { HeroBlockProps } from './HeroBlock'
+
+export { FeatureCard } from './FeatureCard'
+export type { FeatureCardProps } from './FeatureCard'
+
+export { CTABand } from './CTABand'
+export type { CTABandProps } from './CTABand'

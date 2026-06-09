@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL, CommandMenu } = __p
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL, CommandMenu } = __p
 
 /* Tollerud DS — Components gallery. → window.PageComponents */
 function PageComponents() {
@@ -457,7 +457,112 @@ toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' });`}
         </Demo>
       </Section>
 
-      <Section title="Data table" desc="The config-driven <DataTable>: pass rows + a column spec and opt into search, a filter, selection with bulk actions, per-row menus, pagination and an empty state. Powers the Data Table build example.">
+      <Section title="Code block" desc="Terminal-style code display with an optional copy button. Use the code prop for a single string, or children for richer markup.">
+        <Demo name="code-block" variant="col" code={`<CodeBlock showCopy promptPrefix code="systemctl status tollerud-agent" />`}>
+          <CodeBlock showCopy promptPrefix code="systemctl status tollerud-agent" />
+        </Demo>
+      </Section>
+
+      <Section title="Container" desc="Layout width constraint — 1100px max with 24px horizontal padding. Use as a page wrapper or section cap.">
+        <Demo name="container" variant="col" code={`<Container className="py-6 text-center text-sm text-tollerud-text-secondary border border-dashed border-tollerud-border rounded-lg">
+  Content capped at 1100px
+</Container>`}>
+          <Container className="py-6 text-center text-sm text-tollerud-text-secondary border border-dashed border-tollerud-border rounded-lg">
+            Content capped at 1100px · px-6
+          </Container>
+        </Demo>
+      </Section>
+
+      <Section title="Action row" desc="A single command-list row — icon, label, description and shortcut. Used inside CommandMenu-style surfaces.">
+        <Demo name="action-row" variant="col" code={`<ActionRow
+  highlighted
+  action={{
+    id: 'deploy',
+    label: 'Deploy to production',
+    description: 'emma.tollerud.no · hermes stack',
+    shortcut: ['⌘', 'D'],
+    onSelect: () => {},
+  }}
+/>`}>
+          <div style={{ width: '100%', maxWidth: 420 }}>
+            <ActionRow
+              highlighted
+              action={{
+                id: 'deploy',
+                label: 'Deploy to production',
+                description: 'emma.tollerud.no · hermes stack',
+                shortcut: ['⌘', 'D'],
+                onSelect: () => toast({ tone: 'info', title: 'Deploy queued' }),
+              }}
+            />
+            <ActionRow
+              action={{
+                id: 'logs',
+                label: 'View logs',
+                description: 'Stream hermes stdout',
+                shortcut: 'L',
+                onSelect: () => toast({ tone: 'info', title: 'Opening logs' }),
+              }}
+            />
+          </div>
+        </Demo>
+      </Section>
+
+      <Section title="Glow card" desc="Wraps any surface with a cursor-tracking yellow glow. Intensity and color are configurable.">
+        <Demo name="glow-card" variant="center" code={`<GlowCard className="rounded-lg border border-tollerud-border p-6 max-w-sm">
+  <p className="text-sm text-tollerud-text-secondary">Hover to see the glow follow the cursor.</p>
+</GlowCard>`}>
+          <GlowCard className="rounded-lg border border-tollerud-border p-6 max-w-sm">
+            <p style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>Hover to see the glow follow the cursor.</p>
+          </GlowCard>
+        </Demo>
+      </Section>
+
+      <Section title="Data table (npm)" desc="Sortable, filterable table from @tollerud/ui. For bulk actions, row menus and pagination, the docs site also ships a richer DataTable demo (see Data Table build example).">
+        <Demo name="package-data-table" variant="col" code={`<PackageDataTable
+  columns={[
+    { key: 'hostname', label: 'Host', sortable: true },
+    { key: 'status', label: 'Status', render: (_v, row) => (
+      <Badge variant={row.status === 'online' ? 'success' : 'error'}>{row.status}</Badge>
+    )},
+  ]}
+  data={[
+    { id: 'emma', hostname: 'emma', status: 'online' },
+    { id: 'pia', hostname: 'pia', status: 'offline' },
+  ]}
+/>`}>
+          <div style={{ width: '100%' }}>
+            <PackageDataTable
+              columns={[
+                { key: 'hostname', label: 'Host', sortable: true },
+                {
+                  key: 'status',
+                  label: 'Status',
+                  render: (_v, row) => (
+                    <Badge variant={row.status === 'online' ? 'success' : 'error'}>{row.status}</Badge>
+                  ),
+                },
+              ]}
+              data={[
+                { id: 'emma', hostname: 'emma.tollerud.no', status: 'online' },
+                { id: 'pia', hostname: 'pia.tollerud.no', status: 'offline' },
+                { id: 'iris', hostname: 'iris.tollerud.no', status: 'online' },
+              ]}
+            />
+          </div>
+        </Demo>
+      </Section>
+
+      <Section title="Toaster" desc="Mount Toaster once near the app root. Call toast() from sonner for styled notifications.">
+        <Demo name="toaster" variant="center" code={`<Toaster />
+<Button onClick={() => toast.success('emma — deploy complete')}>Show toast</Button>`}>
+          <Button variant="primary" onClick={() => toast.success('emma — deploy complete')}>Show toast</Button>
+          <Button variant="secondary" onClick={() => toast.error('Connection to pia timed out')}>Show error</Button>
+          <Toaster />
+        </Demo>
+      </Section>
+
+      <Section title="Data table (docs)" desc="The config-driven docs DataTable: pass rows + a column spec and opt into search, a filter, selection with bulk actions, per-row menus, pagination and an empty state. Powers the Data Table build example.">
         <Demo name="data-table" variant="col" code={`<DataTable
   rows={services}
   rowKey="name"

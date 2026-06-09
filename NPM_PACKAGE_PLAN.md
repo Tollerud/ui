@@ -28,9 +28,46 @@ Status key: `[ ]` todo · `[~]` in progress · `[x]` done
 - [x] Add **drift test** (`npm run test:drift`): registry keys ↔ `components/index.ts` exports ↔ source files
 - [x] Docs bridge uses `docs-app/lib/docs-adapters.jsx` (npm-backed); `legacy-ui.jsx` removed
 
-### 1c — Docs-only code stays doc-only
+### 1c — Docs site layout taxonomy `[x]`
 
-Keep in `docs-app/components/` (not npm): `primitives.jsx` (Demo, Section, PageHeader), `icons.jsx`, `charts.jsx`, `marketing.jsx`, doc toast shim until sonner migration.
+Routable gallery pages vs support modules — only routes use the `page-` prefix.
+
+```
+docs-app/components/
+  docs-shell.jsx              # App shell: sidebar, routing, theme, CommandMenu
+  pages/
+    page-*.jsx                # 17 routable doc pages (URLs in docs-shell NAV/PAGES)
+  kit/                        # Docs chrome — never shipped in npm
+    primitives.jsx            # Demo, Section, PageHeader, CodeSnippet, toast shim
+    icons.jsx                 # Stroke icon set for demos (package uses lucide-react)
+    cmd-registry.jsx          # ⌘K section index + slugify helpers
+    motion.jsx                # Scroll reveal, CountUp, Typewriter, PageTOC
+  blocks/
+    rich-datatable.jsx        # Docs-only DataTable (bulk/row menus/pagination)
+  backgrounds/
+    grain-gl.jsx              # Legacy WebGL loader; prefer NoirGlowBackground in npm
+```
+
+| Module | In `@tollerud/ui`? | Notes |
+|--------|-------------------|-------|
+| `pages/page-*.jsx` | N/A | Routable doc pages |
+| `docs-shell.jsx` | Never | Docs app infrastructure |
+| `kit/primitives.jsx` | Never | Demo chrome |
+| `kit/icons.jsx` | Never | Duplicates lucide for static demos |
+| `kit/cmd-registry.jsx` | Never | Docs routing / ⌘K |
+| `kit/motion.jsx` | Never | Docs-site UX (reveal, TOC) |
+| `blocks/rich-datatable.jsx` | No | Incremental merge into npm `DataTable` |
+| `backgrounds/grain-gl.jsx` | Partial | npm ships `NoirGlowBackground` |
+
+Bridge entry points: `docs-app/lib/ui-merged.js` (npm re-exports), `docs-app/lib/docs-adapters.jsx` (legacy demo prop shapes), `docs-app/lib/provide-pages.js` (barrel for injected page imports).
+
+### 1d — Ship charts & marketing blocks `[x]`
+
+- [x] `BarChart`, `AreaChart`, `Donut`, `Sparkline` → `components/*.tsx` + registry
+- [x] `HeroBlock`, `FeatureCard`, `CTABand` → `components/*.tsx` + registry
+- [x] Docs import charts/marketing from `@tollerud/ui` via `ui-merged.js`
+- [x] `FeatureCard` icon string keys in docs → adapter maps `Icons[name]` to npm `icon` slot
+- [ ] Retire `backgrounds/grain-gl.jsx` once all demos use `NoirGlowBackground` (`intense` on `HeroBlock` uses npm shader)
 
 ---
 
@@ -54,7 +91,7 @@ Keep in `docs-app/components/` (not npm): `primitives.jsx` (Demo, Section, PageH
 
 ---
 
-## Phase 4 — Clean installs
+## Phase 4 — Clean installs `[x]`
 
 **Problem:** `npm ci --legacy-peer-deps` required everywhere.
 
@@ -102,9 +139,10 @@ Keep in `docs-app/components/` (not npm): `primitives.jsx` (Demo, Section, PageH
 | 2 | 2 | CI proves install works |
 | 3 | 3 | Safe publishes |
 | 4 | 1b | Remove duplicate code |
-| 5 | 4 | Contributor UX |
-| 6 | 5 | Consumer bundle health |
-| 7 | 6–7 | Maturity |
+| 5 | 1c–1d | Taxonomy + charts/marketing in npm |
+| 6 | 4 | Contributor UX |
+| 7 | 5 | Consumer bundle health |
+| 8 | 6–7 | Maturity |
 
 ---
 

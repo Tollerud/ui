@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useEffect, useMemo } from 'react'
-import { Icons } from './icons'
+import { Icons } from '../kit/icons'
 import { Button, Checkbox, Skeleton } from '@tollerud/ui'
-import { DropdownMenu } from '../lib/docs-adapters'
+import { DropdownMenu } from '@/lib/docs-adapters'
 
 /* Tollerud DS — RichDataTable (docs-only): config-driven table with search, filter, sort,
    selection + bulk actions, per-row menus, pagination and an empty state.

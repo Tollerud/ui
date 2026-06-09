@@ -1,4 +1,4 @@
-import { Icons } from '../components/icons'
+import { Icons } from '../components/kit/icons'
 
 /** Map docs command items (string icon keys) to npm CommandMenu ActionItem shape. */
 export function adaptCommandGroups(groups) {

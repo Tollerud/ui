@@ -8,7 +8,7 @@ import { useState, useEffect, useRef } from 'react'
    shader package at runtime and falls back to CSS only if the import/WebGL path
    fails. → window.GrainGradientGL */
 
-const PAPER_SHADERS_URL = '/docs/vendor/paper-shaders/index.js';
+const PAPER_SHADERS_URL = '/docs/paper-shaders/index.js';
 let paperShadersPromise = null;
 
 function loadPaperShaders() {

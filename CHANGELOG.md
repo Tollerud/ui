@@ -7,6 +7,29 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 1.4.0 — 2026-06-09 — Charts and marketing blocks
+
+Palette-aware charts and landing-page blocks ship in the npm package. Docs site reorganized into `pages/`, `kit/`, `blocks/`, and `backgrounds/`.
+
+### New components
+
+- `BarChart` — vertical bars with optional yellow accent series
+- `AreaChart` — gradient area/line chart with grid lines
+- `Donut` — donut chart with segment legend
+- `Sparkline` — compact inline trend line
+- `HeroBlock` — landing hero on noir glow (`intense` uses `NoirGlowBackground`)
+- `FeatureCard` — icon chip + title + description
+- `CTABand` — closing CTA with optional accent bar
+
+### Docs
+
+- Charts and marketing import from `@tollerud/ui` (no duplicate `charts.jsx` / `marketing.jsx`)
+- `docs-app/components/` taxonomy: routable `pages/page-*.jsx`, `kit/`, `blocks/rich-datatable.jsx`, `backgrounds/grain-gl.jsx`
+
+### Migration
+
+Nothing breaking. Import charts and blocks from `@tollerud/ui` as named exports.
+
 ## 1.3.0 — 2026-06-09 — Tailwind v4 as default CSS entry
 
 `@tollerud/ui/globals.css` is now the Tailwind v4 bundle (tokens + component layers + `@import "tailwindcss"`). v3 projects move to `@tollerud/ui/globals-v3.css`.

@@ -25,7 +25,7 @@ Apply the Tailwind preset when you need extra utilities from `tollerud-preset.js
 @source "../node_modules/@tollerud/ui/dist";
 ```
 
-As of **v1.3.0**, `@tollerud/ui/globals.css` is the Tailwind v4 entry. Tailwind colors are under `tollerud.*` only (`text-tollerud-yellow`, `bg-tollerud-surface-raised`, etc.) — not `tia-*`.
+As of **v1.4.0**, charts (`BarChart`, `AreaChart`, `Donut`, `Sparkline`) and marketing blocks (`HeroBlock`, `FeatureCard`, `CTABand`) ship in the package. As of **v1.3.0**, `@tollerud/ui/globals.css` is the Tailwind v4 entry. Tailwind colors are under `tollerud.*` only (`text-tollerud-yellow`, `bg-tollerud-surface-raised`, etc.) — not `tia-*`.
 
 **Tailwind v3 legacy:** `@import "@tollerud/ui/globals-v3.css"` after preflight/utilities, with `tailwind.config.ts` preset + content paths.
 
@@ -349,11 +349,31 @@ import { Empty, EmptyHeader, EmptyIcon, EmptyTitle, EmptyDescription, EmptyConte
 ### Visual / decorative
 
 ```tsx
-import { GlowCard, NoirGlowBackground, BentoDashboard } from '@tollerud/ui'
+import {
+  GlowCard, NoirGlowBackground, BentoDashboard,
+  BarChart, AreaChart, Donut, Sparkline,
+  HeroBlock, FeatureCard, CTABand,
+} from '@tollerud/ui'
 ```
 - **GlowCard** — `children`, `className?`, `glowColor?`, `intensity?: number`. Mouse-tracked glow card.
 - **NoirGlowBackground** — animated WebGL shader background (needs `@paper-design/shaders-react`). `shape?: 'corners' | 'wave' | 'dots' | 'truchet' | 'ripple' | 'blob' | 'sphere'`, `intensity?: 'subtle' | 'medium' | 'loud'`, `speed?: 'still' | 'slow' | 'medium' | 'fast'`, `grain?: 'none' | 'soft' | 'high'`, `colors?: string[]`, `forceCssFallback?: boolean`.
 - **BentoDashboard** — composed dashboard shell taking arrays of `HostCardProps`, `StatCardProps`, `ServiceHealthCardProps`, incidents, `BackupJob[]`.
+
+**Charts** — palette-aware SVG; yellow highlights one series.
+```tsx
+<BarChart data={[{ label: 'Mon', value: 32, accent: true }]} height={180} />
+<AreaChart data={[28, 35, 30, 44, 52]} height={150} />
+<Donut segments={[{ label: 'CPU', value: 40, color: 'var(--chart-1)' }]} size={160} />
+<Sparkline data={[12, 18, 14, 22]} width={84} height={26} />
+```
+
+**Marketing blocks**
+```tsx
+<HeroBlock eyebrow="homelab" title="Run your stack" intense actions={<Button>Deploy</Button>} />
+<FeatureCard icon={<Zap size={20} />} title="Instant deploys" description="…" />
+<CTABand title="Ship it" actions={<Button variant="primary">Get started</Button>} />
+```
+`HeroBlock.intense` mounts `NoirGlowBackground` (needs `@paper-design/shaders-react`).
 
 ### Data & tables
 

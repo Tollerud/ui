@@ -61,7 +61,7 @@ Last updated: 2026-06-09
 - ✅ DataTable — stable height on search, sort, select, bulk, pagination
 - ✅ Density — `<Card density="compact">` + `data-density` container wrapper
 
-### npm package (components/*.tsx) — v1.3.0
+### npm package (components/*.tsx) — v1.4.0
 - ✅ Button — defaults to secondary, `asChild` (Radix Slot) + exported `buttonVariants` since 1.0.7
 - ✅ Bundle correctly marked `'use client'` for RSC/SSR safety since 1.0.8
 - ✅ Card — density prop
@@ -78,6 +78,8 @@ Last updated: 2026-06-09
 - ✅ Panel, Meter, FormRow, PricingCard
 - ✅ Accordion, Slider, PasswordInput
 - ✅ Combobox, DatePicker, FileUpload, TagInput
+- ✅ Charts — BarChart, AreaChart, Donut, Sparkline
+- ✅ Marketing blocks — HeroBlock, FeatureCard, CTABand
 - ✅ Tailwind preset exposes package utilities under `tollerud.*`
 
 ### Docs site

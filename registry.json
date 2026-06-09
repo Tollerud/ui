@@ -1,6 +1,6 @@
 {
   "name": "tollerud-noir",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Tollerud Design System \u2014 dark, cinematic, keyboard-first infrastructure UI",
   "components": {
     "button": {
@@ -816,6 +816,102 @@
         "clsx",
         "tailwind-merge",
         "@radix-ui/react-tooltip"
+      ],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "bar-chart": {
+      "name": "BarChart",
+      "description": "Palette-aware vertical bar chart with optional yellow accent series",
+      "files": [
+        "components/BarChart.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "area-chart": {
+      "name": "AreaChart",
+      "description": "Area/line chart with yellow gradient fill and grid lines",
+      "files": [
+        "components/AreaChart.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "donut": {
+      "name": "Donut",
+      "description": "Donut chart with segment legend",
+      "files": [
+        "components/Donut.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "sparkline": {
+      "name": "Sparkline",
+      "description": "Compact inline sparkline for stat cards and tables",
+      "files": [
+        "components/Sparkline.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "hero-block": {
+      "name": "HeroBlock",
+      "description": "Landing hero on noir glow background with optional shader intensity",
+      "files": [
+        "components/HeroBlock.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "pill",
+        "noir-glow-background"
+      ],
+      "type": "components:ui"
+    },
+    "feature-card": {
+      "name": "FeatureCard",
+      "description": "Marketing feature card with icon chip, title and description",
+      "files": [
+        "components/FeatureCard.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "card"
+      ],
+      "type": "components:ui"
+    },
+    "cta-band": {
+      "name": "CTABand",
+      "description": "Closing call-to-action band with optional yellow accent bar",
+      "files": [
+        "components/CTABand.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
       ],
       "registryDependencies": [],
       "type": "components:ui"

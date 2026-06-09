@@ -1,7 +1,7 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
-import { PageHeader, Section, Demo, CodeSnippet } from './primitives'
-import { GrainGradientGL } from './grain-gl'
+import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
+import * as __p from '@/lib/provide-pages'
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, GrainGradientGL, CommandMenu } = __p
 
 /* Tollerud DS — Background treatments ported from tollerud.no.
    → window.Squares, window.GrainGradient, window.PageBackgrounds */
@@ -204,6 +204,27 @@ function PageBackgrounds() {
   />
   <div className="relative z-20">{children}</div>
 </div>`}/>
+        </div>
+      </Section>
+
+      <Section title="Noir glow background (npm)" desc="Shipped as NoirGlowBackground from @tollerud/ui — the packaged grain atmosphere with optional CSS fallback for static export and docs.">
+        <BgFrame label="NoirGlowBackground · forceCssFallback" h={280}>
+          <div style={{ position: 'relative', height: '100%', minHeight: 240 }}>
+            <NoirGlowBackground forceCssFallback intensity="medium" preserveCenter className="absolute inset-0" />
+            <div style={{ position: 'relative', zIndex: 20, padding: '32px 28px' }}>
+              <span className="tollerud-pill tollerud-pill--outline">@tollerud/ui</span>
+              <h3 className="tollerud-display--secondary" style={{ marginTop: 12, fontSize: 28, color: '#F5F5F5' }}>Noir glow</h3>
+              <p style={{ marginTop: 8, fontSize: 13.5, color: 'var(--text-secondary)', maxWidth: 360 }}>Drop-in background for heroes and empty states. Pass forceCssFallback when WebGL is unavailable.</p>
+            </div>
+          </div>
+        </BgFrame>
+        <div style={{ marginTop: 16 }}>
+          <CodeSnippet name="noir-glow.jsx" code={`<NoirGlowBackground
+  intensity="medium"
+  preserveCenter
+  forceCssFallback={false}
+  className="absolute inset-0"
+/>`}/>
         </div>
       </Section>
 

@@ -127,6 +127,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@tollerud/ui'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@tollerud/ui'
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from '@tollerud/ui'
 import { Skeleton, Progress, Toaster, GlowCard, NoirGlowBackground, BentoDashboard, Alert } from '@tollerud/ui'
+import { BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand } from '@tollerud/ui'
 // Infra / homelab set
 import { HostCard, ServiceHealthCard, DockerStackCard, IncidentCard } from '@tollerud/ui'
 import { ApprovalCard, ActionDiff, AlertInbox, RollbackPlan, BackupStatusPanel } from '@tollerud/ui'
@@ -398,7 +399,7 @@ npm run validate   # typecheck + lint + test + build
 | Component file | `components/ComponentName.tsx` |
 | Named export + type export | `components/index.ts` |
 | Registry entry | `registry.json` — add a `kebab-case` key with `name`, `description`, `files`, `dependencies`, `registryDependencies`, `type: "components:ui"` |
-| Docs preview | Add a `<Section>` + `<Demo>` in the relevant `docs-app/components/page-*.jsx`. Register new top-level pages in `docs-app/components/app.jsx` (`NAV`, `PAGES`, `PAGE_TITLES`). Build: `npm run build:docs` → `_site/`. |
+| Docs preview | Add a `<Section>` + `<Demo>` in `docs-app/components/pages/page-*.jsx`. Register routes in `docs-app/components/docs-shell.jsx` (`NAV`, `PAGES`, `PAGE_TITLES`). Support code lives in `kit/`, `blocks/`, `backgrounds/`. Build: `npm run build:docs` → `_site/`. |
 
 ### 3. Version bump rules
 

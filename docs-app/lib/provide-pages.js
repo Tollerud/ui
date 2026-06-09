@@ -1,6 +1,7 @@
 'use client'
 
 export * from './ui-merged'
+export { toast } from 'sonner'
 export {
   highlight,
   CopyButton,
@@ -13,25 +14,23 @@ export {
   TokenTable,
   ToastProvider,
   useToast,
-} from '../components/primitives'
-export { Icons, Ico } from '../components/icons'
+} from '../components/kit/primitives'
+export { Icons, Ico } from '../components/kit/icons'
 /** Docs-only DataTable with bulk actions, row menus, and pagination — richer than npm DataTable. */
-export { DataTable } from '../components/rich-datatable'
-export { BarChart, AreaChart, Donut, Sparkline } from '../components/charts'
-export { HeroBlock, FeatureCard, CTABand } from '../components/marketing'
-export { initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED } from '../components/motion'
+export { DataTable } from '../components/blocks/rich-datatable'
+export { initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED } from '../components/kit/motion'
 export {
   slugify,
   jumpToSection,
   goToSection,
   buildSectionCommands,
   matchesCommandQuery,
-} from '../components/cmd-registry'
+} from '../components/kit/cmd-registry'
 export {
   Squares,
   GrainGradient,
   PageBackgrounds,
   BgFrame,
   GradientReadabilityDemo,
-} from '../components/backgrounds'
-export { GrainGradientGL } from '../components/grain-gl'
+} from '../components/pages/page-backgrounds'
+export { GrainGradientGL } from '../components/backgrounds/grain-gl'

@@ -57,7 +57,10 @@ import {
   Divider as NpmDivider,
   cn,
 } from '@tollerud/ui'
-import { Icons } from '../components/icons'
+import {
+  FeatureCard as NpmFeatureCard,
+} from '@tollerud/ui'
+import { Icons } from '../components/kit/icons'
 
 export { LogViewer, Combobox, Select, DatePicker, FileUpload, TagInput }
 
@@ -376,6 +379,12 @@ function AvatarGroup({ users = [], max = 4, size = 32, ...props }) {
   )
 }
 
+/** Maps docs icon string keys (Icons registry) to npm FeatureCard icon slot. */
+function FeatureCard({ icon, ...props }) {
+  const Icon = icon && typeof icon === 'string' ? Icons[icon] : null
+  return <NpmFeatureCard icon={Icon ? <Icon size={20} /> : undefined} {...props} />
+}
+
 export {
   Tabs,
   Segmented,
@@ -396,4 +405,5 @@ export {
   AvatarGroup,
   Divider,
   Timeline,
+  FeatureCard,
 }
