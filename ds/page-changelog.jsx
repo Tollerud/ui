@@ -98,7 +98,7 @@ function ChangelogBody({ blocks }) {
           <p key={i} style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: inlineMarkdown(block.text) }}/>
         );
         if (block.type === 'h3') return (
-          <p key={i} style={{ margin: 0, fontWeight: 600, color: 'var(--foreground)' }}
+          <p key={i} style={{ margin: '4px 0 2px', fontWeight: 600, color: 'var(--foreground)', borderTop: i > 0 ? '1px solid var(--border)' : 'none', paddingTop: i > 0 ? 12 : 0 }}
              dangerouslySetInnerHTML={{ __html: inlineMarkdown(block.text) }}/>
         );
         if (block.type === 'ul') return (
@@ -128,6 +128,7 @@ function parseChangelog(md) {
   let current = null;
   let inCode = false;
   let codeLines = [];
+  let afterBlank = true; // start true so first line of an entry starts a fresh paragraph
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -141,15 +142,21 @@ function parseChangelog(md) {
       } else {
         inCode = true;
       }
+      afterBlank = true;
       continue;
     }
     if (inCode) { codeLines.push(line); continue; }
+
+    // Blank line — break paragraph continuity
+    if (!line.trim()) {
+      afterBlank = true;
+      continue;
+    }
 
     // H2 = new entry  (## 1.1.3 — 2026-06-09 — Title)
     if (/^## /.test(line)) {
       if (current) entries.push(current);
       const rest = line.slice(3).trim();
-      // Try to parse: version — date — title  OR  version — title  OR  date — title
       const versionMatch = rest.match(/^(\d+\.\d+\.\d+)\s*[—–-]\s*/);
       let version = null, remainder = rest;
       if (versionMatch) {
@@ -163,20 +170,30 @@ function parseChangelog(md) {
         remainder = remainder.slice(dateMatch[0].length);
       }
       current = { version, date, title: remainder.trim(), blocks: [] };
+      afterBlank = true;
       continue;
     }
 
     if (!current) continue;
 
-    // H3 = sub-heading inside entry
+    // H3
     if (/^### /.test(line)) {
       current.blocks.push({ type: 'h3', text: line.slice(4).trim() });
+      afterBlank = true;
       continue;
     }
 
     // H4
     if (/^#### /.test(line)) {
       current.blocks.push({ type: 'h3', text: line.slice(5).trim() });
+      afterBlank = true;
+      continue;
+    }
+
+    // Bold line used as a section heading (e.g. **1. Title**)
+    if (/^\*\*[^*]+\*\*/.test(line.trim()) && afterBlank) {
+      current.blocks.push({ type: 'h3', text: line.trim() });
+      afterBlank = false;
       continue;
     }
 
@@ -189,19 +206,19 @@ function parseChangelog(md) {
       } else {
         current.blocks.push({ type: 'ul', items: [text] });
       }
+      afterBlank = false;
       continue;
     }
 
-    // Paragraph (skip blank lines)
+    // Paragraph — only continue previous p if no blank line since it
     const trimmed = line.trim();
-    if (trimmed) {
-      const last = current.blocks[current.blocks.length - 1];
-      if (last && last.type === 'p') {
-        last.text += ' ' + trimmed;
-      } else {
-        current.blocks.push({ type: 'p', text: trimmed });
-      }
+    const last = current.blocks[current.blocks.length - 1];
+    if (!afterBlank && last && last.type === 'p') {
+      last.text += ' ' + trimmed;
+    } else {
+      current.blocks.push({ type: 'p', text: trimmed });
     }
+    afterBlank = false;
   }
 
   // Flush any unclosed code block at EOF
