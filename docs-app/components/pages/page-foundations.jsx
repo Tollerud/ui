@@ -270,15 +270,7 @@ function PageFoundations() {
           ])}/>
       </Section>
 
-      <Section title="Typography" desc="Inter for display and body, JetBrains Mono for code, metrics and terminal moments. Tight tracking on display sizes. Accent lines can use the shipped .tollerud-display-shimmer sweep on dark surfaces.">
-        <div className="ds-demo ds-themed" style={{ marginBottom: 16 }}>
-          <div style={{ padding: '28px 24px', background: 'var(--tollerud-black)', borderRadius: 8 }}>
-            <h2 className="tollerud-display" style={{ fontSize: 40, color: '#F5F5F5', lineHeight: 0.98 }}>
-              Dark. Monochrome.<br/><span className="tollerud-display-shimmer">Yellow where it counts.</span>
-            </h2>
-            <p className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 12 }}>.tollerud-display-shimmer — from @tollerud/ui/globals.css</p>
-          </div>
-        </div>
+      <Section title="Typography" desc="Inter for display and body, JetBrains Mono for code, metrics and terminal moments. Tight tracking on display sizes.">
         <div className="ds-demo ds-themed">
           <div style={{ padding: '8px 4px' }}>
             {typeScale.map(([name, spec, w, size, sample], i) => (
@@ -292,6 +284,29 @@ function PageFoundations() {
             ))}
           </div>
         </div>
+
+        <SubHead>Display shimmer</SubHead>
+        <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: 16, maxWidth: 640 }}>
+          Animated yellow sweep clipped to text — for hero accent lines and key metrics on dark surfaces. Ships with the standard <span className="ds-mono" style={{ fontSize: 12 }}>@import &quot;@tollerud/ui/globals.css&quot;</span> setup; no extra install step. Use on a short accent span inside <span className="ds-mono" style={{ fontSize: 12 }}>.tollerud-display</span>, not body copy. Respects <span className="ds-mono" style={{ fontSize: 12 }}>prefers-reduced-motion</span> (static yellow). For a static gradient, use <span className="ds-mono" style={{ fontSize: 12 }}>.tollerud-gradient-text</span> instead.
+        </p>
+        <Demo name="display-shimmer" code={`<h1 class="tollerud-display text-[70px] text-tollerud-text-primary">
+  Dark. Monochrome.<br>
+  <span class="tollerud-display-shimmer">Yellow where it counts.</span>
+</h1>
+
+{/* Key metric — same class on the number */}
+<div class="tollerud-display-shimmer text-[38px] font-bold tracking-tight">
+  42
+</div>`}>
+          <div style={{ padding: '28px 24px', background: 'var(--tollerud-black)', borderRadius: 8 }}>
+            <h2 className="tollerud-display" style={{ fontSize: 40, color: '#F5F5F5', lineHeight: 0.98 }}>
+              Dark. Monochrome.<br/><span className="tollerud-display-shimmer">Yellow where it counts.</span>
+            </h2>
+            <div className="tollerud-display-shimmer" style={{ marginTop: 20, fontSize: 38, fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1 }}>
+              42
+            </div>
+          </div>
+        </Demo>
       </Section>
 
       <Section title="Spacing" desc="A 4px base grid. These eight steps cover the vast majority of layout.">
