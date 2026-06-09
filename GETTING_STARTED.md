@@ -150,7 +150,7 @@ import { Button, Card } from '@tollerud/ui'
 
 ## Registry (shadcn-style)
 
-Individual components can be added via the registry at `registry.json`. The registry now covers all 60 shipped components.
+Individual components can be added via the registry at `registry.json`. The registry now covers all 61 shipped components.
 
 ---
 
