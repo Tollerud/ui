@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   {
-    ignores: ['dist/**', 'docs/**', 'docs-app/public/**', 'docs-app/.next/**', 'docs-app/next-env.d.ts', 'docs-app/tailwind.config.cjs', 'docs-app/tollerud-docs-preset.cjs', 'docs-app/node_modules/**', 'node_modules/**', 'coverage/**', 'tollerud-preset.js', 'entries/**', '_site/**', 'registry-dist/**', 'examples/consumer/dist/**', 'examples/consumer/.next/**', 'examples/consumer/out/**', 'examples/consumer/next-env.d.ts', 'examples/registry-consumer/**', 'packages/footer/dist/**'],
+    ignores: ['dist/**', 'docs/**', 'docs-app/public/**', 'docs-app/.next/**', 'docs-app/next-env.d.ts', 'docs-app/tailwind.config.cjs', 'docs-app/tollerud-docs-preset.cjs', 'docs-app/node_modules/**', 'node_modules/**', 'coverage/**', 'tollerud-preset.js', 'entries/**', '_site/**', 'examples/consumer/dist/**', 'examples/consumer/.next/**', 'examples/consumer/out/**', 'examples/consumer/next-env.d.ts', 'packages/footer/dist/**'],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

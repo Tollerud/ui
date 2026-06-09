@@ -62,7 +62,7 @@ const CMD_SECTION_ENTRIES = [
   ['getting-started', 'Import components'],
   ['getting-started', 'Server Components', ['rsc', 'ssr']],
   ['getting-started', 'Toaster', ['sonner', 'toast']],
-  ['getting-started', 'Registry', ['shadcn']],
+  ['getting-started', 'Subpath imports', ['tree-shake', 'subpath']],
 
   ['foundations', 'Brand color', ['yellow', 'palette']],
   ['foundations', 'Monogram', ['logo', 'mark', 'wordmark']],

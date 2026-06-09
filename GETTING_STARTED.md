@@ -79,70 +79,10 @@ Import individual components without pulling the full barrel:
 
 ```tsx
 import { Button } from '@tollerud/ui/button'
-import { Dialog, DialogContent } from '@tollerud/ui/dialog'
 import { cn } from '@tollerud/ui/utils'
 ```
 
-Every component in the catalog has a matching subpath (kebab-case filename). The main `@tollerud/ui` entry still works for convenience.
-
----
-
-## Toaster (optional)
-
-Mount the `Toaster` once near your app root to enable `sonner` toast notifications:
-
-```tsx
-// app/layout.tsx
-import { Toaster } from '@tollerud/ui'
-
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <body>
-        {children}
-        <Toaster />
-      </body>
-    </html>
-  )
-}
-```
-
----
-
-## Import Components
-
-All 61 components are named exports from `@tollerud/ui`:
-
-```tsx
-// Basics
-import { Button, Card, Badge, StatusDot, Kbd, Input, Textarea } from '@tollerud/ui'
-
-// Overlays
-import { Dialog, DialogContent, Tooltip, TooltipProvider, Sheet } from '@tollerud/ui'
-
-// Data & infra
-import { DataTable, HostCard, LogViewer, CommandMenu } from '@tollerud/ui'
-```
-
 See [COMPONENTS.md](COMPONENTS.md) for the full prop reference.
-
----
-
-## shadcn / registry
-
-CI validates registry installs with `npm run test:registry-cli`, which builds `registry-dist/` (shadcn v3 item JSON with embedded sources) and runs `npx shadcn@3.2.1 add` against the packed tarball consumer.
-
-Install individual components via the registry:
-
-```bash
-npx shadcn@latest add https://unpkg.com/@tollerud/ui@latest/registry.json
-```
-
-Or add a single component:
-
-```bash
-npx shadcn@latest add button --registry https://unpkg.com/@tollerud/ui@latest/registry.json
-```
 
 ---
 

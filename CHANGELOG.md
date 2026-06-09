@@ -7,6 +7,35 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.0.1 — 2026-06-10 — npm-only install path
+
+Patch release: drops copy-via-shadcn registry tooling. Install from the package — barrel or subpath imports.
+
+### Removed
+
+- `npm run test:registry-cli`, `npm run build:registry`, and `examples/registry-consumer/`
+- `registry-dist/` build output (never shipped to npm in v4.0.0)
+- Public shadcn `npx shadcn add` install docs — no consumers use copy-into-repo flow
+
+### Docs
+
+- Getting started leads with `npm install @tollerud/ui` and subpath imports (`@tollerud/ui/button`)
+- `registry.json` remains for internal drift checks (`npm run test:drift`) only
+
+### Migration
+
+Use the package directly:
+
+```tsx
+import { Button } from '@tollerud/ui'
+// or tree-shake:
+import { Button } from '@tollerud/ui/button'
+```
+
+Do not copy component source via shadcn CLI — that path is unsupported.
+
+---
+
 ## 4.0.0 — 2026-06-10 — Ecosystem hardening and globals-v4 removal
 
 Major release: completes the post-v3 roadmap (light gallery, registry CLI, footer lockstep), reorganizes brand assets, and drops deprecated CSS entrypoints.
@@ -20,8 +49,7 @@ Major release: completes the post-v3 roadmap (light gallery, registry CLI, foote
 
 - `@tollerud/footer` — `packages/footer/` synced from `components/Footer.tsx` via `npm run sync:footer`; `npm run verify:footer-sync` in `validate`
 - Changesets linked `@tollerud/ui` and `@tollerud/footer` for joint version bumps
-- `npm run build:registry` — builds shadcn v3 `registry-dist/*.json` with embedded sources
-- `npm run test:registry-cli` — smoke test: `npx shadcn@3.2.1 add` for `utils` + `button`, then Next.js build
+- Registry drift checks via `registry.json` (`npm run test:drift`) — internal manifest, not a public shadcn install path
 
 ### Docs site
 
@@ -34,7 +62,7 @@ Major release: completes the post-v3 roadmap (light gallery, registry CLI, foote
 ### Tooling
 
 - CI and dev tooling on Node 24 + npm 11.16.0 (`.nvmrc`, lockfile guardrails)
-- Dependabot for `docs-app/` and `examples/consumer/` + `examples/registry-consumer/`
+- Dependabot for `docs-app/` and `examples/consumer/`
 - Removed legacy `preview.html`, completed planning docs, and stale docs artifacts
 - Consumer smoke test auto-syncs tarball version in `examples/consumer/package.json`
 

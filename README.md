@@ -204,19 +204,19 @@ The design system ships brand assets under `brand/` — import via `@tollerud/ui
 4. **Sharp when it counts** — Radius is subtle. Full round only for pills. Sharp corners for the noir feel.
 5. **Glow with purpose** — Yellow glow only on hover/active states. Never decorative.
 
-## shadcn Registry
+## Install
 
 ```bash
-# Add via shadcn CLI — registry ships with the npm package
-npx shadcn@latest add button --registry https://unpkg.com/@tollerud/ui/registry.json
-
-# Or copy source manually
-cp -r components/ src/components/ui
-cp globals.css src/app/
-cp tollerud-preset.js .
+npm install @tollerud/ui clsx tailwind-merge tailwindcss
 ```
 
-See [GETTING_STARTED.md](GETTING_STARTED.md) for the full setup guide.
+```tsx
+import { Button, Card } from '@tollerud/ui'
+// or tree-shake:
+import { Button } from '@tollerud/ui/button'
+```
+
+See [GETTING_STARTED.md](GETTING_STARTED.md) for Tailwind setup and peer dependencies.
 
 ## File Structure
 
@@ -224,7 +224,7 @@ See [GETTING_STARTED.md](GETTING_STARTED.md) for the full setup guide.
 design-system/
 ├── .nvmrc                    # Node 24 for local dev / CI parity
 ├── package.json              # @tollerud/ui — version, exports, scripts
-├── registry.json             # shadcn registry manifest
+├── registry.json             # Internal drift manifest (not a public install path)
 ├── CHANGELOG.md              # Version history (synced to docs on build)
 ├── SKILL.md                  # AI agent catalog — source of truth for exports
 ├── COMPONENTS.md             # Human prop reference

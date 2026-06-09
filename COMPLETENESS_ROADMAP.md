@@ -61,7 +61,7 @@ Last updated: 2026-06-10
 - ✅ DataTable — stable height on search, sort, select, bulk, pagination
 - ✅ Density — `<Card density="compact">` + `data-density` container wrapper
 
-### npm package (components/*.tsx) — v4.0.0
+### npm package (components/*.tsx) — v4.0.1
 - ✅ Button — defaults to secondary, `asChild` (Radix Slot) + exported `buttonVariants` since 1.0.7
 - ✅ Bundle correctly marked `'use client'` for RSC/SSR safety since 1.0.8
 - ✅ Card — density prop
@@ -113,7 +113,7 @@ Last updated: 2026-06-10
 
 ### Ecosystem
 - [x] `@tollerud/footer` version lockstep automation with `@tollerud/ui` Footer export
-- [x] Registry CLI (`npx shadcn@latest add`) smoke test in CI consumer example
+- [x] npm-only install path — removed copy-via-shadcn registry CLI (v4.0.1); `registry.json` kept for drift checks
 
 ---
 

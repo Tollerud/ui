@@ -90,10 +90,11 @@ export default function RootLayout({ children }) {
         />
       </Section>
 
-      <Section title="Registry" desc="Install individual components via the shadcn CLI.">
+      <Section title="Subpath imports" desc="Tree-shake individual components without pulling the full barrel.">
         <CodeSnippet
-          name="registry"
-          code={`npx shadcn@latest add button --registry https://unpkg.com/@tollerud/ui@latest/registry.json`}
+          name="subpath"
+          code={`import { Button } from '@tollerud/ui/button'
+import { cn } from '@tollerud/ui/utils'`}
         />
       </Section>
 
