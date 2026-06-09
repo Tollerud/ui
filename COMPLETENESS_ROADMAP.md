@@ -100,5 +100,9 @@ Last updated: 2026-06-09
 
 ### Quality
 - ~~Combobox / DropdownMenu don't reposition on window resize~~ — fixed in 1.1.0 (Combobox + DatePicker now close on resize, matching scroll behaviour; DropdownMenu was already handled by Radix)
+- ~~No CI on PRs~~ — GitHub Actions runs typecheck, lint, test, build, docs path check, and tarball verify
+- ~~No unit tests~~ — Vitest + Testing Library smoke tests for core components + registry validation
+- ~~No ESLint / jsx-a11y~~ — flat config with react-hooks + jsx-a11y
+- ~~registry.json not published~~ — exported as `@tollerud/ui/registry.json`
 - No Storybook or visual regression tests for the npm package
 - `CHANGELOG.md` is manual — could be auto-generated from commits
