@@ -20,7 +20,7 @@ npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
 npm install @paper-design/shaders-react
 ```
 
-As of **v3.1.1**, `.tollerud-display-shimmer` ships in `globals.css` for animated hero accent text. As of **v3.1.0**, `Monogram` ships as an inline SVG component (`color`: `yellow` | `black` | `white`). As of **v3.0.0**, the package is **ESM-only** (no CJS `require` entry). As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peers** (not bundled).
+As of **v4.0.0**, `@tollerud/ui/globals-v4.css` is removed — use `globals.css` only. Brand assets live at `@tollerud/ui/brand/*`. As of **v3.1.1**, `.tollerud-display-shimmer` ships in `globals.css` for animated hero accent text. As of **v3.1.0**, `Monogram` ships as an inline SVG component (`color`: `yellow` | `black` | `white`). As of **v3.0.0**, the package is **ESM-only** (no CJS `require` entry). As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peers** (not bundled).
 
 Apply the Tailwind preset when you need extra utilities from `tollerud-preset.js` — `globals.css` already includes tokens and component layers for v4:
 

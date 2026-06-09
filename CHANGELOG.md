@@ -7,6 +7,68 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.0.0 — 2026-06-10 — Ecosystem hardening and globals-v4 removal
+
+Major release: completes the post-v3 roadmap (light gallery, registry CLI, footer lockstep), reorganizes brand assets, and drops deprecated CSS entrypoints.
+
+### Breaking changes
+
+- Removed `@tollerud/ui/globals-v4.css` — it was an alias for `globals.css`. Tailwind v4 projects should import `@tollerud/ui/globals.css` only.
+- Brand assets moved under `@tollerud/ui/brand/*` — e.g. `@tollerud/ui/brand/tollerud-logo.svg` (not package-root paths).
+
+### Ecosystem
+
+- `@tollerud/footer` — `packages/footer/` synced from `components/Footer.tsx` via `npm run sync:footer`; `npm run verify:footer-sync` in `validate`
+- Changesets linked `@tollerud/ui` and `@tollerud/footer` for joint version bumps
+- `npm run build:registry` — builds shadcn v3 `registry-dist/*.json` with embedded sources
+- `npm run test:registry-cli` — smoke test: `npx shadcn@3.2.1 add` for `utils` + `button`, then Next.js build
+
+### Docs site
+
+- Light-mode gallery parity — docs-only Tailwind preset maps `tollerud-*` utilities to CSS variables so npm previews flip in `data-theme="light"`
+- Docs icons migrated to `lucide-react` (custom GitHub mark retained)
+- Playwright coverage — forms page, command palette, theme toggle, light-mode card surfaces
+- Brand assets canonical in `brand/`; synced to docs via `scripts/sync-brand-assets.mjs`
+- Homepage and live docs URL → `https://design.tollerud.dev/`
+
+### Tooling
+
+- CI and dev tooling on Node 24 + npm 11.16.0 (`.nvmrc`, lockfile guardrails)
+- Dependabot for `docs-app/` and `examples/consumer/` + `examples/registry-consumer/`
+- Removed legacy `preview.html`, completed planning docs, and stale docs artifacts
+- Consumer smoke test auto-syncs tarball version in `examples/consumer/package.json`
+
+### Migration
+
+**globals-v4.css** — replace:
+
+```css
+@import "@tollerud/ui/globals-v4.css";
+```
+
+with:
+
+```css
+@import "@tollerud/ui/globals.css";
+@source "../node_modules/@tollerud/ui/dist";
+```
+
+**Brand assets** — replace root imports:
+
+```ts
+import logo from '@tollerud/ui/tollerud-logo.svg'
+```
+
+with:
+
+```ts
+import logo from '@tollerud/ui/brand/tollerud-logo.svg'
+```
+
+No component API changes. `@tollerud/ui` barrel and subpath imports unchanged.
+
+---
+
 ## 3.1.1 — 2026-06-09 — Display shimmer, form indicators, and button fixes
 
 Patch release: ships hero text shimmer for consumer apps, fixes secondary/checkbox/radio styling, and polishes docs layout components.

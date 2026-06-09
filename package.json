@@ -1,6 +1,6 @@
 {
   "name": "@tollerud/ui",
-  "version": "3.1.1",
+  "version": "4.0.0",
   "description": "Tollerud User Interface — dark, monochrome + yellow accent. Noir aesthetic meets modern utility.",
   "private": false,
   "type": "module",
@@ -33,7 +33,6 @@
     },
     "./globals.css": "./globals.css",
     "./globals-v3.css": "./globals-v3.css",
-    "./globals-v4.css": "./globals-v4.css",
     "./globals-layers.css": "./globals-layers.css",
     "./tailwind.css": "./tailwind.css",
     "./tokens.css": "./tokens.css",
@@ -55,7 +54,6 @@
     "dist",
     "globals.css",
     "globals-v3.css",
-    "globals-v4.css",
     "globals-layers.css",
     "tailwind.css",
     "tokens.css",

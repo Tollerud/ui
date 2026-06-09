@@ -1,6 +1,6 @@
 # Tollerud User Interface — Roadmap
 
-Last updated: 2026-06-09
+Last updated: 2026-06-10
 
 ## Current state — what's done
 
@@ -61,7 +61,7 @@ Last updated: 2026-06-09
 - ✅ DataTable — stable height on search, sort, select, bulk, pagination
 - ✅ Density — `<Card density="compact">` + `data-density` container wrapper
 
-### npm package (components/*.tsx) — v3.1.1
+### npm package (components/*.tsx) — v4.0.0
 - ✅ Button — defaults to secondary, `asChild` (Radix Slot) + exported `buttonVariants` since 1.0.7
 - ✅ Bundle correctly marked `'use client'` for RSC/SSR safety since 1.0.8
 - ✅ Card — density prop
@@ -124,3 +124,4 @@ Last updated: 2026-06-09
 - ✅ Rich DataTable, ESM-only, Changesets, generated props (v3.0.0)
 - ✅ publint + attw + size-limit in CI validate
 - ✅ Publish gate: drift, package quality, E2E, registry version sync
+- ✅ `globals-v4.css` alias removed — use `globals.css` (v4.0.0)
