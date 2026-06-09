@@ -102,9 +102,9 @@ function ChangelogBody({ blocks }) {
              dangerouslySetInnerHTML={{ __html: inlineMarkdown(block.text) }}/>
         );
         if (block.type === 'ul') return (
-          <ul key={i} style={{ margin: 0, paddingLeft: 20, display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <ul key={i} style={{ margin: 0, paddingLeft: 20, listStyleType: 'disc' }}>
             {block.items.map((item, j) => (
-              <li key={j} dangerouslySetInnerHTML={{ __html: inlineMarkdown(item) }}/>
+              <li key={j} style={{ marginBottom: 4 }} dangerouslySetInnerHTML={{ __html: inlineMarkdown(item) }}/>
             ))}
           </ul>
         );
