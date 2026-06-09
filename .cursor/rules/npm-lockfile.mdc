@@ -1,0 +1,33 @@
+---
+description: Keep package-lock.json compatible with npm 11 CI (npm ci on GitHub Actions)
+globs: package.json,package-lock.json,docs-app/package-lock.json
+alwaysApply: false
+---
+
+# npm lockfile — match CI
+
+This repo pins **`npm@11.16.0`** via `packageManager` in `package.json`. CI (Node 24) runs `npm ci` — lockfiles generated with a different npm major can fail `npm ci`.
+
+## When editing dependencies or bumping version
+
+1. Regenerate the lockfile with the pinned npm:
+   ```bash
+   npx npm@11.16.0 install
+   ```
+2. Verify clean install:
+   ```bash
+   rm -rf node_modules && npx npm@11.16.0 ci
+   ```
+3. Commit `package.json` and `package-lock.json` together.
+
+## Do not
+
+- Run `npm install` with an unpinned npm version and commit the lockfile without verifying `npx npm@11.16.0 ci`
+- Use `npm install --package-lock-only` as the only lockfile update for version bumps
+- Commit `package.json` version changes without an updated `package-lock.json`
+
+## Before push
+
+```bash
+npm run validate
+```

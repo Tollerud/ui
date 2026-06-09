@@ -399,6 +399,19 @@ When asked to add components, fix bugs, or cut a release:
 npm run validate   # typecheck + lint + test + build
 ```
 
+### 1b. `package-lock.json` must match CI npm
+
+GitHub Actions uses **Node 24 + npm 11** (`packageManager` in `package.json` pins `npm@11.16.0`). Regenerating the lockfile with a different npm major can produce entries that **`npm ci` rejects on CI**.
+
+When you change dependencies or bump the package version:
+
+```bash
+npx npm@11.16.0 install          # refresh lockfile — use the pinned npm, not an arbitrary local version
+rm -rf node_modules && npx npm@11.16.0 ci   # verify before push
+```
+
+Never use `npm install --package-lock-only` alone for version bumps — it can desync optional peer entries. Commit `package-lock.json` in the same commit as `package.json` changes.
+
 ### 2. Every new component needs all four of these
 
 | What | Where |

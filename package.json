@@ -14,8 +14,9 @@
   },
   "license": "MIT",
   "author": "Mathias Tollerud <mathias.tollerud@gmail.com>",
+  "packageManager": "npm@11.16.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "sideEffects": [
     "*.css"
