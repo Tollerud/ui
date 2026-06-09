@@ -85,10 +85,11 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:subpath": "node scripts/verify-subpath-exports.mjs",
+    "test:drift": "node scripts/verify-registry-drift.mjs",
     "test:consumer": "node scripts/test-consumer.mjs",
     "changelog:draft": "node scripts/changelog-draft.mjs",
-    "validate": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath && npm run build:docs && npm run test:consumer",
-    "prepublishOnly": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath",
+    "validate": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath && npm run test:drift && npm run build:docs && npm run test:consumer",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath && npm run test:drift",
     "build:docs": "node scripts/build-docs.mjs",
     "preview:docs": "npx --yes serve _site -l 4173",
     "preview": "open preview.html"

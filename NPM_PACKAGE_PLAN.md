@@ -14,18 +14,19 @@ Status key: `[ ]` todo · `[~]` in progress · `[x]` done
 
 - [x] Add `docs-app/` Next.js App Router static export importing `@tollerud/ui` from `dist/`
 - [x] Dogfood `@tollerud/ui/globals.css` (Tailwind v4) instead of CDN v3
-- [x] `docs-app/lib/ui-merged.js` — npm components override legacy adapters in `legacy-ui.jsx`
+- [x] `docs-app/lib/ui-merged.js` — re-exports `@tollerud/ui` + `docs-adapters.jsx` for demo prop shapes
 - [x] Update GitHub Pages workflow to `npm run build && npm run build:docs` → `_site/`
-- [ ] Retire Babel-in-browser `index.html` entry (legacy kept for now; Next.js is primary deploy)
+- [x] Retire Babel-in-browser `index.html` entry (Next.js `_site/` is the only deploy)
 - [x] Playwright E2E serves static `_site/` preview
 
-### 1b — Eliminate duplicate component files `[~]`
+### 1b — Eliminate duplicate component files `[x]`
 
-- [ ] Delete `docs/components.jsx` once bridge covers all exports
+- [x] Delete legacy `docs/*.jsx` duplicates (`components.jsx`, `infra.jsx`, `datatable.jsx`, etc.); keep `docs/docs.css` only
 - [x] Replace `docs-app/components/infra.jsx` with `@tollerud/ui` infra components (+ string props for HostCard cpu/memory/disk)
 - [x] Rename docs DataTable to `rich-datatable.jsx` (docs-only; npm `DataTable` stays the package export)
 - [x] Align docs `CommandMenu` with npm API (`onOpenChange` + `adaptCommandGroups` helper)
-- [ ] Add **drift test**: registry keys ↔ `components/index.ts` exports ↔ docs demo imports
+- [x] Add **drift test** (`npm run test:drift`): registry keys ↔ `components/index.ts` exports ↔ source files
+- [x] Docs bridge uses `docs-app/lib/docs-adapters.jsx` (npm-backed); `legacy-ui.jsx` removed
 
 ### 1c — Docs-only code stays doc-only
 
@@ -57,8 +58,8 @@ Keep in `docs-app/components/` (not npm): `primitives.jsx` (Demo, Section, PageH
 
 **Problem:** `npm ci --legacy-peer-deps` required everywhere.
 
-- [ ] Run `npm ci` without flag; fix peer conflicts (likely ESLint plugins or TS 6)
-- [ ] Remove `--legacy-peer-deps` from CI and CONTRIBUTING
+- [x] Run `npm ci` without flag (no peer conflicts on Node 22)
+- [x] Remove `--legacy-peer-deps` from CI, scripts, and CONTRIBUTING
 
 ---
 

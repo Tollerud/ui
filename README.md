@@ -261,15 +261,12 @@ design-system/
 │   ├── Timeline.tsx           # Vertical activity timeline
 │   ├── BackupStatusPanel.tsx  # Backup job overview
 │   └── Container.tsx         # Layout width constraint
-├── index.html                # 🏆 Live docs entry (GitHub Pages)
+├── docs-app/                 # Next.js docs site (static export → _site/ for GitHub Pages)
+│   ├── app/                  # App Router entry
+│   ├── components/           # Page demos (primitives, charts, marketing)
+│   └── lib/                  # ui-merged.js + docs-adapters.jsx (npm-backed)
 └── docs/
-    ├── app.jsx               # Shell: sidebar nav, routing, theme toggle
-    ├── components.jsx        # Shared demo primitives
-    ├── page-components.jsx   # Live component gallery + copy-paste code
-    ├── page-foundations.jsx  # Tokens, typography, color
-    ├── page-forms.jsx        # Form controls
-    ├── page-infra.jsx        # Homelab / infra components
-    └── page-*.jsx            # Patterns, blocks, changelog, etc.
+    └── docs.css              # Shared docs chrome styles (imported by docs-app)
 ```
 
 ## Graphify-inspired Components

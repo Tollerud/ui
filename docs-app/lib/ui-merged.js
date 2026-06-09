@@ -36,7 +36,7 @@ export {
   Combobox,
   AvatarGroup,
   Select,
-} from '../components/legacy-ui'
+} from './docs-adapters'
 
 export const {
   Button,

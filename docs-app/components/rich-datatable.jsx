@@ -1,7 +1,8 @@
 'use client'
-import { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Icons } from './icons'
-import { Button, Checkbox, DropdownMenu, Skeleton } from './legacy-ui'
+import { Button, Checkbox, Skeleton } from '@tollerud/ui'
+import { DropdownMenu } from '../lib/docs-adapters'
 
 /* Tollerud DS — RichDataTable (docs-only): config-driven table with search, filter, sort,
    selection + bulk actions, per-row menus, pagination and an empty state.
@@ -120,13 +121,13 @@ function DataTable({
             <tbody>
               {Array.from({ length: skeletonRows }).map((_, i) => (
                 <tr key={i}>
-                  {selectable && <td style={{ paddingRight: 0 }}><Skeleton w={16} h={16} r={4}/></td>}
+                  {selectable && <td style={{ paddingRight: 0 }}><Skeleton style={{ width: 16, height: 16, borderRadius: 4 }} /></td>}
                   {columns.map((col, j) => (
                     <td key={col.key} style={{ textAlign: col.align || 'left' }}>
-                      <Skeleton w={j === 0 ? '70%' : (col.align === 'right' ? '40%' : '55%')} h={12}/>
+                      <Skeleton style={{ width: j === 0 ? '70%' : (col.align === 'right' ? '40%' : '55%'), height: 12 }} />
                     </td>
                   ))}
-                  {rowMenu && <td><Skeleton w={16} h={16} r={4}/></td>}
+                  {rowMenu && <td><Skeleton style={{ width: 16, height: 16, borderRadius: 4 }} /></td>}
                 </tr>
               ))}
             </tbody>

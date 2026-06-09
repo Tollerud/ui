@@ -38,7 +38,7 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
-      - run: npm ci --legacy-peer-deps
+      - run: npm ci
 
       - name: Check if version already published
         id: version_check

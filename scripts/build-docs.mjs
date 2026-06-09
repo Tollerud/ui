@@ -11,7 +11,7 @@ if (!existsSync(join(root, 'dist/index.js'))) {
 }
 
 if (!existsSync(join(docsApp, 'node_modules/next'))) {
-  execSync('npm install --legacy-peer-deps', { cwd: docsApp, stdio: 'inherit' })
+  execSync('npm install', { cwd: docsApp, stdio: 'inherit' })
 }
 
 execSync('npm run build', { cwd: docsApp, stdio: 'inherit' })

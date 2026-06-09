@@ -228,7 +228,7 @@ See `KEYBOARD.md` for full keyboard contract.
 
 ## Homelab / Infrastructure Components
 
-The Tier 2 component set — these make Tia a real infrastructure assistant. All live in `docs/infra.jsx` and are showcased on the **Infrastructure** page; `HostCard`, `AlertInbox` and `ApprovalCard` also power the Mission Control dashboard. They share a five-level `SEVERITY` scale (`critical · high · medium · low · info`).
+The Tier 2 component set — these make Tia a real infrastructure assistant. All ship from `components/*.tsx` (`@tollerud/ui`) and are showcased on the **Infrastructure** page; `HostCard`, `AlertInbox` and `ApprovalCard` also power the Mission Control dashboard. They share a five-level `SEVERITY` scale (`critical · high · medium · low · info`).
 
 ### ServiceHealthCard
 

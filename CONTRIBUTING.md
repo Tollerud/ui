@@ -3,7 +3,7 @@
 ## Before you open a PR
 
 ```bash
-npm ci --legacy-peer-deps
+npm ci
 npm run typecheck
 npm run lint
 npm run test
@@ -35,7 +35,7 @@ Follow the checklist in [AGENTS.md](AGENTS.md):
 1. Component source in `components/`
 2. Export from `components/index.ts`
 3. Registry entry in `registry.json`
-4. Live demo in `docs/page-*.jsx` (site entry: `index.html`)
+4. Live demo in `docs-app/components/page-*.jsx` (Next.js static export → `_site/`)
 
 ## Releases
 

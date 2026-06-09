@@ -28,7 +28,7 @@ jobs:
           node-version: 22
           cache: npm
 
-      - run: npm ci --legacy-peer-deps
+      - run: npm ci
 
       - name: Build npm package and Next.js docs site
         run: npm run build && npm run build:docs

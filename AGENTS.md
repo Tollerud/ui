@@ -398,7 +398,7 @@ npm run validate   # typecheck + lint + test + build
 | Component file | `components/ComponentName.tsx` |
 | Named export + type export | `components/index.ts` |
 | Registry entry | `registry.json` — add a `kebab-case` key with `name`, `description`, `files`, `dependencies`, `registryDependencies`, `type: "components:ui"` |
-| Docs preview | Add a `<Section>` + `<Demo>` in the relevant `docs/page-*.jsx` (e.g. `docs/page-components.jsx` for core UI). Register new top-level pages in `docs/app.jsx` (`NAV`, `PAGES`, `PAGE_TITLES`). Site entry: `index.html` → `docs/`. |
+| Docs preview | Add a `<Section>` + `<Demo>` in the relevant `docs-app/components/page-*.jsx`. Register new top-level pages in `docs-app/components/app.jsx` (`NAV`, `PAGES`, `PAGE_TITLES`). Build: `npm run build:docs` → `_site/`. |
 
 ### 3. Version bump rules
 

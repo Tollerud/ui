@@ -21,7 +21,7 @@ const tgz = readdirSync(root).find((f) => f.startsWith('tollerud-ui-') && f.ends
 if (!tgz) throw new Error('npm pack did not produce a tarball')
 
 execSync('rm -rf node_modules .next out', { cwd: consumer, stdio: 'inherit' })
-execSync(`npm install --legacy-peer-deps ../../${tgz}`, { cwd: consumer, stdio: 'inherit' })
+execSync(`npm install ../../${tgz}`, { cwd: consumer, stdio: 'inherit' })
 execSync('npm run build', { cwd: consumer, stdio: 'inherit' })
 
 console.log('Consumer smoke test passed.')

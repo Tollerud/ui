@@ -5,7 +5,7 @@ const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Chec
 
 /* Tollerud DS — Blocks page: full-width composed page sections. → window.PageBlocks
    Block components (HeroBlock, FeatureCard, CTABand, PricingCard) live in
-   docs/marketing.jsx and docs/components.jsx. */
+   docs-app/components/marketing.jsx and @tollerud/ui. */
 
 function PageBlocks() {
   return (

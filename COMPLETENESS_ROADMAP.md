@@ -18,7 +18,7 @@ Last updated: 2026-06-09
 - ✅ Dark mode default
 - ✅ `prefers-reduced-motion` respected globally
 
-### Components (docs site — docs/components.jsx)
+### Components (docs site — docs-app via @tollerud/ui + docs-adapters)
 - ✅ Button — 5 variants, 3 sizes, icon, loading, disabled, icon-only
 - ✅ Card — accent, density prop
 - ✅ Badge — 6 variants
@@ -107,5 +107,5 @@ Last updated: 2026-06-09
 Docs site E2E smoke tests for the Vite-built docs (`npm run test:e2e`)
 - ~~`CHANGELOG.md` is manual~~ — `npm run changelog:draft` drafts an entry from commits since the latest version
 - ~~No subpath exports~~ — `@tollerud/ui/button`, `@tollerud/ui/dialog`, etc. (generated at build time)
-- ~~Docs site duplicates npm components~~ — Vite `docs-app/` dogfoods `@tollerud/ui` (21 components from npm; legacy-ui for demo-only APIs)
+- ~~Docs site duplicates npm components~~ — Next.js `docs-app/` dogfoods `@tollerud/ui` via `docs-adapters.jsx` for legacy demo prop shapes
 - [ ] See [NPM_PACKAGE_PLAN.md](NPM_PACKAGE_PLAN.md) for remaining npm package hardening
