@@ -22,12 +22,15 @@ const NAV = [
     { id: 'billing', label: 'Billing', icon: 'card' },
     { id: 'auth', label: 'Sign in', icon: 'shield' },
   ]},
+  { group: '', items: [
+    { id: 'changelog', label: 'Changelog', icon: 'clock' },
+  ]},
 ];
 const PAGE_TITLES = {
   overview: 'Overview', foundations: 'Foundations', components: 'Components',
   forms: 'Forms', navoverlays: 'Navigation & Overlays', datablocks: 'Charts', blocks: 'Blocks',
   backgrounds: 'Backgrounds', patterns: 'Mission Control', servers: 'Data Table',
-  console: 'Logs & Console', settings: 'Settings', auth: 'Sign in', onboarding: 'Onboarding', billing: 'Billing', infra: 'Infrastructure',
+  console: 'Logs & Console', settings: 'Settings', auth: 'Sign in', onboarding: 'Onboarding', billing: 'Billing', infra: 'Infrastructure', changelog: 'Changelog',
 };
 
 function useHashRoute() {
@@ -87,6 +90,7 @@ function App() {
     settings: <PageSettings/>,
     billing: <PageBilling/>,
     auth: <PageAuth/>,
+    changelog: <PageChangelog/>,
   };
 
   // Global command palette: pages, in-doc sections, and actions
