@@ -4,7 +4,7 @@ function PageChangelog() {
   const [error, setError]     = useState(null);
 
   useEffect(() => {
-    fetch('../CHANGELOG.md')
+    fetch('./CHANGELOG.md')
       .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
       .then(md => setEntries(parseChangelog(md)))
       .catch(e => setError(e.message));
