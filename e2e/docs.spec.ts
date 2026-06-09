@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test'
+import packageJson from '../package.json' with { type: 'json' }
 
 test.describe('docs site', () => {
   test('overview page loads with hero copy', async ({ page }) => {
     await page.goto('/')
-    await expect(page.locator('#root')).toBeVisible()
-    await expect(page).toHaveTitle(/Tollerud User Interface/)
+    await expect(page.locator('.ds-shell')).toBeVisible()
+    await expect(page).toHaveTitle(/Tollerud UI/)
     await expect(page.getByText('Dark. Monochrome.')).toBeVisible()
   })
 
@@ -17,6 +18,6 @@ test.describe('docs site', () => {
   test('changelog page loads entries', async ({ page }) => {
     await page.goto('/changelog')
     await expect(page.getByRole('heading', { name: 'Changelog' })).toBeVisible()
-    await expect(page.getByText('2.0.0', { exact: false }).first()).toBeVisible({ timeout: 15_000 })
+    await expect(page.getByText(packageJson.version, { exact: false }).first()).toBeVisible({ timeout: 15_000 })
   })
 })

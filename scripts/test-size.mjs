@@ -2,7 +2,7 @@
 /**
  * Bundle size budget — file bytes (no headless Chrome).
  */
-import { readFileSync, statSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { gzipSync } from 'node:zlib'
 

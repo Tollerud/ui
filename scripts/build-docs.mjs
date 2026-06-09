@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 import { execSync } from 'node:child_process'
-import { existsSync } from 'node:fs'
+import { copyFileSync, existsSync } from 'node:fs'
 import { join } from 'node:path'
 
 const root = join(import.meta.dirname, '..')
 const docsApp = join(root, 'docs-app')
+
+copyFileSync(join(root, 'CHANGELOG.md'), join(docsApp, 'public/CHANGELOG.md'))
 
 if (!existsSync(join(root, 'dist/index.js'))) {
   execSync('npm run build', { cwd: root, stdio: 'inherit' })

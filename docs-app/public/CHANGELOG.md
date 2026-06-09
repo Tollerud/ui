@@ -7,6 +7,86 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 3.0.0 — 2026-06-09 — ESM-only and rich DataTable
+
+Ships the full table pattern in npm, drops CommonJS builds, and adds release/props tooling.
+
+### Breaking change
+
+- Package is **ESM-only** — `require('@tollerud/ui')` and `.cjs` subpath bundles are removed. Use `import` in apps and bundlers that support ES modules.
+
+### New features
+
+- `DataTable` — search, segmented filter, row selection, bulk actions, per-row menus, pagination, loading skeletons, and custom empty states (optional; simple sort/filter mode unchanged)
+- `npm run docs:props` — generates `PROPS.generated.md` from component `*Props` interfaces
+- `npm run test:props` — drift check in `validate` / `prepublishOnly`
+- Changesets — `npm run changeset` and `npm run version:release` (runs `sync:registry`)
+
+### Docs
+
+- Retired docs-only `rich-datatable.jsx`; docs `DataTable` is an adapter over npm `DataTable`
+- `PackageDataTable` remains the direct npm import alias on the components page
+
+### Migration
+
+Replace `require('@tollerud/ui')` with ESM imports. For rich tables, pass the new optional props on `DataTable` instead of copying docs-only table code.
+
+---
+
+## 2.0.0 — 2026-06-09 — Peer dependency model
+
+Radix, Lucide, Framer Motion, and Sonner move to peer dependencies so consumer apps do not bundle duplicate copies.
+
+### Breaking change
+
+Install peers explicitly alongside `@tollerud/ui`:
+
+```bash
+npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
+  @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress \
+  @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip \
+  lucide-react framer-motion sonner
+```
+
+### New features
+
+- `@tollerud/ui/tailwind.css` — convenience import with documented `@source` hint
+- `npm run test:package` — publint + `@arethetypeswrong/cli` on the package
+- `npm run test:size` — size-limit budget on `dist/button.js` and `dist/index.js`
+- `npm run sync:registry` — align `registry.json` version with `package.json` before publish
+
+### Docs
+
+- Retired docs-only `grain-gl.jsx`; backgrounds and overview use npm `NoirGlowBackground`
+- Publish workflow runs drift, package quality, size budget, docs build, and Playwright E2E
+
+### Migration
+
+If you already had Radix/Lucide/Motion/Sonner in your app, add them to `package.json` if npm no longer hoists them from `@tollerud/ui`. No component API changes.
+
+## 1.4.0 — 2026-06-09 — Charts and marketing blocks
+
+Palette-aware charts and landing-page blocks ship in the npm package. Docs site reorganized into `pages/`, `kit/`, `blocks/`, and `backgrounds/`.
+
+### New components
+
+- `BarChart` — vertical bars with optional yellow accent series
+- `AreaChart` — gradient area/line chart with grid lines
+- `Donut` — donut chart with segment legend
+- `Sparkline` — compact inline trend line
+- `HeroBlock` — landing hero on noir glow (`intense` uses `NoirGlowBackground`)
+- `FeatureCard` — icon chip + title + description
+- `CTABand` — closing CTA with optional accent bar
+
+### Docs
+
+- Charts and marketing import from `@tollerud/ui` (no duplicate `charts.jsx` / `marketing.jsx`)
+- `docs-app/components/` taxonomy: routable `pages/page-*.jsx`, `kit/`, `blocks/rich-datatable.jsx`, `backgrounds/grain-gl.jsx`
+
+### Migration
+
+Nothing breaking. Import charts and blocks from `@tollerud/ui` as named exports.
+
 ## 1.3.0 — 2026-06-09 — Tailwind v4 as default CSS entry
 
 `@tollerud/ui/globals.css` is now the Tailwind v4 bundle (tokens + component layers + `@import "tailwindcss"`). v3 projects move to `@tollerud/ui/globals-v3.css`.

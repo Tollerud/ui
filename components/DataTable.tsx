@@ -103,7 +103,7 @@ function DataTableInner<T extends Record<string, unknown>>({
   skeletonRows = 5,
   forwardedRef,
 }: DataTableInnerProps<T>) {
-  const tableData = rows ?? data ?? []
+  const tableData = useMemo(() => rows ?? data ?? [], [rows, data])
 
   const isRich =
     searchable ||
