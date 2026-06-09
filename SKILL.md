@@ -458,7 +458,7 @@ The monogram must always sit left of the project name with `gap-2`. Never show t
 </div>
 ```
 
-**Monogram** — `color?: 'yellow' | 'black' | 'white'` (default `yellow`), `size?: number`, `title?: string` (default `'Tollerud'`). Brand avatars: `@tollerud/ui/tollerud-avatar.svg`, `tollerud-avatar-full.svg` (+ `.png` variants).
+**Monogram** — `color?: 'yellow' | 'black' | 'white'` (default `yellow`), `size?: number`, `title?: string` (default `'Tollerud'`). Brand avatars: `@tollerud/ui/brand/tollerud-avatar.svg`, `brand/tollerud-avatar-full.svg` (+ `.png` variants).
 Monogram sizing: top bar/sidebar expanded → `h-5`, collapsed → `h-6`, footer → `h-4` (handled automatically by `<Footer />`).
 
 ---

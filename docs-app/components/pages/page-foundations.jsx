@@ -412,21 +412,21 @@ container: (p) => (
       <Section title="Tia" desc="Tia — Tollerud Infrastructure Agent — is the brand mascot. Cel-shaded monochrome gakuran, amber eyes, gold buttons. A brand signature, not a UI icon. Use sparingly on landing pages, about sections, agent-running moments and loading states.">
         <div className="ds-grid-2" style={{ alignItems: 'start' }}>
           <div className="tollerud-card ds-themed" style={{ padding: 0, overflow: 'hidden' }}>
-            <div className="ds-panel__head"><span className="ds-panel__title">Portrait</span><span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)' }}>tollerud-avatar.svg</span></div>
+            <div className="ds-panel__head"><span className="ds-panel__title">Portrait</span><span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)' }}>brand/tollerud-avatar.svg</span></div>
             <div style={{ padding: 24, display: 'flex', justifyContent: 'center', background: 'var(--tollerud-black)' }}>
               <TiaPortrait width={160} alt="Tia portrait" />
             </div>
             <div style={{ padding: '14px 18px', fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55, borderTop: '1px solid var(--border)' }}>
-              Waist-up wave — the default avatar for nav badges, chat bubbles, and compact brand moments. PNG variant (<code className="ds-mono" style={{ fontSize: 12 }}>tollerud-avatar.png</code>) ships for hero-scale renders with drop shadow.
+              Waist-up wave — the default avatar for nav badges, chat bubbles, and compact brand moments. PNG variant (<code className="ds-mono" style={{ fontSize: 12 }}>brand/tollerud-avatar.png</code>) ships for hero-scale renders with drop shadow.
             </div>
           </div>
           <div className="tollerud-card ds-themed" style={{ padding: 0, overflow: 'hidden' }}>
-            <div className="ds-panel__head"><span className="ds-panel__title">Full figure</span><span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)' }}>tollerud-avatar-full.svg · .png</span></div>
+            <div className="ds-panel__head"><span className="ds-panel__title">Full figure</span><span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)' }}>brand/tollerud-avatar-full.svg · .png</span></div>
             <div style={{ padding: '16px 24px', display: 'flex', justifyContent: 'center', background: 'var(--tollerud-black)', maxHeight: 420, overflow: 'hidden' }}>
               <TollerudAvatarFull height={380} alt="Tia full figure" />
             </div>
             <div style={{ padding: '14px 18px', fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55, borderTop: '1px solid var(--border)' }}>
-              Head-to-toe illustration for hero sections, empty states, and onboarding. PNG variant (<code className="ds-mono" style={{ fontSize: 12 }}>tollerud-avatar-full.png</code>) ships for hero-scale renders with drop shadow.
+              Head-to-toe illustration for hero sections, empty states, and onboarding. PNG variant (<code className="ds-mono" style={{ fontSize: 12 }}>brand/tollerud-avatar-full.png</code>) ships for hero-scale renders with drop shadow.
             </div>
           </div>
         </div>

@@ -293,7 +293,7 @@ Severity scale: `critical` · `high` · `medium` · `low` · `info`
 The monogram must always appear left of the project name with `gap-2`. Never show the name without the monogram or the monogram alone in a nav context.
 
 ```tsx
-import logo from '@tollerud/ui/tollerud-logo.svg'
+import logo from '@tollerud/ui/brand/tollerud-logo.svg'
 
 // Top bar
 <nav className="tollerud-glass fixed top-0 inset-x-0 z-50 h-14 flex items-center px-6 gap-6">

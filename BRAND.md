@@ -2,10 +2,10 @@
 
 ## Monogram
 
-The Tollerud monogram (`tollerud-logo.svg`) is the primary brand mark. It is always yellow (`#FFFF00`) on dark backgrounds — never recolored, never outlined, never placed on a light surface without explicit approval.
+The Tollerud monogram (`brand/tollerud-logo.svg`) is the primary brand mark. It is always yellow (`#FFFF00`) on dark backgrounds — never recolored, never outlined, never placed on a light surface without explicit approval.
 
 ```tsx
-import logo from '@tollerud/ui/tollerud-logo.svg'
+import logo from '@tollerud/ui/brand/tollerud-logo.svg'
 ```
 
 ### Rule: monogram always left of the project name
@@ -42,7 +42,7 @@ Whenever a project name or wordmark appears in a navigation context, the monogra
 ### Top bar (fixed, full-width)
 
 ```tsx
-import logo from '@tollerud/ui/tollerud-logo.svg'
+import logo from '@tollerud/ui/brand/tollerud-logo.svg'
 
 <nav className="tollerud-glass fixed top-0 inset-x-0 z-50 h-14 flex items-center px-6 gap-6">
   {/* Lockup — always far left */}
@@ -124,7 +124,7 @@ When the sidebar collapses to icon width, hide the project name and increase the
 ```tsx
 'use client'
 import { useState } from 'react'
-import logo from '@tollerud/ui/tollerud-logo.svg'
+import logo from '@tollerud/ui/brand/tollerud-logo.svg'
 
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)

@@ -141,7 +141,7 @@ Include `tokens.css` or `globals.css` for CSS custom properties and utility clas
 
 ### Brand Mascot
 
-The design system includes `tollerud-avatar.svg` — a full cel-shaded monochrome illustration of Tia in her black gakuran, available in `design-system/` for use in headers, landing pages, branding, or anywhere the Tia identity appears.
+The design system ships brand assets under `brand/` — import via `@tollerud/ui/brand/tollerud-avatar.svg` (and `.png` / full-figure variants) for headers, landing pages, and agent identity moments. Prefer `<Monogram />` for nav lockups.
 
 ## Palette Summary
 
@@ -240,7 +240,7 @@ design-system/
 ├── globals-v4.css            # Alias → globals.css
 ├── tokens.css                # (backward compat CSS vars only)
 ├── preview.html              # Visual reference
-├── tollerud-avatar.svg            # Brand mascot
+├── brand/                    # Logo + Tia avatars (npm: @tollerud/ui/brand/*)
 ├── components/
 │   ├── index.ts              # Barrel exports
 │   ├── Button.tsx            # 5 variants, 3 sizes

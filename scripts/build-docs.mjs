@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { execSync } from 'node:child_process'
-import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs'
+import { copyFileSync, existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 const root = join(import.meta.dirname, '..')
@@ -9,24 +9,7 @@ const docsApp = join(root, 'docs-app')
 copyFileSync(join(root, 'CHANGELOG.md'), join(docsApp, 'public/CHANGELOG.md'))
 
 execSync('node scripts/generate-docs-props-json.mjs', { cwd: root, stdio: 'inherit' })
-
-const brandDir = join(docsApp, 'public/brand')
-mkdirSync(brandDir, { recursive: true })
-for (const file of [
-  'tollerud-logo.svg',
-  'tollerud-avatar.svg',
-  'tollerud-avatar.png',
-  'tollerud-avatar-full.svg',
-  'tollerud-avatar-full.png',
-]) {
-  const fromRoot = join(root, file)
-  const fromPublic = join(docsApp, 'public', file)
-  const fromBrand = join(docsApp, 'public/brand', file)
-  const source = existsSync(fromRoot) ? fromRoot : existsSync(fromPublic) ? fromPublic : fromBrand
-  if (existsSync(source)) {
-    copyFileSync(source, join(brandDir, file))
-  }
-}
+execSync('node scripts/sync-brand-assets.mjs', { cwd: root, stdio: 'inherit' })
 
 if (!existsSync(join(root, 'dist/index.js'))) {
   execSync('npm run build', { cwd: root, stdio: 'inherit' })
