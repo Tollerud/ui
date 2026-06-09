@@ -394,6 +394,7 @@ npx tsup                                   # verify the bundle builds
 Edit `package.json` version, then update these to match:
 - `COMPLETENESS_ROADMAP.md` — header line `### npm package (components/*.tsx) — vX.X.X`
 - `registry.json` — top-level `"version"` field
+- `ds/app.jsx` — sidebar brand line `user interface · vX.X.X`
 
 ### 4. Always update these files in the same commit
 
