@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 1.1.5 — 2026-06-09 — Fix Tailwind preset color namespace
+
+### Bug fix
+
+The Tailwind preset now exposes design-system colors under `tollerud.*`, matching the shipped component classes and documentation (`text-tollerud-yellow`, `bg-tollerud-noir-900`, `border-tollerud-border`, etc.).
+
+Previously the preset exposed the same palette under `tia.*`, so consumer projects following the docs could miss generated `tollerud-*` utilities.
+
+### Details
+
+- Renamed the preset color namespace from `tia` to `tollerud`
+- Renamed the default package shadow token from `shadow-tia` to `shadow-tollerud`
+- Added missing documented/component color aliases: `tollerud.accent`, `tollerud.foreground`, `tollerud.black`, `tollerud.white`, `tollerud.noir-950`, and `tollerud.noir-850`
+
+### Migration
+
+Replace any `text-tia-*`, `bg-tia-*`, `border-tia-*`, or `shadow-tia` utilities with their `tollerud` equivalents.
+
 ## 1.1.4 — 2026-06-09 — Fix: Alert tone colors missing in Tailwind v4
 
 ### Bug fix
@@ -111,7 +129,7 @@ dependencies were added.
 **Breaking token changes:**
 - `--tollerud-yellow` is now `#FFFF00` (was `#E8D500`) — the brighter, high-voltage yellow is now the primary accent
 - `--tollerud-yellow-bright` removed — replaced by `--tollerud-yellow-warm: #E8D500` for the warmer secondary yellow
-- Tailwind: `tia.yellow` → `#FFFF00`, `tia.yellow-bright` → renamed to `tia.yellow-warm: #E8D500`
+- Tailwind: `tollerud.yellow` → `#FFFF00`, `tollerud.yellow-bright` → renamed to `tollerud.yellow-warm: #E8D500`
 - All glow `rgba` values updated from `rgba(232,213,0,...)` to `rgba(255,255,0,...)`
 - Semantic tokens `--primary`, `--ring`, `--chart-1`, `--border-accent` updated to `#FFFF00`
 

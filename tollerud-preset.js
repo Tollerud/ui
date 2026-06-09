@@ -13,56 +13,61 @@
  * Or merge manually into an existing config.
  */
 
+const tollerudColors = {
+  // Brand
+  yellow:        '#FFFF00',
+  'yellow-warm': '#E8D500',
+  acid:          '#FFFF00',
+  accent:        '#FFFF00',
+  'yellow-dim':  '#B8A800',
+  amber:         '#FFB800',
+  'amber-glow':  '#FF8C00',
+
+  // Noir scale
+  black:         '#0A0A0A',
+  'noir-black':  '#0A0A0A',
+  'noir-950':    '#0A0A0A',
+  'noir-900':    '#121212',
+  'noir-850':    '#161616',
+  'noir-800':    '#1A1A1A',
+  'noir-700':    '#252525',
+  'noir-600':    '#333333',
+  'noir-500':    '#4A4A4A',
+  'noir-400':    '#666666',
+  'noir-300':    '#888888',
+  'noir-200':    '#AAAAAA',
+  'noir-100':    '#CCCCCC',
+  'noir-50':     '#E5E5E5',
+  'noir-white':  '#F5F5F5',
+  white:         '#F5F5F5',
+
+  // Surfaces
+  surface:       '#0A0A0A',
+  'surface-raised': '#121212',
+  'surface-overlay': '#1A1A1A',
+  'surface-hover':   '#252525',
+
+  // Text
+  foreground:       '#F5F5F5',
+  'text-primary':   '#F5F5F5',
+  'text-secondary': '#AAAAAA',
+  'text-muted':     '#666666',
+  'text-inverse':   '#0A0A0A',
+
+  // Borders
+  border:        '#333333',
+  'border-subtle': '#252525',
+  'border-accent': '#FFFF00',
+
+  // States
+  success:       '#22C55E',
+  warning:       '#E8D500',
+  error:         '#EF4444',
+  info:          '#3B82F6',
+}
+
 const palette = {
-  tia: {
-    // Brand
-    yellow:        '#FFFF00',
-    'yellow-warm': '#E8D500',
-    acid:          '#FFFF00',
-    'yellow-dim':  '#B8A800',
-    amber:         '#FFB800',
-    'amber-glow':  '#FF8C00',
-
-    // Noir scale
-    'noir-black':  '#0A0A0A',
-    'noir-900':    '#121212',
-    'noir-800':    '#1A1A1A',
-    'noir-700':    '#252525',
-    'noir-600':    '#333333',
-    'noir-500':    '#4A4A4A',
-    'noir-400':    '#666666',
-    'noir-300':    '#888888',
-    'noir-200':    '#AAAAAA',
-    'noir-100':    '#CCCCCC',
-    'noir-50':     '#E5E5E5',
-    'noir-white':  '#F5F5F5',
-
-    // Surfaces
-    surface:       '#0A0A0A',
-    'surface-raised': '#121212',
-    'surface-overlay': '#1A1A1A',
-    'surface-hover':   '#252525',
-
-    // Text
-    'text-primary':   '#F5F5F5',
-    'text-secondary': '#AAAAAA',
-    'text-muted':     '#666666',
-    'text-inverse':   '#0A0A0A',
-
-    // Borders
-    border:        '#333333',
-    'border-subtle': '#252525',
-    'border-accent': '#FFFF00',
-
-    // States
-    success:       '#22C55E',
-    warning:       '#E8D500',
-    error:         '#EF4444',
-    info:          '#3B82F6',
-
-    // Shadows
-    glow:          '0 0 15px rgba(255,255,0,0.3), 0 0 30px rgba(255,255,0,0.1)',
-  },
+  tollerud: tollerudColors,
 }
 
 /** @type {import('tailwindcss').Config} */
@@ -118,7 +123,7 @@ module.exports = {
       // ─── Shadows ───
       boxShadow: {
         'tollerud-sm':  '0 1px 2px 0 rgba(0,0,0,0.4)',
-        'tia':     '0 1px 3px 0 rgba(0,0,0,0.5), 0 1px 2px -1px rgba(0,0,0,0.3)',
+        'tollerud':     '0 1px 3px 0 rgba(0,0,0,0.5), 0 1px 2px -1px rgba(0,0,0,0.3)',
         'tollerud-md':  '0 4px 6px -1px rgba(0,0,0,0.5), 0 2px 4px -2px rgba(0,0,0,0.3)',
         'tollerud-lg':  '0 10px 15px -3px rgba(0,0,0,0.5), 0 4px 6px -4px rgba(0,0,0,0.3)',
         'tollerud-glow':'0 0 15px rgba(255,255,0,0.3), 0 0 30px rgba(255,255,0,0.1)',
