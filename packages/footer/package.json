@@ -1,0 +1,48 @@
+{
+  "name": "@tollerud/footer",
+  "version": "3.1.1",
+  "description": "Tollerud branded footer — synced from @tollerud/ui Footer export",
+  "private": false,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tollerud/ui.git",
+    "directory": "packages/footer"
+  },
+  "homepage": "https://design.tollerud.dev/",
+  "license": "MIT",
+  "author": "Mathias Tollerud <mathias.tollerud@gmail.com>",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.0.0"
+  },
+  "devDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.0"
+  }
+}

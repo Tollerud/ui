@@ -23,3 +23,11 @@ examples/consumer/out/
 tollerud-ui-*.tgz
 examples/consumer/node_modules
 examples/consumer/dist
+registry-dist/
+scripts/registry-build.json
+examples/registry-consumer/node_modules
+examples/registry-consumer/.next
+examples/registry-consumer/out
+examples/registry-consumer/components
+examples/registry-consumer/lib
+packages/footer/dist

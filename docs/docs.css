@@ -5,6 +5,33 @@
    ═══════════════════════════════════════════════════════════════ */
 
 /* ─────────────────────────────────────────────────────────────
+   Docs-only tollerud Tailwind bridge — dark defaults for utility
+   classes that reference var(--tollerud-*). Light remaps follow.
+   ───────────────────────────────────────────────────────────── */
+:root,
+html[data-theme="dark"] {
+  --tollerud-surface:           #0A0A0A;
+  --tollerud-surface-raised:    #121212;
+  --tollerud-surface-overlay:   #1A1A1A;
+  --tollerud-surface-hover:     #252525;
+  --tollerud-border:            #333333;
+  --tollerud-border-subtle:     #252525;
+  --tollerud-border-accent:     #FFFF00;
+  --tollerud-text-primary:      #F5F5F5;
+  --tollerud-text-secondary:    #AAAAAA;
+  --tollerud-text-muted:        #666666;
+  --tollerud-text-inverse:      #0A0A0A;
+  --tollerud-foreground:        #F5F5F5;
+  --tollerud-noir-950:          #0A0A0A;
+  --tollerud-noir-850:          #161616;
+  --tollerud-noir-black:        #0A0A0A;
+  --tollerud-success:           #22C55E;
+  --tollerud-warning:           #E8D500;
+  --tollerud-error:             #EF4444;
+  --tollerud-info:              #3B82F6;
+}
+
+/* ─────────────────────────────────────────────────────────────
    LIGHT THEME — a real, contrast-checked light palette grounded
    in the noir scale. Yellow stays a fill; accent *text* uses a
    deep gold (#8A7A00) so it reads on white. Code/terminal stay
@@ -43,11 +70,27 @@ html[data-theme="light"] {
   --surface-hover:      #F0EFEA;
 
   /* Plain .tollerud-* tokens + Tailwind tollerud-* utilities */
-  --tollerud-surface-raised:  #FFFFFF;
-  --tollerud-surface-hover:   #F0EFEA;
-  --tollerud-border:          #E4E2DA;
-  --tollerud-text-primary:    #15140F;
-  --tollerud-text-secondary:  #56544A;
+  --tollerud-surface:           #FAFAF7;
+  --tollerud-surface-raised:    #FFFFFF;
+  --tollerud-surface-overlay:   #FFFFFF;
+  --tollerud-surface-hover:     #F0EFEA;
+  --tollerud-border:            #E4E2DA;
+  --tollerud-border-subtle:     #ECEAE2;
+  --tollerud-border-accent:     #C9B400;
+  --tollerud-text-primary:      #15140F;
+  --tollerud-text-secondary:    #56544A;
+  --tollerud-text-muted:        #8B897C;
+  --tollerud-text-inverse:      #FAFAF7;
+  --tollerud-foreground:        #15140F;
+  --tollerud-white:             #FAFAF7;
+  --tollerud-black:             #15140F;
+  --tollerud-noir-black:        #15140F;
+  --tollerud-noir-950:          #FBFAF6;
+  --tollerud-noir-850:          #F4F2EC;
+  --tollerud-success:           #16A34A;
+  --tollerud-warning:           #B59A00;
+  --tollerud-error:             #DC2626;
+  --tollerud-info:              #2563EB;
 
   --text-primary:       #15140F;
   --text-secondary:     #56544A;
@@ -157,6 +200,18 @@ html[data-theme="light"] .tollerud-slider::-webkit-slider-thumb { background: va
 html[data-theme="light"] .tollerud-slider::-moz-range-thumb { background: var(--accent-text); }
 
 /* Log viewer source column stays on dark bg, no override needed */
+
+/* npm component previews — yellow text → deep gold on light surfaces */
+html[data-theme="light"] .ds-demo :is(.text-tollerud-yellow, [class*="text-tollerud-yellow"]) {
+  color: var(--accent-text);
+}
+/* Keep yellow fills readable (primary button, active pagination, etc.) */
+html[data-theme="light"] .ds-demo :is(
+  .bg-tollerud-yellow,
+  [class*="bg-tollerud-yellow"]
+) {
+  color: var(--tollerud-black);
+}
 
 /* ─────────────────────────────────────────────────────────────
    Base + smooth theme transition

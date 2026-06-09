@@ -94,7 +94,7 @@ Last updated: 2026-06-09
 ### Other
 - ✅ Scroll-reveal disableable via `window.TOLLERUD_NO_REVEAL = true` or `<html data-no-reveal>`
 - ✅ Text selection — yellow highlight, dark text on both themes
-- ✅ All icons are hand-written SVGs (no third-party license)
+- ✅ Docs icons use lucide-react (custom GitHub mark retained)
 
 ---
 
@@ -108,12 +108,12 @@ Last updated: 2026-06-09
 - [x] Replace docs `kit/icons.jsx` with Lucide in demos
 
 ### Docs site
-- [ ] Light-mode gallery parity for npm components (package stays dark-only; docs may preview tokens)
+- [x] Light-mode gallery parity for npm components (package stays dark-only; docs may preview tokens)
 - [x] More Playwright coverage (forms page, command palette, theme toggle)
 
 ### Ecosystem
-- [ ] `@tollerud/footer` version lockstep automation with `@tollerud/ui` Footer export
-- [ ] Registry CLI (`npx shadcn@latest add`) smoke test in CI consumer example
+- [x] `@tollerud/footer` version lockstep automation with `@tollerud/ui` Footer export
+- [x] Registry CLI (`npx shadcn@latest add`) smoke test in CI consumer example
 
 ---
 

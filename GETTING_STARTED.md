@@ -130,6 +130,8 @@ See [COMPONENTS.md](COMPONENTS.md) for the full prop reference.
 
 ## shadcn / registry
 
+CI validates registry installs with `npm run test:registry-cli`, which builds `registry-dist/` (shadcn v3 item JSON with embedded sources) and runs `npx shadcn@3.2.1 add` against the packed tarball consumer.
+
 Install individual components via the registry:
 
 ```bash

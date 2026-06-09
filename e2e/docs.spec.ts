@@ -61,6 +61,19 @@ test.describe('docs site', () => {
     await expect(page.getByPlaceholder('e.g. emma.tollerud.no').first()).toBeVisible()
   })
 
+  test('light mode gallery uses light card surfaces', async ({ page }) => {
+    await page.goto('/components/card/')
+    await page.getByRole('button', { name: 'Switch to light' }).click()
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+
+    const cardBg = await page.locator('#card .ds-demo__stage').first().evaluate((el) => {
+      const surface = el.querySelector('[class*="bg-tollerud-surface"], [class*="bg-tollerud-noir"]')
+      return surface ? getComputedStyle(surface).backgroundColor : ''
+    })
+
+    expect(cardBg).toMatch(/rgb\(25[0-5], 25[0-5], 25[0-5]\)|rgb\(24[0-9], 24[0-9], 24[0-9]\)|rgb\(25[0-5], 25[0-5], 24[0-9]\)/)
+  })
+
   test('theme toggle switches data-theme on html', async ({ page }) => {
     await page.goto('/')
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')

@@ -243,7 +243,7 @@ function PageComponents({ go }) {
           <div style={{ width: '100%', maxWidth: 560 }}>
             <Accordion items={[
               { q: 'How do I install the system?', a: 'npm install @tollerud/ui tailwindcss@4, then @import globals.css and @source the package dist in app/globals.css.' },
-              { q: 'Does it support light mode?', a: 'Yes — the entire system flips on a single data-theme attribute. Try the toggle in the top bar.' },
+              { q: 'Does it support light mode?', a: 'The docs site previews light tokens via data-theme — npm components stay dark-first in production, but gallery demos remap surfaces and accent text for contrast. Code blocks and log viewers stay dark in both themes.' },
               { q: 'Can I use it without React?', a: 'Yes. Every component has a matching .tollerud-* CSS class in globals.css for plain HTML.' },
             ]}/>
           </div>
