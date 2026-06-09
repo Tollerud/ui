@@ -13,7 +13,7 @@ export interface CodeBlockProps extends HTMLAttributes<HTMLPreElement> {
 }
 
 const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
-  ({ className, children, code, promptPrefix, showCopy = true, ...props }, ref) => {
+  ({ className, children, code, promptPrefix: _promptPrefix, showCopy = true, ...props }, ref) => {
     const [copied, setCopied] = useState(false)
 
     const content = code ? (

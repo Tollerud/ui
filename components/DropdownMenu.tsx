@@ -1,7 +1,7 @@
 'use client'
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import { type HTMLAttributes, forwardRef, type ReactNode } from 'react'
+import { forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── DropdownMenu ──────────────────── */

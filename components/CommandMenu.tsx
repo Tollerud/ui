@@ -191,10 +191,11 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
 
       {/* Command Menu */}
       <div
+        ref={ref}
         className={cn('tollerud-cmd', className)}
-        role="listbox"
+        role="dialog"
+        aria-modal="true"
         aria-label="Command palette"
-        onKeyDown={handleKeyDown}
       >
         {/* Search Input */}
         <div className="tollerud-cmd__header">
@@ -223,13 +224,14 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
               setQuery(e.target.value)
               setSelectedIndex(0)
             }}
+            onKeyDown={handleKeyDown}
             autoComplete="off"
             spellCheck={false}
           />
         </div>
 
         {/* Results */}
-        <div ref={listRef} className="tollerud-cmd__list">
+        <div ref={listRef} className="tollerud-cmd__list" role="listbox" tabIndex={-1}>
           {filteredGroups.length === 0 && (
             <div className="tollerud-cmd__empty">{emptyMessage}</div>
           )}

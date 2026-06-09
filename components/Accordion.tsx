@@ -92,7 +92,7 @@ function useAccordionItemContext(component: string) {
   return ctx
 }
 
-export interface AccordionTriggerProps extends HTMLAttributes<HTMLButtonElement> {}
+export type AccordionTriggerProps = HTMLAttributes<HTMLButtonElement>
 
 const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
   ({ className, children, ...props }, ref) => {
@@ -125,7 +125,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
 )
 AccordionTrigger.displayName = 'AccordionTrigger'
 
-export interface AccordionContentProps extends HTMLAttributes<HTMLDivElement> {}
+export type AccordionContentProps = HTMLAttributes<HTMLDivElement>
 
 const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
   ({ className, children, ...props }, ref) => {

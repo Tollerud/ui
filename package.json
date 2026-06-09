@@ -13,6 +13,10 @@
     "url": "https://github.com/Tollerud/ui/issues"
   },
   "license": "MIT",
+  "author": "Mathias Tollerud <mathias.tollerud@gmail.com>",
+  "engines": {
+    "node": ">=18"
+  },
   "sideEffects": [
     "*.css"
   ],
@@ -53,7 +57,10 @@
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit -p tsconfig.build.json",
-    "prepublishOnly": "npm run typecheck && npm run build",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run typecheck && npm run lint && npm run test && npm run build",
     "preview": "open preview.html"
   },
   "peerDependencies": {
@@ -82,14 +89,26 @@
     "sonner": "^2.0.7"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "clsx": "^2.1.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.6.0",
+    "jsdom": "^29.1.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "tailwind-merge": "^3.6.0",
     "tsup": "^8.4.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "^4.1.8"
   },
   "keywords": [
     "tollerud",

@@ -38,7 +38,7 @@ const diffPrefix = {
 }
 
 const ActionDiff = forwardRef<HTMLDivElement, ActionDiffProps>(
-  ({ className, lines, label, view = 'unified', loading, ...props }, ref) => {
+  ({ className, lines, label, view: _view = 'unified', loading, ...props }, ref) => {
     const [showContext, setShowContext] = useState(true)
 
     const stats = useMemo(() => {

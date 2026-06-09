@@ -20,6 +20,10 @@ jobs:
 
       - run: npm run typecheck
 
+      - run: npm run lint
+
+      - run: npm run test
+
       - run: npm run build
 
       - name: Verify docs site asset paths

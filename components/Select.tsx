@@ -94,7 +94,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     }
 
     return (
-      <div className="flex flex-col gap-1.5" ref={ref}>
+      <div className="flex flex-col gap-1.5" ref={ref} {...props}>
         {label && (
           <label className="text-xs font-medium text-tollerud-text-muted">
             {label}

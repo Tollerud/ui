@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 
 // ── Empty ──
 
-export interface EmptyProps extends HTMLAttributes<HTMLDivElement> {}
+export type EmptyProps = HTMLAttributes<HTMLDivElement>
 
 const Empty = forwardRef<HTMLDivElement, EmptyProps>(
   ({ className, ...props }, ref) => {
@@ -60,7 +60,7 @@ EmptyIcon.displayName = 'EmptyIcon'
 // ── EmptyTitle ──
 
 const EmptyTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => {
+  ({ className, children, ...props }, ref) => {
     return (
       <h3
         ref={ref}
@@ -69,7 +69,9 @@ const EmptyTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElem
           className
         )}
         {...props}
-      />
+      >
+        {children}
+      </h3>
     )
   }
 )

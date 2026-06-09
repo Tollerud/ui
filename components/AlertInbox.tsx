@@ -1,6 +1,6 @@
 'use client'
 
-import { type HTMLAttributes, forwardRef, useState } from 'react'
+import { type HTMLAttributes, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 import { IncidentCard, type IncidentSeverity } from './IncidentCard'
 

@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import type { HostCardProps } from './HostCard'
 import type { StatCardProps } from './StatCard'
 import type { ServiceHealthCardProps } from './ServiceHealthCard'
-import type { IncidentCardProps, IncidentSeverity } from './IncidentCard'
+import type { IncidentSeverity } from './IncidentCard'
 import type { BackupJob } from './BackupStatusPanel'
 
 /* ──────────────────── Bento Grid Dashboard Template ──────────────────── */

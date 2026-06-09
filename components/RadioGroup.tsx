@@ -14,7 +14,6 @@ export interface RadioGroupProps {
 
 const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
   ({ label, error, children, className }, ref) => {
-    const autoId = useId()
     return (
       <fieldset ref={ref} className={cn('flex flex-col gap-1', className)}>
         {label && (
