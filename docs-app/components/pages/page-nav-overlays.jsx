@@ -10,6 +10,7 @@ import { adaptCommandGroups, docsCommandFilter } from '@/lib/adapt-command-group
 function PageNavOverlays() {
   const toast = useToast();
   const [dialog, setDialog] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [cmd, setCmd] = useState(false);
 
   const cmdGroups = [
@@ -98,13 +99,36 @@ function PageNavOverlays() {
         </Demo>
       </Section>
 
-      <Section title="Toasts" desc="Transient confirmations, bottom-right. Four tones, auto-dismiss, stackable.">
+      <Section title="Toasts" desc="Transient confirmations via useToast() or sonner. Mount <Toaster /> once near the app root.">
         <Demo name="toasts" variant="center" code={`const toast = useToast();
-<Button onClick={() => toast({ tone: 'success', title: 'emma — deployment complete' })}>Success</Button>`}>
+toast({ tone: 'success', title: 'emma — deployment complete' });
+
+// app/layout.tsx
+import { Toaster } from '@tollerud/ui'
+<Toaster />`}>
           <Button variant="secondary" onClick={() => toast({ tone: 'success', title: 'emma — deployment complete', message: 'hermes v2.0 is live' })}>Success</Button>
           <Button variant="secondary" onClick={() => toast({ tone: 'error', title: 'Port 8080 is in use', message: 'Pick another port and retry' })}>Error</Button>
-          <Button variant="secondary" onClick={() => toast({ tone: 'info', title: 'Backup scheduled for 03:00' })}>Info</Button>
-          <Button variant="secondary" onClick={() => toast({ tone: 'accent', title: 'New version available', message: 'v1.1 — see changelog' })}>Accent</Button>
+          <Button variant="secondary" onClick={() => toast.success('emma — deploy complete')}>Sonner</Button>
+          <Toaster />
+        </Demo>
+      </Section>
+
+      <Section title="Drawer / Sheet" desc="Side panel for detail views and slide-over forms. Opens from the right or left; closes on Esc or overlay click.">
+        <Demo name="drawer" variant="center" code={`<Drawer open={open} onClose={() => setOpen(false)} title="Host details"
+  description="emma.tollerud.no"
+  footer={<><Button variant="ghost" size="sm">Close</Button><Button variant="primary" size="sm">Connect</Button></>}>
+  …content…
+</Drawer>`}>
+          <Button variant="primary" onClick={() => setDrawerOpen(true)}>Open drawer</Button>
+          <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Host details" description="emma.tollerud.no"
+            footer={<><Button variant="ghost" size="sm" onClick={() => setDrawerOpen(false)}>Close</Button><Button variant="primary" size="sm" onClick={() => { setDrawerOpen(false); toast({ tone: 'info', title: 'Connecting to emma…' }); }}>Connect (SSH)</Button></>}>
+            <div className="ds-col" style={{ gap: 14 }}>
+              <Meter label="CPU" value={23} valueLabel="23%"/>
+              <Meter label="Memory" value={62} valueLabel="62%"/>
+              <Meter label="Disk" value={45} valueLabel="45%"/>
+              <FormRow label="Auto-restart" hint="Restart on failure."><Switch defaultChecked/></FormRow>
+            </div>
+          </Drawer>
         </Demo>
       </Section>
 

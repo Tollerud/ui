@@ -50,7 +50,7 @@ function PagePatterns() {
 
   return (
     <div>
-      <PageHeader icon="app" eyebrow="Patterns" title="Mission Control"
+      <PageHeader icon="app" eyebrow="Examples · mission control" title="Mission Control"
         lede="A live dashboard assembled entirely from Tollerud components — stat cards, host cards, charts, an alert inbox and an approval flow. Metrics update in real time. Press ⌘K."/>
 
       {/* toolbar */}

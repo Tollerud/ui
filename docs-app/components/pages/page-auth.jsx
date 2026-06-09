@@ -26,7 +26,7 @@ function PageAuth() {
 
   return (
     <div>
-      <PageHeader icon="shield" eyebrow="Build · authentication" title="Sign in"
+      <PageHeader icon="shield" eyebrow="Examples · authentication" title="Sign in"
         lede="An authentication screen pairing the live tollerud.no grain-gradient atmosphere with a validated form, OAuth options and a loading state — the system's most cinematic surface."/>
 
       <Section title="Split sign-in" desc="A two-panel layout: brand and terminal on the left over the grain gradient, the form on the right. Collapses to a single column on mobile.">

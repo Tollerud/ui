@@ -256,8 +256,30 @@ function Terminal() {
 function PageConsole() {
   return (
     <div>
-      <PageHeader icon="code" eyebrow="Build · console" title="Logs & Console"
-        lede="The infrastructure surface: a live, filterable log stream and a keyboard-first interactive shell — both assembled from system tokens and theme-aware in light and dark."/>
+      <PageHeader icon="code" eyebrow="Examples · console" title="Logs & Console"
+        lede="LogViewer component plus example surfaces: a live, filterable log stream and a keyboard-first interactive shell."/>
+
+      <Section title="Log viewer" desc="Level-coded logs with optional search, line numbers and follow-tail. Pass an array of { text, level, timestamp, source }.">
+        <Demo name="log-viewer" variant="col" code={`<LogViewer
+  searchable
+  showLineNumbers
+  height={220}
+  lines={[
+    { timestamp: '14:32:01', level: 'info',  source: 'hermes', text: 'Listening on 0.0.0.0:8080' },
+    { timestamp: '14:32:05', level: 'error', source: 'nginx',  text: 'connect() failed (111: Connection refused)' },
+  ]}
+/>`}>
+          <div style={{ width: '100%' }}>
+            <LogViewer searchable showLineNumbers height={220} lines={[
+              { timestamp: '14:32:01', level: 'info',  source: 'systemd',  text: 'Started tollerud-agent.service' },
+              { timestamp: '14:32:02', level: 'info',  source: 'hermes',   text: 'Listening on 0.0.0.0:8080 (4 workers)' },
+              { timestamp: '14:32:04', level: 'warn',  source: 'nginx',    text: 'upstream response time 1.84s exceeds 1.5s budget' },
+              { timestamp: '14:32:05', level: 'error', source: 'nginx',    text: 'connect() failed (111: Connection refused) upstream emma:443' },
+              { timestamp: '14:32:10', level: 'info',  source: 'hermes',   text: 'GET /api/v1/hosts 200 in 23ms' },
+            ]}/>
+          </div>
+        </Demo>
+      </Section>
 
       <Section title="Live log stream"
         desc="Streaming output with per-level filtering, search, follow-tail, line numbers and one-click export. Toggle a level chip to mute it; flip Follow to pause auto-scroll.">

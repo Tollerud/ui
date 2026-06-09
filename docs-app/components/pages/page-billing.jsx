@@ -30,7 +30,7 @@ function PageBilling() {
 
   return (
     <div>
-      <PageHeader icon="card" eyebrow="Build · billing" title="Billing & Pricing"
+      <PageHeader icon="card" eyebrow="Examples · billing" title="Billing & Pricing"
         lede="The commercial surface: a pricing table with a billing-cycle toggle, the current plan with live usage meters, and an invoice history — the invoices dogfood the same <DataTable> component."/>
 
       <Section title="Plans" desc="Three tiers with a monthly / annual toggle. The recommended plan carries the yellow accent; the current plan is marked.">

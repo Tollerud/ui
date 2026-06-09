@@ -34,7 +34,7 @@ function PageOverview({ go }) {
               A high-contrast UI library for tools, dashboards and homelab UIs. Every token, component and pattern — live, themeable, and copy-paste ready.
             </p>
             <div className="ds-row" style={{ gap: 12, marginTop: 28 }}>
-              <button className="tollerud-btn tollerud-btn--terminal tollerud-btn--lg" onClick={() => go('foundations')}>explore_system</button>
+              <button className="tollerud-btn tollerud-btn--terminal tollerud-btn--lg" onClick={() => go('getting-started')}>npm_install</button>
               <button className="tollerud-btn tollerud-btn--secondary tollerud-btn--lg" style={bold ? { color: '#F5F5F5', borderColor: 'rgba(245,245,245,0.2)' } : {}} onClick={() => go('components')}>Components</button>
             </div>
             <div style={{ marginTop: 22, display: 'inline-flex', alignItems: 'center', gap: 9, padding: '9px 13px', borderRadius: 8, background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(245,245,245,0.12)', fontFamily: 'var(--font-mono)', fontSize: 13, maxWidth: '100%' }}>
@@ -96,16 +96,18 @@ function PageOverview({ go }) {
       </Section>
 
       {/* ── Explore ── */}
-      <Section title="Explore the system" desc="Nine areas, each documented with live examples and copy-paste React + Tailwind.">
+      <Section title="Explore the system" desc="Design reference and full-screen examples — each page has live demos and copy-paste React + Tailwind.">
         <div className="ds-grid-3">
           {[
+            { id: 'getting-started', icon: 'code', t: 'Getting started', d: 'Install, Tailwind v4, peers, Server Components.' },
             { id: 'foundations', icon: 'palette', t: 'Foundations', d: 'Color, type, spacing, radius, shadow, motion, voice.' },
-            { id: 'components', icon: 'grid', t: 'Components', d: 'Buttons, cards, badges, status, kbd and more.' },
-            { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, selects, checks, validation, date & combobox.' },
-            { id: 'navoverlays', icon: 'compass', t: 'Navigation & Overlays', d: 'Tabs, breadcrumbs, menus, dialogs, toasts, command.' },
-            { id: 'datablocks', icon: 'chart', t: 'Charts', d: 'Bar, area, donut and sparkline — palette-aware.' },
+            { id: 'components', icon: 'grid', t: 'Components', d: 'Core primitives — button, card, badge, status, layout.' },
+            { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, selects, combobox, form row, validation.' },
+            { id: 'navigation', icon: 'compass', t: 'Navigation & Overlays', d: 'Breadcrumbs, dialogs, drawer, toasts, command.' },
+            { id: 'charts', icon: 'chart', t: 'Charts', d: 'Bar, area, donut and sparkline — palette-aware.' },
             { id: 'blocks', icon: 'blocks', t: 'Blocks', d: 'Hero, feature grid, pricing and CTA sections.' },
-            { id: 'patterns', icon: 'app', t: 'Patterns', d: 'A real working dashboard built from the system.' },
+            { id: 'mission-control', icon: 'app', t: 'Mission Control', d: 'A working dashboard built from the system.' },
+            { id: 'data-table', icon: 'server', t: 'Data Table', d: 'Rich table with search, bulk actions, pagination.' },
           ].map((s, i) => {
             const I = Icons[s.icon];
             return (
@@ -123,16 +125,11 @@ function PageOverview({ go }) {
       </Section>
 
       {/* ── Install ── */}
-      <Section title="Install" desc="Tailwind v4 + one CSS import. Subpath imports optional.">
-        <CodeSnippet name="terminal" code={`npm install @tollerud/ui clsx tailwind-merge tailwindcss@4
-
-# app/globals.css
-@import '@tollerud/ui/globals.css';
-@source '../node_modules/@tollerud/ui/dist';
-
-# components
-import { Button, Card, Badge, StatusDot } from '@tollerud/ui'
-// or: import { Button } from '@tollerud/ui/button'`}/>
+      <Section title="Install" desc="Full setup lives on Getting started — install command, peers, and Tailwind @source.">
+        <div className="ds-row" style={{ gap: 12 }}>
+          <button className="tollerud-btn tollerud-btn--primary tollerud-btn--md" onClick={() => go('getting-started')}>Getting started</button>
+          <button className="tollerud-btn tollerud-btn--ghost tollerud-btn--md" onClick={() => go('foundations')}>Foundations</button>
+        </div>
       </Section>
     </div>
   );

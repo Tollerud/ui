@@ -28,6 +28,7 @@ function ValidationForm() {
 }
 
 function PageForms() {
+  const [combo, setCombo] = useState('emma');
   const servers = [
     { value: 'emma', label: 'emma.tollerud.no' }, { value: 'miriam', label: 'miriam.tollerud.no' },
     { value: 'pia', label: 'pia.tollerud.no' }, { value: 'iris', label: 'iris.tollerud.no' },
@@ -114,6 +115,50 @@ function PageForms() {
       <Section title="Tag input" desc="Chip-style tag entry. Press Enter to add, Backspace to remove the last tag.">
         <Demo name="tags" variant="col" code={`<TagInput defaultValue={['production', 'docker']} />`}>
           <TagInput defaultValue={['production', 'docker']} className="max-w-[360px]"/>
+        </Demo>
+      </Section>
+
+      <Section title="Combobox" desc="Searchable single-select with keyboard navigation (↑/↓/Enter/Esc) and an empty state.">
+        <Demo name="combobox" variant="col" code={`<Combobox
+  label="Host"
+  value={value}
+  onChange={setValue}
+  options={[{ value: 'emma', label: 'emma.tollerud.no' }, …]}
+/>`}>
+          <div style={{ width: '100%', maxWidth: 320 }}>
+            <Combobox label="Connect to host" value={combo} onChange={setCombo}
+              options={[
+                { value: 'emma', label: 'emma.tollerud.no' },
+                { value: 'pia', label: 'pia.tollerud.no' },
+                { value: 'iris', label: 'iris.tollerud.no' },
+                { value: 'miriam', label: 'miriam.tollerud.no' },
+                { value: 'embla', label: 'embla.tollerud.no' },
+              ]}/>
+          </div>
+        </Demo>
+      </Section>
+
+      <Section title="Password input & spinner" desc="Password field with show/hide toggle, optional label action, and inline loading spinner.">
+        <Demo name="password-input" variant="col" code={`<PasswordInput label="Password" placeholder="••••••••"
+  labelAction={<a href="#">Forgot?</a>} />
+
+<Button variant="primary"><Spinner size={14}/> Signing in…</Button>`}>
+          <div className="ds-col" style={{ width: '100%', maxWidth: 340, gap: 16 }}>
+            <PasswordInput label="Password" placeholder="••••••••" defaultValue="hunter2"
+              labelAction={<a href="#" onClick={e => e.preventDefault()} style={{ fontSize: 12, color: 'var(--accent-text)' }}>Forgot?</a>}/>
+            <Button variant="primary" style={{ alignSelf: 'flex-start' }}><Spinner size={14}/> Signing in…</Button>
+          </div>
+        </Demo>
+      </Section>
+
+      <Section title="Form row" desc="Label + hint on the left, control on the right. Canonical settings-form layout; stacks on narrow viewports.">
+        <Demo name="form-row" variant="col" code={`<FormRow label="Two-factor auth" hint="Require a TOTP code at sign-in.">
+  <Switch defaultChecked />
+</FormRow>`}>
+          <div style={{ width: '100%', maxWidth: 520 }}>
+            <FormRow label="Display name" hint="Shown across the dashboard and in activity logs."><Input defaultValue="Tia"/></FormRow>
+            <FormRow label="Two-factor auth" hint="Require a TOTP code at sign-in."><Switch defaultChecked/></FormRow>
+          </div>
         </Demo>
       </Section>
 

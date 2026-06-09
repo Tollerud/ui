@@ -39,8 +39,43 @@ function PageServers() {
 
   return (
     <div>
-      <PageHeader icon="server" eyebrow="Build · data table" title="Data Table"
+      <PageHeader icon="server" eyebrow="Examples · data table" title="Data Table"
         lede="A complete table pattern: live search, region filter, sortable columns, row selection with a bulk-action bar, status badges, inline load sparklines, per-row menus and pagination — all driven by the reusable <DataTable> component."/>
+
+      <Section title="Simple table" desc="Sortable npm DataTable with column renderers. Pass data, columns, and rowKey.">
+        <Demo name="package-data-table" variant="col" code={`<PackageDataTable
+  columns={[
+    { key: 'hostname', label: 'Host', sortable: true },
+    { key: 'status', label: 'Status', render: (_v, row) => (
+      <Badge variant={row.status === 'online' ? 'success' : 'error'}>{row.status}</Badge>
+    )},
+  ]}
+  data={[
+    { id: 'emma', hostname: 'emma', status: 'online' },
+    { id: 'pia', hostname: 'pia', status: 'offline' },
+  ]}
+/>`}>
+          <div style={{ width: '100%' }}>
+            <PackageDataTable
+              columns={[
+                { key: 'hostname', label: 'Host', sortable: true },
+                {
+                  key: 'status',
+                  label: 'Status',
+                  render: (_v, row) => (
+                    <Badge variant={row.status === 'online' ? 'success' : 'error'}>{row.status}</Badge>
+                  ),
+                },
+              ]}
+              data={[
+                { id: 'emma', hostname: 'emma.tollerud.no', status: 'online' },
+                { id: 'pia', hostname: 'pia.tollerud.no', status: 'offline' },
+                { id: 'iris', hostname: 'iris.tollerud.no', status: 'online' },
+              ]}
+            />
+          </div>
+        </Demo>
+      </Section>
 
       <Section title="Servers" desc="Everything below is the <DataTable> component fed a column config. Sort by any column, select rows for bulk actions, filter by region, search and paginate.">
         <DataTable

@@ -4,15 +4,38 @@ import * as __p from '@/lib/provide-pages'
 const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
 
 /* Tollerud DS — Components gallery. → window.PageComponents */
-function PageComponents() {
+function PageComponents({ go }) {
   const toast = useToast();
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [combo, setCombo] = useState('emma');
   const [density, setDensity] = useState('comfortable');
+  const morePages = [
+    { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, toggles, combobox, form row, validation.' },
+    { id: 'navigation', icon: 'compass', t: 'Navigation & Overlays', d: 'Dialogs, drawer, menus, toasts, command palette.' },
+    { id: 'infra', icon: 'server', t: 'Infrastructure', d: 'Host, incident, approval, and ops cards.' },
+    { id: 'charts', icon: 'chart', t: 'Charts', d: 'Bar, area, donut, sparkline.' },
+    { id: 'blocks', icon: 'blocks', t: 'Blocks', d: 'Hero, pricing, CTA, bento dashboard.' },
+    { id: 'data-table', icon: 'server', t: 'Data Table', d: 'Sortable and rich table patterns.' },
+    { id: 'console', icon: 'code', t: 'Logs & Console', d: 'LogViewer and streaming terminal.' },
+  ];
   return (
     <div>
       <PageHeader icon="grid" eyebrow="Components" title="Components"
-        lede="The core building blocks. Every example is live and theme-aware — hit Code to grab the React + Tailwind."/>
+        lede="Core primitives — button, card, badge, status, layout. Form controls, overlays, data views, and full-screen examples live on their own pages."/>
+
+      <Section title="More components" desc="This page covers primitives only. Everything else has a canonical home.">
+        <div className="ds-grid-3">
+          {morePages.map((s) => {
+            const I = Icons[s.icon];
+            return (
+              <button key={s.id} type="button" className="tollerud-card ds-themed ds-lift" onClick={() => go?.(s.id)}
+                style={{ textAlign: 'left', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <span style={{ color: 'var(--tollerud-yellow)' }}><I size={18}/></span>
+                <div style={{ fontWeight: 600, fontSize: 14.5, color: 'var(--foreground)' }}>{s.t}</div>
+                <p style={{ fontSize: 12.5, lineHeight: 1.5, color: 'var(--text-secondary)', margin: 0 }}>{s.d}</p>
+              </button>
+            );
+          })}
+        </div>
+      </Section>
 
       <Section title="Button" desc="Five variants, three sizes. Supports icons, loading spinners, disabled state, and icon-only. Primary is yellow; terminal carries the ❯ for technical actions.">
         <Demo name="buttons" variant="center" code={`<Button variant="primary">Deploy</Button>
@@ -299,93 +322,6 @@ function PageComponents() {
         </Demo>
       </Section>
 
-      <Section title="Password input & spinner" desc="A password field with a show/hide toggle and an optional label action, plus the inline loading spinner.">
-        <Demo name="password-input" variant="col" code={`<PasswordInput label="Password" placeholder="••••••••"
-  labelAction={<a href="#">Forgot?</a>} />
-
-<Button variant="primary"><Spinner size={14}/> Signing in…</Button>`}>
-          <div className="ds-col" style={{ width: '100%', maxWidth: 340, gap: 16 }}>
-            <PasswordInput label="Password" placeholder="••••••••" defaultValue="hunter2"
-              labelAction={<a href="#" onClick={e => e.preventDefault()} style={{ fontSize: 12, color: 'var(--accent-text)' }}>Forgot?</a>}/>
-            <Button variant="primary" style={{ alignSelf: 'flex-start' }}><Spinner size={14}/> Signing in…</Button>
-          </div>
-        </Demo>
-      </Section>
-
-      <Section title="Form row" desc="Label + hint on the left, control on the right. The canonical settings-form layout; stacks vertically on narrow viewports.">
-        <Demo name="form-row" variant="col" code={`<FormRow label="Two-factor auth" hint="Require a TOTP code at sign-in.">
-  <Switch defaultChecked />
-</FormRow>`}>
-          <div style={{ width: '100%', maxWidth: 520 }}>
-            <FormRow label="Display name" hint="Shown across the dashboard and in activity logs."><Input defaultValue="Tia"/></FormRow>
-            <FormRow label="Two-factor auth" hint="Require a TOTP code at sign-in."><Switch defaultChecked/></FormRow>
-          </div>
-        </Demo>
-      </Section>
-
-      <Section title="Pricing card" desc="A single plan tier with optional ribbon, feature list and CTA. Powers the Billing page and the marketing pricing block.">
-        <Demo name="pricing-card" variant="col" code={`<PricingCard name="Pro" tagline="For a growing fleet"
-  price={12} priceNote="billed monthly" recommended
-  features={['10 hosts', 'Approvals & rollback', 'Priority support']}
-  cta="Upgrade to Pro" />`}>
-          <div className="ds-price-grid" style={{ width: '100%' }}>
-            <PricingCard name="Homelab" price="Free" priceNote="Forever" features={['1 host', '5 containers', 'Community support']} cta="Current plan" ctaVariant="secondary" ctaDisabled/>
-            <PricingCard name="Pro" tagline="For a growing fleet" price={12} priceNote="billed monthly" recommended features={['10 hosts', 'Approvals & rollback', 'Priority support']} cta="Upgrade to Pro"/>
-            <PricingCard name="Fleet" price={49} priceNote="billed monthly" features={['Unlimited hosts', 'SSO & SCIM', 'Audit log']} cta="Contact sales"/>
-          </div>
-        </Demo>
-      </Section>
-
-      <Section title="Toast" desc="Transient feedback via the useToast() hook. Tones: success, error, info, accent. Auto-dismisses; stacks bottom-right.">
-        <Demo name="toast" variant="center" code={`const toast = useToast();
-toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' });`}>
-          <div className="ds-row" style={{ gap: 10 }}>
-            <Button variant="secondary" size="sm" onClick={() => toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' })}>Success</Button>
-            <Button variant="secondary" size="sm" onClick={() => toast({ tone: 'error', title: 'Build failed', message: 'exit code 1' })}>Error</Button>
-            <Button variant="secondary" size="sm" onClick={() => toast({ tone: 'accent', title: 'Heads up' })}>Accent</Button>
-          </div>
-        </Demo>
-      </Section>
-
-      <Section title="Drawer / Sheet" desc="A side panel for detail views and slide-over forms. Opens from the right or left, closes on Esc or overlay click.">
-        <Demo name="drawer" variant="center" code={`<Drawer open={open} onClose={() => setOpen(false)} title="Host details"
-  description="emma.tollerud.no"
-  footer={<><Button variant="ghost" size="sm">Close</Button><Button variant="primary" size="sm">Connect</Button></>}>
-  …content…
-</Drawer>`}>
-          <Button variant="primary" onClick={() => setDrawerOpen(true)}>Open drawer</Button>
-          <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Host details" description="emma.tollerud.no"
-            footer={<><Button variant="ghost" size="sm" onClick={() => setDrawerOpen(false)}>Close</Button><Button variant="primary" size="sm" onClick={() => { setDrawerOpen(false); toast({ tone: 'info', title: 'Connecting to emma…' }); }}>Connect (SSH)</Button></>}>
-            <div className="ds-col" style={{ gap: 14 }}>
-              <Meter label="CPU" value={23} valueLabel="23%"/>
-              <Meter label="Memory" value={62} valueLabel="62%"/>
-              <Meter label="Disk" value={45} valueLabel="45%"/>
-              <FormRow label="Auto-restart" hint="Restart on failure."><Switch defaultChecked/></FormRow>
-            </div>
-          </Drawer>
-        </Demo>
-      </Section>
-
-      <Section title="Combobox" desc="A searchable single-select with full keyboard navigation (↑/↓/Enter/Esc) and an empty state. The autocomplete every dashboard needs.">
-        <Demo name="combobox" variant="col" code={`<Combobox
-  label="Host"
-  value={value}
-  onChange={setValue}
-  options={[{ value: 'emma', label: 'emma.tollerud.no' }, …]}
-/>`}>
-          <div style={{ width: '100%', maxWidth: 320 }}>
-            <Combobox label="Connect to host" value={combo} onChange={setCombo}
-              options={[
-                { value: 'emma', label: 'emma.tollerud.no' },
-                { value: 'pia', label: 'pia.tollerud.no' },
-                { value: 'iris', label: 'iris.tollerud.no' },
-                { value: 'miriam', label: 'miriam.tollerud.no' },
-                { value: 'embla', label: 'embla.tollerud.no' },
-              ]}/>
-          </div>
-        </Demo>
-      </Section>
-
       <Section title="Density" desc="Two ways to apply compact density: set density='compact' directly on a Card, or wrap a group with data-density='compact' to tighten everything inside.">
         <Demo name="density" variant="col" code={`{/* Per-card density prop */}
 <Card density="compact">…</Card>
@@ -427,32 +363,6 @@ toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' });`}
             <EmptyState icon="checkCircle" accent title="All clear"
               description="No open alerts across your fleet."
               action={<Button variant="ghost" size="sm">View history</Button>}/>
-          </div>
-        </Demo>
-      </Section>
-
-      <Section title="Log viewer" desc="Level-coded streaming logs with optional search, line numbers and follow-tail. Pass an array of { text, level, timestamp, source }.">
-        <Demo name="log-viewer" variant="col" code={`<LogViewer
-  searchable
-  showLineNumbers
-  height={220}
-  lines={[
-    { timestamp: '14:32:01', level: 'info',  source: 'hermes', text: 'Listening on 0.0.0.0:8080' },
-    { timestamp: '14:32:04', level: 'warn',  source: 'nginx',  text: 'upstream response 1.84s exceeds budget' },
-    { timestamp: '14:32:05', level: 'error', source: 'nginx',  text: 'connect() failed (111: Connection refused)' },
-    { timestamp: '14:32:10', level: 'info',  source: 'hermes', text: 'GET /api/v1/hosts 200 in 23ms' },
-  ]}
-/>`}>
-          <div style={{ width: '100%' }}>
-            <LogViewer searchable showLineNumbers height={220} lines={[
-              { timestamp: '14:32:01', level: 'info',  source: 'systemd',  text: 'Started tollerud-agent.service' },
-              { timestamp: '14:32:02', level: 'info',  source: 'hermes',   text: 'Listening on 0.0.0.0:8080 (4 workers)' },
-              { timestamp: '14:32:03', level: 'debug', source: 'postgres', text: 'database system is ready to accept connections' },
-              { timestamp: '14:32:04', level: 'warn',  source: 'nginx',    text: 'upstream response time 1.84s exceeds 1.5s budget' },
-              { timestamp: '14:32:05', level: 'error', source: 'nginx',    text: 'connect() failed (111: Connection refused) upstream emma:443' },
-              { timestamp: '14:32:10', level: 'info',  source: 'hermes',   text: 'GET /api/v1/hosts 200 in 23ms' },
-              { timestamp: '14:32:12', level: 'trace', source: 'agent',    text: 'tick scheduler queue depth=2' },
-            ]}/>
           </div>
         </Demo>
       </Section>
@@ -518,103 +428,6 @@ toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' });`}
         </Demo>
       </Section>
 
-      <Section title="Data table (npm)" desc="Sortable table with optional per-column filters from @tollerud/ui. Pass `data`, `columns`, and `label` on each column.">
-        <Demo name="package-data-table" variant="col" code={`<PackageDataTable
-  columns={[
-    { key: 'hostname', label: 'Host', sortable: true },
-    { key: 'status', label: 'Status', render: (_v, row) => (
-      <Badge variant={row.status === 'online' ? 'success' : 'error'}>{row.status}</Badge>
-    )},
-  ]}
-  data={[
-    { id: 'emma', hostname: 'emma', status: 'online' },
-    { id: 'pia', hostname: 'pia', status: 'offline' },
-  ]}
-/>`}>
-          <div style={{ width: '100%' }}>
-            <PackageDataTable
-              columns={[
-                { key: 'hostname', label: 'Host', sortable: true },
-                {
-                  key: 'status',
-                  label: 'Status',
-                  render: (_v, row) => (
-                    <Badge variant={row.status === 'online' ? 'success' : 'error'}>{row.status}</Badge>
-                  ),
-                },
-              ]}
-              data={[
-                { id: 'emma', hostname: 'emma.tollerud.no', status: 'online' },
-                { id: 'pia', hostname: 'pia.tollerud.no', status: 'offline' },
-                { id: 'iris', hostname: 'iris.tollerud.no', status: 'online' },
-              ]}
-            />
-          </div>
-        </Demo>
-      </Section>
-
-      <Section title="Toaster" desc="Mount Toaster once near the app root. Call toast() from sonner for styled notifications.">
-        <Demo name="toaster" variant="center" code={`<Toaster />
-<Button onClick={() => toast.success('emma — deploy complete')}>Show toast</Button>`}>
-          <Button variant="primary" onClick={() => toast.success('emma — deploy complete')}>Show toast</Button>
-          <Button variant="secondary" onClick={() => toast.error('Connection to pia timed out')}>Show error</Button>
-          <Toaster />
-        </Demo>
-      </Section>
-
-      <Section title="Data table (rich)" desc="Same npm DataTable with search, segmented filter, selection, bulk actions, row menus, and pagination. The docs adapter accepts `rows`, `header`, and icon string keys — see the Data Table build example.">
-        <Demo name="data-table" variant="col" code={`<DataTable
-  rows={services}
-  rowKey="name"
-  columns={[
-    { key: 'name', header: 'Service', sortable: true,
-      render: (r) => <b>{r.name}</b> },
-    { key: 'status', header: 'Status',
-      render: (r) => <Badge variant={r.status === 'online' ? 'success' : 'error'}>{r.status}</Badge> },
-    { key: 'replicas', header: 'Replicas', align: 'right', sortable: true },
-  ]}
-  searchable
-  selectable
-  pageSize={4}
-  bulkActions={[{ label: 'Restart', icon: 'refresh', onRun: (ids, clear) => clear() }]}
-  rowMenu={(r) => [{ label: 'View logs', icon: 'code', onSelect: () => {} }]}
-/>`}>
-          <div style={{ width: '100%' }}>
-            <DataTable
-              rows={[
-                { name: 'hermes', status: 'online', replicas: 4, image: 'hermes:v2.0' },
-                { name: 'nginx', status: 'online', replicas: 2, image: 'nginx:1.27' },
-                { name: 'postgres', status: 'online', replicas: 1, image: 'postgres:16' },
-                { name: 'grafana', status: 'online', replicas: 1, image: 'grafana:11.2' },
-                { name: 'prometheus', status: 'online', replicas: 1, image: 'prom:2.54' },
-                { name: 'alertmanager', status: 'offline', replicas: 0, image: 'alert:0.27' },
-              ]}
-              rowKey="name"
-              columns={[
-                { key: 'name', header: 'Service', sortable: true, render: (r) => (
-                  <div className="ds-row" style={{ gap: 8 }}>
-                    <span style={{ color: 'var(--tollerud-yellow)' }}><Icons.grid size={14}/></span>
-                    <div>
-                      <div style={{ fontWeight: 600, color: 'var(--foreground)' }}>{r.name}</div>
-                      <div className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{r.image}</div>
-                    </div>
-                  </div>
-                ) },
-                { key: 'status', header: 'Status', sortable: true, render: (r) => <Badge variant={r.status === 'online' ? 'success' : 'error'}>{r.status}</Badge> },
-                { key: 'replicas', header: 'Replicas', align: 'right', sortable: true, render: (r) => <span className="ds-mono">{r.replicas}</span> },
-              ]}
-              searchable
-              searchKeys={['name', 'image']}
-              searchPlaceholder="Search services…"
-              selectable
-              pageSize={4}
-              bulkActions={[{ label: 'Restart', icon: 'refresh', onRun: (ids, clear) => clear() }]}
-              rowMenu={() => [{ label: 'View logs', icon: 'code', onSelect: () => {} }, { sep: true }, { label: 'Remove', icon: 'trash', onSelect: () => {} }]}
-              emptyState={<EmptyState compact icon="search" title="No services" description="Nothing matches your search."/>}
-            />
-          </div>
-        </Demo>
-      </Section>
     </div>
   );
 }

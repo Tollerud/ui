@@ -6,7 +6,9 @@ import { ToastProvider, Kbd, Icons, CommandMenu, buildSectionCommands, initMotio
 import { Monogram } from '@/components/brand'
 import { adaptCommandGroups, docsCommandFilter } from '@/lib/adapt-command-groups'
 import { PACKAGE_VERSION } from '@/lib/package-version'
+import { NAV, PAGE_TITLES, ROUTE_ALIASES, resolveRoute } from '@/lib/docs-routes'
 import PageOverview from './pages/page-overview'
+import PageGettingStarted from './pages/page-getting-started'
 import PageFoundations from './pages/page-foundations'
 import PageComponents from './pages/page-components'
 import PageInfra from './pages/page-infra'
@@ -24,69 +26,33 @@ import PageBilling from './pages/page-billing'
 import PageAuth from './pages/page-auth'
 import PageChangelog from './pages/page-changelog'
 
-const NAV = [
-  { group: 'Start', items: [{ id: 'overview', label: 'Overview', icon: 'home' }] },
-  { group: 'Design', items: [
-    { id: 'foundations', label: 'Foundations', icon: 'palette' },
-    { id: 'components', label: 'Components', icon: 'grid' },
-    { id: 'infra', label: 'Infrastructure', icon: 'server' },
-    { id: 'forms', label: 'Forms', icon: 'forms' },
-    { id: 'navoverlays', label: 'Navigation & Overlays', icon: 'compass' },
-    { id: 'datablocks', label: 'Charts', icon: 'chart' },
-    { id: 'blocks', label: 'Blocks', icon: 'blocks' },
-    { id: 'backgrounds', label: 'Backgrounds', icon: 'layers' },
-  ]},
-  { group: 'Build', items: [
-    { id: 'onboarding', label: 'Onboarding', icon: 'rocket' },
-    { id: 'patterns', label: 'Mission Control', icon: 'app' },
-    { id: 'servers', label: 'Data Table', icon: 'server' },
-    { id: 'console', label: 'Logs & Console', icon: 'code' },
-    { id: 'settings', label: 'Settings', icon: 'settings' },
-    { id: 'billing', label: 'Billing', icon: 'card' },
-    { id: 'auth', label: 'Sign in', icon: 'shield' },
-  ]},
-  { group: '', items: [{ id: 'changelog', label: 'Changelog', icon: 'clock' }] },
-]
-
-const PAGE_TITLES = {
-  overview: 'Overview',
-  foundations: 'Foundations',
-  components: 'Components',
-  forms: 'Forms',
-  navoverlays: 'Navigation & Overlays',
-  datablocks: 'Charts',
-  blocks: 'Blocks',
-  backgrounds: 'Backgrounds',
-  patterns: 'Mission Control',
-  servers: 'Data Table',
-  console: 'Logs & Console',
-  settings: 'Settings',
-  auth: 'Sign in',
-  onboarding: 'Onboarding',
-  billing: 'Billing',
-  infra: 'Infrastructure',
-  changelog: 'Changelog',
-}
-
-const PAGES = {
+const CANONICAL_PAGES = {
   overview: PageOverview,
+  'getting-started': PageGettingStarted,
   foundations: PageFoundations,
   components: PageComponents,
   infra: PageInfra,
   forms: PageForms,
-  navoverlays: PageNavOverlays,
-  datablocks: PageCharts,
+  navigation: PageNavOverlays,
+  charts: PageCharts,
   blocks: PageBlocks,
   backgrounds: PageBackgrounds,
-  patterns: PagePatterns,
+  'mission-control': PagePatterns,
   onboarding: PageOnboarding,
-  servers: PageServers,
+  'data-table': PageServers,
   console: PageConsole,
   settings: PageSettings,
   billing: PageBilling,
   auth: PageAuth,
   changelog: PageChangelog,
 }
+
+const PAGES = { ...CANONICAL_PAGES }
+for (const [legacy, canonical] of Object.entries(ROUTE_ALIASES)) {
+  PAGES[legacy] = CANONICAL_PAGES[canonical]
+}
+
+const PAGES_WITH_GO = new Set(['overview', 'getting-started', 'components'])
 
 function useTheme() {
   const [theme, setTheme] = useState('dark')
@@ -103,7 +69,8 @@ function useTheme() {
 export function DocsShell({ route: routeProp }) {
   const pathname = usePathname()
   const router = useRouter()
-  const route = routeProp || pathname.replace(/^\//, '').replace(/\/$/, '') || 'overview'
+  const rawRoute = routeProp || pathname.replace(/^\//, '').replace(/\/$/, '') || 'overview'
+  const route = resolveRoute(rawRoute)
   const [theme, toggleTheme] = useTheme()
   const toggleThemeRef = useRef(toggleTheme)
   toggleThemeRef.current = toggleTheme
@@ -114,6 +81,12 @@ export function DocsShell({ route: routeProp }) {
     router.push(`/${id}`)
     window.scrollTo({ top: 0 })
   }, [router])
+
+  useEffect(() => {
+    if (rawRoute !== route) {
+      router.replace(`/${route}`)
+    }
+  }, [rawRoute, route, router])
 
   useEffect(() => { setNavOpen(false) }, [route])
   useEffect(() => { initMotion() }, [])
@@ -130,7 +103,7 @@ export function DocsShell({ route: routeProp }) {
     return () => document.removeEventListener('keydown', h)
   }, [])
 
-  const Page = PAGES[route] || PAGES.overview
+  const Page = PAGES[rawRoute] || CANONICAL_PAGES.overview
   const cmdGroups = [
     {
       label: 'Navigate',
@@ -247,7 +220,7 @@ export function DocsShell({ route: routeProp }) {
           </header>
           <main className="ds-content">
             <div className="ds-page" key={route}>
-              {route === 'overview' ? <PageOverview go={go} /> : <Page />}
+              {PAGES_WITH_GO.has(route) ? <Page go={go} /> : <Page />}
             </div>
             <PageTOC route={route} />
           </main>

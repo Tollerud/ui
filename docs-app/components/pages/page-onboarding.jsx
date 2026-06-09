@@ -120,7 +120,7 @@ function PageOnboarding() {
   const toast = useToast();
   return (
     <div>
-      <PageHeader icon="rocket" eyebrow="Build · onboarding" title="Onboarding & Empty States"
+      <PageHeader icon="rocket" eyebrow="Examples · onboarding" title="Onboarding & Empty States"
         lede="The first five minutes. A multi-step setup wizard and a gallery of empty states — the screens a user meets before there's any data — all built from system components and theme-aware."/>
 
       <Section title="Setup wizard"

@@ -21,7 +21,7 @@ function PageSettings() {
 
   return (
     <div>
-      <PageHeader icon="settings" eyebrow="Build · settings" title="Settings"
+      <PageHeader icon="settings" eyebrow="Examples · settings" title="Settings"
         lede="An account settings screen — a left sub-nav, grouped fields with descriptions, toggles, and a destructive danger zone confirmed through a dialog."/>
 
       <Section title="Account" desc="Switch sections on the left. Changes raise a sticky save bar; the danger zone routes through a confirmation dialog.">

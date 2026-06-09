@@ -1,29 +1,10 @@
 import { DocsShell } from '@/components/docs-shell'
-
-const ROUTES = [
-  'overview',
-  'foundations',
-  'components',
-  'infra',
-  'forms',
-  'navoverlays',
-  'datablocks',
-  'blocks',
-  'backgrounds',
-  'patterns',
-  'onboarding',
-  'servers',
-  'console',
-  'settings',
-  'billing',
-  'auth',
-  'changelog',
-]
+import { ALL_ROUTES } from '@/lib/docs-routes'
 
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return [{ slug: [] }, ...ROUTES.map((id) => ({ slug: [id] }))]
+  return [{ slug: [] }, ...ALL_ROUTES.map((id) => ({ slug: [id] }))]
 }
 
 export default async function DocsPage({ params }: { params: Promise<{ slug?: string[] }> }) {
