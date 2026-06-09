@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { ToastProvider, Kbd, Icons, CommandMenu, buildSectionCommands, initMotion, PageTOC } from '@/lib/provide-pages'
 import { adaptCommandGroups, docsCommandFilter } from '@/lib/adapt-command-groups'
+import { PACKAGE_VERSION } from '@/lib/package-version'
 import PageOverview from './pages/page-overview'
 import PageFoundations from './pages/page-foundations'
 import PageComponents from './pages/page-components'
@@ -172,7 +173,7 @@ export function DocsShell({ route: routeProp }) {
             <img className="ds-sidebar__logo" src="/tollerud-logo.svg" alt="" />
             <div>
               <div className="ds-sidebar__title">Tollerud</div>
-              <div className="ds-sidebar__ver">user interface · v1.3.0</div>
+              <div className="ds-sidebar__ver">user interface · v{PACKAGE_VERSION}</div>
             </div>
           </div>
           <nav className="ds-sidebar__nav">
