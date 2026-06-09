@@ -239,7 +239,6 @@ design-system/
 ├── globals-layers.css        # Shared component CSS layers
 ├── globals-v4.css            # Alias → globals.css
 ├── tokens.css                # (backward compat CSS vars only)
-├── preview.html              # Visual reference
 ├── brand/                    # Logo + Tia avatars (npm: @tollerud/ui/brand/*)
 ├── components/
 │   ├── index.ts              # Barrel exports
