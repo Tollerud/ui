@@ -34,13 +34,17 @@ const PAGE_TITLES = {
 };
 
 function useHashRoute() {
-  const [route, setRoute] = useState(() => (location.hash.replace('#/', '') || 'overview'));
+  const [route, setRoute] = useState(() => location.pathname.slice(1) || 'overview');
   useEffect(() => {
-    const h = () => setRoute(location.hash.replace('#/', '') || 'overview');
-    window.addEventListener('hashchange', h);
-    return () => window.removeEventListener('hashchange', h);
+    const h = () => setRoute(location.pathname.slice(1) || 'overview');
+    window.addEventListener('popstate', h);
+    return () => window.removeEventListener('popstate', h);
   }, []);
-  const go = useCallback((id) => { location.hash = '#/' + id; window.scrollTo({ top: 0 }); }, []);
+  const go = useCallback((id) => {
+    history.pushState(null, '', '/' + id);
+    window.scrollTo({ top: 0 });
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  }, []);
   return [route, go];
 }
 
