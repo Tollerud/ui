@@ -204,6 +204,10 @@ function parseChangelog(md) {
     }
   }
 
+  // Flush any unclosed code block at EOF
+  if (inCode && current && codeLines.length) {
+    current.blocks.push({ type: 'code', text: codeLines.join('\n') });
+  }
   if (current) entries.push(current);
   return entries;
 }
