@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.2 — 2026-06-09 — Ship AGENTS.md + SKILL.md inside the npm package
+
+`AGENTS.md` and `SKILL.md` are now included in the published package (`files` in `package.json`). After `npm install @tollerud/ui`, both files are available at:
+
+- `node_modules/@tollerud/ui/AGENTS.md`
+- `node_modules/@tollerud/ui/SKILL.md`
+
+This lets Claude Code (and other agents) read them directly without needing a separate `curl` or a GitHub URL.
+
 ## 1.1.1 — 2026-06-09 — Docs: AGENTS.md package update + migration instructions
 
 No component or API changes. Documentation only.
