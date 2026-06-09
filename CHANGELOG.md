@@ -7,6 +7,27 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 1.3.0 — 2026-06-09 — Tailwind v4 as default CSS entry
+
+`@tollerud/ui/globals.css` is now the Tailwind v4 bundle (tokens + component layers + `@import "tailwindcss"`). v3 projects move to `@tollerud/ui/globals-v3.css`.
+
+### Breaking change
+
+If you were on Tailwind v3 and importing `@tollerud/ui/globals.css`, switch to `@tollerud/ui/globals-v3.css` and keep your v3 `tailwind.config.ts` preset setup.
+
+### Migration (v4 — recommended)
+
+```css
+@import "@tollerud/ui/globals.css";
+@source "../node_modules/@tollerud/ui/dist";
+```
+
+`@tollerud/ui/globals-v4.css` remains as an alias for `globals.css`.
+
+### Docs
+
+Install instructions, README, GETTING_STARTED, AGENTS.md, and SKILL.md now lead with Tailwind v4.
+
 ## 1.2.0 — 2026-06-09 — Subpath exports, Tailwind v4 CSS, Playwright E2E
 
 Per-component subpath imports, a dedicated Tailwind v4 stylesheet, expanded unit tests, and docs-site E2E smoke tests.

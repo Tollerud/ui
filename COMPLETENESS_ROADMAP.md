@@ -61,7 +61,7 @@ Last updated: 2026-06-09
 - ✅ DataTable — stable height on search, sort, select, bulk, pagination
 - ✅ Density — `<Card density="compact">` + `data-density` container wrapper
 
-### npm package (components/*.tsx) — v1.2.0
+### npm package (components/*.tsx) — v1.3.0
 - ✅ Button — defaults to secondary, `asChild` (Radix Slot) + exported `buttonVariants` since 1.0.7
 - ✅ Bundle correctly marked `'use client'` for RSC/SSR safety since 1.0.8
 - ✅ Card — density prop

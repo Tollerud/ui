@@ -12,38 +12,24 @@ Dark, monochrome + single yellow-accent design system ("noir" aesthetic). This s
 ## Install & setup
 
 ```bash
-npm install @tollerud/ui clsx tailwind-merge tailwindcss
+npm install @tollerud/ui clsx tailwind-merge tailwindcss@4
 # Optional — only if using NoirGlowBackground
 npm install @paper-design/shaders-react
 ```
 
-Apply the Tailwind preset — without it, `text-tollerud-yellow`, `bg-tollerud-noir-900`, etc. won't resolve:
+Apply the Tailwind preset when you need extra utilities from `tollerud-preset.js` — `globals.css` already includes tokens and component layers for v4:
 
-```ts
-// tailwind.config.ts
-import type { Config } from 'tailwindcss'
-import tollerudPreset from '@tollerud/ui/preset'
-
-const config: Config = {
-  presets: [tollerudPreset],
-  content: ['./src/**/*.{ts,tsx}'],
-}
-export default config
-```
-
-As of **v1.2.0**, Tailwind colors are exposed under `tollerud.*` only. Use utilities like `text-tollerud-yellow`, `bg-tollerud-surface-raised`, and `border-tollerud-border`; do not use `tia-*` utility names.
-
-**Tailwind v4:** `@import "@tollerud/ui/globals-v4.css"` (includes tokens + component layers). **Tailwind v3:** `@import "@tollerud/ui/globals.css"` after preflight/utilities.
-
-**Subpath imports (tree-shaking):** `@tollerud/ui/button`, `@tollerud/ui/dialog`, `@tollerud/ui/utils`, etc. The main `@tollerud/ui` barrel still works.
-
-Import base styles/tokens in your root layout / `globals.css`:
 ```css
-/* Tailwind v3 */
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+/* app/globals.css — Tailwind v4 (default) */
 @import "@tollerud/ui/globals.css";
+@source "../node_modules/@tollerud/ui/dist";
 ```
+
+As of **v1.3.0**, `@tollerud/ui/globals.css` is the Tailwind v4 entry. Tailwind colors are under `tollerud.*` only (`text-tollerud-yellow`, `bg-tollerud-surface-raised`, etc.) — not `tia-*`.
+
+**Tailwind v3 legacy:** `@import "@tollerud/ui/globals-v3.css"` after preflight/utilities, with `tailwind.config.ts` preset + content paths.
+
+**Subpath imports (tree-shaking):** `@tollerud/ui/button`, `@tollerud/ui/dialog`, `@tollerud/ui/utils`. The main `@tollerud/ui` barrel still works.
 
 ---
 

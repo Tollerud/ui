@@ -35,7 +35,8 @@ jobs:
           grep -q 'registry.json' /tmp/pack.txt
           grep -q 'dist/index.js' /tmp/pack.txt
           grep -q 'dist/button.js' /tmp/pack.txt
-          grep -q 'globals-v4.css' /tmp/pack.txt
+          grep -q 'globals.css' /tmp/pack.txt
+          grep -q 'globals-v3.css' /tmp/pack.txt
           grep -q 'GETTING_STARTED.md' /tmp/pack.txt
 
   e2e:

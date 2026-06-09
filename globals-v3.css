@@ -1,0 +1,17 @@
+/* ═══════════════════════════════════════════════
+   Tollerud Design System — Global CSS (Tailwind v3 legacy)
+   ══════════════════════════════════════════════
+   Usage in app/globals.css (Tailwind v3 + tailwind.config.ts preset only):
+
+     @import "tailwindcss/preflight";
+     @import "tailwindcss/utilities";
+     @import '@tollerud/ui/globals-v3.css';
+
+   New projects should use Tailwind v4 and @tollerud/ui/globals.css instead.
+   ═══════════════════════════════════════════════ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./globals-layers.css";

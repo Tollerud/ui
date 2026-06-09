@@ -17,6 +17,6 @@ test.describe('docs site', () => {
   test('changelog page loads entries', async ({ page }) => {
     await page.goto('/changelog')
     await expect(page.getByRole('heading', { name: 'Changelog' })).toBeVisible()
-    await expect(page.getByText('1.2.0', { exact: false }).first()).toBeVisible({ timeout: 15_000 })
+    await expect(page.getByText('1.3.0', { exact: false }).first()).toBeVisible({ timeout: 15_000 })
   })
 })

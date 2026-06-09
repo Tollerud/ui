@@ -120,7 +120,7 @@ function App() {
             <img className="ds-sidebar__logo" src="tollerud-logo.svg" alt=""/>
             <div>
               <div className="ds-sidebar__title">Tollerud</div>
-              <div className="ds-sidebar__ver">user interface · v1.2.0</div>
+              <div className="ds-sidebar__ver">user interface · v1.3.0</div>
             </div>
           </div>
           <nav className="ds-sidebar__nav">

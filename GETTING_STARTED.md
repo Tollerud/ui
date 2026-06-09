@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-npm install @tollerud/ui clsx tailwind-merge tailwindcss
+npm install @tollerud/ui clsx tailwind-merge tailwindcss@4
 ```
 
 `@paper-design/shaders-react` is an **optional** peer dependency — only needed if you use `NoirGlowBackground`. All other components work without it.
@@ -14,9 +14,33 @@ npm install @paper-design/shaders-react
 
 ---
 
-## Tailwind Setup
+## Tailwind Setup (v4)
 
-### Tailwind v3
+```css
+/* app/globals.css */
+@import "@tollerud/ui/globals.css";
+@source "../node_modules/@tollerud/ui/dist";
+```
+
+`globals.css` bundles Tailwind v4, design tokens, and all component layer styles. Point `@source` at the package `dist` folder relative to your CSS file so component utility classes are not purged.
+
+**Optional preset shim** — for extra theme tokens from `tollerud-preset.js`:
+
+```ts
+// tailwind.config.ts
+import tollerudPreset from '@tollerud/ui/preset'
+export default { presets: [tollerudPreset] }
+```
+
+```css
+@import "tailwindcss";
+@config "./tailwind.config.ts";
+@import "@tollerud/ui/tokens.css";
+@import "@tollerud/ui/globals-layers.css";
+@source "../node_modules/@tollerud/ui/dist";
+```
+
+### Tailwind v3 (legacy)
 
 ```ts
 // tailwind.config.ts
@@ -28,7 +52,6 @@ const config: Config = {
   content: [
     './app/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
-    // tell Tailwind to scan the package's dist so no classes get purged
     './node_modules/@tollerud/ui/dist/**/*.{js,mjs}',
   ],
 }
@@ -40,17 +63,8 @@ export default config
 /* app/globals.css */
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
+@import "@tollerud/ui/globals-v3.css";
 ```
-
-### Tailwind v4
-
-```css
-/* app/globals.css — recommended */
-@import "@tollerud/ui/globals-v4.css";
-@source "../../node_modules/@tollerud/ui/dist";
-```
-
-`globals-v4.css` bundles Tailwind v4, design tokens, and component layer styles. For Tailwind v3 projects, keep using `@tollerud/ui/globals.css`.
 
 ---
 
@@ -97,99 +111,44 @@ All 61 components are named exports from `@tollerud/ui`:
 ```tsx
 // Basics
 import { Button, Card, Badge, StatusDot, Kbd, Input, Textarea } from '@tollerud/ui'
-import { Select, Checkbox, Switch, RadioGroup, Radio } from '@tollerud/ui'
-import { CodeBlock, StatCard, Container, ActionRow, CommandMenu } from '@tollerud/ui'
 
-// New in 1.0.9
-import { Divider, Pill, Avatar, AvatarGroup } from '@tollerud/ui'
-import { Breadcrumb, Pagination, Segmented, Stepper } from '@tollerud/ui'
-import { Panel, Meter, FormRow, PricingCard } from '@tollerud/ui'
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@tollerud/ui'
-import { Slider, PasswordInput, Combobox, DatePicker, FileUpload, TagInput } from '@tollerud/ui'
+// Overlays
+import { Dialog, DialogContent, Tooltip, TooltipProvider, Sheet } from '@tollerud/ui'
 
-// Overlays (Radix-based)
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from '@tollerud/ui'
-import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@tollerud/ui'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@tollerud/ui'
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@tollerud/ui'
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from '@tollerud/ui'
-
-// Feedback & display
-import { Alert, Skeleton, Progress, Empty, EmptyHeader, EmptyIcon, EmptyTitle, EmptyDescription, EmptyContent } from '@tollerud/ui'
-import { Toaster } from '@tollerud/ui'
-import { DataTable } from '@tollerud/ui'
-import { GlowCard, NoirGlowBackground, BentoDashboard } from '@tollerud/ui'
-
-// Infra / homelab set
-import { HostCard, ServiceHealthCard, DockerStackCard, IncidentCard } from '@tollerud/ui'
-import { ApprovalCard, ActionDiff, AlertInbox, Timeline, RollbackPlan, BackupStatusPanel, LogViewer } from '@tollerud/ui'
-
-// Footer & layout
-import { Footer } from '@tollerud/ui'  // or: import { Footer } from '@tollerud/footer'
-import { Container } from '@tollerud/ui'
+// Data & infra
+import { DataTable, HostCard, LogViewer, CommandMenu } from '@tollerud/ui'
 ```
+
+See [COMPONENTS.md](COMPONENTS.md) for the full prop reference.
 
 ---
 
-## Utils
+## shadcn / registry
 
-`cn` is re-exported from `@tollerud/ui` for convenience — no need to set it up separately:
-
-```tsx
-import { cn } from '@tollerud/ui'
-```
-
-Or keep your own `src/lib/utils.ts` if you prefer:
-
-```ts
-import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-```
-
----
-
-## Server Components (Next.js App Router)
-
-All components are bundled with `'use client'` (≥ 1.0.8) — safe to import into Server Component files. The RSC bundler will correctly treat the whole package as client code.
-
-```tsx
-// ✅ Fine in a Server Component
-import { Button, Card } from '@tollerud/ui'
-```
-
----
-
-## Registry (shadcn-style)
-
-Individual components can be added via the registry shipped with the npm package:
+Install individual components via the registry:
 
 ```bash
-# Add a single component (example: button)
-npx shadcn@latest add button --registry https://unpkg.com/@tollerud/ui/registry.json
-
-# Or reference the file from node_modules after install
-npx shadcn@latest add button --registry ./node_modules/@tollerud/ui/registry.json
+npx shadcn@latest add https://unpkg.com/@tollerud/ui@latest/registry.json
 ```
 
-The registry covers all 61 shipped components. Source of truth: `registry.json` in this repo (also exported as `@tollerud/ui/registry.json`).
+Or add a single component:
+
+```bash
+npx shadcn@latest add button --registry https://unpkg.com/@tollerud/ui@latest/registry.json
+```
 
 ---
 
-## Live docs & examples
+## Server Components
 
-Interactive demos live in the repo root — not a separate Next.js app:
+`@tollerud/ui` ships client bundles with `'use client'`. Importing components (or `cn`, `buttonVariants`) from a Server Component file is safe — the import does not force your file to become a Client Component.
 
-- **`index.html`** — docs site entry (React + Babel in-browser, Tailwind CDN)
-- **`docs/`** — full SPA: component gallery, foundations, forms, infra patterns, changelog
+Use subpath imports (`@tollerud/ui/button`) for smaller client boundaries when splitting files manually.
 
-Reference markdown (`README.md`, `COMPONENTS.md`, etc.) lives at the repo root; **`docs/`** is the interactive site source only.
+---
 
-Run locally: open `index.html` in a browser, or serve the repo root with any static server.
+## AI agents
 
-Published at **[tollerud.github.io/design-system](https://tollerud.github.io/design-system/)** via GitHub Pages.
+If you're using Claude Code or Cursor, sync [SKILL.md](SKILL.md) into your project skills folder — it reflects the actual current exports and known gotchas.
 
-See `README.md` for the complete setup guide and Tailwind v3/v4 instructions.
+See `README.md` for the complete setup guide.

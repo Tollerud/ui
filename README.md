@@ -4,7 +4,7 @@ A complete, browsable UI library built around **monochrome + yellow accent**. No
 
 **[Live docs →](https://tollerud.github.io/design-system/)** — browse every token, component, and pattern live with copy-paste code.
 
-**Requirements:** React ≥ 18 · TypeScript supported (types included) · Tailwind CSS v3 or v4
+**Requirements:** React ≥ 18 · TypeScript supported (types included) · Tailwind CSS v4 (v3 supported via `globals-v3.css`)
 
 → **[Component reference →](COMPONENTS.md)** · **[Setup guide →](GETTING_STARTED.md)** · **[Brand guidelines →](BRAND.md)** · **[Changelog →](CHANGELOG.md)** · **[AI agent skill →](SKILL.md)**
 
@@ -28,7 +28,7 @@ Tollerud DS is minimal but not cold. It uses a near-black foundation with warm y
 ### npm package (recommended)
 
 ```bash
-npm install @tollerud/ui clsx tailwind-merge tailwindcss
+npm install @tollerud/ui clsx tailwind-merge tailwindcss@4
 ```
 
 `@paper-design/shaders-react` is an **optional** peer dependency — the package installs and works without it. Install it only if you use `NoirGlowBackground`; all other components fall back to CSS automatically.
@@ -37,49 +37,51 @@ npm install @tollerud/ui clsx tailwind-merge tailwindcss
 npm install @paper-design/shaders-react
 ```
 
-**Tailwind v3** — add the preset in `tailwind.config.ts`:
+**CSS** — one import in `app/globals.css` (Tailwind v4 + tokens + component classes):
+
+```css
+@import '@tollerud/ui/globals.css';
+@source '../node_modules/@tollerud/ui/dist';
+```
+
+Adjust the `@source` path relative to your CSS file so it resolves to `node_modules/@tollerud/ui/dist`.
+
+**Optional preset shim** — if you need utilities from `tollerud-preset.js` beyond what `tokens.css` provides:
+
+```ts
+// tailwind.config.ts
+import tollerudPreset from '@tollerud/ui/preset'
+export default { presets: [tollerudPreset] }
+```
+
+```css
+@import 'tailwindcss';
+@config './tailwind.config.ts';
+@import '@tollerud/ui/tokens.css';
+@import '@tollerud/ui/globals-layers.css';
+@source '../node_modules/@tollerud/ui/dist';
+```
+
+**Tailwind v3 (legacy)** — preset in `tailwind.config.ts` plus `@tollerud/ui/globals-v3.css`:
 
 ```ts
 import type { Config } from 'tailwindcss'
 import tollerudPreset from '@tollerud/ui/preset'
 
-const config: Config = {
+export default {
   presets: [tollerudPreset],
   content: [
     './app/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './node_modules/@tollerud/ui/dist/**/*.{js,mjs}',
   ],
-}
-export default config
+} satisfies Config
 ```
-
-**Tailwind v4** — use `@config` and `@source` in your CSS instead of a config file:
 
 ```css
-/* app/globals.css */
-@import 'tailwindcss';
-@import '@tollerud/ui/globals.css';
-
-/* Pull in the preset tokens as a v4 plugin */
-@config './tailwind.config.ts';
-
-/* Scan the package dist so utility classes aren't purged */
-@source '../node_modules/@tollerud/ui/dist';
-```
-
-If you're not using a `tailwind.config.ts` in v4, copy the contents of `tollerud-preset.js` into a `@theme {}` block manually, or keep a minimal config just for the preset:
-
-```ts
-// tailwind.config.ts (v4 shim)
-import tollerudPreset from '@tollerud/ui/preset'
-export default { presets: [tollerudPreset] }
-```
-
-**CSS** — import tokens and component classes in `app/globals.css`:
-
-```css
-@import '@tollerud/ui/globals.css';
+@import 'tailwindcss/preflight';
+@import 'tailwindcss/utilities';
+@import '@tollerud/ui/globals-v3.css';
 ```
 
 **Components:**
@@ -227,7 +229,10 @@ design-system/
 ├── SKILL.md                  # Verified component catalog & gotchas for AI agents
 ├── tollerud-preset.js             # 🏆 Drop-in Tailwind preset
 ├── tailwind.config.js        # (backward compat standalone config)
-├── globals.css               # 🏆 Semantic tokens + all component classes
+├── globals.css               # 🏆 Tailwind v4 entry (tokens + component layers)
+├── globals-v3.css            # Tailwind v3 legacy (@tailwind + layers)
+├── globals-layers.css        # Shared component CSS layers
+├── globals-v4.css            # Alias → globals.css
 ├── tokens.css                # (backward compat CSS vars only)
 ├── preview.html              # Visual reference
 ├── tollerud-avatar.svg            # Brand mascot

@@ -1,6 +1,6 @@
 {
   "name": "@tollerud/ui",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Tollerud User Interface — dark, monochrome + yellow accent. Noir aesthetic meets modern utility.",
   "private": false,
   "type": "module",
@@ -35,6 +35,7 @@
       }
     },
     "./globals.css": "./globals.css",
+    "./globals-v3.css": "./globals-v3.css",
     "./globals-v4.css": "./globals-v4.css",
     "./globals-layers.css": "./globals-layers.css",
     "./tokens.css": "./tokens.css",
@@ -58,6 +59,7 @@
   "files": [
     "dist",
     "globals.css",
+    "globals-v3.css",
     "globals-v4.css",
     "globals-layers.css",
     "tokens.css",
@@ -94,7 +96,7 @@
     "react": ">=18",
     "react-dom": ">=18",
     "tailwind-merge": "^2.0.0 || ^3.0.0",
-    "tailwindcss": "^3.4.0 || ^4.0.0"
+    "tailwindcss": "^4.0.0 || ^3.4.0"
   },
   "peerDependenciesMeta": {
     "@paper-design/shaders-react": {

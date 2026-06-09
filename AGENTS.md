@@ -19,7 +19,7 @@ Re-sync it whenever you bump the `@tollerud/ui` version and notice the local cop
 ## Install
 
 ```bash
-npm install @tollerud/ui clsx tailwind-merge tailwindcss
+npm install @tollerud/ui clsx tailwind-merge tailwindcss@4
 # Optional — only if using NoirGlowBackground
 npm install @paper-design/shaders-react
 ```
@@ -31,28 +31,42 @@ npm install @tollerud/footer
 
 ## Tailwind Setup
 
-The design system ships a Tailwind preset that provides all tokens. **Always apply it** — without it, `text-tollerud-yellow`, `bg-tollerud-noir-900`, etc. will not resolve.
+**Default: Tailwind v4.** One CSS import — tokens, component layers, and Tailwind itself:
+
+```css
+/* app/globals.css */
+@import "@tollerud/ui/globals.css";
+@source "../node_modules/@tollerud/ui/dist";
+```
+
+Adjust `@source` relative to your CSS file. Without it, classes used only inside `@tollerud/ui` dist may be purged.
+
+**Optional preset shim** — extra utilities from `tollerud-preset.js`:
 
 ```ts
 // tailwind.config.ts
+import tollerudPreset from '@tollerud/ui/preset'
+export default { presets: [tollerudPreset] }
+```
+
+**Tailwind v3 (legacy)** — preset in config + `@tollerud/ui/globals-v3.css` after preflight/utilities:
+
+```ts
 import type { Config } from 'tailwindcss'
 import tollerudPreset from '@tollerud/ui/preset'
 
 const config: Config = {
   presets: [tollerudPreset],
-  content: ['./src/**/*.{ts,tsx}'],
+  content: ['./src/**/*.{ts,tsx}', './node_modules/@tollerud/ui/dist/**/*.{js,mjs}'],
 }
 export default config
 ```
 
-Import the CSS in your root layout or `globals.css`:
 ```css
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
+@import "@tollerud/ui/globals-v3.css";
 ```
-And import the design system tokens/base styles from `@tollerud/ui/globals.css` or copy them locally.
-
-**Tailwind v4:** `@import "@tollerud/ui/globals-v4.css"` — includes tokens and component layers in one file.
 
 **Subpath imports:** `import { Button } from '@tollerud/ui/button'` — one entry per component for tree-shaking; the main `@tollerud/ui` barrel still works.
 

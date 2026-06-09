@@ -117,16 +117,16 @@ function PageOverview({ go }) {
       </Section>
 
       {/* ── Install ── */}
-      <Section title="Install" desc="Drop the preset and globals into any Tailwind + React project.">
-        <CodeSnippet name="terminal" code={`# 1. add the preset to tailwind.config.ts
-import tollerud from './tollerud-preset'
-export default { presets: [tollerud], content: ['./app/**/*.{ts,tsx}'] }
+      <Section title="Install" desc="Tailwind v4 + one CSS import. Subpath imports optional.">
+        <CodeSnippet name="terminal" code={`npm install @tollerud/ui clsx tailwind-merge tailwindcss@4
 
-# 2. import the tokens + component classes
-@import './globals.css';
+# app/globals.css
+@import '@tollerud/ui/globals.css';
+@source '../node_modules/@tollerud/ui/dist';
 
-# 3. use the components
-import { Button, Card, Badge, StatusDot } from '@/components/ui'`}/>
+# components
+import { Button, Card, Badge, StatusDot } from '@tollerud/ui'
+// or: import { Button } from '@tollerud/ui/button'`}/>
       </Section>
     </div>
   );
