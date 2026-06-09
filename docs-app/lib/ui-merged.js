@@ -36,6 +36,11 @@ export {
   Combobox,
   AvatarGroup,
   Select,
+  DatePicker,
+  FileUpload,
+  TagInput,
+  Divider,
+  Timeline,
 } from './docs-adapters'
 
 export const {
@@ -55,7 +60,6 @@ export const {
   Progress,
   Skeleton,
   Avatar,
-  Divider,
   PasswordInput,
   FormRow,
   PricingCard,

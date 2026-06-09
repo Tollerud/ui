@@ -1,35 +1,9 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL, CommandMenu } = __p
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL, CommandMenu } = __p
 
 /* Tollerud DS — Components gallery. → window.PageComponents */
-function Timeline({ items }) {
-  const statusColor = { online: 'var(--success)', warning: 'var(--warning)', offline: 'var(--destructive)', idle: 'var(--tollerud-noir-400)' };
-  return (
-    <div className="tollerud-timeline ds-themed" style={{ width: '100%' }}>
-      {items.map((it, i) => (
-        <div className="tollerud-timeline__item" key={i}>
-          <div className="tollerud-timeline__marker">
-            <div className="tollerud-timeline__dot-group" style={{ height: '100%' }}>
-              <span className="tollerud-timeline__dot" style={{ background: statusColor[it.status] }}/>
-              {i < items.length - 1 && <span className="tollerud-timeline__line"/>}
-            </div>
-          </div>
-          <div className="tollerud-timeline__content">
-            <div className="ds-row" style={{ justifyContent: 'space-between' }}>
-              <span className="tollerud-timeline__title">{it.title}</span>
-              <span className="tollerud-timeline__time">{it.time}</span>
-            </div>
-            <div className="tollerud-timeline__description">{it.description}</div>
-            {it.meta && <div className="ds-row" style={{ gap: 6, marginTop: 6 }}>{it.meta.map((m, j) => <span key={j} className="tollerud-timeline__meta">{m}</span>)}</div>}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function PageComponents() {
   const toast = useToast();
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -541,4 +515,3 @@ toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' });`}
 }
 
 export default PageComponents;
-export { Timeline };

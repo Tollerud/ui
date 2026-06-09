@@ -50,11 +50,33 @@ import {
   Select,
   Avatar,
   AvatarGroup as NpmAvatarGroup,
+  Timeline as NpmTimeline,
+  DatePicker,
+  FileUpload,
+  TagInput,
+  Divider as NpmDivider,
   cn,
 } from '@tollerud/ui'
 import { Icons } from '../components/icons'
 
-export { LogViewer, Combobox, Select }
+export { LogViewer, Combobox, Select, DatePicker, FileUpload, TagInput }
+
+function Divider({ accent, className, ...props }) {
+  return (
+    <NpmDivider
+      className={cn(accent && 'bg-tollerud-yellow/50', className)}
+      {...props}
+    />
+  )
+}
+
+function Timeline({ items, ...props }) {
+  const normalized = items.map((item, index) => ({
+    id: item.id ?? `timeline-${index}`,
+    ...item,
+  }))
+  return <NpmTimeline items={normalized} {...props} />
+}
 
 function Tabs({ tabs, variant, defaultTab }) {
   const defaultValue = defaultTab || tabs[0]?.id
@@ -372,4 +394,6 @@ export {
   Stepper,
   Drawer,
   AvatarGroup,
+  Divider,
+  Timeline,
 }
