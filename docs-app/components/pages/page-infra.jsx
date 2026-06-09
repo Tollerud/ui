@@ -39,7 +39,7 @@ function PageInfra() {
       <PageHeader icon="server" eyebrow="Components · infrastructure" title="Infrastructure"
         lede="Higher-order components for the homelab domain — host and service cards, container stacks, incidents, an alert inbox, the approval and rollback flows, backups and config diffs. These compose the Mission Control dashboard."/>
 
-      <Section title="HostCard" desc="A machine at a glance: status dot, CPU / memory / disk meters (red past 85%), uptime and container count. Supports a loading skeleton.">
+      <Section title="HostCard" component="HostCard" desc="A machine at a glance: status dot, CPU / memory / disk meters (red past 85%), uptime and container count. Supports a loading skeleton.">
         <Demo name="host-card" code={`<HostCard hostname="emma" ip="10.0.10.10" status="online"
   cpu="23%" memory="62%" disk="45%" uptime="14d" containers={4} />`}>
           <div className="ds-grid-3" style={{ width: '100%', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>

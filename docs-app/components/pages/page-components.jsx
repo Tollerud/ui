@@ -37,7 +37,7 @@ function PageComponents({ go }) {
         </div>
       </Section>
 
-      <Section title="Button" desc="Five variants, three sizes. Supports icons, loading spinners, disabled state, and icon-only. Primary is yellow; terminal carries the ❯ for technical actions.">
+      <Section title="Button" component="Button" desc="Five variants, three sizes. Supports icons, loading spinners, disabled state, and icon-only. Primary is yellow; terminal carries the ❯ for technical actions.">
         <Demo name="buttons" variant="center" code={`<Button variant="primary">Deploy</Button>
 <Button variant="secondary">Cancel</Button>
 <Button variant="ghost">More</Button>
@@ -80,7 +80,7 @@ function PageComponents({ go }) {
         </Demo>
       </Section>
 
-      <Section title="Card" desc="The default surface. Add an accent for a yellow-bordered, highlighted card.">
+      <Section title="Card" component="Card" desc="The default surface. Add an accent for a yellow-bordered, highlighted card.">
         <Demo name="cards" code={`<Card>
   <h3 className="font-semibold mb-1">Standard card</h3>
   <p className="text-sm text-tollerud-noir-200">A raised surface with a hairline border.</p>
@@ -113,7 +113,7 @@ function PageComponents({ go }) {
         </Demo>
       </Section>
 
-      <Section title="Badge & Pill" desc="Badges label status inline. Pills are tiny mono-flavored tags.">
+      <Section title="Badge & Pill" component="Badge" desc="Badges label status inline. Pills are tiny mono-flavored tags.">
         <Demo name="badges" variant="center" code={`<Badge variant="accent">New</Badge>
 <Badge variant="success">Online</Badge>
 <Badge variant="warning">Degraded</Badge>
@@ -156,7 +156,7 @@ function PageComponents({ go }) {
         </Demo>
       </Section>
 
-      <Section title="Stat card" desc="Compact metric tiles for dashboards, with optional trend.">
+      <Section title="Stat card" component="StatCard" desc="Compact metric tiles for dashboards, with optional trend.">
         <Demo name="stats" code={`<StatCard label="Active Sessions" value="42" change={{ value: "12%", direction: "up" }} icon="activity" />
 <StatCard label="CPU Load" value="63%" change={{ value: "4%", direction: "down" }} icon="cpu" />
 <StatCard label="Storage" value="1.2 TB" icon="database" />`}>
@@ -205,7 +205,7 @@ function PageComponents({ go }) {
         </Demo>
       </Section>
 
-      <Section title="Alert" desc="Four semantic tones. Pass icon to override the default icon per tone.">
+      <Section title="Alert" component="Alert" desc="Four semantic tones. Pass icon to override the default icon per tone.">
         <Demo name="alerts" variant="col" code={`<Alert tone="accent"  title="Heads up">Yellow signals an action worth noticing.</Alert>
 <Alert tone="info"    title="Scheduled">Maintenance window at 03:00 UTC.</Alert>
 <Alert tone="success" title="Deployed">emma — hermes v2.0 is live.</Alert>

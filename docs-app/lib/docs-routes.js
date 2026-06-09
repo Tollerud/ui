@@ -20,15 +20,36 @@ export const NAV = [
   },
   {
     group: 'Design',
-    items: [
-      { id: 'foundations', label: 'Foundations', icon: 'palette' },
-      { id: 'components', label: 'Components', icon: 'grid' },
-      { id: 'forms', label: 'Forms', icon: 'forms' },
-      { id: 'navigation', label: 'Navigation & Overlays', icon: 'compass' },
-      { id: 'infra', label: 'Infrastructure', icon: 'server' },
-      { id: 'charts', label: 'Charts', icon: 'chart' },
-      { id: 'blocks', label: 'Blocks', icon: 'blocks' },
-      { id: 'backgrounds', label: 'Backgrounds', icon: 'layers' },
+    subgroups: [
+      {
+        label: 'Core',
+        items: [
+          { id: 'foundations', label: 'Foundations', icon: 'palette' },
+          { id: 'components', label: 'Components', icon: 'grid' },
+        ],
+      },
+      {
+        label: 'Forms & input',
+        items: [{ id: 'forms', label: 'Forms', icon: 'forms' }],
+      },
+      {
+        label: 'Navigation',
+        items: [{ id: 'navigation', label: 'Navigation & Overlays', icon: 'compass' }],
+      },
+      {
+        label: 'Data & infra',
+        items: [
+          { id: 'infra', label: 'Infrastructure', icon: 'server' },
+          { id: 'charts', label: 'Charts', icon: 'chart' },
+        ],
+      },
+      {
+        label: 'Marketing',
+        items: [
+          { id: 'blocks', label: 'Blocks', icon: 'blocks' },
+          { id: 'backgrounds', label: 'Backgrounds', icon: 'layers' },
+        ],
+      },
     ],
   },
   {
@@ -44,8 +65,11 @@ export const NAV = [
     ],
   },
   {
-    group: '',
-    items: [{ id: 'changelog', label: 'Changelog', icon: 'clock' }],
+    group: 'Resources',
+    items: [
+      { id: 'resources', label: 'Guides', icon: 'folder' },
+      { id: 'changelog', label: 'Changelog', icon: 'clock' },
+    ],
   },
 ]
 
@@ -67,11 +91,27 @@ export const PAGE_TITLES = {
   settings: 'Settings',
   billing: 'Billing',
   auth: 'Sign in',
+  resources: 'Guides',
   changelog: 'Changelog',
 }
 
+/** Flatten nav entries (supports Design subgroups). */
+export function flattenNavItems(nav = NAV) {
+  const items = []
+  for (const group of nav) {
+    if (group.subgroups) {
+      for (const sub of group.subgroups) {
+        items.push(...sub.items)
+      }
+    } else {
+      items.push(...group.items)
+    }
+  }
+  return items
+}
+
 /** Canonical route IDs (no aliases). */
-export const CANONICAL_ROUTES = NAV.flatMap((g) => g.items.map((it) => it.id))
+export const CANONICAL_ROUTES = flattenNavItems().map((it) => it.id)
 
 /** All routes for static export — canonical + legacy aliases. */
 export const ALL_ROUTES = [...CANONICAL_ROUTES, ...Object.keys(ROUTE_ALIASES)]

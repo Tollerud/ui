@@ -40,7 +40,7 @@ function PageForms() {
       <PageHeader icon="forms" eyebrow="Forms" title="Forms"
         lede="Every input control, all states, and the higher-order patterns — combobox, date picker, file upload, tag entry and live validation."/>
 
-      <Section title="Text input" desc="All states: default, filled, focused, error, disabled, and readonly. Labels and inline errors are built in.">
+      <Section title="Text input" component="Input" desc="All states: default, filled, focused, error, disabled, and readonly. Labels and inline errors are built in.">
         <Demo name="inputs" code={`<Input label="Server name" placeholder="e.g. emma.tollerud.no" />
 <Input label="Port" defaultValue="8080" />
 <Input label="Host" error="Could not resolve host" defaultValue="emma" />

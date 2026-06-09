@@ -6,7 +6,7 @@ import { ToastProvider, Kbd, Icons, CommandMenu, buildSectionCommands, initMotio
 import { Monogram } from '@/components/brand'
 import { adaptCommandGroups, docsCommandFilter } from '@/lib/adapt-command-groups'
 import { PACKAGE_VERSION } from '@/lib/package-version'
-import { NAV, PAGE_TITLES, ROUTE_ALIASES, resolveRoute } from '@/lib/docs-routes'
+import { NAV, PAGE_TITLES, ROUTE_ALIASES, resolveRoute, flattenNavItems } from '@/lib/docs-routes'
 import PageOverview from './pages/page-overview'
 import PageGettingStarted from './pages/page-getting-started'
 import PageFoundations from './pages/page-foundations'
@@ -25,6 +25,7 @@ import PageSettings from './pages/page-settings'
 import PageBilling from './pages/page-billing'
 import PageAuth from './pages/page-auth'
 import PageChangelog from './pages/page-changelog'
+import PageResources from './pages/page-resources'
 
 const CANONICAL_PAGES = {
   overview: PageOverview,
@@ -44,6 +45,7 @@ const CANONICAL_PAGES = {
   settings: PageSettings,
   billing: PageBilling,
   auth: PageAuth,
+  resources: PageResources,
   changelog: PageChangelog,
 }
 
@@ -52,7 +54,7 @@ for (const [legacy, canonical] of Object.entries(ROUTE_ALIASES)) {
   PAGES[legacy] = CANONICAL_PAGES[canonical]
 }
 
-const PAGES_WITH_GO = new Set(['overview', 'getting-started', 'components'])
+const PAGES_WITH_GO = new Set(['overview', 'getting-started', 'components', 'resources'])
 
 function useTheme() {
   const [theme, setTheme] = useState('dark')
@@ -107,7 +109,7 @@ export function DocsShell({ route: routeProp }) {
   const cmdGroups = [
     {
       label: 'Navigate',
-      items: NAV.flatMap((g) => g.items).map((it) => ({
+      items: flattenNavItems().map((it) => ({
         id: 'nav-' + it.id,
         label: it.label,
         description: 'Go to ' + it.label,
@@ -153,20 +155,39 @@ export function DocsShell({ route: routeProp }) {
           <nav className="ds-sidebar__nav">
             {NAV.map((g) => (
               <div className="ds-navgroup" key={g.group || 'meta'}>
-                <div className="ds-navgroup__label">{g.group}</div>
-                {g.items.map((it) => {
-                  const I = Icons[it.icon]
-                  return (
-                    <button
-                      key={it.id}
-                      className={`ds-navlink ${route === it.id ? 'ds-navlink--active' : ''}`}
-                      onClick={() => go(it.id)}
-                    >
-                      <span className="ds-navlink__icon"><I size={15} /></span>
-                      {it.label}
-                    </button>
-                  )
-                })}
+                {g.group && <div className="ds-navgroup__label">{g.group}</div>}
+                {g.subgroups
+                  ? g.subgroups.map((sub) => (
+                      <div className="ds-navsubgroup" key={sub.label}>
+                        <div className="ds-navsubgroup__label">{sub.label}</div>
+                        {sub.items.map((it) => {
+                          const I = Icons[it.icon]
+                          return (
+                            <button
+                              key={it.id}
+                              className={`ds-navlink ${route === it.id ? 'ds-navlink--active' : ''}`}
+                              onClick={() => go(it.id)}
+                            >
+                              <span className="ds-navlink__icon"><I size={15} /></span>
+                              {it.label}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    ))
+                  : g.items.map((it) => {
+                      const I = Icons[it.icon]
+                      return (
+                        <button
+                          key={it.id}
+                          className={`ds-navlink ${route === it.id ? 'ds-navlink--active' : ''}`}
+                          onClick={() => go(it.id)}
+                        >
+                          <span className="ds-navlink__icon"><I size={15} /></span>
+                          {it.label}
+                        </button>
+                      )
+                    })}
               </div>
             ))}
           </nav>

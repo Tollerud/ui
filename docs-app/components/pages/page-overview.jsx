@@ -1,6 +1,12 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import { TiaPortrait } from '@/components/brand'
+import {
+  PACKAGE_VERSION,
+  REGISTRY_COMPONENT_COUNT,
+  FOUNDATION_TOPIC_COUNT,
+  COLOR_TOKEN_COUNT,
+} from '@/lib/docs-stats'
 import * as __p from '@/lib/provide-pages'
 const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
 
@@ -24,8 +30,8 @@ function PageOverview({ go }) {
         <div className="ds-hero__grid" style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24, padding: '52px 48px', alignItems: 'center' }}>
           <div className="ds-hero__copy">
             <div className="ds-row" style={{ gap: 10, marginBottom: 22 }}>
-              <span className="tollerud-pill tollerud-pill--outline">v1.0 · noir + yellow</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: bold ? 'rgba(245,245,245,0.5)' : 'var(--text-muted)' }}>{'>'}60 components · 9 foundations</span>
+              <span className="tollerud-pill tollerud-pill--outline">v{PACKAGE_VERSION} · noir + yellow</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: bold ? 'rgba(245,245,245,0.5)' : 'var(--text-muted)' }}>{'>'}{REGISTRY_COMPONENT_COUNT} registry components · {FOUNDATION_TOPIC_COUNT} foundation topics</span>
             </div>
             <h1 className="ds-hero__title" style={{ fontWeight: 600, letterSpacing: '-0.045em', lineHeight: 0.98, color: bold ? '#F5F5F5' : 'var(--foreground)' }}>
               Dark. Monochrome.<br/><span className="ds-shimmer">Yellow where it counts.</span>
@@ -58,9 +64,9 @@ function PageOverview({ go }) {
       {/* ── Stats band ── */}
       <div className="ds-grid-4" data-reveal style={{ marginBottom: 40 }}>
         {[
-          { v: 60, suffix: '+', label: 'Components' },
-          { v: 9, suffix: '', label: 'Foundations' },
-          { v: 55, suffix: '+', label: 'Color tokens' },
+          { v: REGISTRY_COMPONENT_COUNT, suffix: '', label: 'Registry components' },
+          { v: FOUNDATION_TOPIC_COUNT, suffix: '', label: 'Foundation topics' },
+          { v: COLOR_TOKEN_COUNT, suffix: '+', label: 'Color tokens' },
           { v: 2, suffix: '', label: 'Themes · light & dark' },
         ].map((s, i) => (
           <div className="tollerud-card ds-themed ds-lift" key={i} style={{ textAlign: 'center', padding: '22px 16px' }}>

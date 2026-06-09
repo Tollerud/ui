@@ -27,6 +27,8 @@ const ROUTE_LABELS = {
   settings: 'Settings',
   billing: 'Billing',
   auth: 'Sign in',
+  resources: 'Guides',
+  changelog: 'Changelog',
 };
 
 const ROUTE_ICONS = {
@@ -47,6 +49,8 @@ const ROUTE_ICONS = {
   settings: 'settings',
   billing: 'card',
   auth: 'shield',
+  resources: 'folder',
+  changelog: 'clock',
 };
 
 /** [route, sectionTitle, optionalKeywords[]] */
@@ -156,6 +160,11 @@ const CMD_SECTION_ENTRIES = [
   ['billing', 'Invoices'],
 
   ['auth', 'Split sign-in', ['login', 'sign in']],
+
+  ['resources', 'Migration', ['breaking', 'esm', 'peer']],
+  ['resources', 'AI agents', ['skill', 'claude', 'cursor']],
+  ['resources', 'Contributing', ['pr', 'validate']],
+  ['resources', 'Prop reference', ['props', 'typescript']],
 ];
 
 function jumpToSection(sectionId) {

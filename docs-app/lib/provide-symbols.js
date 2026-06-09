@@ -18,7 +18,7 @@ export const DOC_SYMBOLS = [
   'Timeline', 'DatePicker', 'FileUpload', 'TagInput',
   'CodeBlock', 'Container', 'ActionRow', 'GlowCard', 'PackageDataTable', 'Toaster', 'toast',
   'Footer', 'BentoDashboard', 'NoirGlowBackground',
-  'CopyButton', 'Demo', 'CodeSnippet', 'PageHeader', 'Section', 'SubHead', 'Swatch', 'TokenTable',
+  'CopyButton', 'Demo', 'CodeSnippet', 'PageHeader', 'Section', 'SubHead', 'Swatch', 'TokenTable', 'PropTable',
   'ToastProvider', 'useToast', 'Icons', 'Ico', 'DataTable', 'BarChart', 'AreaChart', 'Donut',
   'Sparkline', 'HeroBlock', 'FeatureCard', 'CTABand', 'HostCard', 'ServiceHealthCard',
   'DockerStackCard', 'IncidentCard', 'AlertInbox', 'ApprovalCard', 'RollbackPlan',

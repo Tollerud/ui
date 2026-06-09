@@ -1,0 +1,763 @@
+{
+  "Accordion": [
+    {
+      "name": "AccordionProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "multiple?: boolean",
+        "defaultOpen?: string | string[]"
+      ]
+    },
+    {
+      "name": "AccordionItemProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "value: string"
+      ]
+    }
+  ],
+  "ActionDiff": [
+    {
+      "name": "ActionDiffProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "lines: DiffLine[]",
+        "label?: string",
+        "view?: 'unified' | 'side-by-side'",
+        "loading?: boolean"
+      ]
+    }
+  ],
+  "ActionRow": [
+    {
+      "name": "ActionRowProps",
+      "extends": "extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onSelect'>",
+      "props": [
+        "action: ActionItem",
+        "highlighted?: boolean",
+        "showShortcut?: boolean"
+      ]
+    }
+  ],
+  "Alert": [
+    {
+      "name": "AlertProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "tone?: keyof typeof toneStyles",
+        "title?: string",
+        "icon?: React.ReactNode"
+      ]
+    }
+  ],
+  "AlertInbox": [
+    {
+      "name": "AlertInboxProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "alerts: AlertItem[]",
+        "filterSeverity?: IncidentSeverity | ''",
+        "onAcknowledge?: (id: string) => void",
+        "loading?: boolean",
+        "emptyMessage?: string"
+      ]
+    }
+  ],
+  "ApprovalCard": [
+    {
+      "name": "ApprovalCardProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "action: string",
+        "description?: string",
+        "source?: string",
+        "state?: ApprovalState",
+        "timestamp?: string",
+        "onApprove?: () => void",
+        "onReject?: () => void",
+        "disabled?: boolean",
+        "loading?: boolean"
+      ]
+    }
+  ],
+  "AreaChart": [
+    {
+      "name": "AreaChartProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "data: number[]",
+        "height?: number"
+      ]
+    }
+  ],
+  "Avatar": [
+    {
+      "name": "AvatarProps",
+      "extends": "extends HTMLAttributes<HTMLSpanElement>",
+      "props": [
+        "src?: string",
+        "name?: string",
+        "fallback?: React.ReactNode",
+        "size?: keyof typeof avatarSizes | number"
+      ]
+    },
+    {
+      "name": "AvatarGroupProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "max?: number",
+        "size?: keyof typeof avatarSizes | number",
+        "children: React.ReactNode"
+      ]
+    }
+  ],
+  "BackupStatusPanel": [
+    {
+      "name": "BackupStatusPanelProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "jobs: BackupJob[]",
+        "totalSize?: string",
+        "lastFullBackup?: string",
+        "loading?: boolean"
+      ]
+    }
+  ],
+  "Badge": [
+    {
+      "name": "BadgeProps",
+      "extends": "extends HTMLAttributes<HTMLSpanElement>",
+      "props": [
+        "variant?: keyof typeof badgeVariants"
+      ]
+    }
+  ],
+  "BarChart": [
+    {
+      "name": "BarChartProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "data: BarChartDatum[]",
+        "height?: number"
+      ]
+    }
+  ],
+  "BentoDashboard": [
+    {
+      "name": "BentoDashboardProps",
+      "props": [
+        "title: string",
+        "hosts?: HostCardProps[]",
+        "metrics?: StatCardProps[]",
+        "services?: ServiceHealthCardProps[]",
+        "incidents?: { title: string; severity: IncidentSeverity; timestamp: string; service: string; description?: string; acknowledged?: boolean }[]",
+        "backupJobs?: BackupJob[]",
+        "className?: string",
+        "renderIncidentFooter?: () => ReactNode"
+      ]
+    }
+  ],
+  "Breadcrumb": [
+    {
+      "name": "BreadcrumbProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLElement>, 'children'>",
+      "props": [
+        "items: BreadcrumbItem[]",
+        "separator?: React.ReactNode"
+      ]
+    }
+  ],
+  "Button": [
+    {
+      "name": "ButtonVariantProps",
+      "props": [
+        "variant?: keyof typeof variants",
+        "size?: keyof typeof sizes"
+      ]
+    },
+    {
+      "name": "ButtonProps",
+      "extends": "extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariantProps",
+      "props": [
+        "asChild?: boolean"
+      ]
+    }
+  ],
+  "CTABand": [
+    {
+      "name": "CTABandProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "title: React.ReactNode",
+        "description?: React.ReactNode",
+        "actions?: React.ReactNode",
+        "accentBar?: boolean"
+      ]
+    }
+  ],
+  "Card": [
+    {
+      "name": "CardProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "accent?: boolean",
+        "density?: 'comfortable' | 'compact'"
+      ]
+    }
+  ],
+  "Checkbox": [
+    {
+      "name": "CheckboxProps",
+      "extends": "extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>",
+      "props": [
+        "label?: string"
+      ]
+    }
+  ],
+  "CodeBlock": [
+    {
+      "name": "CodeBlockProps",
+      "extends": "extends HTMLAttributes<HTMLPreElement>",
+      "props": [
+        "code?: string",
+        "promptPrefix?: boolean",
+        "showCopy?: boolean"
+      ]
+    }
+  ],
+  "Combobox": [
+    {
+      "name": "ComboboxProps",
+      "props": [
+        "options: ComboboxOption[]",
+        "value?: string",
+        "defaultValue?: string",
+        "onChange?: (value: string) => void",
+        "placeholder?: string",
+        "label?: string",
+        "error?: string",
+        "filter?: (option: ComboboxOption, query: string) => boolean",
+        "className?: string",
+        "disabled?: boolean"
+      ]
+    }
+  ],
+  "CommandMenu": [
+    {
+      "name": "CommandMenuProps",
+      "props": [
+        "open: boolean",
+        "onOpenChange: (open: boolean) => void",
+        "groups: CommandGroup[]",
+        "placeholder?: string",
+        "emptyMessage?: string",
+        "className?: string",
+        "toggleShortcut?: string",
+        "filter?: (query: string, groups: CommandGroup[]) => CommandGroup[]",
+        "onAction?: (action: ActionItem) => void"
+      ]
+    }
+  ],
+  "Container": [
+    {
+      "name": "ContainerProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'div' | 'section' | 'article' | 'main' | 'header' | 'footer'"
+      ]
+    }
+  ],
+  "DatePicker": [
+    {
+      "name": "DatePickerProps",
+      "props": [
+        "value?: Date | null",
+        "defaultValue?: Date | null",
+        "onChange?: (date: Date | null) => void",
+        "label?: string",
+        "error?: string",
+        "placeholder?: string",
+        "formatDate?: (date: Date) => string",
+        "className?: string",
+        "disabled?: boolean"
+      ]
+    }
+  ],
+  "Divider": [
+    {
+      "name": "DividerProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "orientation?: 'horizontal' | 'vertical'",
+        "label?: React.ReactNode"
+      ]
+    }
+  ],
+  "DockerStackCard": [
+    {
+      "name": "DockerStackCardProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "name: string",
+        "services: StackService[]",
+        "composePath?: string",
+        "loading?: boolean"
+      ]
+    }
+  ],
+  "Donut": [
+    {
+      "name": "DonutProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "segments: DonutSegment[]",
+        "size?: number"
+      ]
+    }
+  ],
+  "FeatureCard": [
+    {
+      "name": "FeatureCardProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "icon?: React.ReactNode",
+        "title: React.ReactNode",
+        "description: React.ReactNode"
+      ]
+    }
+  ],
+  "FileUpload": [
+    {
+      "name": "FileUploadProps",
+      "props": [
+        "label?: string",
+        "description?: React.ReactNode",
+        "error?: string",
+        "accept?: string",
+        "multiple?: boolean",
+        "onFilesChange?: (files: File[]) => void",
+        "className?: string",
+        "disabled?: boolean"
+      ]
+    }
+  ],
+  "FormRow": [
+    {
+      "name": "FormRowProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "label?: React.ReactNode",
+        "description?: React.ReactNode",
+        "hint?: React.ReactNode",
+        "error?: React.ReactNode",
+        "required?: boolean",
+        "htmlFor?: string",
+        "layout?: 'settings' | 'stack'"
+      ]
+    }
+  ],
+  "GlowCard": [
+    {
+      "name": "GlowCardProps",
+      "props": [
+        "children: ReactNode",
+        "className?: string",
+        "glowColor?: string",
+        "intensity?: number"
+      ]
+    }
+  ],
+  "HeroBlock": [
+    {
+      "name": "HeroBlockProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "eyebrow?: React.ReactNode",
+        "title: React.ReactNode",
+        "description?: React.ReactNode",
+        "actions?: React.ReactNode",
+        "media?: React.ReactNode",
+        "minHeight?: number",
+        "intense?: boolean"
+      ]
+    }
+  ],
+  "HostCard": [
+    {
+      "name": "HostCardProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "hostname: string",
+        "ip?: string",
+        "status?: Status",
+        "cpu?: string",
+        "memory?: string",
+        "disk?: string",
+        "uptime?: string",
+        "containers?: number",
+        "loading?: boolean"
+      ]
+    }
+  ],
+  "IncidentCard": [
+    {
+      "name": "IncidentCardProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "title: string",
+        "severity: IncidentSeverity",
+        "timestamp: string",
+        "description?: string",
+        "service?: string",
+        "acknowledged?: boolean",
+        "loading?: boolean"
+      ]
+    }
+  ],
+  "Input": [
+    {
+      "name": "InputProps",
+      "extends": "extends InputHTMLAttributes<HTMLInputElement>",
+      "props": [
+        "label?: string",
+        "error?: string"
+      ]
+    }
+  ],
+  "Kbd": [
+    {
+      "name": "KbdProps",
+      "extends": "extends HTMLAttributes<HTMLSpanElement>",
+      "props": [
+        "* The keys to display. Separate by + for chords.",
+        "* @example \"⌘K\", \"⌘⇧S\", \"⌘K\", \"Esc\"",
+        "*/",
+        "keys: string | string[]",
+        "size?: 'sm' | 'md'"
+      ]
+    }
+  ],
+  "LogViewer": [
+    {
+      "name": "LogViewerProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "lines: LogLine[]",
+        "maxLines?: number",
+        "showLineNumbers?: boolean",
+        "showTimestamps?: boolean",
+        "follow?: boolean",
+        "searchable?: boolean",
+        "height?: string",
+        "loading?: boolean"
+      ]
+    }
+  ],
+  "Meter": [
+    {
+      "name": "MeterProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "value: number",
+        "max?: number",
+        "label?: React.ReactNode",
+        "showValue?: boolean",
+        "tone?: keyof typeof meterTones"
+      ]
+    }
+  ],
+  "Monogram": [
+    {
+      "name": "MonogramProps",
+      "extends": "extends SVGAttributes<SVGSVGElement>",
+      "props": [
+        "* Fill color via `currentColor`.",
+        "* - `yellow` — default on dark surfaces (#FFFF00)",
+        "* - `black` — light-mode surfaces (#0A0A0A)",
+        "* - `white` — on tinted or photographic backgrounds",
+        "*/",
+        "color?: MonogramColor",
+        "size?: number",
+        "title?: string"
+      ]
+    }
+  ],
+  "NoirGlowBackground": [
+    {
+      "name": "NoirGlowBackgroundProps",
+      "props": [
+        "className?: string",
+        "style?: CSSProperties",
+        "shape?: ShaderShape",
+        "intensity?: Intensity",
+        "speed?: Speed",
+        "grain?: Grain",
+        "softness?: number",
+        "colorBack?: string",
+        "colors?: string[]",
+        "preserveCenter?: boolean",
+        "noiseOverlay?: boolean",
+        "forceCssFallback?: boolean",
+        "inert?: boolean",
+        "offsetX?: number",
+        "offsetY?: number",
+        "scale?: number"
+      ]
+    }
+  ],
+  "Pagination": [
+    {
+      "name": "PaginationProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>",
+      "props": [
+        "page: number",
+        "pageCount: number",
+        "onChange: (page: number) => void",
+        "siblingCount?: number"
+      ]
+    }
+  ],
+  "Panel": [
+    {
+      "name": "PanelProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "title?: React.ReactNode",
+        "description?: React.ReactNode",
+        "actions?: React.ReactNode"
+      ]
+    }
+  ],
+  "PasswordInput": [
+    {
+      "name": "PasswordInputProps",
+      "extends": "extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>",
+      "props": [
+        "label?: string",
+        "error?: string"
+      ]
+    }
+  ],
+  "Pill": [
+    {
+      "name": "PillProps",
+      "extends": "extends HTMLAttributes<HTMLSpanElement>",
+      "props": [
+        "variant?: keyof typeof pillVariants"
+      ]
+    }
+  ],
+  "PricingCard": [
+    {
+      "name": "PricingCardProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "name: React.ReactNode",
+        "price: React.ReactNode",
+        "period?: React.ReactNode",
+        "description?: React.ReactNode",
+        "features?: React.ReactNode[]",
+        "ctaLabel?: React.ReactNode",
+        "onCtaClick?: () => void",
+        "featured?: boolean",
+        "badge?: React.ReactNode"
+      ]
+    }
+  ],
+  "RadioGroup": [
+    {
+      "name": "RadioGroupProps",
+      "props": [
+        "label?: string",
+        "error?: string",
+        "children?: React.ReactNode",
+        "className?: string"
+      ]
+    },
+    {
+      "name": "RadioProps",
+      "extends": "extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>",
+      "props": [
+        "label?: string"
+      ]
+    }
+  ],
+  "RollbackPlan": [
+    {
+      "name": "RollbackPlanProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "name: string",
+        "steps: RollbackStep[]",
+        "executing?: boolean",
+        "loading?: boolean"
+      ]
+    }
+  ],
+  "Segmented": [
+    {
+      "name": "SegmentedProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>",
+      "props": [
+        "options: SegmentedOption[]",
+        "value: string",
+        "onChange: (value: string) => void",
+        "size?: 'sm' | 'md'"
+      ]
+    }
+  ],
+  "Select": [
+    {
+      "name": "SelectProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>",
+      "props": [
+        "label?: string",
+        "error?: string",
+        "placeholder?: string",
+        "options?: SelectOption[]",
+        "value?: string",
+        "onChange?: (value: string) => void"
+      ]
+    }
+  ],
+  "ServiceHealthCard": [
+    {
+      "name": "ServiceHealthCardProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "service: string",
+        "status?: Status",
+        "uptime?: string",
+        "responseTime?: string",
+        "version?: string",
+        "loading?: boolean"
+      ]
+    }
+  ],
+  "Sheet": [
+    {
+      "name": "SheetProps",
+      "props": [
+        "open?: boolean",
+        "onOpenChange?: (open: boolean) => void",
+        "children: ReactNode"
+      ]
+    }
+  ],
+  "Skeleton": [
+    {
+      "name": "SkeletonProps",
+      "extends": "extends React.HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "h?: number | string",
+        "w?: number | string",
+        "r?: number | string"
+      ]
+    }
+  ],
+  "Slider": [
+    {
+      "name": "SliderProps",
+      "extends": "extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'>",
+      "props": [
+        "label?: string",
+        "showValue?: boolean",
+        "onChange?: (value: number) => void"
+      ]
+    }
+  ],
+  "Sparkline": [
+    {
+      "name": "SparklineProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "data: number[]",
+        "width?: number",
+        "height?: number",
+        "w?: number",
+        "h?: number",
+        "color?: string"
+      ]
+    }
+  ],
+  "StatCard": [
+    {
+      "name": "StatCardProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "label: string",
+        "value: string | number",
+        "change?: { value: string; direction: 'up' | 'down' }",
+        "accent?: boolean"
+      ]
+    }
+  ],
+  "StatusDot": [
+    {
+      "name": "StatusDotProps",
+      "extends": "extends HTMLAttributes<HTMLSpanElement>",
+      "props": [
+        "status?: Status",
+        "label?: string",
+        "noPulse?: boolean"
+      ]
+    }
+  ],
+  "Stepper": [
+    {
+      "name": "StepperProps",
+      "extends": "extends HTMLAttributes<HTMLOListElement>",
+      "props": [
+        "steps: StepperStep[]",
+        "current: number",
+        "orientation?: 'horizontal' | 'vertical'"
+      ]
+    }
+  ],
+  "Switch": [
+    {
+      "name": "SwitchProps",
+      "extends": "extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>",
+      "props": [
+        "label?: string"
+      ]
+    }
+  ],
+  "TagInput": [
+    {
+      "name": "TagInputProps",
+      "props": [
+        "value?: string[]",
+        "defaultValue?: string[]",
+        "onChange?: (tags: string[]) => void",
+        "label?: string",
+        "error?: string",
+        "placeholder?: string",
+        "max?: number",
+        "className?: string",
+        "disabled?: boolean"
+      ]
+    }
+  ],
+  "Textarea": [
+    {
+      "name": "TextareaProps",
+      "extends": "extends TextareaHTMLAttributes<HTMLTextAreaElement>",
+      "props": [
+        "label?: string",
+        "error?: string"
+      ]
+    }
+  ],
+  "Timeline": [
+    {
+      "name": "TimelineProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "items: TimelineItemData[]",
+        "active?: boolean",
+        "loading?: boolean"
+      ]
+    }
+  ]
+}

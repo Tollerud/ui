@@ -12,6 +12,7 @@ export {
   SubHead,
   Swatch,
   TokenTable,
+  PropTable,
   ToastProvider,
   useToast,
 } from '../components/kit/primitives'

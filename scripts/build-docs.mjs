@@ -8,6 +8,8 @@ const docsApp = join(root, 'docs-app')
 
 copyFileSync(join(root, 'CHANGELOG.md'), join(docsApp, 'public/CHANGELOG.md'))
 
+execSync('node scripts/generate-docs-props-json.mjs', { cwd: root, stdio: 'inherit' })
+
 const brandDir = join(docsApp, 'public/brand')
 mkdirSync(brandDir, { recursive: true })
 for (const file of [

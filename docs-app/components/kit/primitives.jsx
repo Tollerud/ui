@@ -1,6 +1,7 @@
 'use client'
 import { useState, useCallback, useContext, createContext } from 'react'
 import { Icons } from './icons'
+import propsData from '../../lib/props-data.json'
 
 /* ── lightweight JSX syntax highlighter — single pass, never re-scans
    its own injected markup (so output stays valid XML for serialization) ── */
@@ -100,12 +101,56 @@ function slugifySectionTitle(title) {
     .replace(/(^-|-$)/g, '');
 }
 
-function Section({ id, title, desc, children }) {
+function pickPrimaryInterface(component, interfaces) {
+  if (!interfaces?.length) return null
+  const preferred = `${component}Props`
+  return interfaces.find((i) => i.name === preferred) || interfaces[0]
+}
+
+function PropTable({ component }) {
+  const interfaces = propsData[component]
+  const primary = pickPrimaryInterface(component, interfaces)
+  if (!primary) return null
+
+  return (
+    <div className="ds-proptable" style={{ marginBottom: 18 }}>
+      <div className="ds-row" style={{ justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10 }}>
+        <span className="ds-subhead" style={{ margin: 0 }}>Props</span>
+        <code className="ds-mono" style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>{primary.name}</code>
+      </div>
+      <div style={{ overflowX: 'auto' }}>
+        <table className="ds-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th></tr>
+          </thead>
+          <tbody>
+            {primary.props.map((prop) => {
+              const colon = prop.indexOf(': ')
+              const nameRaw = colon === -1 ? prop : prop.slice(0, colon)
+              const optional = nameRaw.endsWith('?')
+              const name = nameRaw.replace(/\?$/, '')
+              const type = colon === -1 ? '' : prop.slice(colon + 2)
+              return (
+                <tr key={prop}>
+                  <td><code className="ds-mono" style={{ fontSize: 12 }}>{name}{optional ? '?' : ''}</code></td>
+                  <td style={{ color: 'var(--text-secondary)', fontSize: 13 }}>{type || '—'}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+function Section({ id, title, desc, component, children }) {
   const sectionId = id || (title ? slugifySectionTitle(title) : undefined);
   return (
     <section className="ds-section" id={sectionId} data-reveal>
       <div className="ds-section__head"><h2 className="ds-section__title">{title}</h2></div>
       {desc && <p className="ds-section__desc">{desc}</p>}
+      {component && <PropTable component={component} />}
       {children}
     </section>
   );
@@ -181,4 +226,4 @@ function ToastProvider({ children }) {
 }
 const useToast = () => useContext(ToastCtx);
 
-export { highlight, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast };
+export { highlight, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, PropTable, ToastProvider, useToast };

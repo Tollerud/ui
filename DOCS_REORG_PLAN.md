@@ -67,14 +67,14 @@ Button, Card, Divider, Badge & Pill, Status & Kbd, Stat card, Progress/Skeleton/
 | Data table (npm + rich) | Data Table example |
 | Pricing card | Blocks (grid already covers; drop standalone duplicate) |
 
-## Phase 2 — Depth
+## Phase 2 — Depth (done)
 
 | Task | Detail |
 |------|--------|
-| **Nested nav** | Optional sub-groups under Design (Core · Forms · Navigation · Data · Infra · Marketing) |
-| **Overview cleanup** | Dynamic version + component counts from `package.json` / registry |
-| **Prop tables** | Surface `PROPS.generated.md` per section (or link to GitHub) |
-| **Resources group** | Migration notes, `SKILL.md` sync hint, contributing link |
+| **Nested nav** | Design sub-groups: Core · Forms & input · Navigation · Data & infra · Marketing |
+| **Overview cleanup** | Dynamic version + counts from `docs-stats.js` (registry, foundations, tokens) |
+| **Prop tables** | `PropTable` + `props-data.json` (generated at docs build); inline on key sections |
+| **Resources group** | `/resources` — migration, SKILL.md sync, contributing, prop reference |
 
 ## Phase 3 — Scale (only if needed)
 
