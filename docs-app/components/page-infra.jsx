@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, SEVERITY, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL } = __p
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL, CommandMenu } = __p
 
 /* Tollerud DS — Infrastructure component gallery. → window.PageInfra */
 function PageInfra() {
@@ -20,18 +20,18 @@ function PageInfra() {
 
   const rollbackSteps = rolling
     ? [
-      { id: 1, label: 'Drain traffic from hermes:v2.1', status: 'success' },
-      { id: 2, label: 'Stop hermes:v2.1 containers', status: 'success' },
-      { id: 3, label: 'Restore hermes:v2.0 image', status: 'running' },
-      { id: 4, label: 'Re-attach traffic', status: 'pending' },
-      { id: 5, label: 'Verify health checks', status: 'pending' },
+      { id: '1', label: 'Drain traffic from hermes:v2.1', status: 'success' },
+      { id: '2', label: 'Stop hermes:v2.1 containers', status: 'success' },
+      { id: '3', label: 'Restore hermes:v2.0 image', status: 'running' },
+      { id: '4', label: 'Re-attach traffic', status: 'pending' },
+      { id: '5', label: 'Verify health checks', status: 'pending' },
     ]
     : [
-      { id: 1, label: 'Drain traffic from hermes:v2.1', status: 'pending' },
-      { id: 2, label: 'Stop hermes:v2.1 containers', status: 'pending' },
-      { id: 3, label: 'Restore hermes:v2.0 image', status: 'pending' },
-      { id: 4, label: 'Re-attach traffic', status: 'pending' },
-      { id: 5, label: 'Verify health checks', status: 'skipped' },
+      { id: '1', label: 'Drain traffic from hermes:v2.1', status: 'pending' },
+      { id: '2', label: 'Stop hermes:v2.1 containers', status: 'pending' },
+      { id: '3', label: 'Restore hermes:v2.0 image', status: 'pending' },
+      { id: '4', label: 'Re-attach traffic', status: 'pending' },
+      { id: '5', label: 'Verify health checks', status: 'skipped' },
     ];
 
   return (
@@ -41,10 +41,10 @@ function PageInfra() {
 
       <Section title="HostCard" desc="A machine at a glance: status dot, CPU / memory / disk meters (red past 85%), uptime and container count. Supports a loading skeleton.">
         <Demo name="host-card" code={`<HostCard hostname="emma" ip="10.0.10.10" status="online"
-  cpu={23} memory={62} disk={45} uptime="14d" containers={4} />`}>
+  cpu="23%" memory="62%" disk="45%" uptime="14d" containers={4} />`}>
           <div className="ds-grid-3" style={{ width: '100%', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
-            <HostCard hostname="emma" ip="10.0.10.10" status="online" cpu={23} memory={62} disk={45} uptime="14d" containers={4}/>
-            <HostCard hostname="iris" ip="10.0.10.12" status="warning" cpu={88} memory={79} disk={52} uptime="3d" containers={6}/>
+            <HostCard hostname="emma" ip="10.0.10.10" status="online" cpu="23%" memory="62%" disk="45%" uptime="14d" containers={4}/>
+            <HostCard hostname="iris" ip="10.0.10.12" status="warning" cpu="88%" memory="79%" disk="52%" uptime="3d" containers={6}/>
             <HostCard loading/>
           </div>
         </Demo>
@@ -104,7 +104,7 @@ function PageInfra() {
   onApprove={…} onReject={…} />`}>
           <div className="ds-col" style={{ width: '100%', maxWidth: 460, gap: 10 }}>
             <ApprovalCard action="restart_container" state={approval}
-              description={<>Restart <b style={{ color: 'var(--foreground)' }}>iris:tollerud-hermes</b> to clear the sustained CPU alert.</>}
+              description="Restart iris:tollerud-hermes to clear the sustained CPU alert."
               source="iris → /hdd/config/tia/compose.yml" timestamp="14:33"
               onApprove={() => { setApproval('approved'); toast({ tone: 'success', title: 'Approved' }); }}
               onReject={() => { setApproval('rejected'); toast({ tone: 'error', title: 'Rejected' }); }}/>

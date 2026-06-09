@@ -1,82 +1,15 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, SEVERITY, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL } = __p
+import { adaptCommandGroups, docsCommandFilter } from '@/lib/adapt-command-groups'
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL, CommandMenu } = __p
 
 /* Tollerud DS — Navigation & Overlays. → window.PageNavOverlays */
-
-/* ── Command palette (Raycast-style) ── */
-function CommandMenu({ open, onClose, groups, placeholder = 'Search pages, sections, actions…' }) {
-  const [q, setQ] = useState('');
-  const [hi, setHi] = useState(0);
-  const inputRef = useRef(null);
-  const flat = [];
-  groups.forEach(g => g.items.forEach(it => { if (!q || matchesCommandQuery(it, q)) flat.push(it); }));
-  useEffect(() => { if (open) { setQ(''); setHi(0); setTimeout(() => inputRef.current && inputRef.current.focus(), 30); } }, [open]);
-  useEffect(() => {
-    if (!open) return;
-    const h = (e) => {
-      if (e.key === 'Escape') onClose();
-      else if (e.key === 'ArrowDown') { e.preventDefault(); setHi(i => Math.min(flat.length - 1, i + 1)); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); setHi(i => Math.max(0, i - 1)); }
-      else if (e.key === 'Enter') { const it = flat[hi]; if (it) { it.onSelect && it.onSelect(); onClose(); } }
-    };
-    document.addEventListener('keydown', h); return () => document.removeEventListener('keydown', h);
-  }, [open, flat, hi, onClose]);
-  if (!open) return null;
-  let idx = -1;
-  return (
-    <div className="tollerud-cmd-overlay" onClick={onClose}>
-      <div className="tollerud-cmd ds-themed" onClick={e => e.stopPropagation()} style={{ background: 'var(--surface-overlay)' }}>
-        <div className="tollerud-cmd__header">
-          <span className="tollerud-cmd__search-icon"><Icons.search size={17}/></span>
-          <input ref={inputRef} className="tollerud-cmd__input" placeholder={placeholder} value={q} onChange={e => { setQ(e.target.value); setHi(0); }}/>
-          <Kbd keys="Esc" size="sm"/>
-        </div>
-        <div className="tollerud-cmd__list">
-          {flat.length === 0 && <div className="tollerud-cmd__empty">No results for “{q}”</div>}
-          {groups.map(g => {
-            const items = g.items.filter(it => !q || matchesCommandQuery(it, q));
-            if (!items.length) return null;
-            return (
-              <div className="tollerud-cmd__group" key={g.label}>
-                <div className="tollerud-cmd__group-label">{g.label}</div>
-                {items.map(it => {
-                  idx++; const active = idx === hi; const I = it.icon ? Icons[it.icon] : Icons.dot;
-                  return (
-                    <button key={it.id} className={`tollerud-action-row ${active ? 'tollerud-action-row--highlighted' : ''}`}
-                      onMouseEnter={() => setHi(idx)} onClick={() => { it.onSelect && it.onSelect(); onClose(); }}>
-                      <span className="tollerud-action-row__icon"><I size={17}/></span>
-                      <span className="tollerud-action-row__content">
-                        <span className="tollerud-action-row__label">{it.label}</span>
-                        {it.description && <span className="tollerud-action-row__description">{it.description}</span>}
-                      </span>
-                      {it.shortcut && <span className="tollerud-action-row__shortcut"><Kbd keys={it.shortcut} size="sm"/></span>}
-                    </button>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
-        <div className="tollerud-cmd__footer">
-          <span className="tollerud-cmd__hint"><Kbd keys="↑" size="sm"/><Kbd keys="↓" size="sm"/><span className="tollerud-cmd__hint-text">navigate</span></span>
-          <span className="tollerud-cmd__hint"><Kbd keys="↵" size="sm"/><span className="tollerud-cmd__hint-text">select</span></span>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 function PageNavOverlays() {
   const toast = useToast();
   const [dialog, setDialog] = useState(false);
   const [cmd, setCmd] = useState(false);
-
-  useEffect(() => {
-    const h = (e) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); setCmd(true); } };
-    document.addEventListener('keydown', h); return () => document.removeEventListener('keydown', h);
-  }, []);
 
   const cmdGroups = [
     { label: 'Servers', items: [
@@ -181,12 +114,12 @@ function PageNavOverlays() {
   return () => document.removeEventListener('keydown', h);
 }, []);
 
-<CommandMenu open={open} onClose={close} groups={groups} />`}>
+<CommandMenu open={open} onOpenChange={setOpen} groups={groups} />`}>
           <div className="ds-row" style={{ gap: 12 }}>
             <Button variant="terminal" onClick={() => setCmd(true)}>open_command</Button>
             <span className="ds-row" style={{ gap: 7, fontSize: 13, color: 'var(--text-muted)' }}>or press <Kbd keys="⌘+K"/></span>
           </div>
-          <CommandMenu open={cmd} onClose={() => setCmd(false)} groups={cmdGroups}/>
+          <CommandMenu open={cmd} onOpenChange={setCmd} groups={adaptCommandGroups(cmdGroups)} filter={docsCommandFilter}/>
         </Demo>
       </Section>
     </div>
@@ -194,4 +127,3 @@ function PageNavOverlays() {
 }
 
 export default PageNavOverlays;
-export { CommandMenu };

@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Icons } from './icons'
 import { Button, Checkbox, DropdownMenu, Skeleton } from './legacy-ui'
 
-/* Tollerud DS — DataTable: config-driven table with search, filter, sort,
+/* Tollerud DS — RichDataTable (docs-only): config-driven table with search, filter, sort,
    selection + bulk actions, per-row menus, pagination and an empty state.
    → window.DataTable
 

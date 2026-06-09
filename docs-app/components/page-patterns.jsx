@@ -1,10 +1,10 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, SEVERITY, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL } = __p
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, GrainGradientGL, CommandMenu } = __p
 
 import { Timeline } from './page-components'
-import { CommandMenu } from './page-nav-overlays'
+import { adaptCommandGroups, docsCommandFilter } from '@/lib/adapt-command-groups'
 
 /* Tollerud DS — Patterns: Mission Control dashboard built from infra components. */
 
@@ -86,7 +86,7 @@ function PagePatterns() {
           <div className="ds-grid-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))' }}>
             {hosts.map(h => (
               <HostCard key={h.name} hostname={h.name} ip={h.ip} status={h.status}
-                cpu={h.cpu} memory={h.mem} disk={h.disk} uptime={h.uptime} containers={h.containers}/>
+                cpu={`${h.cpu}%`} memory={`${h.mem}%`} disk={`${h.disk}%`} uptime={h.uptime} containers={h.containers}/>
             ))}
           </div>
         </div>
@@ -97,7 +97,7 @@ function PagePatterns() {
 
           <ApprovalCard
             action="restart_container"
-            description={<>Restart <b style={{ color: 'var(--foreground)' }}>iris:tollerud-hermes</b> to clear the sustained CPU alert.</>}
+            description="Restart iris:tollerud-hermes to clear the sustained CPU alert."
             source="iris → /hdd/config/tia/compose.yml"
             state={approval}
             onApprove={() => { setApproval('approved'); toast({ tone: 'success', title: 'Approved — restarting iris:hermes' }); }}
@@ -120,7 +120,7 @@ function PagePatterns() {
         </div>
       </div>
 
-      <CommandMenu open={cmd} onClose={() => setCmd(false)} groups={cmdGroups}/>
+      <CommandMenu open={cmd} onOpenChange={setCmd} groups={adaptCommandGroups(cmdGroups)} filter={docsCommandFilter}/>
     </div>
   );
 }

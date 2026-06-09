@@ -19,12 +19,12 @@ Status key: `[ ]` todo · `[~]` in progress · `[x]` done
 - [ ] Retire Babel-in-browser `index.html` entry (legacy kept for now; Next.js is primary deploy)
 - [x] Playwright E2E serves static `_site/` preview
 
-### 1b — Eliminate duplicate component files
+### 1b — Eliminate duplicate component files `[~]`
 
 - [ ] Delete `docs/components.jsx` once bridge covers all exports
-- [ ] Replace `docs/infra.jsx` with `@tollerud/ui` infra components (+ prop mapping: `cpu={23}` → `cpu="23%"`)
-- [ ] Replace or extend npm `DataTable` for docs demos (docs version has bulk actions, pagination, row menus — richer than npm)
-- [ ] Align docs `CommandMenu` with npm API (`onOpenChange` vs `onClose`) or document docs-only nav palette separately
+- [x] Replace `docs-app/components/infra.jsx` with `@tollerud/ui` infra components (+ string props for HostCard cpu/memory/disk)
+- [x] Rename docs DataTable to `rich-datatable.jsx` (docs-only; npm `DataTable` stays the package export)
+- [x] Align docs `CommandMenu` with npm API (`onOpenChange` + `adaptCommandGroups` helper)
 - [ ] Add **drift test**: registry keys ↔ `components/index.ts` exports ↔ docs demo imports
 
 ### 1c — Docs-only code stays doc-only

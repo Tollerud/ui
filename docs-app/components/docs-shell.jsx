@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { ToastProvider, Kbd, Icons, buildSectionCommands, initMotion, PageTOC } from '@/lib/provide-pages'
-import { CommandMenu } from './page-nav-overlays'
+import { ToastProvider, Kbd, Icons, CommandMenu, buildSectionCommands, initMotion, PageTOC } from '@/lib/provide-pages'
+import { adaptCommandGroups, docsCommandFilter } from '@/lib/adapt-command-groups'
 import PageOverview from './page-overview'
 import PageFoundations from './page-foundations'
 import PageComponents from './page-components'
@@ -119,10 +119,6 @@ export function DocsShell({ route: routeProp }) {
   useEffect(() => {
     const h = (e) => {
       if (e.key === 'Escape') setNavOpen(false)
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault()
-        setCmdOpen((o) => !o)
-      }
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'l') {
         e.preventDefault()
         toggleThemeRef.current()
@@ -258,8 +254,9 @@ export function DocsShell({ route: routeProp }) {
       </div>
       <CommandMenu
         open={cmdOpen}
-        onClose={() => setCmdOpen(false)}
-        groups={cmdGroups}
+        onOpenChange={setCmdOpen}
+        groups={adaptCommandGroups(cmdGroups)}
+        filter={docsCommandFilter}
         placeholder="Search pages, sections, components…"
       />
     </ToastProvider>

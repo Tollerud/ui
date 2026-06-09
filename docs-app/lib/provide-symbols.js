@@ -17,10 +17,10 @@ export const DOC_SYMBOLS = [
   'Stepper', 'PasswordInput', 'FormRow', 'PricingCard', 'Drawer', 'Combobox', 'AvatarGroup',
   'CopyButton', 'Demo', 'CodeSnippet', 'PageHeader', 'Section', 'SubHead', 'Swatch', 'TokenTable',
   'ToastProvider', 'useToast', 'Icons', 'Ico', 'DataTable', 'BarChart', 'AreaChart', 'Donut',
-  'Sparkline', 'HeroBlock', 'FeatureCard', 'CTABand', 'SEVERITY', 'HostCard', 'ServiceHealthCard',
+  'Sparkline', 'HeroBlock', 'FeatureCard', 'CTABand', 'HostCard', 'ServiceHealthCard',
   'DockerStackCard', 'IncidentCard', 'AlertInbox', 'ApprovalCard', 'RollbackPlan',
   'BackupStatusPanel', 'ActionDiff', 'initMotion', 'CountUp', 'Typewriter', 'PageTOC',
   'MOTION_REDUCED', 'slugify', 'jumpToSection', 'goToSection', 'buildSectionCommands',
   'matchesCommandQuery', 'Squares', 'GrainGradient', 'PageBackgrounds', 'BgFrame',
-  'GradientReadabilityDemo', 'GrainGradientGL',
+  'GradientReadabilityDemo', 'GrainGradientGL', 'CommandMenu',
 ]
