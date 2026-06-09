@@ -32,7 +32,7 @@ function PageChangelog() {
       <Section title="Changelog" desc="Every release, in order. All API changes are noted." />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
         {entries.map((entry, i) => (
-          <ChangelogEntry key={i} entry={entry} />
+          <ChangelogEntry key={i} entry={entry} defaultOpen={i === 0} />
         ))}
       </div>
     </div>
@@ -40,8 +40,8 @@ function PageChangelog() {
 }
 
 /* ── Entry component ── */
-function ChangelogEntry({ entry }) {
-  const [open, setOpen] = useState(true);
+function ChangelogEntry({ entry, defaultOpen }) {
+  const [open, setOpen] = useState(defaultOpen);
   return (
     <div style={{
       border: '1px solid var(--border)',
