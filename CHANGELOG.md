@@ -7,6 +7,27 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 1.2.0 — 2026-06-09 — Subpath exports, Tailwind v4 CSS, Playwright E2E
+
+Per-component subpath imports, a dedicated Tailwind v4 stylesheet, expanded unit tests, and docs-site E2E smoke tests.
+
+### New features
+
+- Subpath exports — `@tollerud/ui/button`, `@tollerud/ui/dialog`, `@tollerud/ui/utils`, and one entry per component (61 total)
+- `@tollerud/ui/globals-v4.css` — single import for Tailwind v4 + tokens + component layers
+- `@tollerud/ui/globals-layers.css` — shared component CSS layers (also imported by v3 `globals.css`)
+- `npm run changelog:draft` — draft a CHANGELOG entry from commits since the latest version
+
+### Tests & CI
+
+- Vitest coverage for `Dialog`, `DataTable`, and `CommandMenu`
+- Playwright E2E smoke tests for the docs site (`npm run test:e2e`)
+- CI verifies subpath bundles and `globals-v4.css` in the npm tarball
+
+### Migration
+
+Nothing breaking. Existing `@tollerud/ui` barrel imports continue to work. For tree-shaking, switch to subpath imports. Tailwind v4 projects should prefer `@import "@tollerud/ui/globals-v4.css"`.
+
 ## 1.1.5 — 2026-06-09 — Fix Tailwind preset color namespace
 
 ### Bug fix

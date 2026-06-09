@@ -45,11 +45,26 @@ export default config
 ### Tailwind v4
 
 ```css
-/* app/globals.css */
-@import "tailwindcss";
-@config "../../node_modules/@tollerud/ui/preset";
+/* app/globals.css — recommended */
+@import "@tollerud/ui/globals-v4.css";
 @source "../../node_modules/@tollerud/ui/dist";
 ```
+
+`globals-v4.css` bundles Tailwind v4, design tokens, and component layer styles. For Tailwind v3 projects, keep using `@tollerud/ui/globals.css`.
+
+---
+
+## Subpath imports (tree-shaking)
+
+Import individual components without pulling the full barrel:
+
+```tsx
+import { Button } from '@tollerud/ui/button'
+import { Dialog, DialogContent } from '@tollerud/ui/dialog'
+import { cn } from '@tollerud/ui/utils'
+```
+
+Every component in the catalog has a matching subpath (kebab-case filename). The main `@tollerud/ui` entry still works for convenience.
 
 ---
 

@@ -61,7 +61,7 @@ Last updated: 2026-06-09
 - ✅ DataTable — stable height on search, sort, select, bulk, pagination
 - ✅ Density — `<Card density="compact">` + `data-density` container wrapper
 
-### npm package (components/*.tsx) — v1.1.5
+### npm package (components/*.tsx) — v1.2.0
 - ✅ Button — defaults to secondary, `asChild` (Radix Slot) + exported `buttonVariants` since 1.0.7
 - ✅ Bundle correctly marked `'use client'` for RSC/SSR safety since 1.0.8
 - ✅ Card — density prop
@@ -104,5 +104,7 @@ Last updated: 2026-06-09
 - ~~No unit tests~~ — Vitest + Testing Library smoke tests for core components + registry validation
 - ~~No ESLint / jsx-a11y~~ — flat config with react-hooks + jsx-a11y
 - ~~registry.json not published~~ — exported as `@tollerud/ui/registry.json`
-- No Storybook or visual regression tests for the npm package
-- `CHANGELOG.md` is manual — could be auto-generated from commits
+- ~~No Storybook or visual regression tests for the npm package~~ — Playwright E2E smoke tests for the docs site (`npm run test:e2e`)
+- ~~`CHANGELOG.md` is manual~~ — `npm run changelog:draft` drafts an entry from commits since the latest version
+- ~~No subpath exports~~ — `@tollerud/ui/button`, `@tollerud/ui/dialog`, etc. (generated at build time)
+- ~~No Tailwind v4 CSS entry~~ — `@tollerud/ui/globals-v4.css`

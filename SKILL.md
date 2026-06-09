@@ -31,10 +31,15 @@ const config: Config = {
 export default config
 ```
 
-As of **v1.1.5**, Tailwind colors are exposed under `tollerud.*` only. Use utilities like `text-tollerud-yellow`, `bg-tollerud-surface-raised`, and `border-tollerud-border`; do not use `tia-*` utility names.
+As of **v1.2.0**, Tailwind colors are exposed under `tollerud.*` only. Use utilities like `text-tollerud-yellow`, `bg-tollerud-surface-raised`, and `border-tollerud-border`; do not use `tia-*` utility names.
 
-Import base styles/tokens from `@tollerud/ui/globals.css` (or `@tollerud/ui/tokens.css`) in your root layout / `globals.css`, alongside Tailwind's own layers:
+**Tailwind v4:** `@import "@tollerud/ui/globals-v4.css"` (includes tokens + component layers). **Tailwind v3:** `@import "@tollerud/ui/globals.css"` after preflight/utilities.
+
+**Subpath imports (tree-shaking):** `@tollerud/ui/button`, `@tollerud/ui/dialog`, `@tollerud/ui/utils`, etc. The main `@tollerud/ui` barrel still works.
+
+Import base styles/tokens in your root layout / `globals.css`:
 ```css
+/* Tailwind v3 */
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
 @import "@tollerud/ui/globals.css";

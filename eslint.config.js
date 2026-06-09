@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   {
-    ignores: ['dist/**', 'docs/**', 'node_modules/**', 'coverage/**', 'tollerud-preset.js'],
+    ignores: ['dist/**', 'docs/**', 'node_modules/**', 'coverage/**', 'tollerud-preset.js', 'entries/**'],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -30,5 +30,11 @@ export default tseslint.config(
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
     },
-  }
+  },
+  {
+    files: ['scripts/**/*.mjs', 'playwright.config.ts', 'e2e/**/*.ts'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 )

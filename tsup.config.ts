@@ -2,14 +2,10 @@ import { defineConfig } from 'tsup'
 import { readFileSync, writeFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 
-// esbuild strips/rejects "use client" as a banner (treats it as a module
-// directive and errors when bundling). Prepend it to the built files after
-// the fact so consumers' RSC bundlers see the whole package as client code —
-// it contains hooks (useState, useEffect, etc.) throughout.
 function prependUseClient() {
   const dir = join(__dirname, 'dist')
   for (const file of readdirSync(dir)) {
-    if (file === 'index.js' || file === 'index.cjs') {
+    if (file.endsWith('.js') || file.endsWith('.cjs')) {
       const path = join(dir, file)
       const content = readFileSync(path, 'utf8')
       if (!content.startsWith("'use client'")) {
@@ -19,8 +15,20 @@ function prependUseClient() {
   }
 }
 
+const manifest = JSON.parse(
+  readFileSync(join(__dirname, 'entries/manifest.json'), 'utf8')
+) as string[]
+
+const entry = Object.fromEntries(
+  manifest.map((path) => {
+    if (path === 'components/index.ts') return ['index', path]
+    const name = path.replace(/^entries\//, '').replace(/\.ts$/, '')
+    return [name, path]
+  })
+)
+
 export default defineConfig({
-  entry: ['components/index.ts'],
+  entry,
   format: ['esm', 'cjs'],
   outExtension({ format }) {
     return { js: format === 'cjs' ? '.cjs' : '.js' }
@@ -41,6 +49,7 @@ export default defineConfig({
     '@radix-ui/react-progress',
     '@radix-ui/react-tabs',
     '@radix-ui/react-tooltip',
+    '@radix-ui/react-slot',
     'class-variance-authority',
     'framer-motion',
     'lucide-react',

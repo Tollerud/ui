@@ -16,6 +16,18 @@ Or run the full gate in one step:
 npm run validate
 ```
 
+Docs site E2E (requires `npx playwright install chromium` once):
+
+```bash
+npm run test:e2e
+```
+
+Draft a CHANGELOG entry from git commits:
+
+```bash
+npm run changelog:draft
+```
+
 ## Adding or changing components
 
 Follow the checklist in [AGENTS.md](AGENTS.md):

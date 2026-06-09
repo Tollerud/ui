@@ -52,6 +52,10 @@ Import the CSS in your root layout or `globals.css`:
 ```
 And import the design system tokens/base styles from `@tollerud/ui/globals.css` or copy them locally.
 
+**Tailwind v4:** `@import "@tollerud/ui/globals-v4.css"` — includes tokens and component layers in one file.
+
+**Subpath imports:** `import { Button } from '@tollerud/ui/button'` — one entry per component for tree-shaking; the main `@tollerud/ui` barrel still works.
+
 ---
 
 ## Aesthetic Rules

@@ -1,6 +1,6 @@
 {
   "name": "@tollerud/ui",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Tollerud User Interface — dark, monochrome + yellow accent. Noir aesthetic meets modern utility.",
   "private": false,
   "type": "module",
@@ -35,17 +35,31 @@
       }
     },
     "./globals.css": "./globals.css",
+    "./globals-v4.css": "./globals-v4.css",
+    "./globals-layers.css": "./globals-layers.css",
     "./tokens.css": "./tokens.css",
     "./preset": "./tollerud-preset.js",
     "./tollerud-logo.svg": "./tollerud-logo.svg",
     "./tollerud-avatar.svg": "./tollerud-avatar.svg",
     "./tollerud-avatar.png": "./tollerud-avatar.png",
     "./tia-full-figure.svg": "./tia-full-figure.svg",
-    "./registry.json": "./registry.json"
+    "./registry.json": "./registry.json",
+    "./*": {
+      "import": {
+        "types": "./dist/*.d.ts",
+        "default": "./dist/*.js"
+      },
+      "require": {
+        "types": "./dist/*.d.cts",
+        "default": "./dist/*.cjs"
+      }
+    }
   },
   "files": [
     "dist",
     "globals.css",
+    "globals-v4.css",
+    "globals-layers.css",
     "tokens.css",
     "tollerud-preset.js",
     "registry.json",
@@ -61,12 +75,16 @@
     "SKILL.md"
   ],
   "scripts": {
+    "prebuild": "node scripts/generate-entries.mjs",
     "build": "tsup",
     "typecheck": "tsc --noEmit -p tsconfig.build.json",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "validate": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "test:e2e": "playwright test",
+    "test:subpath": "node scripts/verify-subpath-exports.mjs",
+    "changelog:draft": "node scripts/changelog-draft.mjs",
+    "validate": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath",
     "prepublishOnly": "npm run typecheck && npm run lint && npm run test && npm run build",
     "preview": "open preview.html"
   },
@@ -97,6 +115,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@playwright/test": "^1.60.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

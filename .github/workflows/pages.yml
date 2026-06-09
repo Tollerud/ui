@@ -28,7 +28,7 @@ jobs:
       - name: Build static site
         run: |
           mkdir -p _site
-          cp index.html 404.html preview.html globals.css tokens.css CHANGELOG.md _site/
+          cp index.html 404.html preview.html globals.css globals-v4.css globals-layers.css tokens.css CHANGELOG.md _site/
           cp CNAME _site/
           cp tollerud-avatar.png tollerud-avatar.svg tollerud-logo.svg tia-full-figure.svg _site/
           cp -R docs _site/docs

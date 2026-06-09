@@ -1,0 +1,18 @@
+/* ═══════════════════════════════════════════════
+   Tollerud Design System — Global CSS (Tailwind v4)
+   ══════════════════════════════════════════════
+   Usage in app/globals.css:
+
+     @import '@tollerud/ui/globals-v4.css';
+     @source '../node_modules/@tollerud/ui/dist';
+
+   Or with a local tailwind.config.ts shim for the preset:
+
+     @import 'tailwindcss';
+     @config './tailwind.config.ts';
+     @import '@tollerud/ui/globals-v4.css';
+   ═══════════════════════════════════════════════ */
+
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./globals-layers.css";

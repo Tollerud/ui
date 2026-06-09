@@ -34,4 +34,22 @@ jobs:
           npm pack --dry-run 2>&1 | tee /tmp/pack.txt
           grep -q 'registry.json' /tmp/pack.txt
           grep -q 'dist/index.js' /tmp/pack.txt
+          grep -q 'dist/button.js' /tmp/pack.txt
+          grep -q 'globals-v4.css' /tmp/pack.txt
           grep -q 'GETTING_STARTED.md' /tmp/pack.txt
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --legacy-peer-deps
+
+      - run: npx playwright install chromium --with-deps
+
+      - run: npm run test:e2e
