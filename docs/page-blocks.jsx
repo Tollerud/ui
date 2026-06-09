@@ -1,6 +1,6 @@
 /* Tollerud DS — Blocks page: full-width composed page sections. → window.PageBlocks
    Block components (HeroBlock, FeatureCard, CTABand, PricingCard) live in
-   ds/marketing.jsx and ds/components.jsx. */
+   docs/marketing.jsx and docs/components.jsx. */
 
 function PageBlocks() {
   return (

@@ -31,7 +31,7 @@ jobs:
           cp index.html 404.html preview.html globals.css tokens.css CHANGELOG.md _site/
           cp CNAME _site/
           cp tollerud-avatar.png tollerud-avatar.svg tollerud-logo.svg tia-full-figure.svg _site/
-          cp -R ds _site/ds
+          cp -R docs _site/docs
           touch _site/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5

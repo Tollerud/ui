@@ -1,5 +1,5 @@
 /* Tollerud DS — Charts page. → window.PageCharts
-   Chart components (BarChart, AreaChart, Donut, Sparkline) live in ds/charts.jsx. */
+   Chart components (BarChart, AreaChart, Donut, Sparkline) live in docs/charts.jsx. */
 
 function PageCharts() {
   return (

@@ -159,7 +159,9 @@ Individual components can be added via the registry at `registry.json`. The regi
 Interactive demos live in the repo root — not a separate Next.js app:
 
 - **`index.html`** — docs site entry (React + Babel in-browser, Tailwind CDN)
-- **`ds/`** — full SPA: component gallery, foundations, forms, infra patterns, changelog
+- **`docs/`** — full SPA: component gallery, foundations, forms, infra patterns, changelog
+
+Reference markdown (`README.md`, `COMPONENTS.md`, etc.) lives at the repo root; **`docs/`** is the interactive site source only.
 
 Run locally: open `index.html` in a browser, or serve the repo root with any static server.
 

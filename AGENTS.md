@@ -381,7 +381,7 @@ npx tsup                                   # verify the bundle builds
 | Component file | `components/ComponentName.tsx` |
 | Named export + type export | `components/index.ts` |
 | Registry entry | `registry.json` — add a `kebab-case` key with `name`, `description`, `files`, `dependencies`, `registryDependencies`, `type: "components:ui"` |
-| Docs preview | Add a `<Section>` + `<Demo>` in the relevant `ds/page-*.jsx` (e.g. `ds/page-components.jsx` for core UI). Register new top-level pages in `ds/app.jsx` (`NAV`, `PAGES`, `PAGE_TITLES`). Site entry: `index.html` → `ds/`. |
+| Docs preview | Add a `<Section>` + `<Demo>` in the relevant `docs/page-*.jsx` (e.g. `docs/page-components.jsx` for core UI). Register new top-level pages in `docs/app.jsx` (`NAV`, `PAGES`, `PAGE_TITLES`). Site entry: `index.html` → `docs/`. |
 
 ### 3. Version bump rules
 
@@ -394,7 +394,7 @@ npx tsup                                   # verify the bundle builds
 Edit `package.json` version, then update these to match:
 - `COMPLETENESS_ROADMAP.md` — header line `### npm package (components/*.tsx) — vX.X.X`
 - `registry.json` — top-level `"version"` field
-- `ds/app.jsx` — sidebar brand line `user interface · vX.X.X`
+- `docs/app.jsx` — sidebar brand line `user interface · vX.X.X`
 
 ### 4. Always update these files in the same commit
 

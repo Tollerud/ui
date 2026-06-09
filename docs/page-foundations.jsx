@@ -345,7 +345,7 @@ function PageFoundations() {
           })}
         </div>
         <div style={{ marginTop: 16 }}>
-          <CodeSnippet name="adding-an-icon.jsx" code={`// 1. Add to ds/icons.jsx — draw on the 24×24 grid, no fills:
+          <CodeSnippet name="adding-an-icon.jsx" code={`// 1. Add to docs/icons.jsx — draw on the 24×24 grid, no fills:
 //    <Ico> already sets viewBox, 1.8 stroke, round caps/joins.
 container: (p) => (
   <Ico {...p}>

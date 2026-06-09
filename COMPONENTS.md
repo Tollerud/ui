@@ -228,7 +228,7 @@ See `KEYBOARD.md` for full keyboard contract.
 
 ## Homelab / Infrastructure Components
 
-The Tier 2 component set — these make Tia a real infrastructure assistant. All live in `ds/infra.jsx` and are showcased on the **Infrastructure** page; `HostCard`, `AlertInbox` and `ApprovalCard` also power the Mission Control dashboard. They share a five-level `SEVERITY` scale (`critical · high · medium · low · info`).
+The Tier 2 component set — these make Tia a real infrastructure assistant. All live in `docs/infra.jsx` and are showcased on the **Infrastructure** page; `HostCard`, `AlertInbox` and `ApprovalCard` also power the Mission Control dashboard. They share a five-level `SEVERITY` scale (`critical · high · medium · low · info`).
 
 ### ServiceHealthCard
 
@@ -544,7 +544,7 @@ CSS: `.ds-price` and `.ds-price__*`; grid wrapper `.ds-price-grid`.
 > ⚠️ **Not yet in the `@tollerud/ui` npm package** — this is a docs-site / roadmap component (see [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)). Do not import `BarChart / AreaChart / Donut / Sparkline` from `@tollerud/ui` — it will not resolve. Check [SKILL.md](SKILL.md) for what's actually shipped.
 
 
-Palette-aware SVG charts in `ds/charts.jsx`. Yellow is the highlight series; everything else stays monochrome. Grid/axis use the `--chart-grid` token, so all four are theme-aware.
+Palette-aware SVG charts in `docs/charts.jsx`. Yellow is the highlight series; everything else stays monochrome. Grid/axis use the `--chart-grid` token, so all four are theme-aware.
 
 ```tsx
 <BarChart data={[{ label: 'Mon', value: 12 }, { label: 'Tue', value: 18, accent: true }]} height={180} />
@@ -560,7 +560,7 @@ Palette-aware SVG charts in `ds/charts.jsx`. Yellow is the highlight series; eve
 
 ## Marketing blocks
 
-Full-width page sections in `ds/marketing.jsx`, used on the Blocks page.
+Full-width page sections in `docs/marketing.jsx`, used on the Blocks page.
 
 ### HeroBlock
 

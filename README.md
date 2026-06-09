@@ -257,7 +257,7 @@ design-system/
 │   ├── BackupStatusPanel.tsx  # Backup job overview
 │   └── Container.tsx         # Layout width constraint
 ├── index.html                # 🏆 Live docs entry (GitHub Pages)
-└── ds/
+└── docs/
     ├── app.jsx               # Shell: sidebar nav, routing, theme toggle
     ├── components.jsx        # Shared demo primitives
     ├── page-components.jsx   # Live component gallery + copy-paste code

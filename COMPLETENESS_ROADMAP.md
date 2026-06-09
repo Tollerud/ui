@@ -18,7 +18,7 @@ Last updated: 2026-06-09
 - ✅ Dark mode default
 - ✅ `prefers-reduced-motion` respected globally
 
-### Components (docs site — ds/components.jsx)
+### Components (docs site — docs/components.jsx)
 - ✅ Button — 5 variants, 3 sizes, icon, loading, disabled, icon-only
 - ✅ Card — accent, density prop
 - ✅ Badge — 6 variants
