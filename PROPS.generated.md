@@ -59,7 +59,7 @@
 ## Avatar — `AvatarGroupProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `max?: number`
-- `size?: keyof typeof avatarSizes`
+- `size?: keyof typeof avatarSizes | number`
 - `children: React.ReactNode`
 
 ## Avatar — `AvatarProps` extends extends HTMLAttributes<HTMLSpanElement>
@@ -67,7 +67,7 @@
 - `src?: string`
 - `name?: string`
 - `fallback?: React.ReactNode`
-- `size?: keyof typeof avatarSizes`
+- `size?: keyof typeof avatarSizes | number`
 
 ## BackupStatusPanel — `BackupStatusPanelProps` extends extends HTMLAttributes<HTMLDivElement>
 
@@ -211,9 +211,11 @@
 
 - `label?: React.ReactNode`
 - `description?: React.ReactNode`
+- `hint?: React.ReactNode`
 - `error?: React.ReactNode`
 - `required?: boolean`
 - `htmlFor?: string`
+- `layout?: 'settings' | 'stack'`
 
 ## GlowCard — `GlowCardProps`
 
@@ -286,6 +288,17 @@
 - `showValue?: boolean`
 - `tone?: keyof typeof meterTones`
 
+## Monogram — `MonogramProps` extends extends SVGAttributes<SVGSVGElement>
+
+- `* Fill color via `currentColor`.`
+- `* - `yellow` — default on dark surfaces (#FFFF00)`
+- `* - `black` — light-mode surfaces (#0A0A0A)`
+- `* - `white` — on tinted or photographic backgrounds`
+- `*/`
+- `color?: MonogramColor`
+- `size?: number`
+- `title?: string`
+
 ## NoirGlowBackground — `NoirGlowBackgroundProps`
 
 - `className?: string`
@@ -301,6 +314,9 @@
 - `noiseOverlay?: boolean`
 - `forceCssFallback?: boolean`
 - `inert?: boolean`
+- `offsetX?: number`
+- `offsetY?: number`
+- `scale?: number`
 
 ## Pagination — `PaginationProps` extends extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>
 
@@ -384,6 +400,12 @@
 - `open?: boolean`
 - `onOpenChange?: (open: boolean) => void`
 - `children: ReactNode`
+
+## Skeleton — `SkeletonProps` extends extends React.HTMLAttributes<HTMLDivElement>
+
+- `h?: number | string`
+- `w?: number | string`
+- `r?: number | string`
 
 ## Slider — `SliderProps` extends extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'onChange'>
 
