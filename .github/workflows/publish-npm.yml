@@ -29,7 +29,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      id-token: write
     steps:
       - uses: actions/checkout@v5
 
@@ -90,11 +89,13 @@ jobs:
       - run: npm run test:e2e
         if: steps.version_check.outputs.skip == 'false'
 
+      # Do not use --provenance with a classic NPM_TOKEN — npm returns E404 on
+      # scoped packages. Re-enable after configuring Trusted Publishers (OIDC) on npmjs.com.
       - name: Publish to npm
         if: steps.version_check.outputs.skip == 'false'
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
 
       - name: Create GitHub Release
         if: steps.version_check.outputs.skip == 'false'
