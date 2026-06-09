@@ -1,4 +1,1 @@
-@import "../../globals.css";
-@source "../../node_modules/@tollerud/ui/dist";
-
-@import "../../docs/docs.css";
+@import "../app/globals.css";

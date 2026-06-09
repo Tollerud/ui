@@ -1,4 +1,12 @@
 @import "../../globals.css";
-@source "../../node_modules/@tollerud/ui/dist";
+@config "../tailwind.config.cjs";
+
+/* npm component utilities — monorepo dist (CI) + docs-app install (local) */
+@source "../../dist";
+@source "../node_modules/@tollerud/ui/dist";
+
+/* docs adapters and pages that compose Tailwind utilities */
+@source "../components";
+@source "../lib";
 
 @import "../../docs/docs.css";
