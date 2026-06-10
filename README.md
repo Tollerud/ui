@@ -6,7 +6,7 @@ A complete, browsable UI library built around **monochrome + yellow accent**. No
 
 **Requirements:** React ≥ 18 · TypeScript supported (types included) · Tailwind CSS v4 (v3 supported via `globals-v3.css`)
 
-→ **[Component reference →](COMPONENTS.md)** · **[Setup guide →](GETTING_STARTED.md)** · **[Brand guidelines →](BRAND.md)** · **[Changelog →](CHANGELOG.md)** · **[AI agent skill →](SKILL.md)**
+→ **[Components →](COMPONENTS.md)** · **[Props (generated) →](PROPS.generated.md)** · **[Setup guide →](GETTING_STARTED.md)** · **[Brand guidelines →](BRAND.md)** · **[Changelog →](CHANGELOG.md)** · **[AI agent skill →](SKILL.md)**
 
 ## Packages
 
@@ -97,7 +97,7 @@ export default {
 import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, NoirGlowBackground } from '@tollerud/ui'
 ```
 
-TypeScript types are included — no `@types/*` package needed. See **[COMPONENTS.md](COMPONENTS.md)** for the full prop reference for every component.
+TypeScript types are included — no `@types/*` package needed. **[SKILL.md](SKILL.md)** lists every export; **[PROPS.generated.md](PROPS.generated.md)** has machine-checked prop tables; **[COMPONENTS.md](COMPONENTS.md)** has usage examples and patterns.
 
 Publish a new version by bumping `version` in `package.json` and pushing to `main` — the `publish-npm` GitHub Action detects the version change, runs `npm publish --provenance` via npm Trusted Publishers (OIDC), and then creates a matching GitHub Release automatically.
 
@@ -229,7 +229,8 @@ design-system/
 ├── registry.json             # Repo-only drift manifest (`test:drift`; not in npm tarball)
 ├── CHANGELOG.md              # Version history (synced to docs on build)
 ├── SKILL.md                  # AI agent catalog — source of truth for exports
-├── COMPONENTS.md             # Human prop reference
+├── COMPONENTS.md             # Usage guide + export index (props: PROPS.generated.md)
+├── PROPS.generated.md        # Auto-generated prop tables (`npm run test:props`)
 ├── AGENTS.md                 # Contributor / release guide
 ├── brand/                    # Logo + Tia avatars (npm: @tollerud/ui/brand/*)
 ├── components/               # React components (*.tsx) + index.ts barrel

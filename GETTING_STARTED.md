@@ -133,7 +133,7 @@ import { Button } from '@tollerud/ui/button'
 import { cn } from '@tollerud/ui/utils'
 ```
 
-See [COMPONENTS.md](COMPONENTS.md) for the full prop reference.
+See [SKILL.md](SKILL.md) for the export catalog, [PROPS.generated.md](PROPS.generated.md) for prop signatures, and [COMPONENTS.md](COMPONENTS.md) for usage examples.
 
 ---
 

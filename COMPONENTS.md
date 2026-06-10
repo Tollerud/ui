@@ -1,8 +1,33 @@
 # Tollerud Design System — Component Library
 
-All components come as CSS classes (in `globals.css` / `tokens.css`) with React `.tsx` examples in `components/`.
+Human-oriented usage guide for `@tollerud/ui` **v4.0.5**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
-> **Note:** As of **v1.0.9** the vast majority of components documented here ship in `@tollerud/ui`. Sections for components that are still docs-site-only or roadmap-only are marked with a ⚠️ warning; sections already in the package are marked ✅. **For the authoritative, props-complete reference use [SKILL.md](SKILL.md)** (verified against `components/index.ts`) or [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md).
+## Documentation map
+
+| Resource | Use for |
+|----------|---------|
+| **[SKILL.md](SKILL.md)** | Authoritative export catalog, import examples, gotchas (verified against `components/index.ts`) |
+| **[PROPS.generated.md](PROPS.generated.md)** | Machine-generated prop tables — run `npm run docs:props` to refresh; `npm run test:props` catches drift |
+| **This file** | Narrative examples, CSS class patterns, homelab/dashboard usage |
+| **[COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)** | Planned components not yet shipped |
+
+> ⚠️ **Roadmap only (do not import from npm):** `Spinner`, `Drawer`, docs-site `EmptyState`, docs-site `useToast` / `ToastProvider`. The npm package ships **`Toaster`** (Sonner) and the **`Empty`** compound component instead.
+
+## Export index
+
+All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted. Prop signatures: see [PROPS.generated.md](PROPS.generated.md).
+
+**Core & forms:** `Button`, `buttonVariants`, `cn`, `Card`, `Badge`, `StatusDot`, `Kbd`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `PasswordInput`, `Combobox`, `TagInput`, `Slider`, `FormRow`, `Container`, `CodeBlock`, `StatCard`, `ActionRow`, `CommandMenu`
+
+**Navigation & layout:** `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
+
+**Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Toaster`, `Empty` (+ `EmptyHeader`, `EmptyIcon`, `EmptyTitle`, `EmptyDescription`, `EmptyContent`), `Skeleton`, `Progress`
+
+**Data & infra:** `DataTable`, `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `ActionDiff`, `LogViewer`, `AlertInbox`, `Timeline`, `RollbackPlan`, `BackupStatusPanel`
+
+**Visual & marketing:** `Monogram`, `GlowCard`, `NoirGlowBackground`, `BentoDashboard`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `HeroBlock`, `FeatureCard`, `CTABand`
+
+**Footer:** `Footer` — also published as [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer)
 
 ## NoirGlowBackground
 
@@ -43,6 +68,8 @@ Sizes: `--sm`, `--md`, `--lg`
   start_building
 </Button>
 ```
+
+`Button` renders a native `<button>`. To style a link, use `asChild` or `buttonVariants()` — see [SKILL.md](SKILL.md#3-button-only-renders-a-native-button--use-aschild-for-links--107).
 
 ## Card
 
@@ -101,17 +128,14 @@ Sizes: `--sm`, `--md`, `--lg`
 />
 ```
 
-## Pill Tag
+## Pill
 
-> ✅ `Pill` ships in `@tollerud/ui >= 1.0.9`. Import: `import { Pill } from '@tollerud/ui'`
-
-
-```html
-<span class="tollerud-pill tollerud-pill--outline">new</span>
-<span class="tollerud-pill tollerud-pill--muted">deprecated</span>
-<span class="tollerud-pill tollerud-pill--success">stable</span>
-<span class="tollerud-pill tollerud-pill--error">critical</span>
+```tsx
+<Pill variant="outline">new</Pill>
+<Pill variant="accent">production</Pill>
 ```
+
+Variants: `outline` · `solid` · `accent`. CSS classes: `.tollerud-pill`, `.tollerud-pill--outline`, `.tollerud-pill--muted`, etc.
 
 ## StatCard
 
@@ -126,22 +150,23 @@ Sizes: `--sm`, `--md`, `--lg`
 ## CodeBlock
 
 ```jsx
-<CodeBlock>
-{`$ systemctl status tollerud-agent
+<CodeBlock
+  promptPrefix
+  showCopy
+  code={`$ systemctl status tollerud-agent
 ● active (running)`}
-</CodeBlock>
+/>
 ```
 
 ## Divider
 
-> ✅ `Divider` ships in `@tollerud/ui >= 1.0.9`. Import: `import { Divider } from '@tollerud/ui'`
-
-
-```html
-<hr class="tollerud-divider" />
-<hr class="tollerud-divider--accent" />
-<hr class="tollerud-accent-bar" />   <!-- gradient -->
+```tsx
+<Divider />
+<Divider label="or" />
+<Divider orientation="vertical" className="h-6" />
 ```
+
+CSS: `.tollerud-divider`, `.tollerud-divider--accent`, `.tollerud-accent-bar` (gradient).
 
 ## Kbd — Keyboard Shortcut Chip
 
@@ -417,127 +442,91 @@ Features: per-job status dots, size/target display, failed job warning footer. P
 
 ### Panel
 
-> ✅ `Panel` ships in `@tollerud/ui >= 1.0.9`. Import: `import { Panel } from '@tollerud/ui'`
-
-
-A card with a header bar (title + optional actions) and optional footer — the structural workhorse behind the log viewer, data table, alert inbox and most dashboard surfaces.
+A card with a header bar (title + optional description + actions) and padded body — the structural workhorse behind log viewer, data table, and alert inbox surfaces.
 
 ```tsx
-<Panel title="Compose stack" icon="grid"
-  actions={<Button variant="ghost" size="sm">Edit</Button>}
-  footer={<span className="ds-mono">compose.yml · 4 services</span>}>
+<Panel title="Compose stack" description="4 services"
+  actions={<Button variant="ghost" size="sm">Edit</Button>}>
   …content…
 </Panel>
 ```
 
-Props: `title`, `icon` (icon-set name), `actions`, `footer`, `noPadding`, `className`, `style`. CSS: `.ds-panel__head` / `.ds-panel__title` / `.ds-panel__foot`.
+Props: `title`, `description`, `actions`, `children`, `className`.
 
 ### Meter
 
-> ✅ `Meter` ships in `@tollerud/ui >= 1.0.9`. Import: `import { Meter } from '@tollerud/ui'`
-
-
-A labeled progress row that turns red past a hot threshold.
+A labeled progress bar with semantic tone coloring.
 
 ```tsx
-<Meter label="CPU" value={23} valueLabel="23%" />
-<Meter label="Containers" value={28} unlimited valueLabel="28 running" />
+<Meter label="CPU" value={23} showValue />
+<Meter label="RAM" value={72} max={100} showValue tone="warning" />
 ```
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `label` | `string` | — | Left-hand label. |
-| `value` | `number` | — | Current value. |
-| `max` | `number` | `100` | Denominator for the percentage. |
-| `valueLabel` | `string` | — | Overrides the right-hand readout (else `value / max`). |
-| `hot` | `number` | `85` | Percentage past which the bar turns red. |
-| `unlimited` | `boolean` | `false` | Full dimmed bar; shows `value` alone. |
+Props: `value`, `max?` (default 100), `label?`, `showValue?`, `tone?: 'default' | 'success' | 'warning' | 'error'`.
 
 ### Stepper
 
-> ✅ `Stepper` ships in `@tollerud/ui >= 1.0.9`. Import: `import { Stepper } from '@tollerud/ui'`
-
-
-Horizontal step indicator for wizards. Completed steps fill yellow; the current one carries a ring.
+Horizontal or vertical step indicator for wizards. Completed steps fill yellow; the current one carries a ring.
 
 ```tsx
-<Stepper steps={['Connect host', 'Choose stacks', 'Invite team', 'Finish']} current={1} />
+<Stepper
+  steps={[
+    { label: 'Connect host' },
+    { label: 'Choose stacks', description: 'Pick compose files' },
+    { label: 'Finish' },
+  ]}
+  current={1}
+/>
+<Stepper steps={['Connect', 'Deploy', 'Verify']} current={0} orientation="vertical" />
 ```
 
-Props: `steps: string[]`, `current` (0-indexed). CSS: `.ds-wizard__*`.
+Props: `steps: string[] | { label, description? }[]`, `current` (0-indexed), `orientation?: 'horizontal' | 'vertical'`.
 
 ### PasswordInput
 
-> ✅ `PasswordInput` ships in `@tollerud/ui >= 1.0.9`. Import: `import { PasswordInput } from '@tollerud/ui'`
-
-
-A password field with a show/hide toggle and an optional label action (e.g. a "Forgot?" link).
+A password field with a show/hide toggle. Same API as `Input` (`label`, `error`, `id`, …) plus native `<input>` props.
 
 ```tsx
-<PasswordInput label="Password" placeholder="••••••••"
-  error={pwError}
-  labelAction={<a href="#">Forgot?</a>} />
+<PasswordInput label="Password" placeholder="••••••••" error={pwError} />
 ```
-
-Props: `label`, `labelAction`, `error`, `id`, plus all native `<input>` props.
 
 ### Spinner
 
-> ⚠️ **Not yet in the `@tollerud/ui` npm package** — this is a docs-site / roadmap component (see [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)). Do not import `Spinner` from `@tollerud/ui` — it will not resolve. Check [SKILL.md](SKILL.md) for what's actually shipped.
+> ⚠️ **Roadmap only** — not exported from `@tollerud/ui`. Use `Skeleton`, `loading` props on cards/tables, or a disabled `Button` while work is in flight.
 
-
-Inline loading spinner; respects reduced-motion.
-
-```tsx
-<Button variant="primary"><Spinner size={14} /> Signing in…</Button>
-```
-
-Props: `size` (px, default 16), `style`. CSS: `.ds-spin`.
+The docs site uses `.ds-spin` CSS for inline spinners; that React component is not in the npm package yet.
 
 ### FormRow
 
-> ✅ `FormRow` ships in `@tollerud/ui >= 1.0.9`. Import: `import { FormRow } from '@tollerud/ui'`
-
-
-Label + hint on the left, control on the right. The canonical settings-form layout; stacks vertically under 560px.
+Accessible field wrapper — wires `aria-describedby` between label, description, error, and control.
 
 ```tsx
-<FormRow label="Two-factor auth" hint="Require a TOTP code at sign-in.">
-  <Switch defaultChecked />
+<FormRow label="Hostname" htmlFor="hostname" description="Unique within your network." required error={errors.hostname}>
+  <Input id="hostname" placeholder="e.g. embla" />
 </FormRow>
 ```
 
-Props: `label`, `hint`, `children`. CSS: `.ds-formrow`.
+Props: `label?`, `description?`, `error?`, `required?`, `htmlFor?`, `children`.
 
 ### PricingCard
 
-> ✅ `PricingCard` ships in `@tollerud/ui >= 1.0.9`. Import: `import { PricingCard } from '@tollerud/ui'`
-
-
-A single plan tier with optional ribbon, feature list and CTA. Powers the Billing page and the marketing pricing block.
+A single plan tier with optional badge, feature list, and CTA.
 
 ```tsx
-<PricingCard name="Pro" tagline="For a growing fleet"
-  price={12} priceNote="billed monthly" recommended
+<PricingCard
+  name="Pro"
+  price="$12"
+  period="/month"
+  description="For a growing fleet"
   features={['10 hosts', 'Approvals & rollback', 'Priority support']}
-  cta="Upgrade to Pro" />
+  featured
+  badge="Most popular"
+  ctaLabel="Upgrade to Pro"
+  onCtaClick={() => {}}
+/>
 ```
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `name` / `tagline` | `string` | Title + sub-line. |
-| `price` | `number \| string` | `0`, `'Free'`, `'$12'` render as "Free"; numbers get a `$` prefix. |
-| `period` | `string` | Suffix after the price (default `/mo`). |
-| `priceNote` | `string` | Small line under the amount. |
-| `features` | `string[]` | Checklist. |
-| `recommended` | `boolean` | Accent border + ribbon. |
-| `ribbon` | `string` | Ribbon label (default `Recommended`). |
-| `cta` | `string` | Button label. |
-| `ctaVariant` | `string` | Button variant (defaults by recommended/state). |
-| `ctaDisabled` | `boolean` | Disable the CTA (e.g. current plan). |
-| `onCta` | `fn` | CTA click handler. |
-
-CSS: `.ds-price` and `.ds-price__*`; grid wrapper `.ds-price-grid`.
+Props: `name`, `price`, `period?`, `description?`, `features?: ReactNode[]`, `ctaLabel?`, `onCtaClick?`, `featured?`, `badge?`.
 
 ## Charts
 
@@ -551,13 +540,13 @@ import { BarChart, AreaChart, Donut, Sparkline } from '@tollerud/ui'
 <BarChart data={[{ label: 'Mon', value: 12 }, { label: 'Tue', value: 18, accent: true }]} height={180} />
 <AreaChart data={[28, 35, 30, 44, 52]} height={150} />
 <Donut segments={[{ label: 'CPU', value: 40, color: '#E8D500' }, { label: 'Idle', value: 60, color: '#444' }]} size={160} />
-<Sparkline data={[12, 18, 14, 22, 19]} w={84} h={26} color="#E8D500" />
+<Sparkline data={[12, 18, 14, 22, 19]} width={84} height={26} color="#E8D500" />
 ```
 
 - **BarChart** — `data: { label, value, accent? }[]`, `height`. `accent: true` paints a bar yellow.
 - **AreaChart** — `data: number[]`, `height`. Gradient fill + point markers.
 - **Donut** — `segments: { label, value, color }[]`, `size`. Renders a legend with percentages.
-- **Sparkline** — `data: number[]`, `w`, `h`, `color`. Inline trend line (used in DataTable cells).
+- **Sparkline** — `data: number[]`, `width`, `height`, `color`. Inline trend line (used in DataTable cells).
 
 ## Marketing blocks
 
@@ -603,69 +592,238 @@ A centered closing call-to-action with an optional accent bar.
 
 Props: `title`, `description`, `actions`, `accentBar` (default true).
 
-## Overlays & data
+## Navigation primitives
 
-### Toast
-
-> ⚠️ **Not yet in the `@tollerud/ui` npm package** — this is a docs-site / roadmap component (see [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)). Do not import `Toast / useToast / ToastProvider` from `@tollerud/ui` — it will not resolve. Check [SKILL.md](SKILL.md) for what's actually shipped.
-
-
-Transient feedback via the `useToast()` hook (provided by `ToastProvider` at the app root). Toasts auto-dismiss and stack bottom-right.
+### Breadcrumb
 
 ```tsx
-const toast = useToast();
-toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' });
-```
-
-Tones: `success` · `error` · `info` · `accent`. `title` required; `message` optional.
-
-### Drawer / Sheet
-
-> ⚠️ **`Drawer` is not yet in the npm package** (roadmap only — see [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)). `Sheet` (with `SheetTrigger`/`SheetContent`/etc.) **is** shipped and is the closest available primitive — see [SKILL.md](SKILL.md) for its API.
-
-
-A side panel for detail views and slide-over forms. Closes on Esc or overlay click.
-
-```tsx
-<Drawer open={open} onClose={() => setOpen(false)} side="right" title="Host details"
-  description="emma.tollerud.no"
-  footer={<Button variant="primary" size="sm">Connect</Button>}>
-  …content…
-</Drawer>
-```
-
-Props: `open`, `onClose`, `side` (`right` | `left`, default right), `title`, `description`, `children`, `footer`, `width` (default 380).
-
-### Combobox
-
-> ✅ `Combobox` ships in `@tollerud/ui >= 1.0.9`. Import: `import { Combobox } from '@tollerud/ui'`
-
-
-Searchable single-select with keyboard navigation (↑/↓/Enter/Esc), controlled or uncontrolled.
-
-```tsx
-<Combobox label="Host" value={value} onChange={setValue}
-  options={[{ value: 'emma', label: 'emma.tollerud.no' }, …]}
-  placeholder="Search…" emptyText="No matches" />
-```
-
-Props: `options: { value, label }[]`, `value`, `onChange`, `label`, `placeholder`, `emptyText`.
-
-### AvatarGroup
-
-> ✅ `Avatar` and `AvatarGroup` ship in `@tollerud/ui >= 1.0.9`. Import: `import { Avatar, AvatarGroup } from '@tollerud/ui'`
-
-
-Stacked avatars with an overflow count and optional presence dots.
-
-```tsx
-<AvatarGroup max={4} size={32} users={[
-  { name: 'Tia', status: 'online' },
-  { name: 'Emma Pung', src: '/emma.jpg', status: 'warning' },
+<Breadcrumb items={[
+  { label: 'Servers', href: '/servers' },
+  { label: 'Embla' },
 ]} />
 ```
 
-Props: `users: { name, src?, status? }[]` (`status`: `online` | `offline` | `warning`), `max` (default 4), `size` (default 32).
+Props: `items: { label, href?, onClick? }[]`, `separator?`.
+
+### Pagination
+
+```tsx
+<Pagination page={page} pageCount={20} onChange={setPage} siblingCount={1} />
+```
+
+Props: `page` (1-indexed), `pageCount`, `onChange`, `siblingCount?`.
+
+### Segmented
+
+Toggle between views or filter modes.
+
+```tsx
+<Segmented
+  value={view}
+  onChange={setView}
+  options={[
+    { value: 'grid', label: 'Grid' },
+    { value: 'list', label: 'List' },
+  ]}
+  size="sm"
+/>
+```
+
+Props: `options: { value, label, disabled? }[]`, `value`, `onChange`, `size?: 'sm' | 'md'`.
+
+### Accordion
+
+```tsx
+<Accordion defaultOpen="faq-1">
+  <AccordionItem value="faq-1">
+    <AccordionTrigger>What is Tia?</AccordionTrigger>
+    <AccordionContent>An infrastructure assistant for homelabs.</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+Props: `multiple?`, `defaultOpen?: string | string[]`. Items use `value` to identify panels.
+
+## Advanced forms
+
+### TagInput
+
+Chip-style multi-value input. Enter or comma to add; Backspace removes the last tag.
+
+```tsx
+<TagInput label="Tags" value={tags} onChange={setTags} placeholder="Add tag…" max={10} />
+```
+
+### Slider
+
+```tsx
+<Slider label="Alert threshold" showValue value={threshold} onChange={setThreshold} min={0} max={100} />
+```
+
+### DatePicker
+
+```tsx
+<DatePicker label="Schedule deployment" value={date} onChange={setDate} placeholder="Pick a date" />
+```
+
+### FileUpload
+
+```tsx
+<FileUpload label="Upload config" accept=".yaml,.json" multiple onFilesChange={handleFiles} />
+```
+
+## Visual & branding
+
+### Monogram
+
+Inline SVG brand mark. Never recolor outside the design system rules.
+
+```tsx
+<Monogram className="h-5 w-auto" color="yellow" />
+```
+
+Props: `color?: 'yellow' | 'black' | 'white'`, plus standard SVG attributes.
+
+### GlowCard
+
+Mouse-tracked glow border card.
+
+```tsx
+<GlowCard glowColor="#FFFF00" intensity={0.4}>
+  <p>Interactive surface</p>
+</GlowCard>
+```
+
+### BentoDashboard
+
+Composed dashboard shell — pass arrays of host stats, services, incidents, and backup jobs.
+
+```tsx
+<BentoDashboard hosts={[…]} stats={[…]} services={[…]} incidents={[…]} backups={[…]} />
+```
+
+See [PROPS.generated.md](PROPS.generated.md) for the full `BentoDashboardProps` shape.
+
+### Progress
+
+```tsx
+<Progress value={65} />
+```
+
+Determinate progress bar (Radix-based). Use inside panels, upload flows, or deploy wizards.
+
+## Overlays & feedback
+
+### Toaster
+
+Sonner-based toast renderer. Mount once near the app root; trigger toasts with `toast()` from `sonner`.
+
+```tsx
+import { Toaster } from '@tollerud/ui'
+import { toast } from 'sonner'
+
+// layout.tsx or app root
+<Toaster theme="dark" />
+
+// anywhere in a client component
+toast.success('Deployed', { description: 'hermes v2.0 is live' })
+toast.error('Connection timed out')
+```
+
+Props: extends Sonner `ToasterProps` plus `theme?: 'light' | 'dark' | 'system'` (default `dark`). Position adapts to viewport (top-right desktop, top-center mobile).
+
+> The docs site still uses a legacy `useToast` / `ToastProvider` pattern — that API is **not** exported from npm.
+
+### Sheet
+
+Radix-based slide-over panel for detail views and forms. Use the compound API (`SheetTrigger`, `SheetContent`, etc.).
+
+```tsx
+<Sheet>
+  <SheetTrigger asChild>
+    <Button variant="ghost" size="sm">Host details</Button>
+  </SheetTrigger>
+  <SheetContent side="right">
+    <SheetHeader>
+      <SheetTitle>emma.tollerud.no</SheetTitle>
+      <SheetDescription>SSH · 4 containers</SheetDescription>
+    </SheetHeader>
+    …content…
+    <Button variant="primary" size="sm">Connect</Button>
+  </SheetContent>
+</Sheet>
+```
+
+`SheetContent` accepts `side?: 'left' | 'right'`. Closes on Esc or overlay click.
+
+> ⚠️ **`Drawer`** (single-component API with `open` / `onClose` / `footer`) is roadmap-only — use `Sheet` instead.
+
+### Dialog, Tooltip, Tabs, DropdownMenu
+
+Standard Radix/shadcn composition patterns. All require a client boundary in the consuming file.
+
+```tsx
+<Dialog>
+  <DialogTrigger asChild><Button>Open</Button></DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Restart container</DialogTitle>
+      <DialogDescription>This will interrupt active connections.</DialogDescription>
+    </DialogHeader>
+    <DialogFooter><Button variant="destructive">Restart</Button></DialogFooter>
+  </DialogContent>
+</Dialog>
+
+<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild><Button variant="ghost" size="sm">?</Button></TooltipTrigger>
+    <TooltipContent>Uptime since last deploy</TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+
+<Tabs defaultValue="overview">
+  <TabsList><TabsTrigger value="overview">Overview</TabsTrigger><TabsTrigger value="logs">Logs</TabsTrigger></TabsList>
+  <TabsContent value="overview">…</TabsContent>
+</Tabs>
+```
+
+### Alert
+
+Inline status banner for persistent messages (not transient like toasts).
+
+```tsx
+<Alert tone="error" title="Connection failed" description="emma.tollerud.no timed out after 30s" />
+```
+
+Tones: `default` · `error` · `info` · `success` · `warning`.
+
+### Combobox
+
+Searchable single-select with keyboard navigation (↑/↓/Enter/Esc).
+
+```tsx
+<Combobox label="Host" value={value} onChange={setValue}
+  options={[{ value: 'emma', label: 'emma.tollerud.no' }]}
+  placeholder="Search…" error={errors.host} />
+```
+
+Props: `options: { value, label, disabled? }[]`, `value?`, `onChange?`, `label?`, `placeholder?`, `error?`, `filter?`.
+
+### Avatar / AvatarGroup
+
+Stacked avatars with a `+N` overflow chip.
+
+```tsx
+<Avatar name="Mathias Tollerud" src="/avatar.jpg" size="md" />
+<AvatarGroup max={3} size="md">
+  <Avatar name="Emma" />
+  <Avatar name="Iris" />
+  <Avatar name="Pia" />
+  <Avatar name="Victoria" />
+</AvatarGroup>
+```
+
+`Avatar`: `src?`, `name?` (derives initials), `fallback?`, `size?: 'sm' | 'md' | 'lg' | number`. `AvatarGroup`: `max?`, `size?`, `children` (`<Avatar>` elements).
 
 ## Elevation & density
 
@@ -677,94 +835,99 @@ Props: `users: { name, src?, status? }[]` (`status`: `online` | `offline` | `war
 <div data-density="compact"> … dense tables / forms … </div>
 ```
 
-## EmptyState
+## Empty
 
-> ⚠️ **Not yet in the `@tollerud/ui` npm package** — this is a docs-site / roadmap component (see [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)). Do not import `EmptyState` from `@tollerud/ui` — it will not resolve. Check [SKILL.md](SKILL.md) for what's actually shipped.
-
-
-For any surface with no data yet, no search results, or an error. Pairs an icon, a one-line headline, a calm explanation and up to two actions. A `compact` variant fits inside cards, tables and panels.
+Compound empty-state layout for tables, cards, and panels with no data yet.
 
 ```tsx
-<EmptyState
-  icon="server"
-  title="No hosts connected"
-  description="Connect your first machine and Tia will start watching it."
-  action={<Button variant="primary" size="sm">Connect a host</Button>}
-/>
-<EmptyState compact accent icon="checkCircle" title="All clear" description="No open alerts." />
+<Empty>
+  <EmptyHeader>
+    <EmptyIcon><ServerIcon className="h-6 w-6" /></EmptyIcon>
+    <EmptyTitle>No hosts connected</EmptyTitle>
+    <EmptyDescription>Connect your first machine and Tia will start watching it.</EmptyDescription>
+  </EmptyHeader>
+  <EmptyContent>
+    <Button variant="primary" size="sm">Connect a host</Button>
+  </EmptyContent>
+</Empty>
 ```
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `icon` | `string` | `'folder'` | Icon name from the icon set. |
-| `title` | `string` | — | Headline. |
-| `description` | `string` | — | Supporting copy (max ~340px wide). |
-| `action` | `ReactNode` | — | Primary action, usually a `<Button>`. |
-| `secondaryAction` | `ReactNode` | — | Optional second action. |
-| `compact` | `boolean` | `false` | Tighter padding for inline use. |
-| `accent` | `boolean` | `false` | Yellow-tinted surface + border. |
+Exports: `Empty`, `EmptyHeader`, `EmptyIcon`, `EmptyTitle`, `EmptyDescription`, `EmptyContent` — each accepts standard HTML attributes + `className`.
 
-CSS class: `.ds-empty` (with `.ds-empty__icon`, `.ds-empty__title`, `.ds-empty__desc`).
+> The docs site may still reference **`EmptyState`** (icon-name prop API) — that component is **not** in npm. Use the compound `Empty` API above, or pass `<Empty>…</Empty>` to `DataTable`'s `emptyState` prop.
 
 ## DataTable
 
-The config-driven table. Pass `rows` + a `columns` spec and opt into search, a filter, selection with bulk actions, per-row menus, pagination and an empty state. It owns all sort / filter / selection / pagination state internally. Powers the **Data Table** build page and the invoice history on **Billing**.
+Config-driven table with optional search, segmented filter, selection, bulk actions, row menus, and pagination. Owns sort / filter / selection / pagination state internally.
 
 ```tsx
 <DataTable
-  rows={hosts}
+  data={hosts}
   rowKey="id"
   columns={[
-    { key: 'id', header: 'Host', sortable: true, render: (r) => <HostCell {...r} /> },
-    { key: 'status', header: 'Status', sortable: true, render: (r) => <Badge variant={...}>{r.status}</Badge> },
-    { key: 'cpu', header: 'CPU', align: 'right', sortable: true },
+    { key: 'hostname', label: 'Host', sortable: true, render: (_v, row) => <span>{row.hostname}</span> },
+    { key: 'status', label: 'Status', sortable: true, render: (_v, row) => (
+      <Badge variant={row.status === 'online' ? 'success' : 'error'}>{row.status}</Badge>
+    )},
+    { key: 'cpu', label: 'CPU', align: 'right', sortable: true },
   ]}
   searchable
-  searchKeys={['id', 'ip', 'owner']}
-  searchPlaceholder="Search host, ip, owner…"
+  searchKeys={['hostname', 'ip']}
+  searchPlaceholder="Search host, ip…"
   filter={{ key: 'region', allLabel: 'All regions' }}
   selectable
-  pageSize={5}
+  pageSize={10}
   toolbarRight={<Button variant="terminal" size="sm">add_host</Button>}
   bulkActions={[
-    { label: 'Restart', icon: 'refresh', variant: 'ghost', onRun: (ids, clear) => { /* … */ clear(); } },
-    { label: 'Stop', icon: 'trash', variant: 'destructive', onRun: (ids, clear) => clear() },
+    { label: 'Restart', variant: 'ghost', onRun: (ids, clear) => { clear() } },
+    { label: 'Stop', variant: 'destructive', onRun: (ids, clear) => clear() },
   ]}
   rowMenu={(row) => [
-    { label: 'Connect (SSH)', icon: 'external', onSelect: () => {} },
+    { label: 'Connect (SSH)', onSelect: () => {} },
     { sep: true },
-    { label: 'Stop host', icon: 'trash', onSelect: () => {} },
+    { label: 'Stop host', onSelect: () => {} },
   ]}
-  emptyState={<EmptyState icon="search" title="No hosts found" description="Try clearing your filters." />}
+  emptyState={
+    <Empty>
+      <EmptyHeader>
+        <EmptyTitle>No hosts found</EmptyTitle>
+        <EmptyDescription>Try clearing your filters.</EmptyDescription>
+      </EmptyHeader>
+    </Empty>
+  }
 />
 ```
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `rows` | `object[]` | `[]` | Row data. |
-| `rowKey` | `string` | `'id'` | Field used as the unique key + selection id. |
+| `data` / `rows` | `object[]` | `[]` | Row data (`data` preferred; `rows` is an alias). |
+| `rowKey` | `keyof T \| fn` | `row.id` / `row.key` | Unique key + selection id. |
 | `columns` | `Column[]` | `[]` | Column spec — see below. |
+| `onRowClick` | `(row) => void` | — | Row click handler. |
+| `emptyMessage` | `string` | `'No data'` | Plain-text fallback when `emptyState` is not set. |
 | `searchable` | `boolean` | `false` | Show the search input. |
-| `searchKeys` | `string[]` | all column keys | Which fields the search matches against. |
+| `searchKeys` | `string[]` | column keys | Fields the search matches. |
 | `searchPlaceholder` | `string` | `'Search…'` | Search input placeholder. |
-| `filter` | `{ key, options?, allLabel? }` | — | Segmented filter on one field; `options` defaults to the field's distinct values. |
+| `filter` | `{ key, options?, allLabel? }` | — | Segmented filter on one field. |
 | `selectable` | `boolean` | `false` | Row checkboxes + select-all. |
-| `pageSize` | `number` | `8` | Rows per page. |
-| `bulkActions` | `BulkAction[]` | `[]` | Buttons shown when rows are selected; `onRun(ids, clear)`. |
-| `rowMenu` | `(row) => MenuItem[]` | — | Per-row ⋮ dropdown (same item shape as `DropdownMenu`). |
-| `toolbarRight` | `ReactNode` | — | Content pinned to the right of the toolbar (e.g. an add button). |
-| `emptyState` | `ReactNode` | default text | Shown when no rows match. |
-| `loading` | `boolean` | `false` | Render shimmer skeleton rows instead of data. |
-| `skeletonRows` | `number` | `5` | How many skeleton rows while `loading`. |
+| `pageSize` | `number` | — | Rows per page (enables pagination when set). |
+| `bulkActions` | `BulkAction[]` | `[]` | Shown when rows are selected; `onRun(ids, clear)`. |
+| `rowMenu` | `(row) => MenuItem[]` | — | Per-row ⋮ dropdown. |
+| `toolbarRight` | `ReactNode` | — | Toolbar right slot (e.g. add button). |
+| `emptyState` | `ReactNode` | — | Custom empty UI (use `<Empty>…</Empty>`). |
+| `loading` | `boolean` | `false` | Skeleton rows instead of data. |
+| `skeletonRows` | `number` | `5` | Skeleton row count while loading. |
 
-**Column:** `{ key, header, sortable?, align?: 'left' | 'right', width?, render?: (row) => ReactNode }`. Without `render`, the raw `row[key]` is shown in mono.
+**Column:** `{ key, label, sortable?, filterable?, align?: 'left' | 'center' | 'right', width?, render?: (value, row) => ReactNode }`. Without `render`, `row[key]` is shown.
 
 ## Skeleton
 
-```html
-<div class="tollerud-skeleton h-4 w-48" />
-<div class="tollerud-skeleton h-48 w-full" />
+```tsx
+<Skeleton className="h-4 w-48" />
+<Skeleton className="h-48 w-full" />
 ```
+
+Variants: `variant?: 'default' | 'circular' | 'text'`. CSS class: `.tollerud-skeleton`.
 
 ## Glass Nav
 

@@ -539,7 +539,8 @@ Also check for a local `components/ui.ts` or `components/ui/index.ts` that re-ex
 | File | Contents |
 |------|----------|
 | [SKILL.md](SKILL.md) | **Verified** component catalog, props, gotchas — source of truth for what's actually shipped |
-| [COMPONENTS.md](COMPONENTS.md) | Prop tables — includes both shipped and planned/roadmap components, check against SKILL.md before relying on an entry |
+| [COMPONENTS.md](COMPONENTS.md) | Human usage guide + export index; roadmap-only components marked ⚠️ — verify exports in SKILL.md |
+| [PROPS.generated.md](PROPS.generated.md) | Auto-generated `*Props` tables — `npm run docs:props` / `npm run test:props` |
 | [BRAND.md](BRAND.md) | Logo usage, nav lockup, sizing rules |
 | [ACCESSIBILITY.md](ACCESSIBILITY.md) | Contrast ratios, focus, ARIA patterns |
 | [VOICE.md](VOICE.md) | Copy tone, terminal-style CTAs, error messages |
