@@ -19,3 +19,59 @@
 @import "tailwindcss";
 @import "./tokens.css";
 @import "./globals-layers.css";
+
+/* ═══════════════════════════════════════════════
+   Tailwind v4 theme registration
+   ═══════════════════════════════════════════════
+   Registers the `tollerud-*` palette as real Tailwind color tokens so
+   utilities like `bg-tollerud-yellow`, `text-tollerud-noir-400`, and
+   `border-tollerud-border` are generated. Without this block, Tailwind v4
+   does not know about these colors and the classes used throughout the
+   component dist files resolve to nothing.
+   ═══════════════════════════════════════════════ */
+@theme {
+  --color-tollerud-yellow:        var(--tollerud-yellow);
+  --color-tollerud-yellow-warm:   var(--tollerud-yellow-warm);
+  --color-tollerud-acid:          var(--tollerud-acid);
+  --color-tollerud-accent:        var(--tollerud-yellow);
+  --color-tollerud-yellow-dim:    var(--tollerud-yellow-dim);
+  --color-tollerud-amber:         var(--tollerud-amber);
+  --color-tollerud-amber-glow:    var(--tollerud-amber-glow);
+
+  --color-tollerud-black:         var(--tollerud-black);
+  --color-tollerud-noir-black:    var(--tollerud-black);
+  --color-tollerud-noir-950:      var(--tollerud-black);
+  --color-tollerud-noir-900:      var(--tollerud-noir-900);
+  --color-tollerud-noir-850:      #161616;
+  --color-tollerud-noir-800:      var(--tollerud-noir-800);
+  --color-tollerud-noir-700:      var(--tollerud-noir-700);
+  --color-tollerud-noir-600:      var(--tollerud-noir-600);
+  --color-tollerud-noir-500:      var(--tollerud-noir-500);
+  --color-tollerud-noir-400:      var(--tollerud-noir-400);
+  --color-tollerud-noir-300:      var(--tollerud-noir-300);
+  --color-tollerud-noir-200:      var(--tollerud-noir-200);
+  --color-tollerud-noir-100:      var(--tollerud-noir-100);
+  --color-tollerud-noir-50:       var(--tollerud-noir-50);
+  --color-tollerud-noir-white:    var(--tollerud-white);
+  --color-tollerud-white:         var(--tollerud-white);
+
+  --color-tollerud-surface:         var(--tollerud-surface);
+  --color-tollerud-surface-raised:  var(--tollerud-surface-raised);
+  --color-tollerud-surface-overlay: var(--tollerud-surface-overlay);
+  --color-tollerud-surface-hover:   var(--tollerud-surface-hover);
+
+  --color-tollerud-foreground:    var(--tollerud-text-primary);
+  --color-tollerud-text-primary:  var(--tollerud-text-primary);
+  --color-tollerud-text-secondary: var(--tollerud-text-secondary);
+  --color-tollerud-text-muted:    var(--tollerud-text-muted);
+  --color-tollerud-text-inverse:  var(--tollerud-text-inverse);
+
+  --color-tollerud-border:         var(--tollerud-border);
+  --color-tollerud-border-subtle:  var(--tollerud-border-subtle);
+  --color-tollerud-border-accent:  var(--tollerud-border-accent);
+
+  --color-tollerud-success: var(--tollerud-success);
+  --color-tollerud-warning: var(--tollerud-warning);
+  --color-tollerud-error:   var(--tollerud-error);
+  --color-tollerud-info:    var(--tollerud-info);
+}

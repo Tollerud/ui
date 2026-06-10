@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.1.1 — 2026-06-10 — Fix: missing `@theme` registration broke all `tollerud-*` color utilities
+
+Critical fix. `globals.css` imported `tokens.css` (plain `--tollerud-*` CSS custom properties) but never registered them with Tailwind v4 via `@theme`. Tailwind v4 only generates color utilities for colors declared as `--color-*` theme variables, so every `bg-tollerud-*`, `text-tollerud-*`, and `border-tollerud-*` class used across the 52 component dist files resolved to nothing — breaking the entire visual identity (yellow accents, noir surfaces, borders, state colors) in any consumer app.
+
+### Fix
+
+Added a `@theme` block to `globals.css` mapping the full `tollerud-*` palette (brand yellows, noir scale, surfaces, text, borders, state colors) to `--color-tollerud-*` theme variables, referencing the existing `--tollerud-*` tokens. No change to token values — `bg-tollerud-yellow`, `text-tollerud-noir-400`, etc. now generate correctly with no extra config.
+
+No API changes. Consumers should pick this up automatically on `npm update @tollerud/ui` — no code changes needed.
+
 ## 4.1.0 — 2026-06-11 — Ship Spinner, Drawer, EmptyState, and useToast
 
 Minor release: four docs-site-only components move into `@tollerud/ui` with matching CSS in `globals-layers.css`.
