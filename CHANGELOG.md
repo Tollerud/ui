@@ -7,6 +7,29 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.1.0 — 2026-06-11 — Ship Spinner, Drawer, EmptyState, and useToast
+
+Minor release: four docs-site-only components move into `@tollerud/ui` with matching CSS in `globals-layers.css`.
+
+### New components
+
+- `Spinner` — inline loading indicator with reduced-motion support
+- `Drawer` — controlled slide-over API (`open`, `onClose`, `footer`) built on `Sheet`
+- `EmptyState` — prop-driven empty state with built-in Lucide icon names
+- `ToastProvider` / `useToast` — context-based toast stack (alternative to Sonner `Toaster`)
+
+### Changed
+
+- Docs app imports the four components from `@tollerud/ui` instead of local adapters
+- `COMPONENTS.md`, `SKILL.md`, `AGENTS.md` — export catalog and usage docs updated
+- `registry.json` — four new entries; subpath exports: `@tollerud/ui/spinner`, `/drawer`, `/empty-state`, `/toast`
+
+### Migration
+
+Nothing breaking. `Empty` compound component and Sonner `Toaster` remain available.
+
+---
+
 ## 4.0.5 — 2026-06-10 — Starter template and DX docs
 
 Patch release: human-facing Next.js starter, migration guide, and footer package tooling alignment. No breaking API changes.

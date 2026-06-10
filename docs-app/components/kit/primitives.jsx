@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback, useContext, createContext } from 'react'
+import { useState, useCallback } from 'react'
 import { Icons } from './icons'
 import propsData from '../../lib/props-data.json'
 
@@ -198,39 +198,4 @@ function TokenTable({ cols, rows }) {
   );
 }
 
-/* ── Toast system ── */
-const ToastCtx = createContext(null);
-function ToastProvider({ children }) {
-  const [toasts, setToasts] = useState([]);
-  const push = useCallback((t) => {
-    const id = Math.random().toString(36).slice(2);
-    setToasts(ts => [...ts, { id, ...t }]);
-    setTimeout(() => setToasts(ts => ts.filter(x => x.id !== id)), t.duration || 3800);
-  }, []);
-  const dismiss = (id) => setToasts(ts => ts.filter(x => x.id !== id));
-  const iconFor = { success: 'checkCircle', error: 'xCircle', info: 'info', accent: 'zap' };
-  const colorFor = { success: 'var(--success)', error: 'var(--destructive)', info: 'var(--info)', accent: 'var(--tollerud-yellow)' };
-  return (
-    <ToastCtx.Provider value={push}>
-      {children}
-      <div className="tollerud-toaster">
-        {toasts.map(t => {
-          const I = Icons[iconFor[t.tone || 'info']] || Icons.info;
-          return (
-            <div key={t.id} className="tollerud-toast ds-themed">
-              <span className="tollerud-toast__icon" style={{ color: colorFor[t.tone || 'info'] }}><I size={18}/></span>
-              <div style={{ flex: 1 }}>
-                <div className="tollerud-toast__title">{t.title}</div>
-                {t.message && <div className="tollerud-toast__msg">{t.message}</div>}
-              </div>
-              <button className="tollerud-menu__item" style={{ width: 'auto', padding: 2 }} onClick={() => dismiss(t.id)}><Icons.x size={14}/></button>
-            </div>
-          );
-        })}
-      </div>
-    </ToastCtx.Provider>
-  );
-}
-const useToast = () => useContext(ToastCtx);
-
-export { highlight, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, PropTable, ToastProvider, useToast };
+export { highlight, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, PropTable };

@@ -1,6 +1,6 @@
 # Tollerud Design System — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.0.5**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.1.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 ## Documentation map
 
@@ -11,8 +11,6 @@ Human-oriented usage guide for `@tollerud/ui` **v4.0.5**. Components ship as Rea
 | **This file** | Narrative examples, CSS class patterns, homelab/dashboard usage |
 | **[COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)** | Planned components not yet shipped |
 
-> ⚠️ **Roadmap only (do not import from npm):** `Spinner`, `Drawer`, docs-site `EmptyState`, docs-site `useToast` / `ToastProvider`. The npm package ships **`Toaster`** (Sonner) and the **`Empty`** compound component instead.
-
 ## Export index
 
 All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted. Prop signatures: see [PROPS.generated.md](PROPS.generated.md).
@@ -21,7 +19,7 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 
 **Navigation & layout:** `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
 
-**Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Toaster`, `Empty` (+ `EmptyHeader`, `EmptyIcon`, `EmptyTitle`, `EmptyDescription`, `EmptyContent`), `Skeleton`, `Progress`
+**Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Drawer`, `Toaster` (Sonner), `ToastProvider` / `useToast`, `Empty` (+ compound parts), `EmptyState`, `Skeleton`, `Progress`, `Spinner`
 
 **Data & infra:** `DataTable`, `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `ActionDiff`, `LogViewer`, `AlertInbox`, `Timeline`, `RollbackPlan`, `BackupStatusPanel`
 
@@ -492,9 +490,13 @@ A password field with a show/hide toggle. Same API as `Input` (`label`, `error`,
 
 ### Spinner
 
-> ⚠️ **Roadmap only** — not exported from `@tollerud/ui`. Use `Skeleton`, `loading` props on cards/tables, or a disabled `Button` while work is in flight.
+Inline loading indicator; respects `prefers-reduced-motion`.
 
-The docs site uses `.ds-spin` CSS for inline spinners; that React component is not in the npm package yet.
+```tsx
+<Button variant="primary" disabled><Spinner size={14} /> Deploying…</Button>
+```
+
+Props: `size` (px, default 16). CSS class: `.tollerud-spinner`.
 
 ### FormRow
 
@@ -714,7 +716,7 @@ Determinate progress bar (Radix-based). Use inside panels, upload flows, or depl
 
 ## Overlays & feedback
 
-### Toaster
+### Toaster (Sonner)
 
 Sonner-based toast renderer. Mount once near the app root; trigger toasts with `toast()` from `sonner`.
 
@@ -722,17 +724,42 @@ Sonner-based toast renderer. Mount once near the app root; trigger toasts with `
 import { Toaster } from '@tollerud/ui'
 import { toast } from 'sonner'
 
-// layout.tsx or app root
 <Toaster theme="dark" />
-
-// anywhere in a client component
 toast.success('Deployed', { description: 'hermes v2.0 is live' })
-toast.error('Connection timed out')
 ```
 
-Props: extends Sonner `ToasterProps` plus `theme?: 'light' | 'dark' | 'system'` (default `dark`). Position adapts to viewport (top-right desktop, top-center mobile).
+Props: extends Sonner `ToasterProps` plus `theme?: 'light' | 'dark' | 'system'` (default `dark`).
 
-> The docs site still uses a legacy `useToast` / `ToastProvider` pattern — that API is **not** exported from npm.
+### ToastProvider / useToast
+
+Context-based toasts with the Tollerud stack UI (alternative to Sonner).
+
+```tsx
+import { ToastProvider, useToast } from '@tollerud/ui'
+
+// app root
+<ToastProvider>{children}</ToastProvider>
+
+// client component
+const toast = useToast()
+toast({ tone: 'success', title: 'Deployed', message: 'hermes v2.0 is live' })
+```
+
+Tones: `success` · `error` · `info` · `accent`. `title` required; `message` and `duration` (default 3800ms) optional.
+
+### Drawer
+
+Controlled slide-over panel — simpler API than composing `Sheet` manually.
+
+```tsx
+<Drawer open={open} onClose={() => setOpen(false)} side="right" title="Host details"
+  description="emma.tollerud.no"
+  footer={<Button variant="primary" size="sm">Connect</Button>}>
+  …content…
+</Drawer>
+```
+
+Props: `open`, `onClose`, `side` (`right` | `left`), `title`, `description`, `children`, `footer`, `width` (default 380).
 
 ### Sheet
 
@@ -754,9 +781,7 @@ Radix-based slide-over panel for detail views and forms. Use the compound API (`
 </Sheet>
 ```
 
-`SheetContent` accepts `side?: 'left' | 'right'`. Closes on Esc or overlay click.
-
-> ⚠️ **`Drawer`** (single-component API with `open` / `onClose` / `footer`) is roadmap-only — use `Sheet` instead.
+`SheetContent` accepts `side?: 'left' | 'right'`. Closes on Esc or overlay click. Prefer **`Drawer`** when you want a single controlled component with `open` / `onClose` / `footer`.
 
 ### Dialog, Tooltip, Tabs, DropdownMenu
 
@@ -854,7 +879,31 @@ Compound empty-state layout for tables, cards, and panels with no data yet.
 
 Exports: `Empty`, `EmptyHeader`, `EmptyIcon`, `EmptyTitle`, `EmptyDescription`, `EmptyContent` — each accepts standard HTML attributes + `className`.
 
-> The docs site may still reference **`EmptyState`** (icon-name prop API) — that component is **not** in npm. Use the compound `Empty` API above, or pass `<Empty>…</Empty>` to `DataTable`'s `emptyState` prop.
+### EmptyState
+
+Prop-driven empty state with built-in icon names — quicker than composing `Empty` by hand.
+
+```tsx
+<EmptyState
+  icon="server"
+  title="No hosts connected"
+  description="Connect your first machine and Tia will start watching it."
+  action={<Button variant="primary" size="sm">Connect a host</Button>}
+/>
+<EmptyState compact accent icon="checkCircle" title="All clear" description="No open alerts." />
+```
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `icon` | `string \| ReactNode` | `'folder'` | Built-in names: `folder`, `server`, `search`, `alert`, `bell`, `checkCircle`, `rocket` — or pass a custom icon element |
+| `title` | `ReactNode` | — | Headline |
+| `description` | `ReactNode` | — | Supporting copy |
+| `action` | `ReactNode` | — | Primary action |
+| `secondaryAction` | `ReactNode` | — | Optional second action |
+| `compact` | `boolean` | `false` | Tighter padding |
+| `accent` | `boolean` | `false` | Yellow-tinted surface |
+
+CSS classes: `.tollerud-empty`, `.tollerud-empty__icon`, `.tollerud-empty__title`, `.tollerud-empty__desc`.
 
 ## DataTable
 

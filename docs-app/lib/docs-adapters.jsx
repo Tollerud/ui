@@ -32,11 +32,6 @@ import {
   DialogFooter,
   DialogTitle,
   DialogDescription,
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
   LogViewer,
   Panel as NpmPanel,
   Meter as NpmMeter,
@@ -228,46 +223,6 @@ function Dialog({ open, onClose, title, description, children, footer }) {
   )
 }
 
-function Drawer({ open, onClose, side = 'right', title, description, children, footer, width = 380 }) {
-  return (
-    <Sheet open={open} onOpenChange={(next) => !next && onClose?.()}>
-      <SheetContent side={side} style={{ maxWidth: width }}>
-        {(title || description) && (
-          <SheetHeader>
-            {title ? <SheetTitle>{title}</SheetTitle> : null}
-            {description ? <SheetDescription>{description}</SheetDescription> : null}
-          </SheetHeader>
-        )}
-        <div className="flex-1 overflow-y-auto py-4">{children}</div>
-        {footer ? <div className="flex items-center justify-end gap-2 border-t border-tollerud-border pt-4">{footer}</div> : null}
-      </SheetContent>
-    </Sheet>
-  )
-}
-
-function EmptyState({ icon = 'folder', title, description, action, secondaryAction, compact, accent }) {
-  const I = Icons[icon] || Icons.folder
-  return (
-    <div
-      className="ds-empty"
-      data-compact={compact ? 'true' : undefined}
-      data-accent={accent ? 'true' : undefined}
-    >
-      <div className="ds-empty__icon">
-        <I size={compact ? 20 : 24} />
-      </div>
-      {title ? <div className="ds-empty__title">{title}</div> : null}
-      {description ? <p className="ds-empty__desc">{description}</p> : null}
-      {(action || secondaryAction) && (
-        <div className="ds-row" style={{ gap: 10, marginTop: 14 }}>
-          {action}
-          {secondaryAction}
-        </div>
-      )}
-    </div>
-  )
-}
-
 function PricingCard({
   name,
   tagline,
@@ -334,16 +289,6 @@ function PricingCard({
         {buttonLabel}
       </Button>
     </div>
-  )
-}
-
-function Spinner({ size = 16, style }) {
-  return (
-    <span
-      className="inline-block animate-spin rounded-full border-2 border-current border-t-transparent"
-      style={{ width: size, height: size, ...style }}
-      aria-hidden
-    />
   )
 }
 
@@ -499,12 +444,9 @@ export {
   Slider,
   DropdownMenu,
   Dialog,
-  EmptyState,
-  Spinner,
   Panel,
   Meter,
   Stepper,
-  Drawer,
   AvatarGroup,
   Divider,
   Timeline,

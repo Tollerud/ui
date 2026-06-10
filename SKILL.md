@@ -329,17 +329,22 @@ import {
   Tabs, TabsList, TabsTrigger, TabsContent,
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel,
   Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetClose,
-  Toaster,
+  Drawer, Toaster, ToastProvider, useToast,
 } from '@tollerud/ui'
 ```
 - `Dialog` / `Sheet` / `DropdownMenu` follow the standard shadcn/Radix composition pattern — `Trigger` wraps the activating element with `asChild`. `Sheet` takes a `side?: 'left' | 'right'`.
+- `Drawer` — controlled API: `open`, `onClose`, `side`, `title`, `description`, `footer`, `width`.
 - `Tooltip` requires a `<TooltipProvider>` ancestor.
-- `Toaster` is the toast renderer (Sonner-based) — mount it once near the app root.
+- `Toaster` — Sonner renderer; mount once, call `toast()` from `sonner`.
+- `ToastProvider` + `useToast` — context API: `toast({ tone, title, message?, duration? })`.
 
 ### Empty states & loading
 
 ```tsx
-import { Empty, EmptyHeader, EmptyIcon, EmptyTitle, EmptyDescription, EmptyContent, Skeleton, Progress } from '@tollerud/ui'
+import {
+  Empty, EmptyHeader, EmptyIcon, EmptyTitle, EmptyDescription, EmptyContent,
+  EmptyState, Skeleton, Progress, Spinner,
+} from '@tollerud/ui'
 
 <Empty>
   <EmptyHeader>
@@ -350,6 +355,14 @@ import { Empty, EmptyHeader, EmptyIcon, EmptyTitle, EmptyDescription, EmptyConte
   <EmptyContent><Button variant="primary" size="sm">Connect a host</Button></EmptyContent>
 </Empty>
 ```
+
+**EmptyState** — prop-driven shortcut: `icon` (built-in name or custom element), `title`, `description`, `action`, `secondaryAction`, `compact`, `accent`.
+```tsx
+<EmptyState icon="server" title="No hosts connected" description="Connect your first machine."
+  action={<Button variant="primary" size="sm">Connect</Button>} />
+```
+
+**Spinner** — `size?: number` (px, default 16). Inline loading indicator.
 
 ### Visual / decorative
 

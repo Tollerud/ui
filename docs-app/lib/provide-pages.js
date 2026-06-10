@@ -13,8 +13,6 @@ export {
   Swatch,
   TokenTable,
   PropTable,
-  ToastProvider,
-  useToast,
 } from '../components/kit/primitives'
 export { Icons, Ico } from '../components/kit/icons'
 /** Docs DataTable — adapter over npm DataTable (`rows`/`header`/icon strings). */

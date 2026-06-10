@@ -190,6 +190,27 @@
 - `segments: DonutSegment[]`
 - `size?: number`
 
+## Drawer — `DrawerProps`
+
+- `open: boolean`
+- `onClose?: () => void`
+- `side?: DrawerSide`
+- `title?: ReactNode`
+- `description?: ReactNode`
+- `children?: ReactNode`
+- `footer?: ReactNode`
+- `width?: number`
+
+## EmptyState — `EmptyStateProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `icon?: EmptyStateIconName | ReactNode`
+- `title?: ReactNode`
+- `description?: ReactNode`
+- `action?: ReactNode`
+- `secondaryAction?: ReactNode`
+- `compact?: boolean`
+- `accent?: boolean`
+
 ## FeatureCard — `FeatureCardProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 - `icon?: React.ReactNode`
@@ -425,6 +446,11 @@
 - `h?: number`
 - `color?: string`
 
+## Spinner — `SpinnerProps` extends extends HTMLAttributes<HTMLSpanElement>
+
+- `size?: number`
+- `style?: CSSProperties`
+
 ## StatCard — `StatCardProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `label: string`
@@ -470,3 +496,7 @@
 - `items: TimelineItemData[]`
 - `active?: boolean`
 - `loading?: boolean`
+
+## Toast — `ToastProviderProps`
+
+- `children: ReactNode`
