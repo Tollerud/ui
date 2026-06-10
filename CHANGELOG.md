@@ -9,7 +9,7 @@
 
 ## 4.0.3 — 2026-06-09 — Publish pipeline hardening
 
-Patch release: aligns npm publish with `validate`, fixes preset export shape, and enables provenance via OIDC.
+Patch release: aligns npm publish with `validate`, fixes preset export shape, enables provenance via OIDC, and fixes `@tollerud/footer` CI build.
 
 ### Changed
 
@@ -19,6 +19,7 @@ Patch release: aligns npm publish with `validate`, fixes preset export shape, an
 - `@tollerud/ui/utils` subpath no longer ships `'use client'` — `cn` is safe to import from Server Components
 - Removed `engines.node` from `package.json` (contributor Node/npm guidance stays in `CONTRIBUTING.md`)
 - Publish uses npm Trusted Publishers (OIDC) with `--provenance` instead of `NPM_TOKEN`
+- `@tollerud/footer` ships its own `tsup.config.ts` — stops inheriting root TS 6 `tsconfig.build.json` during DTS emit
 
 ### Docs
 
