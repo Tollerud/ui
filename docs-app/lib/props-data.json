@@ -296,12 +296,35 @@
       "extends": "extends HTMLAttributes<HTMLDivElement>",
       "props": [
         "projectName: ReactNode",
+        "projectSubtitle?: ReactNode",
+        "homeHref?: string",
+        "variant?: DashboardShellVariant",
+        "sidebarGroups?: SidebarNavGroup[]",
+        "sidebarItems?: SidebarNavItem[]",
+        "breadcrumb?: ReactNode",
+        "pageTitle?: ReactNode",
         "navItems?: TopNavItem[]",
         "topActions?: ReactNode",
         "sidebar?: ReactNode",
         "header?: ReactNode",
         "density?: MainContentDensity",
         "contentWidth?: 'default' | 'wide' | 'full'"
+      ]
+    }
+  ],
+  "DashboardTopBar": [
+    {
+      "name": "DashboardTopBarProps",
+      "extends": "extends HTMLAttributes<HTMLElement>",
+      "props": [
+        "projectName: ReactNode",
+        "homeHref?: string",
+        "breadcrumb?: ReactNode",
+        "pageTitle?: ReactNode",
+        "actions?: ReactNode",
+        "menuOpen?: boolean",
+        "onMenuToggle?: () => void",
+        "sticky?: boolean"
       ]
     }
   ],
@@ -843,7 +866,8 @@
         "description?: ReactNode",
         "actions?: ReactNode",
         "navItems?: SettingsNavItem[]",
-        "activeId?: string"
+        "activeId?: string",
+        "onNavSelect?: (id: string) => void"
       ]
     }
   ],
@@ -854,6 +878,21 @@
         "open?: boolean",
         "onOpenChange?: (open: boolean) => void",
         "children: ReactNode"
+      ]
+    }
+  ],
+  "SidebarNav": [
+    {
+      "name": "SidebarNavProps",
+      "extends": "extends HTMLAttributes<HTMLElement>",
+      "props": [
+        "projectName: ReactNode",
+        "projectSubtitle?: ReactNode",
+        "homeHref?: string",
+        "groups?: SidebarNavGroup[]",
+        "items?: SidebarNavItem[]",
+        "onItemSelect?: (item: SidebarNavItem) => void",
+        "children?: ReactNode"
       ]
     }
   ],
