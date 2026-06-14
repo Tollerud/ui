@@ -116,7 +116,7 @@ function SetupWizard() {
   );
 }
 
-function PageOnboarding() {
+function PageOnboarding({ go }) {
   return (
     <div>
       <PageHeader icon="rocket" eyebrow="Examples · onboarding" title="Onboarding"

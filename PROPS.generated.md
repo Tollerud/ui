@@ -177,12 +177,30 @@
 ## DashboardShell — `DashboardShellProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `projectName: ReactNode`
+- `projectSubtitle?: ReactNode`
+- `homeHref?: string`
+- `variant?: DashboardShellVariant`
+- `sidebarGroups?: SidebarNavGroup[]`
+- `sidebarItems?: SidebarNavItem[]`
+- `breadcrumb?: ReactNode`
+- `pageTitle?: ReactNode`
 - `navItems?: TopNavItem[]`
 - `topActions?: ReactNode`
 - `sidebar?: ReactNode`
 - `header?: ReactNode`
 - `density?: MainContentDensity`
 - `contentWidth?: 'default' | 'wide' | 'full'`
+
+## DashboardTopBar — `DashboardTopBarProps` extends extends HTMLAttributes<HTMLElement>
+
+- `projectName: ReactNode`
+- `homeHref?: string`
+- `breadcrumb?: ReactNode`
+- `pageTitle?: ReactNode`
+- `actions?: ReactNode`
+- `menuOpen?: boolean`
+- `onMenuToggle?: () => void`
+- `sticky?: boolean`
 
 ## DatePicker — `DatePickerProps`
 
@@ -528,12 +546,23 @@
 - `actions?: ReactNode`
 - `navItems?: SettingsNavItem[]`
 - `activeId?: string`
+- `onNavSelect?: (id: string) => void`
 
 ## Sheet — `SheetProps`
 
 - `open?: boolean`
 - `onOpenChange?: (open: boolean) => void`
 - `children: ReactNode`
+
+## SidebarNav — `SidebarNavProps` extends extends HTMLAttributes<HTMLElement>
+
+- `projectName: ReactNode`
+- `projectSubtitle?: ReactNode`
+- `homeHref?: string`
+- `groups?: SidebarNavGroup[]`
+- `items?: SidebarNavItem[]`
+- `onItemSelect?: (item: SidebarNavItem) => void`
+- `children?: ReactNode`
 
 ## Skeleton — `SkeletonProps` extends extends React.HTMLAttributes<HTMLDivElement>
 
