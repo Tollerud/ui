@@ -28,6 +28,8 @@ Minor release: adds common page and section compositions so agents can build ful
 
 - Docs app adds a Screen patterns page and search/deep links for the new exports.
 - Docs app adds a **Recipes** page (`/recipes/`) with component-first copy-paste screen compositions for agents; each recipe links to an existing interactive example where one exists.
+- Ships `tollerud-ui-audit` (`npx tollerud-ui-audit`) — lightweight consumer styling drift checker (missing `source.css`, copied `components/ui`, hardcoded brand hex, Button/Link nesting).
+- Docs and `GETTING_STARTED.md` add a consumer project checklist, anti-pattern table, and semantic feature-component example.
 - Component demos and roadmap metadata now reference the actual screen-pattern APIs.
 - Removed obsolete low-level `.tollerud-glass` and `.tollerud-section` utilities now covered by `TopNav` and `Section`.
 

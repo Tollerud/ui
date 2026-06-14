@@ -53,6 +53,48 @@ function PageResources({ go }) {
         </div>
       </Section>
 
+      <Section
+        title="Consumer project checklist"
+        permalink="resources/consumer-checklist"
+        desc="Self-audit styling setup before shipping. Catches copied components, missing source.css, and invalid Button/Link composition."
+      >
+        <CodeSnippet
+          name="audit"
+          code={`# From your consumer app root
+npx tollerud-ui-audit
+
+# Monorepo app package
+npx tollerud-ui-audit ./apps/web`}
+        />
+        <Alert tone="accent" title="What the audit checks">
+          Missing globals.css or source.css imports, local components/ui clones, tollerud-* classes without package imports, hardcoded brand hex values, local cn() helpers, and nested Button/Link patterns.
+        </Alert>
+        <CodeSnippet
+          name="feature-component.tsx"
+          code={`// src/features/hosts/HostDeployPanel.tsx — app-specific; composes @tollerud/ui
+import { Button, FormPanel, Input, Stack } from '@tollerud/ui'
+
+export function HostDeployPanel({ onDeploy }: { onDeploy: (host: string) => void }) {
+  return (
+    <FormPanel
+      title="Connect host"
+      footer={<Button variant="primary" onClick={() => onDeploy('emma.tollerud.no')}>Connect</Button>}
+    >
+      <Stack gap="md">
+        <Input label="Hostname" placeholder="emma.tollerud.no" />
+      </Stack>
+    </FormPanel>
+  )
+}`}
+        />
+        <p style={{ marginTop: 14, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+          Full checklist and anti-pattern table:{' '}
+          <a className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" href="https://github.com/Tollerud/ui/blob/main/GETTING_STARTED.md#consumer-project-checklist" target="_blank" rel="noreferrer">GETTING_STARTED.md</a>
+          {' · '}
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>Recipes</button>
+        </p>
+      </Section>
+
       <Section title="AI agents" desc="Sync SKILL.md into your project so coding assistants use verified exports and gotchas.">
         <CodeSnippet
           name="skill-sync"

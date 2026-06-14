@@ -281,6 +281,20 @@ Copy-paste screen compositions live on the docs site at **Recipes** (`/recipes/`
 
 Reserve Tailwind for small local glue (`mt-6`, `flex justify-end`) — not for rebuilding page structure. See the escape-hatch recipe and Getting started → Consumer styling policy.
 
+### Consumer guardrails
+
+**Self-audit** from a consumer app root:
+
+```bash
+npx tollerud-ui-audit
+```
+
+Checks: missing `source.css`, `components/ui` clones, hardcoded `#FFFF00` / `#0A0A0A`, local `cn()`, `<Button><Link>` nesting, and tollerud-* classes without `@tollerud/ui` imports.
+
+**Anti-patterns:** copied `Button.tsx`, `bg-yellow-400` CTAs, hand-built `min-h-screen bg-black` page grids, missing `<Toaster />`.
+
+**When a pattern is missing:** compose a local feature component under `src/features/…` that wraps `@tollerud/ui` exports — do not fork primitives into `components/ui`. See GETTING_STARTED.md → Consumer project checklist.
+
 **Button** — `variant`: `primary` · `secondary` · `ghost` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`.
 ```tsx
 <Button variant="primary" size="md">Deploy</Button>

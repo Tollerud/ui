@@ -94,6 +94,22 @@ export function DeployCard() {
         </p>
       </Section>
 
+      <Section
+        title="Consumer project checklist"
+        permalink="getting-started/consumer-checklist"
+        desc="Run npx tollerud-ui-audit before shipping. Fix errors for missing source.css, copied components/ui, hardcoded brand colors, and Button/Link nesting."
+      >
+        <CodeSnippet
+          name="audit"
+          code={`npx tollerud-ui-audit
+# monorepo: npx tollerud-ui-audit ./apps/web`}
+        />
+        <div className="ds-row" style={{ gap: 10, marginTop: 14, flexWrap: 'wrap' }}>
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('resources')}>Guides — full checklist</button>
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>Recipes</button>
+        </div>
+      </Section>
+
       <Section title="Server Components" desc="The bundle is marked 'use client'. Importing components or helpers like cn from a Server Component file is safe — your file does not become a Client Component.">
         <Demo name="server-components" variant="col" code={`// app/page.tsx — Server Component
 import { buttonVariants } from '@tollerud/ui'

@@ -182,15 +182,15 @@ Candidate components:
 
 Potential guardrails:
 
-- [ ] Add a "consumer project checklist" to `GETTING_STARTED.md`.
-- [ ] Document common anti-patterns:
+- [x] Add a "consumer project checklist" to `GETTING_STARTED.md`.
+- [x] Document common anti-patterns:
   - copied design-system files
   - hardcoded Tollerud colors
   - local `components/ui` clones
   - missing `@tollerud/ui/source.css`
   - `Button`/`Link` nesting instead of `asChild` or `buttonVariants`
-- [ ] Consider a lightweight lint recipe or script for consumer projects.
-- [ ] Consider examples that show how to create local semantic feature components without creating a parallel design system.
+- [x] Consider a lightweight lint recipe or script for consumer projects (`npx tollerud-ui-audit`).
+- [x] Consider examples that show how to create local semantic feature components without creating a parallel design system.
 
 **Acceptance criteria:**
 

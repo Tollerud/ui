@@ -15,6 +15,9 @@
   "license": "MIT",
   "author": "Mathias Tollerud <mathias@tollerud.no>",
   "packageManager": "npm@11.16.0",
+  "bin": {
+    "tollerud-ui-audit": "./scripts/audit-consumer-styling.mjs"
+  },
   "sideEffects": [
     "*.css"
   ],
@@ -61,7 +64,8 @@
     "CHANGELOG.md",
     "brand",
     "AGENTS.md",
-    "SKILL.md"
+    "SKILL.md",
+    "scripts/audit-consumer-styling.mjs"
   ],
   "scripts": {
     "prebuild": "node scripts/generate-entries.mjs",
@@ -74,6 +78,7 @@
     "test:subpath": "node scripts/verify-subpath-exports.mjs",
     "test:drift": "node scripts/verify-registry-drift.mjs",
     "test:consumer": "node scripts/test-consumer.mjs",
+    "test:consumer-styling": "node scripts/audit-consumer-styling.mjs fixtures/consumer && node scripts/audit-consumer-styling.mjs examples/next-starter",
     "sync:footer": "node scripts/sync-footer-package.mjs",
     "verify:footer-sync": "node scripts/verify-footer-sync.mjs",
     "test:package": "node scripts/test-package.mjs",
@@ -84,7 +89,7 @@
     "version:release": "changeset version && npm run sync:registry && npm run sync:footer",
     "docs:props": "node scripts/generate-props.mjs",
     "test:props": "node scripts/verify-props-drift.mjs",
-    "validate": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath && npm run test:drift && npm run test:package && npm run test:size && npm run test:props && npm run verify:footer-sync && npm run build:docs && npm run test:consumer",
+    "validate": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath && npm run test:drift && npm run test:package && npm run test:size && npm run test:props && npm run verify:footer-sync && npm run build:docs && npm run test:consumer-styling && npm run test:consumer",
     "prepublishOnly": "npm run sync:registry && npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath && npm run test:drift && npm run test:package && npm run test:size && npm run test:props && npm run verify:footer-sync && npm run test:consumer",
     "build:docs": "node scripts/build-docs.mjs",
     "preview:docs": "npx --yes serve _site -l 4173"
