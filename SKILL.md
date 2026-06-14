@@ -36,6 +36,8 @@ As of **v1.4.0**, charts (`BarChart`, `AreaChart`, `Donut`, `Sparkline`) and mar
 
 **Subpath imports (tree-shaking):** `@tollerud/ui/button`, `@tollerud/ui/dialog`, `@tollerud/ui/utils`. The main `@tollerud/ui` barrel still works.
 
+**Greenfield setup:** copy-paste agent prompts (new Next.js project, add to existing app, footer-only) live in [GETTING_STARTED.md](GETTING_STARTED.md) → Start with an AI agent. After agent setup, run `npx tollerud-ui-audit`.
+
 ---
 
 ## Consumer styling policy

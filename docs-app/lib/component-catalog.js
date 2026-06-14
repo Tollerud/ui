@@ -73,6 +73,7 @@ export const DEEP_LINKS = [
 
   // Consumer guardrails
   { page: 'resources', section: 'consumer-checklist', title: 'Consumer project checklist', keywords: ['audit', 'guardrails', 'anti-pattern', 'tollerud-ui-audit', 'warn-only', 'error code'] },
+  { page: 'getting-started', section: 'ai-agent', title: 'Start with an AI agent', keywords: ['agent', 'cursor', 'claude', 'prompt', 'bootstrap', 'greenfield'] },
   { page: 'getting-started', section: 'consumer-checklist', title: 'Consumer project checklist', keywords: ['audit', 'tollerud-ui-audit', 'warn-only'] },
 
   // Forms

@@ -30,6 +30,79 @@ npm install @paper-design/shaders-react`}
         />
       </Section>
 
+      <Section
+        title="Start with an AI agent"
+        permalink="getting-started/ai-agent"
+        desc="Copy a prompt into Cursor or Claude Code instead of wiring setup by hand. Run npx tollerud-ui-audit when the agent finishes."
+      >
+        <Alert tone="accent" title="Sync SKILL.md">
+          {'Prompts reference SKILL.md for exports and gotchas. Let the agent fetch it, or sync https://github.com/Tollerud/ui/blob/main/SKILL.md into your project skills folder first.'}
+        </Alert>
+        <SubHead>New Next.js project</SubHead>
+        <CodeSnippet
+          name="agent-prompt-new-project.txt"
+          code={`Set up a new Next.js App Router project with @tollerud/ui (Tollerud Design System).
+
+Requirements:
+1. Use Next.js with App Router and Tailwind CSS v4 (PostCSS).
+2. Install @tollerud/ui and all required peers:
+   npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip lucide-react framer-motion sonner
+3. In app/globals.css, import BOTH:
+   @import "@tollerud/ui/globals.css";
+   @import "@tollerud/ui/source.css";
+4. Mount <Toaster /> from @tollerud/ui in the root layout.
+5. Build the sample home page with exported layout primitives and screen patterns (PageShell, Section, Stack, Button, etc.) — not hand-built min-h-screen/grid utilities. Follow https://design.tollerud.dev/recipes/ for screen structure.
+6. Sync the Tollerud UI skill: fetch https://raw.githubusercontent.com/Tollerud/ui/main/SKILL.md and write it to .claude/skills/tollerud-ui/SKILL.md (or the equivalent skills folder for this agent).
+7. Do NOT copy @tollerud/ui component source into components/ui. Import from @tollerud/ui only. Do NOT create a local cn() helper — use import { cn } from '@tollerud/ui'.
+8. Style links with <Button asChild><Link … /></Button> or buttonVariants() — never nest <a> inside <button>.
+9. Use Tollerud tokens (text-tollerud-yellow, bg-tollerud-noir-950) — never hardcode #FFFF00 or #0A0A0A.
+10. When done, run npx tollerud-ui-audit and fix all errors before finishing.
+
+If examples/next-starter exists in the Tollerud/ui repo, use it as the reference layout. Otherwise match its structure: globals.css + source.css, layout with Toaster, component-first sample page.
+
+Tell me what you created and any audit output.`}
+        />
+        <SubHead>Add to an existing project</SubHead>
+        <CodeSnippet
+          name="agent-prompt-existing-project.txt"
+          code={`Add @tollerud/ui (Tollerud Design System) to this existing project.
+
+Requirements:
+1. Install @tollerud/ui and required peers if missing:
+   npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip lucide-react framer-motion sonner
+2. Ensure the Tailwind entry CSS imports BOTH:
+   @import "@tollerud/ui/globals.css";
+   @import "@tollerud/ui/source.css";
+3. Mount <Toaster /> near the app root if we use sonner toasts.
+4. Sync SKILL.md from https://raw.githubusercontent.com/Tollerud/ui/main/SKILL.md into the project skills folder (.claude/skills/tollerud-ui/SKILL.md or equivalent).
+5. Replace any vendored components/ui copies with imports from @tollerud/ui. Delete local cn() helpers — use import { cn } from '@tollerud/ui/utils'.
+6. Do NOT copy new component source from the design system repo into this app.
+7. Use component-first composition: @tollerud/ui exports, then layout/screen patterns, then small Tailwind glue only. Screen starting points: https://design.tollerud.dev/recipes/
+8. Fix Button/Link nesting: use asChild or buttonVariants() on links.
+9. Replace hardcoded brand hex (#FFFF00, #0A0A0A) with Tollerud tokens.
+10. Run npx tollerud-ui-audit from the app package root and fix all errors.
+
+Summarize changes and audit results when done.`}
+        />
+        <SubHead>Footer only</SubHead>
+        <CodeSnippet
+          name="agent-prompt-footer-only.txt"
+          code={`Add the Tollerud branded footer to this project using @tollerud/footer (footer-only — not the full design system).
+
+Requirements:
+1. npm install @tollerud/footer
+2. Ensure Tailwind is configured with Tollerud tokens via @import "@tollerud/ui/globals.css" (footer-only apps still need token utilities for text-tollerud-* / bg-tollerud-*).
+3. import { Footer } from '@tollerud/footer' and render <Footer /> in the layout.
+4. Do not install the full @tollerud/ui peer set unless I ask for more components later.
+
+Tell me what you changed.`}
+        />
+        <div className="ds-row" style={{ gap: 10, marginTop: 14, flexWrap: 'wrap' }}>
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('getting-started/consumer-checklist')}>Consumer checklist</button>
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>Recipes</button>
+        </div>
+      </Section>
+
       <Section title="Tailwind v4" desc="globals.css bundles tokens and layers. source.css handles @source scanning inside node_modules (pnpm, workspaces, Bun).">
         <CodeSnippet
           name="globals.css"

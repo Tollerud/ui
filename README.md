@@ -25,7 +25,7 @@ Tollerud UI is minimal but not cold. It uses a near-black foundation with warm y
 
 ## Quick Start
 
-**Starter template:** [`examples/next-starter/`](examples/next-starter/) — copy into a new project, `npm install`, `npm run dev`. See [GETTING_STARTED.md](GETTING_STARTED.md) for the full guide and migration from copied components.
+**Starter template:** [`examples/next-starter/`](examples/next-starter/) — copy into a new project, `npm install`, `npm run dev`. See [GETTING_STARTED.md](GETTING_STARTED.md) for the full guide, [copy-paste AI agent prompts](GETTING_STARTED.md#start-with-an-ai-agent) for Cursor/Claude Code setup, and migration from copied components.
 
 ### npm package (recommended)
 
