@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -211,6 +211,177 @@
         "tailwind-merge"
       ],
       "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "page-header": {
+      "name": "PageHeader",
+      "description": "Page title block with eyebrow, description, metadata, and actions",
+      "files": [
+        "components/PageHeader.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "stack",
+        "cluster"
+      ],
+      "type": "components:ui"
+    },
+    "top-nav": {
+      "name": "TopNav",
+      "description": "Branded top navigation with monogram lockup, links, and actions",
+      "files": [
+        "components/TopNav.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "monogram",
+        "cluster"
+      ],
+      "type": "components:ui"
+    },
+    "dashboard-shell": {
+      "name": "DashboardShell",
+      "description": "Application shell with TopNav, optional sidebar, header, and main content wrapper",
+      "files": [
+        "components/DashboardShell.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "page-shell",
+        "top-nav",
+        "main-content"
+      ],
+      "type": "components:ui"
+    },
+    "settings-layout": {
+      "name": "SettingsLayout",
+      "description": "Settings page layout with header, section navigation, and content panel",
+      "files": [
+        "components/SettingsLayout.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "page-header",
+        "split",
+        "stack"
+      ],
+      "type": "components:ui"
+    },
+    "form-panel": {
+      "name": "FormPanel",
+      "description": "Titled form surface with description, actions, body, and footer slots",
+      "files": [
+        "components/FormPanel.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "card",
+        "stack",
+        "cluster"
+      ],
+      "type": "components:ui"
+    },
+    "resource-list": {
+      "name": "ResourceList",
+      "description": "List/table page wrapper with header, actions, filters, count, and empty state slots",
+      "files": [
+        "components/ResourceList.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "page-header",
+        "card",
+        "cluster",
+        "stack"
+      ],
+      "type": "components:ui"
+    },
+    "detail-page": {
+      "name": "DetailPage",
+      "description": "Detail page composition with header, primary content, and optional aside",
+      "files": [
+        "components/DetailPage.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "page-header",
+        "split",
+        "stack"
+      ],
+      "type": "components:ui"
+    },
+    "empty-page": {
+      "name": "EmptyPage",
+      "description": "Full-page empty state composition on a Tollerud shell",
+      "files": [
+        "components/EmptyPage.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "page-shell",
+        "section",
+        "empty-state"
+      ],
+      "type": "components:ui"
+    },
+    "feature-section": {
+      "name": "FeatureSection",
+      "description": "Feature grid section built from PageHeader, CardGrid, and FeatureCard",
+      "files": [
+        "components/FeatureSection.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "page-header",
+        "card-grid",
+        "feature-card",
+        "stack"
+      ],
+      "type": "components:ui"
+    },
+    "stats-section": {
+      "name": "StatsSection",
+      "description": "Metric section built from PageHeader, Grid, and StatCard",
+      "files": [
+        "components/StatsSection.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "page-header",
+        "grid",
+        "stat-card",
+        "stack"
+      ],
       "type": "components:ui"
     },
     "noir-glow-background": {

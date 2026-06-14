@@ -21,6 +21,7 @@ import PageOverview from './pages/page-overview'
 import PageGettingStarted from './pages/page-getting-started'
 import PageFoundations from './pages/page-foundations'
 import PageLayout from './pages/page-layout'
+import PageScreens from './pages/page-screens'
 import PageComponents from './pages/page-components'
 import PageInfra from './pages/page-infra'
 import PageForms from './pages/page-forms'
@@ -43,6 +44,7 @@ const CANONICAL_PAGES = {
   'getting-started': PageGettingStarted,
   foundations: PageFoundations,
   layout: PageLayout,
+  screens: PageScreens,
   components: PageComponents,
   infra: PageInfra,
   forms: PageForms,

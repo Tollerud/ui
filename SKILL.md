@@ -228,6 +228,43 @@ import {
 </PageShell>
 ```
 
+### Screen patterns
+
+```tsx
+import {
+  PageHeader, TopNav, DashboardShell, SettingsLayout,
+  FormPanel, ResourceList, DetailPage, EmptyPage,
+  FeatureSection, StatsSection,
+} from '@tollerud/ui'
+```
+
+Use these before rebuilding common pages with raw Tailwind:
+
+- **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`.
+- **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`.
+- **DashboardShell** — app frame with `projectName`, `navItems`, `topActions`, `sidebar`, `header`, `contentWidth`, `density`.
+- **SettingsLayout** — settings page with `title`, `description`, `actions`, `navItems`, `activeId`.
+- **FormPanel** — titled form surface with `description`, `actions`, `footer`, `children`.
+- **ResourceList** — list/table page wrapper with `title`, `description`, `actions`, `filters`, `count`, `emptyState`.
+- **DetailPage** — detail header + primary content + optional `aside`.
+- **EmptyPage** — full-page empty state using `EmptyState` on a `PageShell`.
+- **FeatureSection** — section header + `features` rendered with `FeatureCard`.
+- **StatsSection** — section header + `stats` rendered with `StatCard`.
+
+```tsx
+<ResourceList
+  title="Hosts"
+  description="Machines connected to Tollerud."
+  actions={<Button variant="primary">Connect host</Button>}
+  count="3 hosts"
+>
+  <CardGrid columns={3}>
+    <Card><StatusDot status="online" label="emma" /></Card>
+    <Card><StatusDot status="warning" label="iris" /></Card>
+  </CardGrid>
+</ResourceList>
+```
+
 **Button** — `variant`: `primary` · `secondary` · `ghost` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`.
 ```tsx
 <Button variant="primary" size="md">Deploy</Button>

@@ -181,6 +181,8 @@ import { Checkbox, Switch, RadioGroup, Radio, Select, Textarea } from '@tollerud
 import { PasswordInput, Combobox, TagInput, Slider, FormRow } from '@tollerud/ui'
 // Layout primitives (added in 4.2.0)
 import { PageShell, Section, Stack, Cluster, Grid, CardGrid, Split, MainContent } from '@tollerud/ui'
+// Screen patterns (added in 4.3.0)
+import { PageHeader, TopNav, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection } from '@tollerud/ui'
 // Primitives & navigation (added in 1.0.9)
 import { Divider, Pill, Avatar, AvatarGroup } from '@tollerud/ui'
 import { Breadcrumb, Pagination, Segmented, Stepper } from '@tollerud/ui'
@@ -422,6 +424,22 @@ Monogram sizing: top bar/sidebar expanded → `h-5`, sidebar collapsed → `h-6`
   </Stack>
  </Section>
 </PageShell>
+```
+
+### Screen patterns
+
+```tsx
+<ResourceList
+ title="Hosts"
+ description="Machines connected to Tollerud."
+ actions={<Button variant="primary">Connect host</Button>}
+ count="3 hosts"
+>
+ <CardGrid columns={3}>
+  <Card><StatusDot status="online" label="emma" /></Card>
+  <Card><StatusDot status="warning" label="iris" /></Card>
+ </CardGrid>
+</ResourceList>
 ```
 
 ### Density

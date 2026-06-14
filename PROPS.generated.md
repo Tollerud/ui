@@ -174,6 +174,16 @@
 - `actions?: React.ReactNode`
 - `accentBar?: boolean`
 
+## DashboardShell — `DashboardShellProps` extends extends HTMLAttributes<HTMLDivElement>
+
+- `projectName: ReactNode`
+- `navItems?: TopNavItem[]`
+- `topActions?: ReactNode`
+- `sidebar?: ReactNode`
+- `header?: ReactNode`
+- `density?: MainContentDensity`
+- `contentWidth?: 'default' | 'wide' | 'full'`
+
 ## DatePicker — `DatePickerProps`
 
 - `value?: Date | null`
@@ -185,6 +195,15 @@
 - `formatDate?: (date: Date) => string`
 - `className?: string`
 - `disabled?: boolean`
+
+## DetailPage — `DetailPageProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `eyebrow?: ReactNode`
+- `title: ReactNode`
+- `description?: ReactNode`
+- `actions?: ReactNode`
+- `meta?: ReactNode`
+- `aside?: ReactNode`
 
 ## Divider — `DividerProps` extends extends HTMLAttributes<HTMLDivElement>
 
@@ -214,6 +233,16 @@
 - `footer?: ReactNode`
 - `width?: number`
 
+## EmptyPage — `EmptyPageProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `icon?: EmptyStateIconName | ReactNode`
+- `title: ReactNode`
+- `description?: ReactNode`
+- `action?: ReactNode`
+- `secondaryAction?: ReactNode`
+- `background?: PageShellBackground`
+- `accent?: boolean`
+
 ## EmptyState — `EmptyStateProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 - `icon?: EmptyStateIconName | ReactNode`
@@ -230,6 +259,15 @@
 - `title: React.ReactNode`
 - `description: React.ReactNode`
 
+## FeatureSection — `FeatureSectionProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `eyebrow?: ReactNode`
+- `title: ReactNode`
+- `description?: ReactNode`
+- `actions?: ReactNode`
+- `features: FeatureSectionItem[]`
+- `columns?: CardGridColumns`
+
 ## FileUpload — `FileUploadProps`
 
 - `label?: string`
@@ -240,6 +278,13 @@
 - `onFilesChange?: (files: File[]) => void`
 - `className?: string`
 - `disabled?: boolean`
+
+## FormPanel — `FormPanelProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `title: ReactNode`
+- `description?: ReactNode`
+- `actions?: ReactNode`
+- `footer?: ReactNode`
 
 ## FormRow — `FormRowProps` extends extends HTMLAttributes<HTMLDivElement>
 
@@ -365,6 +410,16 @@
 - `offsetY?: number`
 - `scale?: number`
 
+## PageHeader — `PageHeaderProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `eyebrow?: ReactNode`
+- `title: ReactNode`
+- `description?: ReactNode`
+- `actions?: ReactNode`
+- `meta?: ReactNode`
+- `align?: PageHeaderAlign`
+- `size?: PageHeaderSize`
+
 ## PageShell — `PageShellProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `as?: 'div' | 'main'`
@@ -419,6 +474,15 @@
 
 - `label?: string`
 
+## ResourceList — `ResourceListProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `title: ReactNode`
+- `description?: ReactNode`
+- `actions?: ReactNode`
+- `filters?: ReactNode`
+- `count?: ReactNode`
+- `emptyState?: ReactNode`
+
 ## RollbackPlan — `RollbackPlanProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `name: string`
@@ -456,6 +520,14 @@
 - `responseTime?: string`
 - `version?: string`
 - `loading?: boolean`
+
+## SettingsLayout — `SettingsLayoutProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `title: ReactNode`
+- `description?: ReactNode`
+- `actions?: ReactNode`
+- `navItems?: SettingsNavItem[]`
+- `activeId?: string`
 
 ## Sheet — `SheetProps`
 
@@ -510,6 +582,15 @@
 - `change?: { value: string; direction: 'up' | 'down' }`
 - `accent?: boolean`
 
+## StatsSection — `StatsSectionProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `eyebrow?: ReactNode`
+- `title?: ReactNode`
+- `description?: ReactNode`
+- `actions?: ReactNode`
+- `stats: StatCardProps[]`
+- `columns?: GridColumns`
+
 ## StatusDot — `StatusDotProps` extends extends HTMLAttributes<HTMLSpanElement>
 
 - `status?: Status`
@@ -552,3 +633,11 @@
 ## Toast — `ToastProviderProps`
 
 - `children: ReactNode`
+
+## TopNav — `TopNavProps` extends extends HTMLAttributes<HTMLElement>
+
+- `projectName: ReactNode`
+- `homeHref?: string`
+- `navItems?: TopNavItem[]`
+- `actions?: ReactNode`
+- `sticky?: boolean`

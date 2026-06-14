@@ -9,6 +9,7 @@ function PageComponents({ go }) {
   const [density, setDensity] = useState('comfortable');
   const morePages = [
     { id: 'layout', icon: 'layers', t: 'Layout', d: 'Page shells, sections, stacks, grids, splits.' },
+    { id: 'screens', icon: 'app', t: 'Screen patterns', d: 'Headers, nav, shells, settings, lists.' },
     { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, toggles, combobox, form row, validation.' },
     { id: 'navigation', icon: 'compass', t: 'Navigation & Overlays', d: 'Dialogs, drawer, menus, toasts, command palette.' },
     { id: 'infra', icon: 'server', t: 'Infrastructure', d: 'Host, incident, approval, and ops cards.' },

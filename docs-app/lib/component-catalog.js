@@ -47,6 +47,18 @@ export const DEEP_LINKS = [
   { page: 'layout', section: 'split-maincontent', title: 'Split', component: 'Split', keywords: ['aside', 'two column'] },
   { page: 'layout', section: 'split-maincontent', title: 'MainContent', component: 'MainContent', keywords: ['main', 'content', 'width'] },
 
+  // Screen patterns
+  { page: 'screens', section: 'page-header', title: 'PageHeader', component: 'PageHeader', keywords: ['title', 'heading', 'actions'] },
+  { page: 'screens', section: 'top-nav', title: 'TopNav', component: 'TopNav', keywords: ['nav', 'monogram', 'lockup'] },
+  { page: 'screens', section: 'dashboard-shell', title: 'DashboardShell', component: 'DashboardShell', keywords: ['app shell', 'sidebar'] },
+  { page: 'screens', section: 'settings-form', title: 'SettingsLayout', component: 'SettingsLayout', keywords: ['settings', 'forms'] },
+  { page: 'screens', section: 'settings-form', title: 'FormPanel', component: 'FormPanel', keywords: ['forms', 'panel'] },
+  { page: 'screens', section: 'resource-detail', title: 'ResourceList', component: 'ResourceList', keywords: ['list', 'table'] },
+  { page: 'screens', section: 'resource-detail', title: 'DetailPage', component: 'DetailPage', keywords: ['detail', 'aside'] },
+  { page: 'screens', section: 'empty-page', title: 'EmptyPage', component: 'EmptyPage', keywords: ['empty', 'first run'] },
+  { page: 'screens', section: 'featuresection-statssection', title: 'FeatureSection', component: 'FeatureSection', keywords: ['features', 'marketing'] },
+  { page: 'screens', section: 'featuresection-statssection', title: 'StatsSection', component: 'StatsSection', keywords: ['stats', 'metrics'] },
+
   // Forms
   { page: 'forms', section: 'text-input', title: 'Text input', component: 'Input' },
   { page: 'forms', section: 'combobox', title: 'Combobox', component: 'Combobox' },

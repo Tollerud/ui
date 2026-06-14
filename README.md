@@ -94,7 +94,7 @@ export default {
 **Components:**
 
 ```tsx
-import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, HeroBlock } from '@tollerud/ui'
+import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, HeroBlock, ResourceList } from '@tollerud/ui'
 ```
 
 TypeScript types are included — no `@types/*` package needed. **[SKILL.md](SKILL.md)** lists every export; **[PROPS.generated.md](PROPS.generated.md)** has machine-checked prop tables; **[COMPONENTS.md](COMPONENTS.md)** has usage examples and patterns.

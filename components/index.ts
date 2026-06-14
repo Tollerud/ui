@@ -51,6 +51,36 @@ export type { SplitProps, SplitRatio, SplitGap, SplitAlign } from './Split'
 export { MainContent } from './MainContent'
 export type { MainContentProps, MainContentWidth, MainContentSpacing, MainContentDensity } from './MainContent'
 
+export { PageHeader } from './PageHeader'
+export type { PageHeaderProps, PageHeaderAlign, PageHeaderSize } from './PageHeader'
+
+export { TopNav } from './TopNav'
+export type { TopNavProps, TopNavItem } from './TopNav'
+
+export { DashboardShell } from './DashboardShell'
+export type { DashboardShellProps } from './DashboardShell'
+
+export { SettingsLayout } from './SettingsLayout'
+export type { SettingsLayoutProps, SettingsNavItem } from './SettingsLayout'
+
+export { FormPanel } from './FormPanel'
+export type { FormPanelProps } from './FormPanel'
+
+export { ResourceList } from './ResourceList'
+export type { ResourceListProps } from './ResourceList'
+
+export { DetailPage } from './DetailPage'
+export type { DetailPageProps } from './DetailPage'
+
+export { EmptyPage } from './EmptyPage'
+export type { EmptyPageProps } from './EmptyPage'
+
+export { FeatureSection } from './FeatureSection'
+export type { FeatureSectionProps, FeatureSectionItem } from './FeatureSection'
+
+export { StatsSection } from './StatsSection'
+export type { StatsSectionProps } from './StatsSection'
+
 export { NoirGlowBackground } from './NoirGlowBackground'
 export type { NoirGlowBackgroundProps } from './NoirGlowBackground'
 

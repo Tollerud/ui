@@ -203,6 +203,7 @@ Import individual components without pulling the full barrel:
 ```tsx
 import { Button } from '@tollerud/ui/button'
 import { PageShell, Section, Stack } from '@tollerud/ui'
+import { PageHeader, ResourceList } from '@tollerud/ui'
 import { cn } from '@tollerud/ui/utils'
 ```
 

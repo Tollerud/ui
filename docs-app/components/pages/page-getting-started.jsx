@@ -142,6 +142,7 @@ import { cn } from '@tollerud/ui/utils'`}
           {[
             { id: 'foundations', icon: 'palette', t: 'Foundations', d: 'Color, type, spacing, motion, brand.' },
             { id: 'layout', icon: 'layers', t: 'Layout', d: 'Page shells, sections, stacks, grids.' },
+            { id: 'screens', icon: 'app', t: 'Screen patterns', d: 'Headers, nav, settings, list/detail pages.' },
             { id: 'components', icon: 'grid', t: 'Components', d: 'Core primitives — button, card, badge, status.' },
             { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, toggles, combobox, validation.' },
             { id: 'navigation', icon: 'compass', t: 'Navigation & Overlays', d: 'Dialogs, menus, command palette.' },

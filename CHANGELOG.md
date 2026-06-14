@@ -7,6 +7,32 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.3.0 — 2026-06-14 — Add screen patterns for component-first pages
+
+Minor release: adds common page and section compositions so agents can build full Tollerud screens without recreating branded layout, navigation, form, list, detail, or empty-state structure with raw Tailwind.
+
+### New components
+
+- `PageHeader` — title block with eyebrow, description, metadata, and actions
+- `TopNav` — branded monogram/project lockup with nav links and actions
+- `DashboardShell` — app shell with top nav, optional sidebar, header, and main content
+- `SettingsLayout` — settings page with section navigation and content panel
+- `FormPanel` — titled form surface with body, action, and footer slots
+- `ResourceList` — list/table page wrapper with header, filters, count, actions, and empty state
+- `DetailPage` — detail page with header, primary content, and optional aside
+- `EmptyPage` — full-page empty state on a Tollerud shell
+- `FeatureSection` — feature grid section built from `PageHeader`, `CardGrid`, and `FeatureCard`
+- `StatsSection` — metric section built from `PageHeader`, `Grid`, and `StatCard`
+
+### Changed
+
+- Docs app adds a Screen patterns page and search/deep links for the new exports.
+- Component demos and roadmap metadata now reference the actual screen-pattern APIs.
+
+### Migration
+
+Nothing breaking. Prefer these screen patterns for repeated page structure in consumer apps.
+
 ## 4.2.0 — 2026-06-14 — Add layout primitives for component-first consumer apps
 
 Minor release: adds semantic layout primitives so consumer apps and agents can build Tollerud-shaped pages without recreating branded structure with raw Tailwind utilities.

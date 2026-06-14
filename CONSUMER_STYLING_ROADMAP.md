@@ -133,16 +133,16 @@ Candidate components:
 
 Candidate components:
 
-- [ ] `PageHeader` — title, description, eyebrow, actions, metadata.
-- [ ] `TopNav` — branded monogram lockup, nav links, actions.
-- [ ] `DashboardShell` — sidebar/topbar/content frame for app surfaces.
-- [ ] `SettingsLayout` — section navigation plus settings content.
-- [ ] `FormPanel` — titled form surface with footer actions.
-- [ ] `ResourceList` — list/table page wrapper with search/action slots.
-- [ ] `DetailPage` — header, metadata, primary content, aside.
-- [ ] `EmptyPage` — full-page empty state composition.
-- [ ] `FeatureSection` — marketing feature grid composition.
-- [ ] `StatsSection` — metric/stat composition.
+- [x] `PageHeader` — title, description, eyebrow, actions, metadata.
+- [x] `TopNav` — branded monogram lockup, nav links, actions.
+- [x] `DashboardShell` — sidebar/topbar/content frame for app surfaces.
+- [x] `SettingsLayout` — section navigation plus settings content.
+- [x] `FormPanel` — titled form surface with footer actions.
+- [x] `ResourceList` — list/table page wrapper with search/action slots.
+- [x] `DetailPage` — header, metadata, primary content, aside.
+- [x] `EmptyPage` — full-page empty state composition.
+- [x] `FeatureSection` — marketing feature grid composition.
+- [x] `StatsSection` — metric/stat composition.
 
 **Acceptance criteria:**
 

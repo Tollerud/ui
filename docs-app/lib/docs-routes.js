@@ -26,6 +26,7 @@ export const NAV = [
         items: [
           { id: 'foundations', label: 'Foundations', icon: 'palette' },
           { id: 'layout', label: 'Layout', icon: 'layers' },
+          { id: 'screens', label: 'Screen patterns', icon: 'app' },
           { id: 'components', label: 'Components', icon: 'grid' },
         ],
       },
@@ -79,6 +80,7 @@ export const PAGE_TITLES = {
   'getting-started': 'Getting started',
   foundations: 'Foundations',
   layout: 'Layout',
+  screens: 'Screen patterns',
   components: 'Components',
   forms: 'Forms',
   navigation: 'Navigation & Overlays',
