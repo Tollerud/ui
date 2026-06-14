@@ -38,6 +38,54 @@ As of **v1.4.0**, charts (`BarChart`, `AreaChart`, `Donut`, `Sparkline`) and mar
 
 ---
 
+## Consumer styling policy
+
+Tailwind is part of `@tollerud/ui` on purpose. Use it freely **inside this package** to implement components, variants, layout primitives, focus states, tokens, and docs-only demos.
+
+In consumer apps, use Tailwind as a small escape hatch, not as the primary design language. The default order is:
+
+1. Use exported `@tollerud/ui` components.
+2. Use exported `@tollerud/ui` layout primitives or screen patterns when available.
+3. Use Tailwind only for small local glue, such as one-off margins, alignment, or responsive visibility.
+4. If branded structure repeats, add a component to `@tollerud/ui` or create a local semantic feature component; do not rebuild a parallel design system with raw utility classes.
+
+Allowed consumer Tailwind:
+
+```tsx
+<div className="mt-6">
+  <Button variant="primary">Deploy</Button>
+</div>
+```
+
+Discouraged consumer Tailwind:
+
+```tsx
+<button className="rounded-lg bg-yellow-400 px-4 py-2 text-black">
+  Deploy
+</button>
+```
+
+```tsx
+<section className="min-h-screen bg-black px-6 py-24">
+  <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+    {/* branded cards built by hand */}
+  </div>
+</section>
+```
+
+Consumer apps must import the package CSS for Tailwind v4:
+
+```css
+@import "@tollerud/ui/globals.css";
+@import "@tollerud/ui/source.css";
+```
+
+`globals.css` provides Tailwind, tokens, and component layers. `source.css` makes Tailwind scan the installed package so utility classes used only inside `@tollerud/ui` are generated.
+
+Use `cn` from `@tollerud/ui` or `@tollerud/ui/utils`; do not reimplement a local `cn()` helper in consumer projects.
+
+---
+
 ## Critical gotchas (read before writing code)
 
 ### 1. Server Components — just import normally (≥ 1.0.8)

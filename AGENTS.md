@@ -103,6 +103,37 @@ Agents must:
 - Use Tollerud tokens (`text-tollerud-*`, `bg-tollerud-noir-*`) — never hardcode `#FFFF00` / `#0A0A0A` or copy component source from the package into the repo (see [Fixing copy/paste component patterns](#fixing-copypaste-component-patterns-for-agents-working-in-consumer-projects)).
 - **Do not modify** `node_modules/@tollerud/ui` or vendor forked DS files in the consumer app. Bump the package version or open an issue upstream instead.
 
+### Consumer styling policy
+
+Tailwind is allowed and expected **inside `@tollerud/ui`**. Use it in this package to implement components, variants, layout primitives, responsive behavior, focus states, and docs demos.
+
+In consumer apps, Tailwind is allowed as small local glue, but it should not become the primary design language. Prefer this order:
+
+1. Exported `@tollerud/ui` components.
+2. Exported layout primitives or screen patterns from `@tollerud/ui`.
+3. Small Tailwind adjustments for local spacing, alignment, or responsive visibility.
+4. A local semantic feature component when app-specific structure is needed.
+
+If a branded layout or interaction repeats, add it to `@tollerud/ui` rather than rebuilding it with raw utility classes in each app.
+
+| Allowed in consumer apps | Discouraged in consumer apps |
+|--------------------------|------------------------------|
+| `<div className="mt-6"><Button>Deploy</Button></div>` for local spacing glue | Hand-rolled `<button className="rounded-lg bg-yellow-400 px-4 py-2">...` |
+| Tollerud token utilities when no primitive exists yet | Hardcoded colors like `#FFFF00`, `#0A0A0A`, or generic blue/gray/red palettes for branded UI |
+| Local feature components that compose `@tollerud/ui` exports | A parallel `components/ui` design system copied from this package |
+| `className` escape hatches merged through exported components | Inline styles for static branded design decisions |
+
+For Tailwind v4 consumer apps, both imports are required:
+
+```css
+@import "@tollerud/ui/globals.css";
+@import "@tollerud/ui/source.css";
+```
+
+`globals.css` provides tokens and component layers. `source.css` makes Tailwind scan `@tollerud/ui`'s dist classes. Without `source.css`, styles used only inside the package can disappear in production builds.
+
+Use `import { cn } from '@tollerud/ui'` or `@tollerud/ui/utils`; do not create a local `cn()` helper in consumer projects.
+
 When contributing **to this repository**, changing `components/*.tsx` is expected when the task explicitly calls for it — follow the release checklist in [Updating the npm package](#updating-the-npm-package-for-agents-working-in-this-repo) below.
 
 ---

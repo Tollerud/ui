@@ -82,12 +82,12 @@ The consumer app still imports the required CSS:
 
 **Goal:** make the expected consumer behavior explicit before adding new APIs.
 
-- [ ] Add the styling policy to `SKILL.md`.
-- [ ] Add the styling policy to `AGENTS.md`.
-- [ ] Add a short "consumer styling" section to `GETTING_STARTED.md`.
-- [ ] Add examples of allowed vs discouraged Tailwind usage.
-- [ ] Clarify that `globals.css` plus `source.css` is required for Tailwind v4 consumer styling.
-- [ ] Clarify that `cn` is exported from `@tollerud/ui` and should not be reimplemented in consumer apps.
+- [x] Add the styling policy to `SKILL.md`.
+- [x] Add the styling policy to `AGENTS.md`.
+- [x] Add a short "consumer styling" section to `GETTING_STARTED.md`.
+- [x] Add examples of allowed vs discouraged Tailwind usage.
+- [x] Clarify that `globals.css` plus `source.css` is required for Tailwind v4 consumer styling.
+- [x] Clarify that `cn` is exported from `@tollerud/ui` and should not be reimplemented in consumer apps.
 
 **Acceptance criteria:**
 

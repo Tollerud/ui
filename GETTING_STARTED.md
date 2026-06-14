@@ -124,6 +124,78 @@ export default config
 
 ---
 
+## Consumer styling policy
+
+`@tollerud/ui` ships Tailwind support intentionally. Tailwind is the implementation engine for the design system, but consumer projects should treat the component API as the primary design language.
+
+Use this order in apps:
+
+1. Use exported `@tollerud/ui` components.
+2. Use exported layout primitives and screen patterns when available.
+3. Use Tailwind only for small local glue, such as spacing, alignment, or responsive visibility.
+4. If a branded pattern repeats, add it to `@tollerud/ui` or create a local semantic feature component that composes `@tollerud/ui`.
+
+### Allowed Tailwind glue
+
+Small layout adjustments around package components are fine:
+
+```tsx
+import { Button, Card } from '@tollerud/ui'
+
+export function DeployCard() {
+  return (
+    <Card>
+      <p>Ready to deploy.</p>
+      <div className="mt-6">
+        <Button variant="primary">Deploy</Button>
+      </div>
+    </Card>
+  )
+}
+```
+
+### Avoid rebuilding branded UI with utilities
+
+Do not recreate design-system primitives in app code:
+
+```tsx
+// Avoid: this bypasses Button variants, focus states, and brand tokens.
+<button className="rounded-lg bg-yellow-400 px-4 py-2 text-black">
+  Deploy
+</button>
+```
+
+Do not recreate full branded page structure with raw layout utilities when a component or pattern should own it:
+
+```tsx
+// Avoid: move repeated branded layout into @tollerud/ui or a semantic feature component.
+<section className="min-h-screen bg-black px-6 py-24">
+  <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+    {/* hand-built branded cards */}
+  </div>
+</section>
+```
+
+### Required CSS and shared utilities
+
+For Tailwind v4, keep both imports in your app stylesheet:
+
+```css
+@import "@tollerud/ui/globals.css";
+@import "@tollerud/ui/source.css";
+```
+
+`globals.css` provides Tailwind, tokens, and component layers. `source.css` makes Tailwind scan the installed package so utility classes used only inside `@tollerud/ui` are generated.
+
+Use the exported class merge helper instead of adding a local copy:
+
+```tsx
+import { cn } from '@tollerud/ui'
+// or: import { cn } from '@tollerud/ui/utils'
+```
+
+---
+
 ## Subpath imports (tree-shaking)
 
 Import individual components without pulling the full barrel:
