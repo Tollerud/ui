@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
-import { Monogram, NavLockup, TiaPortrait, TollerudAvatarFull } from '@/components/brand'
+import { Monogram, TiaPortrait, TollerudAvatarFull } from '@/components/brand'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, TopNav } = __p
 
 /* @tollerud/ui docs — Foundations */
 
@@ -190,68 +190,43 @@ function PageFoundations() {
         </div>
         <SubHead>Navigation lockup</SubHead>
         <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 16px' }}>
-          The monogram always appears to the left of the project name — never the name alone, never the mark alone. Gap between mark and text is 8px (<code className="ds-mono" style={{ fontSize: 12 }}>gap-2</code>). The pairing is the lockup.
+          The monogram always appears to the left of the project name — never the name alone, never the mark alone. Use <code className="ds-mono" style={{ fontSize: 12 }}>TopNav</code> for top bars so the lockup, link states, focus styles, and spacing stay consistent.
         </p>
         <div className="ds-demo ds-themed" style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {/* Top bar */}
-          <div>
-            <span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 8 }}>Top bar</span>
-            <div style={{ background: 'var(--tollerud-noir-900)', border: '1px solid var(--border)', borderRadius: 8, height: 48, display: 'flex', alignItems: 'center', padding: '0 16px', gap: 16 }}>
-              <NavLockup projectName="Dashboard" variant="topbar" />
-              <div style={{ display: 'flex', gap: 16, marginLeft: 8 }}>
-                {['Overview', 'Services', 'Logs'].map(l => <span key={l} style={{ fontSize: 13, color: 'var(--text-muted)' }}>{l}</span>)}
-              </div>
-            </div>
-          </div>
-          {/* Sidebar expanded */}
-          <div>
-            <span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 8 }}>Sidebar — expanded</span>
-            <div style={{ background: 'var(--tollerud-noir-900)', border: '1px solid var(--border)', borderRadius: 8, width: 200, overflow: 'hidden' }}>
-              <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--border)' }}>
-                <NavLockup projectName="Project Name" variant="sidebar" />
-              </div>
-              {['Dashboard', 'Services', 'Settings'].map(l => (
-                <div key={l} style={{ padding: '8px 14px', fontSize: 13, color: 'var(--text-muted)' }}>{l}</div>
-              ))}
-            </div>
-          </div>
-          {/* Sidebar collapsed */}
-          <div>
-            <span className="ds-mono" style={{ fontSize: 11, color: 'var(--text-muted)', display: 'block', marginBottom: 8 }}>Sidebar — collapsed</span>
-            <div style={{ background: 'var(--tollerud-noir-900)', border: '1px solid var(--border)', borderRadius: 8, width: 48, overflow: 'hidden' }}>
-              <div style={{ padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
-                <NavLockup variant="sidebarCollapsed" />
-              </div>
-              {['●', '●', '●'].map((l, i) => (
-                <div key={i} style={{ padding: '10px 0', display: 'flex', justifyContent: 'center', fontSize: 6, color: 'var(--text-muted)' }}>{l}</div>
-              ))}
-            </div>
-          </div>
+          <TopNav
+            sticky={false}
+            projectName="Dashboard"
+            navItems={[
+              { label: 'Overview', href: '#', active: true },
+              { label: 'Services', href: '#' },
+              { label: 'Logs', href: '#' },
+            ]}
+            actions={<Button size="sm" variant="primary">Deploy</Button>}
+            className="rounded-lg border border-tollerud-border"
+          />
         </div>
         <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <CodeSnippet name="nav-lockup.jsx" code={`import { NavLockup } from '@/components/brand'
+          <CodeSnippet name="top-nav.jsx" code={`import { Button, TopNav } from '@tollerud/ui'
 
-// Top bar
-<nav className="fixed top-0 inset-x-0 h-14 flex items-center px-6 gap-6 bg-tollerud-noir-900 border-b border-tollerud-noir-600">
-  <NavLockup projectName="Dashboard" variant="topbar" className="shrink-0" />
-  {/* nav links, actions … */}
-</nav>`}/>
-          <CodeSnippet name="sidebar.jsx" code={`import { NavLockup } from '@/components/brand'
+<TopNav
+  projectName="Dashboard"
+  navItems={[
+    { label: 'Overview', href: '/', active: true },
+    { label: 'Services', href: '/services' },
+    { label: 'Logs', href: '/logs' },
+  ]}
+  actions={<Button size="sm" variant="primary">Deploy</Button>}
+/>`}/>
+          <CodeSnippet name="app-shell.jsx" code={`import { Button, DashboardShell, PageHeader, Stack } from '@tollerud/ui'
 
-// Sidebar expanded
-<aside className="w-56 h-screen bg-tollerud-noir-900 border-r border-tollerud-noir-600 flex flex-col">
-  <div className="px-4 h-14 border-b border-tollerud-noir-600 shrink-0 flex items-center">
-    <NavLockup projectName="Project Name" variant="sidebar" />
-  </div>
-  {/* nav items … */}
-</aside>
-
-// Sidebar collapsed — name hidden, mark slightly larger
-<aside className="w-14 h-screen bg-tollerud-noir-900 border-r border-tollerud-noir-600 flex flex-col items-center">
-  <div className="flex items-center justify-center h-14 border-b border-tollerud-noir-600 w-full">
-    <NavLockup variant="sidebarCollapsed" />
-  </div>
-</aside>`}/>
+<DashboardShell
+  projectName="Dashboard"
+  navItems={[{ label: 'Overview', href: '/', active: true }]}
+  sidebar={<Stack gap="sm"><Button variant="ghost">Services</Button><Button variant="ghost">Settings</Button></Stack>}
+  header={<PageHeader title="Overview" description="Fleet health at a glance." />}
+>
+  {/* page content */}
+</DashboardShell>`}/>
         </div>
       </Section>
 

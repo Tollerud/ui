@@ -1033,14 +1033,6 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 
 Variants: `variant?: 'default' | 'circular' | 'text'`. CSS class: `.tollerud-skeleton`.
 
-## Glass Nav
-
-```html
-<nav class="tollerud-glass fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6">
-  ...
-</nav>
-```
-
 ## Grid Background
 
 ```html

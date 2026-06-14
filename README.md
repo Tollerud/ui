@@ -247,7 +247,6 @@ These lower-level classes and Tailwind utilities are available for package inter
 |-----------|-----------|---------------------|-------------|
 | Noir Glow Background | `.tollerud-noir-glow-*` | `bg-tollerud-noir-glow` | Tollerud.no-inspired acid-yellow glow fallback |
 | Grid Background | `.tollerud-grid-bg` | `bg-tollerud-grid bg-[length:40px_40px]` | Subtle yellow grid pattern |
-| Glass Nav | `.tollerud-glass` | `backdrop-blur-glass bg-opacity-88` | Frosted glass navigation bar |
 | Terminal Button | `.tollerud-btn--terminal` | — | Monospace CTA with `❯` prefix |
 | Pill Tag | `.tollerud-pill--outline` / `--muted` | — | Tiny label/tag components |
 | Accent Bar | `.tollerud-accent-bar` | `bg-tollerud-gradient-bar h-[1px]` | Gradient divider bar |

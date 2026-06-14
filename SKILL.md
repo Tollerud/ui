@@ -580,21 +580,22 @@ import type { IncidentSeverity } from '@tollerud/ui'
 ### Footer & branding
 
 ```tsx
-import { Footer, Monogram } from '@tollerud/ui'
+import { Button, Footer, TopNav } from '@tollerud/ui'
 
 <Footer layout="responsive" accent labels={{ tollerudProject: 'A Tollerud Project' }} />
 ```
 The monogram must always sit left of the project name with `gap-2`. Never show the name without the monogram, or the monogram alone, in nav contexts.
 
 ```tsx
-<div className="flex items-center gap-2 shrink-0">
-  <Monogram color="yellow" className="h-5 w-auto" />
-  <span className="font-semibold text-sm text-white">Project Name</span>
-</div>
+<TopNav
+  projectName="Project Name"
+  navItems={[{ label: 'Overview', href: '/overview', active: true }]}
+  actions={<Button variant="primary" size="sm">Get started</Button>}
+/>
 ```
 
 **Monogram** — `color?: 'yellow' | 'black' | 'white'` (default `yellow`), `size?: number`, `title?: string` (default `'Tollerud'`). Brand avatars: `@tollerud/ui/brand/tollerud-avatar.svg`, `brand/tollerud-avatar-full.svg` (+ `.png` variants).
-Monogram sizing: top bar/sidebar expanded → `h-5`, collapsed → `h-6`, footer → `h-4` (handled automatically by `<Footer />`).
+Monogram sizing is handled automatically by `TopNav` and `Footer`; use `Monogram` directly only for custom brand moments.
 
 ---
 
@@ -603,7 +604,6 @@ Monogram sizing: top bar/sidebar expanded → `h-5`, collapsed → `h-6`, footer
 These are low-level class references for package internals, docs demos, and custom cases. In consumer apps, prefer exported components and screen/layout primitives first; use these classes only when no component covers the need yet.
 
 ```html
-<nav class="tollerud-glass fixed top-0 inset-x-0 z-50 h-14 flex items-center px-6">…</nav>
 <section class="tollerud-grid-bg">…</section>
 <h1 class="tollerud-display text-[70px]">Dark. Monochrome.</h1>
 <h2 class="tollerud-display--secondary text-[40px]">

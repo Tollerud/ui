@@ -362,32 +362,14 @@ These class-level patterns are references for package internals, docs demos, and
 The monogram must always appear left of the project name with `gap-2`. Never show the name without the monogram or the monogram alone in a nav context.
 
 ```tsx
-import logo from '@tollerud/ui/brand/tollerud-logo.svg'
-
-// Top bar
-<nav className="tollerud-glass fixed top-0 inset-x-0 z-50 h-14 flex items-center px-6 gap-6">
-  <div className="flex items-center gap-2 shrink-0">
-    <img src={logo} alt="Tollerud" className="h-5 w-auto" />
-    <span className="font-semibold text-sm text-white">Project Name</span>
-  </div>
-  <div className="flex items-center gap-4 ml-4">
-    <a href="/overview" className="text-sm text-tollerud-text-secondary hover:text-white transition-colors">Overview</a>
-  </div>
-  <div className="ml-auto flex items-center gap-3">
-    <Button variant="ghost" size="sm">Sign in</Button>
-    <Button variant="primary" size="sm">Get started</Button>
-  </div>
-</nav>
-<main className="pt-14">…</main>
+<TopNav
+ projectName="Project Name"
+ navItems={[{ label: 'Overview', href: '/overview', active: true }]}
+ actions={<Button variant="primary" size="sm">Get started</Button>}
+/>
 ```
 
-Monogram sizing: top bar/sidebar expanded → `h-5`, sidebar collapsed → `h-6`, footer → `h-4` (handled automatically by `<Footer />`).
-
-### Glass nav
-
-```html
-<nav class="tollerud-glass fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6">…</nav>
-```
+Monogram sizing is handled automatically by `TopNav` and `Footer`. If you build a custom layout inside `@tollerud/ui`, use top bar/sidebar expanded → `h-5`, sidebar collapsed → `h-6`, footer → `h-4`.
 
 ### Grid background
 
