@@ -24,10 +24,10 @@ function PageScreens({ go }) {
 
       {go && (
         <div className="ds-row" style={{ gap: 12, marginBottom: 24 }}>
-          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>
+          <Button variant="secondary" size="sm" onClick={() => go('recipes')}>
             Recipes — agent-safe screen compositions
             <Icons.arrowRight size={14} />
-          </button>
+          </Button>
         </div>
       )}
 
