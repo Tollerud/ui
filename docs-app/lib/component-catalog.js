@@ -31,7 +31,7 @@ export const DEEP_LINKS = [
   { page: 'components', section: 'meter', title: 'Meter', component: 'Meter' },
   { page: 'components', section: 'stepper', title: 'Stepper', component: 'Stepper' },
   { page: 'components', section: 'density', title: 'Density', keywords: ['compact'] },
-  { page: 'components', section: 'empty-state', title: 'Empty state', keywords: ['empty'] },
+  { page: 'components', section: 'empty-state', title: 'Empty state', component: 'EmptyState', keywords: ['empty', 'compact', 'no results', 'error'] },
   { page: 'components', section: 'code-block', title: 'Code block', component: 'CodeBlock' },
   { page: 'components', section: 'container', title: 'Container', component: 'Container' },
   { page: 'components', section: 'action-row', title: 'Action row', component: 'ActionRow' },

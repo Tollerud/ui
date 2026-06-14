@@ -117,46 +117,26 @@ function SetupWizard() {
 }
 
 function PageOnboarding() {
-  const toast = useToast();
   return (
     <div>
-      <PageHeader icon="rocket" eyebrow="Examples · onboarding" title="Onboarding & Empty States"
-        lede="The first five minutes. A multi-step setup wizard and a gallery of empty states — the screens a user meets before there's any data — all built from system components and theme-aware."/>
+      <PageHeader icon="rocket" eyebrow="Examples · onboarding" title="Onboarding"
+        lede="The first five minutes — a multi-step setup wizard for connecting a host, choosing stacks, and inviting teammates. Built from Stepper, Input, Alert, and EmptyState."/>
 
       <Section title="Setup wizard"
         desc="A four-step flow with a live stepper, inline validation, multi-select cards and a success state. Every control is wired — try advancing without a valid hostname.">
         <SetupWizard/>
-      </Section>
-
-      <Section title="Empty states"
-        desc="Reach for the EmptyState component whenever a surface has no data yet, returned no results, or hit an error. Each pairs an icon, a one-line headline, a calm explanation and a single clear action.">
-        <div className="ds-grid-2">
-          <EmptyState icon="server" title="No hosts connected"
-            description="Connect your first machine and Tia will start watching it within seconds."
-            action={<Button variant="primary" size="sm" onClick={() => toast({ tone: 'accent', title: 'Launching setup wizard…' })}><Icons.plus size={14}/>Connect a host</Button>}/>
-          <EmptyState icon="checkCircle" accent title="All clear"
-            description="No open alerts across your fleet. The last incident was acknowledged 6 days ago."
-            action={<Button variant="ghost" size="sm">View history</Button>}/>
-          <EmptyState icon="search" title="No results"
-            description="Nothing matches “grafna”. Check the spelling or clear the filter to see everything."
-            action={<Button variant="secondary" size="sm">Clear search</Button>}/>
-          <EmptyState icon="alert" title="Couldn’t reach the agent"
-            description="emma.tollerud.no refused the connection. The agent may be offline or the port blocked."
-            action={<Button variant="secondary" size="sm"><Icons.refresh size={14}/>Retry</Button>}
-            secondaryAction={<Button variant="ghost" size="sm">View logs</Button>}/>
-        </div>
-      </Section>
-
-      <Section title="Inline & compact"
-        desc="A compact variant drops into cards, tables and panels where a full-bleed empty state would be too heavy.">
-        <div className="tollerud-card ds-themed" style={{ padding: 0, overflow: 'hidden', maxWidth: 520 }}>
-          <div className="ds-row" style={{ justifyContent: 'space-between', padding: '13px 16px', borderBottom: '1px solid var(--border)' }}>
-            <span className="ds-row" style={{ gap: 8, fontWeight: 600, fontSize: 14, color: 'var(--foreground)' }}><Icons.bell size={15}/>Alert inbox</span>
-            <span className="tollerud-badge tollerud-badge--default">0</span>
+        {go && (
+          <div className="ds-row" style={{ gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
+            <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('components/empty-state')}>
+              EmptyState component — gallery and compact variant
+              <Icons.arrowRight size={14} />
+            </button>
+            <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('screens/empty-page')}>
+              EmptyPage — full-page empty state
+              <Icons.arrowRight size={14} />
+            </button>
           </div>
-          <EmptyState compact icon="bell" title="Inbox zero"
-            description="No alerts right now — we’ll surface anything that needs you here."/>
-        </div>
+        )}
       </Section>
     </div>
   );

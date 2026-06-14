@@ -9,6 +9,7 @@ export interface SettingsNavItem {
   label: ReactNode
   href?: string
   active?: boolean
+  tone?: 'default' | 'danger'
 }
 
 export interface SettingsLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
@@ -17,10 +18,11 @@ export interface SettingsLayoutProps extends Omit<HTMLAttributes<HTMLDivElement>
   actions?: ReactNode
   navItems?: SettingsNavItem[]
   activeId?: string
+  onNavSelect?: (id: string) => void
 }
 
 const SettingsLayout = forwardRef<HTMLDivElement, SettingsLayoutProps>(
-  ({ className, title, description, actions, navItems = [], activeId, children, ...props }, ref) => {
+  ({ className, title, description, actions, navItems = [], activeId, onNavSelect, children, ...props }, ref) => {
     return (
       <Stack ref={ref} gap="lg" className={cn('w-full', className)} {...props}>
         <PageHeader title={title} description={description} actions={actions} />
@@ -28,24 +30,37 @@ const SettingsLayout = forwardRef<HTMLDivElement, SettingsLayoutProps>(
           <nav className="rounded-lg border border-tollerud-border bg-tollerud-surface-raised p-2">
             {navItems.map((item) => {
               const active = item.active ?? item.id === activeId
+              const isDanger = item.tone === 'danger'
               const content = (
                 <span
                   className={cn(
-                    'block rounded-md px-3 py-2 text-sm text-tollerud-text-secondary transition-colors',
-                    active
-                      ? 'bg-tollerud-yellow text-tollerud-noir-950'
-                      : 'hover:bg-tollerud-surface-hover hover:text-tollerud-text-primary'
+                    'block rounded-md px-3 py-2 text-sm transition-colors',
+                    isDanger && !active && 'text-tollerud-error',
+                    isDanger && active && 'bg-tollerud-error/10 text-tollerud-error',
+                    !isDanger && active && 'bg-tollerud-yellow text-tollerud-noir-950',
+                    !isDanger && !active && 'text-tollerud-text-secondary hover:bg-tollerud-surface-hover hover:text-tollerud-text-primary'
                   )}
                 >
                   {item.label}
                 </span>
               )
-              return item.href ? (
-                <a key={item.id} href={item.href} className="tollerud-focus-ring block rounded-md no-underline">
+              if (item.href) {
+                return (
+                  <a key={item.id} href={item.href} className="tollerud-focus-ring block rounded-md no-underline">
+                    {content}
+                  </a>
+                )
+              }
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  className="tollerud-focus-ring block w-full rounded-md border-0 bg-transparent p-0 text-left"
+                  onClick={() => onNavSelect?.(item.id)}
+                  aria-current={active ? 'page' : undefined}
+                >
                   {content}
-                </a>
-              ) : (
-                <div key={item.id}>{content}</div>
+                </button>
               )
             })}
           </nav>

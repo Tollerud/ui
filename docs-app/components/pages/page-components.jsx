@@ -360,8 +360,8 @@ function PageComponents({ go }) {
         </Demo>
       </Section>
 
-      <Section title="Empty state" permalink="components/empty-state" desc="For surfaces with no data, no results, or an error. Icon, headline, calm explanation, one clear action. A compact variant fits inside cards.">
-        <Demo name="empty-state" code={`<EmptyState
+      <Section title="Empty state" component="EmptyState" permalink="components/empty-state" desc="For surfaces with no data, no results, or an error. Icon, headline, calm explanation, one clear action. Use compact inside cards, tables, and panels.">
+        <Demo name="empty-state" variant="col" code={`<EmptyState
   icon="server"
   title="No hosts connected"
   description="Connect your first machine and Tia will start watching it."
@@ -369,13 +369,53 @@ function PageComponents({ go }) {
 />`}>
           <div className="ds-grid-2" style={{ width: '100%' }}>
             <EmptyState icon="server" title="No hosts connected"
-              description="Connect your first machine and Tia will start watching it."
-              action={<Button variant="primary" size="sm"><Icons.plus size={14}/>Connect a host</Button>}/>
+              description="Connect your first machine and Tia will start watching it within seconds."
+              action={<Button variant="primary" size="sm" onClick={() => toast({ tone: 'accent', title: 'Launching setup wizard…' })}><Icons.plus size={14}/>Connect a host</Button>}/>
             <EmptyState icon="checkCircle" accent title="All clear"
-              description="No open alerts across your fleet."
+              description="No open alerts across your fleet. The last incident was acknowledged 6 days ago."
               action={<Button variant="ghost" size="sm">View history</Button>}/>
+            <EmptyState icon="search" title="No results"
+              description={'Nothing matches “grafna”. Check the spelling or clear the filter to see everything.'}
+              action={<Button variant="secondary" size="sm">Clear search</Button>}/>
+            <EmptyState icon="alert" title="Couldn’t reach the agent"
+              description="emma.tollerud.no refused the connection. The agent may be offline or the port blocked."
+              action={<Button variant="secondary" size="sm"><Icons.refresh size={14}/>Retry</Button>}
+              secondaryAction={<Button variant="ghost" size="sm">View logs</Button>}/>
           </div>
         </Demo>
+        <Demo name="empty-state-compact" variant="col" code={`<Card style={{ padding: 0, overflow: 'hidden' }}>
+  <div className="flex items-center justify-between border-b border-tollerud-border px-4 py-3">
+    <span>Alert inbox</span>
+    <Badge>0</Badge>
+  </div>
+  <EmptyState
+    compact
+    icon="bell"
+    title="Inbox zero"
+    description="No alerts right now — we’ll surface anything that needs you here."
+  />
+</Card>`}>
+          <div className="tollerud-card ds-themed" style={{ padding: 0, overflow: 'hidden', maxWidth: 520 }}>
+            <div className="ds-row" style={{ justifyContent: 'space-between', padding: '13px 16px', borderBottom: '1px solid var(--border)' }}>
+              <span className="ds-row" style={{ gap: 8, fontWeight: 600, fontSize: 14, color: 'var(--foreground)' }}><Icons.bell size={15}/>Alert inbox</span>
+              <span className="tollerud-badge tollerud-badge--default">0</span>
+            </div>
+            <EmptyState compact icon="bell" title="Inbox zero"
+              description="No alerts right now — we’ll surface anything that needs you here."/>
+          </div>
+        </Demo>
+        {go && (
+          <div className="ds-row" style={{ gap: 12, marginTop: 4, flexWrap: 'wrap' }}>
+            <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('screens/empty-page')}>
+              EmptyPage — full-page composition
+              <Icons.arrowRight size={14} />
+            </button>
+            <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('onboarding')}>
+              Onboarding example — wizard with success EmptyState
+              <Icons.arrowRight size={14} />
+            </button>
+          </div>
+        )}
       </Section>
 
       <Section title="Code block" permalink="components/code-block" desc="Terminal-style code display with an optional copy button. Use the code prop for a single string, or children for richer markup.">

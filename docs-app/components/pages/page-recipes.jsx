@@ -188,36 +188,59 @@ export function DashboardOverviewPage() {
       <Section
         title="Settings page"
         permalink="recipes/settings-page"
-        desc="SettingsLayout + FormPanel for a workspace settings route."
+        desc="Minimal SettingsLayout + FormPanel starter for copy-paste. The Settings example page is a polished account demo with icons, sticky save bar, and extra sections — same information architecture, richer shell."
       >
         <CodeSnippet
           name="settings-page.tsx"
-          code={`import {
-  Button, Input, Switch, FormRow, Cluster,
+          code={`'use client'
+
+import { useState } from 'react'
+import {
+  Button, Input, Switch, FormRow, Cluster, Stack,
   SettingsLayout, FormPanel,
 } from '@tollerud/ui'
 
 export function SettingsPage() {
+  const [activeId, setActiveId] = useState('profile')
+
   return (
     <SettingsLayout
-      title="Settings"
-      description="Manage workspace defaults."
+      title="Account settings"
+      description="Manage profile and security preferences."
       navItems={[
         { id: 'profile', label: 'Profile' },
         { id: 'security', label: 'Security' },
       ]}
-      activeId="profile"
+      activeId={activeId}
+      onNavSelect={setActiveId}
     >
-      <FormPanel
-        title="Profile"
-        description="Shown in audit trails."
-        footer={<Cluster justify="end"><Button variant="primary">Save</Button></Cluster>}
-      >
-        <Input label="Workspace name" defaultValue="Mission Control" />
-        <FormRow label="Require approvals" hint="Ask before risky actions.">
-          <Switch defaultChecked />
-        </FormRow>
-      </FormPanel>
+      {activeId === 'profile' && (
+        <FormPanel
+          title="Profile"
+          description="Shown across the dashboard and in activity logs."
+          footer={<Cluster justify="end"><Button variant="primary">Save changes</Button></Cluster>}
+        >
+          <Stack gap="md">
+            <FormRow label="Display name">
+              <Input defaultValue="Tia Tollerud" />
+            </FormRow>
+            <FormRow label="Email" hint="Used for sign-in and critical alerts.">
+              <Input defaultValue="tia@tollerud.no" />
+            </FormRow>
+          </Stack>
+        </FormPanel>
+      )}
+      {activeId === 'security' && (
+        <FormPanel
+          title="Security"
+          description="Authentication and session controls."
+          footer={<Cluster justify="end"><Button variant="primary">Save changes</Button></Cluster>}
+        >
+          <FormRow label="Two-factor auth" hint="Require a TOTP code at sign-in.">
+            <Switch label="Enabled" defaultChecked />
+          </FormRow>
+        </FormPanel>
+      )}
     </SettingsLayout>
   )
 }`}
@@ -227,7 +250,7 @@ export function SettingsPage() {
             go={go}
             links={[
               { id: 'screens/settings-form', label: 'Screen patterns — SettingsLayout + FormPanel' },
-              { id: 'settings', label: 'Settings — full account screen' },
+              { id: 'settings', label: 'Settings — polished account demo' },
             ]}
           />
         )}
@@ -303,8 +326,8 @@ export function NoHostsPage() {
           <RecipeLinks
             go={go}
             links={[
+              { id: 'components/empty-state', label: 'Components — EmptyState gallery' },
               { id: 'screens/empty-page', label: 'Screen patterns — EmptyPage' },
-              { id: 'onboarding', label: 'Onboarding — wizard + empty-state gallery' },
             ]}
           />
         )}

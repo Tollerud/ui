@@ -245,7 +245,7 @@ Use these before rebuilding common pages with raw Tailwind:
 - **SidebarNav** — sidebar brand lockup with `projectName`, `projectSubtitle`, `groups` / `items`, icons, and active states.
 - **DashboardTopBar** — context top bar with `breadcrumb`, `pageTitle`, `actions`, mobile menu toggle.
 - **DashboardShell** — docs-aligned app frame (default `variant="sidebar"`) with `sidebarGroups`, `sidebarItems`, `pageTitle`, `topActions`, `header`, `contentWidth`, `density`. Use `variant="topnav"` for horizontal TopNav layout.
-- **SettingsLayout** — settings page with `title`, `description`, `actions`, `navItems`, `activeId`.
+- **SettingsLayout** — settings page with `title`, `description`, `actions`, `navItems`, `activeId`, `onNavSelect`, and optional `tone="danger"` on nav items.
 - **FormPanel** — titled form surface with `description`, `actions`, `footer`, `children`.
 - **ResourceList** — list/table page wrapper with `title`, `description`, `actions`, `filters`, `count`, `emptyState`.
 - **DetailPage** — detail header + primary content + optional `aside`.
@@ -275,9 +275,9 @@ Copy-paste screen compositions live on the docs site at **Recipes** (`/recipes/`
 |--------|-------------------|---------------------|
 | Marketing landing | `PageShell`, `HeroBlock`, `FeatureSection`, `CTABand`, `Footer` | Screen patterns → FeatureSection; Blocks |
 | Dashboard overview | `DashboardShell`, `StatsSection`, `HostCard` | Screen patterns → DashboardShell; Mission Control |
-| Settings | `SettingsLayout`, `FormPanel` | Screen patterns → SettingsLayout; Settings |
+| Settings | `SettingsLayout`, `FormPanel` | Screen patterns → SettingsLayout; Settings example (polished demo) |
 | Auth | `PageShell`, `FormPanel` | Screen patterns → FormPanel; Sign in |
-| Empty state | `EmptyPage` | Screen patterns → EmptyPage; Onboarding |
+| Empty state | `EmptyPage` | Components → EmptyState; Screen patterns → EmptyPage |
 | Detail | `DetailPage` | Screen patterns → DetailPage |
 | List / table | `ResourceList`, `DataTable` | Screen patterns → ResourceList; Data Table |
 

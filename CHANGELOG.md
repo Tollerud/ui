@@ -21,6 +21,8 @@
 - `DashboardShell` — default `variant="sidebar"` matches the docs shell; `variant="topnav"` keeps the previous horizontal TopNav layout
 - New props: `sidebarGroups`, `sidebarItems`, `projectSubtitle`, `breadcrumb`, `pageTitle`
 - `navItems` still works and maps into the sidebar when using the default variant
+- `SettingsLayout` — `onNavSelect` for client-side section switching; `tone="danger"` on nav items
+- Settings recipe uses package primitives; Settings example keeps its polished docs shell (`ds-settings`)
 - Docs Screen patterns and Recipes demos updated to the aligned shell
 
 ### Migration

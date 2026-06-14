@@ -6,6 +6,7 @@ const { Button, Card, Badge, StatusDot, Switch, Input, FormRow, PackagePageHeade
 /* @tollerud/ui docs — Screen patterns */
 
 function PageScreens({ go }) {
+  const [settingsTab, setSettingsTab] = useState('profile')
   const featureItems = [
     { icon: <Icons.zap size={18} />, title: 'Fast deploys', description: 'Roll out compose changes with health checks.' },
     { icon: <Icons.shield size={18} />, title: 'Guarded actions', description: 'Review risky operations before they run.' },
@@ -116,36 +117,47 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="SettingsLayout + FormPanel" component="SettingsLayout" permalink="screens/settings-form" desc="Settings pages get section navigation, page header, form surfaces, and footer actions without rebuilding layout.">
+      <Section title="SettingsLayout + FormPanel" component="SettingsLayout" permalink="screens/settings-form" desc="Settings pages get section navigation, page header, form surfaces, and footer actions. Pass onNavSelect for client-side section switching.">
         <Demo name="settings-form" variant="col" code={`<SettingsLayout
-  title="Settings"
-  description="Manage workspace defaults."
+  title="Account settings"
+  description="Manage profile and security preferences."
   navItems={[{ id: 'profile', label: 'Profile' }, { id: 'security', label: 'Security' }]}
-  activeId="profile"
+  activeId={activeId}
+  onNavSelect={setActiveId}
 >
-  <FormPanel title="Profile" description="Shown in audit trails."
-    footer={<Cluster justify="end"><Button variant="primary">Save</Button></Cluster>}>
-    <Input label="Workspace name" defaultValue="Mission Control" />
+  <FormPanel title="Profile" description="Shown in activity logs."
+    footer={<Cluster justify="end"><Button variant="primary">Save changes</Button></Cluster>}>
+    <Input label="Display name" defaultValue="Tia Tollerud" />
     <FormRow label="Require approvals" hint="Ask before risky actions.">
       <Switch defaultChecked />
     </FormRow>
   </FormPanel>
 </SettingsLayout>`}>
           <SettingsLayout
-            title="Settings"
-            description="Manage workspace defaults."
+            title="Account settings"
+            description="Manage profile and security preferences."
             navItems={[{ id: 'profile', label: 'Profile' }, { id: 'security', label: 'Security' }]}
-            activeId="profile"
+            activeId={settingsTab}
+            onNavSelect={setSettingsTab}
           >
-            <FormPanel title="Profile" description="Shown in audit trails."
-              footer={<Cluster justify="end"><Button variant="primary">Save</Button></Cluster>}>
-              <Stack gap="md">
-                <Input label="Workspace name" defaultValue="Mission Control" />
-                <FormRow label="Require approvals" hint="Ask before risky actions.">
-                  <Switch defaultChecked />
+            {settingsTab === 'profile' ? (
+              <FormPanel title="Profile" description="Shown in activity logs."
+                footer={<Cluster justify="end"><Button variant="primary">Save changes</Button></Cluster>}>
+                <Stack gap="md">
+                  <Input label="Display name" defaultValue="Tia Tollerud" />
+                  <FormRow label="Require approvals" hint="Ask before risky actions.">
+                    <Switch defaultChecked />
+                  </FormRow>
+                </Stack>
+              </FormPanel>
+            ) : (
+              <FormPanel title="Security" description="Authentication and session controls."
+                footer={<Cluster justify="end"><Button variant="primary">Save changes</Button></Cluster>}>
+                <FormRow label="Two-factor auth" hint="Require a TOTP code at sign-in.">
+                  <Switch label="Enabled" defaultChecked />
                 </FormRow>
-              </Stack>
-            </FormPanel>
+              </FormPanel>
+            )}
           </SettingsLayout>
         </Demo>
       </Section>

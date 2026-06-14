@@ -92,7 +92,7 @@ const CMD_SECTION_ENTRIES = [
   ['components', 'Meter'],
   ['components', 'Stepper'],
   ['components', 'Density', ['compact']],
-  ['components', 'Empty state', ['empty']],
+  ['components', 'Empty state', ['empty', 'compact']],
   ['components', 'Code block', ['code']],
   ['components', 'Container'],
   ['components', 'Action row'],
@@ -143,8 +143,6 @@ const CMD_SECTION_ENTRIES = [
   ['backgrounds', 'In use'],
 
   ['onboarding', 'Setup wizard', ['wizard']],
-  ['onboarding', 'Empty states', ['empty']],
-  ['onboarding', 'Inline & compact', ['compact']],
 
   ['data-table', 'Simple table', ['datatable', 'package']],
   ['data-table', 'Servers', ['datatable', 'table', 'bulk']],
