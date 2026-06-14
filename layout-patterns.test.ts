@@ -18,7 +18,7 @@ import {
   Stack,
   StatsSection,
   TopNav,
-} from '@tollerud/ui'
+} from './components'
 
 const layoutAndScreenPatterns = [
   ['PageShell', PageShell],
@@ -42,7 +42,7 @@ const layoutAndScreenPatterns = [
 ] as const
 
 describe('layout and screen pattern exports', () => {
-  it.each(layoutAndScreenPatterns)('exports %s from @tollerud/ui', (_name, Component) => {
+  it.each(layoutAndScreenPatterns)('exports %s from the package barrel', (_name, Component) => {
     expect(Component).toBeTruthy()
   })
 })
