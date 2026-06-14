@@ -1,6 +1,6 @@
-# Tollerud Design System — Backgrounds
+# Tollerud User Interface — Backgrounds
 
-The background system is now a first-class Tollerud Design System primitive, not just decoration.
+The background system is now a first-class Tollerud UI primitive, not just decoration.
 
 ## NoirGlowBackground
 

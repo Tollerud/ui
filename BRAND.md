@@ -91,7 +91,7 @@ import { Button, DashboardShell, PageHeader, Stack } from '@tollerud/ui'
 
 The `Footer` component handles the monogram automatically — no manual placement needed.
 
-**Using the full design system** — import from `@tollerud/ui`:
+**Using the full Tollerud UI package** — import from `@tollerud/ui`:
 
 ```tsx
 import { Footer } from '@tollerud/ui'

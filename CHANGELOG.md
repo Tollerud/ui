@@ -627,7 +627,7 @@ dependencies were added.
 - Added **Checkbox** — custom-styled checkbox with checkmark SVG, label, focus-visible ring
 - Added **Switch** — toggle switch with role="switch", animated thumb, label
 - Added **RadioGroup / Radio** — fieldset-based radio group with custom dot indicator, label/error
-- Added **Footer** — ported from `@tollerud/footer` (v1.1.2), uses Tollerud Design System design tokens, supports `accent` variant, responsive/row layouts, unstyled mode
+- Added **Footer** — ported from `@tollerud/footer` (v1.1.2), uses Tollerud UI design tokens, supports `accent` variant, responsive/row layouts, unstyled mode
 - 6 new components → total **29 components** now
 
 ## 2026-05-26 — Phase 5: Docs App

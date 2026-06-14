@@ -27,7 +27,13 @@ Treat these as high-risk — change only when the task requires it:
 2. New/changed components: source, export, registry, docs demo, `SKILL.md`, `CHANGELOG.md` (see `AGENTS.md` §2–4).
 3. Version bumps: commit `package.json` and lockfiles together.
 
-## Design system (non-negotiable)
+## Product naming
+
+- The project is **Tollerud User Interface**; short form **Tollerud UI**. Package: `@tollerud/ui`.
+- Do not call it "Tollerud Design System" in docs, prompts, comments, or user-facing copy.
+- Generic phrases like "design tokens" or "parallel design system" (anti-pattern) are still fine when they describe patterns, not the product name.
+
+## Tollerud UI aesthetic (non-negotiable)
 
 - Dark surfaces only (`bg-tollerud-noir-*`). Yellow accent for CTAs/focus only.
 - Use Tollerud tokens — never hardcode `#FFFF00`, `#0A0A0A`, or parallel `components/ui` copies.

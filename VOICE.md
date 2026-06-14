@@ -1,4 +1,4 @@
-# Tollerud Design System — Voice & Copy
+# Tollerud User Interface — Voice & Copy
 
 ## Tone
 

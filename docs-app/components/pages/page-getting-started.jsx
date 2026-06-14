@@ -41,7 +41,7 @@ npm install @paper-design/shaders-react`}
         <SubHead>New Next.js project</SubHead>
         <CodeSnippet
           name="agent-prompt-new-project.txt"
-          code={`Set up a new Next.js App Router project with @tollerud/ui (Tollerud Design System).
+          code={`Set up a new Next.js App Router project with @tollerud/ui (Tollerud User Interface / Tollerud UI).
 
 Requirements:
 1. Use Next.js with App Router and Tailwind CSS v4 (PostCSS).
@@ -65,7 +65,7 @@ Tell me what you created and any audit output.`}
         <SubHead>Add to an existing project</SubHead>
         <CodeSnippet
           name="agent-prompt-existing-project.txt"
-          code={`Add @tollerud/ui (Tollerud Design System) to this existing project.
+          code={`Add @tollerud/ui (Tollerud User Interface / Tollerud UI) to this existing project.
 
 Requirements:
 1. Install @tollerud/ui and required peers if missing:
@@ -76,7 +76,7 @@ Requirements:
 3. Mount <Toaster /> near the app root if we use sonner toasts.
 4. Sync SKILL.md from https://raw.githubusercontent.com/Tollerud/ui/main/SKILL.md into the project skills folder (.claude/skills/tollerud-ui/SKILL.md or equivalent).
 5. Replace any vendored components/ui copies with imports from @tollerud/ui. Delete local cn() helpers — use import { cn } from '@tollerud/ui/utils'.
-6. Do NOT copy new component source from the design system repo into this app.
+6. Do NOT copy new component source from the Tollerud UI repo into this app.
 7. Use component-first composition: @tollerud/ui exports, then layout/screen patterns, then small Tailwind glue only. Screen starting points: https://design.tollerud.dev/recipes/
 8. Fix Button/Link nesting: use asChild or buttonVariants() on links.
 9. Replace hardcoded brand hex (#FFFF00, #0A0A0A) with Tollerud tokens.
@@ -87,7 +87,7 @@ Summarize changes and audit results when done.`}
         <SubHead>Footer only</SubHead>
         <CodeSnippet
           name="agent-prompt-footer-only.txt"
-          code={`Add the Tollerud branded footer to this project using @tollerud/footer (footer-only — not the full design system).
+          code={`Add the Tollerud branded footer to this project using @tollerud/footer (footer-only — not the full Tollerud UI package).
 
 Requirements:
 1. npm install @tollerud/footer
@@ -127,7 +127,7 @@ import { cn } from '@tollerud/ui/utils'`}
         />
       </Section>
 
-      <Section title="Consumer styling policy" desc="Tailwind ships with the design system, but app code should use the component API as the primary design language.">
+      <Section title="Consumer styling policy" desc="Tailwind ships with Tollerud UI, but app code should use the component API as the primary design language.">
         <Alert tone="accent" title="Component-first by default">
           {'Use @tollerud/ui components first, exported layout primitives or screen patterns when available, and Tailwind only for small local spacing, alignment, or responsive glue.'}
         </Alert>

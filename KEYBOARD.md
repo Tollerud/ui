@@ -1,6 +1,6 @@
-# Tollerud Design System — Keyboard Contract
+# Tollerud User Interface — Keyboard Contract
 
-Command-first interaction is a core Tollerud Design System principle. This document defines the keyboard contracts across all Tia components and interfaces.
+Command-first interaction is a core Tollerud UI principle. This document defines the keyboard contracts across all Tia components and interfaces.
 
 ## Global shortcuts
 

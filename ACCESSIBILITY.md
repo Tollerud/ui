@@ -1,4 +1,4 @@
-# Tollerud Design System — Accessibility Guidelines
+# Tollerud User Interface — Accessibility Guidelines
 
 ## Color Contrast
 

@@ -1,11 +1,11 @@
 ---
 name: tollerud-ui
-description: Use the @tollerud/ui design system correctly — components, props, Tailwind tokens, aesthetic rules, and known gotchas (Server Component imports, Button/Link composition). Trigger whenever a project imports from @tollerud/ui or @tollerud/footer, or when building UI that should match the Tollerud noir aesthetic.
+description: Use @tollerud/ui (Tollerud User Interface / Tollerud UI) correctly — components, props, Tailwind tokens, aesthetic rules, and known gotchas (Server Component imports, Button/Link composition). Trigger whenever a project imports from @tollerud/ui or @tollerud/footer, or when building UI that should match the Tollerud noir aesthetic.
 ---
 
-# @tollerud/ui — Design System Skill
+# @tollerud/ui — Tollerud UI Skill
 
-Dark, monochrome + single yellow-accent design system ("noir" aesthetic). This skill documents the package's **actual current exports** (verified against `components/index.ts` in the source repo) — not aspirational docs. If you see a component referenced elsewhere that isn't listed below, it does not exist yet; don't import it.
+Dark, monochrome + single yellow-accent UI library ("noir" aesthetic). This skill documents the package's **actual current exports** (verified against `components/index.ts` in the source repo) — not aspirational docs. If you see a component referenced elsewhere that isn't listed below, it does not exist yet; don't import it.
 
 ---
 

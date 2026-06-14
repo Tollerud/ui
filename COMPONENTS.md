@@ -1,4 +1,4 @@
-# Tollerud Design System — Component Library
+# Tollerud User Interface — Component Library
 
 Human-oriented usage guide for `@tollerud/ui` **v4.3.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
@@ -1183,7 +1183,7 @@ Fieldset-based radio group with custom dot indicator.
 
 ## Footer
 
-Footer bar with Tollerud monogram and branding link. The component is re-exported from [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer) — install that package directly if you need the footer without the full design system.
+Footer bar with Tollerud monogram and branding link. The component is re-exported from [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer) — install that package directly if you need the footer without the full Tollerud UI package.
 
 ```tsx
 <Footer />

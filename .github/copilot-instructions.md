@@ -1,4 +1,4 @@
-This project uses the Tollerud Design System (`@tollerud/ui`).
+This project uses Tollerud User Interface / Tollerud UI (`@tollerud/ui`).
 
 See [AGENTS.md](../AGENTS.md) at the repo root for full guidance: install, Tailwind setup, component APIs, color tokens, layout patterns, copy voice, and accessibility rules.
 

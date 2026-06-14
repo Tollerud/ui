@@ -12,8 +12,8 @@ A complete, browsable UI library built around **monochrome + yellow accent**. No
 
 | Package | Install | Use when |
 |---------|---------|----------|
-| [`@tollerud/ui`](https://www.npmjs.com/package/@tollerud/ui) | `npm install @tollerud/ui` | You want the full design system — components, tokens, Tailwind preset |
-| [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer) | `npm install @tollerud/footer` | You only need the branded footer, with no other design system dependency |
+| [`@tollerud/ui`](https://www.npmjs.com/package/@tollerud/ui) | `npm install @tollerud/ui` | You want the full Tollerud UI — components, tokens, Tailwind preset |
+| [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer) | `npm install @tollerud/footer` | You only need the branded footer, with no other Tollerud UI dependency |
 
 **Footer maintenance:** `@tollerud/ui` exports `Footer` from the same source as `@tollerud/footer` (`npm run sync:footer` keeps them lockstep). Use the standalone package when you want the branded footer without Radix, Lucide, Framer Motion, Sonner, or other `@tollerud/ui` peers — `@tollerud/footer` bundles `clsx` and `tailwind-merge` as dependencies **on purpose** for that path. You still need Tailwind + Tollerud tokens for footer styles. Deprecation of `@tollerud/footer` is not planned for now.
 
@@ -36,7 +36,7 @@ npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
   lucide-react framer-motion sonner
 ```
 
-As of **v2.0.0**, Radix primitives, Lucide, Framer Motion, and Sonner are **peer dependencies** — your app must install them (one line above). The design system bundles only `class-variance-authority`.
+As of **v2.0.0**, Radix primitives, Lucide, Framer Motion, and Sonner are **peer dependencies** — your app must install them (one line above). Tollerud UI bundles only `class-variance-authority`.
 
 `@paper-design/shaders-react` is an **optional** peer — install only if you use `NoirGlowBackground`:
 
@@ -142,7 +142,7 @@ Include `tokens.css` or `globals.css` for CSS custom properties and utility clas
 
 ### Brand Mascot
 
-The design system ships brand assets under `brand/` — import via `@tollerud/ui/brand/tollerud-avatar.svg` (and `.png` / full-figure variants) for headers, landing pages, and agent identity moments. Prefer `<Monogram />` for nav lockups.
+Tollerud UI ships brand assets under `brand/` — import via `@tollerud/ui/brand/tollerud-avatar.svg` (and `.png` / full-figure variants) for headers, landing pages, and agent identity moments. Prefer `<Monogram />` for nav lockups.
 
 ## Palette Summary
 

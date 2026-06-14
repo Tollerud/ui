@@ -1,4 +1,4 @@
-# Tollerud Design System — AI Agent Guide
+# Tollerud User Interface — AI Agent Guide
 
 Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`.
 
@@ -27,7 +27,7 @@ npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
 npm install @paper-design/shaders-react
 ```
 
-For the footer alone (no full design system dependency):
+For the footer alone (no full Tollerud UI dependency):
 ```bash
 npm install @tollerud/footer
 ```
@@ -579,7 +579,7 @@ git push origin main
 
 ## Fixing copy/paste component patterns (for agents working in consumer projects)
 
-Older versions of projects that use `@tollerud/ui` sometimes copied component source files directly into the repo (e.g. `src/components/ui/Button.tsx` copied from the design system). These need to be replaced with package imports.
+Older versions of projects that use `@tollerud/ui` sometimes copied component source files directly into the repo (e.g. `src/components/ui/Button.tsx` copied from Tollerud UI). These need to be replaced with package imports.
 
 ### How to detect it
 

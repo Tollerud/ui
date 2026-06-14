@@ -1,5 +1,5 @@
 /**
- * Tollerud Design System — Tailwind Preset
+ * Tollerud User Interface — Tailwind Preset
   *
   * Drop this into any Tailwind project:
   *
