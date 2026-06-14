@@ -18,3 +18,7 @@ updates:
     directory: /fixtures/consumer
     schedule:
       interval: weekly
+  - package-ecosystem: npm
+    directory: /packages/footer
+    schedule:
+      interval: weekly
