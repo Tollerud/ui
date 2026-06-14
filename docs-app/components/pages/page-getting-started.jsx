@@ -54,6 +54,45 @@ import { cn } from '@tollerud/ui/utils'`}
         />
       </Section>
 
+      <Section title="Consumer styling policy" desc="Tailwind ships with the design system, but app code should use the component API as the primary design language.">
+        <Alert tone="accent" title="Component-first by default">
+          {'Use @tollerud/ui components first, exported layout primitives or screen patterns when available, and Tailwind only for small local spacing, alignment, or responsive glue.'}
+        </Alert>
+        <CodeSnippet
+          name="allowed-glue.tsx"
+          code={`import { Button, Card } from '@tollerud/ui'
+
+export function DeployCard() {
+  return (
+    <Card>
+      <p>Ready to deploy.</p>
+      <div className="mt-6">
+        <Button variant="primary">Deploy</Button>
+      </div>
+    </Card>
+  )
+}`}
+        />
+        <CodeSnippet
+          name="avoid-rebuilding.tsx"
+          code={`// Avoid: this bypasses Button variants, focus states, and brand tokens.
+<button className="rounded-lg bg-yellow-400 px-4 py-2 text-black">
+  Deploy
+</button>
+
+// Avoid: move repeated branded layout into @tollerud/ui
+// or a semantic feature component.
+<section className="min-h-screen bg-black px-6 py-24">
+  <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+    {/* hand-built branded cards */}
+  </div>
+</section>`}
+        />
+        <p style={{ marginTop: 16, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+          If a branded structure repeats across screens, add it to <code className="ds-mono">@tollerud/ui</code> or compose a local semantic feature component. Do not copy package internals into <code className="ds-mono">components/ui</code>, and import <code className="ds-mono">cn</code> from the package instead of reimplementing it.
+        </p>
+      </Section>
+
       <Section title="Server Components" desc="The bundle is marked 'use client'. Importing components or helpers like cn from a Server Component file is safe — your file does not become a Client Component.">
         <Demo name="server-components" variant="col" code={`// app/page.tsx — Server Component
 import { buttonVariants } from '@tollerud/ui'

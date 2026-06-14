@@ -23,7 +23,7 @@ npm install @paper-design/shaders-react
 
 ### Footer only (minimal)
 
-If you only need the branded footer — no Tailwind, Radix, or other design-system peers:
+If you only need the branded footer — no Radix, Lucide, Framer Motion, Sonner, or other full design-system peers:
 
 ```bash
 npm install @tollerud/footer

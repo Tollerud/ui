@@ -526,6 +526,8 @@ Monogram sizing: top bar/sidebar expanded → `h-5`, collapsed → `h-6`, footer
 
 ## Layout utility classes
 
+These are low-level class references for package internals, docs demos, and custom cases. In consumer apps, prefer exported components and screen/layout primitives first; use these classes only when no component covers the need yet.
+
 ```html
 <nav class="tollerud-glass fixed top-0 inset-x-0 z-50 h-14 flex items-center px-6">…</nav>
 <section class="tollerud-grid-bg">…</section>

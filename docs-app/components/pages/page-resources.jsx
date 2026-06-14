@@ -40,6 +40,13 @@ function PageResources({ go }) {
             </p>
             <a className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" href="https://github.com/Tollerud/ui/blob/main/AGENTS.md" target="_blank" rel="noreferrer">AGENTS.md</a>
           </Card>
+          <Card>
+            <div style={{ fontWeight: 600, color: 'var(--foreground)', marginBottom: 6 }}>Consumer styling policy</div>
+            <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: '0 0 12px', lineHeight: 1.55 }}>
+              Tailwind remains available, but consumer apps should use exported components first and reserve utilities for small layout glue.
+            </p>
+            <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('getting-started')}>Read policy</button>
+          </Card>
         </div>
       </Section>
 

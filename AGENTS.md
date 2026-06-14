@@ -351,6 +351,8 @@ Severity scale: `critical` · `high` · `medium` · `low` · `info`
 
 ## Layout Patterns
 
+These class-level patterns are references for package internals, docs demos, and custom cases. In consumer apps, prefer exported components and layout/screen primitives first. Use raw classes only as small local glue or when a component does not exist yet.
+
 ### Navigation lockup
 
 The monogram must always appear left of the project name with `gap-2`. Never show the name without the monogram or the monogram alone in a nav context.

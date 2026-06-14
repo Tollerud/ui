@@ -11,6 +11,10 @@ Human-oriented usage guide for `@tollerud/ui` **v4.1.0**. Components ship as Rea
 | **This file** | Narrative examples, CSS class patterns, homelab/dashboard usage |
 | **[COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)** | Planned components not yet shipped |
 
+## Consumer styling policy
+
+Use this file as a component reference, not as an invitation to rebuild branded UI in each app. React consumers should prefer exported components first, layout primitives or screen patterns when available, and Tailwind only for small local glue. If a branded structure repeats, add it to `@tollerud/ui` or compose a local semantic feature component instead of copying package internals or creating a parallel `components/ui` system.
+
 ## Export index
 
 All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted. Prop signatures: see [PROPS.generated.md](PROPS.generated.md).
@@ -32,19 +36,15 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 Tollerud.no-inspired animated WebGL background using `@paper-design/shaders-react`, with CSS fallback classes.
 
 ```tsx
-<section className="relative overflow-hidden bg-black">
-  <NoirGlowBackground
-    intensity="medium"
-    speed="slow"
-    grain="soft"
-    shape="corners"
-    preserveCenter
-  />
-  <div className="relative z-10">Content</div>
-</section>
+<HeroBlock
+  eyebrow="homelab control plane"
+  title="Run your stack like production."
+  description="Deploy, monitor, and roll back from one keyboard-first console."
+  intense
+/>
 ```
 
-See `BACKGROUNDS.md` for install, props, usage rules, and fallback HTML.
+Use `NoirGlowBackground` directly only for custom background composition that cannot be represented by an exported block yet. See `BACKGROUNDS.md` for install, props, usage rules, and fallback HTML.
 
 ## Button
 
@@ -78,8 +78,7 @@ Sizes: `--sm`, `--md`, `--lg`
 
 ```jsx
 <Card>
-  <h3 className="font-semibold mb-1">Title</h3>
-  <p className="text-tollerud-text-secondary text-sm">Content</p>
+  <StatusDot status="online" label="Emma — ready" />
 </Card>
 <Card accent>
   <p>Highlighted card with yellow border</p>
@@ -565,7 +564,7 @@ A landing hero on the noir glow background. Single-column by default; pass `medi
 ```tsx
 <HeroBlock eyebrow="homelab control plane" title="Run your stack like production."
   description="Deploy, monitor and roll back from one keyboard-first console."
-  actions={<><button className="tollerud-btn tollerud-btn--terminal tollerud-btn--md">deploy --free</button></>}
+  actions={<Button variant="terminal">deploy --free</Button>}
   media={<img src="tia.png" alt="" />} />
 ```
 
