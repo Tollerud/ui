@@ -176,6 +176,10 @@ Do not recreate full branded page structure with raw layout utilities when a com
 </section>
 ```
 
+### Agent-safe recipes
+
+Copy-paste screen compositions for common pages live on the docs site: **[Recipes](https://design.tollerud.dev/recipes/)** (`/recipes/`). Each recipe uses exported layout primitives and screen patterns, and links to a fuller interactive example where one exists (Blocks, Mission Control, Settings, Sign in, Onboarding, Data Table).
+
 ### Required CSS and shared utilities
 
 For Tailwind v4, keep both imports in your app stylesheet:

@@ -15,6 +15,8 @@ Human-oriented usage guide for `@tollerud/ui` **v4.3.0**. Components ship as Rea
 
 Use this file as a component reference, not as an invitation to rebuild branded UI in each app. React consumers should prefer exported components first, layout primitives or screen patterns when available, and Tailwind only for small local glue. If a branded structure repeats, add it to `@tollerud/ui` or compose a local semantic feature component instead of copying package internals or creating a parallel `components/ui` system.
 
+**Agent-safe recipes** for common screens (marketing landing, dashboard, settings, auth, empty state, detail, list/table) live on the docs site at [Recipes](https://design.tollerud.dev/recipes/).
+
 ## Export index
 
 All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted. Prop signatures: see [PROPS.generated.md](PROPS.generated.md).

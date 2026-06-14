@@ -70,7 +70,7 @@ for (const [legacy, canonical] of Object.entries(ROUTE_ALIASES)) {
   PAGES[legacy] = CANONICAL_PAGES[canonical]
 }
 
-const PAGES_WITH_GO = new Set(['overview', 'getting-started', 'recipes', 'components', 'resources'])
+const PAGES_WITH_GO = new Set(['overview', 'getting-started', 'recipes', 'screens', 'components', 'resources'])
 
 function slugFromPathname(pathname) {
   const parts = pathname.replace(/^\//, '').replace(/\/$/, '').split('/').filter(Boolean)

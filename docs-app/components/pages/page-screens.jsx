@@ -5,7 +5,7 @@ const { Button, Card, Badge, StatusDot, Switch, Input, FormRow, PackagePageHeade
 
 /* @tollerud/ui docs — Screen patterns */
 
-function PageScreens() {
+function PageScreens({ go }) {
   const featureItems = [
     { icon: <Icons.zap size={18} />, title: 'Fast deploys', description: 'Roll out compose changes with health checks.' },
     { icon: <Icons.shield size={18} />, title: 'Guarded actions', description: 'Review risky operations before they run.' },
@@ -18,8 +18,17 @@ function PageScreens() {
         icon="app"
         eyebrow="Patterns"
         title="Screen patterns"
-        lede="Full-page and section-level compositions for consumer apps. Use these before rebuilding branded page structure with raw Tailwind utilities."
+        lede="Full-page and section-level compositions for consumer apps. Use these before rebuilding branded page structure with raw Tailwind utilities. For copy-paste screen starting points, see Recipes."
       />
+
+      {go && (
+        <div className="ds-row" style={{ gap: 12, marginBottom: 24 }}>
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>
+            Recipes — agent-safe screen compositions
+            <Icons.arrowRight size={14} />
+          </button>
+        </div>
+      )}
 
       <Section title="PageHeader" component="PageHeader" permalink="screens/page-header" desc="A consistent page title block with eyebrow, description, metadata, and action slots.">
         <Demo name="page-header" variant="col" code={`<PageHeader

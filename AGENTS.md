@@ -134,6 +134,8 @@ For Tailwind v4 consumer apps, both imports are required:
 
 Use `import { cn } from '@tollerud/ui'` or `@tollerud/ui/utils`; do not create a local `cn()` helper in consumer projects.
 
+**Agent-safe recipes** — copy-paste screen compositions for common pages (marketing landing, dashboard, settings, auth, empty state, detail, list/table) live on the docs site at [Recipes](https://design.tollerud.dev/recipes/). Each recipe is component-first and links to a fuller interactive example where one exists. See also [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md) Phase 4.
+
 When contributing **to this repository**, changing `components/*.tsx` is expected when the task explicitly calls for it — follow the release checklist in [Updating the npm package](#updating-the-npm-package-for-agents-working-in-this-repo) below.
 
 ---
@@ -630,3 +632,5 @@ Also check for a local `components/ui.ts` or `components/ui/index.ts` that re-ex
 | [KEYBOARD.md](KEYBOARD.md) | Keyboard contract for CommandMenu and navigation |
 | [BACKGROUNDS.md](BACKGROUNDS.md) | NoirGlowBackground props and fallback rules |
 | [GETTING_STARTED.md](GETTING_STARTED.md) | Install, Tailwind config, registry usage |
+| [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md) | Component-first consumer styling phases and acceptance criteria |
+| [Recipes (docs)](https://design.tollerud.dev/recipes/) | Agent-safe copy-paste screen compositions |

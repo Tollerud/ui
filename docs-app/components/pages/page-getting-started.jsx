@@ -89,7 +89,8 @@ export function DeployCard() {
 </section>`}
         />
         <p style={{ marginTop: 16, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-          If a branded structure repeats across screens, add it to <code className="ds-mono">@tollerud/ui</code> or compose a local semantic feature component. Do not copy package internals into <code className="ds-mono">components/ui</code>, and import <code className="ds-mono">cn</code> from the package instead of reimplementing it.
+          If a branded structure repeats across screens, add it to <code className="ds-mono">@tollerud/ui</code> or compose a local semantic feature component. Do not copy package internals into <code className="ds-mono">components/ui</code>, and import <code className="ds-mono">cn</code> from the package instead of reimplementing it. For copy-paste screen starting points, see{' '}
+          <button type="button" onClick={() => go('recipes')} style={{ color: 'var(--accent-text)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit' }}>Recipes</button>.
         </p>
       </Section>
 
