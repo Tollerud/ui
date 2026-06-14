@@ -1,17 +1,30 @@
-/* @tollerud/ui fixture — tarball install smoke test page */
-import { Badge, Button, Card, StatusDot } from '@tollerud/ui'
+/* @tollerud/ui fixture — tarball install smoke test (layout + screen pattern imports) */
+import {
+  Badge,
+  Button,
+  Card,
+  PageHeader,
+  PageShell,
+  Section,
+  Stack,
+  StatusDot,
+} from '@tollerud/ui'
 
 export default function Home() {
   return (
-    <main className="mx-auto flex max-w-md flex-col gap-4">
-      <h1 className="text-xl font-semibold">@tollerud/ui install check</h1>
-      <Card accent>
-        <div className="flex flex-col gap-3 p-4">
-          <StatusDot status="online" label="Package resolved" />
-          <Badge variant="accent">@tollerud/ui</Badge>
-          <Button variant="primary">Build passed</Button>
-        </div>
-      </Card>
-    </main>
+    <PageShell background="plain">
+      <Section size="sm" width="narrow">
+        <Stack gap="md">
+          <PageHeader title="@tollerud/ui install check" description="Layout primitives resolve from the packed tarball." />
+          <Card accent>
+            <Stack gap="sm">
+              <StatusDot status="online" label="Package resolved" />
+              <Badge variant="accent">PageShell · Section · Stack</Badge>
+              <Button variant="primary">Build passed</Button>
+            </Stack>
+          </Card>
+        </Stack>
+      </Section>
+    </PageShell>
   )
 }

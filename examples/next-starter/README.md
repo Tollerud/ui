@@ -24,13 +24,24 @@ Open [http://localhost:3000](http://localhost:3000).
 | `postcss.config.mjs` | Tailwind v4 PostCSS |
 | `next.config.mjs` | Static export–ready defaults |
 
+The sample page uses exported layout primitives and screen patterns — not hand-built `min-h-screen` / grid utilities. Copy [Recipes](https://design.tollerud.dev/recipes/) for full screens.
+
 ## Production build
 
 ```bash
 npm run build
 ```
 
+## Self-audit
+
+After customizing, run from your app root:
+
+```bash
+npx tollerud-ui-audit
+```
+
 ## Docs
 
-- [GETTING_STARTED.md](https://github.com/Tollerud/ui/blob/main/GETTING_STARTED.md) — full install and Tailwind setup
+- [GETTING_STARTED.md](https://github.com/Tollerud/ui/blob/main/GETTING_STARTED.md) — install, Tailwind setup, consumer checklist
+- [Recipes](https://design.tollerud.dev/recipes/) — copy-paste screen compositions
 - [design.tollerud.dev](https://design.tollerud.dev/) — live component reference

@@ -204,11 +204,13 @@ Potential guardrails:
 
 **Goal:** prove the component-first path works in real consumer projects.
 
-- [ ] Update `examples/next-starter` to use the new layout primitives and screen patterns.
-- [ ] Add a fixture or smoke test that imports the new primitives.
-- [ ] Run the full package validation suite.
-- [ ] Review generated docs and prop tables for drift.
-- [ ] Collect missing patterns found while converting examples and add them to this roadmap.
+- [x] Update `examples/next-starter` to use the new layout primitives and screen patterns.
+- [x] Add a fixture or smoke test that imports the new primitives.
+- [x] Run the full package validation suite.
+- [x] Review generated docs and prop tables for drift.
+- [x] Collect missing patterns found while converting examples and add them to this roadmap.
+
+**Notes from conversion:** no new package components required — `DashboardShell` + rich Mission Control demo remain on Recipes/docs examples; the starter intentionally stays a narrow layout-primitive demo.
 
 **Acceptance criteria:**
 

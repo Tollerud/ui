@@ -529,6 +529,8 @@ The docs sidebar version reads live from `package.json` via `PACKAGE_VERSION` in
 - `SKILL.md` — add new components to the catalog, update version notes
 - `AGENTS.md` (this file) — update the component import blocks if new exports were added
 
+**Consumer styling / recipes / guardrails** (no version bump required for docs-only): also sync `GETTING_STARTED.md`, relevant `docs-app/components/pages/page-*.jsx`, `docs-app/lib/docs-routes.js`, `docs-app/lib/component-catalog.js`, and `CONSUMER_STYLING_ROADMAP.md` — see [CONTRIBUTING.md](CONTRIBUTING.md) and `.cursor/rules/consumer-styling-docs.mdc`.
+
 ### 5. CHANGELOG.md format rules
 
 The docs site parses `CHANGELOG.md` at runtime. Wrong formatting causes entries to render as a wall of text or missing content. Follow these rules exactly:
