@@ -127,19 +127,14 @@ export function DashboardOverviewPage() {
   return (
     <DashboardShell
       projectName="Mission Control"
-      navItems={[
-        { label: 'Overview', href: '/', active: true },
-        { label: 'Hosts', href: '/hosts' },
-        { label: 'Logs', href: '/logs' },
+      projectSubtitle="fleet control"
+      pageTitle="Overview"
+      sidebarItems={[
+        { id: 'overview', label: 'Overview', href: '/', active: true },
+        { id: 'hosts', label: 'Hosts', href: '/hosts' },
+        { id: 'logs', label: 'Logs', href: '/logs' },
       ]}
       topActions={<Button size="sm" variant="primary">Deploy</Button>}
-      sidebar={
-        <Stack gap="sm">
-          <Button variant="ghost">Hosts</Button>
-          <Button variant="ghost">Alerts</Button>
-          <Button variant="ghost">Settings</Button>
-        </Stack>
-      }
       header={
         <PageHeader
           title="Overview"

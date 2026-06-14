@@ -57,8 +57,14 @@ export type { PageHeaderProps, PageHeaderAlign, PageHeaderSize } from './PageHea
 export { TopNav } from './TopNav'
 export type { TopNavProps, TopNavItem } from './TopNav'
 
+export { SidebarNav } from './SidebarNav'
+export type { SidebarNavProps, SidebarNavItem, SidebarNavGroup } from './SidebarNav'
+
+export { DashboardTopBar } from './DashboardTopBar'
+export type { DashboardTopBarProps } from './DashboardTopBar'
+
 export { DashboardShell } from './DashboardShell'
-export type { DashboardShellProps } from './DashboardShell'
+export type { DashboardShellProps, DashboardShellVariant } from './DashboardShell'
 
 export { SettingsLayout } from './SettingsLayout'
 export type { SettingsLayoutProps, SettingsNavItem } from './SettingsLayout'

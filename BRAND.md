@@ -74,13 +74,13 @@ import { Button, DashboardShell, PageHeader, Stack } from '@tollerud/ui'
 
 <DashboardShell
   projectName="Dashboard"
-  navItems={[{ label: 'Overview', href: '/', active: true }]}
-  sidebar={
-    <Stack gap="sm">
-      <Button variant="ghost">Services</Button>
-      <Button variant="ghost">Settings</Button>
-    </Stack>
-  }
+  projectSubtitle="workspace"
+  pageTitle="Overview"
+  sidebarItems={[
+    { id: 'overview', label: 'Overview', href: '/', active: true },
+    { id: 'services', label: 'Services', href: '/services' },
+    { id: 'settings', label: 'Settings', href: '/settings' },
+  ]}
   header={<PageHeader title="Overview" description="Fleet health at a glance." />}
 >
   {/* page content */}

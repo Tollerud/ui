@@ -242,7 +242,9 @@ Use these before rebuilding common pages with raw Tailwind:
 
 - **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`.
 - **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`.
-- **DashboardShell** — app frame with `projectName`, `navItems`, `topActions`, `sidebar`, `header`, `contentWidth`, `density`.
+- **SidebarNav** — sidebar brand lockup with `projectName`, `projectSubtitle`, `groups` / `items`, icons, and active states.
+- **DashboardTopBar** — context top bar with `breadcrumb`, `pageTitle`, `actions`, mobile menu toggle.
+- **DashboardShell** — docs-aligned app frame (default `variant="sidebar"`) with `sidebarGroups`, `sidebarItems`, `pageTitle`, `topActions`, `header`, `contentWidth`, `density`. Use `variant="topnav"` for horizontal TopNav layout.
 - **SettingsLayout** — settings page with `title`, `description`, `actions`, `navItems`, `activeId`.
 - **FormPanel** — titled form surface with `description`, `actions`, `footer`, `children`.
 - **ResourceList** — list/table page wrapper with `title`, `description`, `actions`, `filters`, `count`, `emptyState`.

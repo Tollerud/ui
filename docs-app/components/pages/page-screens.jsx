@@ -71,15 +71,20 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="DashboardShell" component="DashboardShell" permalink="screens/dashboard-shell" desc="App shell with TopNav, optional sidebar, page header, and main content width/density presets.">
+      <Section title="DashboardShell" component="DashboardShell" permalink="screens/dashboard-shell" desc="Docs-aligned app shell: sidebar brand lockup, structured nav, context top bar, and main content. Use variant=&quot;topnav&quot; for the legacy horizontal TopNav layout.">
         <Demo
           name="dashboard-shell"
           variant="col"
           code={`<DashboardShell
   projectName="Mission Control"
-  navItems={[{ label: 'Overview', href: '/', active: true }]}
+  projectSubtitle="fleet control"
+  pageTitle="Overview"
+  sidebarItems={[
+    { id: 'overview', label: 'Overview', href: '/', active: true, icon: <Icons.app size={15} /> },
+    { id: 'hosts', label: 'Hosts', href: '/hosts', icon: <Icons.server size={15} /> },
+    { id: 'logs', label: 'Logs', href: '/logs', icon: <Icons.terminal size={15} /> },
+  ]}
   topActions={<Button size="sm" variant="primary">Deploy</Button>}
-  sidebar={<Stack gap="sm"><Button variant="ghost">Hosts</Button><Button variant="ghost">Logs</Button></Stack>}
   header={<PageHeader title="Overview" description="Fleet health at a glance." />}
 >
   <StatsSection stats={[
@@ -90,11 +95,16 @@ function PageScreens({ go }) {
         >
           <DashboardShell
             projectName="Mission Control"
-            navItems={[{ label: 'Overview', href: '#', active: true }, { label: 'Hosts', href: '#' }]}
+            projectSubtitle="fleet control"
+            pageTitle="Overview"
+            sidebarItems={[
+              { id: 'overview', label: 'Overview', href: '#', active: true, icon: <Icons.app size={15} /> },
+              { id: 'hosts', label: 'Hosts', href: '#', icon: <Icons.server size={15} /> },
+              { id: 'logs', label: 'Logs', href: '#', icon: <Icons.terminal size={15} /> },
+            ]}
             topActions={<Button size="sm" variant="primary">Deploy</Button>}
-            sidebar={<Stack gap="sm"><Button variant="ghost">Hosts</Button><Button variant="ghost">Logs</Button></Stack>}
             header={<PackagePageHeader title="Overview" description="Fleet health at a glance." />}
-            className="min-h-[320px] rounded-lg border border-tollerud-border"
+            className="min-h-[420px] overflow-hidden rounded-lg border border-tollerud-border"
           >
             <StatsSection
               stats={[

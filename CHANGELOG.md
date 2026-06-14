@@ -7,6 +7,26 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.4.0 — 2026-06-15 — Align DashboardShell with docs app shell
+
+`DashboardShell` now defaults to the same sidebar-first layout used on the docs site: brand lockup in the left rail, structured sidebar navigation, and a context top bar instead of duplicating the lockup horizontally.
+
+### New components
+
+- `SidebarNav` — sidebar brand lockup with grouped nav links, icons, and active states
+- `DashboardTopBar` — context top bar with breadcrumb, page title, mobile menu toggle, and actions
+
+### Changed
+
+- `DashboardShell` — default `variant="sidebar"` matches the docs shell; `variant="topnav"` keeps the previous horizontal TopNav layout
+- New props: `sidebarGroups`, `sidebarItems`, `projectSubtitle`, `breadcrumb`, `pageTitle`
+- `navItems` still works and maps into the sidebar when using the default variant
+- Docs Screen patterns and Recipes demos updated to the aligned shell
+
+### Migration
+
+Existing apps using horizontal top navigation should pass `variant="topnav"` to preserve the previous layout. Apps that already pass `navItems` get sidebar navigation automatically with the new default.
+
 ## 4.3.0 — 2026-06-14 — Add screen patterns for component-first pages
 
 Minor release: adds common page and section compositions so agents can build full Tollerud screens without recreating branded layout, navigation, form, list, detail, or empty-state structure with raw Tailwind.

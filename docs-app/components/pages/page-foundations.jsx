@@ -217,12 +217,16 @@ function PageFoundations() {
   ]}
   actions={<Button size="sm" variant="primary">Deploy</Button>}
 />`}/>
-          <CodeSnippet name="app-shell.jsx" code={`import { Button, DashboardShell, PageHeader, Stack } from '@tollerud/ui'
+          <CodeSnippet name="app-shell.jsx" code={`import { DashboardShell, PageHeader } from '@tollerud/ui'
 
 <DashboardShell
   projectName="Dashboard"
-  navItems={[{ label: 'Overview', href: '/', active: true }]}
-  sidebar={<Stack gap="sm"><Button variant="ghost">Services</Button><Button variant="ghost">Settings</Button></Stack>}
+  pageTitle="Overview"
+  sidebarItems={[
+    { id: 'overview', label: 'Overview', href: '/', active: true },
+    { id: 'services', label: 'Services', href: '/services' },
+    { id: 'settings', label: 'Settings', href: '/settings' },
+  ]}
   header={<PageHeader title="Overview" description="Fleet health at a glance." />}
 >
   {/* page content */}

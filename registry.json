@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -247,18 +247,53 @@
     },
     "dashboard-shell": {
       "name": "DashboardShell",
-      "description": "Application shell with TopNav, optional sidebar, header, and main content wrapper",
+      "description": "Docs-aligned application shell with sidebar brand lockup, structured nav, context top bar, and main content wrapper",
       "files": [
         "components/DashboardShell.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "page-shell",
+        "sidebar-nav",
+        "dashboard-top-bar",
+        "main-content",
+        "top-nav"
+      ],
+      "type": "components:ui"
+    },
+    "sidebar-nav": {
+      "name": "SidebarNav",
+      "description": "Sidebar brand lockup with grouped navigation links, icons, and active states",
+      "files": [
+        "components/SidebarNav.tsx"
       ],
       "dependencies": [
         "clsx",
         "tailwind-merge"
       ],
       "registryDependencies": [
-        "page-shell",
-        "top-nav",
-        "main-content"
+        "monogram"
+      ],
+      "type": "components:ui"
+    },
+    "dashboard-top-bar": {
+      "name": "DashboardTopBar",
+      "description": "Context top bar with breadcrumb, page title, mobile menu toggle, and action slots",
+      "files": [
+        "components/DashboardTopBar.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "monogram",
+        "cluster"
       ],
       "type": "components:ui"
     },

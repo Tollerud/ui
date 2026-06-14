@@ -25,7 +25,7 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 
 **Core & forms:** `Button`, `buttonVariants`, `cn`, `Card`, `Badge`, `StatusDot`, `Kbd`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `PasswordInput`, `Combobox`, `TagInput`, `Slider`, `FormRow`, `Container`, `CodeBlock`, `StatCard`, `ActionRow`, `CommandMenu`
 
-**Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
+**Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `SidebarNav`, `DashboardTopBar`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
 
 **Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Drawer`, `Toaster` (Sonner), `ToastProvider` / `useToast`, `Empty` (+ compound parts), `EmptyState`, `Skeleton`, `Progress`, `Spinner`
 
@@ -86,7 +86,8 @@ These components assemble common page structures from the layout primitives and 
 ```tsx
 <DashboardShell
   projectName="Mission Control"
-  navItems={[{ label: 'Overview', href: '/', active: true }]}
+  pageTitle="Overview"
+  sidebarItems={[{ id: 'overview', label: 'Overview', href: '/', active: true }]}
   header={<PageHeader title="Overview" description="Fleet health at a glance." />}
 >
   <StatsSection stats={[{ label: 'Hosts online', value: 3, accent: true }]} />
@@ -97,7 +98,9 @@ These components assemble common page structures from the layout primitives and 
 |-----------|---------|
 | `PageHeader` | Page title, eyebrow, description, metadata, and actions |
 | `TopNav` | Branded monogram lockup, nav links, and top-level actions |
-| `DashboardShell` | App shell with top nav, optional sidebar, and main content |
+| `SidebarNav` | Sidebar brand lockup and grouped navigation links |
+| `DashboardTopBar` | Context top bar with breadcrumb, page title, and actions |
+| `DashboardShell` | Docs-aligned app shell with sidebar nav and context top bar |
 | `SettingsLayout` | Settings pages with section navigation |
 | `FormPanel` | Titled form surface with actions and footer |
 | `ResourceList` | List/table pages with filters, count, and empty state |
