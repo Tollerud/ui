@@ -637,3 +637,4 @@ Also check for a local `components/ui.ts` or `components/ui/index.ts` that re-ex
 | [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md) | Component-first consumer styling phases and acceptance criteria |
 | [Recipes (docs)](https://design.tollerud.dev/recipes/) | Agent-safe copy-paste screen compositions |
 | `npx tollerud-ui-audit` | Consumer styling drift checker (ships with `@tollerud/ui`) |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | PR gates, component checklist, consumer styling doc sync matrix |

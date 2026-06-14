@@ -1,0 +1,68 @@
+---
+description: Keep consumer styling MD files and docs pages in sync when changing layout primitives, screen patterns, recipes, guardrails, or tollerud-ui-audit
+globs: CONSUMER_STYLING_ROADMAP.md,GETTING_STARTED.md,SKILL.md,AGENTS.md,COMPONENTS.md,CHANGELOG.md,CONTRIBUTING.md,scripts/audit-consumer-styling.mjs,package.json,docs-app/components/pages/page-recipes.jsx,docs-app/components/pages/page-screens.jsx,docs-app/components/pages/page-layout.jsx,docs-app/components/pages/page-getting-started.jsx,docs-app/components/pages/page-resources.jsx,docs-app/lib/docs-routes.js,docs-app/lib/component-catalog.js
+alwaysApply: false
+---
+
+# Consumer styling — keep docs in sync
+
+When changing **consumer styling policy**, **layout primitives**, **screen patterns**, **recipes**, **guardrails**, or **`tollerud-ui-audit`**, update the related files in the **same commit**. Do not update only the docs app or only markdown — agents and humans read both.
+
+## File roles
+
+| File | Role |
+|------|------|
+| `SKILL.md` | **Source of truth for agents** — exports, recipes table, guardrails, gotchas |
+| `AGENTS.md` | Contributor + agent guide — import blocks, reference table, release checklist |
+| `GETTING_STARTED.md` | **Shipped in npm** — install, policy, checklist, audit command |
+| `CONSUMER_STYLING_ROADMAP.md` | Phase tracking — check boxes only when acceptance criteria met |
+| `CHANGELOG.md` | User-facing release notes (docs site parses this at runtime) |
+| `COMPONENTS.md` | Human usage index — link to Recipes and policy when relevant |
+| `CONTRIBUTING.md` | Contributor sync matrix (this rule mirrors it) |
+
+## Docs app (live site)
+
+| Area | Files |
+|------|-------|
+| New docs route | `docs-app/lib/docs-routes.js`, `docs-app/components/docs-shell.jsx` |
+| Section deep links / ⌘K | `docs-app/lib/component-catalog.js` |
+| Recipes | `docs-app/components/pages/page-recipes.jsx` |
+| Screen patterns | `docs-app/components/pages/page-screens.jsx` |
+| Layout primitives | `docs-app/components/pages/page-layout.jsx` |
+| Getting started mirror | `docs-app/components/pages/page-getting-started.jsx` |
+| Guides / checklist | `docs-app/components/pages/page-resources.jsx` |
+
+New nav entries need `PAGE_TITLES` and, if the page uses `go()`, add the route id to `PAGES_WITH_GO` in `docs-shell.jsx`.
+
+## Audit script
+
+If you change `scripts/audit-consumer-styling.mjs` or the `tollerud-ui-audit` bin in `package.json`:
+
+1. Document behavior in `GETTING_STARTED.md` → Consumer project checklist
+2. Mention in `SKILL.md` → Consumer guardrails and `AGENTS.md` reference table
+3. Run `npm run test:consumer-styling` — must pass on `fixtures/consumer` and `examples/next-starter`
+4. Note the change in `CHANGELOG.md`
+
+## New components (layout / screen patterns)
+
+Follow [AGENTS.md](AGENTS.md) §2–4 **plus** consumer styling rows in [CONTRIBUTING.md](CONTRIBUTING.md):
+
+- Demo on `page-layout.jsx` or `page-screens.jsx` (prefer live `<Demo>` over code-only snippets)
+- Optional recipe snippet on `page-recipes.jsx` if it is a common full-page pattern
+- `SKILL.md` catalog entry with props summary
+- Deep link in `component-catalog.js`
+
+## Do not
+
+- Mark `CONSUMER_STYLING_ROADMAP.md` phases complete without meeting listed acceptance criteria
+- Update `SKILL.md` without checking `components/index.ts` exports still match
+- Add docs-only guidance to `SKILL.md` without mirroring key points in `GETTING_STARTED.md` when consumers need it offline
+- Edit `docs-app/public/CHANGELOG.md` directly — it is copied from root `CHANGELOG.md` on `npm run build:docs`
+
+## Before push
+
+```bash
+npm run test:consumer-styling
+npm run build:docs
+npm run validate   # full gate before release PRs
+```
