@@ -19,6 +19,7 @@ import { NAV, PAGE_TITLES, ROUTE_ALIASES, resolveRoute, flattenNavItems, isLegac
 import { DEEP_LINKS, deepLinkPath, findDeepLink } from '@/lib/component-catalog'
 import PageOverview from './pages/page-overview'
 import PageGettingStarted from './pages/page-getting-started'
+import PageRecipes from './pages/page-recipes'
 import PageFoundations from './pages/page-foundations'
 import PageLayout from './pages/page-layout'
 import PageScreens from './pages/page-screens'
@@ -42,6 +43,7 @@ import PageResources from './pages/page-resources'
 const CANONICAL_PAGES = {
   overview: PageOverview,
   'getting-started': PageGettingStarted,
+  recipes: PageRecipes,
   foundations: PageFoundations,
   layout: PageLayout,
   screens: PageScreens,
@@ -68,7 +70,7 @@ for (const [legacy, canonical] of Object.entries(ROUTE_ALIASES)) {
   PAGES[legacy] = CANONICAL_PAGES[canonical]
 }
 
-const PAGES_WITH_GO = new Set(['overview', 'getting-started', 'components', 'resources'])
+const PAGES_WITH_GO = new Set(['overview', 'getting-started', 'recipes', 'components', 'resources'])
 
 function slugFromPathname(pathname) {
   const parts = pathname.replace(/^\//, '').replace(/\/$/, '').split('/').filter(Boolean)

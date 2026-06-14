@@ -63,8 +63,9 @@ function PageScreens() {
       </Section>
 
       <Section title="DashboardShell" component="DashboardShell" permalink="screens/dashboard-shell" desc="App shell with TopNav, optional sidebar, page header, and main content width/density presets.">
-        <CodeSnippet
-          name="dashboard-shell.tsx"
+        <Demo
+          name="dashboard-shell"
+          variant="col"
           code={`<DashboardShell
   projectName="Mission Control"
   navItems={[{ label: 'Overview', href: '/', active: true }]}
@@ -77,7 +78,23 @@ function PageScreens() {
     { label: 'Open alerts', value: 1 },
   ]} />
 </DashboardShell>`}
-        />
+        >
+          <DashboardShell
+            projectName="Mission Control"
+            navItems={[{ label: 'Overview', href: '#', active: true }, { label: 'Hosts', href: '#' }]}
+            topActions={<Button size="sm" variant="primary">Deploy</Button>}
+            sidebar={<Stack gap="sm"><Button variant="ghost">Hosts</Button><Button variant="ghost">Logs</Button></Stack>}
+            header={<PackagePageHeader title="Overview" description="Fleet health at a glance." />}
+            className="min-h-[320px] rounded-lg border border-tollerud-border"
+          >
+            <StatsSection
+              stats={[
+                { label: 'Hosts online', value: 3, accent: true },
+                { label: 'Open alerts', value: 1 },
+              ]}
+            />
+          </DashboardShell>
+        </Demo>
       </Section>
 
       <Section title="SettingsLayout + FormPanel" component="SettingsLayout" permalink="screens/settings-form" desc="Settings pages get section navigation, page header, form surfaces, and footer actions without rebuilding layout.">
@@ -142,8 +159,9 @@ function PageScreens() {
             </CardGrid>
           </ResourceList>
         </Demo>
-        <CodeSnippet
-          name="detail-page.tsx"
+        <Demo
+          name="detail-page"
+          variant="col"
           code={`<DetailPage
   eyebrow="host"
   title="emma.tollerud.no"
@@ -153,12 +171,23 @@ function PageScreens() {
 >
   <Card>Logs, metrics, and configuration.</Card>
 </DetailPage>`}
-        />
+        >
+          <DetailPage
+            eyebrow="host"
+            title="emma.tollerud.no"
+            description="Primary production host."
+            actions={<Button variant="terminal">ssh emma</Button>}
+            aside={<Card><StatusDot status="online" label="SSH connected" /></Card>}
+          >
+            <Card>Logs, metrics, and configuration.</Card>
+          </DetailPage>
+        </Demo>
       </Section>
 
       <Section title="EmptyPage" component="EmptyPage" permalink="screens/empty-page" desc="A full-page empty state composition for first-run, no-results, and error pages.">
-        <CodeSnippet
-          name="empty-page.tsx"
+        <Demo
+          name="empty-page"
+          variant="col"
           code={`<EmptyPage
   icon="server"
   title="No hosts connected"
@@ -166,7 +195,19 @@ function PageScreens() {
   action={<Button variant="primary">Connect a host</Button>}
   secondaryAction={<Button variant="ghost">Read docs</Button>}
 />`}
-        />
+        >
+          <div className="rounded-lg border border-tollerud-border overflow-hidden">
+            <EmptyPage
+              background="plain"
+              icon="server"
+              title="No hosts connected"
+              description="Connect your first machine and Tia will start watching it."
+              action={<Button variant="primary">Connect a host</Button>}
+              secondaryAction={<Button variant="ghost">Read docs</Button>}
+              className="min-h-[280px]"
+            />
+          </div>
+        </Demo>
       </Section>
 
       <Section title="FeatureSection + StatsSection" component="FeatureSection" permalink="screens/featuresection-statssection" desc="Higher-level sections for marketing and dashboard overview pages.">

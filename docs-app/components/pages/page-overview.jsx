@@ -106,6 +106,7 @@ function PageOverview({ go }) {
         <div className="ds-grid-3">
           {[
             { id: 'getting-started', icon: 'code', t: 'Getting started', d: 'Install, Tailwind v4, peers, Server Components.' },
+            { id: 'recipes', icon: 'terminal', t: 'Recipes', d: 'Component-first screen compositions — copy-paste for agents.' },
             { id: 'foundations', icon: 'palette', t: 'Foundations', d: 'Color, type, spacing, radius, shadow, motion, voice.' },
             { id: 'components', icon: 'grid', t: 'Components', d: 'Core primitives — button, card, badge, status, layout.' },
             { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, selects, combobox, form row, validation.' },

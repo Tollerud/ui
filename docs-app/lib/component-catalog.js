@@ -59,6 +59,16 @@ export const DEEP_LINKS = [
   { page: 'screens', section: 'featuresection-statssection', title: 'FeatureSection', component: 'FeatureSection', keywords: ['features', 'marketing'] },
   { page: 'screens', section: 'featuresection-statssection', title: 'StatsSection', component: 'StatsSection', keywords: ['stats', 'metrics'] },
 
+  // Agent-safe recipes
+  { page: 'recipes', section: 'marketing-landing', title: 'Marketing landing page', keywords: ['landing', 'hero', 'marketing'] },
+  { page: 'recipes', section: 'dashboard-overview', title: 'Dashboard overview', component: 'DashboardShell', keywords: ['dashboard', 'app shell'] },
+  { page: 'recipes', section: 'settings-page', title: 'Settings page', component: 'SettingsLayout', keywords: ['settings', 'forms'] },
+  { page: 'recipes', section: 'auth-page', title: 'Auth page', keywords: ['sign in', 'login', 'auth'] },
+  { page: 'recipes', section: 'empty-state-page', title: 'Empty state page', component: 'EmptyPage', keywords: ['empty', 'first run'] },
+  { page: 'recipes', section: 'detail-page', title: 'Detail page', component: 'DetailPage', keywords: ['detail', 'aside'] },
+  { page: 'recipes', section: 'list-table-page', title: 'List / table page', component: 'ResourceList', keywords: ['list', 'table', 'data'] },
+  { page: 'recipes', section: 'escape-hatch', title: 'Acceptable Tailwind glue', keywords: ['tailwind', 'consumer', 'styling'] },
+
   // Forms
   { page: 'forms', section: 'text-input', title: 'Text input', component: 'Input' },
   { page: 'forms', section: 'combobox', title: 'Combobox', component: 'Combobox' },

@@ -45,7 +45,10 @@ function PageResources({ go }) {
             <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: '0 0 12px', lineHeight: 1.55 }}>
               Tailwind remains available, but consumer apps should use exported components first and reserve utilities for small layout glue.
             </p>
-            <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('getting-started')}>Read policy</button>
+            <div className="ds-row" style={{ gap: 10 }}>
+              <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('getting-started')}>Read policy</button>
+              <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>Recipes</button>
+            </div>
           </Card>
         </div>
       </Section>
