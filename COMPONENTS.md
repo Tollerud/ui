@@ -1,6 +1,6 @@
 # Tollerud Design System — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.1.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.3.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 ## Documentation map
 
@@ -11,13 +11,21 @@ Human-oriented usage guide for `@tollerud/ui` **v4.1.0**. Components ship as Rea
 | **This file** | Narrative examples, CSS class patterns, homelab/dashboard usage |
 | **[COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md)** | Planned components not yet shipped |
 
+## Consumer styling policy
+
+Use this file as a component reference, not as an invitation to rebuild branded UI in each app. React consumers should prefer exported components first, layout primitives or screen patterns when available, and Tailwind only for small local glue. If a branded structure repeats, add it to `@tollerud/ui` or compose a local semantic feature component instead of copying package internals or creating a parallel `components/ui` system.
+
+**Agent-safe recipes** for common screens (marketing landing, dashboard, settings, auth, empty state, detail, list/table) live on the docs site at [Recipes](https://design.tollerud.dev/recipes/).
+
+**Consumer guardrails** — run `npx tollerud-ui-audit` from your app root before shipping. The audit checks Tailwind CSS setup, copied `components/ui` trees, hardcoded brand hex values, local `cn()` helpers, and `<Button><Link>` nesting. Use `--warn-only` in CI when you want warnings without a failing exit code. Full command reference, error codes, and fixes: [GETTING_STARTED.md](GETTING_STARTED.md) → Consumer project checklist · [Guides on design.tollerud.dev](https://design.tollerud.dev/resources/consumer-checklist/).
+
 ## Export index
 
 All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted. Prop signatures: see [PROPS.generated.md](PROPS.generated.md).
 
 **Core & forms:** `Button`, `buttonVariants`, `cn`, `Card`, `Badge`, `StatusDot`, `Kbd`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `PasswordInput`, `Combobox`, `TagInput`, `Slider`, `FormRow`, `Container`, `CodeBlock`, `StatCard`, `ActionRow`, `CommandMenu`
 
-**Navigation & layout:** `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
+**Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
 
 **Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Drawer`, `Toaster` (Sonner), `ToastProvider` / `useToast`, `Empty` (+ compound parts), `EmptyState`, `Skeleton`, `Progress`, `Spinner`
 
@@ -32,19 +40,71 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 Tollerud.no-inspired animated WebGL background using `@paper-design/shaders-react`, with CSS fallback classes.
 
 ```tsx
-<section className="relative overflow-hidden bg-black">
-  <NoirGlowBackground
-    intensity="medium"
-    speed="slow"
-    grain="soft"
-    shape="corners"
-    preserveCenter
-  />
-  <div className="relative z-10">Content</div>
-</section>
+<HeroBlock
+  eyebrow="homelab control plane"
+  title="Run your stack like production."
+  description="Deploy, monitor, and roll back from one keyboard-first console."
+  intense
+/>
 ```
 
-See `BACKGROUNDS.md` for install, props, usage rules, and fallback HTML.
+Use `NoirGlowBackground` directly only for custom background composition that cannot be represented by an exported block yet. See `BACKGROUNDS.md` for install, props, usage rules, and fallback HTML.
+
+## Layout primitives
+
+These primitives give consumer apps a component-first page structure before reaching for raw Tailwind layout classes.
+
+```tsx
+<PageShell background="grid">
+  <Section size="hero">
+    <Stack gap="lg">
+      <h1>Build with components first.</h1>
+      <Cluster>
+        <Button variant="primary">Start</Button>
+        <Button variant="secondary">Read policy</Button>
+      </Cluster>
+    </Stack>
+  </Section>
+</PageShell>
+```
+
+| Component | Key props | Use for |
+|-----------|-----------|---------|
+| `PageShell` | `background`, `density` | Full-page noir/grid/glow background and main landmark |
+| `Section` | `size`, `width` | Consistent page sections |
+| `Stack` | `gap`, `align` | Vertical rhythm |
+| `Cluster` | `gap`, `align`, `justify` | Wrapping actions, badges, and toolbars |
+| `Grid` | `columns`, `gap` | Generic responsive grids |
+| `CardGrid` | `columns`, `gap` | Card collections |
+| `Split` | `ratio`, `gap`, `reverse` | Content/aside two-column layouts |
+| `MainContent` | `width`, `spacing`, `density` | App route content wrapper |
+
+## Screen patterns
+
+These components assemble common page structures from the layout primitives and core components.
+
+```tsx
+<DashboardShell
+  projectName="Mission Control"
+  navItems={[{ label: 'Overview', href: '/', active: true }]}
+  header={<PageHeader title="Overview" description="Fleet health at a glance." />}
+>
+  <StatsSection stats={[{ label: 'Hosts online', value: 3, accent: true }]} />
+</DashboardShell>
+```
+
+| Component | Use for |
+|-----------|---------|
+| `PageHeader` | Page title, eyebrow, description, metadata, and actions |
+| `TopNav` | Branded monogram lockup, nav links, and top-level actions |
+| `DashboardShell` | App shell with top nav, optional sidebar, and main content |
+| `SettingsLayout` | Settings pages with section navigation |
+| `FormPanel` | Titled form surface with actions and footer |
+| `ResourceList` | List/table pages with filters, count, and empty state |
+| `DetailPage` | Detail pages with optional aside |
+| `EmptyPage` | First-run, no-results, or error pages |
+| `FeatureSection` | Marketing/product feature grids |
+| `StatsSection` | Metric overview sections |
 
 ## Button
 
@@ -78,8 +138,7 @@ Sizes: `--sm`, `--md`, `--lg`
 
 ```jsx
 <Card>
-  <h3 className="font-semibold mb-1">Title</h3>
-  <p className="text-tollerud-text-secondary text-sm">Content</p>
+  <StatusDot status="online" label="Emma — ready" />
 </Card>
 <Card accent>
   <p>Highlighted card with yellow border</p>
@@ -565,7 +624,7 @@ A landing hero on the noir glow background. Single-column by default; pass `medi
 ```tsx
 <HeroBlock eyebrow="homelab control plane" title="Run your stack like production."
   description="Deploy, monitor and roll back from one keyboard-first console."
-  actions={<><button className="tollerud-btn tollerud-btn--terminal tollerud-btn--md">deploy --free</button></>}
+  actions={<Button variant="terminal">deploy --free</Button>}
   media={<img src="tia.png" alt="" />} />
 ```
 
@@ -977,14 +1036,6 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 ```
 
 Variants: `variant?: 'default' | 'circular' | 'text'`. CSS class: `.tollerud-skeleton`.
-
-## Glass Nav
-
-```html
-<nav class="tollerud-glass fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6">
-  ...
-</nav>
-```
 
 ## Grid Background
 

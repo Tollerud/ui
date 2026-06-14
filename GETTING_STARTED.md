@@ -23,7 +23,7 @@ npm install @paper-design/shaders-react
 
 ### Footer only (minimal)
 
-If you only need the branded footer — no Tailwind, Radix, or other design-system peers:
+If you only need the branded footer — no Radix, Lucide, Framer Motion, Sonner, or other full design-system peers:
 
 ```bash
 npm install @tollerud/footer
@@ -124,12 +124,207 @@ export default config
 
 ---
 
+## Consumer styling policy
+
+`@tollerud/ui` ships Tailwind support intentionally. Tailwind is the implementation engine for the design system, but consumer projects should treat the component API as the primary design language.
+
+Use this order in apps:
+
+1. Use exported `@tollerud/ui` components.
+2. Use exported layout primitives and screen patterns when available.
+3. Use Tailwind only for small local glue, such as spacing, alignment, or responsive visibility.
+4. If a branded pattern repeats, add it to `@tollerud/ui` or create a local semantic feature component that composes `@tollerud/ui`.
+
+### Allowed Tailwind glue
+
+Small layout adjustments around package components are fine:
+
+```tsx
+import { Button, Card } from '@tollerud/ui'
+
+export function DeployCard() {
+  return (
+    <Card>
+      <p>Ready to deploy.</p>
+      <div className="mt-6">
+        <Button variant="primary">Deploy</Button>
+      </div>
+    </Card>
+  )
+}
+```
+
+### Avoid rebuilding branded UI with utilities
+
+Do not recreate design-system primitives in app code:
+
+```tsx
+// Avoid: this bypasses Button variants, focus states, and brand tokens.
+<button className="rounded-lg bg-yellow-400 px-4 py-2 text-black">
+  Deploy
+</button>
+```
+
+Do not recreate full branded page structure with raw layout utilities when a component or pattern should own it:
+
+```tsx
+// Avoid: move repeated branded layout into @tollerud/ui or a semantic feature component.
+<section className="min-h-screen bg-black px-6 py-24">
+  <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+    {/* hand-built branded cards */}
+  </div>
+</section>
+```
+
+### Agent-safe recipes
+
+Copy-paste screen compositions for common pages live on the docs site: **[Recipes](https://design.tollerud.dev/recipes/)** (`/recipes/`). Each recipe uses exported layout primitives and screen patterns, and links to a fuller interactive example where one exists (Blocks, Mission Control, Settings, Sign in, Onboarding, Data Table).
+
+---
+
+## Consumer project checklist
+
+Run this before shipping or after onboarding a new app. It catches the styling drift that makes Tollerud projects look off-brand or lose production styles.
+
+### Setup
+
+- [ ] `@tollerud/ui` and required peers are installed (see [Install](#install)).
+- [ ] `app/globals.css` imports **both** `@tollerud/ui/globals.css` and `@tollerud/ui/source.css`.
+- [ ] `<Toaster />` is mounted near the app root when using Sonner toasts.
+- [ ] Agents have [SKILL.md](SKILL.md) synced (`.claude/skills/tollerud-ui/SKILL.md` or equivalent).
+- [ ] Common screens start from [Recipes](https://design.tollerud.dev/recipes/) or exported layout/screen patterns — not hand-built page grids.
+
+### Automated audit
+
+From your consumer app root:
+
+```bash
+npx tollerud-ui-audit
+# monorepo app package:
+npx tollerud-ui-audit ./apps/web
+```
+
+Equivalent when `npx` cannot resolve the bin:
+
+```bash
+node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs ./apps/web
+```
+
+**Exit codes:** `0` when no issues are found, or when only warnings exist and you passed `--warn-only`. `1` when one or more errors are found (fix before merge).
+
+**Flags:**
+
+| Flag | Effect |
+|------|--------|
+| `--warn-only` | Print findings but exit `0` even when errors are present — useful for advisory CI jobs |
+| `./path/to/app` | Audit a monorepo package instead of the current working directory |
+
+**What it checks:** missing `@tollerud/ui` in `package.json`, missing `globals.css` / `source.css` imports, local `components/ui` clones, `tollerud-*` classes without package imports, hardcoded brand hex values, local `cn()` helpers, nested `<Button><Link>` / `<button><a>`, and `components/ui` re-export shims that bypass the package.
+
+Fix errors before merge; treat warnings as tech debt.
+
+#### Audit error codes
+
+Each finding prints `ERROR [code]` or `WARN [code]`. Use this table to fix issues:
+
+| Code | Level | Meaning | Fix |
+|------|-------|---------|-----|
+| `missing-ui-dep` | error | `@tollerud/ui` not in `package.json` | Add the package and required peers — see [Install](#install) |
+| `missing-globals-css` | error | Tailwind entry missing `@import "@tollerud/ui/globals.css"` | Add both `globals.css` and `source.css` imports below |
+| `missing-source-css` | error | Tailwind entry missing `@import "@tollerud/ui/source.css"` | Without `source.css`, DS utility classes may be purged in production |
+| `local-ui-clone` | error | `src/components/ui/` (or similar) contains copied primitives | Delete copies; `import { … } from '@tollerud/ui'` |
+| `copied-ds-tokens` | error | File uses `tollerud-*` classes without importing `@tollerud/ui` | Replace vendored component files with package imports |
+| `hardcoded-hex` | error | File hardcodes `#FFFF00`, `#0A0A0A`, `#E8D500`, etc. | Use `text-tollerud-yellow`, `bg-tollerud-noir-950`, `text-tollerud-yellow-warm` |
+| `button-link-nesting` | error | `<Button>` or `<button>` wraps `<Link>` / `<a>` | `<Button asChild><Link … /></Button>` or `buttonVariants()` on the link |
+| `ui-reexport-shim` | warn | `components/ui/index.ts` re-exports local copies | Import from `@tollerud/ui` directly |
+| `local-cn` | warn | `lib/utils.ts` defines a local `cn()` | `import { cn } from '@tollerud/ui/utils'` |
+| `generic-yellow-util` | warn | `bg-yellow-400` / `text-yellow-400` on branded UI | Prefer `<Button variant="primary">` or `text-tollerud-yellow` |
+| `no-globals-css` | warn | No `globals.css` (or similar) found | Verify your Tailwind entry imports both Tollerud CSS files |
+| `no-package-json` | warn | No `package.json` at audit root | Run from the consumer app package directory |
+
+**CI example:**
+
+```bash
+npx tollerud-ui-audit
+# advisory report (does not fail the job):
+npx tollerud-ui-audit --warn-only
+```
+
+### Anti-patterns
+
+| Symptom | Why it fails | Fix |
+|---------|--------------|-----|
+| `src/components/ui/Button.tsx` with `tollerud-btn` classes | Parallel design system; drifts from package | Delete; `import { Button } from '@tollerud/ui'` |
+| `#FFFF00`, `#0A0A0A`, `bg-yellow-400` on branded UI | Hardcoded colors bypass tokens | `text-tollerud-yellow`, `bg-tollerud-noir-950` |
+| Local `lib/utils.ts` with `cn()` | Duplicates package helper | `import { cn } from '@tollerud/ui/utils'` |
+| Missing `@tollerud/ui/source.css` | Production purge drops DS classes | Add `@import "@tollerud/ui/source.css"` |
+| `<Button><Link href="…">` | Invalid HTML; breaks focus/a11y | `<Button asChild><Link … /></Button>` or `buttonVariants()` on the link |
+| Full pages built from `min-h-screen bg-black grid …` | Branded structure belongs in components | Use `PageShell`, `DashboardShell`, or a [recipe](https://design.tollerud.dev/recipes/) |
+
+### Detect copied files manually
+
+```bash
+grep -rl "tollerud-yellow\|tollerud-noir\|tollerud-surface" src --include="*.tsx" --include="*.ts"
+```
+
+Files that match but do not import `@tollerud/ui` are likely vendored copies.
+
+### Local feature components (not a parallel design system)
+
+When a screen needs app-specific structure, compose **semantic feature components** that wrap `@tollerud/ui` exports — do not fork primitives into `components/ui`.
+
+```tsx
+// src/features/hosts/HostDeployPanel.tsx — app-specific, composes the package
+import { Button, Card, FormPanel, Input, Stack } from '@tollerud/ui'
+
+export function HostDeployPanel({ onDeploy }: { onDeploy: (host: string) => void }) {
+  return (
+    <FormPanel
+      title="Connect host"
+      description="SSH target for the Tollerud agent."
+      footer={<Button variant="primary" onClick={() => onDeploy('emma.tollerud.no')}>Connect</Button>}
+    >
+      <Stack gap="md">
+        <Input label="Hostname" placeholder="emma.tollerud.no" />
+      </Stack>
+    </FormPanel>
+  )
+}
+```
+
+Allowed Tailwind in feature components: small glue (`mt-6`, `flex justify-end`). The branded frame (`FormPanel`, `Button` variants, tokens) stays on the package.
+
+---
+
+## Required CSS and shared utilities
+
+For Tailwind v4, keep both imports in your app stylesheet:
+
+```css
+@import "@tollerud/ui/globals.css";
+@import "@tollerud/ui/source.css";
+```
+
+`globals.css` provides Tailwind, tokens, and component layers. `source.css` makes Tailwind scan the installed package so utility classes used only inside `@tollerud/ui` are generated.
+
+Use the exported class merge helper instead of adding a local copy:
+
+```tsx
+import { cn } from '@tollerud/ui'
+// or: import { cn } from '@tollerud/ui/utils'
+```
+
+---
+
 ## Subpath imports (tree-shaking)
 
 Import individual components without pulling the full barrel:
 
 ```tsx
 import { Button } from '@tollerud/ui/button'
+import { PageShell, Section, Stack } from '@tollerud/ui'
+import { PageHeader, ResourceList } from '@tollerud/ui'
 import { cn } from '@tollerud/ui/utils'
 ```
 

@@ -37,6 +37,42 @@ export const DEEP_LINKS = [
   { page: 'components', section: 'action-row', title: 'Action row', component: 'ActionRow' },
   { page: 'components', section: 'glow-card', title: 'Glow card', component: 'GlowCard' },
 
+  // Layout primitives
+  { page: 'layout', section: 'page-shell', title: 'PageShell', component: 'PageShell', keywords: ['shell', 'background', 'page'] },
+  { page: 'layout', section: 'page-shell', title: 'Section', component: 'Section', keywords: ['section', 'spacing'] },
+  { page: 'layout', section: 'stack-cluster', title: 'Stack', component: 'Stack', keywords: ['vertical', 'gap'] },
+  { page: 'layout', section: 'stack-cluster', title: 'Cluster', component: 'Cluster', keywords: ['actions', 'toolbar', 'wrap'] },
+  { page: 'layout', section: 'grid-cardgrid', title: 'Grid', component: 'Grid', keywords: ['columns', 'responsive'] },
+  { page: 'layout', section: 'grid-cardgrid', title: 'CardGrid', component: 'CardGrid', keywords: ['cards', 'responsive'] },
+  { page: 'layout', section: 'split-maincontent', title: 'Split', component: 'Split', keywords: ['aside', 'two column'] },
+  { page: 'layout', section: 'split-maincontent', title: 'MainContent', component: 'MainContent', keywords: ['main', 'content', 'width'] },
+
+  // Screen patterns
+  { page: 'screens', section: 'page-header', title: 'PageHeader', component: 'PageHeader', keywords: ['title', 'heading', 'actions'] },
+  { page: 'screens', section: 'top-nav', title: 'TopNav', component: 'TopNav', keywords: ['nav', 'monogram', 'lockup'] },
+  { page: 'screens', section: 'dashboard-shell', title: 'DashboardShell', component: 'DashboardShell', keywords: ['app shell', 'sidebar'] },
+  { page: 'screens', section: 'settings-form', title: 'SettingsLayout', component: 'SettingsLayout', keywords: ['settings', 'forms'] },
+  { page: 'screens', section: 'settings-form', title: 'FormPanel', component: 'FormPanel', keywords: ['forms', 'panel'] },
+  { page: 'screens', section: 'resource-detail', title: 'ResourceList', component: 'ResourceList', keywords: ['list', 'table'] },
+  { page: 'screens', section: 'resource-detail', title: 'DetailPage', component: 'DetailPage', keywords: ['detail', 'aside'] },
+  { page: 'screens', section: 'empty-page', title: 'EmptyPage', component: 'EmptyPage', keywords: ['empty', 'first run'] },
+  { page: 'screens', section: 'featuresection-statssection', title: 'FeatureSection', component: 'FeatureSection', keywords: ['features', 'marketing'] },
+  { page: 'screens', section: 'featuresection-statssection', title: 'StatsSection', component: 'StatsSection', keywords: ['stats', 'metrics'] },
+
+  // Agent-safe recipes
+  { page: 'recipes', section: 'marketing-landing', title: 'Marketing landing page', keywords: ['landing', 'hero', 'marketing'] },
+  { page: 'recipes', section: 'dashboard-overview', title: 'Dashboard overview', component: 'DashboardShell', keywords: ['dashboard', 'app shell'] },
+  { page: 'recipes', section: 'settings-page', title: 'Settings page', component: 'SettingsLayout', keywords: ['settings', 'forms'] },
+  { page: 'recipes', section: 'auth-page', title: 'Auth page', keywords: ['sign in', 'login', 'auth'] },
+  { page: 'recipes', section: 'empty-state-page', title: 'Empty state page', component: 'EmptyPage', keywords: ['empty', 'first run'] },
+  { page: 'recipes', section: 'detail-page', title: 'Detail page', component: 'DetailPage', keywords: ['detail', 'aside'] },
+  { page: 'recipes', section: 'list-table-page', title: 'List / table page', component: 'ResourceList', keywords: ['list', 'table', 'data'] },
+  { page: 'recipes', section: 'escape-hatch', title: 'Acceptable Tailwind glue', keywords: ['tailwind', 'consumer', 'styling'] },
+
+  // Consumer guardrails
+  { page: 'resources', section: 'consumer-checklist', title: 'Consumer project checklist', keywords: ['audit', 'guardrails', 'anti-pattern', 'tollerud-ui-audit', 'warn-only', 'error code'] },
+  { page: 'getting-started', section: 'consumer-checklist', title: 'Consumer project checklist', keywords: ['audit', 'tollerud-ui-audit', 'warn-only'] },
+
   // Forms
   { page: 'forms', section: 'text-input', title: 'Text input', component: 'Input' },
   { page: 'forms', section: 'combobox', title: 'Combobox', component: 'Combobox' },

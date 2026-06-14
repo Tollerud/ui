@@ -7,6 +7,62 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.3.0 — 2026-06-14 — Add screen patterns for component-first pages
+
+Minor release: adds common page and section compositions so agents can build full Tollerud screens without recreating branded layout, navigation, form, list, detail, or empty-state structure with raw Tailwind.
+
+### New components
+
+- `PageHeader` — title block with eyebrow, description, metadata, and actions
+- `TopNav` — branded monogram/project lockup with nav links and actions
+- `DashboardShell` — app shell with top nav, optional sidebar, header, and main content
+- `SettingsLayout` — settings page with section navigation and content panel
+- `FormPanel` — titled form surface with body, action, and footer slots
+- `ResourceList` — list/table page wrapper with header, filters, count, actions, and empty state
+- `DetailPage` — detail page with header, primary content, and optional aside
+- `EmptyPage` — full-page empty state on a Tollerud shell
+- `FeatureSection` — feature grid section built from `PageHeader`, `CardGrid`, and `FeatureCard`
+- `StatsSection` — metric section built from `PageHeader`, `Grid`, and `StatCard`
+
+### Changed
+
+- Docs app adds a Screen patterns page and search/deep links for the new exports.
+- Docs app adds a **Recipes** page (`/recipes/`) with component-first copy-paste screen compositions for agents; each recipe links to an existing interactive example where one exists.
+- Ships `tollerud-ui-audit` (`npx tollerud-ui-audit`) — lightweight consumer styling drift checker (missing `source.css`, copied `components/ui`, hardcoded brand hex, Button/Link nesting). Documented with full error-code reference, `--warn-only` flag, and alternative script invocation in `GETTING_STARTED.md`, `README.md`, `COMPONENTS.md`, and docs Guides.
+- Docs and `GETTING_STARTED.md` add a consumer project checklist, anti-pattern table, and semantic feature-component example.
+- `examples/next-starter` and `fixtures/consumer` use layout primitives (`PageShell`, `Section`, `Stack`, `PageHeader`, `CardGrid`) as the component-first reference implementation.
+- `layout-patterns.test.ts` smoke-tests all layout and screen-pattern exports from the package barrel.
+- Component demos and roadmap metadata now reference the actual screen-pattern APIs.
+- Removed obsolete low-level `.tollerud-glass` and `.tollerud-section` utilities now covered by `TopNav` and `Section`.
+
+### Migration
+
+Replace `.tollerud-glass` nav usage with `TopNav`, and `.tollerud-section` wrappers with `Section`. No public projects are using these utilities yet.
+
+## 4.2.0 — 2026-06-14 — Add layout primitives for component-first consumer apps
+
+Minor release: adds semantic layout primitives so consumer apps and agents can build Tollerud-shaped pages without recreating branded structure with raw Tailwind utilities.
+
+### New components
+
+- `PageShell` — full-page shell with noir, grid, or glow background options
+- `Section` — semantic page section with consistent spacing and width presets
+- `Stack` — vertical layout primitive with finite gap and alignment options
+- `Cluster` — wrapping horizontal layout for actions, badges, and toolbars
+- `Grid` — responsive grid primitive with constrained column presets
+- `CardGrid` — card collection grid with Tollerud spacing defaults
+- `Split` — responsive two-column content/aside layout
+- `MainContent` — main content wrapper with width, spacing, and density presets
+
+### Changed
+
+- Docs app adds a dedicated Layout page and deep links for each new primitive.
+- `SKILL.md`, `AGENTS.md`, `GETTING_STARTED.md`, `README.md`, `COMPONENTS.md`, and `BACKGROUNDS.md` now reinforce component-first consumer styling.
+
+### Migration
+
+Nothing breaking. Existing Tailwind glue still works; prefer these primitives for repeated branded page structure.
+
 ## 4.1.1 — 2026-06-10 — Fix: missing `@theme` registration broke all `tollerud-*` color utilities
 
 Critical fix. `globals.css` imported `tokens.css` (plain `--tollerud-*` CSS custom properties) but never registered them with Tailwind v4 via `@theme`. Tailwind v4 only generates color utilities for colors declared as `--color-*` theme variables, so every `bg-tollerud-*`, `text-tollerud-*`, and `border-tollerud-*` class used across the 52 component dist files resolved to nothing — breaking the entire visual identity (yellow accents, noir surfaces, borders, state colors) in any consumer app.

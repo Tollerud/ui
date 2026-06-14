@@ -38,6 +38,54 @@ As of **v1.4.0**, charts (`BarChart`, `AreaChart`, `Donut`, `Sparkline`) and mar
 
 ---
 
+## Consumer styling policy
+
+Tailwind is part of `@tollerud/ui` on purpose. Use it freely **inside this package** to implement components, variants, layout primitives, focus states, tokens, and docs-only demos.
+
+In consumer apps, use Tailwind as a small escape hatch, not as the primary design language. The default order is:
+
+1. Use exported `@tollerud/ui` components.
+2. Use exported `@tollerud/ui` layout primitives or screen patterns when available.
+3. Use Tailwind only for small local glue, such as one-off margins, alignment, or responsive visibility.
+4. If branded structure repeats, add a component to `@tollerud/ui` or create a local semantic feature component; do not rebuild a parallel design system with raw utility classes.
+
+Allowed consumer Tailwind:
+
+```tsx
+<div className="mt-6">
+  <Button variant="primary">Deploy</Button>
+</div>
+```
+
+Discouraged consumer Tailwind:
+
+```tsx
+<button className="rounded-lg bg-yellow-400 px-4 py-2 text-black">
+  Deploy
+</button>
+```
+
+```tsx
+<section className="min-h-screen bg-black px-6 py-24">
+  <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+    {/* branded cards built by hand */}
+  </div>
+</section>
+```
+
+Consumer apps must import the package CSS for Tailwind v4:
+
+```css
+@import "@tollerud/ui/globals.css";
+@import "@tollerud/ui/source.css";
+```
+
+`globals.css` provides Tailwind, tokens, and component layers. `source.css` makes Tailwind scan the installed package so utility classes used only inside `@tollerud/ui` are generated.
+
+Use `cn` from `@tollerud/ui` or `@tollerud/ui/utils`; do not reimplement a local `cn()` helper in consumer projects.
+
+---
+
 ## Critical gotchas (read before writing code)
 
 ### 1. Server Components — just import normally (≥ 1.0.8)
@@ -142,6 +190,115 @@ import {
   Container, CodeBlock, StatCard, ActionRow, CommandMenu,
 } from '@tollerud/ui'
 ```
+
+### Layout primitives
+
+```tsx
+import {
+  PageShell, Section, Stack, Cluster,
+  Grid, CardGrid, Split, MainContent,
+} from '@tollerud/ui'
+```
+
+**PageShell** — `as?: 'div' | 'main'`, `background?: 'plain' | 'grid' | 'glow'`, `density?: 'comfortable' | 'compact'`. Full-page dark shell for app routes and marketing pages.
+
+**Section** — `as?: 'section' | 'div' | 'article' | 'header' | 'footer'`, `size?: 'sm' | 'md' | 'lg' | 'hero'`, `width?: 'narrow' | 'default' | 'wide' | 'full'`. Consistent vertical rhythm and width constraints.
+
+**Stack** — vertical layout. `gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'`, `align?: 'start' | 'center' | 'end' | 'stretch'`.
+
+**Cluster** — wrapping horizontal layout for actions, badges, and toolbars. `gap?: 'xs' | 'sm' | 'md' | 'lg'`, `align?`, `justify?: 'start' | 'center' | 'end' | 'between'`.
+
+**Grid / CardGrid** — responsive grid primitives. `columns?: 1 | 2 | 3 | 4 | 'auto'` for `Grid`; `columns?: 2 | 3 | 4 | 'auto'` for `CardGrid`.
+
+**Split** — responsive two-column layout. `ratio?: 'equal' | 'content' | 'sidebar'`, `gap?: 'md' | 'lg' | 'xl'`, `align?: 'start' | 'center' | 'stretch'`, `reverse?: boolean`.
+
+**MainContent** — `as?: 'main' | 'div'`, `width?: 'narrow' | 'default' | 'wide' | 'full'`, `spacing?: 'none' | 'sm' | 'md' | 'lg'`, `density?: 'comfortable' | 'compact'`.
+
+```tsx
+<PageShell background="grid">
+  <Section size="hero">
+    <Stack gap="lg">
+      <h1>Build with components first.</h1>
+      <Cluster>
+        <Button variant="primary">Start</Button>
+        <Button variant="secondary">Read policy</Button>
+      </Cluster>
+    </Stack>
+  </Section>
+</PageShell>
+```
+
+### Screen patterns
+
+```tsx
+import {
+  PageHeader, TopNav, DashboardShell, SettingsLayout,
+  FormPanel, ResourceList, DetailPage, EmptyPage,
+  FeatureSection, StatsSection,
+} from '@tollerud/ui'
+```
+
+Use these before rebuilding common pages with raw Tailwind:
+
+- **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`.
+- **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`.
+- **DashboardShell** — app frame with `projectName`, `navItems`, `topActions`, `sidebar`, `header`, `contentWidth`, `density`.
+- **SettingsLayout** — settings page with `title`, `description`, `actions`, `navItems`, `activeId`.
+- **FormPanel** — titled form surface with `description`, `actions`, `footer`, `children`.
+- **ResourceList** — list/table page wrapper with `title`, `description`, `actions`, `filters`, `count`, `emptyState`.
+- **DetailPage** — detail header + primary content + optional `aside`.
+- **EmptyPage** — full-page empty state using `EmptyState` on a `PageShell`.
+- **FeatureSection** — section header + `features` rendered with `FeatureCard`.
+- **StatsSection** — section header + `stats` rendered with `StatCard`.
+
+```tsx
+<ResourceList
+  title="Hosts"
+  description="Machines connected to Tollerud."
+  actions={<Button variant="primary">Connect host</Button>}
+  count="3 hosts"
+>
+  <CardGrid columns={3}>
+    <Card><StatusDot status="online" label="emma" /></Card>
+    <Card><StatusDot status="warning" label="iris" /></Card>
+  </CardGrid>
+</ResourceList>
+```
+
+### Agent-safe recipes
+
+Copy-paste screen compositions live on the docs site at **Recipes** (`/recipes/`). Each recipe is component-first and links to a fuller interactive example where one exists:
+
+| Recipe | Primary components | Full example |
+|--------|-------------------|--------------|
+| Marketing landing | `PageShell`, `HeroBlock`, `FeatureSection`, `CTABand`, `Footer` | Blocks |
+| Dashboard overview | `DashboardShell`, `StatsSection`, `HostCard` | Mission Control |
+| Settings | `SettingsLayout`, `FormPanel` | Settings |
+| Auth | `PageShell`, `FormPanel` | Sign in (cinematic) |
+| Empty state | `EmptyPage` | Onboarding |
+| Detail | `DetailPage` | Screen patterns |
+| List / table | `ResourceList`, `DataTable` | Data Table |
+
+Reserve Tailwind for small local glue (`mt-6`, `flex justify-end`) — not for rebuilding page structure. See the escape-hatch recipe and Getting started → Consumer styling policy.
+
+### Consumer guardrails
+
+**Self-audit** from a consumer app root:
+
+```bash
+npx tollerud-ui-audit
+# monorepo: npx tollerud-ui-audit ./apps/web
+# without npx: node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+# advisory CI (exit 0 even with errors): npx tollerud-ui-audit --warn-only
+```
+
+**Checks:** missing `@tollerud/ui` dependency, missing `globals.css` / `source.css`, `components/ui` clones, `tollerud-*` classes without package imports, hardcoded `#FFFF00` / `#0A0A0A` / `#E8D500`, local `cn()`, `<Button><Link>` nesting, and local `components/ui` re-export shims.
+
+**Error codes:** findings print `ERROR [code]` or `WARN [code]` — full code→fix table in GETTING_STARTED.md → Consumer project checklist (`missing-ui-dep`, `missing-source-css`, `local-ui-clone`, `button-link-nesting`, `ui-reexport-shim`, etc.).
+
+**Anti-patterns:** copied `Button.tsx`, `bg-yellow-400` CTAs, hand-built `min-h-screen bg-black` page grids, missing `<Toaster />`.
+
+**When a pattern is missing:** compose a local feature component under `src/features/…` that wraps `@tollerud/ui` exports — do not fork primitives into `components/ui`. See GETTING_STARTED.md → Consumer project checklist.
 
 **Button** — `variant`: `primary` · `secondary` · `ghost` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`.
 ```tsx
@@ -458,28 +615,30 @@ import type { IncidentSeverity } from '@tollerud/ui'
 ### Footer & branding
 
 ```tsx
-import { Footer, Monogram } from '@tollerud/ui'
+import { Button, Footer, TopNav } from '@tollerud/ui'
 
 <Footer layout="responsive" accent labels={{ tollerudProject: 'A Tollerud Project' }} />
 ```
 The monogram must always sit left of the project name with `gap-2`. Never show the name without the monogram, or the monogram alone, in nav contexts.
 
 ```tsx
-<div className="flex items-center gap-2 shrink-0">
-  <Monogram color="yellow" className="h-5 w-auto" />
-  <span className="font-semibold text-sm text-white">Project Name</span>
-</div>
+<TopNav
+  projectName="Project Name"
+  navItems={[{ label: 'Overview', href: '/overview', active: true }]}
+  actions={<Button variant="primary" size="sm">Get started</Button>}
+/>
 ```
 
 **Monogram** — `color?: 'yellow' | 'black' | 'white'` (default `yellow`), `size?: number`, `title?: string` (default `'Tollerud'`). Brand avatars: `@tollerud/ui/brand/tollerud-avatar.svg`, `brand/tollerud-avatar-full.svg` (+ `.png` variants).
-Monogram sizing: top bar/sidebar expanded → `h-5`, collapsed → `h-6`, footer → `h-4` (handled automatically by `<Footer />`).
+Monogram sizing is handled automatically by `TopNav` and `Footer`; use `Monogram` directly only for custom brand moments.
 
 ---
 
 ## Layout utility classes
 
+These are low-level class references for package internals, docs demos, and custom cases. In consumer apps, prefer exported components and screen/layout primitives first; use these classes only when no component covers the need yet.
+
 ```html
-<nav class="tollerud-glass fixed top-0 inset-x-0 z-50 h-14 flex items-center px-6">…</nav>
 <section class="tollerud-grid-bg">…</section>
 <h1 class="tollerud-display text-[70px]">Dark. Monochrome.</h1>
 <h2 class="tollerud-display--secondary text-[40px]">

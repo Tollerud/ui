@@ -205,12 +205,35 @@
       ]
     }
   ],
+  "CardGrid": [
+    {
+      "name": "CardGridProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'div' | 'section'",
+        "columns?: CardGridColumns",
+        "gap?: CardGridGap"
+      ]
+    }
+  ],
   "Checkbox": [
     {
       "name": "CheckboxProps",
       "extends": "extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>",
       "props": [
         "label?: string"
+      ]
+    }
+  ],
+  "Cluster": [
+    {
+      "name": "ClusterProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'div' | 'nav' | 'header' | 'footer'",
+        "gap?: ClusterGap",
+        "align?: ClusterAlign",
+        "justify?: ClusterJustify"
       ]
     }
   ],
@@ -267,6 +290,21 @@
       ]
     }
   ],
+  "DashboardShell": [
+    {
+      "name": "DashboardShellProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "projectName: ReactNode",
+        "navItems?: TopNavItem[]",
+        "topActions?: ReactNode",
+        "sidebar?: ReactNode",
+        "header?: ReactNode",
+        "density?: MainContentDensity",
+        "contentWidth?: 'default' | 'wide' | 'full'"
+      ]
+    }
+  ],
   "DatePicker": [
     {
       "name": "DatePickerProps",
@@ -280,6 +318,20 @@
         "formatDate?: (date: Date) => string",
         "className?: string",
         "disabled?: boolean"
+      ]
+    }
+  ],
+  "DetailPage": [
+    {
+      "name": "DetailPageProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "eyebrow?: ReactNode",
+        "title: ReactNode",
+        "description?: ReactNode",
+        "actions?: ReactNode",
+        "meta?: ReactNode",
+        "aside?: ReactNode"
       ]
     }
   ],
@@ -315,6 +367,51 @@
       ]
     }
   ],
+  "Drawer": [
+    {
+      "name": "DrawerProps",
+      "props": [
+        "open: boolean",
+        "onClose?: () => void",
+        "side?: DrawerSide",
+        "title?: ReactNode",
+        "description?: ReactNode",
+        "children?: ReactNode",
+        "footer?: ReactNode",
+        "width?: number"
+      ]
+    }
+  ],
+  "EmptyPage": [
+    {
+      "name": "EmptyPageProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "icon?: EmptyStateIconName | ReactNode",
+        "title: ReactNode",
+        "description?: ReactNode",
+        "action?: ReactNode",
+        "secondaryAction?: ReactNode",
+        "background?: PageShellBackground",
+        "accent?: boolean"
+      ]
+    }
+  ],
+  "EmptyState": [
+    {
+      "name": "EmptyStateProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "icon?: EmptyStateIconName | ReactNode",
+        "title?: ReactNode",
+        "description?: ReactNode",
+        "action?: ReactNode",
+        "secondaryAction?: ReactNode",
+        "compact?: boolean",
+        "accent?: boolean"
+      ]
+    }
+  ],
   "FeatureCard": [
     {
       "name": "FeatureCardProps",
@@ -323,6 +420,20 @@
         "icon?: React.ReactNode",
         "title: React.ReactNode",
         "description: React.ReactNode"
+      ]
+    }
+  ],
+  "FeatureSection": [
+    {
+      "name": "FeatureSectionProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "eyebrow?: ReactNode",
+        "title: ReactNode",
+        "description?: ReactNode",
+        "actions?: ReactNode",
+        "features: FeatureSectionItem[]",
+        "columns?: CardGridColumns"
       ]
     }
   ],
@@ -338,6 +449,18 @@
         "onFilesChange?: (files: File[]) => void",
         "className?: string",
         "disabled?: boolean"
+      ]
+    }
+  ],
+  "FormPanel": [
+    {
+      "name": "FormPanelProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "title: ReactNode",
+        "description?: ReactNode",
+        "actions?: ReactNode",
+        "footer?: ReactNode"
       ]
     }
   ],
@@ -364,6 +487,17 @@
         "className?: string",
         "glowColor?: string",
         "intensity?: number"
+      ]
+    }
+  ],
+  "Grid": [
+    {
+      "name": "GridProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'div' | 'section'",
+        "columns?: GridColumns",
+        "gap?: GridGap"
       ]
     }
   ],
@@ -453,6 +587,18 @@
       ]
     }
   ],
+  "MainContent": [
+    {
+      "name": "MainContentProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'main' | 'div'",
+        "width?: MainContentWidth",
+        "spacing?: MainContentSpacing",
+        "density?: MainContentDensity"
+      ]
+    }
+  ],
   "Meter": [
     {
       "name": "MeterProps",
@@ -502,6 +648,32 @@
         "offsetX?: number",
         "offsetY?: number",
         "scale?: number"
+      ]
+    }
+  ],
+  "PageHeader": [
+    {
+      "name": "PageHeaderProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "eyebrow?: ReactNode",
+        "title: ReactNode",
+        "description?: ReactNode",
+        "actions?: ReactNode",
+        "meta?: ReactNode",
+        "align?: PageHeaderAlign",
+        "size?: PageHeaderSize"
+      ]
+    }
+  ],
+  "PageShell": [
+    {
+      "name": "PageShellProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'div' | 'main'",
+        "background?: PageShellBackground",
+        "density?: PageShellDensity"
       ]
     }
   ],
@@ -585,6 +757,20 @@
       ]
     }
   ],
+  "ResourceList": [
+    {
+      "name": "ResourceListProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "title: ReactNode",
+        "description?: ReactNode",
+        "actions?: ReactNode",
+        "filters?: ReactNode",
+        "count?: ReactNode",
+        "emptyState?: ReactNode"
+      ]
+    }
+  ],
   "RollbackPlan": [
     {
       "name": "RollbackPlanProps",
@@ -594,6 +780,17 @@
         "steps: RollbackStep[]",
         "executing?: boolean",
         "loading?: boolean"
+      ]
+    }
+  ],
+  "Section": [
+    {
+      "name": "SectionProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'section' | 'div' | 'article' | 'header' | 'footer'",
+        "size?: SectionSize",
+        "width?: SectionWidth"
       ]
     }
   ],
@@ -634,6 +831,19 @@
         "responseTime?: string",
         "version?: string",
         "loading?: boolean"
+      ]
+    }
+  ],
+  "SettingsLayout": [
+    {
+      "name": "SettingsLayoutProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "title: ReactNode",
+        "description?: ReactNode",
+        "actions?: ReactNode",
+        "navItems?: SettingsNavItem[]",
+        "activeId?: string"
       ]
     }
   ],
@@ -683,6 +893,40 @@
       ]
     }
   ],
+  "Spinner": [
+    {
+      "name": "SpinnerProps",
+      "extends": "extends HTMLAttributes<HTMLSpanElement>",
+      "props": [
+        "size?: number",
+        "style?: CSSProperties"
+      ]
+    }
+  ],
+  "Split": [
+    {
+      "name": "SplitProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'div' | 'section'",
+        "ratio?: SplitRatio",
+        "gap?: SplitGap",
+        "align?: SplitAlign",
+        "reverse?: boolean"
+      ]
+    }
+  ],
+  "Stack": [
+    {
+      "name": "StackProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'div' | 'section' | 'article' | 'header' | 'footer'",
+        "gap?: StackGap",
+        "align?: StackAlign"
+      ]
+    }
+  ],
   "StatCard": [
     {
       "name": "StatCardProps",
@@ -692,6 +936,20 @@
         "value: string | number",
         "change?: { value: string; direction: 'up' | 'down' }",
         "accent?: boolean"
+      ]
+    }
+  ],
+  "StatsSection": [
+    {
+      "name": "StatsSectionProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "eyebrow?: ReactNode",
+        "title?: ReactNode",
+        "description?: ReactNode",
+        "actions?: ReactNode",
+        "stats: StatCardProps[]",
+        "columns?: GridColumns"
       ]
     }
   ],
@@ -760,6 +1018,27 @@
         "items: TimelineItemData[]",
         "active?: boolean",
         "loading?: boolean"
+      ]
+    }
+  ],
+  "Toast": [
+    {
+      "name": "ToastProviderProps",
+      "props": [
+        "children: ReactNode"
+      ]
+    }
+  ],
+  "TopNav": [
+    {
+      "name": "TopNavProps",
+      "extends": "extends HTMLAttributes<HTMLElement>",
+      "props": [
+        "projectName: ReactNode",
+        "homeHref?: string",
+        "navItems?: TopNavItem[]",
+        "actions?: ReactNode",
+        "sticky?: boolean"
       ]
     }
   ]

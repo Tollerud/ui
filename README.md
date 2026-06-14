@@ -94,49 +94,48 @@ export default {
 **Components:**
 
 ```tsx
-import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, NoirGlowBackground } from '@tollerud/ui'
+import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, HeroBlock, ResourceList } from '@tollerud/ui'
 ```
 
 TypeScript types are included — no `@types/*` package needed. **[SKILL.md](SKILL.md)** lists every export; **[PROPS.generated.md](PROPS.generated.md)** has machine-checked prop tables; **[COMPONENTS.md](COMPONENTS.md)** has usage examples and patterns.
 
 Publish a new version by bumping `version` in `package.json` and pushing to `main` — the `publish-npm` GitHub Action detects the version change, runs `npm publish --provenance` via npm Trusted Publishers (OIDC), and then creates a matching GitHub Release automatically.
 
-### Copy from repo (alternative)
+### Do not copy package internals
 
-```bash
-npm install clsx tailwind-merge
-cp tollerud-preset.cjs globals.css components/ -r <your-next-project>/
-```
-
-Then use local paths instead of `@tollerud/ui` in the snippets above.
+Use the npm package in consumer apps. Do not vendor `components/`, `lib/utils.ts`, or a local `components/ui` clone from this repo — copied files drift from the published API and make agents rebuild Tollerud UI by hand. If you already copied components, follow the migration checklist in [GETTING_STARTED.md](GETTING_STARTED.md).
 
 ### Usage example
 
-That's it. You now have all Tailwind colors (`bg-tollerud-yellow`, `text-tollerud-noir-200`), semantic CSS variables (`--primary`, `--background`, `--ring`), component utilities (`.tollerud-card`, `.tollerud-btn--terminal`), and React components ready to import:
+That's it. You now have all Tailwind colors (`bg-tollerud-yellow`, `text-tollerud-noir-200`), semantic CSS variables (`--primary`, `--background`, `--ring`), component utilities (`.tollerud-card`, `.tollerud-btn--terminal`), and React components ready to import. Prefer component-first composition in apps:
 
 ```tsx
-import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, NoirGlowBackground } from '@tollerud/ui'
+import { Button, Card, CodeBlock, HeroBlock, StatusDot } from '@tollerud/ui'
 
-<section className="relative overflow-hidden bg-black">
-  <NoirGlowBackground intensity="medium" speed="slow" grain="soft" shape="corners" preserveCenter />
-  <div className="relative z-10">
-    <Button variant="terminal" size="lg">open_dashboard</Button>
-  </div>
-</section>
+<HeroBlock
+  eyebrow="homelab control plane"
+  title="Run your stack like production."
+  description="Deploy, monitor, and roll back from one keyboard-first console."
+  actions={<Button variant="terminal" size="lg">open_dashboard</Button>}
+/>
 <Card accent>
   <StatusDot status="online" label="Emma — ready" />
 </Card>
 <CodeBlock>{`❯ systemctl status tollerud-agent`}</CodeBlock>
 ```
 
+### Consumer styling policy
+
+Tailwind is allowed inside `@tollerud/ui` and as small app-level glue. In consumer apps, prefer exported components and layout primitives first; do not rebuild buttons, cards, panels, navs, dashboards, or branded page structure with raw utilities. See [GETTING_STARTED.md](GETTING_STARTED.md#consumer-styling-policy) for allowed and discouraged examples.
+
 ### Plain CSS
 
-Include `tokens.css` or `globals.css` for CSS custom properties and utility classes:
+Include `tokens.css` or `globals.css` for CSS custom properties and utility classes. This path is for static HTML/prototyping; React apps should prefer the package components above.
 
 ```html
 <link rel="stylesheet" href="globals.css">
 <div class="tollerud-card">
-  <h2 style="color: var(--tollerud-yellow)">Tollerud User Interface</h2>
+  <h2 class="tollerud-display--secondary">Tollerud User Interface</h2>
   <button class="tollerud-btn tollerud-btn--primary tollerud-btn--md">Get Started</button>
 </div>
 ```
@@ -169,7 +168,9 @@ The design system ships brand assets under `brand/` — import via `@tollerud/ui
 - **Scale:** 2xs (0.625rem) → 9xl (8rem)
 - **Weights:** 400 (normal), 500 (medium), 600 (semibold), 700 (bold), 900 (black)
 
-## Usage Patterns
+## CSS class reference
+
+These classes are available for package internals, docs examples, and static HTML/prototyping. React consumers should prefer the exported components and use Tailwind only as small local glue.
 
 ### Buttons
 ```html
@@ -208,17 +209,15 @@ The design system ships brand assets under `brand/` — import via `@tollerud/ui
 
 ## Install
 
+See [GETTING_STARTED.md](GETTING_STARTED.md) for the current peer install command, Tailwind setup, subpath imports, and consumer styling policy.
+
+After setup, self-audit consumer apps with:
+
 ```bash
-npm install @tollerud/ui clsx tailwind-merge tailwindcss
+npx tollerud-ui-audit
 ```
 
-```tsx
-import { Button, Card } from '@tollerud/ui'
-// or tree-shake:
-import { Button } from '@tollerud/ui/button'
-```
-
-See [GETTING_STARTED.md](GETTING_STARTED.md) for Tailwind setup and peer dependencies.
+The command ships with `@tollerud/ui` and flags missing `source.css`, copied `components/ui` clones, hardcoded brand colors, and invalid Button/Link nesting. See GETTING_STARTED.md → Consumer project checklist for the full error-code reference and `--warn-only` flag.
 
 ## File Structure
 
@@ -248,19 +247,17 @@ design-system/
 └── fixtures/consumer/        # npm tarball install smoke test (CI)
 ```
 
-## Graphify-inspired Components
+## CSS utilities and generated classes
 
-New additions inspired by [Graphify Labs](https://graphifylabs.ai/):
+These lower-level classes and Tailwind utilities are available for package internals, docs demos, static HTML, and custom escape hatches. React consumers should still prefer exported components and use utilities only as small local glue.
 
-| Component | CSS Class | Tailwind Alternative | Description |
+| Area | CSS Class | Implementation utility | Description |
 |-----------|-----------|---------------------|-------------|
 | Noir Glow Background | `.tollerud-noir-glow-*` | `bg-tollerud-noir-glow` | Tollerud.no-inspired acid-yellow glow fallback |
 | Grid Background | `.tollerud-grid-bg` | `bg-tollerud-grid bg-[length:40px_40px]` | Subtle yellow grid pattern |
-| Glass Nav | `.tollerud-glass` | `backdrop-blur-glass bg-opacity-88` | Frosted glass navigation bar |
 | Terminal Button | `.tollerud-btn--terminal` | — | Monospace CTA with `❯` prefix |
 | Pill Tag | `.tollerud-pill--outline` / `--muted` | — | Tiny label/tag components |
 | Accent Bar | `.tollerud-accent-bar` | `bg-tollerud-gradient-bar h-[1px]` | Gradient divider bar |
 | Gradient Text | `.tollerud-gradient-text` | `bg-tollerud-gradient-soft bg-clip-text text-transparent` | Yellow → amber gradient text |
 | Display Heading | `.tollerud-display` | `tracking-tightest leading-[0.95] font-semibold text-white` | Tight, impactful display heads |
 | Display Shimmer | `.tollerud-display-shimmer` | — | Animated yellow gradient sweep clipped to hero accent text (dark surfaces) |
-| Section Container | `.tollerud-section` | `max-w-[1100px] mx-auto px-6` | Content width constraint |

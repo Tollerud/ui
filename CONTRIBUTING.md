@@ -50,6 +50,44 @@ Follow the checklist in [AGENTS.md](AGENTS.md):
 2. Export from `components/index.ts`
 3. Registry entry in `registry.json`
 4. Live demo in `docs-app/components/pages/page-*.jsx` (Next.js static export → `_site/`)
+5. Register routes in `docs-app/lib/docs-routes.js` (`NAV`, `PAGE_TITLES`) and `docs-app/components/docs-shell.jsx` (`CANONICAL_PAGES`)
+6. Add command-palette deep links in `docs-app/lib/component-catalog.js` when the page has permalink sections
+
+In the same commit, update [AGENTS.md](AGENTS.md) §4: `CHANGELOG.md`, `COMPLETENESS_ROADMAP.md`, `SKILL.md`, and component import blocks where exports changed.
+
+## Consumer styling, recipes, and guardrails
+
+Work tracked in [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md). When you change consumer-facing styling policy, layout primitives, screen patterns, recipes, or the audit script, keep these files aligned in the **same commit**:
+
+| Change type | Update |
+|-------------|--------|
+| New/changed layout or screen pattern export | `SKILL.md`, `AGENTS.md` import blocks, `GETTING_STARTED.md`, docs `page-layout.jsx` / `page-screens.jsx`, `component-catalog.js` deep links |
+| New recipe or guardrail guidance | `GETTING_STARTED.md`, `SKILL.md`, `docs-app/components/pages/page-recipes.jsx` and/or `page-resources.jsx`, `docs-routes.js` if new route |
+| Consumer checklist or anti-pattern | `GETTING_STARTED.md`, `SKILL.md`, `AGENTS.md`, matching docs page (`page-getting-started.jsx`, `page-resources.jsx`) |
+| `scripts/audit-consumer-styling.mjs` or `tollerud-ui-audit` bin | `GETTING_STARTED.md`, `SKILL.md`, `AGENTS.md`, `COMPONENTS.md`, `README.md`, `page-getting-started.jsx`, `page-resources.jsx`, `page-overview.jsx`, `component-catalog.js`, `CHANGELOG.md`; `test:consumer-styling` fixtures must still pass |
+| Phase completed on roadmap | `CONSUMER_STYLING_ROADMAP.md` checkboxes |
+
+Run the consumer audit locally:
+
+```bash
+npm run test:consumer-styling
+# or from a consumer app after install:
+npx tollerud-ui-audit
+```
+
+Mark roadmap phases complete only when acceptance criteria are met — not when a single file changes.
+
+## Docs-only changes
+
+Docs site source lives under `docs-app/`. After editing `docs-app/components/pages/*.jsx` or routes:
+
+```bash
+npm run build:docs
+```
+
+`CHANGELOG.md` is copied to `docs-app/public/CHANGELOG.md` during that build — edit the root `CHANGELOG.md` only.
+
+Human/agent reference markdown shipped in the npm tarball (`GETTING_STARTED.md`, `SKILL.md`, `AGENTS.md`, `COMPONENTS.md`) must stay consistent with the live docs site when both cover the same topic.
 
 ## Releases
 

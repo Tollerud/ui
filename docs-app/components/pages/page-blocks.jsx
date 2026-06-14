@@ -10,14 +10,14 @@ function PageBlocks() {
   return (
     <div>
       <PageHeader icon="blocks" eyebrow="Blocks" title="Blocks"
-        lede="Prebuilt, full-width page sections assembled from the primitives — a landing hero, feature grid, pricing table and closing CTA. Drop them in whole, or fork them as a starting point."/>
+        lede="Prebuilt, full-width page sections assembled from the primitives — a landing hero, feature grid, pricing table and closing CTA. Drop them in whole, or compose local feature sections around them."/>
 
       <Section title="Hero block" desc="A drop-in landing hero on the noir glow background, built with the reusable <HeroBlock>. Terminal CTA, supporting copy, optional media slot. Pass `intense` for the live WebGL grain atmosphere.">
         <HeroBlock eyebrow="homelab control plane" title="Run your stack like production."
           description="Deploy, monitor and roll back from one keyboard-first console. No dashboards you have to babysit."
           actions={<>
-            <button className="tollerud-btn tollerud-btn--terminal tollerud-btn--md">deploy --free</button>
-            <button className="tollerud-btn tollerud-btn--secondary tollerud-btn--md" style={{ color: '#F5F5F5', borderColor: 'rgba(245,245,245,0.2)' }}>Read the docs</button>
+            <Button variant="terminal">deploy --free</Button>
+            <Button variant="secondary">Read the docs</Button>
           </>}/>
       </Section>
 

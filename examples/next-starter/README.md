@@ -24,13 +24,44 @@ Open [http://localhost:3000](http://localhost:3000).
 | `postcss.config.mjs` | Tailwind v4 PostCSS |
 | `next.config.mjs` | Static export–ready defaults |
 
+The sample page uses exported layout primitives and screen patterns — not hand-built `min-h-screen` / grid utilities. Copy [Recipes](https://design.tollerud.dev/recipes/) for full screens.
+
 ## Production build
 
 ```bash
 npm run build
 ```
 
+## Self-audit
+
+After customizing, run from your app root:
+
+```bash
+npx tollerud-ui-audit
+```
+
+Monorepo app package:
+
+```bash
+npx tollerud-ui-audit ./apps/web
+```
+
+Without `npx`:
+
+```bash
+node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+```
+
+Advisory CI (exit `0` even when errors are found):
+
+```bash
+npx tollerud-ui-audit --warn-only
+```
+
+Error codes and fixes: [GETTING_STARTED.md — Consumer project checklist](https://github.com/Tollerud/ui/blob/main/GETTING_STARTED.md#audit-error-codes) · [Guides on design.tollerud.dev](https://design.tollerud.dev/resources/consumer-checklist/).
+
 ## Docs
 
-- [GETTING_STARTED.md](https://github.com/Tollerud/ui/blob/main/GETTING_STARTED.md) — full install and Tailwind setup
+- [GETTING_STARTED.md](https://github.com/Tollerud/ui/blob/main/GETTING_STARTED.md) — install, Tailwind setup, consumer checklist
+- [Recipes](https://design.tollerud.dev/recipes/) — copy-paste screen compositions
 - [design.tollerud.dev](https://design.tollerud.dev/) — live component reference

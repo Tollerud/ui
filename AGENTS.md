@@ -103,6 +103,41 @@ Agents must:
 - Use Tollerud tokens (`text-tollerud-*`, `bg-tollerud-noir-*`) — never hardcode `#FFFF00` / `#0A0A0A` or copy component source from the package into the repo (see [Fixing copy/paste component patterns](#fixing-copypaste-component-patterns-for-agents-working-in-consumer-projects)).
 - **Do not modify** `node_modules/@tollerud/ui` or vendor forked DS files in the consumer app. Bump the package version or open an issue upstream instead.
 
+### Consumer styling policy
+
+Tailwind is allowed and expected **inside `@tollerud/ui`**. Use it in this package to implement components, variants, layout primitives, responsive behavior, focus states, and docs demos.
+
+In consumer apps, Tailwind is allowed as small local glue, but it should not become the primary design language. Prefer this order:
+
+1. Exported `@tollerud/ui` components.
+2. Exported layout primitives or screen patterns from `@tollerud/ui`.
+3. Small Tailwind adjustments for local spacing, alignment, or responsive visibility.
+4. A local semantic feature component when app-specific structure is needed.
+
+If a branded layout or interaction repeats, add it to `@tollerud/ui` rather than rebuilding it with raw utility classes in each app.
+
+| Allowed in consumer apps | Discouraged in consumer apps |
+|--------------------------|------------------------------|
+| `<div className="mt-6"><Button>Deploy</Button></div>` for local spacing glue | Hand-rolled `<button className="rounded-lg bg-yellow-400 px-4 py-2">...` |
+| Tollerud token utilities when no primitive exists yet | Hardcoded colors like `#FFFF00`, `#0A0A0A`, or generic blue/gray/red palettes for branded UI |
+| Local feature components that compose `@tollerud/ui` exports | A parallel `components/ui` design system copied from this package |
+| `className` escape hatches merged through exported components | Inline styles for static branded design decisions |
+
+For Tailwind v4 consumer apps, both imports are required:
+
+```css
+@import "@tollerud/ui/globals.css";
+@import "@tollerud/ui/source.css";
+```
+
+`globals.css` provides tokens and component layers. `source.css` makes Tailwind scan `@tollerud/ui`'s dist classes. Without `source.css`, styles used only inside the package can disappear in production builds.
+
+Use `import { cn } from '@tollerud/ui'` or `@tollerud/ui/utils`; do not create a local `cn()` helper in consumer projects.
+
+**Agent-safe recipes** — copy-paste screen compositions for common pages (marketing landing, dashboard, settings, auth, empty state, detail, list/table) live on the docs site at [Recipes](https://design.tollerud.dev/recipes/). Each recipe is component-first and links to a fuller interactive example where one exists. See also [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md) Phase 4.
+
+**Consumer guardrails** — run `npx tollerud-ui-audit` from consumer app roots to detect styling drift (missing `@tollerud/ui` dep, `source.css`, copied `components/ui`, hardcoded brand hex, local `cn()`, Button/Link nesting). Use `--warn-only` for advisory CI. Alternative: `node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs`. Error codes and fixes: GETTING_STARTED.md → Consumer project checklist.
+
 When contributing **to this repository**, changing `components/*.tsx` is expected when the task explicitly calls for it — follow the release checklist in [Updating the npm package](#updating-the-npm-package-for-agents-working-in-this-repo) below.
 
 ---
@@ -148,6 +183,10 @@ import { Button, buttonVariants, cn, Card, Badge, Input, StatusDot, Kbd } from '
 import { CommandMenu, ActionRow, DataTable, LogViewer, Timeline, CodeBlock, StatCard, Container } from '@tollerud/ui'
 import { Checkbox, Switch, RadioGroup, Radio, Select, Textarea } from '@tollerud/ui'
 import { PasswordInput, Combobox, TagInput, Slider, FormRow } from '@tollerud/ui'
+// Layout primitives (added in 4.2.0)
+import { PageShell, Section, Stack, Cluster, Grid, CardGrid, Split, MainContent } from '@tollerud/ui'
+// Screen patterns (added in 4.3.0)
+import { PageHeader, TopNav, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection } from '@tollerud/ui'
 // Primitives & navigation (added in 1.0.9)
 import { Divider, Pill, Avatar, AvatarGroup } from '@tollerud/ui'
 import { Breadcrumb, Pagination, Segmented, Stepper } from '@tollerud/ui'
@@ -320,37 +359,21 @@ Severity scale: `critical` · `high` · `medium` · `low` · `info`
 
 ## Layout Patterns
 
+These class-level patterns are references for package internals, docs demos, and custom cases. In consumer apps, prefer exported components and layout/screen primitives first. Use raw classes only as small local glue or when a component does not exist yet.
+
 ### Navigation lockup
 
 The monogram must always appear left of the project name with `gap-2`. Never show the name without the monogram or the monogram alone in a nav context.
 
 ```tsx
-import logo from '@tollerud/ui/brand/tollerud-logo.svg'
-
-// Top bar
-<nav className="tollerud-glass fixed top-0 inset-x-0 z-50 h-14 flex items-center px-6 gap-6">
-  <div className="flex items-center gap-2 shrink-0">
-    <img src={logo} alt="Tollerud" className="h-5 w-auto" />
-    <span className="font-semibold text-sm text-white">Project Name</span>
-  </div>
-  <div className="flex items-center gap-4 ml-4">
-    <a href="/overview" className="text-sm text-tollerud-text-secondary hover:text-white transition-colors">Overview</a>
-  </div>
-  <div className="ml-auto flex items-center gap-3">
-    <Button variant="ghost" size="sm">Sign in</Button>
-    <Button variant="primary" size="sm">Get started</Button>
-  </div>
-</nav>
-<main className="pt-14">…</main>
+<TopNav
+ projectName="Project Name"
+ navItems={[{ label: 'Overview', href: '/overview', active: true }]}
+ actions={<Button variant="primary" size="sm">Get started</Button>}
+/>
 ```
 
-Monogram sizing: top bar/sidebar expanded → `h-5`, sidebar collapsed → `h-6`, footer → `h-4` (handled automatically by `<Footer />`).
-
-### Glass nav
-
-```html
-<nav class="tollerud-glass fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6">…</nav>
-```
+Monogram sizing is handled automatically by `TopNav` and `Footer`. If you build a custom layout inside `@tollerud/ui`, use top bar/sidebar expanded → `h-5`, sidebar collapsed → `h-6`, footer → `h-4`.
 
 ### Grid background
 
@@ -371,6 +394,38 @@ Monogram sizing: top bar/sidebar expanded → `h-5`, sidebar collapsed → `h-6`
 
 ```tsx
 <Container>Content capped at 1100px with 24px padding</Container>
+```
+
+### Component-first page layout
+
+```tsx
+<PageShell background="grid">
+ <Section size="hero">
+  <Stack gap="lg">
+   <h1>Build with components first.</h1>
+   <Cluster>
+    <Button variant="primary">Start</Button>
+    <Button variant="secondary">Read policy</Button>
+   </Cluster>
+  </Stack>
+ </Section>
+</PageShell>
+```
+
+### Screen patterns
+
+```tsx
+<ResourceList
+ title="Hosts"
+ description="Machines connected to Tollerud."
+ actions={<Button variant="primary">Connect host</Button>}
+ count="3 hosts"
+>
+ <CardGrid columns={3}>
+  <Card><StatusDot status="online" label="emma" /></Card>
+  <Card><StatusDot status="warning" label="iris" /></Card>
+ </CardGrid>
+</ResourceList>
 ```
 
 ### Density
@@ -473,6 +528,8 @@ The docs sidebar version reads live from `package.json` via `PACKAGE_VERSION` in
 - `COMPLETENESS_ROADMAP.md` — move completed items to the done list, strike through fixed quality items
 - `SKILL.md` — add new components to the catalog, update version notes
 - `AGENTS.md` (this file) — update the component import blocks if new exports were added
+
+**Consumer styling / recipes / guardrails** (no version bump required for docs-only): also sync `GETTING_STARTED.md`, relevant `docs-app/components/pages/page-*.jsx`, `docs-app/lib/docs-routes.js`, `docs-app/lib/component-catalog.js`, and `CONSUMER_STYLING_ROADMAP.md` — see [CONTRIBUTING.md](CONTRIBUTING.md) and `.cursor/rules/consumer-styling-docs.mdc`.
 
 ### 5. CHANGELOG.md format rules
 
@@ -579,3 +636,7 @@ Also check for a local `components/ui.ts` or `components/ui/index.ts` that re-ex
 | [KEYBOARD.md](KEYBOARD.md) | Keyboard contract for CommandMenu and navigation |
 | [BACKGROUNDS.md](BACKGROUNDS.md) | NoirGlowBackground props and fallback rules |
 | [GETTING_STARTED.md](GETTING_STARTED.md) | Install, Tailwind config, registry usage |
+| [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md) | Component-first consumer styling phases and acceptance criteria |
+| [Recipes (docs)](https://design.tollerud.dev/recipes/) | Agent-safe copy-paste screen compositions |
+| `npx tollerud-ui-audit` | Consumer styling drift checker (ships with `@tollerud/ui`); `--warn-only` for advisory CI; error codes in GETTING_STARTED.md |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | PR gates, component checklist, consumer styling doc sync matrix |

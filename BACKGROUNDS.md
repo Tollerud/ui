@@ -24,29 +24,24 @@ Source reference:
 />
 ```
 
-`@tollerud/ui` version:
+Recommended `@tollerud/ui` usage:
 
 ```tsx
-import { NoirGlowBackground } from '@/components/ui'
+import { HeroBlock } from '@tollerud/ui'
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-black">
-      <NoirGlowBackground
-        intensity="medium"
-        speed="slow"
-        grain="soft"
-        shape="corners"
-        preserveCenter
-      />
-
-      <div className="relative z-10">
-        {/* page content */}
-      </div>
-    </section>
+    <HeroBlock
+      eyebrow="homelab control plane"
+      title="Run your stack like production."
+      description="Deploy, monitor, and roll back from one keyboard-first console."
+      intense
+    />
   )
 }
 ```
+
+Use `NoirGlowBackground` directly only for custom background composition that cannot be represented by an exported block yet. Prefer adding repeated branded layout to `@tollerud/ui` rather than rebuilding it in every consumer app.
 
 ## Install dependency
 
@@ -83,8 +78,15 @@ The component lazy-loads the shader and uses the CSS fallback while loading.
 
 Static HTML usage:
 
+```css
+.custom-noir-layer {
+  position: absolute;
+  inset: 0;
+}
+```
+
 ```html
-<div class="tollerud-noir-glow-root" style="position:absolute;inset:0">
+<div class="tollerud-noir-glow-root custom-noir-layer">
   <div class="tollerud-noir-glow-bg"></div>
   <div class="tollerud-noir-glow-vignette"></div>
   <div class="tollerud-noir-noise"></div>

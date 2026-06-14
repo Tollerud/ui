@@ -54,6 +54,69 @@ import { cn } from '@tollerud/ui/utils'`}
         />
       </Section>
 
+      <Section title="Consumer styling policy" desc="Tailwind ships with the design system, but app code should use the component API as the primary design language.">
+        <Alert tone="accent" title="Component-first by default">
+          {'Use @tollerud/ui components first, exported layout primitives or screen patterns when available, and Tailwind only for small local spacing, alignment, or responsive glue.'}
+        </Alert>
+        <CodeSnippet
+          name="allowed-glue.tsx"
+          code={`import { Button, Card } from '@tollerud/ui'
+
+export function DeployCard() {
+  return (
+    <Card>
+      <p>Ready to deploy.</p>
+      <div className="mt-6">
+        <Button variant="primary">Deploy</Button>
+      </div>
+    </Card>
+  )
+}`}
+        />
+        <CodeSnippet
+          name="avoid-rebuilding.tsx"
+          code={`// Avoid: this bypasses Button variants, focus states, and brand tokens.
+<button className="rounded-lg bg-yellow-400 px-4 py-2 text-black">
+  Deploy
+</button>
+
+// Avoid: move repeated branded layout into @tollerud/ui
+// or a semantic feature component.
+<section className="min-h-screen bg-black px-6 py-24">
+  <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-3">
+    {/* hand-built branded cards */}
+  </div>
+</section>`}
+        />
+        <p style={{ marginTop: 16, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+          If a branded structure repeats across screens, add it to <code className="ds-mono">@tollerud/ui</code> or compose a local semantic feature component. Do not copy package internals into <code className="ds-mono">components/ui</code>, and import <code className="ds-mono">cn</code> from the package instead of reimplementing it. For copy-paste screen starting points, see{' '}
+          <button type="button" onClick={() => go('recipes')} style={{ color: 'var(--accent-text)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit' }}>Recipes</button>.
+        </p>
+      </Section>
+
+      <Section
+        title="Consumer project checklist"
+        permalink="getting-started/consumer-checklist"
+        desc="Run npx tollerud-ui-audit before shipping. Fix errors for missing source.css, copied components/ui, hardcoded brand colors, and Button/Link nesting."
+      >
+        <CodeSnippet
+          name="audit"
+          code={`npx tollerud-ui-audit
+# monorepo: npx tollerud-ui-audit ./apps/web
+# without npx:
+node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+# advisory CI (exit 0 even with errors):
+npx tollerud-ui-audit --warn-only`}
+        />
+        <Alert tone="accent" title="Exit codes">
+          Exit 0 when clean, or when only warnings exist with --warn-only. Exit 1 when errors are found — fix before merge.
+        </Alert>
+        <div className="ds-row" style={{ gap: 10, marginTop: 14, flexWrap: 'wrap' }}>
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('resources')}>Guides — error code reference</button>
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>Recipes</button>
+        </div>
+      </Section>
+
       <Section title="Server Components" desc="The bundle is marked 'use client'. Importing components or helpers like cn from a Server Component file is safe — your file does not become a Client Component.">
         <Demo name="server-components" variant="col" code={`// app/page.tsx — Server Component
 import { buttonVariants } from '@tollerud/ui'
@@ -102,6 +165,8 @@ import { cn } from '@tollerud/ui/utils'`}
         <div className="ds-grid-3">
           {[
             { id: 'foundations', icon: 'palette', t: 'Foundations', d: 'Color, type, spacing, motion, brand.' },
+            { id: 'layout', icon: 'layers', t: 'Layout', d: 'Page shells, sections, stacks, grids.' },
+            { id: 'screens', icon: 'app', t: 'Screen patterns', d: 'Headers, nav, settings, list/detail pages.' },
             { id: 'components', icon: 'grid', t: 'Components', d: 'Core primitives — button, card, badge, status.' },
             { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, toggles, combobox, validation.' },
             { id: 'navigation', icon: 'compass', t: 'Navigation & Overlays', d: 'Dialogs, menus, command palette.' },

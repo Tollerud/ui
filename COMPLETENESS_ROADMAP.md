@@ -51,7 +51,7 @@ Last updated: 2026-06-11
 - ✅ EmptyState — standard + compact + accent
 - ✅ LogViewer (static) + StreamingLogViewer (console page)
 - ✅ Spinner
-- ✅ Panel — title, icon, multiple actions, footer
+- ✅ Panel — title, description, action toolbar
 - ✅ Meter — with hot threshold
 - ✅ Stepper — array of strings, 0-based current index
 - ✅ PasswordInput
@@ -61,7 +61,7 @@ Last updated: 2026-06-11
 - ✅ DataTable — stable height on search, sort, select, bulk, pagination
 - ✅ Density — `<Card density="compact">` + `data-density` container wrapper
 
-### npm package (components/*.tsx) — v4.1.0
+### npm package (components/*.tsx) — v4.3.0
 - ✅ Button — defaults to secondary, `asChild` (Radix Slot) + exported `buttonVariants` since 1.0.7
 - ✅ Bundle correctly marked `'use client'` for RSC/SSR safety since 1.0.8
 - ✅ Card — density prop
@@ -81,6 +81,8 @@ Last updated: 2026-06-11
 - ✅ Combobox, DatePicker, FileUpload, TagInput
 - ✅ Charts — BarChart, AreaChart, Donut, Sparkline
 - ✅ Marketing blocks — HeroBlock, FeatureCard, CTABand
+- ✅ Layout primitives — PageShell, Section, Stack, Cluster, Grid, CardGrid, Split, MainContent
+- ✅ Screen patterns — PageHeader, TopNav, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection
 - ✅ Tailwind preset exposes package utilities under `tollerud.*`
 
 ### Docs site

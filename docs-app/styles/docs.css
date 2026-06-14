@@ -28,6 +28,8 @@ html[data-theme="dark"] {
   --tollerud-warning:           #E8D500;
   --tollerud-error:             #EF4444;
   --tollerud-info:              #3B82F6;
+  --docs-topbar-bg:             rgba(10,10,10,0.88);
+  --docs-topbar-blur:           blur(20px);
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -112,8 +114,7 @@ html[data-theme="light"] {
   --tollerud-noir-800:  #F4F2EC;
   --tollerud-noir-900:  #FBFAF6;
 
-  --glass-bg:           rgba(255,255,255,0.82);
-  --glass-border:       rgba(20,20,16,0.08);
+  --docs-topbar-bg:     rgba(255,255,255,0.82);
   --grid-color:         rgba(20,20,16,0.045);
 
   --chart-grid:         rgba(20,20,16,0.08);
@@ -276,8 +277,8 @@ h1,h2,h3,h4,h5,h6,p { margin: 0; }
 .ds-topbar {
   position: sticky; top: 0; z-index: var(--z-fixed);
   height: 56px; display: flex; align-items: center; gap: 14px;
-  padding: 0 28px; background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  padding: 0 28px; background: var(--docs-topbar-bg);
+  backdrop-filter: var(--docs-topbar-blur); -webkit-backdrop-filter: var(--docs-topbar-blur);
   border-bottom: 1px solid var(--border);
 }
 .ds-topbar__crumb { font-size: 13px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
