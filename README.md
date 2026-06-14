@@ -211,6 +211,14 @@ These classes are available for package internals, docs examples, and static HTM
 
 See [GETTING_STARTED.md](GETTING_STARTED.md) for the current peer install command, Tailwind setup, subpath imports, and consumer styling policy.
 
+After setup, self-audit consumer apps with:
+
+```bash
+npx tollerud-ui-audit
+```
+
+The command ships with `@tollerud/ui` and flags missing `source.css`, copied `components/ui` clones, hardcoded brand colors, and invalid Button/Link nesting. See GETTING_STARTED.md → Consumer project checklist for the full error-code reference and `--warn-only` flag.
+
 ## File Structure
 
 ```

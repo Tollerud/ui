@@ -102,10 +102,17 @@ export function DeployCard() {
         <CodeSnippet
           name="audit"
           code={`npx tollerud-ui-audit
-# monorepo: npx tollerud-ui-audit ./apps/web`}
+# monorepo: npx tollerud-ui-audit ./apps/web
+# without npx:
+node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+# advisory CI (exit 0 even with errors):
+npx tollerud-ui-audit --warn-only`}
         />
+        <Alert tone="accent" title="Exit codes">
+          Exit 0 when clean, or when only warnings exist with --warn-only. Exit 1 when errors are found — fix before merge.
+        </Alert>
         <div className="ds-row" style={{ gap: 10, marginTop: 14, flexWrap: 'wrap' }}>
-          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('resources')}>Guides — full checklist</button>
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('resources')}>Guides — error code reference</button>
           <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>Recipes</button>
         </div>
       </Section>

@@ -204,7 +204,52 @@ npx tollerud-ui-audit
 npx tollerud-ui-audit ./apps/web
 ```
 
-The audit checks for missing `source.css`, copied `components/ui` clones, hardcoded brand hex values, local `cn()` helpers, and invalid `<Button><Link>` nesting. Fix errors before merge; treat warnings as tech debt.
+Equivalent when `npx` cannot resolve the bin:
+
+```bash
+node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs ./apps/web
+```
+
+**Exit codes:** `0` when no issues are found, or when only warnings exist and you passed `--warn-only`. `1` when one or more errors are found (fix before merge).
+
+**Flags:**
+
+| Flag | Effect |
+|------|--------|
+| `--warn-only` | Print findings but exit `0` even when errors are present — useful for advisory CI jobs |
+| `./path/to/app` | Audit a monorepo package instead of the current working directory |
+
+**What it checks:** missing `@tollerud/ui` in `package.json`, missing `globals.css` / `source.css` imports, local `components/ui` clones, `tollerud-*` classes without package imports, hardcoded brand hex values, local `cn()` helpers, nested `<Button><Link>` / `<button><a>`, and `components/ui` re-export shims that bypass the package.
+
+Fix errors before merge; treat warnings as tech debt.
+
+#### Audit error codes
+
+Each finding prints `ERROR [code]` or `WARN [code]`. Use this table to fix issues:
+
+| Code | Level | Meaning | Fix |
+|------|-------|---------|-----|
+| `missing-ui-dep` | error | `@tollerud/ui` not in `package.json` | Add the package and required peers — see [Install](#install) |
+| `missing-globals-css` | error | Tailwind entry missing `@import "@tollerud/ui/globals.css"` | Add both `globals.css` and `source.css` imports below |
+| `missing-source-css` | error | Tailwind entry missing `@import "@tollerud/ui/source.css"` | Without `source.css`, DS utility classes may be purged in production |
+| `local-ui-clone` | error | `src/components/ui/` (or similar) contains copied primitives | Delete copies; `import { … } from '@tollerud/ui'` |
+| `copied-ds-tokens` | error | File uses `tollerud-*` classes without importing `@tollerud/ui` | Replace vendored component files with package imports |
+| `hardcoded-hex` | error | File hardcodes `#FFFF00`, `#0A0A0A`, `#E8D500`, etc. | Use `text-tollerud-yellow`, `bg-tollerud-noir-950`, `text-tollerud-yellow-warm` |
+| `button-link-nesting` | error | `<Button>` or `<button>` wraps `<Link>` / `<a>` | `<Button asChild><Link … /></Button>` or `buttonVariants()` on the link |
+| `ui-reexport-shim` | warn | `components/ui/index.ts` re-exports local copies | Import from `@tollerud/ui` directly |
+| `local-cn` | warn | `lib/utils.ts` defines a local `cn()` | `import { cn } from '@tollerud/ui/utils'` |
+| `generic-yellow-util` | warn | `bg-yellow-400` / `text-yellow-400` on branded UI | Prefer `<Button variant="primary">` or `text-tollerud-yellow` |
+| `no-globals-css` | warn | No `globals.css` (or similar) found | Verify your Tailwind entry imports both Tollerud CSS files |
+| `no-package-json` | warn | No `package.json` at audit root | Run from the consumer app package directory |
+
+**CI example:**
+
+```bash
+npx tollerud-ui-audit
+# advisory report (does not fail the job):
+npx tollerud-ui-audit --warn-only
+```
 
 ### Anti-patterns
 

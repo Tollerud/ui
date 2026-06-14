@@ -64,11 +64,57 @@ function PageResources({ go }) {
 npx tollerud-ui-audit
 
 # Monorepo app package
-npx tollerud-ui-audit ./apps/web`}
+npx tollerud-ui-audit ./apps/web
+
+# Without npx (direct script path)
+node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+
+# Advisory CI — print findings but exit 0 even with errors
+npx tollerud-ui-audit --warn-only`}
         />
         <Alert tone="accent" title="What the audit checks">
-          Missing globals.css or source.css imports, local components/ui clones, tollerud-* classes without package imports, hardcoded brand hex values, local cn() helpers, and nested Button/Link patterns.
+          Missing @tollerud/ui in package.json, missing globals.css or source.css imports, local components/ui clones, tollerud-* classes without package imports, hardcoded brand hex values, local cn() helpers, nested Button/Link patterns, and components/ui re-export shims.
         </Alert>
+        <Alert tone="info" title="Exit codes">
+          Exit 0 when no issues are found, or when --warn-only is set. Exit 1 when errors are found — use in required CI checks.
+        </Alert>
+        <SubHead>Audit error codes</SubHead>
+        <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.55, margin: '0 0 12px' }}>
+          Findings print as <code className="ds-mono">ERROR [code]</code> or <code className="ds-mono">WARN [code]</code>:
+        </p>
+        <div className="tollerud-card ds-themed" style={{ overflowX: 'auto', padding: 0 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13, lineHeight: 1.5 }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border)', textAlign: 'left' }}>
+                <th style={{ padding: '10px 14px', color: 'var(--text-muted)', fontWeight: 600 }}>Code</th>
+                <th style={{ padding: '10px 14px', color: 'var(--text-muted)', fontWeight: 600 }}>Level</th>
+                <th style={{ padding: '10px 14px', color: 'var(--text-muted)', fontWeight: 600 }}>Fix</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['missing-ui-dep', 'error', 'Add @tollerud/ui and peers to package.json'],
+                ['missing-globals-css', 'error', 'Import @tollerud/ui/globals.css in Tailwind entry'],
+                ['missing-source-css', 'error', 'Import @tollerud/ui/source.css (prevents production purge)'],
+                ['local-ui-clone', 'error', 'Delete components/ui copies; import from @tollerud/ui'],
+                ['copied-ds-tokens', 'error', 'Replace vendored files using tollerud-* without package imports'],
+                ['hardcoded-hex', 'error', 'Use text-tollerud-yellow, bg-tollerud-noir-950 tokens'],
+                ['button-link-nesting', 'error', 'Button asChild + Link, or buttonVariants() on the link'],
+                ['ui-reexport-shim', 'warn', 'Import from @tollerud/ui instead of local ui/index re-exports'],
+                ['local-cn', 'warn', 'import { cn } from "@tollerud/ui/utils"'],
+                ['generic-yellow-util', 'warn', 'Prefer Button variant="primary" or text-tollerud-yellow'],
+                ['no-globals-css', 'warn', 'Verify Tailwind entry imports both Tollerud CSS files'],
+                ['no-package-json', 'warn', 'Run audit from the consumer app package root'],
+              ].map(([code, level, fix]) => (
+                <tr key={code} style={{ borderBottom: '1px solid var(--border)' }}>
+                  <td style={{ padding: '10px 14px', fontFamily: 'var(--font-mono)', color: 'var(--tollerud-yellow)' }}>{code}</td>
+                  <td style={{ padding: '10px 14px', color: level === 'error' ? 'var(--foreground)' : 'var(--text-secondary)' }}>{level}</td>
+                  <td style={{ padding: '10px 14px', color: 'var(--text-secondary)' }}>{fix}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <CodeSnippet
           name="feature-component.tsx"
           code={`// src/features/hosts/HostDeployPanel.tsx — app-specific; composes @tollerud/ui

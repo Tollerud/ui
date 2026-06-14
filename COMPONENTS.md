@@ -17,6 +17,8 @@ Use this file as a component reference, not as an invitation to rebuild branded 
 
 **Agent-safe recipes** for common screens (marketing landing, dashboard, settings, auth, empty state, detail, list/table) live on the docs site at [Recipes](https://design.tollerud.dev/recipes/).
 
+**Consumer guardrails** — run `npx tollerud-ui-audit` from your app root before shipping. The audit checks Tailwind CSS setup, copied `components/ui` trees, hardcoded brand hex values, local `cn()` helpers, and `<Button><Link>` nesting. Use `--warn-only` in CI when you want warnings without a failing exit code. Full command reference, error codes, and fixes: [GETTING_STARTED.md](GETTING_STARTED.md) → Consumer project checklist · [Guides on design.tollerud.dev](https://design.tollerud.dev/resources/consumer-checklist/).
+
 ## Export index
 
 All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted. Prop signatures: see [PROPS.generated.md](PROPS.generated.md).

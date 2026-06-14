@@ -64,7 +64,7 @@ Work tracked in [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md). When
 | New/changed layout or screen pattern export | `SKILL.md`, `AGENTS.md` import blocks, `GETTING_STARTED.md`, docs `page-layout.jsx` / `page-screens.jsx`, `component-catalog.js` deep links |
 | New recipe or guardrail guidance | `GETTING_STARTED.md`, `SKILL.md`, `docs-app/components/pages/page-recipes.jsx` and/or `page-resources.jsx`, `docs-routes.js` if new route |
 | Consumer checklist or anti-pattern | `GETTING_STARTED.md`, `SKILL.md`, `AGENTS.md`, matching docs page (`page-getting-started.jsx`, `page-resources.jsx`) |
-| `scripts/audit-consumer-styling.mjs` or `tollerud-ui-audit` bin | `GETTING_STARTED.md`, `CHANGELOG.md`, `test:consumer-styling` fixtures must still pass |
+| `scripts/audit-consumer-styling.mjs` or `tollerud-ui-audit` bin | `GETTING_STARTED.md`, `SKILL.md`, `AGENTS.md`, `COMPONENTS.md`, `README.md`, `page-getting-started.jsx`, `page-resources.jsx`, `page-overview.jsx`, `component-catalog.js`, `CHANGELOG.md`; `test:consumer-styling` fixtures must still pass |
 | Phase completed on roadmap | `CONSUMER_STYLING_ROADMAP.md` checkboxes |
 
 Run the consumer audit locally:

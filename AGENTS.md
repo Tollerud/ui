@@ -136,7 +136,7 @@ Use `import { cn } from '@tollerud/ui'` or `@tollerud/ui/utils`; do not create a
 
 **Agent-safe recipes** — copy-paste screen compositions for common pages (marketing landing, dashboard, settings, auth, empty state, detail, list/table) live on the docs site at [Recipes](https://design.tollerud.dev/recipes/). Each recipe is component-first and links to a fuller interactive example where one exists. See also [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md) Phase 4.
 
-**Consumer guardrails** — run `npx tollerud-ui-audit` from consumer app roots to detect styling drift (copied `components/ui`, missing `source.css`, hardcoded brand hex, Button/Link nesting). See GETTING_STARTED.md → Consumer project checklist.
+**Consumer guardrails** — run `npx tollerud-ui-audit` from consumer app roots to detect styling drift (missing `@tollerud/ui` dep, `source.css`, copied `components/ui`, hardcoded brand hex, local `cn()`, Button/Link nesting). Use `--warn-only` for advisory CI. Alternative: `node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs`. Error codes and fixes: GETTING_STARTED.md → Consumer project checklist.
 
 When contributing **to this repository**, changing `components/*.tsx` is expected when the task explicitly calls for it — follow the release checklist in [Updating the npm package](#updating-the-npm-package-for-agents-working-in-this-repo) below.
 
@@ -638,5 +638,5 @@ Also check for a local `components/ui.ts` or `components/ui/index.ts` that re-ex
 | [GETTING_STARTED.md](GETTING_STARTED.md) | Install, Tailwind config, registry usage |
 | [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md) | Component-first consumer styling phases and acceptance criteria |
 | [Recipes (docs)](https://design.tollerud.dev/recipes/) | Agent-safe copy-paste screen compositions |
-| `npx tollerud-ui-audit` | Consumer styling drift checker (ships with `@tollerud/ui`) |
+| `npx tollerud-ui-audit` | Consumer styling drift checker (ships with `@tollerud/ui`); `--warn-only` for advisory CI; error codes in GETTING_STARTED.md |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | PR gates, component checklist, consumer styling doc sync matrix |

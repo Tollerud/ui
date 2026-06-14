@@ -40,6 +40,26 @@ After customizing, run from your app root:
 npx tollerud-ui-audit
 ```
 
+Monorepo app package:
+
+```bash
+npx tollerud-ui-audit ./apps/web
+```
+
+Without `npx`:
+
+```bash
+node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+```
+
+Advisory CI (exit `0` even when errors are found):
+
+```bash
+npx tollerud-ui-audit --warn-only
+```
+
+Error codes and fixes: [GETTING_STARTED.md — Consumer project checklist](https://github.com/Tollerud/ui/blob/main/GETTING_STARTED.md#audit-error-codes) · [Guides on design.tollerud.dev](https://design.tollerud.dev/resources/consumer-checklist/).
+
 ## Docs
 
 - [GETTING_STARTED.md](https://github.com/Tollerud/ui/blob/main/GETTING_STARTED.md) — install, Tailwind setup, consumer checklist

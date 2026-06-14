@@ -105,8 +105,9 @@ function PageOverview({ go }) {
       <Section title="Explore the system" desc="Design reference and full-screen examples — each page has live demos and copy-paste React + Tailwind.">
         <div className="ds-grid-3">
           {[
-            { id: 'getting-started', icon: 'code', t: 'Getting started', d: 'Install, Tailwind v4, peers, Server Components.' },
+            { id: 'getting-started', icon: 'code', t: 'Getting started', d: 'Install, Tailwind v4, peers, Server Components, tollerud-ui-audit.' },
             { id: 'recipes', icon: 'terminal', t: 'Recipes', d: 'Component-first screen compositions — copy-paste for agents.' },
+            { id: 'resources', icon: 'folder', t: 'Guides', d: 'Consumer checklist, audit error codes, migration notes.' },
             { id: 'foundations', icon: 'palette', t: 'Foundations', d: 'Color, type, spacing, radius, shadow, motion, voice.' },
             { id: 'components', icon: 'grid', t: 'Components', d: 'Core primitives — button, card, badge, status, layout.' },
             { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, selects, combobox, form row, validation.' },
@@ -132,9 +133,15 @@ function PageOverview({ go }) {
       </Section>
 
       {/* ── Install ── */}
-      <Section title="Install" desc="Full setup lives on Getting started — install command, peers, and Tailwind @source.">
-        <div className="ds-row" style={{ gap: 12 }}>
+      <Section title="Install" desc="Full setup lives on Getting started — install command, peers, Tailwind @source, and npx tollerud-ui-audit for styling drift.">
+        <CodeSnippet
+          name="self-audit"
+          code={`npx tollerud-ui-audit
+# error code reference → Guides → Consumer project checklist`}
+        />
+        <div className="ds-row" style={{ gap: 12, marginTop: 14 }}>
           <button className="tollerud-btn tollerud-btn--primary tollerud-btn--md" onClick={() => go('getting-started')}>Getting started</button>
+          <button className="tollerud-btn tollerud-btn--ghost tollerud-btn--md" onClick={() => go('resources')}>Guides — audit reference</button>
           <button className="tollerud-btn tollerud-btn--ghost tollerud-btn--md" onClick={() => go('foundations')}>Foundations</button>
         </div>
       </Section>

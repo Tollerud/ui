@@ -1,6 +1,6 @@
 ---
 description: Keep consumer styling MD files and docs pages in sync when changing layout primitives, screen patterns, recipes, guardrails, or tollerud-ui-audit
-globs: CONSUMER_STYLING_ROADMAP.md,GETTING_STARTED.md,SKILL.md,AGENTS.md,COMPONENTS.md,CHANGELOG.md,CONTRIBUTING.md,scripts/audit-consumer-styling.mjs,package.json,docs-app/components/pages/page-recipes.jsx,docs-app/components/pages/page-screens.jsx,docs-app/components/pages/page-layout.jsx,docs-app/components/pages/page-getting-started.jsx,docs-app/components/pages/page-resources.jsx,docs-app/lib/docs-routes.js,docs-app/lib/component-catalog.js
+globs: CONSUMER_STYLING_ROADMAP.md,GETTING_STARTED.md,SKILL.md,AGENTS.md,COMPONENTS.md,README.md,CHANGELOG.md,CONTRIBUTING.md,scripts/audit-consumer-styling.mjs,package.json,docs-app/components/pages/page-recipes.jsx,docs-app/components/pages/page-screens.jsx,docs-app/components/pages/page-layout.jsx,docs-app/components/pages/page-getting-started.jsx,docs-app/components/pages/page-resources.jsx,docs-app/components/pages/page-overview.jsx,docs-app/lib/docs-routes.js,docs-app/lib/component-catalog.js
 alwaysApply: false
 ---
 
@@ -17,7 +17,8 @@ When changing **consumer styling policy**, **layout primitives**, **screen patte
 | `GETTING_STARTED.md` | **Shipped in npm** — install, policy, checklist, audit command |
 | `CONSUMER_STYLING_ROADMAP.md` | Phase tracking — check boxes only when acceptance criteria met |
 | `CHANGELOG.md` | User-facing release notes (docs site parses this at runtime) |
-| `COMPONENTS.md` | Human usage index — link to Recipes and policy when relevant |
+| `COMPONENTS.md` | Human usage index — link to Recipes, policy, and audit command |
+| `README.md` | Repo landing — install pointer and audit one-liner |
 | `CONTRIBUTING.md` | Contributor sync matrix (this rule mirrors it) |
 
 ## Docs app (live site)
@@ -31,6 +32,7 @@ When changing **consumer styling policy**, **layout primitives**, **screen patte
 | Layout primitives | `docs-app/components/pages/page-layout.jsx` |
 | Getting started mirror | `docs-app/components/pages/page-getting-started.jsx` |
 | Guides / checklist | `docs-app/components/pages/page-resources.jsx` |
+| Overview audit CTA | `docs-app/components/pages/page-overview.jsx` |
 
 New nav entries need `PAGE_TITLES` and, if the page uses `go()`, add the route id to `PAGES_WITH_GO` in `docs-shell.jsx`.
 
@@ -38,8 +40,8 @@ New nav entries need `PAGE_TITLES` and, if the page uses `go()`, add the route i
 
 If you change `scripts/audit-consumer-styling.mjs` or the `tollerud-ui-audit` bin in `package.json`:
 
-1. Document behavior in `GETTING_STARTED.md` → Consumer project checklist
-2. Mention in `SKILL.md` → Consumer guardrails and `AGENTS.md` reference table
+1. Document behavior in `GETTING_STARTED.md` → Consumer project checklist (include error codes, `--warn-only`, alternative invocation)
+2. Mirror commands in `SKILL.md` → Consumer guardrails, `AGENTS.md` reference table, `COMPONENTS.md`, `README.md`, and docs pages (`page-getting-started.jsx`, `page-resources.jsx`, `page-overview.jsx`)
 3. Run `npm run test:consumer-styling` — must pass on `fixtures/consumer` and `examples/next-starter`
 4. Note the change in `CHANGELOG.md`
 

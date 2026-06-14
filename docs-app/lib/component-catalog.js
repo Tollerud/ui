@@ -70,8 +70,8 @@ export const DEEP_LINKS = [
   { page: 'recipes', section: 'escape-hatch', title: 'Acceptable Tailwind glue', keywords: ['tailwind', 'consumer', 'styling'] },
 
   // Consumer guardrails
-  { page: 'resources', section: 'consumer-checklist', title: 'Consumer project checklist', keywords: ['audit', 'guardrails', 'anti-pattern'] },
-  { page: 'getting-started', section: 'consumer-checklist', title: 'Consumer project checklist', keywords: ['audit', 'tollerud-ui-audit'] },
+  { page: 'resources', section: 'consumer-checklist', title: 'Consumer project checklist', keywords: ['audit', 'guardrails', 'anti-pattern', 'tollerud-ui-audit', 'warn-only', 'error code'] },
+  { page: 'getting-started', section: 'consumer-checklist', title: 'Consumer project checklist', keywords: ['audit', 'tollerud-ui-audit', 'warn-only'] },
 
   // Forms
   { page: 'forms', section: 'text-input', title: 'Text input', component: 'Input' },

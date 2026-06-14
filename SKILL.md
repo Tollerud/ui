@@ -287,9 +287,14 @@ Reserve Tailwind for small local glue (`mt-6`, `flex justify-end`) — not for r
 
 ```bash
 npx tollerud-ui-audit
+# monorepo: npx tollerud-ui-audit ./apps/web
+# without npx: node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+# advisory CI (exit 0 even with errors): npx tollerud-ui-audit --warn-only
 ```
 
-Checks: missing `source.css`, `components/ui` clones, hardcoded `#FFFF00` / `#0A0A0A`, local `cn()`, `<Button><Link>` nesting, and tollerud-* classes without `@tollerud/ui` imports.
+**Checks:** missing `@tollerud/ui` dependency, missing `globals.css` / `source.css`, `components/ui` clones, `tollerud-*` classes without package imports, hardcoded `#FFFF00` / `#0A0A0A` / `#E8D500`, local `cn()`, `<Button><Link>` nesting, and local `components/ui` re-export shims.
+
+**Error codes:** findings print `ERROR [code]` or `WARN [code]` — full code→fix table in GETTING_STARTED.md → Consumer project checklist (`missing-ui-dep`, `missing-source-css`, `local-ui-clone`, `button-link-nesting`, `ui-reexport-shim`, etc.).
 
 **Anti-patterns:** copied `Button.tsx`, `bg-yellow-400` CTAs, hand-built `min-h-screen bg-black` page grids, missing `<Toaster />`.
 

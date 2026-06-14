@@ -5,7 +5,10 @@
  * Usage (from a consumer app root):
  *   npx tollerud-ui-audit
  *   npx tollerud-ui-audit ./apps/web
+ *   npx tollerud-ui-audit --warn-only
  *   node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs
+ *
+ * Full error-code reference: GETTING_STARTED.md → Consumer project checklist.
  *
  * Exit 0 when no issues (or only warnings with --warn-only).
  * Exit 1 when errors are found.
