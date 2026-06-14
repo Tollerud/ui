@@ -51,7 +51,7 @@ Last updated: 2026-06-11
 - ✅ EmptyState — standard + compact + accent
 - ✅ LogViewer (static) + StreamingLogViewer (console page)
 - ✅ Spinner
-- ✅ Panel — title, icon, multiple actions, footer
+- ✅ Panel — title, description, action toolbar
 - ✅ Meter — with hot threshold
 - ✅ Stepper — array of strings, 0-based current index
 - ✅ PasswordInput

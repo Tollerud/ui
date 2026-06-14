@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
 
 /* @tollerud/ui docs — Components gallery */
 function PageComponents({ go }) {
@@ -66,7 +66,7 @@ function PageComponents({ go }) {
 <Button variant="primary" disabled><Spinner size={14}/>Deploying…</Button>
 
 {/* Icon-only */}
-<Button variant="ghost" style={{width:36,height:36,padding:0}}><Icons.settings size={16}/></Button>
+<Button variant="ghost" size="sm" aria-label="Open settings"><Icons.settings size={16}/></Button>
 
 {/* Disabled */}
 <Button variant="primary" disabled>Disabled</Button>
@@ -75,7 +75,7 @@ function PageComponents({ go }) {
           <Button variant="secondary"><Icons.refresh size={15}/>Restart</Button>
           <Button variant="destructive"><Icons.trash size={15}/>Delete</Button>
           <Button variant="primary" disabled><Spinner size={14}/>Deploying…</Button>
-          <Button variant="ghost" style={{ width: 36, height: 36, padding: 0 }}><Icons.settings size={16}/></Button>
+          <Button variant="ghost" size="sm" aria-label="Open settings"><Icons.settings size={16}/></Button>
           <Button variant="primary" disabled>Disabled</Button>
           <Button variant="secondary" disabled>Disabled</Button>
         </Demo>
@@ -83,21 +83,31 @@ function PageComponents({ go }) {
 
       <Section title="Card" component="Card" permalink="components/card" desc="The default surface. Add an accent for a yellow-bordered, highlighted card.">
         <Demo name="cards" code={`<Card>
-  <h3 className="font-semibold mb-1">Standard card</h3>
-  <p className="text-sm text-tollerud-noir-200">A raised surface with a hairline border.</p>
+  <Stack gap="sm">
+    <StatusDot status="online" label="emma — ready" />
+    <Badge variant="success">healthy</Badge>
+  </Stack>
 </Card>
 <Card accent>
-  <h3 className="font-semibold mb-1">Accent card</h3>
-  <p className="text-sm text-tollerud-noir-200">Yellow border for emphasis.</p>
+  <Stack gap="sm">
+    <StatusDot status="warning" label="iris — review" />
+    <Badge variant="warning">attention</Badge>
+  </Stack>
 </Card>`}>
-          <Card style={{ flex: 1, minWidth: 220 }}>
-            <h3 style={{ fontWeight: 600, marginBottom: 4, color: 'var(--foreground)' }}>Standard card</h3>
-            <p style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>A raised surface with a hairline border.</p>
-          </Card>
-          <Card accent style={{ flex: 1, minWidth: 220 }}>
-            <h3 style={{ fontWeight: 600, marginBottom: 4, color: 'var(--foreground)' }}>Accent card</h3>
-            <p style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>Yellow border for emphasis.</p>
-          </Card>
+          <CardGrid columns={2}>
+            <Card>
+              <Stack gap="sm">
+                <StatusDot status="online" label="emma — ready" />
+                <Badge variant="success">healthy</Badge>
+              </Stack>
+            </Card>
+            <Card accent>
+              <Stack gap="sm">
+                <StatusDot status="warning" label="iris — review" />
+                <Badge variant="warning">attention</Badge>
+              </Stack>
+            </Card>
+          </CardGrid>
         </Demo>
       </Section>
 
@@ -267,30 +277,29 @@ function PageComponents({ go }) {
         </Demo>
       </Section>
 
-      <Section title="Panel" permalink="components/panel" desc="A card with a header bar (title + optional actions) and optional footer. Pass a fragment with multiple buttons to actions for a toolbar.">
-        <Demo name="panel" variant="col" code={`<Panel title="Compose stack" icon="grid"
+      <Section title="Panel" permalink="components/panel" desc="A card with a header bar: title, optional description, and optional actions. Pass a fragment with multiple buttons to actions for a toolbar.">
+        <Demo name="panel" variant="col" code={`<Panel title="Compose stack" description="compose.yml · 4 services"
   actions={<Button variant="ghost" size="sm">Edit</Button>}
-  footer={<span className="ds-mono">compose.yml · 4 services</span>}>
-  …content…
+>
+  <StatusDot status="online" label="All services healthy" />
 </Panel>
 
 {/* Multiple actions */}
-<Panel title="hermes" icon="server"
+<Panel title="hermes" description="emma.tollerud.no"
   actions={<>
     <Button variant="ghost" size="sm">Logs</Button>
     <Button variant="ghost" size="sm">Restart</Button>
     <Button variant="destructive" size="sm">Stop</Button>
   </>}>
-  …content…
+  <StatusDot status="warning" label="Restart pending" />
 </Panel>`}>
           <div className="ds-col" style={{ width: '100%', maxWidth: 460, gap: 16 }}>
-            <Panel title="Compose stack" icon="grid" actions={<Button variant="ghost" size="sm">Edit</Button>}
-              footer={<span className="ds-mono" style={{ fontSize: 12, color: 'var(--text-muted)' }}>compose.yml · 4 services</span>}>
-              <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: 0 }}>Single action in the header.</p>
+            <Panel title="Compose stack" description="compose.yml · 4 services" actions={<Button variant="ghost" size="sm">Edit</Button>}>
+              <StatusDot status="online" label="All services healthy" />
             </Panel>
-            <Panel title="hermes" icon="server"
+            <Panel title="hermes" description="emma.tollerud.no"
               actions={<><Button variant="ghost" size="sm">Logs</Button><Button variant="ghost" size="sm">Restart</Button><Button variant="destructive" size="sm">Stop</Button></>}>
-              <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: 0 }}>Multiple actions — pass a React fragment to <code>actions</code>.</p>
+              <StatusDot status="warning" label="Restart pending" />
             </Panel>
           </div>
         </Demo>
@@ -375,11 +384,15 @@ function PageComponents({ go }) {
       </Section>
 
       <Section title="Container" permalink="components/container" desc="Layout width constraint — 1100px max with 24px horizontal padding. Use as a page wrapper or section cap.">
-        <Demo name="container" variant="col" code={`<Container className="py-6 text-center text-sm text-tollerud-text-secondary border border-dashed border-tollerud-border rounded-lg">
-  Content capped at 1100px
+        <Demo name="container" variant="col" code={`<Container>
+  <Card>
+    <StatusDot status="online" label="Content capped at 1100px" />
+  </Card>
 </Container>`}>
-          <Container className="py-6 text-center text-sm text-tollerud-text-secondary border border-dashed border-tollerud-border rounded-lg">
-            Content capped at 1100px · px-6
+          <Container>
+            <Card>
+              <StatusDot status="online" label="Content capped at 1100px" />
+            </Card>
           </Container>
         </Demo>
       </Section>
@@ -420,11 +433,15 @@ function PageComponents({ go }) {
       </Section>
 
       <Section title="Glow card" permalink="components/glow-card" desc="Wraps any surface with a cursor-tracking yellow glow. Intensity and color are configurable.">
-        <Demo name="glow-card" variant="center" code={`<GlowCard className="rounded-lg border border-tollerud-border p-6 max-w-sm">
-  <p className="text-sm text-tollerud-text-secondary">Hover to see the glow follow the cursor.</p>
+        <Demo name="glow-card" variant="center" code={`<GlowCard>
+  <Card>
+    <StatusDot status="online" label="Hover to see the glow follow the cursor." />
+  </Card>
 </GlowCard>`}>
-          <GlowCard className="rounded-lg border border-tollerud-border p-6 max-w-sm">
-            <p style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>Hover to see the glow follow the cursor.</p>
+          <GlowCard>
+            <Card>
+              <StatusDot status="online" label="Hover to see the glow follow the cursor." />
+            </Card>
           </GlowCard>
         </Demo>
       </Section>
