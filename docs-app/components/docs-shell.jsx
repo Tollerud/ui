@@ -229,26 +229,23 @@ export function DocsShell({ slug: slugProp }) {
             {NAV.map((g) => (
               <div className="ds-navgroup" key={g.group || 'meta'}>
                 {g.group && <div className="ds-navgroup__label">{g.group}</div>}
-                {g.subgroups
-                  ? g.subgroups.map((sub) => (
-                      <div className="ds-navsubgroup" key={sub.label}>
-                        <div className="ds-navsubgroup__label">{sub.label}</div>
-                        {sub.items.map((it) => {
-                          const I = Icons[it.icon]
-                          return (
-                            <button
-                              key={it.id}
-                              className={`ds-navlink ${page === it.id && !sectionSlug ? 'ds-navlink--active' : ''}`}
-                              onClick={() => go(it.id)}
-                            >
-                              <span className="ds-navlink__icon"><I size={15} /></span>
-                              {it.label}
-                            </button>
-                          )
-                        })}
-                      </div>
-                    ))
-                  : g.items.map((it) => {
+                {g.items?.map((it) => {
+                  const I = Icons[it.icon]
+                  return (
+                    <button
+                      key={it.id}
+                      className={`ds-navlink ${page === it.id && !sectionSlug ? 'ds-navlink--active' : ''}`}
+                      onClick={() => go(it.id)}
+                    >
+                      <span className="ds-navlink__icon"><I size={15} /></span>
+                      {it.label}
+                    </button>
+                  )
+                })}
+                {g.subgroups?.map((sub, subIndex) => (
+                  <div className="ds-navsubgroup" key={sub.label || sub.items[0]?.id || subIndex}>
+                    {sub.label && <div className="ds-navsubgroup__label">{sub.label}</div>}
+                    {sub.items.map((it) => {
                       const I = Icons[it.icon]
                       return (
                         <button
@@ -261,6 +258,8 @@ export function DocsShell({ slug: slugProp }) {
                         </button>
                       )
                     })}
+                  </div>
+                ))}
               </div>
             ))}
           </nav>

@@ -21,24 +21,15 @@ export const NAV = [
   },
   {
     group: 'Design',
+    items: [
+      { id: 'foundations', label: 'Foundations', icon: 'palette' },
+      { id: 'layout', label: 'Layout', icon: 'layers' },
+      { id: 'screens', label: 'Screen patterns', icon: 'app' },
+      { id: 'components', label: 'Components', icon: 'grid' },
+      { id: 'forms', label: 'Forms', icon: 'forms' },
+      { id: 'navigation', label: 'Navigation & Overlays', icon: 'compass' },
+    ],
     subgroups: [
-      {
-        label: 'Core',
-        items: [
-          { id: 'foundations', label: 'Foundations', icon: 'palette' },
-          { id: 'layout', label: 'Layout', icon: 'layers' },
-          { id: 'screens', label: 'Screen patterns', icon: 'app' },
-          { id: 'components', label: 'Components', icon: 'grid' },
-        ],
-      },
-      {
-        label: 'Forms & input',
-        items: [{ id: 'forms', label: 'Forms', icon: 'forms' }],
-      },
-      {
-        label: 'Navigation',
-        items: [{ id: 'navigation', label: 'Navigation & Overlays', icon: 'compass' }],
-      },
       {
         label: 'Data & infra',
         items: [
@@ -101,16 +92,15 @@ export const PAGE_TITLES = {
   changelog: 'Changelog',
 }
 
-/** Flatten nav entries (supports Design subgroups). */
+/** Flatten nav entries (supports top-level items plus optional subgroups). */
 export function flattenNavItems(nav = NAV) {
   const items = []
   for (const group of nav) {
+    if (group.items?.length) items.push(...group.items)
     if (group.subgroups) {
       for (const sub of group.subgroups) {
         items.push(...sub.items)
       }
-    } else {
-      items.push(...group.items)
     }
   }
   return items
