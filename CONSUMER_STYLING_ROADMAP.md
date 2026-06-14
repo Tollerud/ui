@@ -156,17 +156,17 @@ Candidate components:
 
 **Goal:** make the docs demonstrate the behavior agents should copy.
 
-- [ ] Audit docs for examples that rely on raw Tailwind for branded structure.
-- [ ] Replace Tailwind-heavy wrappers with `PageShell`, `Section`, `Stack`, `Grid`, or pattern components.
-- [ ] Keep a small "escape hatch" section showing acceptable local Tailwind glue.
-- [ ] Add "agent-safe recipes" for common project screens:
-  - [ ] marketing landing page
-  - [ ] dashboard overview
-  - [ ] settings page
-  - [ ] auth page
-  - [ ] empty state page
-  - [ ] detail page
-  - [ ] list/table page
+- [x] Audit docs for examples that rely on raw Tailwind for branded structure.
+- [x] Replace Tailwind-heavy wrappers with `PageShell`, `Section`, `Stack`, `Grid`, or pattern components.
+- [x] Keep a small "escape hatch" section showing acceptable local Tailwind glue.
+- [x] Add "agent-safe recipes" for common project screens:
+  - [x] marketing landing page
+  - [x] dashboard overview
+  - [x] settings page
+  - [x] auth page
+  - [x] empty state page
+  - [x] detail page
+  - [x] list/table page
 
 **Acceptance criteria:**
 

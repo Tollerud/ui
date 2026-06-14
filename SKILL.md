@@ -265,6 +265,22 @@ Use these before rebuilding common pages with raw Tailwind:
 </ResourceList>
 ```
 
+### Agent-safe recipes
+
+Copy-paste screen compositions live on the docs site at **Recipes** (`/recipes/`). Each recipe is component-first and links to a fuller interactive example where one exists:
+
+| Recipe | Primary components | Full example |
+|--------|-------------------|--------------|
+| Marketing landing | `PageShell`, `HeroBlock`, `FeatureSection`, `CTABand`, `Footer` | Blocks |
+| Dashboard overview | `DashboardShell`, `StatsSection`, `HostCard` | Mission Control |
+| Settings | `SettingsLayout`, `FormPanel` | Settings |
+| Auth | `PageShell`, `FormPanel` | Sign in (cinematic) |
+| Empty state | `EmptyPage` | Onboarding |
+| Detail | `DetailPage` | Screen patterns |
+| List / table | `ResourceList`, `DataTable` | Data Table |
+
+Reserve Tailwind for small local glue (`mt-6`, `flex justify-end`) — not for rebuilding page structure. See the escape-hatch recipe and Getting started → Consumer styling policy.
+
 **Button** — `variant`: `primary` · `secondary` · `ghost` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`.
 ```tsx
 <Button variant="primary" size="md">Deploy</Button>

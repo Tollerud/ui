@@ -16,6 +16,7 @@ export const NAV = [
     items: [
       { id: 'overview', label: 'Overview', icon: 'home' },
       { id: 'getting-started', label: 'Getting started', icon: 'code' },
+      { id: 'recipes', label: 'Recipes', icon: 'terminal' },
     ],
   },
   {
@@ -78,6 +79,7 @@ export const NAV = [
 export const PAGE_TITLES = {
   overview: 'Overview',
   'getting-started': 'Getting started',
+  recipes: 'Recipes',
   foundations: 'Foundations',
   layout: 'Layout',
   screens: 'Screen patterns',
