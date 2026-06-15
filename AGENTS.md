@@ -616,7 +616,7 @@ Also check for a local `components/ui.ts` or `components/ui/index.ts` that re-ex
 | Pattern | Fix |
 |---------|-----|
 | `src/components/ui/Button.tsx` with `tollerud-btn` classes | Delete, import from `@tollerud/ui` |
-| `lib/utils.ts` defining `cn()` manually | Replace with `import { cn } from '@tollerud/ui'` |
+| `lib/utils.ts` defining `cn()` manually | Replace with `import { cn } from '@tollerud/ui'` (or `@tollerud/ui/utils` for tree-shaking) |
 | `components/ui.ts` re-exporting from `'../../../components/Button'` | Replace all with `export * from '@tollerud/ui'` or direct named imports |
 | Inline `bg-[#FFFF00]` or `text-[#0A0A0A]` | Replace with `bg-tollerud-yellow` / `text-tollerud-noir-950` |
 | `import { toast } from 'sonner'` without a `<Toaster />` mount | Add `<Toaster />` near app root |

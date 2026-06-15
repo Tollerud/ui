@@ -17,7 +17,23 @@ function PageGettingStarted({ go }) {
         lede={`Install @tollerud/ui v${PACKAGE_VERSION}, wire Tailwind v4, and avoid the gotchas that break Server Components or purge component styles.`}
       />
 
-      <Section title="Install" desc="Core package plus required peers. Optional shader peer only if you use NoirGlowBackground.">
+      <Section title="Choose your path" desc="Most users: full design system. Footer-only and legacy Tailwind v3 are separate paths.">
+        <div style={{ marginBottom: 16 }}>
+          <table className="ds-table">
+            <thead>
+              <tr><th>Path</th><th>Install</th><th>CSS</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Full system</strong> (most users)</td><td><code className="ds-mono">@tollerud/ui</code> + peers below</td><td><code className="ds-mono">globals.css</code> + <code className="ds-mono">source.css</code></td></tr>
+              <tr><td>Footer only</td><td><code className="ds-mono">@tollerud/footer</code></td><td>Tollerud tokens still required</td></tr>
+              <tr><td>Tailwind v3</td><td>Same peers</td><td><code className="ds-mono">globals-v3.css</code> + preset</td></tr>
+              <tr><td>NoirGlowBackground</td><td>+ <code className="ds-mono">@paper-design/shaders-react</code></td><td>Optional peer</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section title="Install" desc="Core package plus required peers. One-time setup — peers stay in your app so you control versions.">
         <SubHead>Full Tollerud UI</SubHead>
         <CodeSnippet
           name="terminal"
@@ -184,7 +200,7 @@ export default config`}
       <Section title="Imports" desc="Named exports from the barrel, or subpaths for tree-shaking and smaller client boundaries.">
         <CodeSnippet
           name="imports.tsx"
-          code={`import { Button, Card, Badge, Monogram, DataTable } from '@tollerud/ui'
+          code={`import { Button, Card, Badge, cn, Monogram, DataTable } from '@tollerud/ui'
 import { PageShell, Section, Stack } from '@tollerud/ui'
 import { PageHeader, ResourceList } from '@tollerud/ui'
 

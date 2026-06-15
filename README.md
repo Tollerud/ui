@@ -13,34 +13,11 @@ The npm `"license": "MIT"` field refers to the software components. Brand assets
 
 ---
 
-A complete, browsable UI library built around **monochrome + yellow accent**. Noir aesthetic meets modern utility.
+Dark, monochrome React components with a single yellow accent. Noir aesthetic meets modern utility.
 
-**[Live docs →](https://design.tollerud.dev/)** — browse every token, component, and pattern live with copy-paste code.
+**[Live docs →](https://design.tollerud.dev/)** · React ≥ 18 · TypeScript included · Tailwind v4 (v3 via `globals-v3.css`)
 
-**Requirements:** React ≥ 18 · TypeScript supported (types included) · Tailwind CSS v4 (v3 supported via `globals-v3.css`)
-
-→ **[Components →](COMPONENTS.md)** · **[Props (generated) →](PROPS.generated.md)** · **[Setup guide →](GETTING_STARTED.md)** · **[Brand guidelines →](BRAND.md)** · **[Changelog →](CHANGELOG.md)** · **[AI agent skill →](SKILL.md)**
-
-## Packages
-
-| Package | Install | Use when |
-|---------|---------|----------|
-| [`@tollerud/ui`](https://www.npmjs.com/package/@tollerud/ui) | `npm install @tollerud/ui` | You want the full Tollerud UI — components, tokens, Tailwind preset |
-| [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer) | `npm install @tollerud/footer` | You only need the branded footer, with no other Tollerud UI dependency |
-
-**Footer maintenance:** `@tollerud/ui` exports `Footer` from the same source as `@tollerud/footer` (`npm run sync:footer` keeps them lockstep). Use the standalone package when you want the branded footer without Radix, Lucide, Framer Motion, Sonner, or other `@tollerud/ui` peers — `@tollerud/footer` bundles `clsx` and `tailwind-merge` as dependencies **on purpose** for that path. You still need Tailwind + Tollerud tokens for footer styles. Deprecation of `@tollerud/footer` is not planned for now.
-
-## Philosophy
-
-> Clean lines. Sharp contrast. Yellow where it counts.
-
-Tollerud UI is minimal but not cold. It uses a near-black foundation with warm yellow accents for interaction points. Every element has purpose — nothing decorative for its own sake. The cross-hatching spirit lives in the sharp borders, the thin lines, the deliberate whitespace.
-
-## Quick Start
-
-**Starter template:** [`examples/next-starter/`](examples/next-starter/) — copy into a new project, `npm install`, `npm run dev`. See [GETTING_STARTED.md](GETTING_STARTED.md) for the full guide, [copy-paste AI agent prompts](GETTING_STARTED.md#start-with-an-ai-agent) for Cursor/Claude Code setup, and migration from copied components.
-
-### npm package (recommended)
+## 30-second start
 
 ```bash
 npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
@@ -49,24 +26,85 @@ npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
   lucide-react framer-motion sonner
 ```
 
-As of **v2.0.0**, Radix primitives, Lucide, Framer Motion, and Sonner are **peer dependencies** — your app must install them (one line above). Tollerud UI bundles only `class-variance-authority`.
-
-`@paper-design/shaders-react` is an **optional** peer — install only if you use `NoirGlowBackground`:
-
-```bash
-npm install @paper-design/shaders-react
-```
-
-**CSS** — two imports in `app/globals.css` (Tailwind v4 + tokens + component class scanning):
+Looks long — most apps only do this once. Peers stay in your app so you control versions. See [peer dependencies by family](#peer-dependencies-by-family) if you want to know what each group is for.
 
 ```css
+/* app/globals.css */
 @import '@tollerud/ui/globals.css';
 @import '@tollerud/ui/source.css';
 ```
 
-`source.css` resolves `@source` inside the installed package — works with npm, pnpm, Yarn workspaces, and Bun. See [GETTING_STARTED.md](GETTING_STARTED.md) for manual `@source` paths in monorepos.
+```tsx
+import { Button, Card } from '@tollerud/ui'
 
-**Optional preset shim** — if you need utilities from `@tollerud/ui/preset` beyond what `tokens.css` provides:
+export function Home() {
+  return (
+    <Card>
+      <Button variant="primary">Deploy</Button>
+    </Card>
+  )
+}
+```
+
+**Starter template:** [`examples/next-starter/`](examples/next-starter/) — copy, `npm install`, `npm run dev`. See [GETTING_STARTED.md](GETTING_STARTED.md) for the full guide, [AI agent prompts](GETTING_STARTED.md#start-with-an-ai-agent), and migration from copied components.
+
+Full setup, migration, and edge cases: **[GETTING_STARTED.md](GETTING_STARTED.md)**.
+
+## Which doc should I use?
+
+| Resource | Use for |
+|----------|---------|
+| **[GETTING_STARTED.md](GETTING_STARTED.md)** | Install, Tailwind, paths, migration, audit — **start here** |
+| **[COMPONENTS.md](COMPONENTS.md)** | Usage examples, CSS patterns, homelab/dashboard recipes |
+| **[SKILL.md](SKILL.md)** | Export catalog and gotchas (source of truth for agents) |
+| **[PROPS.generated.md](PROPS.generated.md)** | Machine-checked prop tables |
+| **[BRAND.md](BRAND.md)** | Logo, nav lockup, trademark rules |
+| **[Live docs](https://design.tollerud.dev/)** | Browse every component with copy-paste demos |
+
+## Choose your path
+
+| Path | Install | CSS / setup |
+|------|---------|-------------|
+| **Full design system** (most users) | `@tollerud/ui` + required peers (see [30-second start](#30-second-start)) | `globals.css` + `source.css` |
+| **Footer only** | `@tollerud/footer` | Still need Tollerud tokens — `@tollerud/ui/globals.css` or equivalent |
+| **Tailwind v3 (legacy)** | Same peers as full system | `globals-v3.css` + `@tollerud/ui/preset` in `tailwind.config.ts` — [details](GETTING_STARTED.md#tailwind-v3-legacy) |
+| **NoirGlowBackground only** | Add `@paper-design/shaders-react` | Optional peer — all other components work without it |
+
+| Package | When |
+|---------|------|
+| [`@tollerud/ui`](https://www.npmjs.com/package/@tollerud/ui) | Components, tokens, preset, brand assets |
+| [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer) | Branded footer without Radix, Lucide, Framer Motion, or Sonner peers |
+
+`@tollerud/ui` exports `Footer` from the same source as `@tollerud/footer` (`npm run sync:footer` keeps them lockstep). `@tollerud/footer` bundles `clsx` and `tailwind-merge` on purpose for the lean path.
+
+## Peer dependencies by family
+
+| Family | Packages | Needed for |
+|--------|----------|------------|
+| **Always** | `react`, `react-dom`, `clsx`, `tailwind-merge`, `tailwindcss` | Every integration |
+| **Overlays & navigation** | `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-tabs`, `@radix-ui/react-tooltip`, `@radix-ui/react-slot`, `@radix-ui/react-progress` | Dialog, Sheet, Drawer, DropdownMenu, Tabs, Tooltip, Progress, Button `asChild` |
+| **Icons** | `lucide-react` | Components with built-in icons |
+| **Motion** | `framer-motion` | Animated components (e.g. GlowCard, charts) |
+| **Toasts** | `sonner` | `<Toaster />` / toast API — mount once at app root |
+| **Optional — glow** | `@paper-design/shaders-react` | `NoirGlowBackground` only |
+
+The design system bundles only `class-variance-authority`. Radix, Lucide, Framer Motion, and Sonner have been peers since **v2.0.0**.
+
+## Philosophy
+
+> Clean lines. Sharp contrast. Yellow where it counts.
+
+Tollerud UI is minimal but not cold. It uses a near-black foundation with warm yellow accents for interaction points. Every element has purpose — nothing decorative for its own sake.
+
+## Setup details
+
+### CSS (`source.css`)
+
+`source.css` resolves `@source` inside the installed package — works with npm, pnpm, Yarn workspaces, and Bun. Without it (or a correct manual `@source` path), component styles can be purged in production. See [GETTING_STARTED.md](GETTING_STARTED.md) for monorepo paths.
+
+### Optional preset shim
+
+If you need utilities from `@tollerud/ui/preset` beyond what `tokens.css` provides:
 
 ```ts
 // tailwind.config.ts
@@ -82,7 +120,7 @@ export default { presets: [tollerudPreset] }
 @import '@tollerud/ui/source.css';
 ```
 
-**Tailwind v3 (legacy)** — preset in `tailwind.config.ts` plus `@tollerud/ui/globals-v3.css`:
+### Tailwind v3 (legacy)
 
 ```ts
 import type { Config } from 'tailwindcss'
@@ -104,15 +142,17 @@ export default {
 @import '@tollerud/ui/globals-v3.css';
 ```
 
-**Components:**
+### Imports and tree-shaking
 
 ```tsx
-import { Button, Card, Badge, StatusDot, CodeBlock, Kbd, CommandMenu, HeroBlock, ResourceList } from '@tollerud/ui'
+import { Button, Card, Badge, cn, PageShell, Section } from '@tollerud/ui'
+// or subpaths:
+import { Button } from '@tollerud/ui/button'
 ```
 
-TypeScript types are included — no `@types/*` package needed. **[SKILL.md](SKILL.md)** lists every export; **[PROPS.generated.md](PROPS.generated.md)** has machine-checked prop tables; **[COMPONENTS.md](COMPONENTS.md)** has usage examples and patterns.
+`cn` and `buttonVariants` are safe to import from Server Components — they do not force your file to become a Client Component. Prefer `@tollerud/ui/utils` only when tree-shaking `cn` without the barrel.
 
-Publish a new version by bumping `version` in `package.json` and pushing to `main` — the `publish-npm` GitHub Action detects the version change, runs `npm publish --provenance` via npm Trusted Publishers (OIDC), and then creates a matching GitHub Release automatically.
+TypeScript types are included. **[SKILL.md](SKILL.md)** lists every export; **[PROPS.generated.md](PROPS.generated.md)** has machine-checked prop tables; **[COMPONENTS.md](COMPONENTS.md)** has usage examples.
 
 ### Do not copy package internals
 
@@ -120,7 +160,7 @@ Use the npm package in consumer apps. Do not vendor `components/`, `lib/utils.ts
 
 ### Usage example
 
-That's it. You now have all Tailwind colors (`bg-tollerud-yellow`, `text-tollerud-noir-200`), semantic CSS variables (`--primary`, `--background`, `--ring`), component utilities (`.tollerud-card`, `.tollerud-btn--terminal`), and React components ready to import. Prefer component-first composition in apps:
+Prefer component-first composition — layout primitives and screen patterns before raw Tailwind soup:
 
 ```tsx
 import { Button, Card, CodeBlock, HeroBlock, StatusDot } from '@tollerud/ui'
@@ -153,9 +193,19 @@ Include `tokens.css` or `globals.css` for CSS custom properties and utility clas
 </div>
 ```
 
-### Brand Mascot
+### Brand assets
 
-Tollerud UI ships brand assets under `brand/` — import via `@tollerud/ui/brand/tollerud-avatar.svg` (and `.png` / full-figure variants) for headers, landing pages, and agent identity moments. Prefer `<Monogram />` for nav lockups.
+Import via `@tollerud/ui/brand/tollerud-avatar.svg` (and `.png` / full-figure variants). Prefer `<Monogram />` for nav lockups. See [BRAND.md](BRAND.md).
+
+## Consumer audit
+
+After setup, self-audit consumer apps with:
+
+```bash
+npx tollerud-ui-audit
+```
+
+The command ships with `@tollerud/ui` and flags missing `source.css`, copied `components/ui` clones, hardcoded brand colors, and invalid Button/Link nesting. See [GETTING_STARTED.md](GETTING_STARTED.md#consumer-project-checklist) for the full error-code reference and `--warn-only` flag.
 
 ## Palette Summary
 
@@ -220,18 +270,6 @@ These classes are available for package internals, docs examples, and static HTM
 4. **Sharp when it counts** — Radius is subtle. Full round only for pills. Sharp corners for the noir feel.
 5. **Glow with purpose** — Yellow glow only on hover/active states. Never decorative.
 
-## Install
-
-See [GETTING_STARTED.md](GETTING_STARTED.md) for the current peer install command, Tailwind setup, subpath imports, and consumer styling policy.
-
-After setup, self-audit consumer apps with:
-
-```bash
-npx tollerud-ui-audit
-```
-
-The command ships with `@tollerud/ui` and flags missing `source.css`, copied `components/ui` clones, hardcoded brand colors, and invalid Button/Link nesting. See GETTING_STARTED.md → Consumer project checklist for the full error-code reference and `--warn-only` flag.
-
 ## File Structure
 
 ```
@@ -274,3 +312,7 @@ These lower-level classes and Tailwind utilities are available for package inter
 | Gradient Text | `.tollerud-gradient-text` | `bg-tollerud-gradient-soft bg-clip-text text-transparent` | Yellow → amber gradient text |
 | Display Heading | `.tollerud-display` | `tracking-tightest leading-[0.95] font-semibold text-white` | Tight, impactful display heads |
 | Display Shimmer | `.tollerud-display-shimmer` | — | Animated yellow gradient sweep clipped to hero accent text (dark surfaces) |
+
+## Publishing (contributors)
+
+Bump `version` in `package.json` and push to `main` — the `publish-npm` GitHub Action runs `npm publish --provenance` via npm Trusted Publishers (OIDC) and creates a matching GitHub Release. See [AGENTS.md](AGENTS.md).

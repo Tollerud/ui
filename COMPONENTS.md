@@ -2,10 +2,13 @@
 
 Human-oriented usage guide for `@tollerud/ui` **v4.4.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
+**New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
+
 ## Documentation map
 
 | Resource | Use for |
 |----------|---------|
+| **[GETTING_STARTED.md](GETTING_STARTED.md)** | Install, Tailwind, paths, migration — **start here** |
 | **[SKILL.md](SKILL.md)** | Authoritative export catalog, import examples, gotchas (verified against `components/index.ts`) |
 | **[PROPS.generated.md](PROPS.generated.md)** | Machine-generated prop tables — run `npm run docs:props` to refresh; `npm run test:props` catches drift |
 | **This file** | Narrative examples, CSS class patterns, homelab/dashboard usage |

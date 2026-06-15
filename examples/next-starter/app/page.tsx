@@ -29,9 +29,9 @@ export default function Home() {
                 <StatusDot status="online" label="Package resolved" />
                 <Badge variant="accent">@tollerud/ui</Badge>
                 <p className="text-sm text-tollerud-text-secondary">
-                  Imports from the barrel. See{' '}
-                  <code className="font-mono text-tollerud-yellow">@tollerud/ui/utils</code> for{' '}
-                  <code className="font-mono">cn()</code> in Client Components.
+                  Imports from the barrel. Import <code className="font-mono">cn</code> from{' '}
+                  <code className="font-mono text-tollerud-yellow">@tollerud/ui</code>
+                  {' '}— or <code className="font-mono">@tollerud/ui/utils</code> when tree-shaking.
                 </p>
               </Stack>
             </Card>

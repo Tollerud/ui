@@ -34,7 +34,7 @@ As of **v1.4.0**, charts (`BarChart`, `AreaChart`, `Donut`, `Sparkline`) and mar
 
 **Tailwind v3 legacy:** `@import "@tollerud/ui/globals-v3.css"` after preflight/utilities, with `tailwind.config.ts` preset + content paths.
 
-**Subpath imports (tree-shaking):** `@tollerud/ui/button`, `@tollerud/ui/dialog`, `@tollerud/ui/utils`. The main `@tollerud/ui` barrel still works.
+**Subpath imports (tree-shaking):** `@tollerud/ui/button`, `@tollerud/ui/dialog`, `@tollerud/ui/utils`. The main `@tollerud/ui` barrel still works. Import `cn` from `@tollerud/ui` by default; use `@tollerud/ui/utils` only when tree-shaking without the barrel.
 
 **Greenfield setup:** copy-paste agent prompts (new Next.js project, add to existing app, footer-only) live in [GETTING_STARTED.md](GETTING_STARTED.md) → Start with an AI agent. After agent setup, run `npx tollerud-ui-audit`.
 
