@@ -1,6 +1,6 @@
 ---
 description: Keep consumer styling MD files and docs pages in sync when changing layout primitives, screen patterns, recipes, guardrails, or tollerud-ui-audit
-globs: CONSUMER_STYLING_ROADMAP.md,GETTING_STARTED.md,SKILL.md,AGENTS.md,COMPONENTS.md,README.md,CHANGELOG.md,CONTRIBUTING.md,scripts/audit-consumer-styling.mjs,package.json,docs-app/components/pages/page-recipes.jsx,docs-app/components/pages/page-screens.jsx,docs-app/components/pages/page-layout.jsx,docs-app/components/pages/page-getting-started.jsx,docs-app/components/pages/page-resources.jsx,docs-app/components/pages/page-overview.jsx,docs-app/lib/docs-routes.js,docs-app/lib/component-catalog.js
+globs: GETTING_STARTED.md,SKILL.md,AGENTS.md,COMPONENTS.md,README.md,CHANGELOG.md,CONTRIBUTING.md,scripts/audit-consumer-styling.mjs,package.json,docs-app/components/pages/page-recipes.jsx,docs-app/components/pages/page-screens.jsx,docs-app/components/pages/page-layout.jsx,docs-app/components/pages/page-getting-started.jsx,docs-app/components/pages/page-resources.jsx,docs-app/components/pages/page-overview.jsx,docs-app/lib/docs-routes.js,docs-app/lib/component-catalog.js
 alwaysApply: false
 ---
 
@@ -15,11 +15,13 @@ When changing **consumer styling policy**, **layout primitives**, **screen patte
 | `SKILL.md` | **Source of truth for agents** — exports, recipes table, guardrails, gotchas |
 | `AGENTS.md` | Contributor + agent guide — import blocks, reference table, release checklist |
 | `GETTING_STARTED.md` | **Shipped in npm** — install, policy, checklist, audit command |
-| `CONSUMER_STYLING_ROADMAP.md` | Phase tracking — check boxes only when acceptance criteria met |
+| `COMPLETENESS_ROADMAP.md` | Open roadmap items; update on release when scope changes |
 | `CHANGELOG.md` | User-facing release notes (docs site parses this at runtime) |
 | `COMPONENTS.md` | Human usage index — link to Recipes, policy, and audit command |
 | `README.md` | Repo landing — install pointer and audit one-liner |
 | `CONTRIBUTING.md` | Contributor sync matrix (this rule mirrors it) |
+
+Completed consumer styling initiative (archived): [docs/archive/CONSUMER_STYLING_ROADMAP.md](docs/archive/CONSUMER_STYLING_ROADMAP.md).
 
 ## Docs app (live site)
 
@@ -56,7 +58,6 @@ Follow [AGENTS.md](AGENTS.md) §2–4 **plus** consumer styling rows in [CONTRIB
 
 ## Do not
 
-- Mark `CONSUMER_STYLING_ROADMAP.md` phases complete without meeting listed acceptance criteria
 - Update `SKILL.md` without checking `components/index.ts` exports still match
 - Add docs-only guidance to `SKILL.md` without mirroring key points in `GETTING_STARTED.md` when consumers need it offline
 - Edit `docs-app/public/CHANGELOG.md` directly — it is copied from root `CHANGELOG.md` on `npm run build:docs`

@@ -1,5 +1,7 @@
 # npm package hardening — work plan
 
+**Archived:** 2026-06-15 — priorities 1–3 complete; open quality items tracked in [COMPLETENESS_ROADMAP.md](../../COMPLETENESS_ROADMAP.md).
+
 **Target:** 2026-06-11  
 **Package:** `@tollerud/ui` v4.0.5  
 **Status:** Priority 1 complete (2026-06-09) — OIDC configured for both packages
@@ -195,6 +197,6 @@ cd fixtures/consumer && npm run build  # or npm run test:consumer from root
 ## References
 
 - Audit conversation: 2026-06-10
-- Related roadmap: [COMPLETENESS_ROADMAP.md](./COMPLETENESS_ROADMAP.md) → “npm package hardening (planned)”
+- Active roadmap: [COMPLETENESS_ROADMAP.md](../../COMPLETENESS_ROADMAP.md)
 - Consumer fixture: `fixtures/consumer/`
 - Publish workflow: `.github/workflows/publish-npm.yml`

@@ -57,7 +57,9 @@ In the same commit, update [AGENTS.md](AGENTS.md) §4: `CHANGELOG.md`, `COMPLETE
 
 ## Consumer styling, recipes, and guardrails
 
-Work tracked in [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md). When you change consumer-facing styling policy, layout primitives, screen patterns, recipes, or the audit script, keep these files aligned in the **same commit**:
+Consumer apps should treat `@tollerud/ui` components and layout primitives as the design language. Tailwind stays available for small local glue — not as the primary way to build branded UI. Full policy: [SKILL.md](SKILL.md) and [AGENTS.md](AGENTS.md) → Consumer styling policy.
+
+When you change consumer-facing styling policy, layout primitives, screen patterns, recipes, or the audit script, keep these files aligned in the **same commit**:
 
 | Change type | Update |
 |-------------|--------|
@@ -65,7 +67,6 @@ Work tracked in [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md). When
 | New recipe or guardrail guidance | `GETTING_STARTED.md`, `SKILL.md`, `docs-app/components/pages/page-recipes.jsx` and/or `page-resources.jsx`, `docs-routes.js` if new route |
 | Consumer checklist or anti-pattern | `GETTING_STARTED.md`, `SKILL.md`, `AGENTS.md`, matching docs page (`page-getting-started.jsx`, `page-resources.jsx`) |
 | `scripts/audit-consumer-styling.mjs` or `tollerud-ui-audit` bin | `GETTING_STARTED.md`, `SKILL.md`, `AGENTS.md`, `COMPONENTS.md`, `README.md`, `page-getting-started.jsx`, `page-resources.jsx`, `page-overview.jsx`, `component-catalog.js`, `CHANGELOG.md`; `test:consumer-styling` fixtures must still pass |
-| Phase completed on roadmap | `CONSUMER_STYLING_ROADMAP.md` checkboxes |
 
 Run the consumer audit locally:
 
@@ -75,7 +76,7 @@ npm run test:consumer-styling
 npx tollerud-ui-audit
 ```
 
-Mark roadmap phases complete only when acceptance criteria are met — not when a single file changes.
+Mark roadmap items complete in [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md) only when acceptance criteria are met — not when a single file changes.
 
 ## Docs-only changes
 

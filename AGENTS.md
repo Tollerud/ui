@@ -134,7 +134,7 @@ For Tailwind v4 consumer apps, both imports are required:
 
 Use `import { cn } from '@tollerud/ui'` or `@tollerud/ui/utils`; do not create a local `cn()` helper in consumer projects.
 
-**Agent-safe recipes** — copy-paste screen compositions for common pages (marketing landing, dashboard, settings, auth, empty state, detail, list/table) live on the docs site at [Recipes](https://design.tollerud.dev/recipes/). Each recipe is component-first and links to a fuller interactive example where one exists. See also [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md) Phase 4.
+**Agent-safe recipes** — copy-paste screen compositions for common pages (marketing landing, dashboard, settings, auth, empty state, detail, list/table) live on the docs site at [Recipes](https://design.tollerud.dev/recipes/). Each recipe is component-first and links to a fuller interactive example where one exists.
 
 **Consumer guardrails** — run `npx tollerud-ui-audit` from consumer app roots to detect styling drift (missing `@tollerud/ui` dep, `source.css`, copied `components/ui`, hardcoded brand hex, local `cn()`, Button/Link nesting). Use `--warn-only` for advisory CI. Alternative: `node node_modules/@tollerud/ui/scripts/audit-consumer-styling.mjs`. Error codes and fixes: GETTING_STARTED.md → Consumer project checklist.
 
@@ -525,11 +525,11 @@ The docs sidebar version reads live from `package.json` via `PACKAGE_VERSION` in
 ### 4. Always update these files in the same commit
 
 - `CHANGELOG.md` — add an entry at the top following the **exact format rules below**
-- `COMPLETENESS_ROADMAP.md` — move completed items to the done list, strike through fixed quality items
+- `COMPLETENESS_ROADMAP.md` — update `### npm package (components/*.tsx) — vX.X.X` header; check off or add open items
 - `SKILL.md` — add new components to the catalog, update version notes
 - `AGENTS.md` (this file) — update the component import blocks if new exports were added
 
-**Consumer styling / recipes / guardrails** (no version bump required for docs-only): also sync `GETTING_STARTED.md`, relevant `docs-app/components/pages/page-*.jsx`, `docs-app/lib/docs-routes.js`, `docs-app/lib/component-catalog.js`, and `CONSUMER_STYLING_ROADMAP.md` — see [CONTRIBUTING.md](CONTRIBUTING.md) and `.cursor/rules/consumer-styling-docs.mdc`.
+**Consumer styling / recipes / guardrails** (no version bump required for docs-only): also sync `GETTING_STARTED.md`, relevant `docs-app/components/pages/page-*.jsx`, `docs-app/lib/docs-routes.js`, and `docs-app/lib/component-catalog.js` — see [CONTRIBUTING.md](CONTRIBUTING.md) and `.cursor/rules/consumer-styling-docs.mdc`.
 
 ### 5. CHANGELOG.md format rules
 
@@ -628,15 +628,16 @@ Also check for a local `components/ui.ts` or `components/ui/index.ts` that re-ex
 | File | Contents |
 |------|----------|
 | [SKILL.md](SKILL.md) | **Verified** component catalog, props, gotchas — source of truth for what's actually shipped |
-| [COMPONENTS.md](COMPONENTS.md) | Human usage guide + export index; roadmap-only components marked ⚠️ — verify exports in SKILL.md |
+| [COMPONENTS.md](COMPONENTS.md) | Human usage guide + export index — verify exports in SKILL.md |
 | [PROPS.generated.md](PROPS.generated.md) | Auto-generated `*Props` tables — `npm run docs:props` / `npm run test:props` |
 | [BRAND.md](BRAND.md) | Logo usage, nav lockup, sizing rules |
 | [ACCESSIBILITY.md](ACCESSIBILITY.md) | Contrast ratios, focus, ARIA patterns |
 | [VOICE.md](VOICE.md) | Copy tone, terminal-style CTAs, error messages |
 | [KEYBOARD.md](KEYBOARD.md) | Keyboard contract for CommandMenu and navigation |
 | [BACKGROUNDS.md](BACKGROUNDS.md) | NoirGlowBackground props and fallback rules |
-| [GETTING_STARTED.md](GETTING_STARTED.md) | Install, Tailwind config, registry usage |
-| [CONSUMER_STYLING_ROADMAP.md](CONSUMER_STYLING_ROADMAP.md) | Component-first consumer styling phases and acceptance criteria |
+| [GETTING_STARTED.md](GETTING_STARTED.md) | Install, Tailwind config, consumer styling policy, audit checklist |
+| [docs/archive/CONSUMER_STYLING_ROADMAP.md](docs/archive/CONSUMER_STYLING_ROADMAP.md) | Archived — completed consumer styling initiative (phases 1–6) |
+| [COMPLETENESS_ROADMAP.md](COMPLETENESS_ROADMAP.md) | Open roadmap items and release ritual |
 | [Recipes (docs)](https://design.tollerud.dev/recipes/) | Agent-safe copy-paste screen compositions |
 | `npx tollerud-ui-audit` | Consumer styling drift checker (ships with `@tollerud/ui`); `--warn-only` for advisory CI; error codes in GETTING_STARTED.md |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | PR gates, component checklist, consumer styling doc sync matrix |

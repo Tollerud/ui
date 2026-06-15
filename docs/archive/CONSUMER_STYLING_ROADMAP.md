@@ -1,5 +1,7 @@
 # Consumer styling roadmap
 
+**Archived:** 2026-06-15 — all six phases complete. Living policy: [SKILL.md](../../SKILL.md), [AGENTS.md](../../AGENTS.md), [GETTING_STARTED.md](../../GETTING_STARTED.md), [Recipes](https://design.tollerud.dev/recipes/).
+
 **Purpose:** make `@tollerud/ui` easier for agents and consumer apps to use consistently without recreating branded UI with ad hoc Tailwind classes or inline styles.
 
 `@tollerud/ui` ships Tailwind support intentionally. Tailwind should remain the styling engine for Tollerud UI and a safe escape hatch in consumer apps. The goal is not to ban Tailwind; the goal is to make the component API the primary design language so projects look like the docs by default.
