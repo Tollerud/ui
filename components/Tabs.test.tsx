@@ -22,4 +22,28 @@ describe('Tabs', () => {
     await user.click(screen.getByRole('tab', { name: 'Beta' }))
     expect(screen.getByText('Panel B')).toBeVisible()
   })
+
+  it('moves focus between tabs with arrow keys', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <Tabs defaultValue="a">
+        <TabsList>
+          <TabsTrigger value="a">Alpha</TabsTrigger>
+          <TabsTrigger value="b">Beta</TabsTrigger>
+          <TabsTrigger value="c">Gamma</TabsTrigger>
+        </TabsList>
+        <TabsContent value="a">Panel A</TabsContent>
+        <TabsContent value="b">Panel B</TabsContent>
+        <TabsContent value="c">Panel C</TabsContent>
+      </Tabs>
+    )
+
+    const alpha = screen.getByRole('tab', { name: 'Alpha' })
+    alpha.focus()
+    await user.keyboard('{ArrowRight}')
+
+    expect(screen.getByRole('tab', { name: 'Beta' })).toHaveFocus()
+    expect(screen.getByText('Panel B')).toBeVisible()
+  })
 })

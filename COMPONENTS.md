@@ -22,6 +22,20 @@ Use this file as a component reference, not as an invitation to rebuild branded 
 
 **Consumer guardrails** — run `npx tollerud-ui-audit` from your app root before shipping. The audit checks Tailwind CSS setup, copied `components/ui` trees, hardcoded brand hex values, local `cn()` helpers, and `<Button><Link>` nesting. Use `--warn-only` in CI when you want warnings without a failing exit code. Full command reference, error codes, and fixes: [GETTING_STARTED.md](GETTING_STARTED.md) → Consumer project checklist · [Guides on design.tollerud.dev](https://design.tollerud.dev/resources/consumer-checklist/).
 
+## Component families
+
+Use this map to pick the right layer — not every app needs infra widgets or glow backgrounds.
+
+| Family | Components | Reach for these when… |
+|--------|------------|-------------------------|
+| **Core** | `Button`, `Card`, `Badge`, `Input`, `Select`, `Checkbox`, `Switch`, `Textarea`, `FormRow`, `Container`, `StatusDot`, `Kbd`, `CodeBlock`, `StatCard` | Building any screen — actions, forms, layout, status |
+| **Overlays & navigation** | `Dialog`, `Sheet`, `Drawer`, `DropdownMenu`, `Tabs`, `Tooltip`, `CommandMenu`, `Alert`, `Empty`, `Toaster` | Modals, menus, multi-step flows, command palette, toasts |
+| **Data & patterns** | `DataTable`, `ActionRow`, `Timeline`, `LogViewer`, `BentoDashboard` | Tables, logs, dashboards assembled from primitives |
+| **Infra / ops** | `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `AlertInbox`, `RollbackPlan`, `BackupStatusPanel`, `ActionDiff` | Homelab, fleet, incident, and approval UIs |
+| **Visual & marketing** | `HeroBlock`, `FeatureCard`, `CTABand`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `GlowCard`, `BentoDashboard` | Landing sections, charts, marketing blocks |
+| **Optional visual** | `NoirGlowBackground` (+ `@paper-design/shaders-react` peer) | Hero backgrounds with WebGL glow — optional install |
+| **Branding** | `Monogram`, `Footer` | Nav lockups and page chrome (`Footer` also as [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer)) |
+
 ## Export index
 
 All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted. Prop signatures: see [PROPS.generated.md](PROPS.generated.md).
