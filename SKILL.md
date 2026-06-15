@@ -375,9 +375,19 @@ const [open, setOpen] = useState(false)
 <PasswordInput label="Password" placeholder="Enter password" error={errors.password} />
 ```
 
-**Combobox** — searchable single-select. `options: { value, label, disabled? }[]`, `value?`, `onChange?`, `placeholder?`, `filter?`, `label?`, `error?`.
+**Combobox** — searchable single-select. Flat `options: { value, label, disabled? }[]` or grouped `groups: { label, options }[]` with section titles in the dropdown. `value?`, `onChange?`, `placeholder?`, `filter?`, `label?`, `error?`.
 ```tsx
 <Combobox label="Connect to host" value={host} onChange={setHost} options={hostOptions} />
+
+<Combobox
+  label="Command target"
+  value={target}
+  onChange={setTarget}
+  groups={[
+    { label: 'Servers', options: hostOptions },
+    { label: 'Actions', options: actionOptions },
+  ]}
+/>
 ```
 
 **TagInput** — chip-style multi-value input. `value?: string[]`, `onChange?`, `max?`, `placeholder?`, `label?`, `error?`. Enter/comma to add, Backspace to remove last.

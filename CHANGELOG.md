@@ -7,6 +7,19 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.5.0 — 2026-06-16 — Grouped Combobox sections
+
+`Combobox` now supports searchable dropdowns with section titles via an optional `groups` prop.
+
+### Changed
+
+- `Combobox` — optional `groups: { label, options }[]` for titled sections inside the list; flat `options` still works unchanged
+- Exported `ComboboxGroup` type
+
+### Migration
+
+Nothing breaking. Existing flat `options` usage is unchanged. Pass `groups` when you need section headers in the dropdown.
+
 ## 4.4.1 — 2026-06-15 — Trademark notice and brand asset license
 
 Clarifies that MIT applies to source code only. Tollerud trademarks, the monogram, avatars, and files under `brand/` remain proprietary.

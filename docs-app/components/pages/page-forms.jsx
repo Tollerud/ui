@@ -28,11 +28,30 @@ function ValidationForm() {
 }
 
 function PageForms() {
-  const [combo, setCombo] = useState('emma');
+  const [comboHost, setComboHost] = useState('emma');
+  const [comboTarget, setComboTarget] = useState('deploy');
   const servers = [
     { value: 'emma', label: 'emma.tollerud.no' }, { value: 'miriam', label: 'miriam.tollerud.no' },
     { value: 'pia', label: 'pia.tollerud.no' }, { value: 'iris', label: 'iris.tollerud.no' },
     { value: 'victoria', label: 'victoria.tollerud.no' }, { value: 'embla', label: 'embla.tollerud.no' },
+  ];
+  const commandGroups = [
+    {
+      label: 'Servers',
+      options: [
+        { value: 'emma', label: 'emma.tollerud.no' },
+        { value: 'pia', label: 'pia.tollerud.no' },
+        { value: 'iris', label: 'iris.tollerud.no' },
+      ],
+    },
+    {
+      label: 'Actions',
+      options: [
+        { value: 'backup', label: 'Run backup' },
+        { value: 'deploy', label: 'Deploy stack' },
+        { value: 'logs', label: 'View logs' },
+      ],
+    },
   ];
   const [rg, setRg] = useState('staging');
   return (
@@ -118,22 +137,52 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Combobox" permalink="forms/combobox" desc="Searchable single-select with keyboard navigation (↑/↓/Enter/Esc) and an empty state.">
-        <Demo name="combobox" variant="col" code={`<Combobox
-  label="Host"
-  value={value}
-  onChange={setValue}
-  options={[{ value: 'emma', label: 'emma.tollerud.no' }, …]}
+      <Section title="Combobox" permalink="forms/combobox" desc="Type in the field to filter options as you search. Keyboard navigation (↑/↓/Enter/Esc), optional grouped section titles that collapse when empty, and a no-results state.">
+        <Demo name="combobox" variant="col" code={`// Flat list — type to filter hosts
+<Combobox
+  label="Connect to host"
+  placeholder="Search hosts…"
+  value={host}
+  onChange={setHost}
+  options={servers}
+/>
+
+// Grouped — search hides empty sections (try "deploy")
+<Combobox
+  label="Command target"
+  placeholder="Search commands…"
+  value={target}
+  onChange={setTarget}
+  groups={[
+    { label: 'Servers', options: serverOptions },
+    { label: 'Actions', options: actionOptions },
+  ]}
 />`}>
-          <div style={{ width: '100%', maxWidth: 320 }}>
-            <Combobox label="Connect to host" value={combo} onChange={setCombo}
-              options={[
-                { value: 'emma', label: 'emma.tollerud.no' },
-                { value: 'pia', label: 'pia.tollerud.no' },
-                { value: 'iris', label: 'iris.tollerud.no' },
-                { value: 'miriam', label: 'miriam.tollerud.no' },
-                { value: 'embla', label: 'embla.tollerud.no' },
-              ]}/>
+          <div className="ds-col" style={{ width: '100%', maxWidth: 360, gap: 20 }}>
+            <div className="ds-col" style={{ gap: 6 }}>
+              <Combobox
+                label="Connect to host"
+                placeholder="Search hosts…"
+                value={comboHost}
+                onChange={setComboHost}
+                options={servers}
+              />
+              <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>
+                Type to filter the flat list — try <span className="ds-mono">iris</span> or <span className="ds-mono">pia</span>.
+              </p>
+            </div>
+            <div className="ds-col" style={{ gap: 6 }}>
+              <Combobox
+                label="Command target"
+                placeholder="Search commands…"
+                value={comboTarget}
+                onChange={setComboTarget}
+                groups={commandGroups}
+              />
+              <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>
+                Type to filter across groups — try <span className="ds-mono">deploy</span> to collapse to the Actions section.
+              </p>
+            </div>
           </div>
         </Demo>
       </Section>

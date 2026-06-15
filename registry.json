@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.4.1",
+  "version": "4.5.0",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -797,7 +797,7 @@
     },
     "combobox": {
       "name": "Combobox",
-      "description": "Searchable single-select combobox with full keyboard navigation",
+      "description": "Searchable single-select combobox with optional grouped section titles and full keyboard navigation",
       "files": [
         "components/Combobox.tsx"
       ],

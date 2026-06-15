@@ -269,7 +269,7 @@ export { PasswordInput } from './PasswordInput'
 export type { PasswordInputProps } from './PasswordInput'
 
 export { Combobox } from './Combobox'
-export type { ComboboxProps, ComboboxOption } from './Combobox'
+export type { ComboboxProps, ComboboxOption, ComboboxGroup } from './Combobox'
 
 export { DatePicker } from './DatePicker'
 export type { DatePickerProps } from './DatePicker'

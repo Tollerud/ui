@@ -903,15 +903,21 @@ Tones: `default` · `error` · `info` · `success` · `warning`.
 
 ### Combobox
 
-Searchable single-select with keyboard navigation (↑/↓/Enter/Esc).
+Searchable single-select with keyboard navigation (↑/↓/Enter/Esc). Pass flat `options` or grouped `groups` with section titles in the dropdown.
 
 ```tsx
 <Combobox label="Host" value={value} onChange={setValue}
   options={[{ value: 'emma', label: 'emma.tollerud.no' }]}
   placeholder="Search…" error={errors.host} />
+
+<Combobox label="Target" value={target} onChange={setTarget}
+  groups={[
+    { label: 'Servers', options: hostOptions },
+    { label: 'Actions', options: actionOptions },
+  ]} />
 ```
 
-Props: `options: { value, label, disabled? }[]`, `value?`, `onChange?`, `label?`, `placeholder?`, `error?`, `filter?`.
+Props: `options?: { value, label, disabled? }[]`, `groups?: { label, options }[]`, `value?`, `onChange?`, `label?`, `placeholder?`, `error?`, `filter?`.
 
 ### Avatar / AvatarGroup
 

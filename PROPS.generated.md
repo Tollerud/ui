@@ -140,7 +140,8 @@
 
 ## Combobox — `ComboboxProps`
 
-- `options: ComboboxOption[]`
+- `options?: ComboboxOption[]`
+- `groups?: ComboboxGroup[]`
 - `value?: string`
 - `defaultValue?: string`
 - `onChange?: (value: string) => void`

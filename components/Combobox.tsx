@@ -10,8 +10,17 @@ export interface ComboboxOption {
   disabled?: boolean
 }
 
-export interface ComboboxProps {
+export interface ComboboxGroup {
+  /** Section title shown above options in the dropdown */
+  label: string
   options: ComboboxOption[]
+}
+
+export interface ComboboxProps {
+  /** Flat option list — use when sections are not needed */
+  options?: ComboboxOption[]
+  /** Grouped options with section titles — takes precedence over `options` when provided */
+  groups?: ComboboxGroup[]
   value?: string
   defaultValue?: string
   onChange?: (value: string) => void
@@ -27,8 +36,30 @@ export interface ComboboxProps {
 const defaultFilter = (option: ComboboxOption, query: string) =>
   option.label.toLowerCase().includes(query.toLowerCase())
 
+function flattenOptions(options: ComboboxOption[], groups?: ComboboxGroup[]) {
+  if (groups && groups.length > 0) {
+    return groups.flatMap((group) => group.options)
+  }
+  return options
+}
+
+function filterGroups(
+  groups: ComboboxGroup[],
+  query: string,
+  filter: (option: ComboboxOption, query: string) => boolean
+): ComboboxGroup[] {
+  if (!query) return groups
+  return groups
+    .map((group) => ({
+      ...group,
+      options: group.options.filter((option) => filter(option, query)),
+    }))
+    .filter((group) => group.options.length > 0)
+}
+
 function Combobox({
-  options,
+  options = [],
+  groups,
   value: valueProp,
   defaultValue,
   onChange,
@@ -49,12 +80,24 @@ function Combobox({
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
 
-  const selected = options.find((o) => o.value === value)
+  const isGrouped = Boolean(groups && groups.length > 0)
+  const allOptions = useMemo(() => flattenOptions(options, groups), [options, groups])
+
+  const filteredGroups = useMemo(() => {
+    if (!isGrouped || !groups) return []
+    return filterGroups(groups, query, filter)
+  }, [groups, isGrouped, query, filter])
 
   const filtered = useMemo(() => {
+    if (isGrouped) return filteredGroups.flatMap((group) => group.options)
     if (!query) return options
-    return options.filter((o) => filter(o, query))
-  }, [options, query, filter])
+    return options.filter((option) => filter(option, query))
+  }, [filteredGroups, filter, isGrouped, options, query])
+
+  const highlightedIndex =
+    filtered.length === 0 ? 0 : Math.min(activeIndex, filtered.length - 1)
+
+  const selected = allOptions.find((option) => option.value === value)
 
   useEffect(() => {
     if (!open) return
@@ -88,19 +131,21 @@ function Combobox({
     if (e.key === 'ArrowDown') {
       e.preventDefault()
       setOpen(true)
-      setActiveIndex((i) => Math.min(i + 1, filtered.length - 1))
+      setActiveIndex((index) => Math.min(index + 1, filtered.length - 1))
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
-      setActiveIndex((i) => Math.max(i - 1, 0))
+      setActiveIndex((index) => Math.max(index - 1, 0))
     } else if (e.key === 'Enter') {
       e.preventDefault()
-      const opt = filtered[activeIndex]
-      if (opt) commit(opt)
+      const option = filtered[highlightedIndex]
+      if (option) commit(option)
     } else if (e.key === 'Escape') {
       setOpen(false)
       setQuery('')
     }
   }
+
+  let flatIndex = 0
 
   return (
     <div ref={rootRef} className={cn('relative flex flex-col gap-1', className)}>
@@ -157,29 +202,68 @@ function Combobox({
           {filtered.length === 0 && (
             <li className="px-3 py-2 text-sm text-tollerud-text-muted">No results</li>
           )}
-          {filtered.map((option, i) => {
-            const isSelected = option.value === value
-            return (
-              <li
-                key={option.value}
-                role="option"
-                aria-selected={isSelected}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                  commit(option)
-                }}
-                onMouseEnter={() => setActiveIndex(i)}
-                className={cn(
-                  'flex items-center justify-between gap-2 px-3 py-2 text-sm cursor-pointer',
-                  i === activeIndex ? 'bg-tollerud-surface-hover text-tollerud-text-primary' : 'text-tollerud-text-secondary',
-                  option.disabled && 'opacity-40 pointer-events-none'
-                )}
-              >
-                {option.label}
-                {isSelected && <Check size={14} className="text-tollerud-yellow" />}
-              </li>
-            )
-          })}
+
+          {isGrouped
+            ? filteredGroups.map((group) => (
+                <li key={group.label} role="presentation">
+                  <div className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-tollerud-text-muted">
+                    {group.label}
+                  </div>
+                  <ul role="group" aria-label={group.label}>
+                    {group.options.map((option) => {
+                      const index = flatIndex++
+                      const isSelected = option.value === value
+                      return (
+                        <li
+                          key={option.value}
+                          role="option"
+                          aria-selected={isSelected}
+                          onMouseDown={(e) => {
+                            e.preventDefault()
+                            commit(option)
+                          }}
+                          onMouseEnter={() => setActiveIndex(index)}
+                          className={cn(
+                            'flex items-center justify-between gap-2 px-3 py-2 text-sm cursor-pointer',
+                            index === highlightedIndex
+                              ? 'bg-tollerud-surface-hover text-tollerud-text-primary'
+                              : 'text-tollerud-text-secondary',
+                            option.disabled && 'opacity-40 pointer-events-none'
+                          )}
+                        >
+                          {option.label}
+                          {isSelected && <Check size={14} className="text-tollerud-yellow" />}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </li>
+              ))
+            : filtered.map((option, index) => {
+                const isSelected = option.value === value
+                return (
+                  <li
+                    key={option.value}
+                    role="option"
+                    aria-selected={isSelected}
+                    onMouseDown={(e) => {
+                      e.preventDefault()
+                      commit(option)
+                    }}
+                    onMouseEnter={() => setActiveIndex(index)}
+                    className={cn(
+                      'flex items-center justify-between gap-2 px-3 py-2 text-sm cursor-pointer',
+                      index === highlightedIndex
+                        ? 'bg-tollerud-surface-hover text-tollerud-text-primary'
+                        : 'text-tollerud-text-secondary',
+                      option.disabled && 'opacity-40 pointer-events-none'
+                    )}
+                  >
+                    {option.label}
+                    {isSelected && <Check size={14} className="text-tollerud-yellow" />}
+                  </li>
+                )
+              })}
         </ul>
       )}
 
