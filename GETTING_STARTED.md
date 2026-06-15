@@ -1,5 +1,18 @@
 # Getting Started
 
+**New here?** Follow [Choose your path](#choose-your-path), run the install for your path, add the two CSS imports, import a component. Everything else on this page is detail.
+
+→ **[README](README.md)** · **[COMPONENTS.md](COMPONENTS.md)** · **[SKILL.md](SKILL.md)** · **[Live docs](https://design.tollerud.dev/)**
+
+## Choose your path
+
+| Path | Install | CSS / setup |
+|------|---------|-------------|
+| **Full design system** (most users) | `@tollerud/ui` + [required peers](#full-tollerud-ui) | `globals.css` + `source.css` |
+| **Footer only** | `@tollerud/footer` | Tollerud tokens still required — see [Footer only](#footer-only-minimal) |
+| **Tailwind v3 (legacy)** | Same peers as full system | `globals-v3.css` + preset — see [Tailwind v3](#tailwind-v3-legacy) |
+| **NoirGlowBackground** | Add `@paper-design/shaders-react` | Optional — all other components work without it |
+
 ## Install
 
 ### Full Tollerud UI
@@ -13,13 +26,26 @@ npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
   lucide-react framer-motion sonner
 ```
 
-As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peer dependencies**.
+Looks long — most apps only do this once. Peers stay in your app so you control versions.
+
+As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peer dependencies**. The design system bundles only `class-variance-authority`.
 
 `@paper-design/shaders-react` is an **optional** peer dependency — only needed if you use `NoirGlowBackground`. All other components work without it.
 
 ```bash
 npm install @paper-design/shaders-react
 ```
+
+### Peer dependencies by family
+
+| Family | Packages | Needed for |
+|--------|----------|------------|
+| **Always** | `react`, `react-dom`, `clsx`, `tailwind-merge`, `tailwindcss` | Every integration |
+| **Overlays & navigation** | `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-tabs`, `@radix-ui/react-tooltip`, `@radix-ui/react-slot`, `@radix-ui/react-progress` | Dialog, Sheet, Drawer, DropdownMenu, Tabs, Tooltip, Progress, Button `asChild` |
+| **Icons** | `lucide-react` | Components with built-in icons |
+| **Motion** | `framer-motion` | Animated components (e.g. GlowCard, charts) |
+| **Toasts** | `sonner` | `<Toaster />` / toast API — mount once at app root |
+| **Optional — glow** | `@paper-design/shaders-react` | `NoirGlowBackground` only |
 
 ### Footer only (minimal)
 
@@ -95,7 +121,7 @@ Requirements:
    @import "@tollerud/ui/source.css";
 3. Mount <Toaster /> near the app root if we use sonner toasts.
 4. Sync SKILL.md from https://raw.githubusercontent.com/Tollerud/ui/main/SKILL.md into the project skills folder (.claude/skills/tollerud-ui/SKILL.md or equivalent).
-5. Replace any vendored components/ui copies with imports from @tollerud/ui. Delete local cn() helpers — use import { cn } from '@tollerud/ui/utils'.
+5. Replace any vendored components/ui copies with imports from @tollerud/ui. Delete local cn() helpers — use import { cn } from '@tollerud/ui' (or '@tollerud/ui/utils' for tree-shaking).
 6. Do NOT copy new component source from the Tollerud UI repo into this app.
 7. Use component-first composition: @tollerud/ui exports, then layout/screen patterns, then small Tailwind glue only. Screen starting points: https://design.tollerud.dev/recipes/
 8. Fix Button/Link nesting: use asChild or buttonVariants() on links.
@@ -397,7 +423,7 @@ Import individual components without pulling the full barrel:
 import { Button } from '@tollerud/ui/button'
 import { PageShell, Section, Stack } from '@tollerud/ui'
 import { PageHeader, ResourceList } from '@tollerud/ui'
-import { cn } from '@tollerud/ui/utils'
+import { cn } from '@tollerud/ui'  // or @tollerud/ui/utils for tree-shaking
 ```
 
 See [SKILL.md](SKILL.md) for the export catalog, [PROPS.generated.md](PROPS.generated.md) for prop signatures, and [COMPONENTS.md](COMPONENTS.md) for usage examples.
@@ -438,7 +464,7 @@ Also look for `components/ui/index.ts` re-exporting relative paths instead of `@
 | Copied pattern | Fix |
 |----------------|-----|
 | `src/components/ui/Button.tsx` | Delete; import from `@tollerud/ui` |
-| Local `lib/utils.ts` with `cn()` | Delete; `import { cn } from '@tollerud/ui/utils'` |
+| Local `lib/utils.ts` with `cn()` | Delete; `import { cn } from '@tollerud/ui'` |
 | `components/ui.ts` re-exporting relatives | Direct `@tollerud/ui` imports |
 
 ---

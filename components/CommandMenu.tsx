@@ -231,7 +231,7 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
         </div>
 
         {/* Results */}
-        <div ref={listRef} className="tollerud-cmd__list" role="listbox" tabIndex={-1}>
+        <div ref={listRef} className="tollerud-cmd__list" role="listbox" aria-label="Commands" tabIndex={-1}>
           {filteredGroups.length === 0 && (
             <div className="tollerud-cmd__empty">{emptyMessage}</div>
           )}

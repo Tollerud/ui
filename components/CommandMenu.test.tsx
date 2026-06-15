@@ -39,6 +39,43 @@ describe('CommandMenu', () => {
     expect(onOpenChange).toHaveBeenCalledWith(false)
   })
 
+  it('navigates with arrow keys and selects with Enter', async () => {
+    const user = userEvent.setup()
+    const onOpenChange = vi.fn()
+    const onAction = vi.fn()
+
+    render(
+      <CommandMenu
+        open
+        onOpenChange={onOpenChange}
+        groups={groups}
+        onAction={onAction}
+      />
+    )
+
+    const input = screen.getByPlaceholderText('Type a command…')
+    await user.click(input)
+    await user.keyboard('{ArrowDown}')
+    await user.keyboard('{Enter}')
+
+    expect(onAction).toHaveBeenCalled()
+    expect(onOpenChange).toHaveBeenCalledWith(false)
+  })
+
+  it('closes on Escape', async () => {
+    const user = userEvent.setup()
+    const onOpenChange = vi.fn()
+
+    render(
+      <CommandMenu open onOpenChange={onOpenChange} groups={groups} />
+    )
+
+    await user.click(screen.getByPlaceholderText('Type a command…'))
+    await user.keyboard('{Escape}')
+
+    expect(onOpenChange).toHaveBeenCalledWith(false)
+  })
+
   it('returns null when closed', () => {
     const { container } = render(
       <CommandMenu open={false} onOpenChange={vi.fn()} groups={groups} />

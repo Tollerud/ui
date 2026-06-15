@@ -2,10 +2,13 @@
 
 Human-oriented usage guide for `@tollerud/ui` **v4.4.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
+**New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
+
 ## Documentation map
 
 | Resource | Use for |
 |----------|---------|
+| **[GETTING_STARTED.md](GETTING_STARTED.md)** | Install, Tailwind, paths, migration — **start here** |
 | **[SKILL.md](SKILL.md)** | Authoritative export catalog, import examples, gotchas (verified against `components/index.ts`) |
 | **[PROPS.generated.md](PROPS.generated.md)** | Machine-generated prop tables — run `npm run docs:props` to refresh; `npm run test:props` catches drift |
 | **This file** | Narrative examples, CSS class patterns, homelab/dashboard usage |
@@ -18,6 +21,20 @@ Use this file as a component reference, not as an invitation to rebuild branded 
 **Agent-safe recipes** for common screens (marketing landing, dashboard, settings, auth, empty state, detail, list/table) live on the docs site at [Recipes](https://design.tollerud.dev/recipes/).
 
 **Consumer guardrails** — run `npx tollerud-ui-audit` from your app root before shipping. The audit checks Tailwind CSS setup, copied `components/ui` trees, hardcoded brand hex values, local `cn()` helpers, and `<Button><Link>` nesting. Use `--warn-only` in CI when you want warnings without a failing exit code. Full command reference, error codes, and fixes: [GETTING_STARTED.md](GETTING_STARTED.md) → Consumer project checklist · [Guides on design.tollerud.dev](https://design.tollerud.dev/resources/consumer-checklist/).
+
+## Component families
+
+Use this map to pick the right layer — not every app needs infra widgets or glow backgrounds.
+
+| Family | Components | Reach for these when… |
+|--------|------------|-------------------------|
+| **Core** | `Button`, `Card`, `Badge`, `Input`, `Select`, `Checkbox`, `Switch`, `Textarea`, `FormRow`, `Container`, `StatusDot`, `Kbd`, `CodeBlock`, `StatCard` | Building any screen — actions, forms, layout, status |
+| **Overlays & navigation** | `Dialog`, `Sheet`, `Drawer`, `DropdownMenu`, `Tabs`, `Tooltip`, `CommandMenu`, `Alert`, `Empty`, `Toaster` | Modals, menus, multi-step flows, command palette, toasts |
+| **Data & patterns** | `DataTable`, `ActionRow`, `Timeline`, `LogViewer`, `BentoDashboard` | Tables, logs, dashboards assembled from primitives |
+| **Infra / ops** | `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `AlertInbox`, `RollbackPlan`, `BackupStatusPanel`, `ActionDiff` | Homelab, fleet, incident, and approval UIs |
+| **Visual & marketing** | `HeroBlock`, `FeatureCard`, `CTABand`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `GlowCard`, `BentoDashboard` | Landing sections, charts, marketing blocks |
+| **Optional visual** | `NoirGlowBackground` (+ `@paper-design/shaders-react` peer) | Hero backgrounds with WebGL glow — optional install |
+| **Branding** | `Monogram`, `Footer` | Nav lockups and page chrome (`Footer` also as [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer)) |
 
 ## Export index
 
