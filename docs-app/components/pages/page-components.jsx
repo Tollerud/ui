@@ -217,18 +217,20 @@ function PageComponents({ go }) {
         </Demo>
       </Section>
 
-      <Section title="Alert" component="Alert" permalink="components/alert" desc="Four semantic tones. Pass icon to override the default icon per tone.">
-        <Demo name="alerts" variant="col" code={`<Alert tone="accent"  title="Heads up">Yellow signals an action worth noticing.</Alert>
-<Alert tone="info"    title="Scheduled">Maintenance window at 03:00 UTC.</Alert>
-<Alert tone="success" title="Deployed">emma — hermes v2.0 is live.</Alert>
-<Alert tone="error"   title="Connection failed">Could not resolve host — check DNS.</Alert>
-<Alert tone="error"   title="Storage full" icon="database">Custom icon via icon prop.</Alert>`}>
+      <Section title="Alert" component="Alert" permalink="components/alert" desc="Four semantic tones. Pass icon to override the default icon per tone. Alert has no built-in outer margin — stack with Stack or className in apps.">
+        <Demo name="alerts" variant="col" code={`<Stack gap="md">
+  <Alert tone="accent"  title="Heads up">Yellow signals an action worth noticing.</Alert>
+  <Alert tone="info"    title="Scheduled">Maintenance window at 03:00 UTC.</Alert>
+</Stack>`}>
           <Alert tone="accent"  title="Heads up">Yellow signals an action worth noticing.</Alert>
           <Alert tone="info"    title="Scheduled">Maintenance window at 03:00 UTC. No action needed.</Alert>
           <Alert tone="success" title="Deployed">emma — hermes v2.0 is live.</Alert>
           <Alert tone="error"   title="Connection failed">Could not resolve host — check DNS.</Alert>
           <Alert tone="error"   title="Storage full" icon="database">Custom icon via the <code>icon</code> prop.</Alert>
         </Demo>
+        <Alert tone="info" title="Spacing in apps">
+          {'Wrap stacked alerts in <Stack gap="md"> or add className="mb-4". The demo above uses flex gap from the preview stage only.'}
+        </Alert>
       </Section>
 
       <Section title="Tabs & Accordion" permalink="components/tabs-and-accordion" desc="Organize content. Tabs ship pill and underline variants.">

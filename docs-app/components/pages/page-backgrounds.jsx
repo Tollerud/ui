@@ -188,12 +188,10 @@ function PageBackgrounds() {
             <NoirGlowBackground intensity="medium" speed="medium" className="absolute inset-0" />
           </div>
         </BgFrame>
-        <div style={{ marginTop: 16 }}>
-          <CodeSnippet name="noir-glow-live.jsx" code={`<div className="relative min-h-[280px]">
+        <CodeSnippet name="noir-glow-live.jsx" code={`<div className="relative min-h-[280px]">
   <NoirGlowBackground intensity="medium" speed="medium" className="absolute inset-0" />
   <div className="relative z-20">{children}</div>
 </div>`}/>
-        </div>
       </Section>
 
       <Section title="Noir glow · CSS fallback" desc="Pass forceCssFallback for static export, reduced-motion, or when WebGL is unavailable.">
@@ -207,14 +205,12 @@ function PageBackgrounds() {
             </div>
           </div>
         </BgFrame>
-        <div style={{ marginTop: 16 }}>
-          <CodeSnippet name="noir-glow.jsx" code={`<NoirGlowBackground
+        <CodeSnippet name="noir-glow.jsx" code={`<NoirGlowBackground
   intensity="medium"
   preserveCenter
   forceCssFallback={false}
   className="absolute inset-0"
 />`}/>
-        </div>
       </Section>
 
       <Section title="Grain gradient · CSS only" desc="A pure-CSS approximation using the same yellow ramp and corner composition — zero WebGL cost. NoirGlowBackground uses a similar fallback when forceCssFallback is set.">
@@ -241,8 +237,7 @@ function PageBackgrounds() {
             <Squares direction="up" speed={0.4} borderColor="rgba(232,213,0,0.22)" hoverFillColor="rgba(232,213,0,0.14)"/>
           </BgFrame>
         </div>
-        <div style={{ marginTop: 16 }}>
-          <CodeSnippet name="squares.jsx" code={`<Squares
+        <CodeSnippet name="squares.jsx" code={`<Squares
   direction="diagonal"   // right | left | up | down | diagonal
   speed={0.5}
   squareSize={40}
@@ -250,7 +245,6 @@ function PageBackgrounds() {
   hoverFillColor="#222"
   base="#060606"
 />`}/>
-        </div>
       </Section>
 
       <Section title="In use" desc="The grain gradient backs the Overview hero; the grid suits full-bleed section dividers and empty states. Both sit behind content at a lower z-index — keep foreground on z-20+.">

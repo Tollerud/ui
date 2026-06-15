@@ -16,7 +16,7 @@ function ExampleLink({ go, id, children }) {
 
 function RecipeLinks({ go, links }) {
   return (
-    <div className="ds-row" style={{ gap: 12, marginTop: 14, flexWrap: 'wrap' }}>
+    <div className="ds-row" style={{ gap: 12, flexWrap: 'wrap' }}>
       {links.map(({ id, label }) => (
         <ExampleLink key={id} go={go} id={id}>
           {label}
@@ -43,7 +43,7 @@ function PageRecipes({ go }) {
         <Alert tone="accent" title="Recipes are snippets, not duplicates">
           Recipes stay code-only. Screen patterns holds the interactive demos for each export. Example pages (Mission Control, Settings, Data Table) show fuller product screens built from the same primitives.
         </Alert>
-        <div className="ds-row" style={{ gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
+        <div className="ds-row" style={{ gap: 12, flexWrap: 'wrap' }}>
           <ExampleLink go={go} id="layout">Layout primitives</ExampleLink>
           <ExampleLink go={go} id="screens">Screen patterns</ExampleLink>
           <ExampleLink go={go} id="getting-started">Consumer styling policy</ExampleLink>
@@ -454,7 +454,7 @@ export function DeployCard() {
   </div>
 </section>`}
         />
-        <p style={{ marginTop: 14, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+        <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
           Full policy and setup notes live on{' '}
           <Button variant="secondary" size="sm" onClick={() => go('getting-started')}>Getting started</Button>.
         </p>

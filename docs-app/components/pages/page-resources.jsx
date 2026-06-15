@@ -133,7 +133,7 @@ export function HostDeployPanel({ onDeploy }: { onDeploy: (host: string) => void
   )
 }`}
         />
-        <p style={{ marginTop: 14, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+        <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
           Full checklist and anti-pattern table:{' '}
           <a className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" href="https://github.com/Tollerud/ui/blob/main/GETTING_STARTED.md#consumer-project-checklist" target="_blank" rel="noreferrer">GETTING_STARTED.md</a>
           {' · '}
@@ -151,7 +151,7 @@ curl -fsSL https://raw.githubusercontent.com/Tollerud/ui/main/SKILL.md \\
 
 # Current package version: v${PACKAGE_VERSION}`}
         />
-        <p style={{ marginTop: 14, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.55 }}>
+        <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
           SKILL.md reflects actual <code className="ds-mono">components/index.ts</code> exports — more reliable than stale copy-paste snippets.
         </p>
       </Section>
@@ -164,7 +164,7 @@ curl -fsSL https://raw.githubusercontent.com/Tollerud/ui/main/SKILL.md \\
 # Component checklist (see AGENTS.md):
 # components/*.tsx → index.ts → registry.json → docs page demo`}
         />
-        <div className="ds-row" style={{ gap: 12, marginTop: 16 }}>
+        <div className="ds-row" style={{ gap: 12 }}>
           <a className="tollerud-btn tollerud-btn--secondary tollerud-btn--md" href="https://github.com/Tollerud/ui/blob/main/CONTRIBUTING.md" target="_blank" rel="noreferrer">CONTRIBUTING.md</a>
           <a className="tollerud-btn tollerud-btn--terminal tollerud-btn--md" href="https://github.com/Tollerud/ui" target="_blank" rel="noreferrer">open_repository</a>
         </div>

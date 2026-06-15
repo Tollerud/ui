@@ -18,6 +18,7 @@ function PageGettingStarted({ go }) {
       />
 
       <Section title="Install" desc="Core package plus required peers. Optional shader peer only if you use NoirGlowBackground.">
+        <SubHead>Full Tollerud UI</SubHead>
         <CodeSnippet
           name="terminal"
           code={`npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \\
@@ -27,6 +28,38 @@ function PageGettingStarted({ go }) {
 
 # Optional — NoirGlowBackground only
 npm install @paper-design/shaders-react`}
+        />
+        <Alert tone="info" title="Required peers">
+          As of v2.0.0, Radix, Lucide, Framer Motion, and Sonner are required peer dependencies — install them with the command above.
+        </Alert>
+        <SubHead>Footer only</SubHead>
+        <CodeSnippet
+          name="footer-only"
+          code={`npm install @tollerud/footer
+
+import { Footer } from '@tollerud/footer'
+
+<Footer />`}
+        />
+        <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+          {'@tollerud/footer bundles clsx and tailwind-merge on purpose. You still need Tailwind with Tollerud tokens — '}
+          <code className="ds-mono">@import &quot;@tollerud/ui/globals.css&quot;</code>
+          {' — so '}<code className="ds-mono">text-tollerud-*</code> / <code className="ds-mono">bg-tollerud-*</code> classes resolve.
+        </p>
+      </Section>
+
+      <Section
+        title="Next.js starter"
+        permalink="getting-started/next-starter"
+        desc="Minimal App Router app with globals.css, source.css, sample page, and Toaster mounted."
+      >
+        <CodeSnippet
+          name="terminal"
+          code={`# From the Tollerud/ui repo:
+cp -R examples/next-starter my-app && cd my-app && npm install && npm run dev
+
+# Or clone and copy:
+# https://github.com/Tollerud/ui/tree/main/examples/next-starter`}
         />
       </Section>
 
@@ -97,7 +130,7 @@ Requirements:
 
 Tell me what you changed.`}
         />
-        <div className="ds-row" style={{ gap: 10, marginTop: 14, flexWrap: 'wrap' }}>
+        <div className="ds-row" style={{ gap: 10, flexWrap: 'wrap' }}>
           <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('getting-started/consumer-checklist')}>Consumer checklist</button>
           <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>Recipes</button>
         </div>
@@ -110,18 +143,46 @@ Tell me what you changed.`}
 @import "@tollerud/ui/globals.css";
 @import "@tollerud/ui/source.css";`}
         />
-        <p style={{ marginTop: 16, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+        <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
           Without <code className="ds-mono">source.css</code> (or a correct manual <code className="ds-mono">@source</code> path), components render unstyled in production. See{' '}
           <button type="button" onClick={() => go('foundations')} style={{ color: 'var(--accent-text)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit' }}>Foundations</button> for tokens and{' '}
           <button type="button" onClick={() => go('components')} style={{ color: 'var(--accent-text)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit' }}>Components</button> for live examples.
         </p>
       </Section>
 
-      <Section title="Import components" desc="Named exports from the barrel, or subpaths for smaller client boundaries.">
+      <Section title="Tailwind v3 (legacy)" desc="Use the preset plus globals-v3.css when you cannot move to Tailwind v4 yet.">
+        <CodeSnippet
+          name="tailwind.config.ts"
+          code={`import type { Config } from 'tailwindcss'
+import tollerudPreset from '@tollerud/ui/preset'
+
+const config: Config = {
+  presets: [tollerudPreset],
+  content: [
+    './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './node_modules/@tollerud/ui/dist/**/*.{js,mjs}',
+  ],
+}
+
+export default config`}
+        />
+        <CodeSnippet
+          name="globals.css"
+          code={`@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@import "@tollerud/ui/globals-v3.css";`}
+        />
+      </Section>
+
+      <Section title="Imports" desc="Named exports from the barrel, or subpaths for tree-shaking and smaller client boundaries.">
         <CodeSnippet
           name="imports.tsx"
           code={`import { Button, Card, Badge, Monogram, DataTable } from '@tollerud/ui'
-// or tree-shaken:
+import { PageShell, Section, Stack } from '@tollerud/ui'
+import { PageHeader, ResourceList } from '@tollerud/ui'
+
+// Tree-shaken subpaths:
 import { Button } from '@tollerud/ui/button'
 import { cn } from '@tollerud/ui/utils'`}
         />
@@ -161,7 +222,7 @@ export function DeployCard() {
   </div>
 </section>`}
         />
-        <p style={{ marginTop: 16, fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+        <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
           If a branded structure repeats across screens, add it to <code className="ds-mono">@tollerud/ui</code> or compose a local semantic feature component. Do not copy package internals into <code className="ds-mono">components/ui</code>, and import <code className="ds-mono">cn</code> from the package instead of reimplementing it. For copy-paste screen starting points, see{' '}
           <button type="button" onClick={() => go('recipes')} style={{ color: 'var(--accent-text)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit' }}>Recipes</button>.
         </p>
@@ -184,7 +245,7 @@ npx tollerud-ui-audit --warn-only`}
         <Alert tone="accent" title="Exit codes">
           Exit 0 when clean, or when only warnings exist with --warn-only. Exit 1 when errors are found — fix before merge.
         </Alert>
-        <div className="ds-row" style={{ gap: 10, marginTop: 14, flexWrap: 'wrap' }}>
+        <div className="ds-row" style={{ gap: 10, flexWrap: 'wrap' }}>
           <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('resources')}>Guides — error code reference</button>
           <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('recipes')}>Recipes</button>
         </div>
@@ -226,12 +287,31 @@ export default function RootLayout({ children }) {
         />
       </Section>
 
-      <Section title="Subpath imports" desc="Tree-shake individual components without pulling the full barrel.">
+      <Section
+        title="Migrating from copied components"
+        permalink="getting-started/migrate-copied-ui"
+        desc="Replace vendored components/ui trees and local cn() helpers with package imports."
+      >
         <CodeSnippet
-          name="subpath"
-          code={`import { Button } from '@tollerud/ui/button'
+          name="detect-copies.sh"
+          code={`grep -rl "tollerud-yellow\\|tollerud-noir\\|tollerud-surface" src --include="*.tsx" --include="*.ts"`}
+        />
+        <Alert tone="accent" title="Fix checklist">
+          Install peers, swap imports to @tollerud/ui, delete copied files, sync SKILL.md for prop drift, add Toaster if using Sonner, then run npx tsc --noEmit and npx tollerud-ui-audit.
+        </Alert>
+        <CodeSnippet
+          name="before-after.tsx"
+          code={`// Before
+import { Button } from '@/components/ui/Button'
+import { cn } from '@/lib/utils'
+
+// After
+import { Button } from '@tollerud/ui'
 import { cn } from '@tollerud/ui/utils'`}
         />
+        <div className="ds-row" style={{ gap: 10, flexWrap: 'wrap' }}>
+          <button type="button" className="tollerud-btn tollerud-btn--ghost tollerud-btn--sm" onClick={() => go('resources')}>Guides — full anti-pattern table</button>
+        </div>
       </Section>
 
       <Section title="Next steps" desc="Explore the system by area.">

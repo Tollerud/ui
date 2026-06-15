@@ -638,7 +638,7 @@ dependencies were added.
   - Patterns: Dashboard and Approval Flow templates
   - Brand: Tia avatar, voice, and Tollerud glow guide
   - Changelog: Version history timeline
-- Docs use the same design system components for consistent preview
+- Docs use the same Tollerud UI components for consistent preview
 - Dark theme with sidebar navigation, responsive layout
 
 ## 2026-05-26 — Phase 4: shadcn Registry Compatibility

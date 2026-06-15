@@ -127,7 +127,7 @@ function PageFoundations() {
 
       <Section title="Brand color" desc="Yellow is the only chromatic color in the system. It signals interaction; everything else is monochrome.">
         <SubHead>Yellow & amber</SubHead>
-        <div className="ds-swatchgrid" style={{ marginBottom: 28 }}>
+        <div className="ds-swatchgrid">
           {brand.map(([n, v, t]) => <Swatch key={n} name={n} value={v} varName={t}/>)}
         </div>
         <SubHead>Noir scale</SubHead>
@@ -176,8 +176,7 @@ function PageFoundations() {
             </div>
           </div>
         </div>
-        <div style={{ marginTop: 16 }}>
-          <CodeSnippet name="monogram.jsx" code={`import { Monogram } from '@tollerud/ui'
+        <CodeSnippet name="monogram.jsx" code={`import { Monogram } from '@tollerud/ui'
 
 // Default — acid yellow on dark surfaces
 <Monogram size={26} />
@@ -187,7 +186,6 @@ function PageFoundations() {
 
 // On tinted or photo backgrounds
 <Monogram color="white" className="h-5 w-auto" />`}/>
-        </div>
         <SubHead>Navigation lockup</SubHead>
         <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 16px' }}>
           The monogram always appears to the left of the project name — never the name alone, never the mark alone. Use <code className="ds-mono" style={{ fontSize: 12 }}>TopNav</code> for top bars so the lockup, link states, focus styles, and spacing stay consistent.
@@ -205,7 +203,7 @@ function PageFoundations() {
             className="rounded-lg border border-tollerud-border"
           />
         </div>
-        <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div className="ds-col" style={{ gap: 22 }}>
           <CodeSnippet name="top-nav.jsx" code={`import { Button, TopNav } from '@tollerud/ui'
 
 <TopNav
@@ -353,8 +351,7 @@ function PageFoundations() {
             );
           })}
         </div>
-        <div style={{ marginTop: 16 }}>
-          <CodeSnippet name="adding-an-icon.jsx" code={`// 1. Map a lucide icon in docs-app/components/kit/icons.jsx:
+        <CodeSnippet name="adding-an-icon.jsx" code={`// 1. Map a lucide icon in docs-app/components/kit/icons.jsx:
 import { Container } from 'lucide-react'
 // ...
 container: icon(Container),
@@ -362,7 +359,6 @@ container: icon(Container),
 // 2. Use it anywhere — by component or by name string:
 <Icons.container size={18}/>
 <StatCard icon="container" .../>   // components that take an icon prop`}/>
-        </div>
       </Section>
 
       <Section title="Voice" desc="Direct. Technical. Warm-but-not-corporate. Think terminal prompt, not marketing email.">
@@ -405,7 +401,7 @@ container: icon(Container),
             </div>
           </div>
         </div>
-        <div className="ds-grid-2" style={{ marginTop: 16 }}>
+        <div className="ds-grid-2">
           <div className="tollerud-card ds-themed">
             <div className="ds-row" style={{ gap: 7, marginBottom: 14, color: 'var(--success)' }}><Icons.checkCircle size={16}/><span style={{ fontWeight: 600, fontSize: 13, color: 'var(--foreground)' }}>Do</span></div>
             <div className="ds-col" style={{ gap: 9 }}>
@@ -421,8 +417,7 @@ container: icon(Container),
             </div>
           </div>
         </div>
-        <div style={{ marginTop: 16 }}>
-          <CodeSnippet name="tia-avatar.jsx" code={`import { TiaPortrait, TollerudAvatarFull } from '@/components/brand'
+        <CodeSnippet name="tia-avatar.jsx" code={`import { TiaPortrait, TollerudAvatarFull } from '@/components/brand'
 
 // Portrait — SVG for crisp scaling, PNG for hero glow
 <TiaPortrait width={96} alt="Tia" />
@@ -431,7 +426,6 @@ container: icon(Container),
 // Full figure — SVG for docs panels, PNG for hero glow
 <TollerudAvatarFull height={480} alt="Tia" />
 <TollerudAvatarFull variant="png" height={520} glow alt="Tia" />`}/>
-        </div>
       </Section>
     </div>
   );

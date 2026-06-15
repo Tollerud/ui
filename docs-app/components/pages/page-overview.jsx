@@ -139,7 +139,7 @@ function PageOverview({ go }) {
           code={`npx tollerud-ui-audit
 # error code reference → Guides → Consumer project checklist`}
         />
-        <div className="ds-row" style={{ gap: 12, marginTop: 14 }}>
+        <div className="ds-row" style={{ gap: 12 }}>
           <button className="tollerud-btn tollerud-btn--primary tollerud-btn--md" onClick={() => go('getting-started')}>Getting started</button>
           <button className="tollerud-btn tollerud-btn--ghost tollerud-btn--md" onClick={() => go('resources')}>Guides — audit reference</button>
           <button className="tollerud-btn tollerud-btn--ghost tollerud-btn--md" onClick={() => go('foundations')}>Foundations</button>

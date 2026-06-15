@@ -740,7 +740,7 @@ Chip-style multi-value input. Enter or comma to add; Backspace removes the last 
 
 ### Monogram
 
-Inline SVG brand mark. Never recolor outside the design system rules.
+Inline SVG brand mark. Never recolor outside the Tollerud UI rules.
 
 ```tsx
 <Monogram className="h-5 w-auto" color="yellow" />

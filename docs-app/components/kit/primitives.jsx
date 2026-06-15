@@ -113,7 +113,7 @@ function PropTable({ component }) {
   if (!primary) return null
 
   return (
-    <div className="ds-proptable" style={{ marginBottom: 18 }}>
+    <div className="ds-proptable">
       <div className="ds-row" style={{ justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10 }}>
         <span className="ds-subhead" style={{ margin: 0 }}>Props</span>
         <code className="ds-mono" style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>{primary.name}</code>
@@ -157,8 +157,12 @@ function Section({ id, title, desc, component, permalink, children }) {
         )}
       </div>
       {desc && <p className="ds-section__desc">{desc}</p>}
-      {component && <PropTable component={component} />}
-      {children}
+      {(component || children) && (
+        <div className="ds-section__body">
+          {component && <PropTable component={component} />}
+          {children}
+        </div>
+      )}
     </section>
   );
 }
