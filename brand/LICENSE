@@ -1,0 +1,52 @@
+TOLLERUD BRAND ASSET LICENSE
+
+Copyright (c) 2026 Mathias Tollerud. All rights reserved.
+
+The files in this directory (brand/) — including but not limited to SVG
+logotypes, monograms, wordmarks, avatars, color definitions, and any other
+visual identity assets — are NOT licensed under the MIT license that applies
+to the source code of this repository or package.
+
+These assets are proprietary trademarks and creative works of Mathias
+Tollerud ("the Mark Owner") and are subject to the trademark and brand
+asset terms described in the root LICENSE file of this repository.
+
+PERMITTED USES
+
+You MAY:
+
+  1. Use these assets when your project declares a dependency on @tollerud/ui
+     or @tollerud/footer — through the official component APIs (e.g.
+     <Monogram />, <Footer />) or documented subpath imports (e.g.
+     @tollerud/ui/brand/tollerud-avatar.svg), for display in your
+     application's UI.
+
+  2. Reference these assets in documentation, screenshots, or blog posts
+     for the purpose of accurately describing your use of Tollerud UI.
+
+PROHIBITED USES
+
+You MAY NOT, without prior written permission from the Mark Owner:
+
+  1. Use any file from this directory as the logo, icon, or brand identifier
+     for any product, service, or organization other than as part of your
+     use of Tollerud UI in a dependent application.
+
+  2. Modify or adapt these assets and present the result as an official or
+     affiliated Tollerud asset.
+
+  3. Redistribute, sublicense, sell, or transfer these assets standalone —
+     including as an asset pack, design system, or template — separate from
+     your application's use of @tollerud/ui or @tollerud/footer.
+
+  4. Include these assets in any npm package or other distributable where
+     the package is not a direct consumer of @tollerud/ui or @tollerud/footer.
+
+The presence of these files in an npm package distributed via the
+@tollerud scope does not constitute a grant of any rights beyond those
+explicitly listed above. The npm package "license" field applies to the
+software components only, not to files in this directory.
+
+REQUESTING PERMISSION
+
+For uses not covered above, contact: mathias@tollerud.no

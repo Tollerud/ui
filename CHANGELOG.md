@@ -7,6 +7,22 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.4.1 — 2026-06-15 — Trademark notice and brand asset license
+
+Clarifies that MIT applies to source code only. Tollerud trademarks, the monogram, avatars, and files under `brand/` remain proprietary.
+
+### Added
+
+- Trademark and brand asset notice appended to root `LICENSE`
+- `brand/LICENSE` — terms for logo, monogram, and avatar assets
+- `packages/footer/LICENSE` — MIT for footer code with pointer to full trademark terms
+- README license section at the top (also visible on the npm package page)
+
+### Changed
+
+- Copyright holder on `LICENSE` — Mathias Tollerud
+- `LICENSE` included in npm tarball `files` for `@tollerud/ui` and `@tollerud/footer`
+
 ## 4.4.0 — 2026-06-15 — Align DashboardShell with docs app shell
 
 `DashboardShell` now defaults to the same sidebar-first layout used on the docs site: brand lockup in the left rail, structured sidebar navigation, and a context top bar instead of duplicating the lockup horizontally.

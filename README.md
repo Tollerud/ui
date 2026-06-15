@@ -1,5 +1,18 @@
 # Tollerud User Interface
 
+## License
+
+**MIT applies to source code only** — not to Tollerud trademarks, the monogram, avatars, or other brand assets.
+
+| Document | What it covers |
+|----------|----------------|
+| [LICENSE](LICENSE) | MIT for software + trademark and brand asset notice |
+| [brand/LICENSE](brand/LICENSE) | Terms for files under `brand/` (logos, monogram exports, avatars) |
+
+The npm `"license": "MIT"` field refers to the software components. Brand assets remain proprietary. Usage guidelines: [BRAND.md](BRAND.md).
+
+---
+
 A complete, browsable UI library built around **monochrome + yellow accent**. Noir aesthetic meets modern utility.
 
 **[Live docs →](https://design.tollerud.dev/)** — browse every token, component, and pattern live with copy-paste code.

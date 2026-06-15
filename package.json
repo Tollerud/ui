@@ -1,6 +1,6 @@
 {
   "name": "@tollerud/ui",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "description": "Tollerud User Interface — dark, monochrome + yellow accent. Noir aesthetic meets modern utility.",
   "private": false,
   "type": "module",
@@ -51,6 +51,7 @@
     }
   },
   "files": [
+    "LICENSE",
     "dist",
     "globals.css",
     "globals-v3.css",
