@@ -26,9 +26,7 @@ copyWithRewrite('components/Monogram.tsx', 'Monogram.tsx', (s) =>
 )
 
 copyWithRewrite('components/Footer.tsx', 'Footer.tsx', (s) =>
-  s
-    .replace("from '@/lib/utils'", "from './utils'")
-    .replace("from './Monogram'", "from './Monogram'"),
+  s.replace("from '@/lib/utils'", "from './utils'"),
 )
 
 writeFileSync(
@@ -62,7 +60,7 @@ const footerPkg = {
       },
     },
   },
-  files: ['dist'],
+  files: ['LICENSE', 'dist'],
   scripts: {
     build: 'tsup --config tsup.config.ts',
     typecheck: 'tsc --noEmit',
