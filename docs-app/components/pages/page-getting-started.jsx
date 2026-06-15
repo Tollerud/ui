@@ -48,6 +48,46 @@ npm install @paper-design/shaders-react`}
         <Alert tone="info" title="Required peers">
           As of v2.0.0, Radix, Lucide, Framer Motion, and Sonner are required peer dependencies — install them with the command above.
         </Alert>
+        <SubHead>Peer dependencies by family</SubHead>
+        <div style={{ marginBottom: 20 }}>
+          <table className="ds-table">
+            <thead>
+              <tr><th>Family</th><th>Packages</th><th>Needed for</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Always</strong></td>
+                <td><code className="ds-mono">react</code>, <code className="ds-mono">react-dom</code>, <code className="ds-mono">clsx</code>, <code className="ds-mono">tailwind-merge</code>, <code className="ds-mono">tailwindcss</code></td>
+                <td>Every integration</td>
+              </tr>
+              <tr>
+                <td><strong>Overlays &amp; navigation</strong></td>
+                <td><code className="ds-mono">@radix-ui/react-dialog</code>, <code className="ds-mono">@radix-ui/react-dropdown-menu</code>, <code className="ds-mono">@radix-ui/react-tabs</code>, <code className="ds-mono">@radix-ui/react-tooltip</code>, <code className="ds-mono">@radix-ui/react-slot</code>, <code className="ds-mono">@radix-ui/react-progress</code></td>
+                <td>Dialog, Sheet, Drawer, DropdownMenu, Tabs, Tooltip, Progress, Button <code className="ds-mono">asChild</code></td>
+              </tr>
+              <tr>
+                <td><strong>Icons</strong></td>
+                <td><code className="ds-mono">lucide-react</code></td>
+                <td>Components with built-in icons</td>
+              </tr>
+              <tr>
+                <td><strong>Motion</strong></td>
+                <td><code className="ds-mono">framer-motion</code></td>
+                <td>Animated components (e.g. GlowCard, charts)</td>
+              </tr>
+              <tr>
+                <td><strong>Toasts</strong></td>
+                <td><code className="ds-mono">sonner</code></td>
+                <td><code className="ds-mono">&lt;Toaster /&gt;</code> / toast API — mount once at app root</td>
+              </tr>
+              <tr>
+                <td><strong>Optional — glow</strong></td>
+                <td><code className="ds-mono">@paper-design/shaders-react</code></td>
+                <td><code className="ds-mono">NoirGlowBackground</code> only</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <SubHead>Footer only</SubHead>
         <CodeSnippet
           name="footer-only"
