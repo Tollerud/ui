@@ -86,7 +86,7 @@ function FileUpload({
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
         className={cn(
-          'flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed px-6 py-8 text-center cursor-pointer transition-colors duration-[150ms]',
+          'flex flex-col items-center justify-center gap-2 rounded border border-dashed px-6 py-8 text-center cursor-pointer transition-colors duration-[150ms]',
           dragging
             ? 'border-tollerud-yellow bg-tollerud-yellow/[0.06]'
             : 'border-tollerud-border bg-tollerud-surface-raised hover:border-tollerud-text-secondary',
@@ -116,7 +116,7 @@ function FileUpload({
           {files.map((file, i) => (
             <li
               key={`${file.name}-${i}`}
-              className="flex items-center gap-2.5 rounded-md border border-tollerud-border bg-tollerud-surface-raised px-3 py-2 text-sm"
+              className="flex items-center gap-2.5 rounded border border-tollerud-border bg-tollerud-surface-raised px-3 py-2 text-sm"
             >
               <FileIcon size={15} className="shrink-0 text-tollerud-text-muted" />
               <span className="flex-1 truncate text-tollerud-text-primary">{file.name}</span>

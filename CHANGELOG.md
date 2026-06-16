@@ -7,6 +7,15 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.7.4 — 2026-06-16 — Form field border radius
+
+Align `Select` and `FileUpload` field radii with `Input`, `Combobox`, and `DatePicker`.
+
+### Fixed
+
+- `Select` — trigger uses `rounded` (was `rounded-lg`); dropdown panel unchanged
+- `FileUpload` — drop zone and file rows use `rounded` (was `rounded-lg` / `rounded-md`)
+
 ## 4.7.3 — 2026-06-16 — Chart value prefix and suffix
 
 Optional `valuePrefix` / `valueSuffix` on `TimeSeriesChart` for tooltip, axis, and badge formatting without a custom callback.
