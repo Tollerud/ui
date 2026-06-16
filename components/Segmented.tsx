@@ -37,8 +37,8 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
               disabled={opt.disabled}
               onClick={() => !opt.disabled && onChange(opt.value)}
               className={cn(
-                'rounded-md font-medium transition-colors duration-[150ms]',
-                size === 'sm' ? 'px-2.5 py-1 text-xs' : 'px-3.5 py-1.5 text-sm',
+                'inline-flex items-center justify-center rounded-md font-medium leading-none transition-colors duration-[150ms]',
+                size === 'sm' ? 'h-7 px-2.5 text-xs' : 'h-8 px-3.5 text-sm',
                 active
                   ? 'bg-tollerud-yellow text-tollerud-noir-black'
                   : 'text-tollerud-text-secondary hover:text-tollerud-text-primary',
