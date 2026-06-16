@@ -729,7 +729,11 @@
       "props": [
         "eyebrow?: ReactNode",
         "title: ReactNode",
+        "* When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`.",
+        "* Use for a single word mid-sentence, e.g. title=\"Hold ølprisene ærlige.\" shimmer=\"ærlige\".",
+        "*/",
         "titleAccent?: string",
+        "shimmer?: string",
         "titleShimmer?: ReactNode",
         "description?: ReactNode",
         "actions?: ReactNode",

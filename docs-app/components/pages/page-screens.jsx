@@ -33,30 +33,37 @@ function PageScreens({ go }) {
 
       <Section title="PageHeader" component="PageHeader" permalink="screens/page-header" desc="A consistent page title block with eyebrow, description, metadata, and action slots.">
         <Demo name="page-header" variant="col" code={`<PageHeader
-  eyebrow="mission control"
-  title="Hosts online"
-  titleAccent="online"
-  description="Monitor machines, containers, and incidents from one view."
-  actions={<Button variant="primary">Connect host</Button>}
-  meta={<Badge variant="success">3 online</Badge>}
+  title="Hold ølprisene ærlige."
+  shimmer="ærlige"
 />
 
 <PageHeader
-  title="Dark. Monochrome."
-  titleShimmer="Yellow where it counts."
+  title="Hva koster ølet egentlig — butikk for butikk."
+  shimmer="egentlig"
+/>
+
+<PageHeader
+  eyebrow="mission control"
+  title="Hosts online"
+  shimmer="online"
+  description="Monitor machines, containers, and incidents from one view."
 />`}>
           <Stack gap="lg">
             <PackagePageHeader
+              title="Hold ølprisene ærlige."
+              shimmer="ærlige"
+            />
+            <PackagePageHeader
+              title="Hva koster ølet egentlig — butikk for butikk."
+              shimmer="egentlig"
+            />
+            <PackagePageHeader
               eyebrow="mission control"
               title="Hosts online"
-              titleAccent="online"
+              shimmer="online"
               description="Monitor machines, containers, and incidents from one view."
               actions={<Button variant="primary">Connect host</Button>}
               meta={<Badge variant="success">3 online</Badge>}
-            />
-            <PackagePageHeader
-              title="Dark. Monochrome."
-              titleShimmer="Yellow where it counts."
             />
           </Stack>
         </Demo>

@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.15 — 2026-06-16 — PageHeader shimmer alias
+
+`shimmer` prop alias for mid-sentence accent words in page titles.
+
+### Added
+
+- `PageHeader` — `shimmer` alias for `titleAccent` (same behavior: first matching substring in a string `title`)
+
+### Migration
+
+Nothing breaking. Prefer `shimmer="ærlige"` with `title="Hold ølprisene ærlige."` for one highlighted word mid-sentence.
+
 ## 4.6.14 — 2026-06-16 — PageHeader shimmer accents
 
 Selective display shimmer on page titles.

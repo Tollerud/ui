@@ -20,8 +20,13 @@ PageHeaderShimmer.displayName = 'PageHeaderShimmer'
 export interface PageHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   eyebrow?: ReactNode
   title: ReactNode
-  /** When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`. */
+  /**
+   * When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`.
+   * Use for a single word mid-sentence, e.g. title="Hold ølprisene ærlige." shimmer="ærlige".
+   */
   titleAccent?: string
+  /** Alias for `titleAccent` — the word (or phrase) in `title` to render with shimmer. */
+  shimmer?: string
   /** Optional second title line rendered with display secondary + shimmer styles. */
   titleShimmer?: ReactNode
   description?: ReactNode
@@ -87,6 +92,7 @@ const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
       eyebrow,
       title,
       titleAccent,
+      shimmer,
       titleShimmer,
       description,
       actions,
@@ -98,6 +104,8 @@ const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
     ref
   ) => {
     const centered = align === 'center'
+
+    const accent = shimmer ?? titleAccent
 
     return (
       <header
@@ -116,7 +124,7 @@ const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
             </div>
           )}
           <h1 className={cn('tollerud-display text-tollerud-text-primary', titleSizes[size])}>
-            {renderPageHeaderTitle(title, titleAccent, titleShimmer, size)}
+            {renderPageHeaderTitle(title, accent, titleShimmer, size)}
           </h1>
           {description && (
             <p className="max-w-[680px] text-[15.5px] leading-relaxed text-tollerud-text-secondary">

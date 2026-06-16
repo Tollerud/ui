@@ -19,6 +19,27 @@ describe('PageHeader', () => {
     expect(screen.getByRole('button', { name: 'Connect' })).toBeInTheDocument()
   })
 
+  it('shimmers a mid-sentence word in Norwegian copy', () => {
+    render(<PageHeader title="Hold ølprisene ærlige." shimmer="ærlige" />)
+
+    const heading = screen.getByRole('heading', { name: /hold ølprisene ærlige/i })
+    expect(heading.querySelector('.tollerud-display-shimmer')).toHaveTextContent('ærlige')
+    expect(heading).toHaveTextContent('Hold ølprisene ærlige.')
+  })
+
+  it('shimmers a word before an em dash in a long title', () => {
+    render(
+      <PageHeader
+        title="Hva koster ølet egentlig — butikk for butikk."
+        shimmer="egentlig"
+      />
+    )
+
+    const heading = screen.getByRole('heading', { name: /hva koster ølet egentlig/i })
+    expect(heading.querySelector('.tollerud-display-shimmer')).toHaveTextContent('egentlig')
+    expect(heading).toHaveTextContent('Hva koster ølet egentlig — butikk for butikk.')
+  })
+
   it('wraps a selective word with titleAccent', () => {
     render(<PageHeader title="Hosts online" titleAccent="online" />)
 
