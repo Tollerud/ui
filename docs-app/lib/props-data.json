@@ -1020,7 +1020,7 @@
       "name": "StackProps",
       "extends": "extends HTMLAttributes<HTMLDivElement>",
       "props": [
-        "as?: 'div' | 'section' | 'article' | 'header' | 'footer'",
+        "as?: 'div' | 'section' | 'article' | 'header' | 'footer' | 'nav'",
         "gap?: StackGap",
         "align?: StackAlign"
       ]
