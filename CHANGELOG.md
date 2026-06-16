@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.7 — 2026-06-16 — DataTable height matches actual rows
+
+Partial pages no longer pad with empty spacer rows below the last data row.
+
+### Fixed
+
+- `DataTable` — removed spacer rows that filled unused `pageSize` capacity; footer sits flush under the last row when fewer items than `pageSize` (e.g. 11 items with `pageSize={25}`)
+
+### Migration
+
+Nothing breaking. Table body height now reflects rendered row count.
+
 ## 4.6.6 — 2026-06-16 — Flip dropdowns upward near viewport edge
 
 Select, Combobox, and DatePicker open above the trigger when there is not enough space below.

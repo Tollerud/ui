@@ -508,14 +508,6 @@ function DataTableInner<T extends Record<string, unknown>>({
             </tr>
           )
         })}
-        {isRich &&
-          effectivePageSize &&
-          pageRows.length < effectivePageSize &&
-          Array.from({ length: effectivePageSize - pageRows.length }).map((_, i) => (
-            <tr key={`spacer-${i}`} aria-hidden className="h-[49px]">
-              <td colSpan={colSpan} />
-            </tr>
-          ))}
       </tbody>
     )
   }

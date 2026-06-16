@@ -131,6 +131,22 @@ describe('DataTable', () => {
     expect(screen.queryByText('host-11')).not.toBeInTheDocument()
   })
 
+  it('does not pad partial pages with empty spacer rows', () => {
+    render(
+      <DataTable
+        columns={[{ key: 'name', label: 'Name' }]}
+        data={Array.from({ length: 11 }, (_, i) => ({ id: String(i + 1), name: `item-${i + 1}` }))}
+        rowKey="id"
+        pageSize={25}
+      />
+    )
+
+    expect(screen.getByText(/showing 1–11 of 11/i)).toBeInTheDocument()
+    const table = screen.getByRole('table')
+    expect(table.querySelectorAll('tbody tr')).toHaveLength(11)
+    expect(table.querySelectorAll('tr[aria-hidden]')).toHaveLength(0)
+  })
+
   it('stretches the table to the container width', () => {
     render(
       <DataTable
