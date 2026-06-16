@@ -122,6 +122,22 @@ const DONUT_CHART = `<Donut
   size={160}
 />`
 
+const MS_DAY = 24 * 60 * 60 * 1000
+
+const BASIC_SAMPLE = [
+  { date: '2026-03-23', value: 13999, label: 'Bygghjemme', meta: ['Vaskemaskin Miele WWR860'] },
+  { date: '2026-04-06', value: 14250, label: 'Obs BYGG' },
+  { date: '2026-04-13', value: 13800, label: 'Maxbo' },
+]
+
+const RANGES_NB = [
+  { value: '3m', label: '3 mnd', durationMs: 90 * MS_DAY },
+  { value: '6m', label: '6 mnd', durationMs: 180 * MS_DAY },
+  { value: '1y', label: '1 år', durationMs: 365 * MS_DAY },
+  { value: '2y', label: '2 år', durationMs: 730 * MS_DAY },
+  { value: 'all', label: 'Alt' },
+]
+
 function buildPriceSeries() {
   const start = new Date('2025-12-23')
   const points = []
@@ -148,6 +164,7 @@ function buildPriceSeries() {
 function PageCharts() {
   const priceData = useMemo(() => buildPriceSeries(), [])
   const [range, setRange] = useState('3m')
+  const [rangeNb, setRangeNb] = useState('3m')
 
   return (
     <div>
@@ -195,19 +212,64 @@ function PageCharts() {
           />
         </Card>
         <SubHead>Basic</SubHead>
-        <Demo name="time-series-basic" variant="col" code={TIME_SERIES_BASIC} />
+        <Demo name="time-series-basic" variant="col" code={TIME_SERIES_BASIC}>
+          <TimeSeriesChart
+            data={BASIC_SAMPLE}
+            curve="step"
+            height={220}
+            ranges={TIME_SERIES_PRESETS}
+            range="3m"
+          />
+        </Demo>
         <SubHead>Controlled range</SubHead>
         <p className="ds-section__desc" style={{ marginTop: 0 }}>
           Pair <code className="ds-mono">range</code> with <code className="ds-mono">onRangeChange</code> when the parent owns filter state — e.g. alongside a store selector in <code className="ds-mono">toolbarLeft</code>.
         </p>
-        <Demo name="time-series-controlled" variant="col" code={TIME_SERIES_CONTROLLED} />
+        <Demo name="time-series-controlled" variant="col" code={TIME_SERIES_CONTROLLED}>
+          <TimeSeriesChart
+            data={priceData}
+            curve="step"
+            height={220}
+            ranges={TIME_SERIES_PRESETS}
+            range={range}
+            onRangeChange={setRange}
+            toolbarLeft={
+              <span className="text-sm text-tollerud-text-secondary">Price history</span>
+            }
+          />
+        </Demo>
         <SubHead>Custom ranges (Norwegian)</SubHead>
         <p className="ds-section__desc" style={{ marginTop: 0 }}>
           <code className="ds-mono">TIME_SERIES_PRESETS</code> ships English labels. For Norwegian UI, pass your own <code className="ds-mono">ranges</code> and set <code className="ds-mono">locale="nb-NO"</code> for axis/tooltip formatting.
         </p>
-        <Demo name="time-series-ranges" variant="col" code={TIME_SERIES_CUSTOM_RANGES} />
+        <Demo name="time-series-ranges" variant="col" code={TIME_SERIES_CUSTOM_RANGES}>
+          <TimeSeriesChart
+            data={priceData}
+            curve="step"
+            height={220}
+            ranges={RANGES_NB}
+            range={rangeNb}
+            onRangeChange={setRangeNb}
+            locale="nb-NO"
+            toolbarLeft={
+              <span className="text-sm text-tollerud-text-secondary">Prishistorikk</span>
+            }
+          />
+        </Demo>
         <SubHead>Custom tooltip</SubHead>
-        <Demo name="time-series-tooltip" variant="col" code={TIME_SERIES_TOOLTIP} />
+        <Demo name="time-series-tooltip" variant="col" code={TIME_SERIES_TOOLTIP}>
+          <TimeSeriesChart
+            data={BASIC_SAMPLE}
+            curve="step"
+            height={220}
+            renderTooltip={(point) => (
+              <div className="rounded-lg border border-tollerud-noir-600 bg-tollerud-noir-800 px-3 py-2 shadow-lg">
+                <div className="text-lg font-semibold text-tollerud-text-primary">{point.value}</div>
+                <div className="text-xs text-tollerud-text-secondary">{point.label}</div>
+              </div>
+            )}
+          />
+        </Demo>
         <TokenTable
           cols={['Type', 'Shape']}
           rows={[
