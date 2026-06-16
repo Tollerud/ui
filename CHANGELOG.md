@@ -7,6 +7,15 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.0 — 2026-06-16 — Segmented collapseMobile
+
+Mobile-friendly segmented control that collapses to the selected option on narrow viewports.
+
+### Added
+
+- `Segmented` — `collapseMobile?` shows only the active option below `md`; tap to expand inline, select to collapse
+- `useIsMobile` — internal hook for the `md` breakpoint (`lib/use-mobile.ts`, not exported)
+
 ## 4.7.4 — 2026-06-16 — Form field border radius
 
 Align `Select` and `FileUpload` field radii with `Input`, `Combobox`, and `DatePicker`.

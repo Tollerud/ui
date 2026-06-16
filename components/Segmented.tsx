@@ -1,4 +1,15 @@
-import { type HTMLAttributes, forwardRef } from 'react'
+'use client'
+
+import {
+  type HTMLAttributes,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import { ChevronDown } from 'lucide-react'
+import { useIsMobile } from '@/lib/use-mobile'
 import { cn } from '@/lib/utils'
 
 export interface SegmentedOption {
@@ -12,18 +23,101 @@ export interface SegmentedProps extends Omit<HTMLAttributes<HTMLDivElement>, 'on
   value: string
   onChange: (value: string) => void
   size?: 'sm' | 'md'
+  /** On viewports below `md`, show only the selected option until expanded. Desktop unchanged. */
+  collapseMobile?: boolean
+}
+
+const shellClass =
+  'inline-flex items-center gap-0.5 rounded-lg p-1 bg-tollerud-surface-raised border border-tollerud-border'
+
+function segmentButtonClass(active: boolean, size: 'sm' | 'md', disabled?: boolean) {
+  return cn(
+    'inline-flex items-center justify-center rounded-md font-medium leading-none transition-colors duration-[150ms] tollerud-focus-ring',
+    size === 'sm' ? 'h-7 px-2.5 text-xs' : 'h-8 px-3.5 text-sm',
+    active
+      ? 'bg-tollerud-yellow text-tollerud-noir-black'
+      : 'text-tollerud-text-secondary hover:text-tollerud-text-primary',
+    disabled && 'opacity-40 pointer-events-none',
+  )
 }
 
 const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
-  ({ className, options, value, onChange, size = 'md', ...props }, ref) => {
+  (
+    {
+      className,
+      options,
+      value,
+      onChange,
+      size = 'md',
+      collapseMobile = false,
+      ...props
+    },
+    ref,
+  ) => {
+    const isMobile = useIsMobile()
+    const [expanded, setExpanded] = useState(false)
+    const rootRef = useRef<HTMLDivElement>(null)
+    const collapse = collapseMobile && isMobile
+    const showCollapsed = collapse && !expanded
+    const selected = options.find((opt) => opt.value === value)
+
+    const setRefs = useCallback(
+      (node: HTMLDivElement | null) => {
+        rootRef.current = node
+        if (typeof ref === 'function') ref(node)
+        else if (ref) ref.current = node
+      },
+      [ref],
+    )
+
+    useEffect(() => {
+      if (!collapse) setExpanded(false)
+    }, [collapse])
+
+    useEffect(() => {
+      if (!expanded) return
+      function onPointerDown(event: MouseEvent) {
+        if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
+          setExpanded(false)
+        }
+      }
+      document.addEventListener('mousedown', onPointerDown)
+      return () => document.removeEventListener('mousedown', onPointerDown)
+    }, [expanded])
+
+    const handleSelect = (next: string) => {
+      onChange(next)
+      if (collapse) setExpanded(false)
+    }
+
+    if (showCollapsed) {
+      const selectedLabel =
+        typeof selected?.label === 'string' || typeof selected?.label === 'number'
+          ? String(selected?.label)
+          : value
+
+      return (
+        <div ref={setRefs} className={cn(shellClass, className)} {...props}>
+          <button
+            type="button"
+            aria-expanded={false}
+            aria-haspopup="listbox"
+            aria-label={`${selectedLabel}, show options`}
+            onClick={() => setExpanded(true)}
+            className={cn(segmentButtonClass(true, size), 'gap-1')}
+          >
+            {selected?.label ?? value}
+            <ChevronDown size={size === 'sm' ? 14 : 16} aria-hidden />
+          </button>
+        </div>
+      )
+    }
+
     return (
       <div
-        ref={ref}
+        ref={setRefs}
         role="radiogroup"
-        className={cn(
-          'inline-flex items-center gap-0.5 rounded-lg p-1 bg-tollerud-surface-raised border border-tollerud-border',
-          className
-        )}
+        className={cn(shellClass, collapse && expanded && 'flex-wrap', className)}
         {...props}
       >
         {options.map((opt, index) => {
@@ -35,15 +129,8 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
               role="radio"
               aria-checked={active}
               disabled={opt.disabled}
-              onClick={() => !opt.disabled && onChange(opt.value)}
-              className={cn(
-                'inline-flex items-center justify-center rounded-md font-medium leading-none transition-colors duration-[150ms]',
-                size === 'sm' ? 'h-7 px-2.5 text-xs' : 'h-8 px-3.5 text-sm',
-                active
-                  ? 'bg-tollerud-yellow text-tollerud-noir-black'
-                  : 'text-tollerud-text-secondary hover:text-tollerud-text-primary',
-                opt.disabled && 'opacity-40 pointer-events-none'
-              )}
+              onClick={() => !opt.disabled && handleSelect(opt.value)}
+              className={segmentButtonClass(active, size, opt.disabled)}
             >
               {opt.label}
             </button>
@@ -51,7 +138,7 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
         })}
       </div>
     )
-  }
+  },
 )
 Segmented.displayName = 'Segmented'
 

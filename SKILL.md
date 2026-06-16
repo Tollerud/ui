@@ -467,10 +467,14 @@ import {
 <Pagination page={page} pageCount={20} onChange={setPage} />
 ```
 
-**Segmented** — `options: { value, label, disabled? }[]`, `value`, `onChange`, `size?: 'sm' | 'md'`. Segment height is fixed per size so text and icon labels align.
+**Segmented** — `options: { value, label, disabled? }[]`, `value`, `onChange`, `size?: 'sm' | 'md'`, `collapseMobile?`. Segment height is fixed per size so text and icon labels align.
 ```tsx
 <Segmented value={view} onChange={setView} options={[{ value: 'grid', label: 'Grid' }, { value: 'list', label: 'List' }]} />
+
+<Segmented value={sort} onChange={setSort} options={SORTS} collapseMobile />
 ```
+
+With `collapseMobile`, viewports below `md` show only the selected label (with chevron) until tapped; choosing an option collapses again. Desktop is unchanged.
 
 **Stepper** — `steps: { label, description? }[]`, `current` (0-indexed), `orientation?: 'horizontal' | 'vertical'`.
 ```tsx

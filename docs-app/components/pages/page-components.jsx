@@ -7,6 +7,12 @@ const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea,
 function PageComponents({ go }) {
   const toast = useToast();
   const [density, setDensity] = useState('comfortable');
+  const [sort, setSort] = useState('kr-stk');
+  const sortOptions = [
+    { value: 'kr-l', label: 'kr/l' },
+    { value: 'kr-stk', label: 'kr/stk' },
+    { value: 'name', label: 'Navn' },
+  ];
   const morePages = [
     { id: 'layout', icon: 'layers', t: 'Layout', d: 'Page shells, sections, stacks, grids, splits.' },
     { id: 'screens', icon: 'app', t: 'Screen patterns', d: 'Headers, nav, shells, settings, lists.' },
@@ -119,6 +125,31 @@ export function ButtonGlowRoot() {
               <Button variant="ghost" aria-label="List view"><Icons.menu size={16} aria-hidden /></Button>
               <Button variant="ghost" aria-label="Grid view"><Icons.grid size={16} aria-hidden /></Button>
             </ButtonGroup>
+          </div>
+        </Demo>
+      </Section>
+
+      <Section title="Segmented" component="Segmented" permalink="components/segmented" desc="Single-select toggle for views, sort modes, or filters. Pass collapseMobile to show only the active option on narrow viewports — tap to expand inline, select to collapse.">
+        <Demo name="segmented" variant="center" code={`<Segmented
+  value={view}
+  onChange={setView}
+  options={[
+    { value: 'grid', label: 'Grid' },
+    { value: 'list', label: 'List' },
+  ]}
+/>
+
+<Segmented value={sort} onChange={setSort} options={SORTS} collapseMobile />`}>
+          <div className="ds-col" style={{ gap: 16, alignItems: 'center', width: '100%' }}>
+            <Segmented
+              value={sort}
+              onChange={setSort}
+              options={sortOptions}
+              collapseMobile
+            />
+            <p className="text-xs text-tollerud-text-muted" style={{ margin: 0, textAlign: 'center' }}>
+              Resize below 768px to see <code className="ds-mono">collapseMobile</code> — selected option only until expanded.
+            </p>
           </div>
         </Demo>
       </Section>

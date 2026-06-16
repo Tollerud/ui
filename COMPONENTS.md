@@ -902,9 +902,13 @@ Toggle between views or filter modes. Segment height is fixed per size so text a
   ]}
   size="sm"
 />
+
+<Segmented value={sort} onChange={setSort} options={SORTS} collapseMobile />
 ```
 
-Props: `options: { value, label, disabled? }[]`, `value`, `onChange`, `size?: 'sm' | 'md'`.
+Props: `options: { value, label, disabled? }[]`, `value`, `onChange`, `size?: 'sm' | 'md'`, `collapseMobile?`.
+
+With `collapseMobile`, viewports below Tailwind `md` show only the selected option until tapped; the full control expands inline and collapses again after a selection. Desktop behavior is unchanged.
 
 ### Accordion
 

@@ -879,7 +879,8 @@
         "options: SegmentedOption[]",
         "value: string",
         "onChange: (value: string) => void",
-        "size?: 'sm' | 'md'"
+        "size?: 'sm' | 'md'",
+        "collapseMobile?: boolean"
       ]
     }
   ],
