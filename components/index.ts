@@ -3,6 +3,9 @@ export { cn } from '../lib/utils'
 export { Button, buttonVariants } from './Button'
 export type { ButtonProps, ButtonVariantProps } from './Button'
 
+export { ButtonGroup } from './ButtonGroup'
+export type { ButtonGroupProps, ButtonGroupSize, ButtonGroupOrientation } from './ButtonGroup'
+
 export { Alert } from './Alert'
 export type { AlertProps } from './Alert'
 

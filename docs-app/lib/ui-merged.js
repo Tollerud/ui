@@ -89,6 +89,7 @@ export { FeatureCard, PricingCard } from './docs-adapters'
 
 export const {
   Button,
+  ButtonGroup,
   Card,
   Badge,
   Pill,

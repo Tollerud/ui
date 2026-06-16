@@ -110,6 +110,11 @@
 - `variant?: keyof typeof variants`
 - `size?: keyof typeof sizes`
 
+## ButtonGroup — `ButtonGroupProps` extends extends HTMLAttributes<HTMLDivElement>
+
+- `size?: ButtonGroupSize`
+- `orientation?: ButtonGroupOrientation`
+
 ## Card — `CardProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `accent?: boolean`

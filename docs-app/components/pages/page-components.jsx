@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
+const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
 
 /* @tollerud/ui docs — Components gallery */
 function PageComponents({ go }) {
@@ -83,6 +83,33 @@ function PageComponents({ go }) {
           </div>
           <Button variant="primary" disabled>Disabled</Button>
           <Button variant="secondary" disabled>Disabled</Button>
+        </Demo>
+      </Section>
+
+      <Section title="Button group" component="ButtonGroup" permalink="components/button-group" desc="Fused action buttons for independent clicks — not a toggle. Wrap text or icon-only Button children; the group shares borders and height. Use Segmented when one option should stay selected.">
+        <Demo name="button-group" variant="center" code={`<ButtonGroup size="sm">
+  <Button variant="secondary">Deploy</Button>
+  <Button variant="secondary">Cancel</Button>
+  <Button variant="ghost" aria-label="More options"><MoreIcon /></Button>
+</ButtonGroup>
+
+<ButtonGroup size="sm">
+  <Button variant="ghost" aria-label="List view"><ListIcon /></Button>
+  <Button variant="ghost" aria-label="Grid view"><GridIcon /></Button>
+</ButtonGroup>`}>
+          <div className="ds-col" style={{ gap: 16, alignItems: 'center' }}>
+            <ButtonGroup size="sm">
+              <Button variant="secondary" onClick={() => toast({ tone: 'accent', title: 'Deploy' })}>Deploy</Button>
+              <Button variant="secondary" onClick={() => toast({ tone: 'info', title: 'Cancelled' })}>Cancel</Button>
+              <Button variant="ghost" aria-label="More options" onClick={() => toast({ tone: 'info', title: 'More' })}>
+                <Icons.menu size={16} aria-hidden />
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup size="sm">
+              <Button variant="ghost" aria-label="List view"><Icons.menu size={16} aria-hidden /></Button>
+              <Button variant="ghost" aria-label="Grid view"><Icons.grid size={16} aria-hidden /></Button>
+            </ButtonGroup>
+          </div>
         </Demo>
       </Section>
 

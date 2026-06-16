@@ -7,6 +7,23 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.0 — 2026-06-16 — Add ButtonGroup
+
+New fused action button row for independent clicks with text or icon-only `Button` children.
+
+### New components
+
+- `ButtonGroup` — wraps `<Button>` children with shared borders, internal dividers, default `size`, and `orientation?: 'horizontal' | 'vertical'`
+
+### When to use
+
+- `ButtonGroup` — adjacent actions (Deploy, Cancel, ⋯)
+- `Segmented` — single selected option (sort mode, list/grid view)
+
+### Migration
+
+Nothing breaking. Add `ButtonGroup` where fused action toolbars were hand-rolled with `Cluster` + `Button`.
+
 ## 4.5.2 — 2026-06-16 — Fix Button height for icon-only labels
 
 Button sizes now use fixed heights so text and icon-only buttons align when placed in the same toolbar row.

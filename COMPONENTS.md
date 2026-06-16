@@ -40,7 +40,7 @@ Use this map to pick the right layer — not every app needs infra widgets or gl
 
 All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted. Prop signatures: see [PROPS.generated.md](PROPS.generated.md).
 
-**Core & forms:** `Button`, `buttonVariants`, `cn`, `Card`, `Badge`, `StatusDot`, `Kbd`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `PasswordInput`, `Combobox`, `TagInput`, `Slider`, `FormRow`, `Container`, `CodeBlock`, `StatCard`, `ActionRow`, `CommandMenu`
+**Core & forms:** `Button`, `ButtonGroup`, `buttonVariants`, `cn`, `Card`, `Badge`, `StatusDot`, `Kbd`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `PasswordInput`, `Combobox`, `TagInput`, `Slider`, `FormRow`, `Container`, `CodeBlock`, `StatCard`, `ActionRow`, `CommandMenu`
 
 **Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `SidebarNav`, `DashboardTopBar`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
 
@@ -148,6 +148,20 @@ Sizes: `--sm` (28px), `--md` (40px), `--lg` (48px) — fixed height per size so 
 ```
 
 `Button` renders a native `<button>`. To style a link, use `asChild` or `buttonVariants()` — see [SKILL.md](SKILL.md#3-button-only-renders-a-native-button--use-aschild-for-links--107).
+
+## Button group
+
+Fused action buttons for independent clicks — shared outer border, internal dividers, consistent height. Not a toggle; use `Segmented` for single-select view/sort controls.
+
+```jsx
+<ButtonGroup size="sm">
+  <Button variant="secondary">Deploy</Button>
+  <Button variant="secondary">Cancel</Button>
+  <Button variant="ghost" aria-label="More options"><MoreIcon /></Button>
+</ButtonGroup>
+```
+
+Props: `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. Children must be `<Button>` elements.
 
 ## Card
 

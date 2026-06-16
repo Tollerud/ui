@@ -179,7 +179,7 @@ All components import from `@tollerud/ui`. Use named imports.
 
 ```tsx
 // Core / forms
-import { Button, buttonVariants, cn, Card, Badge, Input, StatusDot, Kbd } from '@tollerud/ui'
+import { Button, ButtonGroup, buttonVariants, cn, Card, Badge, Input, StatusDot, Kbd } from '@tollerud/ui'
 import { CommandMenu, ActionRow, DataTable, LogViewer, Timeline, CodeBlock, StatCard, Container } from '@tollerud/ui'
 import { Checkbox, Switch, RadioGroup, Radio, Select, Textarea } from '@tollerud/ui'
 import { PasswordInput, Combobox, TagInput, Slider, FormRow } from '@tollerud/ui'

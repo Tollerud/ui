@@ -17,6 +17,7 @@ export function sectionSlug(title) {
 export const DEEP_LINKS = [
   // Components — core primitives
   { page: 'components', section: 'button', title: 'Button', component: 'Button', keywords: ['cta', 'terminal'] },
+  { page: 'components', section: 'button-group', title: 'Button group', component: 'ButtonGroup', keywords: ['toolbar', 'actions', 'fused'] },
   { page: 'components', section: 'card', title: 'Card', component: 'Card', keywords: ['surface'] },
   { page: 'components', section: 'divider', title: 'Divider' },
   { page: 'components', section: 'badge-and-pill', title: 'Badge & Pill', component: 'Badge', keywords: ['tag'] },

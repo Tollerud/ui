@@ -311,6 +311,15 @@ npx tollerud-ui-audit
 <Button variant="terminal" size="sm">start_building</Button>
 ```
 
+**ButtonGroup** — fused action buttons (independent clicks, not a toggle). Wrap `<Button>` children; `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. Use **`Segmented`** when one option should stay selected.
+```tsx
+<ButtonGroup size="sm">
+  <Button variant="secondary">Deploy</Button>
+  <Button variant="secondary">Cancel</Button>
+  <Button variant="ghost" aria-label="More"><MoreIcon /></Button>
+</ButtonGroup>
+```
+
 **Card** — `accent?: boolean`, `density?: 'comfortable' | 'compact'`. Plain `<div>` wrapper — safe to nest in `<Link>`.
 ```tsx
 <Card accent>Highlighted with yellow border</Card>

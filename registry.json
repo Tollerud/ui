@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.5.2",
+  "version": "4.6.0",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -15,6 +15,21 @@
         "@radix-ui/react-slot"
       ],
       "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "button-group": {
+      "name": "ButtonGroup",
+      "description": "Fused action button row for independent clicks — text or icon-only Button children with shared borders and consistent height",
+      "files": [
+        "components/ButtonGroup.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
       "type": "components:ui"
     },
     "card": {

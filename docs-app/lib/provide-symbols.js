@@ -10,7 +10,7 @@ export const REACT_HOOKS = [
 ]
 
 export const DOC_SYMBOLS = [
-  'Button', 'Card', 'Badge', 'Pill', 'StatusDot', 'Kbd', 'Input', 'Textarea', 'Select',
+  'Button', 'ButtonGroup', 'Card', 'Badge', 'Pill', 'StatusDot', 'Kbd', 'Input', 'Textarea', 'Select',
   'Checkbox', 'Switch', 'RadioGroup', 'Radio', 'StatCard', 'Progress', 'Skeleton', 'Avatar',
   'Divider', 'Tabs', 'Segmented', 'Tooltip', 'Alert', 'Accordion', 'Breadcrumb', 'Pagination',
   'Slider', 'DropdownMenu', 'Dialog', 'EmptyState', 'LogViewer', 'Spinner', 'Panel', 'Meter',

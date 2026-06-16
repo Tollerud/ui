@@ -183,6 +183,16 @@
       ]
     }
   ],
+  "ButtonGroup": [
+    {
+      "name": "ButtonGroupProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "size?: ButtonGroupSize",
+        "orientation?: ButtonGroupOrientation"
+      ]
+    }
+  ],
   "CTABand": [
     {
       "name": "CTABandProps",
