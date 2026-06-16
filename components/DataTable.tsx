@@ -18,6 +18,7 @@ import {
 import { Pagination } from './Pagination'
 import { Segmented } from './Segmented'
 import { Combobox } from './Combobox'
+import { Select } from './Select'
 import { Skeleton } from './Skeleton'
 
 /* ──────────────────── Sortable & Filterable Data Table ──────────────────── */
@@ -98,7 +99,10 @@ export interface DataTableProps<T extends Record<string, unknown>> {
   /** Column filter in rich mode — segmented tabs or searchable combobox. */
   filter?: DataTableFilter
   selectable?: boolean
+  /** Rows per page — fixed unless `pageSizeOptions` is set. */
   pageSize?: number
+  /** Lets users change rows per page from the footer (initial value from `pageSize` or first option). */
+  pageSizeOptions?: number[]
   bulkActions?: DataTableBulkAction[]
   rowMenu?: (row: T) => DataTableRowMenuItem[]
   toolbarRight?: ReactNode
@@ -131,6 +135,7 @@ function DataTableInner<T extends Record<string, unknown>>({
   filter,
   selectable = false,
   pageSize,
+  pageSizeOptions,
   bulkActions = [],
   rowMenu,
   toolbarRight,
@@ -145,11 +150,22 @@ function DataTableInner<T extends Record<string, unknown>>({
   const normalizedColumns = useMemo(() => normalizeColumns(columns), [columns])
   const tableData = useMemo(() => rows ?? data ?? [], [rows, data])
 
+  const pageSizeOptionsResolved = useMemo(
+    () => [...new Set(pageSizeOptions ?? [])].filter((n) => n > 0).sort((a, b) => a - b),
+    [pageSizeOptions],
+  )
+  const allowsPageSizeChange = pageSizeOptionsResolved.length > 0
+  const [activePageSize, setActivePageSize] = useState(
+    pageSize ?? pageSizeOptionsResolved[0] ?? 10,
+  )
+  const effectivePageSize = allowsPageSizeChange ? activePageSize : pageSize
+
   const isRich =
     searchable ||
     filter ||
     selectable ||
     pageSize !== undefined ||
+    allowsPageSizeChange ||
     !!rowMenu ||
     !!toolbarRight ||
     bulkActions.length > 0 ||
@@ -254,10 +270,10 @@ function DataTableInner<T extends Record<string, unknown>>({
     })
   }, [filtered, sortKey, sortDir, normalizedColumns])
 
-  const pageCount = pageSize ? Math.max(1, Math.ceil(sorted.length / pageSize)) : 1
+  const pageCount = effectivePageSize ? Math.max(1, Math.ceil(sorted.length / effectivePageSize)) : 1
   const currentPage = Math.min(page, pageCount)
-  const pageRows = pageSize
-    ? sorted.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+  const pageRows = effectivePageSize
+    ? sorted.slice((currentPage - 1) * effectivePageSize, currentPage * effectivePageSize)
     : sorted
 
   const clearSelection = () => setSelected([])
@@ -493,9 +509,9 @@ function DataTableInner<T extends Record<string, unknown>>({
           )
         })}
         {isRich &&
-          pageSize &&
-          pageRows.length < pageSize &&
-          Array.from({ length: pageSize - pageRows.length }).map((_, i) => (
+          effectivePageSize &&
+          pageRows.length < effectivePageSize &&
+          Array.from({ length: effectivePageSize - pageRows.length }).map((_, i) => (
             <tr key={`spacer-${i}`} aria-hidden className="h-[49px]">
               <td colSpan={colSpan} />
             </tr>
@@ -670,13 +686,28 @@ function DataTableInner<T extends Record<string, unknown>>({
       {!loading && sorted.length > 0 && (
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-tollerud-border/30 px-4 py-3">
           <span className="text-xs text-tollerud-text-muted">
-            {pageSize
-              ? `Showing ${(currentPage - 1) * pageSize + 1}–${(currentPage - 1) * pageSize + pageRows.length} of ${sorted.length}`
+            {effectivePageSize
+              ? `Showing ${(currentPage - 1) * effectivePageSize + 1}–${(currentPage - 1) * effectivePageSize + pageRows.length} of ${sorted.length}`
               : `${sorted.length} row${sorted.length === 1 ? '' : 's'}`}
           </span>
           <div className="flex flex-wrap items-center gap-3">
             {footer}
-            {pageSize && pageCount > 1 && (
+            {allowsPageSizeChange && (
+              <Select
+                label="Rows"
+                value={String(activePageSize)}
+                onChange={(value) => {
+                  setActivePageSize(Number(value))
+                  setPage(1)
+                }}
+                options={pageSizeOptionsResolved.map((size) => ({
+                  value: String(size),
+                  label: String(size),
+                }))}
+                className="w-[88px]"
+              />
+            )}
+            {effectivePageSize && pageCount > 1 && (
               <Pagination page={currentPage} pageCount={pageCount} onChange={setPage} siblingCount={1} />
             )}
           </div>

@@ -604,6 +604,7 @@ import { DataTable } from '@tollerud/ui'
   // filter={{ key: 'region', allLabel: 'All regions', variant: 'combobox', placeholder: 'Filter region…' }}
   selectable
   pageSize={10}
+  pageSizeOptions={[10, 25, 50]}
   striped
   pinColumns
   bulkActions={[{ label: 'Restart', variant: 'ghost', onRun: (ids, clear) => { clear() } }]}
@@ -616,7 +617,7 @@ import { DataTable } from '@tollerud/ui'
 
 Column headings use `label` or `header`. `render` accepts `(row) => …` or `(value, row) => …`.
 
-**Pagination** — pass `pageSize` only; page state is internal. Footer shows `Showing 1–5 of N`; controls appear when `pageCount > 1`. Search/filter resets page to 1. Selection spans pages when `selectable` is set.
+**Pagination** — pass `pageSize` (fixed) or add `pageSizeOptions={[10, 25, 50]}` for a footer Rows selector. Page state is internal. Footer shows `Showing 1–5 of N`; controls appear when `pageCount > 1`. Search/filter resets page to 1. Selection spans pages when `selectable` is set.
 
 ### Infra / homelab set
 

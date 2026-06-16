@@ -104,6 +104,33 @@ describe('DataTable', () => {
     expect(hostHeader).toHaveAttribute('aria-sort', 'ascending')
   })
 
+  it('lets users change rows per page with pageSizeOptions', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <DataTable
+        columns={[{ key: 'hostname', label: 'Host' }]}
+        data={Array.from({ length: 12 }, (_, i) => ({
+          id: String(i + 1),
+          hostname: `host-${i + 1}`,
+        }))}
+        rowKey="id"
+        pageSize={5}
+        pageSizeOptions={[5, 10]}
+      />
+    )
+
+    expect(screen.getByText('host-5')).toBeInTheDocument()
+    expect(screen.queryByText('host-6')).not.toBeInTheDocument()
+    expect(screen.getByText('Rows')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: '5' }))
+    await user.click(screen.getByRole('option', { name: '10' }))
+
+    expect(screen.getByText('host-10')).toBeInTheDocument()
+    expect(screen.queryByText('host-11')).not.toBeInTheDocument()
+  })
+
   it('stretches the table to the container width', () => {
     render(
       <DataTable

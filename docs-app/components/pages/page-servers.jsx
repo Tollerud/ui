@@ -32,6 +32,7 @@ const hosts = [
   filter={{ key: 'region', allLabel: 'All regions' }}
   selectable
   pageSize={5}
+  pageSizeOptions={[5, 10, 25]}
   striped
   pinColumns
   toolbarRight={
@@ -104,9 +105,9 @@ function PageServers() {
   return (
     <div>
       <PageHeader icon="server" eyebrow="Examples · data table" title="Data Table"
-        lede="Config-driven table from @tollerud/ui: search, filters, sort, selection, bulk actions, per-row menus, pagination footer, loading skeletons, and horizontal scroll with pinned columns on narrow viewports."/>
+        lede="Config-driven table from @tollerud/ui: search, segmented or combobox filters, sort, selection, bulk actions, per-row menus, pagination with optional rows-per-page selector, loading skeletons, and horizontal scroll with pinned columns."/>
 
-      <Section title="Props" component="DataTable" desc="Auto-generated from DataTableProps in components/DataTable.tsx. Rich features activate when you pass searchable, selectable, pageSize, rowMenu, and related props."/>
+      <Section title="Props" component="DataTable" desc="Auto-generated from DataTableProps. Rich mode activates with searchable, selectable, pageSize, pageSizeOptions, rowMenu, filter, and related props."/>
 
       <Section title="Simple table" desc="Bordered table with sortable headers. Add filterable: true on columns for per-column text filters (simple mode).">
         <Demo name="package-data-table" variant="col" code={`<DataTable
@@ -236,6 +237,7 @@ function PageServers() {
             filter={{ key: 'region', allLabel: 'All regions' }}
             selectable
             pageSize={5}
+            pageSizeOptions={[5, 10, 25]}
             striped
             pinColumns
             toolbarRight={<Button variant="terminal" size="sm" onClick={() => toast({ tone: 'accent', title: 'Provisioning new host…' })}><Icons.plus size={14}/>add_host</Button>}
@@ -254,35 +256,54 @@ function PageServers() {
         </Demo>
       </Section>
 
-      <Section title="Pagination" desc="Pass pageSize to enable client-side pagination. DataTable owns page state — search and filter reset to page 1. The footer shows a row count; page controls appear when there is more than one page. Row selection persists across pages.">
-        <Demo name="data-table-pagination" variant="col" code={`<DataTable
+      <Section title="Pagination" desc="Pass pageSize to enable client-side pagination. Add pageSizeOptions for a footer Rows selector. DataTable owns page state — search and filter reset to page 1. Row selection persists across pages.">
+        <div className="ds-stack" style={{ gap: 28 }}>
+          <div>
+            <SubHead>Fixed page size</SubHead>
+            <Demo name="data-table-pagination" variant="col" code={`<DataTable
   data={hosts}
   rowKey="id"
   pageSize={5}
-  columns={[
-    { key: 'hostname', label: 'Host', sortable: true },
-    { key: 'region', label: 'Region', sortable: true },
-  ]}
+  columns={[…]}
+/>`}>
+              <PackageDataTable
+                data={ALL}
+                rowKey="id"
+                pageSize={5}
+                striped
+                columns={[
+                  { key: 'id', label: 'Host', sortable: true },
+                  { key: 'region', label: 'Region', sortable: true },
+                  { key: 'owner', label: 'Owner', sortable: true },
+                ]}
+              />
+            </Demo>
+          </div>
+          <div>
+            <SubHead>Rows per page selector</SubHead>
+            <Demo name="data-table-page-size-options" variant="col" code={`<DataTable
+  data={hosts}
+  rowKey="id"
+  pageSize={10}
+  pageSizeOptions={[10, 25, 50]}
+  columns={[…]}
 />
 
-// Pagination behavior (built in — no extra props):
-// • Footer: "Showing 1–5 of 12"
-// • <Pagination> appears when pageCount > 1
-// • Search / segmented or combobox filter resets to page 1
-// • selectable + bulkActions: selection spans all pages
-// • Omit pageSize to show all rows (footer: "12 rows")`}>
-          <PackageDataTable
-            data={ALL}
-            rowKey="id"
-            pageSize={5}
-            striped
-            columns={[
-              { key: 'id', label: 'Host', sortable: true },
-              { key: 'region', label: 'Region', sortable: true },
-              { key: 'owner', label: 'Owner', sortable: true },
-            ]}
-          />
-        </Demo>
+// pageSize sets the initial value; users change it from the footer Select
+// Changing rows per page resets to page 1`}>
+              <PackageDataTable
+                data={ALL}
+                rowKey="id"
+                pageSize={10}
+                pageSizeOptions={[5, 10, 25]}
+                columns={[
+                  { key: 'id', label: 'Host', sortable: true },
+                  { key: 'region', label: 'Region', sortable: true },
+                ]}
+              />
+            </Demo>
+          </div>
+        </div>
       </Section>
 
       <Section title="Loading and footer" desc="Pass loading for skeleton rows. Use footer for extra controls beside pagination.">

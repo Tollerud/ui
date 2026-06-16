@@ -223,6 +223,7 @@
 - `filter?: DataTableFilter`
 - `selectable?: boolean`
 - `pageSize?: number`
+- `pageSizeOptions?: number[]`
 - `bulkActions?: DataTableBulkAction[]`
 - `rowMenu?: (row: T) => DataTableRowMenuItem[]`
 - `toolbarRight?: ReactNode`

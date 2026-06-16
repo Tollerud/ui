@@ -7,6 +7,23 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.3 — 2026-06-16 — DataTable rows-per-page selector
+
+Users can change how many rows appear per page when `pageSizeOptions` is set.
+
+### Added
+
+- `DataTable` — `pageSizeOptions?: number[]` renders a footer **Rows** `Select`; changing size resets to page 1. Initial value from `pageSize` or the first option.
+
+### Docs
+
+- Data Table docs — pagination section covers fixed `pageSize` and `pageSizeOptions`; Servers canonical snippet updated
+- `COMPONENTS.md` — fixed props table layout; documents `pageSizeOptions`
+
+### Migration
+
+Nothing breaking. Add `pageSizeOptions={[10, 25, 50]}` alongside `pageSize` to enable the selector.
+
 ## 4.6.2 — 2026-06-16 — Fix DataTable full width and document pagination
 
 Tables in rich mode now stretch to the container width on desktop while keeping horizontal scroll when columns need more space.

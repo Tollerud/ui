@@ -1058,9 +1058,8 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 | `searchPlaceholder` | `string` | `'Search…'` | Search input placeholder. |
 | `filter` | `{ key, options?, allLabel?, variant?: 'segmented' \| 'combobox', placeholder? }` | — | Column filter in rich mode. Default `variant` is `segmented`; use `combobox` for a searchable dropdown. |
 | `selectable` | `boolean` | `false` | Row checkboxes + select-all. |
-| `pageSize` | `number` | — | Rows per page. Enables the footer row count and built-in `Pagination` when `pageCount > 1`. Omit to show all rows. |
-
-**Pagination** — fully client-side; no `page` / `onPageChange` props. Pass `pageSize` only. The footer shows `Showing 1–5 of 12` (or `12 rows` when `pageSize` is omitted). Page controls use the package `Pagination` primitive with `siblingCount={1}`. Search and rich-mode filters reset to page 1. With `selectable`, checked rows persist across pages until cleared or bulk action runs `clear()`.
+| `pageSize` | `number` | — | Rows per page (fixed unless `pageSizeOptions` is set). Enables footer row count and `Pagination` when `pageCount > 1`. |
+| `pageSizeOptions` | `number[]` | — | Footer **Rows** `Select` so users can change page size; resets to page 1 on change. Initial value from `pageSize` or first option. |
 | `bulkActions` | `BulkAction[]` | `[]` | Shown when rows are selected; fused with `ButtonGroup` when 2+ actions. `onRun(ids, clear)`. |
 | `rowMenu` | `(row) => MenuItem[]` | — | Per-row ⋮ dropdown. |
 | `toolbarRight` | `ReactNode` | — | Toolbar right slot (e.g. add button). |
@@ -1070,6 +1069,8 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 | `striped` | `boolean` | `false` | Alternating row backgrounds in rich mode. |
 | `pinColumns` | `boolean` | rich mode default | Pin first column and row ⋮ menu during horizontal scroll. |
 | `footer` | `ReactNode` | — | Extra content in the footer bar (right of row count). |
+
+**Pagination** — fully client-side; no `page` / `onPageChange` props. Pass `pageSize` (and optionally `pageSizeOptions`). The footer shows `Showing 1–5 of 12`. Page controls appear when `pageCount > 1`. Search and rich-mode filters reset to page 1. With `selectable`, checked rows persist across pages until cleared or bulk action runs `clear()`.
 
 **Column:** `{ key, label?, header?, sortable?, filterable?, align?: 'left' | 'center' | 'right', width?, render?: (value, row) => ReactNode | (row) => ReactNode }`. Without `render`, `row[key]` is shown. `header` is an alias for `label`.
 
