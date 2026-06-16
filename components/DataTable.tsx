@@ -5,6 +5,7 @@ import { ChevronDown, MoreHorizontal, Search, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from './Badge'
 import { Button } from './Button'
+import { ButtonGroup } from './ButtonGroup'
 import { Checkbox } from './Checkbox'
 import {
   DropdownMenu,
@@ -548,6 +549,18 @@ function DataTableInner<T extends Record<string, unknown>>({
     </table>
   )
 
+  const bulkActionButtons = bulkActions.map((action, index) => (
+    <Button
+      key={index}
+      variant={action.variant ?? 'ghost'}
+      size="sm"
+      onClick={() => action.onRun(selected, clearSelection)}
+    >
+      {action.icon ? <span className="mr-1.5 inline-flex shrink-0">{action.icon}</span> : null}
+      {action.label}
+    </Button>
+  ))
+
   const tableScroll = (
     <div
       className="tollerud-datatable-scroll min-w-0 w-full overflow-x-auto overscroll-x-contain touch-pan-x"
@@ -639,17 +652,11 @@ function DataTableInner<T extends Record<string, unknown>>({
             selected
           </span>
           <div className="flex flex-wrap items-center gap-2">
-            {bulkActions.map((action, index) => (
-              <Button
-                key={index}
-                variant={action.variant ?? 'ghost'}
-                size="sm"
-                onClick={() => action.onRun(selected, clearSelection)}
-              >
-                {action.icon ? <span className="mr-1.5 inline-flex shrink-0">{action.icon}</span> : null}
-                {action.label}
-              </Button>
-            ))}
+            {bulkActions.length > 1 ? (
+              <ButtonGroup size="sm">{bulkActionButtons}</ButtonGroup>
+            ) : (
+              bulkActionButtons
+            )}
           </div>
         </div>
       )}

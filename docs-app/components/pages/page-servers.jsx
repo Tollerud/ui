@@ -224,7 +224,7 @@ function PageServers() {
         </div>
       </Section>
 
-      <Section title="Servers" desc="Full rich table — the canonical pattern for homelab and ops lists.">
+      <Section title="Servers" desc="Full rich table — the canonical pattern for homelab and ops lists. Multiple bulk actions fuse in ButtonGroup; use toolbarRight for your own ButtonGroup or single buttons.">
         <Demo name="servers-data-table" variant="col" code={SERVERS_CODE}>
           <PackageDataTable
             data={ALL}

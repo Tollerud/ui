@@ -607,6 +607,7 @@ import { DataTable } from '@tollerud/ui'
   striped
   pinColumns
   bulkActions={[{ label: 'Restart', variant: 'ghost', onRun: (ids, clear) => { clear() } }]}
+  // Two or more bulk actions render fused in ButtonGroup automatically
   rowMenu={(row) => [{ label: 'View logs', onSelect: () => {} }]}
   toolbarRight={<Button size="sm">Add host</Button>}
   emptyState={<Empty>...</Empty>}

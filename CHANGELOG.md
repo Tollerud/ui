@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.1 — 2026-06-16 — Fuse DataTable bulk actions in ButtonGroup
+
+Multiple `bulkActions` on `DataTable` now render as a fused `ButtonGroup` instead of separate spaced buttons.
+
+### Changed
+
+- `DataTable` — two or more bulk actions wrap in `ButtonGroup` (`size="sm"`); single action unchanged
+
+### Migration
+
+Nothing breaking. Bulk action bars look tighter with shared borders when multiple actions are defined.
+
 ## 4.6.0 — 2026-06-16 — Add ButtonGroup and first-class DataTable
 
 New fused action button row and a production-ready data table with the full Servers example feature set built into `@tollerud/ui`.

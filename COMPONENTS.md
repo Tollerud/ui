@@ -1059,7 +1059,7 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 | `filter` | `{ key, options?, allLabel?, variant?: 'segmented' \| 'combobox', placeholder? }` | — | Column filter in rich mode. Default `variant` is `segmented`; use `combobox` for a searchable dropdown. |
 | `selectable` | `boolean` | `false` | Row checkboxes + select-all. |
 | `pageSize` | `number` | — | Rows per page (enables pagination when set). |
-| `bulkActions` | `BulkAction[]` | `[]` | Shown when rows are selected; `onRun(ids, clear)`. |
+| `bulkActions` | `BulkAction[]` | `[]` | Shown when rows are selected; fused with `ButtonGroup` when 2+ actions. `onRun(ids, clear)`. |
 | `rowMenu` | `(row) => MenuItem[]` | — | Per-row ⋮ dropdown. |
 | `toolbarRight` | `ReactNode` | — | Toolbar right slot (e.g. add button). |
 | `emptyState` | `ReactNode` | — | Custom empty UI (use `<Empty>…</Empty>`). |

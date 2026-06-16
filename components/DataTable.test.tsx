@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { DataTable } from './DataTable'
@@ -102,6 +102,29 @@ describe('DataTable', () => {
 
     await user.click(hostHeader)
     expect(hostHeader).toHaveAttribute('aria-sort', 'ascending')
+  })
+
+  it('wraps multiple bulk actions in ButtonGroup', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <DataTable
+        columns={[{ key: 'hostname', label: 'Host' }]}
+        data={[{ id: '1', hostname: 'emma' }]}
+        rowKey="id"
+        selectable
+        bulkActions={[
+          { label: 'Restart', onRun: vi.fn() },
+          { label: 'Stop', variant: 'destructive', onRun: vi.fn() },
+        ]}
+      />
+    )
+
+    await user.click(screen.getByRole('checkbox', { name: /select row 1/i }))
+
+    const group = screen.getByRole('group')
+    expect(within(group).getByRole('button', { name: 'Restart' })).toBeInTheDocument()
+    expect(within(group).getByRole('button', { name: 'Stop' })).toBeInTheDocument()
   })
 
   it('filters rows with combobox variant filter', async () => {
