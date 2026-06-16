@@ -49,9 +49,10 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="The branded navigation lockup is built in: monogram plus project name, links, and action slots.">
+      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="The branded navigation lockup is built in: monogram plus project name, links, and action slots. Nav links collapse into a mobile menu below lg; use maxWidth to align with Container.">
         <Demo name="top-nav" variant="col" code={`<TopNav
   projectName="Mission Control"
+  maxWidth="default"
   navItems={[
     { label: 'Overview', href: '/', active: true },
     { label: 'Hosts', href: '/hosts' },
@@ -60,6 +61,7 @@ function PageScreens({ go }) {
 />`}>
           <TopNav
             sticky={false}
+            maxWidth="default"
             projectName="Mission Control"
             navItems={[
               { label: 'Overview', href: '#', active: true },

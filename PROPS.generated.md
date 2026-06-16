@@ -704,3 +704,4 @@
 - `navItems?: TopNavItem[]`
 - `actions?: ReactNode`
 - `sticky?: boolean`
+- `maxWidth?: TopNavMaxWidth`

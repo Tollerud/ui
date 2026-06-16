@@ -243,7 +243,7 @@ import {
 Use these before rebuilding common pages with raw Tailwind:
 
 - **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`.
-- **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`.
+- **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`, `maxWidth` (`default` | `wide` | `full` | `false`). Collapses nav links into a mobile menu below `lg`.
 - **SidebarNav** — sidebar brand lockup with `projectName`, `projectSubtitle`, `groups` / `items`, icons, and active states.
 - **DashboardTopBar** — context top bar with `breadcrumb`, `pageTitle`, `actions`, mobile menu toggle.
 - **DashboardShell** — docs-aligned app frame (default `variant="sidebar"`) with `sidebarGroups`, `sidebarItems`, `pageTitle`, `topActions`, `header`, `contentWidth`, `density`. Use `variant="topnav"` for horizontal TopNav layout.

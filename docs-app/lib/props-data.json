@@ -1120,7 +1120,8 @@
         "homeHref?: string",
         "navItems?: TopNavItem[]",
         "actions?: ReactNode",
-        "sticky?: boolean"
+        "sticky?: boolean",
+        "maxWidth?: TopNavMaxWidth"
       ]
     }
   ]
