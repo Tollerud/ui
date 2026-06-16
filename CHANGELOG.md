@@ -7,6 +7,31 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.9 — 2026-06-16 — TopNav responsive menu and max width
+
+Top navigation now collapses links on narrow viewports and can align with Container width.
+
+### Added
+
+- `TopNav` — mobile menu toggle below `lg` when `navItems` are set; `maxWidth` prop (`default` | `wide` | `full` | `false`) constrains inner content to match `Container` / `MainContent` widths
+
+### Migration
+
+Nothing breaking. `maxWidth` defaults to `false` (full-bleed). Pass `maxWidth="default"` to cap at 1100px.
+
+## 4.6.8 — 2026-06-16 — Sheet and Drawer slide animation
+
+Slide-over panels now animate with shipped CSS keyframes instead of undefined Tailwind animate utilities.
+
+### Fixed
+
+- `Sheet` / `Drawer` — backdrop fade and panel slide in/out (250ms); `tollerud-sheet-*` classes in `globals-layers.css`
+- Respects `prefers-reduced-motion: reduce` (instant open/close)
+
+### Migration
+
+Nothing breaking. Ensure consumer apps import `@tollerud/ui/globals.css` (and `source.css` for Tailwind v4).
+
 ## 4.6.7 — 2026-06-16 — DataTable height matches actual rows
 
 Partial pages no longer pad with empty spacer rows below the last data row.

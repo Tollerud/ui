@@ -23,7 +23,10 @@ describe('Sheet', () => {
     )
 
     await user.click(screen.getByRole('button', { name: 'Open' }))
-    expect(screen.getByRole('dialog')).toBeVisible()
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toBeVisible()
+    expect(dialog).toHaveClass('tollerud-sheet-panel')
+    expect(document.querySelector('.tollerud-sheet-overlay')).toBeInTheDocument()
     expect(screen.getByText('Deploy logs')).toBeVisible()
   })
 

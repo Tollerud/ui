@@ -34,12 +34,7 @@ const SheetOverlay = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Overlay
     ref={ref}
-    className={cn(
-      'fixed inset-0 z-50 bg-black/60 backdrop-blur-sm',
-      'data-[state=open]:animate-in data-[state=closed]:animate-out',
-      'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-      className
-    )}
+    className={cn('tollerud-sheet-overlay', className)}
     {...props}
   />
 ))
@@ -53,15 +48,12 @@ const SheetContent = forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed z-50 gap-4 bg-tollerud-noir-900 border-tollerud-border/30 p-6 shadow-lg',
-        'data-[state=open]:animate-in data-[state=closed]:animate-out',
+        'tollerud-sheet-panel fixed z-50 gap-4 bg-tollerud-noir-900 border-tollerud-border/30 p-6 shadow-xl',
         side === 'right' && [
-          'inset-y-0 right-0 h-full w-full max-w-md border-l',
-          'data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right',
+          'tollerud-sheet-panel--right inset-y-0 right-0 h-full w-full max-w-md border-l',
         ],
         side === 'left' && [
-          'inset-y-0 left-0 h-full w-full max-w-md border-r',
-          'data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left',
+          'tollerud-sheet-panel--left inset-y-0 left-0 h-full w-full max-w-md border-r',
         ],
         className
       )}

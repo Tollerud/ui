@@ -989,6 +989,75 @@
     margin-left: auto;
   }
 
+  /* ═══ Sheet / Drawer ═══ */
+  .tollerud-sheet-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .tollerud-sheet-overlay[data-state='open'] {
+    animation: tollerud-sheet-overlay-in var(--motion-duration-normal) var(--motion-ease-out) forwards;
+  }
+  .tollerud-sheet-overlay[data-state='closed'] {
+    animation: tollerud-sheet-overlay-out var(--motion-duration-normal) var(--motion-ease-in) forwards;
+  }
+  @keyframes tollerud-sheet-overlay-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes tollerud-sheet-overlay-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  .tollerud-sheet-panel[data-state='open'] {
+    animation-duration: var(--motion-duration-normal);
+    animation-timing-function: var(--motion-ease-out);
+    animation-fill-mode: forwards;
+  }
+  .tollerud-sheet-panel[data-state='closed'] {
+    animation-duration: var(--motion-duration-normal);
+    animation-timing-function: var(--motion-ease-in);
+    animation-fill-mode: forwards;
+  }
+  .tollerud-sheet-panel--right[data-state='open'] {
+    animation-name: tollerud-sheet-in-right;
+  }
+  .tollerud-sheet-panel--right[data-state='closed'] {
+    animation-name: tollerud-sheet-out-right;
+  }
+  .tollerud-sheet-panel--left[data-state='open'] {
+    animation-name: tollerud-sheet-in-left;
+  }
+  .tollerud-sheet-panel--left[data-state='closed'] {
+    animation-name: tollerud-sheet-out-left;
+  }
+  @keyframes tollerud-sheet-in-right {
+    from { transform: translateX(100%); }
+    to   { transform: translateX(0); }
+  }
+  @keyframes tollerud-sheet-out-right {
+    from { transform: translateX(0); }
+    to   { transform: translateX(100%); }
+  }
+  @keyframes tollerud-sheet-in-left {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(0); }
+  }
+  @keyframes tollerud-sheet-out-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-100%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tollerud-sheet-overlay[data-state],
+    .tollerud-sheet-panel[data-state] {
+      animation: none !important;
+    }
+  }
+
   /* ═══ Command Menu ═══ */
   .tollerud-cmd-overlay {
     position: fixed;
