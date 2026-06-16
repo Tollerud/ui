@@ -57,8 +57,8 @@ export type { MainContentProps, MainContentWidth, MainContentSpacing, MainConten
 export { PageHeader } from './PageHeader'
 export type { PageHeaderProps, PageHeaderAlign, PageHeaderSize } from './PageHeader'
 
-export { TopNav } from './TopNav'
-export type { TopNavProps, TopNavItem, TopNavMaxWidth } from './TopNav'
+export { TopNav, TopNavAction } from './TopNav'
+export type { TopNavProps, TopNavItem, TopNavMaxWidth, TopNavActionProps, TopNavActionMobile } from './TopNav'
 
 export { SidebarNav } from './SidebarNav'
 export type { SidebarNavProps, SidebarNavItem, SidebarNavGroup } from './SidebarNav'

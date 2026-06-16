@@ -1113,6 +1113,13 @@
   ],
   "TopNav": [
     {
+      "name": "TopNavActionProps",
+      "props": [
+        "children: ReactNode",
+        "mobile?: TopNavActionMobile"
+      ]
+    },
+    {
       "name": "TopNavProps",
       "extends": "extends HTMLAttributes<HTMLElement>",
       "props": [

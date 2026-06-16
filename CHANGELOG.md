@@ -7,6 +7,23 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.10 — 2026-06-16 — TopNav overlay mobile menu
+
+Mobile navigation now uses a modal overlay with backdrop, focus trap, and selective inline actions.
+
+### Added
+
+- `TopNavAction` — wrap `actions` children with `mobile?: 'inline' | 'menu' | 'hidden'` (default `menu`) to keep a primary CTA in the header bar while other actions collapse into the menu
+- `TopNav` — mobile menu is a Radix Dialog overlay with scrim, Esc / backdrop dismiss, and body scroll lock; nav links and menu actions render in the panel below the bar
+
+### Changed
+
+- Unwrapped `actions` children now default to the mobile menu (previously stayed inline in the header). Wrap in `<TopNavAction mobile="inline">` to restore inline placement.
+
+### Migration
+
+Nothing breaking for the `actions` prop API. If you relied on all actions staying visible in the mobile header, wrap them in `TopNavAction mobile="inline"`.
+
 ## 4.6.9 — 2026-06-16 — TopNav responsive menu and max width
 
 Top navigation now collapses links on narrow viewports and can align with Container width.

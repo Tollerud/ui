@@ -234,7 +234,7 @@ import {
 
 ```tsx
 import {
-  PageHeader, TopNav, DashboardShell, SettingsLayout,
+  PageHeader, TopNav, TopNavAction, DashboardShell, SettingsLayout,
   FormPanel, ResourceList, DetailPage, EmptyPage,
   FeatureSection, StatsSection,
 } from '@tollerud/ui'
@@ -243,7 +243,7 @@ import {
 Use these before rebuilding common pages with raw Tailwind:
 
 - **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`.
-- **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`, `maxWidth` (`default` | `wide` | `full` | `false`). Collapses nav links into a mobile menu below `lg`.
+- **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`, `maxWidth` (`default` | `wide` | `full` | `false`). Below `lg`, nav links and menu actions open in a modal overlay (backdrop, focus trap, Esc to close). Wrap actions in `TopNavAction` with `mobile?: 'inline' | 'menu' | 'hidden'` (default `menu`) to keep a primary CTA inline next to the menu toggle.
 - **SidebarNav** — sidebar brand lockup with `projectName`, `projectSubtitle`, `groups` / `items`, icons, and active states.
 - **DashboardTopBar** — context top bar with `breadcrumb`, `pageTitle`, `actions`, mobile menu toggle.
 - **DashboardShell** — docs-aligned app frame (default `variant="sidebar"`) with `sidebarGroups`, `sidebarItems`, `pageTitle`, `topActions`, `header`, `contentWidth`, `density`. Use `variant="topnav"` for horizontal TopNav layout.
@@ -658,9 +658,20 @@ The monogram must always sit left of the project name with `gap-2`. Never show t
 <TopNav
   projectName="Project Name"
   navItems={[{ label: 'Overview', href: '/overview', active: true }]}
-  actions={<Button variant="primary" size="sm">Get started</Button>}
+  actions={
+    <>
+      <TopNavAction mobile="inline">
+        <Button variant="primary" size="sm">Get started</Button>
+      </TopNavAction>
+      <TopNavAction mobile="menu">
+        <Button variant="secondary" size="sm">Sign in</Button>
+      </TopNavAction>
+    </>
+  }
 />
 ```
+
+`TopNavAction` `mobile` values: `inline` (header bar on mobile), `menu` (overlay panel, default), `hidden` (desktop only). Unwrapped `actions` children default to `menu` on mobile.
 
 **Monogram** — `color?: 'yellow' | 'black' | 'white'` (default `yellow`), `size?: number`, `title?: string` (default `'Tollerud'`). Brand avatars: `@tollerud/ui/brand/tollerud-avatar.svg`, `brand/tollerud-avatar-full.svg` (+ `.png` variants).
 Monogram sizing is handled automatically by `TopNav` and `Footer`; use `Monogram` directly only for custom brand moments.

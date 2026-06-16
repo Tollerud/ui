@@ -1035,6 +1035,22 @@
   .tollerud-sheet-panel--left[data-state='closed'] {
     animation-name: tollerud-sheet-out-left;
   }
+
+  .tollerud-topnav-menu-panel[data-state='open'] {
+    animation: tollerud-topnav-menu-in var(--motion-duration-normal) var(--motion-ease-out) forwards;
+  }
+  .tollerud-topnav-menu-panel[data-state='closed'] {
+    animation: tollerud-topnav-menu-out var(--motion-duration-normal) var(--motion-ease-in) forwards;
+  }
+  @keyframes tollerud-topnav-menu-in {
+    from { opacity: 0; transform: translateY(-0.5rem); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes tollerud-topnav-menu-out {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-0.5rem); }
+  }
+
   @keyframes tollerud-sheet-in-right {
     from { transform: translateX(100%); }
     to   { transform: translateX(0); }
@@ -1053,7 +1069,8 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .tollerud-sheet-overlay[data-state],
-    .tollerud-sheet-panel[data-state] {
+    .tollerud-sheet-panel[data-state],
+    .tollerud-topnav-menu-panel[data-state] {
       animation: none !important;
     }
   }

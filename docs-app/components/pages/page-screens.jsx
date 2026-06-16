@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, StatusDot, Switch, Input, FormRow, PackagePageHeader, TopNav, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, Stack, Cluster, CardGrid, Demo, CodeSnippet, PageHeader, Section, Icons } = __p
+const { Button, Card, Badge, StatusDot, Switch, Input, FormRow, PackagePageHeader, TopNav, TopNavAction, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, Stack, Cluster, CardGrid, Demo, CodeSnippet, PageHeader, Section, Icons } = __p
 
 /* @tollerud/ui docs — Screen patterns */
 
@@ -49,7 +49,7 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="The branded navigation lockup is built in: monogram plus project name, links, and action slots. Nav links collapse into a mobile menu below lg; use maxWidth to align with Container.">
+      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle.">
         <Demo name="top-nav" variant="col" code={`<TopNav
   projectName="Mission Control"
   maxWidth="default"
@@ -57,7 +57,16 @@ function PageScreens({ go }) {
     { label: 'Overview', href: '/', active: true },
     { label: 'Hosts', href: '/hosts' },
   ]}
-  actions={<Button size="sm" variant="primary">Deploy</Button>}
+  actions={
+    <>
+      <TopNavAction mobile="inline">
+        <Button size="sm" variant="primary">Deploy</Button>
+      </TopNavAction>
+      <TopNavAction mobile="menu">
+        <Button size="sm" variant="secondary">Sign in</Button>
+      </TopNavAction>
+    </>
+  }
 />`}>
           <TopNav
             sticky={false}
@@ -68,7 +77,16 @@ function PageScreens({ go }) {
               { label: 'Hosts', href: '#' },
               { label: 'Logs', href: '#' },
             ]}
-            actions={<Button size="sm" variant="primary">Deploy</Button>}
+            actions={
+              <>
+                <TopNavAction mobile="inline">
+                  <Button size="sm" variant="primary">Deploy</Button>
+                </TopNavAction>
+                <TopNavAction mobile="menu">
+                  <Button size="sm" variant="secondary">Sign in</Button>
+                </TopNavAction>
+              </>
+            }
             className="rounded-lg border border-tollerud-border"
           />
         </Demo>

@@ -1,7 +1,19 @@
 'use client'
 
-import { type HTMLAttributes, type ReactNode, forwardRef, useId, useState } from 'react'
+import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { Menu, X } from 'lucide-react'
+import {
+  Children,
+  Fragment,
+  type HTMLAttributes,
+  type ReactElement,
+  type ReactNode,
+  forwardRef,
+  isValidElement,
+  useId,
+  useMemo,
+  useState,
+} from 'react'
 import { cn } from '@/lib/utils'
 import { Monogram } from './Monogram'
 import { Cluster } from './Cluster'
@@ -15,10 +27,60 @@ export interface TopNavItem {
 
 export type TopNavMaxWidth = 'default' | 'wide' | 'full' | false
 
+export type TopNavActionMobile = 'inline' | 'menu' | 'hidden'
+
+export interface TopNavActionProps {
+  children: ReactNode
+  /** Mobile placement; desktop always shows in the actions cluster. Default `menu`. */
+  mobile?: TopNavActionMobile
+}
+
 const maxWidthClasses: Record<Exclude<TopNavMaxWidth, false>, string> = {
   default: 'max-w-[1100px]',
   wide: 'max-w-[1400px]',
   full: 'max-w-none',
+}
+
+function TopNavAction({ children }: TopNavActionProps) {
+  return <>{children}</>
+}
+TopNavAction.displayName = 'TopNavAction'
+
+function isTopNavAction(element: unknown): element is ReactElement<TopNavActionProps> {
+  return (
+    isValidElement(element) &&
+    (element.type as { displayName?: string }).displayName === 'TopNavAction'
+  )
+}
+
+function flattenActionChildren(children: ReactNode): ReactNode[] {
+  return Children.toArray(children).flatMap((child) => {
+    if (isValidElement(child) && child.type === Fragment) {
+      return flattenActionChildren((child.props as { children?: ReactNode }).children)
+    }
+    return [child]
+  })
+}
+
+function partitionActions(actions: ReactNode | undefined) {
+  const inline: ReactNode[] = []
+  const menu: ReactNode[] = []
+  const desktop: ReactNode[] = []
+
+  for (const child of flattenActionChildren(actions)) {
+    if (isTopNavAction(child)) {
+      const mobile = child.props.mobile ?? 'menu'
+      const content = child.props.children
+      desktop.push(content)
+      if (mobile === 'inline') inline.push(content)
+      else if (mobile === 'menu') menu.push(content)
+    } else if (child != null && child !== false) {
+      desktop.push(child)
+      menu.push(child)
+    }
+  }
+
+  return { inline, menu, desktop }
 }
 
 export interface TopNavProps extends HTMLAttributes<HTMLElement> {
@@ -74,7 +136,12 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
   ) => {
     const [mobileOpen, setMobileOpen] = useState(false)
     const mobileMenuId = useId()
+    const mobileMenuTitleId = useId()
     const hasNavItems = navItems.length > 0
+    const { inline: mobileInlineActions, menu: mobileMenuActions, desktop: desktopActions } =
+      useMemo(() => partitionActions(actions), [actions])
+    const hasDesktopActions = desktopActions.length > 0
+    const hasMobileMenuContent = hasNavItems || mobileMenuActions.length > 0
     const closeMobileMenu = () => setMobileOpen(false)
 
     return (
@@ -109,16 +176,20 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
             </Cluster>
           )}
 
-          {actions && (
+          {hasDesktopActions && (
             <Cluster as="div" gap="sm" justify="end" className="ml-auto hidden shrink-0 lg:flex">
-              {actions}
+              {desktopActions}
             </Cluster>
           )}
 
-          {(hasNavItems || actions) && (
+          {(hasMobileMenuContent || mobileInlineActions.length > 0) && (
             <div className="ml-auto flex items-center gap-2 lg:hidden">
-              {actions && <Cluster as="div" gap="sm" justify="end">{actions}</Cluster>}
-              {hasNavItems && (
+              {mobileInlineActions.length > 0 && (
+                <Cluster as="div" gap="sm" justify="end" className="shrink-0">
+                  {mobileInlineActions}
+                </Cluster>
+              )}
+              {hasMobileMenuContent && (
                 <button
                   type="button"
                   className="tollerud-focus-ring inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-md border border-tollerud-border bg-tollerud-noir-900 text-tollerud-text-secondary transition-colors hover:border-tollerud-noir-500 hover:text-tollerud-text-primary"
@@ -134,26 +205,57 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
           )}
         </div>
 
-        {hasNavItems && mobileOpen && (
-          <div
-            id={mobileMenuId}
-            className={cn(
-              'border-t border-tollerud-border bg-tollerud-noir-950 px-6 py-3 lg:hidden',
-              maxWidth && 'mx-auto w-full',
-              maxWidth && maxWidthClasses[maxWidth]
-            )}
-          >
-            <Cluster as="div" gap="sm" className="flex-col items-stretch">
-              {navItems.map((item) => (
-                <TopNavLink
-                  key={`mobile-${item.href}-${String(item.label)}`}
-                  item={item}
-                  className="px-1 py-2"
-                  onNavigate={closeMobileMenu}
-                />
-              ))}
-            </Cluster>
-          </div>
+        {hasMobileMenuContent && (
+          <DialogPrimitive.Root open={mobileOpen} onOpenChange={setMobileOpen}>
+            <DialogPrimitive.Portal>
+              <DialogPrimitive.Overlay className="tollerud-sheet-overlay lg:hidden" />
+              <DialogPrimitive.Content
+                id={mobileMenuId}
+                aria-labelledby={mobileMenuTitleId}
+                aria-modal="true"
+                onOpenAutoFocus={(event) => event.preventDefault()}
+                className={cn(
+                  'tollerud-topnav-menu-panel fixed inset-x-0 top-14 z-50 max-h-[calc(100vh-3.5rem)] overflow-y-auto border-b border-tollerud-border bg-tollerud-noir-950 px-6 py-4 shadow-xl outline-none lg:hidden',
+                  maxWidth && 'mx-auto w-full',
+                  maxWidth && maxWidthClasses[maxWidth]
+                )}
+              >
+                <DialogPrimitive.Title id={mobileMenuTitleId} className="sr-only">
+                  Navigation menu
+                </DialogPrimitive.Title>
+                <DialogPrimitive.Description className="sr-only">
+                  Site navigation links and actions
+                </DialogPrimitive.Description>
+                <div className="flex flex-col gap-4">
+                  {hasNavItems && (
+                    <Cluster as="div" gap="sm" className="flex-col items-stretch">
+                      {navItems.map((item) => (
+                        <TopNavLink
+                          key={`mobile-${item.href}-${String(item.label)}`}
+                          item={item}
+                          className="px-1 py-2"
+                          onNavigate={closeMobileMenu}
+                        />
+                      ))}
+                    </Cluster>
+                  )}
+                  {mobileMenuActions.length > 0 && (
+                    <Cluster
+                      as="div"
+                      gap="sm"
+                      className={cn(
+                        'flex-col items-stretch',
+                        hasNavItems && 'border-t border-tollerud-border pt-4'
+                      )}
+                      onClick={closeMobileMenu}
+                    >
+                      {mobileMenuActions}
+                    </Cluster>
+                  )}
+                </div>
+              </DialogPrimitive.Content>
+            </DialogPrimitive.Portal>
+          </DialogPrimitive.Root>
         )}
       </nav>
     )
@@ -161,4 +263,4 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
 )
 TopNav.displayName = 'TopNav'
 
-export { TopNav }
+export { TopNav, TopNavAction }

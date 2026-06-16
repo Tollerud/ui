@@ -61,6 +61,7 @@ export {
   MainContent,
   PageHeader as PackagePageHeader,
   TopNav,
+  TopNavAction,
   DashboardShell,
   SettingsLayout,
   FormPanel,

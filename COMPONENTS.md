@@ -114,7 +114,7 @@ These components assemble common page structures from the layout primitives and 
 | Component | Use for |
 |-----------|---------|
 | `PageHeader` | Page title, eyebrow, description, metadata, and actions |
-| `TopNav` | Branded monogram lockup, nav links, and top-level actions |
+| `TopNav` | Branded monogram lockup, nav links, and top-level actions; `TopNavAction` controls mobile placement |
 | `SidebarNav` | Sidebar brand lockup and grouped navigation links |
 | `DashboardTopBar` | Context top bar with breadcrumb, page title, and actions |
 | `DashboardShell` | Docs-aligned app shell with sidebar nav and context top bar |

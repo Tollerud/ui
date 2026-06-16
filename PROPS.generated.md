@@ -697,6 +697,11 @@
 
 - `children: ReactNode`
 
+## TopNav — `TopNavActionProps`
+
+- `children: ReactNode`
+- `mobile?: TopNavActionMobile`
+
 ## TopNav — `TopNavProps` extends extends HTMLAttributes<HTMLElement>
 
 - `projectName: ReactNode`
