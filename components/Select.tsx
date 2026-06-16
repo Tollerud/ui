@@ -1,6 +1,6 @@
 'use client'
 
-import { type HTMLAttributes, forwardRef, useState, useRef, useEffect, useCallback } from 'react'
+import { type HTMLAttributes, forwardRef, useState, useRef, useEffect, useCallback, useId } from 'react'
 import { cn } from '@/lib/utils'
 
 export interface SelectOption {
@@ -15,10 +15,13 @@ export interface SelectProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onCha
   options?: SelectOption[]
   value?: string
   onChange?: (value: string) => void
+  /** `inline` keeps the label on one row with the trigger — for dense toolbars and table footers. */
+  layout?: 'stacked' | 'inline'
+  size?: 'md' | 'sm'
 }
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
-  ({ className, label, error, placeholder, options = [], value, onChange, ...props }, ref) => {
+  ({ className, label, error, placeholder, options = [], value, onChange, layout = 'stacked', size = 'md', ...props }, ref) => {
     const [open, setOpen] = useState(false)
     const [highlightedIdx, setHighlightedIdx] = useState(0)
     const containerRef = useRef<HTMLDivElement>(null)
@@ -93,23 +96,38 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
       }
     }
 
+    const triggerId = useId()
+
     return (
-      <div className="flex flex-col gap-1.5" ref={ref} {...props}>
+      <div
+        className={cn(layout === 'inline' ? 'flex items-center gap-2' : 'flex flex-col gap-1.5')}
+        ref={ref}
+        {...props}
+      >
         {label && (
-          <label className="text-xs font-medium text-tollerud-text-muted">
+          <label
+            htmlFor={triggerId}
+            className={cn(
+              'shrink-0 font-medium text-tollerud-text-muted text-xs',
+              layout === 'inline' && 'mb-0',
+            )}
+          >
             {label}
           </label>
         )}
-        <div ref={containerRef} className="relative">
+        <div ref={containerRef} className={cn('relative', layout === 'inline' && 'min-w-0')}>
           {/* Trigger */}
           <button
+            id={triggerId}
             type="button"
             onClick={() => setOpen(!open)}
             onKeyDown={handleKeyDown}
             aria-haspopup="listbox"
             aria-expanded={open}
+            aria-label={layout === 'inline' && label ? `${label}: ${selectedOption?.label ?? placeholder ?? 'Select'}` : undefined}
             className={cn(
-              'font-sans text-sm w-full flex items-center justify-between px-3 py-2.5 rounded-lg',
+              'font-sans w-full flex items-center justify-between rounded-lg',
+              size === 'sm' ? 'px-2.5 py-1.5 text-xs' : 'px-3 py-2.5 text-sm',
               'bg-tollerud-surface-raised',
               'text-tollerud-text-primary text-left',
               'transition-all duration-150 ease-out cursor-pointer',
@@ -145,7 +163,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               ref={listRef}
               role="listbox"
               className={cn(
-                'absolute z-10 left-0 right-0 mt-1 py-1',
+                'absolute z-50 left-0 right-0 mt-1 py-1',
                 'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
                 'shadow-[0_8px_24px_rgba(0,0,0,0.4)]',
                 'max-h-60 overflow-y-auto'

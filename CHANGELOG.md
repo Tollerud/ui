@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.5 — 2026-06-16 — Compact DataTable footer and js-yaml security fix
+
+Tighter rows-per-page control in the table footer; dependency override clears Dependabot alert #10.
+
+### Fixed
+
+- `DataTable` — footer **Rows** selector uses inline `Select` (`layout="inline"`, `size="sm"`) so the footer stays one row tall
+- `DataTable` — rows-per-page dropdown no longer clips behind the table (`overflow-hidden` removed from shell; footer stacking raised)
+- `Select` — `layout` and `size` props for dense toolbar/footer use; menu `z-50`
+
+### Security
+
+- Override `@manypkg/get-packages` to `>=3.1.0` — drops vulnerable transitive `js-yaml@3.14.2` from `@changesets/cli` (CVE-2026-53550)
+
+### Migration
+
+Nothing breaking. `Select` defaults unchanged (`layout="stacked"`, `size="md"`).
+
 ## 4.6.3 — 2026-06-16 — DataTable rows-per-page selector
 
 Users can change how many rows appear per page when `pageSizeOptions` is set.

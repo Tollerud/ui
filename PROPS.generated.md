@@ -561,6 +561,8 @@
 - `options?: SelectOption[]`
 - `value?: string`
 - `onChange?: (value: string) => void`
+- `layout?: 'stacked' | 'inline'`
+- `size?: 'md' | 'sm'`
 
 ## ServiceHealthCard — `ServiceHealthCardProps` extends extends HTMLAttributes<HTMLDivElement>
 

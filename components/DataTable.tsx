@@ -602,7 +602,7 @@ function DataTableInner<T extends Record<string, unknown>>({
     <div
       ref={forwardedRef}
       className={cn(
-        'min-w-0 w-full overflow-hidden rounded-lg border border-tollerud-border/30 bg-tollerud-noir-900',
+        'min-w-0 w-full rounded-lg border border-tollerud-border/30 bg-tollerud-noir-900',
         className,
       )}
     >
@@ -684,7 +684,7 @@ function DataTableInner<T extends Record<string, unknown>>({
       )}
 
       {!loading && sorted.length > 0 && (
-        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-tollerud-border/30 px-4 py-3">
+        <div className="relative z-[4] flex flex-wrap items-center justify-between gap-3 border-t border-tollerud-border/30 px-4 py-2">
           <span className="text-xs text-tollerud-text-muted">
             {effectivePageSize
               ? `Showing ${(currentPage - 1) * effectivePageSize + 1}–${(currentPage - 1) * effectivePageSize + pageRows.length} of ${sorted.length}`
@@ -695,6 +695,8 @@ function DataTableInner<T extends Record<string, unknown>>({
             {allowsPageSizeChange && (
               <Select
                 label="Rows"
+                layout="inline"
+                size="sm"
                 value={String(activePageSize)}
                 onChange={(value) => {
                   setActivePageSize(Number(value))
@@ -704,7 +706,7 @@ function DataTableInner<T extends Record<string, unknown>>({
                   value: String(size),
                   label: String(size),
                 }))}
-                className="w-[88px]"
+                className="w-[72px]"
               />
             )}
             {effectivePageSize && pageCount > 1 && (

@@ -124,7 +124,7 @@ describe('DataTable', () => {
     expect(screen.queryByText('host-6')).not.toBeInTheDocument()
     expect(screen.getByText('Rows')).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: '5' }))
+    await user.click(screen.getByRole('button', { name: 'Rows: 5' }))
     await user.click(screen.getByRole('option', { name: '10' }))
 
     expect(screen.getByText('host-10')).toBeInTheDocument()
