@@ -293,6 +293,13 @@ export type { BarChartProps, BarChartDatum } from './BarChart'
 export { AreaChart } from './AreaChart'
 export type { AreaChartProps } from './AreaChart'
 
+export { TimeSeriesChart, TIME_SERIES_PRESETS } from './TimeSeriesChart'
+export type {
+  TimeSeriesChartProps,
+  TimeSeriesPoint,
+  TimeSeriesRange,
+} from './TimeSeriesChart'
+
 export { Donut } from './Donut'
 export type { DonutProps, DonutSegment } from './Donut'
 

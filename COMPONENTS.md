@@ -640,23 +640,30 @@ Props: `name`, `price`, `period?`, `description?`, `features?: ReactNode[]`, `ct
 
 ## Charts
 
-Palette-aware SVG charts. Yellow is the highlight series; everything else stays monochrome. Grid/axis use the `--chart-grid` token, so all four are theme-aware.
+Palette-aware SVG charts — no Recharts dependency. Yellow is the highlight series; grid/axis use `--chart-grid`.
 
 ```tsx
-import { BarChart, AreaChart, Donut, Sparkline } from '@tollerud/ui'
+import { TimeSeriesChart, TIME_SERIES_PRESETS, BarChart, AreaChart, Donut, Sparkline } from '@tollerud/ui'
 ```
 
 ```tsx
+<TimeSeriesChart
+  data={[{ date: '2026-04-11', value: 13999, label: 'Bygghjemme' }]}
+  curve="step"
+  ranges={TIME_SERIES_PRESETS}
+  range="3m"
+/>
 <BarChart data={[{ label: 'Mon', value: 12 }, { label: 'Tue', value: 18, accent: true }]} height={180} />
 <AreaChart data={[28, 35, 30, 44, 52]} height={150} />
 <Donut segments={[{ label: 'CPU', value: 40, color: '#E8D500' }, { label: 'Idle', value: 60, color: '#444' }]} size={160} />
-<Sparkline data={[12, 18, 14, 22, 19]} width={84} height={26} color="#E8D500" />
+<Sparkline data={[17200, 13999]} curve="step" fill interactive width={160} height={36} />
 ```
 
+- **TimeSeriesChart** — `data: TimeSeriesPoint[]`, `curve?: 'linear' | 'step'`, `ranges?`, `range?`, `onRangeChange?`, hover crosshair + tooltip, `formatValue?`, `renderTooltip?`, `toolbarLeft?`. Use `TIME_SERIES_PRESETS` for 3m/6m/1y/2y/all filters.
 - **BarChart** — `data: { label, value, accent? }[]`, `height`. `accent: true` paints a bar yellow.
-- **AreaChart** — `data: number[]`, `height`. Gradient fill + point markers.
+- **AreaChart** — `data: number[]`, `height`. Static gradient fill + point markers.
 - **Donut** — `segments: { label, value, color }[]`, `size`. Renders a legend with percentages.
-- **Sparkline** — `data: number[]`, `width`, `height`, `color`. Inline trend line (used in DataTable cells).
+- **Sparkline** — `data: number[]`, `width`, `height`, `color`, `curve?`, `fill?`, `interactive?`. Inline trend for tables and stat rows.
 
 ## Marketing blocks
 

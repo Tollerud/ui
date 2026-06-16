@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.6.16",
+  "version": "4.7.0",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -1249,6 +1249,21 @@
       "registryDependencies": [],
       "type": "components:ui"
     },
+    "time-series-chart": {
+      "name": "TimeSeriesChart",
+      "description": "Wide stepped area chart with hover crosshair, tooltip, and optional range selector",
+      "files": [
+        "components/TimeSeriesChart.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "segmented"
+      ],
+      "type": "components:ui"
+    },
     "donut": {
       "name": "Donut",
       "description": "Donut chart with segment legend",
@@ -1264,7 +1279,7 @@
     },
     "sparkline": {
       "name": "Sparkline",
-      "description": "Compact inline sparkline for stat cards and tables",
+      "description": "Compact inline sparkline with optional step curve, fill, and hover dot",
       "files": [
         "components/Sparkline.tsx"
       ],

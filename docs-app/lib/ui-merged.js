@@ -78,6 +78,8 @@ export {
   Toaster,
   BarChart,
   AreaChart,
+  TimeSeriesChart,
+  TIME_SERIES_PRESETS,
   Donut,
   Sparkline,
   HeroBlock,

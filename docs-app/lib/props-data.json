@@ -984,7 +984,10 @@
         "height?: number",
         "w?: number",
         "h?: number",
-        "color?: string"
+        "color?: string",
+        "curve?: 'linear' | 'step'",
+        "fill?: boolean",
+        "interactive?: boolean"
       ]
     }
   ],
@@ -1102,6 +1105,31 @@
       "props": [
         "label?: string",
         "error?: string"
+      ]
+    }
+  ],
+  "TimeSeriesChart": [
+    {
+      "name": "TimeSeriesChartProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>",
+      "props": [
+        "data: TimeSeriesPoint[]",
+        "height?: number",
+        "curve?: 'linear' | 'step'",
+        "yAxis?: 'left' | 'right' | 'none'",
+        "padding?: Partial<ChartPadding>",
+        "formatValue?: (value: number) => string",
+        "formatDate?: (date: Date) => string",
+        "formatAxisDate?: (date: Date) => string",
+        "showLatestValue?: boolean",
+        "ranges?: TimeSeriesRange[]",
+        "range?: string",
+        "onRangeChange?: (value: string) => void",
+        "toolbarLeft?: ReactNode",
+        "renderTooltip?: (point: TimeSeriesPoint, index: number) => ReactNode",
+        "emptyMessage?: string",
+        "locale?: string",
+        "ariaLabel?: string"
       ]
     }
   ],

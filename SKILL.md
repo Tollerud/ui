@@ -561,7 +561,7 @@ import {
 ```tsx
 import {
   GlowCard, NoirGlowBackground, BentoDashboard,
-  BarChart, AreaChart, Donut, Sparkline,
+  BarChart, AreaChart, TimeSeriesChart, TIME_SERIES_PRESETS, Donut, Sparkline,
   HeroBlock, FeatureCard, CTABand,
 } from '@tollerud/ui'
 ```
@@ -569,13 +569,24 @@ import {
 - **NoirGlowBackground** — animated WebGL shader background (needs `@paper-design/shaders-react`). `shape?: 'corners' | 'wave' | 'dots' | 'truchet' | 'ripple' | 'blob' | 'sphere'`, `intensity?: 'subtle' | 'medium' | 'loud'`, `speed?: 'still' | 'slow' | 'medium' | 'fast'`, `grain?: 'none' | 'soft' | 'high'`, `colors?: string[]`, `forceCssFallback?: boolean`.
 - **BentoDashboard** — composed dashboard shell taking arrays of `HostCardProps`, `StatCardProps`, `ServiceHealthCardProps`, incidents, `BackupJob[]`.
 
-**Charts** — palette-aware SVG; yellow highlights one series.
+**Charts** — palette-aware SVG; yellow highlights one series. No Recharts dependency.
+
 ```tsx
+<TimeSeriesChart
+  data={[{ date: '2026-04-11', value: 13999, label: 'Bygghjemme', meta: ['Product line'] }]}
+  curve="step"
+  ranges={TIME_SERIES_PRESETS}
+  range="3m"
+/>
 <BarChart data={[{ label: 'Mon', value: 32, accent: true }]} height={180} />
 <AreaChart data={[28, 35, 30, 44, 52]} height={150} />
 <Donut segments={[{ label: 'CPU', value: 40, color: 'var(--chart-1)' }]} size={160} />
-<Sparkline data={[12, 18, 14, 22]} width={84} height={26} />
+<Sparkline data={[17200, 16800, 13999]} curve="step" fill interactive width={160} height={36} />
 ```
+
+`TimeSeriesChart` — `data: TimeSeriesPoint[]`, `curve?: 'linear' | 'step'`, `ranges?`, `range?`, `onRangeChange?`, `renderTooltip?`, `yAxis?: 'left' | 'right' | 'none'`, `formatValue?`, `formatDate?`, `toolbarLeft?`. Hover crosshair + tooltip; filters by `durationMs` on range options.
+
+`Sparkline` — `curve?`, `fill?`, `interactive?` added in **v4.7.0**.
 
 **Marketing blocks**
 ```tsx

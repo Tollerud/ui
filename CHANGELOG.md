@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.7.0 — 2026-06-16 — Interactive time series charts
+
+Stepped area charts with hover, range selection, and enhanced sparklines — pure SVG, no Recharts.
+
+### Added
+
+- `TimeSeriesChart` — wide vector chart with `curve="step"`, crosshair hover, tooltip, Y-axis labels, and optional `ranges` + `Segmented` toolbar
+- `TIME_SERIES_PRESETS` — `3 mnd` / `6 mnd` / `1 år` / `2 år` / `Alt` duration filters
+- `lib/chart-series` — shared path, scale, and format helpers (used by charts)
+
+### Changed
+
+- `Sparkline` — `curve`, `fill`, and `interactive` props for stepped micro charts with hover dot
+
+### Migration
+
+Nothing breaking. Use `TimeSeriesChart` for price history; keep `AreaChart` for simple static series.
+
 ## 4.6.16 — 2026-06-16 — Magnetic button glow
 
 Ship pointer-following glow for primary and terminal buttons as a first-class package export.

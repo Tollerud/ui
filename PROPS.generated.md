@@ -629,6 +629,9 @@
 - `w?: number`
 - `h?: number`
 - `color?: string`
+- `curve?: 'linear' | 'step'`
+- `fill?: boolean`
+- `interactive?: boolean`
 
 ## Spinner — `SpinnerProps` extends extends HTMLAttributes<HTMLSpanElement>
 
@@ -703,6 +706,26 @@
 - `items: TimelineItemData[]`
 - `active?: boolean`
 - `loading?: boolean`
+
+## TimeSeriesChart — `TimeSeriesChartProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>
+
+- `data: TimeSeriesPoint[]`
+- `height?: number`
+- `curve?: 'linear' | 'step'`
+- `yAxis?: 'left' | 'right' | 'none'`
+- `padding?: Partial<ChartPadding>`
+- `formatValue?: (value: number) => string`
+- `formatDate?: (date: Date) => string`
+- `formatAxisDate?: (date: Date) => string`
+- `showLatestValue?: boolean`
+- `ranges?: TimeSeriesRange[]`
+- `range?: string`
+- `onRangeChange?: (value: string) => void`
+- `toolbarLeft?: ReactNode`
+- `renderTooltip?: (point: TimeSeriesPoint, index: number) => ReactNode`
+- `emptyMessage?: string`
+- `locale?: string`
+- `ariaLabel?: string`
 
 ## Toast — `ToastProviderProps`
 
