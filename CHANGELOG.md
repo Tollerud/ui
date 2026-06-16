@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.7.3 — 2026-06-16 — Chart value prefix and suffix
+
+Optional `valuePrefix` / `valueSuffix` on `TimeSeriesChart` for tooltip, axis, and badge formatting without a custom callback.
+
+### Added
+
+- `TimeSeriesChart` — `valuePrefix?` and `valueSuffix?` wrap locale-formatted numbers (ignored when `formatValue` is set)
+
 ## 4.7.2 — 2026-06-16 — Chart value formatting
 
 `formatValue` docs, `formatChartDecimal` helper, Segmented key fix, and `renderTooltip` formatted-value arg.

@@ -727,7 +727,13 @@ const RANGES_NB = [
 />
 ```
 
-`formatValue` formats Y-axis ticks, the latest-value badge, and the default tooltip — independent of `locale` (dates only). Use `formatChartDecimal` for unit rates like kr/l:
+`formatValue` formats Y-axis ticks, the latest-value badge, and the default tooltip — independent of `locale` (dates only). For simple affixes without a callback, use `valuePrefix` / `valueSuffix` (ignored when `formatValue` is set):
+
+```tsx
+<TimeSeriesChart data={points} locale="nb-NO" valueSuffix=" kr/l" />
+```
+
+Use `formatChartDecimal` for decimal unit rates like kr/l:
 
 ```tsx
 import { TimeSeriesChart, formatChartDecimal } from '@tollerud/ui'
@@ -755,7 +761,7 @@ Custom tooltip — `renderTooltip` receives the pre-formatted value as a third a
 />
 ```
 
-Props: `data: TimeSeriesPoint[]`, `curve?: 'linear' | 'step'`, `height?`, `yAxis?: 'left' | 'right' | 'none'`, `ranges?`, `range?`, `onRangeChange?`, `toolbarLeft?`, `formatValue?: (value: number) => string`, `formatDate?`, `formatAxisDate?`, `renderTooltip?: (point, index, formattedValue) => ReactNode`, `showLatestValue?`, `locale?` (default `en-US`), `emptyMessage?`, `ariaLabel?`.
+Props: `data: TimeSeriesPoint[]`, `curve?: 'linear' | 'step'`, `height?`, `yAxis?: 'left' | 'right' | 'none'`, `ranges?`, `range?`, `onRangeChange?`, `toolbarLeft?`, `formatValue?: (value: number) => string`, `valuePrefix?`, `valueSuffix?`, `formatDate?`, `formatAxisDate?`, `renderTooltip?: (point, index, formattedValue) => ReactNode`, `showLatestValue?`, `locale?` (default `en-US`), `emptyMessage?`, `ariaLabel?`.
 
 Types: `TimeSeriesPoint` — `{ date: Date | string | number; value: number; label?; meta? }`. `TIME_SERIES_PRESETS` — English 3 mo · 6 mo · 1 yr · 2 yr · All.
 

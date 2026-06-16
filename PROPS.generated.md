@@ -715,6 +715,8 @@
 - `yAxis?: 'left' | 'right' | 'none'`
 - `padding?: Partial<ChartPadding>`
 - `formatValue?: (value: number) => string`
+- `valuePrefix?: string`
+- `valueSuffix?: string`
 - `formatDate?: (date: Date) => string`
 - `formatAxisDate?: (date: Date) => string`
 - `showLatestValue?: boolean`

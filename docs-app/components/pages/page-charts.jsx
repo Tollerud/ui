@@ -91,6 +91,13 @@ const TIME_SERIES_TOOLTIP = `<TimeSeriesChart
   )}
 />`
 
+const TIME_SERIES_VALUE_AFFIX = `<TimeSeriesChart
+  data={points}
+  curve="step"
+  locale="nb-NO"
+  valueSuffix=" kr/l"
+/>`
+
 const TIME_SERIES_FORMAT_VALUE = `import { TimeSeriesChart, formatChartDecimal } from '@tollerud/ui'
 
 <TimeSeriesChart
@@ -270,6 +277,19 @@ function PageCharts() {
             toolbarLeft={
               <span className="text-sm text-tollerud-text-secondary">Prishistorikk</span>
             }
+          />
+        </Demo>
+        <SubHead>valuePrefix / valueSuffix</SubHead>
+        <p className="ds-section__desc" style={{ marginTop: 0 }}>
+          Quick affixes for tooltip, Y-axis, and latest-value badge — without a custom <code className="ds-mono">formatValue</code>. Ignored when <code className="ds-mono">formatValue</code> is set. For decimal unit rates, prefer <code className="ds-mono">formatChartDecimal</code> via <code className="ds-mono">formatValue</code>.
+        </p>
+        <Demo name="time-series-value-affix" variant="col" code={TIME_SERIES_VALUE_AFFIX}>
+          <TimeSeriesChart
+            data={RATE_SAMPLE}
+            curve="step"
+            height={220}
+            locale="nb-NO"
+            valueSuffix=" kr/l"
           />
         </Demo>
         <SubHead>formatValue</SubHead>

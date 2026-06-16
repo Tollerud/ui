@@ -56,8 +56,12 @@ export interface TimeSeriesChartProps extends Omit<HTMLAttributes<HTMLDivElement
   curve?: 'linear' | 'step'
   yAxis?: 'left' | 'right' | 'none'
   padding?: Partial<ChartPadding>
-  /** Formats Y-axis ticks, latest-value badge, and default tooltip values. Independent of `locale` date formatting. */
+  /** Formats Y-axis ticks, latest-value badge, and default tooltip values. Independent of `locale` date formatting. When set, `valuePrefix` / `valueSuffix` are ignored. */
   formatValue?: (value: number) => string
+  /** Prepended to the locale-formatted number (tooltip, Y-axis, latest badge). Ignored when `formatValue` is set. */
+  valuePrefix?: string
+  /** Appended to the locale-formatted number (tooltip, Y-axis, latest badge). Ignored when `formatValue` is set. */
+  valueSuffix?: string
   formatDate?: (date: Date) => string
   formatAxisDate?: (date: Date) => string
   /** Pin the latest value on the Y axis */
@@ -116,6 +120,8 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       yAxis = 'right',
       padding: paddingOverride,
       formatValue,
+      valuePrefix,
+      valueSuffix,
       formatDate,
       formatAxisDate,
       showLatestValue = true,
@@ -141,8 +147,13 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
     const activeRangeDef = ranges?.find((r) => r.value === activeRange)
 
     const valueFormatter = useCallback(
-      (v: number) => formatValue?.(v) ?? formatChartNumber(v, locale),
-      [formatValue, locale],
+      (v: number) => {
+        if (formatValue) return formatValue(v)
+        const base = formatChartNumber(v, locale)
+        if (!valuePrefix && !valueSuffix) return base
+        return `${valuePrefix ?? ''}${base}${valueSuffix ?? ''}`
+      },
+      [formatValue, locale, valuePrefix, valueSuffix],
     )
     const dateFormatter = useCallback(
       (d: Date) => formatDate?.(d) ?? formatChartDateLong(d, locale),

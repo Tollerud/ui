@@ -604,7 +604,7 @@ import {
 <Sparkline data={[17200, 16800, 13999]} curve="step" fill interactive width={160} height={36} />
 ```
 
-`TimeSeriesChart` — stepped/linear curves, hover crosshair + tooltip, `ranges` + `TIME_SERIES_PRESETS` (English labels), `locale` (default `en-US`, dates only), `formatValue` for Y-axis/tooltip numbers, `formatChartDecimal` helper for rates, `toolbarLeft`, `renderTooltip(point, index, formattedValue)`. Norwegian apps: custom `ranges` + `locale="nb-NO"`. `Sparkline` — `curve`, `fill`, `interactive` for table-row micro charts.
+`TimeSeriesChart` — stepped/linear curves, hover crosshair + tooltip, `ranges` + `TIME_SERIES_PRESETS` (English labels), `locale` (default `en-US`, dates only), `valuePrefix` / `valueSuffix` or `formatValue` for numbers, `formatChartDecimal` helper for rates, `toolbarLeft`, `renderTooltip(point, index, formattedValue)`. Norwegian apps: custom `ranges` + `locale="nb-NO"`. `Sparkline` — `curve`, `fill`, `interactive` for table-row micro charts.
 
 **Marketing blocks**
 ```tsx
