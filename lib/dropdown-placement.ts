@@ -45,6 +45,8 @@ export function useDropdownPlacement(
   options: DropdownPlacementOptions = {},
 ): DropdownPlacement {
   const [placement, setPlacement] = useState<DropdownPlacement>('bottom')
+  const offset = options.offset ?? DEFAULT_OFFSET
+  const maxHeight = options.maxHeight ?? 240
 
   useLayoutEffect(() => {
     if (!open || !anchorRef.current) {
@@ -52,9 +54,11 @@ export function useDropdownPlacement(
       return
     }
 
+    const placementOptions = { offset, maxHeight }
+
     const update = () => {
       if (!anchorRef.current) return
-      setPlacement(getDropdownPlacement(anchorRef.current, popoverRef.current, options))
+      setPlacement(getDropdownPlacement(anchorRef.current, popoverRef.current, placementOptions))
     }
 
     update()
@@ -73,7 +77,7 @@ export function useDropdownPlacement(
       window.removeEventListener('resize', update)
       window.removeEventListener('scroll', update, true)
     }
-  }, [open, anchorRef, popoverRef, options.maxHeight, options.offset])
+  }, [open, anchorRef, popoverRef, offset, maxHeight])
 
   return placement
 }

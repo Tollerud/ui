@@ -208,6 +208,11 @@
       background-clip: initial;
       color: var(--primary);
     }
+    .tollerud-btn--primary::after,
+    .tollerud-btn--terminal::after,
+    .tollerud-btn-glow::after {
+      display: none;
+    }
   }
 }
 
@@ -297,6 +302,50 @@
     border-color: var(--tollerud-yellow);
     box-shadow: 0 0 15px rgba(255,255,0,0.3), 0 0 30px rgba(255,255,0,0.1);
     background: rgba(232, 213, 0, 0.05);
+  }
+
+  /* Magnetic pointer glow — pair with initButtonGlow() from @tollerud/ui */
+  .tollerud-btn--primary,
+  .tollerud-btn--terminal,
+  .tollerud-btn-glow {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .tollerud-btn--primary::after,
+  .tollerud-btn--terminal::after,
+  .tollerud-btn-glow::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.3s var(--motion-ease-out, ease-out);
+    background: radial-gradient(
+      130px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+      rgba(255, 255, 255, 0.45),
+      transparent 60%
+    );
+  }
+  .tollerud-btn--terminal::after,
+  .tollerud-btn-glow::after {
+    background: radial-gradient(
+      150px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+      rgba(232, 213, 0, 0.3),
+      transparent 62%
+    );
+  }
+  .tollerud-btn--primary.is-glowing::after,
+  .tollerud-btn--terminal.is-glowing::after,
+  .tollerud-btn-glow.is-glowing::after {
+    opacity: 1;
+  }
+  .tollerud-btn--primary > *,
+  .tollerud-btn--terminal > *,
+  .tollerud-btn-glow > * {
+    position: relative;
+    z-index: 1;
   }
 
   /* ═══ Input ═══ */

@@ -149,6 +149,21 @@ Sizes: `--sm` (28px), `--md` (40px), `--lg` (48px) — fixed height per size so 
 
 `Button` renders a native `<button>`. To style a link, use `asChild` or `buttonVariants()` — see [SKILL.md](SKILL.md#3-button-only-renders-a-native-button--use-aschild-for-links--107).
 
+**Pointer glow** — primary and terminal buttons support a magnetic cursor-following highlight. CSS ships in `globals-layers.css`; wire it once at the app root:
+
+```tsx
+'use client'
+import { useEffect } from 'react'
+import { initButtonGlow } from '@tollerud/ui'
+
+export function ButtonGlowRoot() {
+  useEffect(() => initButtonGlow(), [])
+  return null
+}
+```
+
+Add `tollerud-btn-glow` to opt in other surfaces. Disabled when `prefers-reduced-motion: reduce`.
+
 ## Button group
 
 Fused action buttons for independent clicks — shared outer border, internal dividers, consistent height. Not a toggle; use `Segmented` for single-select view/sort controls.

@@ -1,4 +1,6 @@
 export { cn } from '../lib/utils'
+export { initButtonGlow, BUTTON_GLOW_SELECTORS } from '../lib/button-glow'
+export type { ButtonGlowOptions } from '../lib/button-glow'
 
 export { Button, buttonVariants } from './Button'
 export type { ButtonProps, ButtonVariantProps } from './Button'

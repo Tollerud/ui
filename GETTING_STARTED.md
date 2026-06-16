@@ -67,7 +67,7 @@ Use `@tollerud/ui` (or `@tollerud/ui/footer`) when you need the full component s
 
 ### Next.js starter
 
-Copy [`examples/next-starter/`](../examples/next-starter/) from this repo — minimal App Router app with `globals.css`, `source.css`, sample page, and `Toaster` mounted.
+Copy [`examples/next-starter/`](../examples/next-starter/) from this repo — minimal App Router app with `globals.css`, `source.css`, sample page, `Toaster`, and optional `initButtonGlow()` via `ButtonGlowRoot`.
 
 ```bash
 cp -R examples/next-starter my-app && cd my-app && npm install && npm run dev

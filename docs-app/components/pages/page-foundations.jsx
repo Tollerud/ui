@@ -333,9 +333,19 @@ function PageFoundations() {
         ]}/>
       </Section>
 
-      <Section title="Motion" desc="Quick and confident. Durations stay short; easing does the expressive work. Everything here respects prefers-reduced-motion.">
+      <Section title="Motion" desc="Quick and confident. Durations stay short; easing does the expressive work. Primary and terminal buttons get a pointer-following glow when you mount initButtonGlow() once at the app root — see snippet below. Everything respects prefers-reduced-motion.">
         <TokenTable cols={['Token', 'Value', 'Use for']} rows={motion.map(([t, v, u]) => [`<code>--motion-${t.includes('ease') ? '' : 'duration-'}${t}</code>`, `<span class="ds-mono">${v}</span>`, u])}/>
         <div style={{ marginTop: 22 }}><MotionLab/></div>
+        <CodeSnippet code={`'use client'
+import { useEffect } from 'react'
+import { initButtonGlow } from '@tollerud/ui'
+
+export function ButtonGlowRoot() {
+  useEffect(() => initButtonGlow(), [])
+  return null
+}
+
+// layout.tsx — mount <ButtonGlowRoot /> once near the body root`}/>
       </Section>
 
       <Section title="Iconography" desc="Docs demos use lucide-react via the Icons registry (24px grid, 1.8 stroke). Yellow is reserved for interactive icons — most sit in the current text color.">

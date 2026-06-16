@@ -39,12 +39,22 @@ function PageComponents({ go }) {
         </div>
       </Section>
 
-      <Section title="Button" component="Button" permalink="components/button" desc="Five variants, three sizes with fixed height per size — text and icon-only buttons align in the same row. Supports loading spinners, disabled state, and aria-label for icon-only. Primary is yellow; terminal carries the ❯ for technical actions.">
+      <Section title="Button" component="Button" permalink="components/button" desc="Five variants, three sizes with fixed height per size — text and icon-only buttons align in the same row. Primary and terminal support a pointer-following glow when you call initButtonGlow() once at the app root (see Foundations → Motion). Terminal carries the ❯ prefix for technical actions.">
         <Demo name="buttons" variant="center" code={`<Button variant="primary">Deploy</Button>
 <Button variant="secondary">Cancel</Button>
 <Button variant="ghost">More</Button>
 <Button variant="destructive">Delete</Button>
-<Button variant="terminal">start_building</Button>`}>
+<Button variant="terminal">start_building</Button>
+
+// app/providers.tsx — once near root
+'use client'
+import { useEffect } from 'react'
+import { initButtonGlow } from '@tollerud/ui'
+
+export function ButtonGlowRoot() {
+  useEffect(() => initButtonGlow(), [])
+  return null
+}`}>
           <Button variant="primary">Deploy</Button>
           <Button variant="secondary">Cancel</Button>
           <Button variant="ghost">More</Button>

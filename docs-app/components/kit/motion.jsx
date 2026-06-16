@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { initButtonGlow } from '@tollerud/ui'
 import { jumpToSection } from './cmd-registry'
 
 /* @tollerud/ui docs — Motion and interaction (reduced-motion aware) */
@@ -41,24 +42,12 @@ function initReveal() {
 }
 
 /* ───────────────────────────────────────────────────────────────
-   Magnetic glow — primary & terminal buttons get a soft yellow light
-   that follows the pointer. Event-delegated; one set of listeners.
+   Magnetic glow — shipped via initButtonGlow() from @tollerud/ui
    ─────────────────────────────────────────────────────────────── */
+let _destroyButtonGlow = null
 function initGlow() {
-  if (REDUCED) return;
-  const sel = '.tollerud-btn--primary, .tollerud-btn--terminal, .ds-glow';
-  document.addEventListener('pointermove', (e) => {
-    const t = e.target.closest && e.target.closest(sel);
-    if (!t) return;
-    const r = t.getBoundingClientRect();
-    t.style.setProperty('--glow-x', `${((e.clientX - r.left) / r.width) * 100}%`);
-    t.style.setProperty('--glow-y', `${((e.clientY - r.top) / r.height) * 100}%`);
-    t.classList.add('is-glowing');
-  });
-  document.addEventListener('pointerout', (e) => {
-    const t = e.target.closest && e.target.closest(sel);
-    if (t) t.classList.remove('is-glowing');
-  });
+  if (REDUCED) return
+  _destroyButtonGlow = initButtonGlow()
 }
 
 /* ───────────────────────────────────────────────────────────────

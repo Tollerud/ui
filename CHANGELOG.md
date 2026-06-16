@@ -7,6 +7,27 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.16 — 2026-06-16 — Magnetic button glow
+
+Ship pointer-following glow for primary and terminal buttons as a first-class package export.
+
+### Added
+
+- `initButtonGlow()` — mount once at the app root; tracks pointer position on `.tollerud-btn--primary`, `.tollerud-btn--terminal`, and opt-in `.tollerud-btn-glow`
+- `BUTTON_GLOW_SELECTORS` and `ButtonGlowOptions` — configure selector scope and event root
+- `@tollerud/ui/button-glow` subpath export for tree-shaking
+- Magnetic glow CSS in `globals-layers.css` (`is-glowing`, `--glow-x` / `--glow-y`); disabled under `prefers-reduced-motion`
+- `examples/next-starter` — `ButtonGlowRoot` client helper wired in root layout
+
+### Docs
+
+- Foundations → Motion and Components → Button document `initButtonGlow()` usage
+- Docs site delegates glow init to the package export (removed duplicate CSS in `docs.css`)
+
+### Migration
+
+Nothing breaking. Call `initButtonGlow()` once if you want the docs-style cursor glow; static hover glow on terminal still works without it.
+
 ## 4.6.15 — 2026-06-16 — PageHeader shimmer alias
 
 `shimmer` prop alias for mid-sentence accent words in page titles.

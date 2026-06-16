@@ -11,7 +11,7 @@ const variants = {
   terminal: 'font-mono text-tollerud-yellow border-[rgba(255,255,0,0.25)] bg-transparent hover:border-tollerud-yellow hover:shadow-tollerud-glow hover:bg-[rgba(255,255,0,0.05)]',
 } as const
 
-/** Layer classes from globals-layers.css — ❯ prefix, hover glow, magnetic glow in docs */
+/** Layer classes from globals-layers.css — ❯ prefix, hover glow; pair with initButtonGlow() for pointer glow */
 const variantLayers = {
   primary: 'tollerud-btn--primary',
   secondary: 'tollerud-btn--secondary',

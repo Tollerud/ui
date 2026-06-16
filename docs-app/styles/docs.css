@@ -711,18 +711,7 @@ h1,h2,h3,h4,h5,h6,p { margin: 0; }
 .ds-page { animation: ds-page-in .5s var(--motion-ease-out) both; }
 @keyframes ds-page-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-/* Magnetic glow follow — primary & terminal buttons + .ds-glow */
-.tollerud-btn--primary, .tollerud-btn--terminal, .ds-glow { position: relative; overflow: hidden; isolation: isolate; }
-.tollerud-btn--primary::after, .tollerud-btn--terminal::after, .ds-glow::after {
-  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; z-index: 0;
-  background: radial-gradient(130px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255,255,255,.45), transparent 60%);
-  transition: opacity .3s var(--motion-ease-out);
-}
-.tollerud-btn--terminal::after, .ds-glow::after {
-  background: radial-gradient(150px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(232,213,0,.30), transparent 62%);
-}
-.is-glowing::after { opacity: 1; }
-.tollerud-btn--primary > *, .tollerud-btn--terminal > * { position: relative; z-index: 1; }
+/* Magnetic button glow — shipped in @tollerud/ui/globals-layers.css; call initButtonGlow() once at app root (see Foundations → Motion). */
 
 /* Card hover lift — applied to interactive cards via .ds-lift */
 .ds-lift { transition: transform .28s var(--motion-ease-out), box-shadow .28s var(--motion-ease-out), border-color var(--transition-fast); }
@@ -1007,5 +996,4 @@ html[data-theme="light"] .tollerud-display-shimmer {
   .ds-theme-icon { animation: none !important; }
   .ds-caret { animation: none !important; }
   .ds-pulse::before { animation: none !important; display: none; }
-  .tollerud-btn--primary::after, .tollerud-btn--terminal::after, .ds-glow::after { display: none; }
 }

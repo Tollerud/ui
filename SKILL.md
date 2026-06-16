@@ -304,12 +304,24 @@ npx tollerud-ui-audit
 
 **When a pattern is missing:** compose a local feature component under `src/features/…` that wraps `@tollerud/ui` exports — do not fork primitives into `components/ui`. See GETTING_STARTED.md → Consumer project checklist.
 
-**Button** — `variant`: `primary` · `secondary` · `ghost` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`. Each size uses a fixed height so text and icon-only buttons align in the same row.
+**Button** — `variant`: `primary` · `secondary` · `ghost` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`. Each size uses a fixed height so text and icon-only buttons align in the same row. Primary and terminal support pointer-following glow when you call `initButtonGlow()` once at the app root (requires `globals.css`; respects `prefers-reduced-motion`).
 ```tsx
 <Button variant="primary" size="md">Deploy</Button>
 <Button variant="destructive">Delete host</Button>
 <Button variant="terminal" size="sm">start_building</Button>
+
+// app/providers.tsx — optional, once near root
+'use client'
+import { useEffect } from 'react'
+import { initButtonGlow } from '@tollerud/ui'
+
+export function ButtonGlowRoot() {
+  useEffect(() => initButtonGlow(), [])
+  return null
+}
 ```
+
+Opt-in on any element: add class `tollerud-btn-glow`. Subpath: `import { initButtonGlow } from '@tollerud/ui/button-glow'`.
 
 **ButtonGroup** — fused action buttons (independent clicks, not a toggle). Wrap `<Button>` children; `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. Use **`Segmented`** when one option should stay selected.
 ```tsx

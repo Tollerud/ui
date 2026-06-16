@@ -36,6 +36,12 @@ for (const file of componentFiles) {
 writeFileSync(join(entriesDir, 'utils.ts'), `export { cn } from '../lib/utils'\n`)
 manifest.push('entries/utils.ts')
 
+writeFileSync(
+  join(entriesDir, 'button-glow.ts'),
+  `export { initButtonGlow, BUTTON_GLOW_SELECTORS } from '../lib/button-glow'\nexport type { ButtonGlowOptions } from '../lib/button-glow'\n`,
+)
+manifest.push('entries/button-glow.ts')
+
 writeFileSync(join(entriesDir, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`)
 
 console.log(`Generated ${componentFiles.length + 1} subpath entries in entries/`)
