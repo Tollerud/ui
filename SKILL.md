@@ -242,7 +242,7 @@ import {
 
 Use these before rebuilding common pages with raw Tailwind:
 
-- **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`.
+- **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`. Use `titleAccent` to shimmer a substring when `title` is a string, `titleShimmer` for a second shimmer line, or `PageHeaderShimmer` inside `title` for full control.
 - **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`, `maxWidth` (`default` | `wide` | `full` | `false`). Below `lg`, nav links and menu actions open in a modal overlay (backdrop, focus trap, Esc to close). Wrap actions in `TopNavAction` with `mobile?: 'inline' | 'menu' | 'hidden'` (default `menu`) to keep a primary CTA inline next to the menu toggle.
 - **SidebarNav** — sidebar brand lockup with `projectName`, `projectSubtitle`, `groups` / `items`, icons, and active states.
 - **DashboardTopBar** — context top bar with `breadcrumb`, `pageTitle`, `actions`, mobile menu toggle.

@@ -7,6 +7,20 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.14 — 2026-06-16 — PageHeader shimmer accents
+
+Selective display shimmer on page titles.
+
+### Added
+
+- `PageHeader` — `titleAccent` wraps the first matching substring in `.tollerud-display-shimmer` when `title` is a string
+- `PageHeader` — `titleShimmer` renders an optional second title line with display secondary + shimmer styles
+- `PageHeaderShimmer` — inline shimmer span for manual `title` composition
+
+### Migration
+
+Nothing breaking. `title` still accepts `ReactNode` for custom markup.
+
 ## 4.6.13 — 2026-06-16 — DataTable full-row hover
 
 Row hover now applies to every cell, not only pinned columns.

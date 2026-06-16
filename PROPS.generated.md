@@ -464,11 +464,18 @@
 
 - `eyebrow?: ReactNode`
 - `title: ReactNode`
+- `titleAccent?: string`
+- `titleShimmer?: ReactNode`
 - `description?: ReactNode`
 - `actions?: ReactNode`
 - `meta?: ReactNode`
 - `align?: PageHeaderAlign`
 - `size?: PageHeaderSize`
+
+## PageHeader — `PageHeaderShimmerProps`
+
+- `children: ReactNode`
+- `className?: string`
 
 ## PageShell — `PageShellProps` extends extends HTMLAttributes<HTMLDivElement>
 

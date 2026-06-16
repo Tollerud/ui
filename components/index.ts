@@ -54,8 +54,8 @@ export type { SplitProps, SplitRatio, SplitGap, SplitAlign } from './Split'
 export { MainContent } from './MainContent'
 export type { MainContentProps, MainContentWidth, MainContentSpacing, MainContentDensity } from './MainContent'
 
-export { PageHeader } from './PageHeader'
-export type { PageHeaderProps, PageHeaderAlign, PageHeaderSize } from './PageHeader'
+export { PageHeader, PageHeaderShimmer } from './PageHeader'
+export type { PageHeaderProps, PageHeaderAlign, PageHeaderSize, PageHeaderShimmerProps } from './PageHeader'
 
 export { TopNav, TopNavAction } from './TopNav'
 export type { TopNavProps, TopNavItem, TopNavMaxWidth, TopNavActionProps, TopNavActionMobile } from './TopNav'

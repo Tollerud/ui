@@ -717,11 +717,20 @@
   ],
   "PageHeader": [
     {
+      "name": "PageHeaderShimmerProps",
+      "props": [
+        "children: ReactNode",
+        "className?: string"
+      ]
+    },
+    {
       "name": "PageHeaderProps",
       "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
       "props": [
         "eyebrow?: ReactNode",
         "title: ReactNode",
+        "titleAccent?: string",
+        "titleShimmer?: ReactNode",
         "description?: ReactNode",
         "actions?: ReactNode",
         "meta?: ReactNode",
