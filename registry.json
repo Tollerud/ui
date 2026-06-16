@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.8.0",
+  "version": "4.8.1",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -1045,7 +1045,7 @@
     },
     "segmented": {
       "name": "Segmented",
-      "description": "Segmented control for switching between a small set of options; optional collapseMobile for narrow viewports",
+      "description": "Segmented control for switching between a small set of options; optional collapseMobile dropdown on narrow viewports",
       "files": [
         "components/Segmented.tsx"
       ],

@@ -474,7 +474,7 @@ import {
 <Segmented value={sort} onChange={setSort} options={SORTS} collapseMobile />
 ```
 
-With `collapseMobile`, viewports below `md` show only the selected label (with chevron) until tapped; choosing an option collapses again. Desktop is unchanged.
+With `collapseMobile`, viewports below `md` show only the selected label (with chevron) until tapped; options open in a dropdown overlay and collapse again after a selection. Desktop is unchanged.
 
 **Stepper** — `steps: { label, description? }[]`, `current` (0-indexed), `orientation?: 'horizontal' | 'vertical'`.
 ```tsx

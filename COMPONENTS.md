@@ -908,7 +908,7 @@ Toggle between views or filter modes. Segment height is fixed per size so text a
 
 Props: `options: { value, label, disabled? }[]`, `value`, `onChange`, `size?: 'sm' | 'md'`, `collapseMobile?`.
 
-With `collapseMobile`, viewports below Tailwind `md` show only the selected option until tapped; the full control expands inline and collapses again after a selection. Desktop behavior is unchanged.
+With `collapseMobile`, viewports below Tailwind `md` show only the selected option until tapped; options open in a dropdown overlay and collapse again after a selection. Desktop behavior is unchanged.
 
 ### Accordion
 

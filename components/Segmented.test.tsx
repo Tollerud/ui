@@ -46,7 +46,7 @@ describe('Segmented', () => {
     expect(screen.getByRole('radio', { name: 'Navn' })).toBeInTheDocument()
   })
 
-  it('collapses to the selected option on mobile and expands on tap', async () => {
+  it('collapses to the selected option on mobile and opens a dropdown on tap', async () => {
     mockMobile(true)
     const user = userEvent.setup()
     const onChange = vi.fn()
@@ -73,10 +73,10 @@ describe('Segmented', () => {
 
     await user.click(screen.getByRole('button', { name: 'kr/stk, show options' }))
 
-    expect(screen.getByRole('radio', { name: 'kr/l' })).toBeInTheDocument()
-    expect(screen.getByRole('radio', { name: 'Navn' })).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: 'kr/l' })).toBeInTheDocument()
+    expect(screen.getByRole('option', { name: 'Navn' })).toBeInTheDocument()
 
-    await user.click(screen.getByRole('radio', { name: 'Navn' }))
+    await user.click(screen.getByRole('option', { name: 'Navn' }))
 
     expect(onChange).toHaveBeenCalledWith('name')
     expect(screen.queryByRole('radio', { name: 'kr/l' })).not.toBeInTheDocument()

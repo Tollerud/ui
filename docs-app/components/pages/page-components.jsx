@@ -129,7 +129,7 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="Segmented" component="Segmented" permalink="components/segmented" desc="Single-select toggle for views, sort modes, or filters. Pass collapseMobile to show only the active option on narrow viewports — tap to expand inline, select to collapse.">
+      <Section title="Segmented" component="Segmented" permalink="components/segmented" desc="Single-select toggle for views, sort modes, or filters. Pass collapseMobile to show only the active option on narrow viewports — tap to open a dropdown overlay, select to collapse.">
         <Demo name="segmented" variant="center" code={`<Segmented
   value={view}
   onChange={setView}
@@ -148,7 +148,7 @@ export function ButtonGlowRoot() {
               collapseMobile
             />
             <p className="text-xs text-tollerud-text-muted" style={{ margin: 0, textAlign: 'center' }}>
-              Resize below 768px to see <code className="ds-mono">collapseMobile</code> — selected option only until expanded.
+              Resize below 768px to see <code className="ds-mono">collapseMobile</code> — selected option only; tap opens a dropdown.
             </p>
           </div>
         </Demo>

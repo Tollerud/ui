@@ -7,13 +7,21 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.1 — 2026-06-16 — Segmented mobile dropdown
+
+`collapseMobile` now opens options in a floating dropdown instead of expanding inline.
+
+### Changed
+
+- `Segmented` — mobile `collapseMobile` uses an absolute dropdown overlay (matches Select/Combobox), not inline expansion
+
 ## 4.8.0 — 2026-06-16 — Segmented collapseMobile
 
-Mobile-friendly segmented control that collapses to the selected option on narrow viewports.
+Mobile-friendly segmented control that collapses to the selected option on narrow viewports and opens a dropdown overlay.
 
 ### Added
 
-- `Segmented` — `collapseMobile?` shows only the active option below `md`; tap to expand inline, select to collapse
+- `Segmented` — `collapseMobile?` shows only the active option below `md`; tap to open dropdown overlay, select to collapse
 - `useIsMobile` — internal hook for the `md` breakpoint (`lib/use-mobile.ts`, not exported)
 
 ## 4.7.4 — 2026-06-16 — Form field border radius
