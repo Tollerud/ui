@@ -1058,7 +1058,9 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 | `searchPlaceholder` | `string` | `'Search…'` | Search input placeholder. |
 | `filter` | `{ key, options?, allLabel?, variant?: 'segmented' \| 'combobox', placeholder? }` | — | Column filter in rich mode. Default `variant` is `segmented`; use `combobox` for a searchable dropdown. |
 | `selectable` | `boolean` | `false` | Row checkboxes + select-all. |
-| `pageSize` | `number` | — | Rows per page (enables pagination when set). |
+| `pageSize` | `number` | — | Rows per page. Enables the footer row count and built-in `Pagination` when `pageCount > 1`. Omit to show all rows. |
+
+**Pagination** — fully client-side; no `page` / `onPageChange` props. Pass `pageSize` only. The footer shows `Showing 1–5 of 12` (or `12 rows` when `pageSize` is omitted). Page controls use the package `Pagination` primitive with `siblingCount={1}`. Search and rich-mode filters reset to page 1. With `selectable`, checked rows persist across pages until cleared or bulk action runs `clear()`.
 | `bulkActions` | `BulkAction[]` | `[]` | Shown when rows are selected; fused with `ButtonGroup` when 2+ actions. `onRun(ids, clear)`. |
 | `rowMenu` | `(row) => MenuItem[]` | — | Per-row ⋮ dropdown. |
 | `toolbarRight` | `ReactNode` | — | Toolbar right slot (e.g. add button). |

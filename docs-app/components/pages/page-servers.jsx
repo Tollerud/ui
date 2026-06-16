@@ -254,6 +254,37 @@ function PageServers() {
         </Demo>
       </Section>
 
+      <Section title="Pagination" desc="Pass pageSize to enable client-side pagination. DataTable owns page state — search and filter reset to page 1. The footer shows a row count; page controls appear when there is more than one page. Row selection persists across pages.">
+        <Demo name="data-table-pagination" variant="col" code={`<DataTable
+  data={hosts}
+  rowKey="id"
+  pageSize={5}
+  columns={[
+    { key: 'hostname', label: 'Host', sortable: true },
+    { key: 'region', label: 'Region', sortable: true },
+  ]}
+/>
+
+// Pagination behavior (built in — no extra props):
+// • Footer: "Showing 1–5 of 12"
+// • <Pagination> appears when pageCount > 1
+// • Search / segmented or combobox filter resets to page 1
+// • selectable + bulkActions: selection spans all pages
+// • Omit pageSize to show all rows (footer: "12 rows")`}>
+          <PackageDataTable
+            data={ALL}
+            rowKey="id"
+            pageSize={5}
+            striped
+            columns={[
+              { key: 'id', label: 'Host', sortable: true },
+              { key: 'region', label: 'Region', sortable: true },
+              { key: 'owner', label: 'Owner', sortable: true },
+            ]}
+          />
+        </Demo>
+      </Section>
+
       <Section title="Loading and footer" desc="Pass loading for skeleton rows. Use footer for extra controls beside pagination.">
         <div className="ds-stack" style={{ gap: 28 }}>
           <div>

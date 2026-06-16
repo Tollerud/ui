@@ -505,7 +505,7 @@ function DataTableInner<T extends Record<string, unknown>>({
   }
 
   const table = (
-    <table className="w-max min-w-full text-sm" style={{ minWidth: tableMinWidth }}>
+    <table className="w-full text-sm" style={{ minWidth: tableMinWidth }}>
       <thead>
         <tr className="border-b border-tollerud-border/30 bg-tollerud-noir-900">
           {selectable && (

@@ -104,6 +104,23 @@ describe('DataTable', () => {
     expect(hostHeader).toHaveAttribute('aria-sort', 'ascending')
   })
 
+  it('stretches the table to the container width', () => {
+    render(
+      <DataTable
+        columns={[
+          { key: 'hostname', label: 'Host' },
+          { key: 'status', label: 'Status' },
+        ]}
+        data={[{ id: '1', hostname: 'emma', status: 'online' }]}
+        rowKey="id"
+        searchable
+        pageSize={10}
+      />
+    )
+
+    expect(screen.getByRole('table')).toHaveClass('w-full')
+  })
+
   it('wraps multiple bulk actions in ButtonGroup', async () => {
     const user = userEvent.setup()
 

@@ -149,6 +149,7 @@ const CMD_SECTION_ENTRIES = [
   ['data-table', 'Column filters', ['filterable', 'filter']],
   ['data-table', 'Filter control', ['segmented', 'combobox', 'filter']],
   ['data-table', 'Servers', ['datatable', 'table', 'bulk', 'rowmenu']],
+  ['data-table', 'Pagination', ['pageSize', 'pages', 'footer']],
   ['data-table', 'Loading and footer', ['loading', 'skeleton', 'footer']],
   ['data-table', 'Mobile and horizontal scroll', ['mobile', 'scroll', 'pincolumns']],
 

@@ -7,6 +7,23 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.2 — 2026-06-16 — Fix DataTable full width and document pagination
+
+Tables in rich mode now stretch to the container width on desktop while keeping horizontal scroll when columns need more space.
+
+### Fixed
+
+- `DataTable` — `<table>` uses `w-full` instead of `w-max` so the table fills its container (e.g. inside a capped `Section`) instead of shrinking to content width
+
+### Docs
+
+- Data Table docs — new **Pagination** section (`pageSize`, internal page state, footer copy, cross-page selection)
+- `COMPONENTS.md` and `SKILL.md` — pagination contract documented
+
+### Migration
+
+Nothing breaking. Drop-in width fix for tables inside max-width layouts.
+
 ## 4.6.1 — 2026-06-16 — Fuse DataTable bulk actions in ButtonGroup
 
 Multiple `bulkActions` on `DataTable` now render as a fused `ButtonGroup` instead of separate spaced buttons.

@@ -98,6 +98,7 @@ export const DEEP_LINKS = [
   { page: 'data-table', section: 'column-filters', title: 'Column filters', component: 'DataTable', keywords: ['filterable'] },
   { page: 'data-table', section: 'filter-control', title: 'Filter control', component: 'DataTable', keywords: ['segmented', 'combobox', 'filter'] },
   { page: 'data-table', section: 'servers', title: 'Servers', component: 'DataTable', keywords: ['search', 'bulk', 'pagination', 'row menu'] },
+  { page: 'data-table', section: 'pagination', title: 'Pagination', component: 'DataTable', keywords: ['pageSize', 'pages', 'footer'] },
   { page: 'data-table', section: 'loading-and-footer', title: 'Loading and footer', component: 'DataTable', keywords: ['skeleton', 'footer'] },
   { page: 'data-table', section: 'mobile-and-horizontal-scroll', title: 'Mobile and horizontal scroll', component: 'DataTable', keywords: ['mobile', 'scroll', 'pin'] },
 ]

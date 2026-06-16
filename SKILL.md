@@ -616,6 +616,8 @@ import { DataTable } from '@tollerud/ui'
 
 Column headings use `label` or `header`. `render` accepts `(row) => …` or `(value, row) => …`.
 
+**Pagination** — pass `pageSize` only; page state is internal. Footer shows `Showing 1–5 of N`; controls appear when `pageCount > 1`. Search/filter resets page to 1. Selection spans pages when `selectable` is set.
+
 ### Infra / homelab set
 
 ```tsx
