@@ -149,6 +149,27 @@ export function formatChartNumber(value: number, locale = 'en-US'): string {
   return locale.toLowerCase().startsWith('nb') ? `${formatted} ,-` : formatted
 }
 
+export interface ChartDecimalFormatOptions {
+  minimumFractionDigits?: number
+  maximumFractionDigits?: number
+  /** Appended as-is, e.g. ` kr/l` or ` ,-` */
+  suffix?: string
+}
+
+/** Decimal formatter for rates and units — pair with `formatValue` on `TimeSeriesChart`. */
+export function formatChartDecimal(
+  value: number,
+  locale = 'en-US',
+  options: ChartDecimalFormatOptions = {},
+): string {
+  const { minimumFractionDigits = 1, maximumFractionDigits = 1, suffix = '' } = options
+  const formatted = new Intl.NumberFormat(locale, {
+    minimumFractionDigits,
+    maximumFractionDigits,
+  }).format(value)
+  return `${formatted}${suffix}`
+}
+
 export function formatChartDateShort(date: Date, locale = 'en-US'): string {
   return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' }).format(date)
 }

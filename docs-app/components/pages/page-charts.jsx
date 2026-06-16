@@ -12,6 +12,7 @@ const {
   Sparkline,
   TimeSeriesChart,
   TIME_SERIES_PRESETS,
+  formatChartDecimal,
   BarChart,
   AreaChart,
   Donut,
@@ -82,12 +83,21 @@ const RANGES_NB = [
 const TIME_SERIES_TOOLTIP = `<TimeSeriesChart
   data={points}
   curve="step"
-  renderTooltip={(point) => (
+  renderTooltip={(point, _index, formattedValue) => (
     <div className="rounded-lg border border-tollerud-noir-600 bg-tollerud-noir-800 px-3 py-2 shadow-lg">
-      <div className="text-lg font-semibold text-tollerud-text-primary">{point.value} ,-</div>
+      <div className="text-lg font-semibold text-tollerud-text-primary">{formattedValue}</div>
       <div className="text-xs text-tollerud-text-secondary">{point.label}</div>
     </div>
   )}
+/>`
+
+const TIME_SERIES_FORMAT_VALUE = `import { TimeSeriesChart, formatChartDecimal } from '@tollerud/ui'
+
+<TimeSeriesChart
+  data={points}
+  curve="step"
+  locale="nb-NO"
+  formatValue={(value) => formatChartDecimal(value, 'nb-NO', { suffix: ' kr/l' })}
 />`
 
 const SPARKLINE_BASIC = `<Sparkline data={[12, 18, 14, 22, 19]} width={84} height={26} color="var(--tollerud-yellow-warm, #E8D500)" />`
@@ -128,6 +138,12 @@ const BASIC_SAMPLE = [
   { date: '2026-03-23', value: 13999, label: 'Bygghjemme', meta: ['Vaskemaskin Miele WWR860'] },
   { date: '2026-04-06', value: 14250, label: 'Obs BYGG' },
   { date: '2026-04-13', value: 13800, label: 'Maxbo' },
+]
+
+const RATE_SAMPLE = [
+  { date: '2026-03-23', value: 58.2, label: 'Store A' },
+  { date: '2026-04-06', value: 57.0, label: 'Store B' },
+  { date: '2026-04-13', value: 56.4, label: 'Store C' },
 ]
 
 const RANGES_NB = [
@@ -256,15 +272,29 @@ function PageCharts() {
             }
           />
         </Demo>
+        <SubHead>formatValue</SubHead>
+        <p className="ds-section__desc" style={{ marginTop: 0 }}>
+          <code className="ds-mono">formatValue</code> formats Y-axis ticks, the latest-value badge, and the default tooltip. It is independent of <code className="ds-mono">locale</code> (dates only). Use <code className="ds-mono">formatChartDecimal</code> for unit rates like kr/l.
+        </p>
+        <Demo name="time-series-format-value" variant="col" code={TIME_SERIES_FORMAT_VALUE}>
+          <TimeSeriesChart
+            data={RATE_SAMPLE}
+            curve="step"
+            height={220}
+            locale="nb-NO"
+            formatValue={(value) => formatChartDecimal(value, 'nb-NO', { suffix: ' kr/l' })}
+          />
+        </Demo>
         <SubHead>Custom tooltip</SubHead>
         <Demo name="time-series-tooltip" variant="col" code={TIME_SERIES_TOOLTIP}>
           <TimeSeriesChart
             data={BASIC_SAMPLE}
             curve="step"
             height={220}
-            renderTooltip={(point) => (
+            formatValue={(value) => new Intl.NumberFormat('en-US').format(value)}
+            renderTooltip={(point, _index, formattedValue) => (
               <div className="rounded-lg border border-tollerud-noir-600 bg-tollerud-noir-800 px-3 py-2 shadow-lg">
-                <div className="text-lg font-semibold text-tollerud-text-primary">{point.value}</div>
+                <div className="text-lg font-semibold text-tollerud-text-primary">{formattedValue}</div>
                 <div className="text-xs text-tollerud-text-secondary">{point.label}</div>
               </div>
             )}

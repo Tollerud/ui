@@ -48,7 +48,7 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 
 **Data & infra:** `DataTable`, `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `ActionDiff`, `LogViewer`, `AlertInbox`, `Timeline`, `RollbackPlan`, `BackupStatusPanel`
 
-**Visual & marketing:** `Monogram`, `GlowCard`, `NoirGlowBackground`, `BentoDashboard`, `TimeSeriesChart`, `TIME_SERIES_PRESETS`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `HeroBlock`, `FeatureCard`, `CTABand`
+**Visual & marketing:** `Monogram`, `GlowCard`, `NoirGlowBackground`, `BentoDashboard`, `TimeSeriesChart`, `TIME_SERIES_PRESETS`, `formatChartDecimal`, `formatChartNumber`, `formatChartDateShort`, `formatChartDateLong`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `HeroBlock`, `FeatureCard`, `CTABand`
 
 **Footer:** `Footer` — also published as [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer)
 
@@ -727,7 +727,35 @@ const RANGES_NB = [
 />
 ```
 
-Props: `data: TimeSeriesPoint[]`, `curve?: 'linear' | 'step'`, `height?`, `yAxis?: 'left' | 'right' | 'none'`, `ranges?`, `range?`, `onRangeChange?`, `toolbarLeft?`, `formatValue?`, `formatDate?`, `formatAxisDate?`, `renderTooltip?`, `showLatestValue?`, `locale?` (default `en-US`), `emptyMessage?`, `ariaLabel?`.
+`formatValue` formats Y-axis ticks, the latest-value badge, and the default tooltip — independent of `locale` (dates only). Use `formatChartDecimal` for unit rates like kr/l:
+
+```tsx
+import { TimeSeriesChart, formatChartDecimal } from '@tollerud/ui'
+
+<TimeSeriesChart
+  data={points}
+  curve="step"
+  locale="nb-NO"
+  formatValue={(value) => formatChartDecimal(value, 'nb-NO', { suffix: ' kr/l' })}
+/>
+```
+
+Custom tooltip — `renderTooltip` receives the pre-formatted value as a third argument (from `formatValue` or locale defaults):
+
+```tsx
+<TimeSeriesChart
+  data={points}
+  curve="step"
+  renderTooltip={(point, _index, formattedValue) => (
+    <div>
+      <div>{formattedValue}</div>
+      <div>{point.label}</div>
+    </div>
+  )}
+/>
+```
+
+Props: `data: TimeSeriesPoint[]`, `curve?: 'linear' | 'step'`, `height?`, `yAxis?: 'left' | 'right' | 'none'`, `ranges?`, `range?`, `onRangeChange?`, `toolbarLeft?`, `formatValue?: (value: number) => string`, `formatDate?`, `formatAxisDate?`, `renderTooltip?: (point, index, formattedValue) => ReactNode`, `showLatestValue?`, `locale?` (default `en-US`), `emptyMessage?`, `ariaLabel?`.
 
 Types: `TimeSeriesPoint` — `{ date: Date | string | number; value: number; label?; meta? }`. `TIME_SERIES_PRESETS` — English 3 mo · 6 mo · 1 yr · 2 yr · All.
 

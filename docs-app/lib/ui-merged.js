@@ -80,6 +80,7 @@ export {
   AreaChart,
   TimeSeriesChart,
   TIME_SERIES_PRESETS,
+  formatChartDecimal,
   Donut,
   Sparkline,
   HeroBlock,

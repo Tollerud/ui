@@ -7,6 +7,23 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.7.2 — 2026-06-16 — Chart value formatting
+
+`formatValue` docs, `formatChartDecimal` helper, Segmented key fix, and `renderTooltip` formatted-value arg.
+
+### Added
+
+- `formatChartDecimal` — decimal formatter with optional suffix (e.g. `57,0 kr/l` via `formatValue` + `locale="nb-NO"`)
+- `TimeSeriesChart` — `renderTooltip` third argument `formattedValue` (from `formatValue` or locale default)
+
+### Fixed
+
+- `Segmented` — stable React keys when mapping options (fixes warning in `TimeSeriesChart` range toolbar)
+
+### Docs
+
+- Charts page — `formatValue` live demo, tooltip snippet uses `formattedValue`
+
 ## 4.7.1 — 2026-06-16 — English chart presets
 
 `TIME_SERIES_PRESETS` and default `locale` now ship in English.

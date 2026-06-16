@@ -20,7 +20,7 @@ export const DOC_SYMBOLS = [
   'Footer', 'BentoDashboard', 'NoirGlowBackground',
   'CopyButton', 'Demo', 'CodeSnippet', 'PageHeader', 'Section', 'SubHead', 'Swatch', 'TokenTable', 'PropTable',
   'ToastProvider', 'useToast', 'Icons', 'Ico', 'DataTable', 'BarChart', 'AreaChart',
-  'TimeSeriesChart', 'TIME_SERIES_PRESETS', 'Donut',
+  'TimeSeriesChart', 'TIME_SERIES_PRESETS', 'formatChartDecimal', 'Donut',
   'Sparkline', 'HeroBlock', 'FeatureCard', 'CTABand', 'HostCard', 'ServiceHealthCard',
   'DockerStackCard', 'IncidentCard', 'AlertInbox', 'ApprovalCard', 'RollbackPlan',
   'BackupStatusPanel', 'ActionDiff', 'initMotion', 'CountUp', 'Typewriter', 'PageTOC',

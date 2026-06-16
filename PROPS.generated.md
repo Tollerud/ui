@@ -722,7 +722,7 @@
 - `range?: string`
 - `onRangeChange?: (value: string) => void`
 - `toolbarLeft?: ReactNode`
-- `renderTooltip?: (point: TimeSeriesPoint, index: number) => ReactNode`
+- `renderTooltip?: (point: TimeSeriesPoint, index: number, formattedValue: string) => ReactNode`
 - `emptyMessage?: string`
 - `locale?: string`
 - `ariaLabel?: string`

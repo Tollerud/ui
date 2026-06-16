@@ -575,6 +575,7 @@ import {
 import {
   TimeSeriesChart,
   TIME_SERIES_PRESETS,
+  formatChartDecimal,
   BarChart,
   AreaChart,
   Donut,
@@ -591,10 +592,19 @@ import {
   ranges={TIME_SERIES_PRESETS}
   range="3m"
 />
+
+// Norwegian unit rate — dates via locale, numbers via formatValue
+<TimeSeriesChart
+  data={ratePoints}
+  curve="step"
+  locale="nb-NO"
+  formatValue={(v) => formatChartDecimal(v, 'nb-NO', { suffix: ' kr/l' })}
+/>
+
 <Sparkline data={[17200, 16800, 13999]} curve="step" fill interactive width={160} height={36} />
 ```
 
-`TimeSeriesChart` — stepped/linear curves, hover crosshair + tooltip, `ranges` + `TIME_SERIES_PRESETS` (English labels), `locale` (default `en-US`), `toolbarLeft`, `renderTooltip`. Norwegian apps: custom `ranges` + `locale="nb-NO"`. `Sparkline` — `curve`, `fill`, `interactive` for table-row micro charts.
+`TimeSeriesChart` — stepped/linear curves, hover crosshair + tooltip, `ranges` + `TIME_SERIES_PRESETS` (English labels), `locale` (default `en-US`, dates only), `formatValue` for Y-axis/tooltip numbers, `formatChartDecimal` helper for rates, `toolbarLeft`, `renderTooltip(point, index, formattedValue)`. Norwegian apps: custom `ranges` + `locale="nb-NO"`. `Sparkline` — `curve`, `fill`, `interactive` for table-row micro charts.
 
 **Marketing blocks**
 ```tsx

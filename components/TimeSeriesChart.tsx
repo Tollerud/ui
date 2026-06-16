@@ -56,6 +56,7 @@ export interface TimeSeriesChartProps extends Omit<HTMLAttributes<HTMLDivElement
   curve?: 'linear' | 'step'
   yAxis?: 'left' | 'right' | 'none'
   padding?: Partial<ChartPadding>
+  /** Formats Y-axis ticks, latest-value badge, and default tooltip values. Independent of `locale` date formatting. */
   formatValue?: (value: number) => string
   formatDate?: (date: Date) => string
   formatAxisDate?: (date: Date) => string
@@ -65,7 +66,7 @@ export interface TimeSeriesChartProps extends Omit<HTMLAttributes<HTMLDivElement
   range?: string
   onRangeChange?: (value: string) => void
   toolbarLeft?: ReactNode
-  renderTooltip?: (point: TimeSeriesPoint, index: number) => ReactNode
+  renderTooltip?: (point: TimeSeriesPoint, index: number, formattedValue: string) => ReactNode
   emptyMessage?: string
   locale?: string
   ariaLabel?: string
@@ -96,8 +97,8 @@ function defaultTooltip(
       {point.label ? (
         <div className="mt-2 text-sm font-medium text-tollerud-text-primary">{point.label}</div>
       ) : null}
-      {point.meta?.map((line) => (
-        <div key={line} className="mt-0.5 text-xs leading-snug text-tollerud-text-muted">
+      {point.meta?.map((line, index) => (
+        <div key={`${index}-${line}`} className="mt-0.5 text-xs leading-snug text-tollerud-text-muted">
           {line}
         </div>
       ))}
@@ -388,7 +389,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
               style={{ left: tooltipLeft, top: crosshairY != null ? crosshairY - 12 : plotTop }}
             >
               {renderTooltip
-                ? renderTooltip(activePoint, activeIndex!)
+                ? renderTooltip(activePoint, activeIndex!, valueFormatter(activePoint.value))
                 : defaultTooltip(activePoint, valueFormatter, dateFormatter)}
             </div>
           ) : null}

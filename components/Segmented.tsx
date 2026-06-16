@@ -26,11 +26,11 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
         )}
         {...props}
       >
-        {options.map((opt) => {
+        {options.map((opt, index) => {
           const active = opt.value === value
           return (
             <button
-              key={opt.value}
+              key={`${String(opt.value)}-${index}`}
               type="button"
               role="radio"
               aria-checked={active}

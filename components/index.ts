@@ -299,6 +299,13 @@ export type {
   TimeSeriesPoint,
   TimeSeriesRange,
 } from './TimeSeriesChart'
+export {
+  formatChartDecimal,
+  formatChartNumber,
+  formatChartDateLong,
+  formatChartDateShort,
+} from '../lib/chart-series'
+export type { ChartDecimalFormatOptions } from '../lib/chart-series'
 
 export { Donut } from './Donut'
 export type { DonutProps, DonutSegment } from './Donut'

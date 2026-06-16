@@ -5,6 +5,7 @@ import {
   computeYDomain,
   filterPointsByDuration,
   formatChartNumber,
+  formatChartDecimal,
   indexFromPointer,
   sortPointsByDate,
 } from './chart-series'
@@ -70,5 +71,10 @@ describe('chart-series', () => {
 
   it('formats en-US values without trailing ,-', () => {
     expect(formatChartNumber(13999, 'en-US')).toBe('13,999')
+  })
+
+  it('formats decimals with suffix for unit rates', () => {
+    expect(formatChartDecimal(57, 'nb-NO', { suffix: ' kr/l' })).toBe('57,0 kr/l')
+    expect(formatChartDecimal(12.5, 'en-US', { suffix: ' kr/l' })).toBe('12.5 kr/l')
   })
 })
