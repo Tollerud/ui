@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, afterEach } from 'vitest'
-import { dropdownPlacementClasses, getDropdownPlacement } from './dropdown-placement'
+import { dropdownPlacementClasses, getDropdownPlacement, getFloatingDropdownCoords } from './dropdown-placement'
 
 function mockRect(top: number, height: number): DOMRect {
   const bottom = top + height
@@ -50,5 +50,33 @@ describe('dropdownPlacementClasses', () => {
   it('maps placement to tailwind anchor utilities', () => {
     expect(dropdownPlacementClasses('bottom')).toContain('top-full')
     expect(dropdownPlacementClasses('top')).toContain('bottom-full')
+  })
+})
+
+describe('getFloatingDropdownCoords', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it('positions below the anchor when opening downward', () => {
+    const anchor = document.createElement('div')
+    vi.spyOn(anchor, 'getBoundingClientRect').mockReturnValue(mockRect(100, 32))
+    Object.defineProperty(window, 'innerHeight', { value: 800, configurable: true })
+
+    const coords = getFloatingDropdownCoords(anchor, null, { maxHeight: 200 })
+    expect(coords.placement).toBe('bottom')
+    expect(coords.top).toBe(136)
+    expect(coords.left).toBe(0)
+    expect(coords.width).toBe(100)
+  })
+
+  it('positions above the anchor when opening upward', () => {
+    const anchor = document.createElement('div')
+    vi.spyOn(anchor, 'getBoundingClientRect').mockReturnValue(mockRect(760, 32))
+    Object.defineProperty(window, 'innerHeight', { value: 800, configurable: true })
+
+    const coords = getFloatingDropdownCoords(anchor, null, { maxHeight: 200 })
+    expect(coords.placement).toBe('top')
+    expect(coords.top).toBe(556)
   })
 })

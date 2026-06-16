@@ -272,6 +272,50 @@
     color: var(--foreground);
     background: var(--surface-hover);
   }
+  .tollerud-btn--ghost-destructive {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: transparent;
+  }
+  .tollerud-btn--ghost-destructive:hover,
+  .tollerud-btn--ghost-destructive:focus-visible {
+    color: var(--destructive);
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+  .tollerud-btn--ghost-success {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: transparent;
+  }
+  .tollerud-btn--ghost-success:hover,
+  .tollerud-btn--ghost-success:focus-visible {
+    color: var(--tollerud-success);
+    background: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+  .tollerud-btn--ghost-warning {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: transparent;
+  }
+  .tollerud-btn--ghost-warning:hover,
+  .tollerud-btn--ghost-warning:focus-visible {
+    color: var(--tollerud-warning);
+    background: rgba(232, 213, 0, 0.1);
+    border-color: rgba(232, 213, 0, 0.3);
+  }
+  .tollerud-btn--ghost-info {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: transparent;
+  }
+  .tollerud-btn--ghost-info:hover,
+  .tollerud-btn--ghost-info:focus-visible {
+    color: var(--tollerud-info);
+    background: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
   .tollerud-btn--destructive {
     background: var(--destructive);
     color: var(--destructive-foreground);

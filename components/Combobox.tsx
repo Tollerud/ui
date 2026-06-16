@@ -3,7 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { dropdownPlacementClasses, useDropdownPlacement } from '@/lib/dropdown-placement'
+import { FloatingDropdownPortal } from '@/lib/floating-dropdown'
 
 export interface ComboboxOption {
   value: string
@@ -73,7 +73,8 @@ function Combobox({
 }: ComboboxProps) {
   const id = useId()
   const rootRef = useRef<HTMLDivElement>(null)
-  const listRef = useRef<HTMLUListElement>(null)
+  const anchorRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
   const isControlled = valueProp !== undefined
   const [internalValue, setInternalValue] = useState(defaultValue)
   const value = isControlled ? valueProp : internalValue
@@ -81,7 +82,6 @@ function Combobox({
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
-  const placement = useDropdownPlacement(open, rootRef, listRef, { maxHeight: 256 })
 
   const isGrouped = Boolean(groups && groups.length > 0)
   const allOptions = useMemo(() => flattenOptions(options, groups), [options, groups])
@@ -105,10 +105,11 @@ function Combobox({
   useEffect(() => {
     if (!open) return
     function onClickOutside(e: MouseEvent) {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
-        setOpen(false)
-        setQuery('')
-      }
+      const target = e.target as Node
+      if (rootRef.current?.contains(target)) return
+      if (listRef.current?.contains(target)) return
+      setOpen(false)
+      setQuery('')
     }
     document.addEventListener('mousedown', onClickOutside)
     return () => {
@@ -151,7 +152,7 @@ function Combobox({
           {label}
         </label>
       )}
-      <div className="relative">
+      <div ref={anchorRef} className="relative">
         <input
           id={id}
           role="combobox"
@@ -190,16 +191,16 @@ function Combobox({
         />
       </div>
 
-      {open && (
-        <ul
-          ref={listRef}
-          id={`${id}-listbox`}
-          role="listbox"
-          className={cn(
-            'absolute z-20 max-h-64 w-full overflow-auto rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1 shadow-lg',
-            dropdownPlacementClasses(placement),
-          )}
-        >
+      <FloatingDropdownPortal
+        open={open}
+        anchorRef={anchorRef}
+        popoverRef={listRef}
+        id={`${id}-listbox`}
+        role="listbox"
+        placementOptions={{ maxHeight: 256 }}
+        className="overflow-auto rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1 shadow-lg"
+      >
+        <ul className="m-0 list-none p-0">
           {filtered.length === 0 && (
             <li className="px-3 py-2 text-sm text-tollerud-text-muted">No results</li>
           )}
@@ -266,7 +267,7 @@ function Combobox({
                 )
               })}
         </ul>
-      )}
+      </FloatingDropdownPortal>
 
       {error && <p className="text-xs text-tollerud-error mt-0.5">{error}</p>}
     </div>

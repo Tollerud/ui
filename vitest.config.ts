@@ -6,6 +6,7 @@ export default defineConfig({
     alias: {
       '@/lib/utils': path.resolve(__dirname, './lib/utils.ts'),
       '@/lib/dropdown-placement': path.resolve(__dirname, './lib/dropdown-placement.ts'),
+      '@/lib/floating-dropdown': path.resolve(__dirname, './lib/floating-dropdown.tsx'),
       '@/lib/use-mobile': path.resolve(__dirname, './lib/use-mobile.ts'),
       '@/lib/chart-series': path.resolve(__dirname, './lib/chart-series.ts'),
     },

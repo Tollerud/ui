@@ -304,9 +304,11 @@ npx tollerud-ui-audit
 
 **When a pattern is missing:** compose a local feature component under `src/features/…` that wraps `@tollerud/ui` exports — do not fork primitives into `components/ui`. See GETTING_STARTED.md → Consumer project checklist.
 
-**Button** — `variant`: `primary` · `secondary` · `ghost` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`. Each size uses a fixed height so text and icon-only buttons align in the same row. Primary and terminal support pointer-following glow when you call `initButtonGlow()` once at the app root (requires `globals.css`; respects `prefers-reduced-motion`).
+**Button** — `variant`: `primary` · `secondary` · `ghost` · `ghost-destructive` · `ghost-success` · `ghost-warning` · `ghost-info` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`. Each size uses a fixed height so text and icon-only buttons align in the same row. Primary and terminal support pointer-following glow when you call `initButtonGlow()` once at the app root (requires `globals.css`; respects `prefers-reduced-motion`). Ghost semantic variants match `Badge` tones — ghost at rest, semantic tint on hover/focus. Use `ghost-destructive` for archive/deactivate, `ghost-success` for approve/enable, `ghost-warning` for pause/caution, `ghost-info` for details/view.
 ```tsx
 <Button variant="primary" size="md">Deploy</Button>
+<Button variant="ghost-destructive">Archive</Button>
+<Button variant="ghost-success">Approve</Button>
 <Button variant="destructive">Delete host</Button>
 <Button variant="terminal" size="sm">start_building</Button>
 

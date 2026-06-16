@@ -1,11 +1,11 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.8.1",
+  "version": "4.8.4",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
       "name": "Button",
-      "description": "Five variants and three sizes — primary, secondary, ghost, destructive, and terminal. Supports asChild, icons, and loading state",
+      "description": "Nine variants and three sizes — primary, secondary, ghost, ghost-destructive, ghost-success, ghost-warning, ghost-info, destructive, and terminal. Supports asChild, icons, and loading state",
       "files": [
         "components/Button.tsx"
       ],

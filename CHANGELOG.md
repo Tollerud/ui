@@ -7,6 +7,39 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.4 — 2026-06-16 — Button ghost semantic variants
+
+Ghost buttons that tint on hover for success, warning, and info — same pattern as `ghost-destructive`.
+
+### Added
+
+- `Button` — `variant="ghost-success"`, `ghost-warning`, `ghost-info` (ghost at rest; semantic text, background tint, and border on hover/focus)
+- `DataTable` bulk actions accept the new ghost semantic variants
+
+## 4.8.3 — 2026-06-16 — Button ghost-destructive variant
+
+Softer destructive button for dense toolbars — ghost at rest, red tint on hover.
+
+### Added
+
+- `Button` — `variant="ghost-destructive"` for archive/deactivate actions in `ButtonGroup` and table toolbars where permanent red chrome is too heavy
+
+## 4.8.2 — 2026-06-16 — Portalled form dropdowns
+
+Select, Combobox, DatePicker, and Segmented mobile menus render in a fixed portal so they are not clipped inside scroll or overflow containers (for example `DataTable`).
+
+### Fixed
+
+- `Select` — options list portals to `document.body` with viewport positioning
+- `Combobox` — suggestion list portals to `document.body`
+- `DatePicker` — calendar panel portals to `document.body`
+- `Segmented` — `collapseMobile` dropdown portals to `document.body`
+
+### Added
+
+- `FloatingDropdownPortal` / `useFloatingDropdownCoords` — shared portalled menu helper (`lib/floating-dropdown.tsx`)
+- `getFloatingDropdownCoords` — fixed-position placement helper on `lib/dropdown-placement.ts`
+
 ## 4.8.1 — 2026-06-16 — Segmented mobile dropdown
 
 `collapseMobile` now opens options in a floating dropdown instead of expanding inline.

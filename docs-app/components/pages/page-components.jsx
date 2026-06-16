@@ -45,10 +45,11 @@ function PageComponents({ go }) {
         </div>
       </Section>
 
-      <Section title="Button" component="Button" permalink="components/button" desc="Five variants, three sizes with fixed height per size — text and icon-only buttons align in the same row. Primary and terminal support a pointer-following glow when you call initButtonGlow() once at the app root (see Foundations → Motion). Terminal carries the ❯ prefix for technical actions.">
+      <Section title="Button" component="Button" permalink="components/button" desc="Nine variants, three sizes with fixed height per size — text and icon-only buttons align in the same row. Primary and terminal support a pointer-following glow when you call initButtonGlow() once at the app root (see Foundations → Motion). Terminal carries the ❯ prefix for technical actions. Ghost semantic variants (ghost-destructive, ghost-success, ghost-warning, ghost-info) stay muted at rest and tint on hover — use in dense toolbars and ButtonGroups.">
         <Demo name="buttons" variant="center" code={`<Button variant="primary">Deploy</Button>
 <Button variant="secondary">Cancel</Button>
 <Button variant="ghost">More</Button>
+<Button variant="ghost-destructive">Archive</Button>
 <Button variant="destructive">Delete</Button>
 <Button variant="terminal">start_building</Button>
 
@@ -64,6 +65,7 @@ export function ButtonGlowRoot() {
           <Button variant="primary">Deploy</Button>
           <Button variant="secondary">Cancel</Button>
           <Button variant="ghost">More</Button>
+          <Button variant="ghost-destructive">Archive</Button>
           <Button variant="destructive">Delete</Button>
           <Button variant="terminal">start_building</Button>
         </Demo>
@@ -78,6 +80,7 @@ export function ButtonGlowRoot() {
 <Button variant="primary"><Icons.rocket size={15}/>Deploy</Button>
 <Button variant="secondary"><Icons.refresh size={15}/>Restart</Button>
 <Button variant="destructive"><Icons.trash size={15}/>Delete</Button>
+<Button variant="ghost-destructive"><Icons.trash size={15}/>Archive</Button>
 
 {/* Loading */}
 <Button variant="primary" disabled><Spinner size={14}/>Deploying…</Button>
@@ -92,6 +95,7 @@ export function ButtonGlowRoot() {
           <Button variant="primary"><Icons.rocket size={15}/>Deploy</Button>
           <Button variant="secondary"><Icons.refresh size={15}/>Restart</Button>
           <Button variant="destructive"><Icons.trash size={15}/>Delete</Button>
+<Button variant="ghost-destructive"><Icons.trash size={15}/>Archive</Button>
           <Button variant="primary" disabled><Spinner size={14}/>Deploying…</Button>
           <div className="ds-row" style={{ gap: 10, alignItems: 'center' }}>
             <Button variant="secondary" size="sm">Deploy</Button>
@@ -100,12 +104,22 @@ export function ButtonGlowRoot() {
           <Button variant="primary" disabled>Disabled</Button>
           <Button variant="secondary" disabled>Disabled</Button>
         </Demo>
+        <Demo name="button-ghost-semantic" variant="center" code={`<Button variant="ghost-destructive">Archive</Button>
+<Button variant="ghost-success">Approve</Button>
+<Button variant="ghost-warning">Pause</Button>
+<Button variant="ghost-info">Details</Button>`}>
+          <Button variant="ghost-destructive">Archive</Button>
+          <Button variant="ghost-success">Approve</Button>
+          <Button variant="ghost-warning">Pause</Button>
+          <Button variant="ghost-info">Details</Button>
+        </Demo>
       </Section>
 
       <Section title="Button group" component="ButtonGroup" permalink="components/button-group" desc="Fused action buttons for independent clicks — not a toggle. Wrap text or icon-only Button children; the group shares borders and height. Use Segmented when one option should stay selected.">
         <Demo name="button-group" variant="center" code={`<ButtonGroup size="sm">
   <Button variant="secondary">Deploy</Button>
   <Button variant="secondary">Cancel</Button>
+  <Button variant="ghost-destructive">Archive</Button>
   <Button variant="ghost" aria-label="More options"><MoreIcon /></Button>
 </ButtonGroup>
 
@@ -117,6 +131,7 @@ export function ButtonGlowRoot() {
             <ButtonGroup size="sm">
               <Button variant="secondary" onClick={() => toast({ tone: 'accent', title: 'Deploy' })}>Deploy</Button>
               <Button variant="secondary" onClick={() => toast({ tone: 'info', title: 'Cancelled' })}>Cancel</Button>
+              <Button variant="ghost-destructive" onClick={() => toast({ tone: 'error', title: 'Archived' })}>Archive</Button>
               <Button variant="ghost" aria-label="More options" onClick={() => toast({ tone: 'info', title: 'More' })}>
                 <Icons.menu size={16} aria-hidden />
               </Button>

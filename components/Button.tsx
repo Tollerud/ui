@@ -2,11 +2,21 @@ import { type ButtonHTMLAttributes, forwardRef } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@/lib/utils'
 
+type GhostSemantic = 'success' | 'warning' | 'info' | 'error'
+
+function ghostSemanticClasses(semantic: GhostSemantic) {
+  return `text-tollerud-text-secondary border-transparent hover:text-tollerud-${semantic} hover:bg-tollerud-${semantic}/10 hover:border-tollerud-${semantic}/30 focus-visible:text-tollerud-${semantic} focus-visible:bg-tollerud-${semantic}/10 focus-visible:border-tollerud-${semantic}/30`
+}
+
 const variants = {
   primary: 'bg-tollerud-yellow text-tollerud-black border-tollerud-yellow hover:bg-tollerud-yellow hover:shadow-tollerud-glow',
   secondary:
     'text-tollerud-text-primary [background:var(--surface-raised,var(--tollerud-surface-raised))] [border-color:var(--border,var(--tollerud-border))] hover:[border-color:var(--text-secondary,var(--tollerud-text-secondary))] hover:[background:var(--surface-hover,var(--tollerud-surface-hover))]',
   ghost: 'text-tollerud-text-secondary border-transparent hover:text-tollerud-text-primary hover:bg-tollerud-surface-hover',
+  'ghost-destructive': ghostSemanticClasses('error'),
+  'ghost-success': ghostSemanticClasses('success'),
+  'ghost-warning': ghostSemanticClasses('warning'),
+  'ghost-info': ghostSemanticClasses('info'),
   destructive: 'bg-tollerud-error text-white border-tollerud-error hover:shadow-[0_0_12px_rgba(239,68,68,0.3)]',
   terminal: 'font-mono text-tollerud-yellow border-[rgba(255,255,0,0.25)] bg-transparent hover:border-tollerud-yellow hover:shadow-tollerud-glow hover:bg-[rgba(255,255,0,0.05)]',
 } as const
@@ -16,6 +26,10 @@ const variantLayers = {
   primary: 'tollerud-btn--primary',
   secondary: 'tollerud-btn--secondary',
   ghost: 'tollerud-btn--ghost',
+  'ghost-destructive': 'tollerud-btn--ghost-destructive',
+  'ghost-success': 'tollerud-btn--ghost-success',
+  'ghost-warning': 'tollerud-btn--ghost-warning',
+  'ghost-info': 'tollerud-btn--ghost-info',
   destructive: 'tollerud-btn--destructive',
   terminal: 'tollerud-btn--terminal',
 } as const

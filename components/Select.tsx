@@ -2,7 +2,7 @@
 
 import { type HTMLAttributes, forwardRef, useState, useRef, useEffect, useCallback, useId } from 'react'
 import { cn } from '@/lib/utils'
-import { dropdownPlacementClasses, useDropdownPlacement } from '@/lib/dropdown-placement'
+import { FloatingDropdownPortal } from '@/lib/floating-dropdown'
 
 export interface SelectOption {
   value: string
@@ -27,17 +27,27 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     const [highlightedIdx, setHighlightedIdx] = useState(0)
     const containerRef = useRef<HTMLDivElement>(null)
     const listRef = useRef<HTMLDivElement>(null)
+    const outerRef = useRef<HTMLDivElement>(null)
 
     const selectedOption = options.find((o) => o.value === value)
-    const placement = useDropdownPlacement(open, containerRef, listRef, { maxHeight: 240 })
+
+    const setOuterRef = useCallback(
+      (node: HTMLDivElement | null) => {
+        outerRef.current = node
+        if (typeof ref === 'function') ref(node)
+        else if (ref) ref.current = node
+      },
+      [ref],
+    )
 
     // Close on click outside
     useEffect(() => {
       if (!open) return
       const handleClick = (e: MouseEvent) => {
-        if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-          setOpen(false)
-        }
+        const target = e.target as Node
+        if (outerRef.current?.contains(target)) return
+        if (listRef.current?.contains(target)) return
+        setOpen(false)
       }
       document.addEventListener('mousedown', handleClick)
       return () => document.removeEventListener('mousedown', handleClick)
@@ -103,7 +113,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     return (
       <div
         className={cn(layout === 'inline' ? 'flex items-center gap-2' : 'flex flex-col gap-1.5')}
-        ref={ref}
+        ref={setOuterRef}
         {...props}
       >
         {label && (
@@ -159,49 +169,48 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             </svg>
           </button>
 
-          {/* Dropdown */}
-          {open && (
-            <div
-              ref={listRef}
-              role="listbox"
-              className={cn(
-                'absolute z-50 left-0 right-0 py-1',
-                dropdownPlacementClasses(placement),
-                'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
-                'shadow-[0_8px_24px_rgba(0,0,0,0.4)]',
-                'max-h-60 overflow-y-auto'
-              )}
-            >
-              {options.length === 0 && (
-                <div className="px-3 py-2 text-xs text-tollerud-text-muted text-center">
-                  No options
-                </div>
-              )}
-              {options.map((opt, idx) => (
-                <button
-                  key={opt.value}
-                  type="button"
-                  role="option"
-                  aria-selected={opt.value === value}
-                  onClick={() => selectOption(opt)}
-                  onMouseEnter={() => setHighlightedIdx(idx)}
-                  className={cn(
-                    'w-full text-sm text-left px-3 py-2 transition-colors duration-75',
-                    'cursor-pointer',
-                    opt.value === value
-                      ? 'text-tollerud-yellow'
-                      : 'text-tollerud-text-primary',
-                    idx === highlightedIdx && !(opt.value === value)
-                      ? 'bg-tollerud-noir-700'
-                      : 'hover:bg-tollerud-noir-700/60',
-                    opt.value === value && highlightedIdx === idx && 'bg-tollerud-noir-700'
-                  )}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* Dropdown — portalled so scroll containers (e.g. DataTable) do not clip */}
+          <FloatingDropdownPortal
+            open={open}
+            anchorRef={containerRef}
+            popoverRef={listRef}
+            role="listbox"
+            placementOptions={{ maxHeight: 240 }}
+            className={cn(
+              'overflow-y-auto py-1',
+              'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
+              'shadow-[0_8px_24px_rgba(0,0,0,0.4)]',
+            )}
+          >
+            {options.length === 0 && (
+              <div className="px-3 py-2 text-xs text-tollerud-text-muted text-center">
+                No options
+              </div>
+            )}
+            {options.map((opt, idx) => (
+              <button
+                key={opt.value}
+                type="button"
+                role="option"
+                aria-selected={opt.value === value}
+                onClick={() => selectOption(opt)}
+                onMouseEnter={() => setHighlightedIdx(idx)}
+                className={cn(
+                  'w-full text-sm text-left px-3 py-2 transition-colors duration-75',
+                  'cursor-pointer',
+                  opt.value === value
+                    ? 'text-tollerud-yellow'
+                    : 'text-tollerud-text-primary',
+                  idx === highlightedIdx && !(opt.value === value)
+                    ? 'bg-tollerud-noir-700'
+                    : 'hover:bg-tollerud-noir-700/60',
+                  opt.value === value && highlightedIdx === idx && 'bg-tollerud-noir-700'
+                )}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </FloatingDropdownPortal>
         </div>
         {error && (
           <p className="text-xs text-tollerud-error mt-0.5">{error}</p>

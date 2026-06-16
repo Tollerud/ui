@@ -44,7 +44,29 @@ describe('Select', () => {
 
     await user.click(screen.getByRole('button', { name: 'Rows: 25' }))
 
-    expect(screen.getByRole('listbox').className).toContain('bottom-full')
+    const listbox = screen.getByRole('listbox')
+    expect(listbox).toHaveAttribute('data-placement', 'top')
+    expect(document.body.contains(listbox)).toBe(true)
+  })
+
+  it('renders listbox in a portal so overflow containers do not clip it', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <div style={{ overflow: 'hidden', height: 120 }}>
+        <Select
+          label="Region"
+          value="eu"
+          options={[
+            { value: 'eu', label: 'EU' },
+            { value: 'us', label: 'US' },
+          ]}
+        />
+      </div>,
+    )
+
+    await user.click(screen.getByRole('button'))
+    expect(document.body.contains(screen.getByRole('listbox'))).toBe(true)
   })
 
   it('opens the list and selects an option', async () => {

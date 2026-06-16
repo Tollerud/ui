@@ -224,7 +224,7 @@ import { Footer, Monogram } from '@tollerud/ui' // or: import { Footer } from '@
 <Link href="/deploy" className={buttonVariants({ variant: 'primary' })}>Deploy</Link>
 ```
 
-Variants: `primary` · `secondary` · `ghost` · `destructive` · `terminal`
+Variants: `primary` · `secondary` · `ghost` · `ghost-destructive` · `ghost-success` · `ghost-warning` · `ghost-info` · `destructive` · `terminal`
 Sizes: `sm` · `md` · `lg`
 `asChild` and `buttonVariants` require `@tollerud/ui >= 1.0.7`.
 

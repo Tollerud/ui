@@ -3,7 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { dropdownPlacementClasses, useDropdownPlacement } from '@/lib/dropdown-placement'
+import { FloatingDropdownPortal } from '@/lib/floating-dropdown'
 
 export interface DatePickerProps {
   value?: Date | null
@@ -55,6 +55,7 @@ function DatePicker({
 }: DatePickerProps) {
   const id = useId()
   const rootRef = useRef<HTMLDivElement>(null)
+  const anchorRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
   const isControlled = valueProp !== undefined
   const [internalValue, setInternalValue] = useState<Date | null>(defaultValue)
@@ -62,14 +63,16 @@ function DatePicker({
 
   const [open, setOpen] = useState(false)
   const [viewMonth, setViewMonth] = useState(() => startOfMonth(value ?? new Date()))
-  const placement = useDropdownPlacement(open, rootRef, panelRef, { maxHeight: 320 })
 
   const cells = useMemo(() => buildCalendarGrid(viewMonth), [viewMonth])
 
   useEffect(() => {
     if (!open) return
     function onClickOutside(e: MouseEvent) {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false)
+      const target = e.target as Node
+      if (rootRef.current?.contains(target)) return
+      if (panelRef.current?.contains(target)) return
+      setOpen(false)
     }
     document.addEventListener('mousedown', onClickOutside)
     return () => {
@@ -91,6 +94,7 @@ function DatePicker({
         </label>
       )}
       <button
+        ref={anchorRef}
         id={id}
         type="button"
         disabled={disabled}
@@ -114,16 +118,16 @@ function DatePicker({
         <CalendarIcon size={15} className="text-tollerud-text-muted" />
       </button>
 
-      {open && (
-        <div
-          ref={panelRef}
-          role="dialog"
-          aria-label="Choose date"
-          className={cn(
-            'absolute z-50 w-72 rounded-lg border border-tollerud-border bg-tollerud-surface-overlay p-3 shadow-lg',
-            dropdownPlacementClasses(placement),
-          )}
-        >
+      <FloatingDropdownPortal
+        open={open}
+        anchorRef={anchorRef}
+        popoverRef={panelRef}
+        width={288}
+        role="dialog"
+        aria-label="Choose date"
+        placementOptions={{ maxHeight: 320 }}
+        className="rounded-lg border border-tollerud-border bg-tollerud-surface-overlay p-3 shadow-lg"
+      >
           <div className="mb-2 flex items-center justify-between">
             <button
               type="button"
@@ -174,8 +178,7 @@ function DatePicker({
               )
             })}
           </div>
-        </div>
-      )}
+      </FloatingDropdownPortal>
 
       {error && <p className="text-xs text-tollerud-error mt-0.5">{error}</p>}
     </div>

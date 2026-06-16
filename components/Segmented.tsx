@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { dropdownPlacementClasses, useDropdownPlacement } from '@/lib/dropdown-placement'
+import { FloatingDropdownPortal, isOutsideFloatingDropdown } from '@/lib/floating-dropdown'
 import { useIsMobile } from '@/lib/use-mobile'
 import { cn } from '@/lib/utils'
 
@@ -60,10 +60,10 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
     const isMobile = useIsMobile()
     const [expanded, setExpanded] = useState(false)
     const rootRef = useRef<HTMLDivElement>(null)
+    const anchorRef = useRef<HTMLDivElement>(null)
     const popoverRef = useRef<HTMLDivElement>(null)
     const collapse = collapseMobile && isMobile
     const selected = options.find((opt) => opt.value === value)
-    const placement = useDropdownPlacement(expanded, rootRef, popoverRef, { maxHeight: 240 })
 
     const setRefs = useCallback(
       (node: HTMLDivElement | null) => {
@@ -81,7 +81,7 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
     useEffect(() => {
       if (!expanded) return
       function onPointerDown(event: MouseEvent) {
-        if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
+        if (isOutsideFloatingDropdown(event.target as Node, anchorRef, popoverRef)) {
           setExpanded(false)
         }
       }
@@ -102,7 +102,7 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
 
       return (
         <div ref={setRefs} className={cn('relative inline-flex', className)} {...props}>
-          <div className={shellClass}>
+          <div ref={anchorRef} className={shellClass}>
             <button
               type="button"
               aria-expanded={expanded}
@@ -121,42 +121,38 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
             </button>
           </div>
 
-          {expanded ? (
-            <div
-              ref={popoverRef}
-              id={listId}
-              role="listbox"
-              className={cn(
-                'absolute z-50 left-0 min-w-full overflow-hidden py-1',
-                dropdownPlacementClasses(placement),
-                'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
-                'shadow-[0_8px_24px_rgba(0,0,0,0.4)]',
-              )}
-            >
-              {options.map((opt, index) => {
-                const active = opt.value === value
-                return (
-                  <button
-                    key={`${String(opt.value)}-${index}`}
-                    type="button"
-                    role="option"
-                    aria-selected={active}
-                    disabled={opt.disabled}
-                    onClick={() => !opt.disabled && handleSelect(opt.value)}
-                    className={cn(
-                      'w-full text-left px-3 py-2 text-sm transition-colors duration-75 cursor-pointer',
-                      active ? 'text-tollerud-yellow' : 'text-tollerud-text-primary',
-                      'hover:bg-tollerud-noir-700/60',
-                      active && 'bg-tollerud-noir-700',
-                      opt.disabled && 'opacity-40 pointer-events-none',
-                    )}
-                  >
-                    {opt.label}
-                  </button>
-                )
-              })}
-            </div>
-          ) : null}
+          <FloatingDropdownPortal
+            open={expanded}
+            anchorRef={anchorRef}
+            popoverRef={popoverRef}
+            id={listId}
+            role="listbox"
+            placementOptions={{ maxHeight: 240 }}
+            className="overflow-hidden rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
+          >
+            {options.map((opt, index) => {
+              const active = opt.value === value
+              return (
+                <button
+                  key={`${String(opt.value)}-${index}`}
+                  type="button"
+                  role="option"
+                  aria-selected={active}
+                  disabled={opt.disabled}
+                  onClick={() => !opt.disabled && handleSelect(opt.value)}
+                  className={cn(
+                    'w-full text-left px-3 py-2 text-sm transition-colors duration-75 cursor-pointer',
+                    active ? 'text-tollerud-yellow' : 'text-tollerud-text-primary',
+                    'hover:bg-tollerud-noir-700/60',
+                    active && 'bg-tollerud-noir-700',
+                    opt.disabled && 'opacity-40 pointer-events-none',
+                  )}
+                >
+                  {opt.label}
+                </button>
+              )
+            })}
+          </FloatingDropdownPortal>
         </div>
       )
     }

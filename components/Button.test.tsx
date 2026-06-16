@@ -32,6 +32,31 @@ describe('Button', () => {
     expect(buttonVariants({ variant: 'primary', size: 'sm' })).toContain('tollerud-btn--sm')
   })
 
+  it('renders ghost-destructive with ghost rest and error hover classes', () => {
+    render(<Button variant="ghost-destructive">Archive</Button>)
+    const btn = screen.getByRole('button', { name: 'Archive' })
+    expect(btn).toHaveClass('tollerud-btn--ghost-destructive')
+    expect(btn).toHaveClass('text-tollerud-text-secondary')
+    expect(btn).toHaveClass('border-transparent')
+    expect(btn).toHaveClass('hover:text-tollerud-error')
+    expect(btn).toHaveClass('hover:bg-tollerud-error/10')
+    expect(btn).toHaveClass('hover:border-tollerud-error/30')
+  })
+
+  it.each([
+    ['ghost-success', 'success', 'Approve'],
+    ['ghost-warning', 'warning', 'Pause'],
+    ['ghost-info', 'info', 'Details'],
+  ] as const)('renders %s with ghost rest and semantic hover classes', (variant, token, label) => {
+    render(<Button variant={variant}>{label}</Button>)
+    const btn = screen.getByRole('button', { name: label })
+    expect(btn).toHaveClass(`tollerud-btn--${variant}`)
+    expect(btn).toHaveClass('text-tollerud-text-secondary')
+    expect(btn).toHaveClass(`hover:text-tollerud-${token}`)
+    expect(btn).toHaveClass(`hover:bg-tollerud-${token}/10`)
+    expect(btn).toHaveClass(`hover:border-tollerud-${token}/30`)
+  })
+
   it('uses the same size class for text and icon-only buttons', () => {
     render(
       <>

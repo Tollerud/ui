@@ -73,7 +73,7 @@ export interface DataTableFilter {
 
 export interface DataTableBulkAction {
   label: string
-  variant?: 'primary' | 'secondary' | 'ghost' | 'destructive' | 'terminal'
+  variant?: 'primary' | 'secondary' | 'ghost' | 'ghost-destructive' | 'ghost-success' | 'ghost-warning' | 'ghost-info' | 'destructive' | 'terminal'
   icon?: ReactNode
   onRun: (selectedIds: (string | number)[], clearSelection: () => void) => void
 }

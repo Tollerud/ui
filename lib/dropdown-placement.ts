@@ -38,6 +38,42 @@ export function dropdownPlacementClasses(placement: DropdownPlacement): string {
   return placement === 'top' ? 'bottom-full mb-1' : 'top-full mt-1'
 }
 
+export interface FloatingDropdownCoords {
+  placement: DropdownPlacement
+  top: number
+  left: number
+  width: number
+  maxHeight: number
+}
+
+/** Fixed viewport coordinates for a portalled dropdown anchored to a trigger. */
+export function getFloatingDropdownCoords(
+  anchor: HTMLElement,
+  popover: HTMLElement | null | undefined,
+  options: DropdownPlacementOptions = {},
+): FloatingDropdownCoords {
+  const offset = options.offset ?? DEFAULT_OFFSET
+  const maxHeight = options.maxHeight ?? 240
+  const rect = anchor.getBoundingClientRect()
+  const placement = getDropdownPlacement(anchor, popover, options)
+  const measuredHeight = popover
+    ? Math.min(popover.getBoundingClientRect().height || maxHeight, maxHeight)
+    : maxHeight
+
+  const top =
+    placement === 'bottom'
+      ? rect.bottom + offset
+      : Math.max(offset, rect.top - offset - measuredHeight)
+
+  return {
+    placement,
+    top,
+    left: rect.left,
+    width: rect.width,
+    maxHeight,
+  }
+}
+
 export function useDropdownPlacement(
   open: boolean,
   anchorRef: RefObject<HTMLElement | null>,
