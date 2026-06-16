@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.12 — 2026-06-16 — DataTable mobile toolbar layout
+
+Search stacks above filter and toolbar actions on narrow viewports.
+
+### Fixed
+
+- `DataTable` — toolbar uses a column layout on mobile: search on top, filter and `toolbarRight` stay paired on one row below (no wrap orphaning the action button)
+
+### Migration
+
+Nothing breaking. Drop-in layout fix for rich-mode tables with `searchable`, `filter`, and `toolbarRight`.
+
 ## 4.6.11 — 2026-06-16 — TopNav a11y, DataTable keys, Sheet title
 
 Radix dialog warnings, DataTable React keys, pinned-column scroll bleed, and TopNav mobile menu polish.

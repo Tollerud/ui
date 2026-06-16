@@ -615,57 +615,67 @@ function DataTableInner<T extends Record<string, unknown>>({
       )}
     >
       {(searchable || filter || toolbarRight) && (
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-tollerud-border/30 px-4 py-3.5">
-          <div className="flex flex-wrap items-center gap-2.5">
-            {searchable && (
-              <div className="flex h-9 w-full max-w-full sm:w-[230px] items-center gap-2 rounded-lg border border-tollerud-border/30 bg-tollerud-noir-950 px-3">
-                <Search size={15} className="shrink-0 text-tollerud-text-muted" aria-hidden />
-                <input
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value)
-                    setPage(1)
-                  }}
-                  placeholder={searchPlaceholder}
-                  className="min-w-0 flex-1 border-none bg-transparent text-sm text-tollerud-text-primary outline-none placeholder:text-tollerud-text-muted"
-                />
-                {query && (
-                  <button
-                    type="button"
-                    onClick={() => setQuery('')}
-                    className="text-tollerud-text-muted hover:text-tollerud-text-primary"
-                    aria-label="Clear search"
-                  >
-                    <X size={13} />
-                  </button>
-                )}
-              </div>
-            )}
-            {filter &&
-              (filter.variant === 'combobox' ? (
-                <Combobox
-                  value={filterValue}
-                  onChange={(value) => {
-                    setFilterValue(value)
-                    setPage(1)
-                  }}
-                  options={filterSelectOptions}
-                  placeholder={filter.placeholder ?? filter.allLabel ?? 'Filter…'}
-                  className="w-full sm:w-[200px]"
-                />
-              ) : (
-                <Segmented
-                  size="sm"
-                  value={filterValue}
-                  onChange={(value) => {
-                    setFilterValue(value)
-                    setPage(1)
-                  }}
-                  options={filterSelectOptions}
-                />
-              ))}
-          </div>
-          {toolbarRight}
+        <div className="flex flex-col gap-2.5 border-b border-tollerud-border/30 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
+          {searchable && (
+            <div className="flex h-9 w-full items-center gap-2 rounded-lg border border-tollerud-border/30 bg-tollerud-noir-950 px-3 sm:w-[230px] sm:shrink-0">
+              <Search size={15} className="shrink-0 text-tollerud-text-muted" aria-hidden />
+              <input
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value)
+                  setPage(1)
+                }}
+                placeholder={searchPlaceholder}
+                className="min-w-0 flex-1 border-none bg-transparent text-sm text-tollerud-text-primary outline-none placeholder:text-tollerud-text-muted"
+              />
+              {query && (
+                <button
+                  type="button"
+                  onClick={() => setQuery('')}
+                  className="text-tollerud-text-muted hover:text-tollerud-text-primary"
+                  aria-label="Clear search"
+                >
+                  <X size={13} />
+                </button>
+              )}
+            </div>
+          )}
+          {(filter || toolbarRight) && (
+            <div
+              className={cn(
+                'flex min-w-0 items-center gap-2',
+                filter ? 'justify-between' : 'justify-end',
+                'sm:justify-end',
+              )}
+            >
+              {filter &&
+                (filter.variant === 'combobox' ? (
+                  <Combobox
+                    value={filterValue}
+                    onChange={(value) => {
+                      setFilterValue(value)
+                      setPage(1)
+                    }}
+                    options={filterSelectOptions}
+                    placeholder={filter.placeholder ?? filter.allLabel ?? 'Filter…'}
+                    className="min-w-0 flex-1 sm:flex-none sm:w-[200px]"
+                  />
+                ) : (
+                  <div className="min-w-0 flex-1 overflow-x-auto sm:flex-none">
+                    <Segmented
+                      size="sm"
+                      value={filterValue}
+                      onChange={(value) => {
+                        setFilterValue(value)
+                        setPage(1)
+                      }}
+                      options={filterSelectOptions}
+                    />
+                  </div>
+                ))}
+              {toolbarRight ? <div className="shrink-0">{toolbarRight}</div> : null}
+            </div>
+          )}
         </div>
       )}
 

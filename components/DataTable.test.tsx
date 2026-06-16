@@ -234,6 +234,27 @@ describe('DataTable', () => {
     expect(screen.queryByText('pia')).not.toBeInTheDocument()
   })
 
+  it('keeps filter and toolbarRight on the same toolbar row below search on mobile', () => {
+    const { container } = render(
+      <DataTable
+        columns={[{ key: 'hostname', label: 'Host' }]}
+        data={[{ id: '1', hostname: 'emma' }]}
+        rowKey="id"
+        searchable
+        filter={{ key: 'hostname', allLabel: 'All' }}
+        toolbarRight={<button type="button">Add host</button>}
+      />
+    )
+
+    const toolbar = container.querySelector('.border-b.border-tollerud-border\\/30.px-4.py-3\\.5')
+    expect(toolbar).toBeTruthy()
+    expect(toolbar).toHaveClass('flex-col')
+    expect(toolbar?.children).toHaveLength(2)
+    const actionRow = toolbar?.children[1] as HTMLElement
+    expect(actionRow).toHaveTextContent('Add host')
+    expect(within(actionRow).getByRole('button', { name: 'Add host' })).toBeInTheDocument()
+  })
+
   it('supports search, selection, and pagination in rich mode', async () => {
     const user = userEvent.setup()
     const onRun = vi.fn()
