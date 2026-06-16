@@ -696,7 +696,7 @@ Props: `page` (1-indexed), `pageCount`, `onChange`, `siblingCount?`.
 
 ### Segmented
 
-Toggle between views or filter modes.
+Toggle between views or filter modes. Segment height is fixed per size so text and icon `label` values align in the same row.
 
 ```tsx
 <Segmented

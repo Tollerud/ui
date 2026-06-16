@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.5.1 — 2026-06-16 — Fix Segmented height for icon labels
+
+Segment buttons now use a fixed height so text and icon labels align when multiple controls sit side by side.
+
+### Fixed
+
+- `Segmented` — `h-8` / `h-7` segment heights with centered flex layout; icon-only segments no longer render shorter than text segments
+
+### Migration
+
+Nothing breaking. Drop-in fix for mixed text/icon `Segmented` rows.
+
 ## 4.5.0 — 2026-06-16 — Grouped Combobox sections
 
 `Combobox` now supports searchable dropdowns with section titles via an optional `groups` prop.

@@ -446,7 +446,7 @@ import {
 <Pagination page={page} pageCount={20} onChange={setPage} />
 ```
 
-**Segmented** — `options: { value, label, disabled? }[]`, `value`, `onChange`, `size?: 'sm' | 'md'`.
+**Segmented** — `options: { value, label, disabled? }[]`, `value`, `onChange`, `size?: 'sm' | 'md'`. Segment height is fixed per size so text and icon labels align.
 ```tsx
 <Segmented value={view} onChange={setView} options={[{ value: 'grid', label: 'Grid' }, { value: 'list', label: 'List' }]} />
 ```
@@ -700,6 +700,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **Server Component import safety requires `@tollerud/ui >= 1.0.8`** (earlier versions crash when imported into a Server Component file — the bundle wasn't marked `'use client'`)
 - **19 new components (`Divider`, `Pill`, `Avatar`/`AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `FormRow`, `Accordion`, `Slider`, `PasswordInput`, `Combobox`, `DatePicker`, `FileUpload`, `TagInput`, `PricingCard`) require `>= 1.0.9`**
 - **`Combobox` + `DatePicker` close on window resize (≥ 1.1.0)** — earlier versions left the popover open and misaligned after viewport changes
+- **`Segmented` icon segments match text height (≥ 4.5.1)** — earlier versions rendered icon-only segments ~4px shorter than text segments
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)
 
 ---
