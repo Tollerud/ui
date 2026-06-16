@@ -32,7 +32,7 @@ Use this map to pick the right layer — not every app needs infra widgets or gl
 | **Overlays & navigation** | `Dialog`, `Sheet`, `Drawer`, `DropdownMenu`, `Tabs`, `Tooltip`, `CommandMenu`, `Alert`, `Empty`, `Toaster` | Modals, menus, multi-step flows, command palette, toasts |
 | **Data & patterns** | `DataTable`, `ActionRow`, `Timeline`, `LogViewer`, `BentoDashboard` | Tables, logs, dashboards assembled from primitives |
 | **Infra / ops** | `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `AlertInbox`, `RollbackPlan`, `BackupStatusPanel`, `ActionDiff` | Homelab, fleet, incident, and approval UIs |
-| **Visual & marketing** | `HeroBlock`, `FeatureCard`, `CTABand`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `GlowCard`, `BentoDashboard` | Landing sections, charts, marketing blocks |
+| **Visual & marketing** | `TimeSeriesChart`, `HeroBlock`, `FeatureCard`, `CTABand`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `GlowCard`, `BentoDashboard` | Landing sections, charts, marketing blocks |
 | **Optional visual** | `NoirGlowBackground` (+ `@paper-design/shaders-react` peer) | Hero backgrounds with WebGL glow — optional install |
 | **Branding** | `Monogram`, `Footer` | Nav lockups and page chrome (`Footer` also as [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer)) |
 
@@ -48,7 +48,7 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 
 **Data & infra:** `DataTable`, `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `ActionDiff`, `LogViewer`, `AlertInbox`, `Timeline`, `RollbackPlan`, `BackupStatusPanel`
 
-**Visual & marketing:** `Monogram`, `GlowCard`, `NoirGlowBackground`, `BentoDashboard`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `HeroBlock`, `FeatureCard`, `CTABand`
+**Visual & marketing:** `Monogram`, `GlowCard`, `NoirGlowBackground`, `BentoDashboard`, `TimeSeriesChart`, `TIME_SERIES_PRESETS`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `HeroBlock`, `FeatureCard`, `CTABand`
 
 **Footer:** `Footer` — also published as [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer)
 
@@ -640,30 +640,154 @@ Props: `name`, `price`, `period?`, `description?`, `features?: ReactNode[]`, `ct
 
 ## Charts
 
-Palette-aware SVG charts — no Recharts dependency. Yellow is the highlight series; grid/axis use `--chart-grid`.
+Palette-aware SVG charts — no Recharts dependency. Yellow is the highlight series; grid and axis use `--chart-grid` and `--chart-axis` from `globals.css`.
 
 ```tsx
-import { TimeSeriesChart, TIME_SERIES_PRESETS, BarChart, AreaChart, Donut, Sparkline } from '@tollerud/ui'
+import {
+  TimeSeriesChart,
+  TIME_SERIES_PRESETS,
+  BarChart,
+  AreaChart,
+  Donut,
+  Sparkline,
+} from '@tollerud/ui'
 ```
+
+### Choosing a chart
+
+| Component | Use when |
+|-----------|----------|
+| `TimeSeriesChart` | Wide price/metric history — stepped curves, hover tooltip, range selector |
+| `Sparkline` | Inline trends in tables, stat rows, or cards |
+| `AreaChart` | Simple static trend — no interaction |
+| `BarChart` | Category comparison with one highlighted bar |
+| `Donut` | Part-to-whole breakdown with legend |
+
+### TimeSeriesChart
+
+Interactive wide SVG chart for `{ date, value }` points. Use `curve="step"` when values hold between samples (prices, discrete readings).
 
 ```tsx
 <TimeSeriesChart
-  data={[{ date: '2026-04-11', value: 13999, label: 'Bygghjemme' }]}
+  data={[
+    { date: '2026-03-23', value: 13999, label: 'Bygghjemme', meta: ['Vaskemaskin Miele WWR860'] },
+    { date: '2026-04-06', value: 14250, label: 'Obs BYGG' },
+    { date: '2026-04-13', value: 13800, label: 'Maxbo' },
+  ]}
   curve="step"
+  height={300}
   ranges={TIME_SERIES_PRESETS}
   range="3m"
 />
-<BarChart data={[{ label: 'Mon', value: 12 }, { label: 'Tue', value: 18, accent: true }]} height={180} />
-<AreaChart data={[28, 35, 30, 44, 52]} height={150} />
-<Donut segments={[{ label: 'CPU', value: 40, color: '#E8D500' }, { label: 'Idle', value: 60, color: '#444' }]} size={160} />
-<Sparkline data={[17200, 13999]} curve="step" fill interactive width={160} height={36} />
 ```
 
-- **TimeSeriesChart** — `data: TimeSeriesPoint[]`, `curve?: 'linear' | 'step'`, `ranges?`, `range?`, `onRangeChange?`, hover crosshair + tooltip, `formatValue?`, `renderTooltip?`, `toolbarLeft?`. Use `TIME_SERIES_PRESETS` for 3m/6m/1y/2y/all filters.
-- **BarChart** — `data: { label, value, accent? }[]`, `height`. `accent: true` paints a bar yellow.
-- **AreaChart** — `data: number[]`, `height`. Static gradient fill + point markers.
-- **Donut** — `segments: { label, value, color }[]`, `size`. Renders a legend with percentages.
-- **Sparkline** — `data: number[]`, `width`, `height`, `color`, `curve?`, `fill?`, `interactive?`. Inline trend for tables and stat rows.
+Controlled range (parent owns filter state):
+
+```tsx
+'use client'
+import { useState } from 'react'
+import { TimeSeriesChart, TIME_SERIES_PRESETS } from '@tollerud/ui'
+
+export function PriceChart({ data }) {
+  const [range, setRange] = useState('3m')
+
+  return (
+    <TimeSeriesChart
+      data={data}
+      curve="step"
+      height={300}
+      ranges={TIME_SERIES_PRESETS}
+      range={range}
+      onRangeChange={setRange}
+      toolbarLeft={<span className="text-sm text-tollerud-text-secondary">Price history</span>}
+    />
+  )
+}
+```
+
+Custom ranges — `TIME_SERIES_PRESETS` ships English labels. For Norwegian UI, pass custom `ranges` and `locale="nb-NO"`:
+
+```tsx
+const MS_DAY = 24 * 60 * 60 * 1000
+
+const RANGES_NB = [
+  { value: '3m', label: '3 mnd', durationMs: 90 * MS_DAY },
+  { value: '6m', label: '6 mnd', durationMs: 180 * MS_DAY },
+  { value: '1y', label: '1 år', durationMs: 365 * MS_DAY },
+  { value: '2y', label: '2 år', durationMs: 730 * MS_DAY },
+  { value: 'all', label: 'Alt' },
+]
+
+<TimeSeriesChart
+  data={points}
+  curve="step"
+  ranges={RANGES_NB}
+  range="3m"
+  locale="nb-NO"
+/>
+```
+
+Props: `data: TimeSeriesPoint[]`, `curve?: 'linear' | 'step'`, `height?`, `yAxis?: 'left' | 'right' | 'none'`, `ranges?`, `range?`, `onRangeChange?`, `toolbarLeft?`, `formatValue?`, `formatDate?`, `formatAxisDate?`, `renderTooltip?`, `showLatestValue?`, `locale?` (default `en-US`), `emptyMessage?`, `ariaLabel?`.
+
+Types: `TimeSeriesPoint` — `{ date: Date | string | number; value: number; label?; meta? }`. `TIME_SERIES_PRESETS` — English 3 mo · 6 mo · 1 yr · 2 yr · All.
+
+### Sparkline
+
+```tsx
+<Sparkline data={[12, 18, 14, 22, 19]} width={84} height={26} color="var(--tollerud-yellow-warm, #E8D500)" />
+
+<Sparkline
+  data={[17200, 16800, 17100, 16500, 13999]}
+  curve="step"
+  fill
+  interactive
+  width={160}
+  height={36}
+/>
+```
+
+Props: `data: number[]`, `width?`, `height?`, `color?`, `curve?: 'linear' | 'step'`, `fill?`, `interactive?`. Deprecated aliases: `w`, `h`.
+
+### AreaChart
+
+```tsx
+<AreaChart data={[28, 35, 30, 44, 52, 48, 63]} height={150} />
+```
+
+Props: `data: number[]`, `height?`. Static gradient fill + point markers — no hover.
+
+### BarChart
+
+```tsx
+<BarChart
+  data={[
+    { label: 'Mon', value: 32 },
+    { label: 'Tue', value: 48 },
+    { label: 'Thu', value: 67, accent: true },
+  ]}
+  height={180}
+/>
+```
+
+Props: `data: { label, value, accent? }[]`, `height?`. `accent: true` paints a bar yellow.
+
+### Donut
+
+```tsx
+<Donut
+  segments={[
+    { label: 'emma', value: 45, color: '#E8D500' },
+    { label: 'pia', value: 25, color: '#FFB800' },
+    { label: 'iris', value: 18, color: '#666666' },
+    { label: 'free', value: 12, color: '#333333' },
+  ]}
+  size={160}
+/>
+```
+
+Props: `segments: { label, value, color }[]`, `size?`. Renders a legend with percentages.
+
+Live demos and prop tables: [design.tollerud.dev/charts](https://design.tollerud.dev/charts/).
 
 ## Marketing blocks
 

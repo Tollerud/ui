@@ -13,7 +13,7 @@ function PageComponents({ go }) {
     { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, toggles, combobox, form row, validation.' },
     { id: 'navigation', icon: 'compass', t: 'Navigation & Overlays', d: 'Dialogs, drawer, menus, toasts, command palette.' },
     { id: 'infra', icon: 'server', t: 'Infrastructure', d: 'Host, incident, approval, and ops cards.' },
-    { id: 'charts', icon: 'chart', t: 'Charts', d: 'Bar, area, donut, sparkline.' },
+    { id: 'charts', icon: 'chart', t: 'Charts', d: 'Time series, sparkline, bar, area, donut.' },
     { id: 'blocks', icon: 'blocks', t: 'Blocks', d: 'Hero, pricing, CTA, bento dashboard.' },
     { id: 'data-table', icon: 'server', t: 'Data Table', d: 'Sortable and rich table patterns.' },
     { id: 'console', icon: 'code', t: 'Logs & Console', d: 'LogViewer and streaming terminal.' },

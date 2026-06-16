@@ -108,7 +108,7 @@ function PageOverview({ go }) {
             { id: 'components', icon: 'grid', t: 'Components', d: 'Core primitives — button, card, badge, status, layout.' },
             { id: 'forms', icon: 'forms', t: 'Forms', d: 'Inputs, selects, combobox, form row, validation.' },
             { id: 'navigation', icon: 'compass', t: 'Navigation & Overlays', d: 'Breadcrumbs, dialogs, drawer, toasts, command.' },
-            { id: 'charts', icon: 'chart', t: 'Charts', d: 'Bar, area, donut and sparkline — palette-aware.' },
+            { id: 'charts', icon: 'chart', t: 'Charts', d: 'TimeSeriesChart, sparkline, bar, area, donut — SVG, no Recharts.' },
             { id: 'blocks', icon: 'blocks', t: 'Blocks', d: 'Hero, feature grid, pricing and CTA sections.' },
             { id: 'mission-control', icon: 'app', t: 'Mission Control', d: 'A working dashboard built from the system.' },
             { id: 'data-table', icon: 'server', t: 'Data Table', d: 'Rich table with search, bulk actions, pagination.' },

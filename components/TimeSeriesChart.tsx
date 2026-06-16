@@ -74,11 +74,11 @@ export interface TimeSeriesChartProps extends Omit<HTMLAttributes<HTMLDivElement
 const MS_DAY = 24 * 60 * 60 * 1000
 
 export const TIME_SERIES_PRESETS: TimeSeriesRange[] = [
-  { value: '3m', label: '3 mnd', durationMs: 90 * MS_DAY },
-  { value: '6m', label: '6 mnd', durationMs: 180 * MS_DAY },
-  { value: '1y', label: '1 år', durationMs: 365 * MS_DAY },
-  { value: '2y', label: '2 år', durationMs: 730 * MS_DAY },
-  { value: 'all', label: 'Alt' },
+  { value: '3m', label: '3 mo', durationMs: 90 * MS_DAY },
+  { value: '6m', label: '6 mo', durationMs: 180 * MS_DAY },
+  { value: '1y', label: '1 yr', durationMs: 365 * MS_DAY },
+  { value: '2y', label: '2 yr', durationMs: 730 * MS_DAY },
+  { value: 'all', label: 'All' },
 ]
 
 function defaultTooltip(
@@ -124,7 +124,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       toolbarLeft,
       renderTooltip,
       emptyMessage = 'No data',
-      locale = 'nb-NO',
+      locale = 'en-US',
       ariaLabel,
       ...props
     },

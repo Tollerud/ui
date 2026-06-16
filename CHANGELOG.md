@@ -7,6 +7,19 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.7.1 — 2026-06-16 — English chart presets
+
+`TIME_SERIES_PRESETS` and default `locale` now ship in English.
+
+### Changed
+
+- `TIME_SERIES_PRESETS` — labels: 3 mo · 6 mo · 1 yr · 2 yr · All (was nb-NO)
+- `TimeSeriesChart` — default `locale` is `en-US`; chart formatters default to `en-US` (`nb-NO` still appends ` ,-` to values)
+
+### Migration
+
+Norwegian apps: pass custom `ranges` (e.g. `3 mnd`, `Alt`) and `locale="nb-NO"` on `TimeSeriesChart`.
+
 ## 4.7.0 — 2026-06-16 — Interactive time series charts
 
 Stepped area charts with hover, range selection, and enhanced sparklines — pure SVG, no Recharts.
@@ -14,7 +27,7 @@ Stepped area charts with hover, range selection, and enhanced sparklines — pur
 ### Added
 
 - `TimeSeriesChart` — wide vector chart with `curve="step"`, crosshair hover, tooltip, Y-axis labels, and optional `ranges` + `Segmented` toolbar
-- `TIME_SERIES_PRESETS` — `3 mnd` / `6 mnd` / `1 år` / `2 år` / `Alt` duration filters
+- `TIME_SERIES_PRESETS` — English range labels: 3 mo · 6 mo · 1 yr · 2 yr · All (`durationMs` filters from latest point). Norwegian UI: pass custom `ranges` with `locale="nb-NO"`.
 - `lib/chart-series` — shared path, scale, and format helpers (used by charts)
 
 ### Changed
@@ -56,7 +69,7 @@ Nothing breaking. Call `initButtonGlow()` once if you want the docs-style cursor
 
 ### Migration
 
-Nothing breaking. Prefer `shimmer="ærlige"` with `title="Hold ølprisene ærlige."` for one highlighted word mid-sentence.
+Nothing breaking. Prefer `shimmer="honest"` with `title="Keep beer prices honest."` for one highlighted word mid-sentence.
 
 ## 4.6.14 — 2026-06-16 — PageHeader shimmer accents
 

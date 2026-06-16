@@ -242,7 +242,7 @@ import {
 
 Use these before rebuilding common pages with raw Tailwind:
 
-- **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`. Use `shimmer` (or `titleAccent`) to shimmer one word mid-sentence when `title` is a string — e.g. `title="Hold ølprisene ærlige." shimmer="ærlige"`. Use `titleShimmer` for a second full shimmer line, or `PageHeaderShimmer` inside `title` for full control.
+- **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`. Use `shimmer` (or `titleAccent`) to shimmer one word mid-sentence when `title` is a string — e.g. `title="Keep beer prices honest." shimmer="honest"`. Use `titleShimmer` for a second full shimmer line, or `PageHeaderShimmer` inside `title` for full control.
 - **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`, `maxWidth` (`default` | `wide` | `full` | `false`). Below `lg`, nav links and menu actions open in a modal overlay (backdrop, focus trap, Esc to close). Wrap actions in `TopNavAction` with `mobile?: 'inline' | 'menu' | 'hidden'` (default `menu`) to keep a primary CTA inline next to the menu toggle.
 - **SidebarNav** — sidebar brand lockup with `projectName`, `projectSubtitle`, `groups` / `items`, icons, and active states.
 - **DashboardTopBar** — context top bar with `breadcrumb`, `pageTitle`, `actions`, mobile menu toggle.
@@ -569,24 +569,32 @@ import {
 - **NoirGlowBackground** — animated WebGL shader background (needs `@paper-design/shaders-react`). `shape?: 'corners' | 'wave' | 'dots' | 'truchet' | 'ripple' | 'blob' | 'sphere'`, `intensity?: 'subtle' | 'medium' | 'loud'`, `speed?: 'still' | 'slow' | 'medium' | 'fast'`, `grain?: 'none' | 'soft' | 'high'`, `colors?: string[]`, `forceCssFallback?: boolean`.
 - **BentoDashboard** — composed dashboard shell taking arrays of `HostCardProps`, `StatCardProps`, `ServiceHealthCardProps`, incidents, `BackupJob[]`.
 
-**Charts** — palette-aware SVG; yellow highlights one series. No Recharts dependency.
+**Charts** — palette-aware SVG; yellow highlights one series. No Recharts. Full usage + prop tables: [COMPONENTS.md](COMPONENTS.md#charts) · [design.tollerud.dev/charts](https://design.tollerud.dev/charts/).
 
 ```tsx
+import {
+  TimeSeriesChart,
+  TIME_SERIES_PRESETS,
+  BarChart,
+  AreaChart,
+  Donut,
+  Sparkline,
+} from '@tollerud/ui'
+
 <TimeSeriesChart
-  data={[{ date: '2026-04-11', value: 13999, label: 'Bygghjemme', meta: ['Product line'] }]}
+  data={[
+    { date: '2026-03-23', value: 13999, label: 'Bygghjemme', meta: ['Vaskemaskin Miele WWR860'] },
+    { date: '2026-04-06', value: 14250, label: 'Obs BYGG' },
+  ]}
   curve="step"
+  height={300}
   ranges={TIME_SERIES_PRESETS}
   range="3m"
 />
-<BarChart data={[{ label: 'Mon', value: 32, accent: true }]} height={180} />
-<AreaChart data={[28, 35, 30, 44, 52]} height={150} />
-<Donut segments={[{ label: 'CPU', value: 40, color: 'var(--chart-1)' }]} size={160} />
 <Sparkline data={[17200, 16800, 13999]} curve="step" fill interactive width={160} height={36} />
 ```
 
-`TimeSeriesChart` — `data: TimeSeriesPoint[]`, `curve?: 'linear' | 'step'`, `ranges?`, `range?`, `onRangeChange?`, `renderTooltip?`, `yAxis?: 'left' | 'right' | 'none'`, `formatValue?`, `formatDate?`, `toolbarLeft?`. Hover crosshair + tooltip; filters by `durationMs` on range options.
-
-`Sparkline` — `curve?`, `fill?`, `interactive?` added in **v4.7.0**.
+`TimeSeriesChart` — stepped/linear curves, hover crosshair + tooltip, `ranges` + `TIME_SERIES_PRESETS` (English labels), `locale` (default `en-US`), `toolbarLeft`, `renderTooltip`. Norwegian apps: custom `ranges` + `locale="nb-NO"`. `Sparkline` — `curve`, `fill`, `interactive` for table-row micro charts.
 
 **Marketing blocks**
 ```tsx

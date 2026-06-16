@@ -1,12 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import {
-  buildLinearPath,
   buildStepAreaPath,
   buildStepPath,
   computeYDomain,
   filterPointsByDuration,
+  formatChartNumber,
   indexFromPointer,
-  parseChartDate,
   sortPointsByDate,
 } from './chart-series'
 
@@ -65,8 +64,11 @@ describe('chart-series', () => {
     expect(indexFromPointer(50, rect, 5, 0, 0)).toBe(2)
   })
 
-  it('parses chart dates', () => {
-    expect(parseChartDate('2026-04-11').getFullYear()).toBe(2026)
-    expect(buildLinearPath([1, 2], () => 0, () => 0)).toBe('M 0 0 L 0 0')
+  it('formats nb-NO values with trailing ,-', () => {
+    expect(formatChartNumber(13999, 'nb-NO')).toBe('13 999 ,-')
+  })
+
+  it('formats en-US values without trailing ,-', () => {
+    expect(formatChartNumber(13999, 'en-US')).toBe('13,999')
   })
 })

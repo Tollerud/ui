@@ -33,13 +33,13 @@ function PageScreens({ go }) {
 
       <Section title="PageHeader" component="PageHeader" permalink="screens/page-header" desc="A consistent page title block with eyebrow, description, metadata, and action slots.">
         <Demo name="page-header" variant="col" code={`<PageHeader
-  title="Hold ølprisene ærlige."
-  shimmer="ærlige"
+  title="Keep beer prices honest."
+  shimmer="honest"
 />
 
 <PageHeader
-  title="Hva koster ølet egentlig — butikk for butikk."
-  shimmer="egentlig"
+  title="What does beer really cost — store by store."
+  shimmer="really"
 />
 
 <PageHeader
@@ -50,12 +50,12 @@ function PageScreens({ go }) {
 />`}>
           <Stack gap="lg">
             <PackagePageHeader
-              title="Hold ølprisene ærlige."
-              shimmer="ærlige"
+              title="Keep beer prices honest."
+              shimmer="honest"
             />
             <PackagePageHeader
-              title="Hva koster ølet egentlig — butikk for butikk."
-              shimmer="egentlig"
+              title="What does beer really cost — store by store."
+              shimmer="really"
             />
             <PackagePageHeader
               eyebrow="mission control"

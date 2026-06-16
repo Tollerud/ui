@@ -101,6 +101,14 @@ export const DEEP_LINKS = [
   { page: 'data-table', section: 'pagination', title: 'Pagination', component: 'DataTable', keywords: ['pageSize', 'pageSizeOptions', 'pages', 'footer'] },
   { page: 'data-table', section: 'loading-and-footer', title: 'Loading and footer', component: 'DataTable', keywords: ['skeleton', 'footer'] },
   { page: 'data-table', section: 'mobile-and-horizontal-scroll', title: 'Mobile and horizontal scroll', component: 'DataTable', keywords: ['mobile', 'scroll', 'pin'] },
+
+  // Charts
+  { page: 'charts', section: 'overview', title: 'Charts overview', keywords: ['chart', 'graph', 'svg'] },
+  { page: 'charts', section: 'time-series-chart', title: 'TimeSeriesChart', component: 'TimeSeriesChart', keywords: ['price', 'hover', 'range', 'step'] },
+  { page: 'charts', section: 'sparkline', title: 'Sparkline', component: 'Sparkline', keywords: ['inline', 'trend', 'table'] },
+  { page: 'charts', section: 'area-chart', title: 'AreaChart', component: 'AreaChart', keywords: ['area', 'static'] },
+  { page: 'charts', section: 'bar-chart', title: 'BarChart', component: 'BarChart', keywords: ['bar', 'comparison'] },
+  { page: 'charts', section: 'donut', title: 'Donut', component: 'Donut', keywords: ['pie', 'segment'] },
 ]
 
 export function deepLinkPath(link) {

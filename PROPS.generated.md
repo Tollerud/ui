@@ -465,7 +465,7 @@
 - `eyebrow?: ReactNode`
 - `title: ReactNode`
 - `* When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`.`
-- `* Use for a single word mid-sentence, e.g. title="Hold ølprisene ærlige." shimmer="ærlige".`
+- `* Use for a single word mid-sentence, e.g. title="Keep beer prices honest." shimmer="honest".`
 - `*/`
 - `titleAccent?: string`
 - `shimmer?: string`

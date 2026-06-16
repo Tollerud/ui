@@ -19,25 +19,25 @@ describe('PageHeader', () => {
     expect(screen.getByRole('button', { name: 'Connect' })).toBeInTheDocument()
   })
 
-  it('shimmers a mid-sentence word in Norwegian copy', () => {
-    render(<PageHeader title="Hold ølprisene ærlige." shimmer="ærlige" />)
+  it('shimmers a mid-sentence word', () => {
+    render(<PageHeader title="Keep beer prices honest." shimmer="honest" />)
 
-    const heading = screen.getByRole('heading', { name: /hold ølprisene ærlige/i })
-    expect(heading.querySelector('.tollerud-display-shimmer')).toHaveTextContent('ærlige')
-    expect(heading).toHaveTextContent('Hold ølprisene ærlige.')
+    const heading = screen.getByRole('heading', { name: /keep beer prices honest/i })
+    expect(heading.querySelector('.tollerud-display-shimmer')).toHaveTextContent('honest')
+    expect(heading).toHaveTextContent('Keep beer prices honest.')
   })
 
   it('shimmers a word before an em dash in a long title', () => {
     render(
       <PageHeader
-        title="Hva koster ølet egentlig — butikk for butikk."
-        shimmer="egentlig"
+        title="What does beer really cost — store by store."
+        shimmer="really"
       />
     )
 
-    const heading = screen.getByRole('heading', { name: /hva koster ølet egentlig/i })
-    expect(heading.querySelector('.tollerud-display-shimmer')).toHaveTextContent('egentlig')
-    expect(heading).toHaveTextContent('Hva koster ølet egentlig — butikk for butikk.')
+    const heading = screen.getByRole('heading', { name: /what does beer really cost/i })
+    expect(heading.querySelector('.tollerud-display-shimmer')).toHaveTextContent('really')
+    expect(heading).toHaveTextContent('What does beer really cost — store by store.')
   })
 
   it('wraps a selective word with titleAccent', () => {

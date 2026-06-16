@@ -144,15 +144,16 @@ export function niceTicks(min: number, max: number, count = 4): number[] {
   return Array.from({ length: count }, (_, i) => min + step * i)
 }
 
-export function formatChartNumber(value: number, locale = 'nb-NO'): string {
-  return `${new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(Math.round(value))} ,-`
+export function formatChartNumber(value: number, locale = 'en-US'): string {
+  const formatted = new Intl.NumberFormat(locale, { maximumFractionDigits: 0 }).format(Math.round(value))
+  return locale.toLowerCase().startsWith('nb') ? `${formatted} ,-` : formatted
 }
 
-export function formatChartDateShort(date: Date, locale = 'nb-NO'): string {
+export function formatChartDateShort(date: Date, locale = 'en-US'): string {
   return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short' }).format(date)
 }
 
-export function formatChartDateLong(date: Date, locale = 'nb-NO'): string {
+export function formatChartDateLong(date: Date, locale = 'en-US'): string {
   return new Intl.DateTimeFormat(locale, {
     day: 'numeric',
     month: 'short',
