@@ -30,6 +30,24 @@ describe('Sheet', () => {
     expect(screen.getByText('Deploy logs')).toBeVisible()
   })
 
+  it('opens with a screen reader title when SheetTitle is omitted', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button variant="secondary">Open</Button>
+        </SheetTrigger>
+        <SheetContent>
+          <p>Panel body</p>
+        </SheetContent>
+      </Sheet>
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Open' }))
+    expect(screen.getByRole('dialog', { name: 'Panel' })).toBeInTheDocument()
+  })
+
   it('closes on Escape', async () => {
     const user = userEvent.setup()
 

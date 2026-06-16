@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.11 — 2026-06-16 — TopNav a11y, DataTable keys, Sheet title
+
+Radix dialog warnings, DataTable React keys, pinned-column scroll bleed, and TopNav mobile menu polish.
+
+### Fixed
+
+- `TopNav` — mobile menu uses `DialogTitle` / `DialogDescription` with shipped `tollerud-sr-only`; `DialogTrigger` wraps the hamburger (no duplicate toggle state)
+- `TopNav` — mobile menu scrim starts below the header (`tollerud-topnav-menu-overlay`) so the bar stays at full brightness when open
+- `DataTable` — column list items use stable `column.key` + index React keys (no object-key warnings)
+- `DataTable` — pinned columns use opaque row/hover backgrounds so horizontal scroll does not show bleed-through on hovered rows
+- `Sheet` / `Drawer` — `SheetContent` injects a visually hidden `SheetTitle` when children omit one (Radix dialog a11y requirement)
+- `tollerud-sr-only` utility in `globals-layers.css` — works without Tailwind `sr-only` in consumer apps
+- Docs `CopyButton` — clipboard failures no longer log unhandled rejections
+
+### Migration
+
+Nothing breaking. `SheetContent` accepts optional `title` for the screen reader label when no visible `SheetTitle` is present (default: `Panel`). `TopNav` accepts optional `mobileMenuTitle` (default: `Navigation menu`).
+
 ## 4.6.10 — 2026-06-16 — TopNav overlay mobile menu
 
 Mobile navigation now uses a modal overlay with backdrop, focus trap, and selective inline actions.

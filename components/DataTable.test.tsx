@@ -60,6 +60,27 @@ describe('DataTable', () => {
     expect(screen.getByText('emma')).toBeInTheDocument()
   })
 
+  it('uses opaque backgrounds on pinned columns', () => {
+    const { container } = render(
+      <DataTable
+        columns={[
+          { key: 'hostname', label: 'Host' },
+          { key: 'status', label: 'Status' },
+        ]}
+        data={[{ id: '1', hostname: 'emma', status: 'online' }]}
+        rowKey="id"
+        pageSize={10}
+        pinColumns
+      />
+    )
+
+    const pinnedCell = container.querySelector('tbody td.sticky')
+    expect(pinnedCell).toBeTruthy()
+    expect(pinnedCell).toHaveClass('bg-tollerud-noir-900')
+    expect(pinnedCell).toHaveClass('group-hover/tr:bg-tollerud-noir-800')
+    expect(pinnedCell).not.toHaveClass('group-hover/tr:bg-tollerud-surface-raised/50')
+  })
+
   it('shows striped rows and scroll region in rich mode', () => {
     render(
       <DataTable

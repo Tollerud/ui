@@ -159,6 +159,18 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  .tollerud-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
   ::selection {
     background-color: rgba(232, 213, 0, 0.55);
     color: #0A0A0A;
@@ -998,10 +1010,25 @@
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }
+  /* TopNav mobile menu — scrim below the sticky header only (keeps bar at full brightness) */
+  .tollerud-topnav-menu-overlay {
+    position: fixed;
+    inset: 3.5rem 0 0;
+    z-index: var(--z-modal);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
   .tollerud-sheet-overlay[data-state='open'] {
     animation: tollerud-sheet-overlay-in var(--motion-duration-normal) var(--motion-ease-out) forwards;
   }
   .tollerud-sheet-overlay[data-state='closed'] {
+    animation: tollerud-sheet-overlay-out var(--motion-duration-normal) var(--motion-ease-in) forwards;
+  }
+  .tollerud-topnav-menu-overlay[data-state='open'] {
+    animation: tollerud-sheet-overlay-in var(--motion-duration-normal) var(--motion-ease-out) forwards;
+  }
+  .tollerud-topnav-menu-overlay[data-state='closed'] {
     animation: tollerud-sheet-overlay-out var(--motion-duration-normal) var(--motion-ease-in) forwards;
   }
   @keyframes tollerud-sheet-overlay-in {
@@ -1069,6 +1096,7 @@
   }
   @media (prefers-reduced-motion: reduce) {
     .tollerud-sheet-overlay[data-state],
+    .tollerud-topnav-menu-overlay[data-state],
     .tollerud-sheet-panel[data-state],
     .tollerud-topnav-menu-panel[data-state] {
       animation: none !important;

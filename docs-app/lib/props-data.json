@@ -1128,7 +1128,8 @@
         "navItems?: TopNavItem[]",
         "actions?: ReactNode",
         "sticky?: boolean",
-        "maxWidth?: TopNavMaxWidth"
+        "maxWidth?: TopNavMaxWidth",
+        "mobileMenuTitle?: string"
       ]
     }
   ]

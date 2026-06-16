@@ -344,7 +344,9 @@ function PageFoundations() {
             const I = Icons[name];
             return (
               <button key={name} className="ds-icon-cell" title={`Icons.${name}`}
-                onClick={() => { navigator.clipboard && navigator.clipboard.writeText(`<Icons.${name} size={18}/>`); }}>
+                onClick={() => {
+                  void navigator.clipboard?.writeText(`<Icons.${name} size={18}/>`).catch(() => {})
+                }}>
                 <I size={20}/>
                 <span className="ds-icon-cell__name">{name}</span>
               </button>

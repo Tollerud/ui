@@ -57,6 +57,10 @@ function normalizeColumns<T>(columns: Column<T>[]): NormalizedColumn<T>[] {
   }))
 }
 
+function columnReactKey(col: { key: string }, index: number) {
+  return `${col.key}-${index}`
+}
+
 export interface DataTableFilter {
   key: string
   options?: string[]
@@ -304,6 +308,16 @@ function DataTableInner<T extends Record<string, unknown>>({
       !isSelected && !(striped && rowIndex % 2 === 0) && isRich && 'bg-tollerud-noir-900',
     )
 
+  /** Opaque sticky cell backgrounds — semi-transparent row hovers bleed through on horizontal scroll. */
+  const stickyRowSurface = (rowIndex: number, isSelected: boolean) =>
+    cn(
+      'group-hover/tr:bg-tollerud-noir-800',
+      isSelected && 'bg-tollerud-noir-900 ring-1 ring-inset ring-tollerud-yellow/25',
+      !isSelected && striped && rowIndex % 2 === 0 && 'bg-tollerud-noir-950',
+      !isSelected && !(striped && rowIndex % 2 === 0) && isRich && 'bg-tollerud-noir-900',
+      !isSelected && !isRich && 'bg-tollerud-noir-950',
+    )
+
   const stickyHead = (edge: 'check' | 'first' | 'actions') =>
     pinEdges &&
     cn(
@@ -316,8 +330,8 @@ function DataTableInner<T extends Record<string, unknown>>({
   const stickyBody = (edge: 'check' | 'first' | 'actions', rowIndex: number, isSelected: boolean) =>
     pinEdges &&
     cn(
-      'sticky z-[2] group-hover/tr:bg-tollerud-surface-raised/50',
-      rowSurface(rowIndex, isSelected),
+      'sticky z-[2]',
+      stickyRowSurface(rowIndex, isSelected),
       edge === 'check' && 'left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]',
       edge === 'first' && cn('left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]', selectable && 'left-10'),
       edge === 'actions' && 'right-0 shadow-[-4px_0_12px_-6px_rgba(0,0,0,0.55)]',
@@ -338,9 +352,9 @@ function DataTableInner<T extends Record<string, unknown>>({
     )
   }
 
-  const headerCell = (col: NormalizedColumn<T>, columnIndex: number) => (
+  const headerCell = (col: NormalizedColumn<T>, columnIndex: number, reactKey: string) => (
     <th
-      key={col.key}
+      key={reactKey}
       className={cn(
         'px-3 py-2.5 text-left text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider whitespace-nowrap',
         col.sortable && 'cursor-pointer select-none hover:text-tollerud-text-primary transition-colors',
@@ -401,7 +415,7 @@ function DataTableInner<T extends Record<string, unknown>>({
               )}
               {normalizedColumns.map((col, j) => (
                 <td
-                  key={col.key}
+                  key={columnReactKey(col, j)}
                   className={cn('px-3 py-2.5 whitespace-nowrap', col.align === 'right' && 'text-right', j === 0 && stickyBody('first', i, false))}
                 >
                   <Skeleton className={cn('h-3', j === 0 ? 'w-[70%]' : 'w-[55%]')} />
@@ -461,7 +475,7 @@ function DataTableInner<T extends Record<string, unknown>>({
                 const value = row[col.key]
                 return (
                   <td
-                    key={col.key}
+                    key={columnReactKey(col, columnIndex)}
                     className={cn(
                       'px-3 py-2.5 text-tollerud-text-secondary whitespace-nowrap',
                       col.align === 'right' && 'text-right',
@@ -525,14 +539,16 @@ function DataTableInner<T extends Record<string, unknown>>({
               />
             </th>
           )}
-          {normalizedColumns.map((col, columnIndex) => headerCell(col, columnIndex))}
+          {normalizedColumns.map((col, columnIndex) =>
+            headerCell(col, columnIndex, columnReactKey(col, columnIndex))
+          )}
           {rowMenu && <th className={cn('w-11 min-w-11', stickyHead('actions'))} aria-label="Row actions" />}
         </tr>
         {!isRich && filterableColumns.length > 0 && (
           <tr className="border-b border-tollerud-border/20">
-            {normalizedColumns.map((col) => (
+            {normalizedColumns.map((col, columnIndex) => (
               <th
-                key={`filter-${col.key}`}
+                key={columnReactKey(col, columnIndex)}
                 className={cn('px-1.5 py-1', col.align === 'right' && 'text-right', col.align === 'center' && 'text-center')}
               >
                 {col.filterable ? (

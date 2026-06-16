@@ -1,7 +1,7 @@
 'use client'
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { type ComponentPropsWithoutRef, type ReactNode, forwardRef } from 'react'
+import { type ComponentPropsWithoutRef, type ReactNode, Children, forwardRef, isValidElement } from 'react'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── Sheet (slide-in panel) ──────────────────── */
@@ -26,6 +26,24 @@ const SheetClose = DialogPrimitive.Close
 
 interface SheetContentProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   side?: SheetSide
+  /** Screen reader label when children omit `SheetTitle`. Default: `Panel`. */
+  title?: string
+}
+
+function treeContainsDisplayName(node: ReactNode, displayName: string): boolean {
+  let found = false
+  Children.forEach(node, (child) => {
+    if (found || !isValidElement(child)) return
+    if ((child.type as { displayName?: string }).displayName === displayName) {
+      found = true
+      return
+    }
+    const props = child.props as { children?: ReactNode }
+    if (props.children && treeContainsDisplayName(props.children, displayName)) {
+      found = true
+    }
+  })
+  return found
 }
 
 const SheetOverlay = forwardRef<
@@ -43,7 +61,7 @@ SheetOverlay.displayName = 'SheetOverlay'
 const SheetContent = forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Content>,
   SheetContentProps
->(({ className, children, side = 'right', ...props }, ref) => (
+>(({ className, children, side = 'right', title = 'Panel', ...props }, ref) => (
   <SheetOverlay>
     <DialogPrimitive.Content
       ref={ref}
@@ -59,6 +77,9 @@ const SheetContent = forwardRef<
       )}
       {...props}
     >
+      {!treeContainsDisplayName(children, 'SheetTitle') && (
+        <DialogPrimitive.Title className="tollerud-sr-only">{title}</DialogPrimitive.Title>
+      )}
       {children}
       <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-tollerud-text-muted hover:text-tollerud-text-primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

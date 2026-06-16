@@ -35,7 +35,7 @@ function Drawer({
 }: DrawerProps) {
   return (
     <Sheet open={open} onOpenChange={(next) => !next && onClose?.()}>
-      <SheetContent side={side} style={{ maxWidth: width }} className="flex flex-col">
+      <SheetContent side={side} style={{ maxWidth: width }} title={typeof title === 'string' ? title : 'Drawer'} className="flex flex-col">
         {(title || description) && (
           <SheetHeader>
             {title ? <SheetTitle>{title}</SheetTitle> : null}

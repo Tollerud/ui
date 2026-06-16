@@ -49,21 +49,18 @@ describe('TopNav', () => {
     expect(within(mobileBar as HTMLElement).queryByRole('button', { name: 'Deploy' })).not.toBeInTheDocument()
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
 
-    const menuButton = screen.getByRole('button', { name: 'Open menu' })
+    const menuButton = screen.getByRole('button', { name: 'Toggle navigation menu' })
     await user.click(menuButton)
 
     const menu = screen.getByRole('dialog', { name: 'Navigation menu' })
     expect(menu).toBeInTheDocument()
-    expect(document.querySelector('.tollerud-sheet-overlay')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Close menu', hidden: true })).toHaveAttribute(
-      'aria-expanded',
-      'true'
-    )
+    expect(document.querySelector('.tollerud-topnav-menu-overlay')).toBeInTheDocument()
+    expect(menuButton).toHaveAttribute('aria-expanded', 'true')
     expect(within(menu).getByRole('link', { name: 'Hosts' })).toBeInTheDocument()
     expect(within(menu).getByRole('button', { name: 'Deploy' })).toBeInTheDocument()
 
     await user.click(within(menu).getByRole('link', { name: 'Hosts' }))
-    expect(screen.getByRole('button', { name: 'Open menu' })).toHaveAttribute('aria-expanded', 'false')
+    expect(menuButton).toHaveAttribute('aria-expanded', 'false')
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
 
@@ -77,7 +74,7 @@ describe('TopNav', () => {
       />
     )
 
-    await user.click(screen.getByRole('button', { name: 'Open menu' }))
+    await user.click(screen.getByRole('button', { name: 'Toggle navigation menu' }))
     expect(screen.getByRole('dialog')).toBeInTheDocument()
 
     await user.keyboard('{Escape}')
@@ -108,7 +105,7 @@ describe('TopNav', () => {
     expect(within(mobileBar).getByRole('button', { name: 'Deploy' })).toBeInTheDocument()
     expect(within(mobileBar).queryByRole('button', { name: 'Sign in' })).not.toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Open menu' }))
+    await user.click(screen.getByRole('button', { name: 'Toggle navigation menu' }))
     const menu = screen.getByRole('dialog', { name: 'Navigation menu' })
     expect(within(menu).getByRole('button', { name: 'Sign in' })).toBeInTheDocument()
     expect(within(menu).queryByRole('button', { name: 'Deploy' })).not.toBeInTheDocument()

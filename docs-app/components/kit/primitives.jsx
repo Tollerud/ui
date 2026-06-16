@@ -25,10 +25,11 @@ function highlight(code) {
 function CopyButton({ text, label = 'Copy', className = 'ds-demo__btn' }) {
   const [done, setDone] = useState(false);
   const copy = () => {
-    navigator.clipboard?.writeText(text).then(() => {
-      setDone(true); setTimeout(() => setDone(false), 1400);
-    }).catch(() => {});
-  };
+    void navigator.clipboard?.writeText(text).then(() => {
+      setDone(true)
+      setTimeout(() => setDone(false), 1400)
+    }).catch(() => {})
+  }
   return (
     <button className={className} onClick={copy}>
       {done ? <Icons.check/> : <Icons.copy/>}
