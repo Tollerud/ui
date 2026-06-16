@@ -1056,7 +1056,7 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 | `searchable` | `boolean` | `false` | Show the search input. |
 | `searchKeys` | `string[]` | column keys | Fields the search matches. |
 | `searchPlaceholder` | `string` | `'Search…'` | Search input placeholder. |
-| `filter` | `{ key, options?, allLabel? }` | — | Segmented filter on one field. |
+| `filter` | `{ key, options?, allLabel?, variant?: 'segmented' \| 'combobox', placeholder? }` | — | Column filter in rich mode. Default `variant` is `segmented`; use `combobox` for a searchable dropdown. |
 | `selectable` | `boolean` | `false` | Row checkboxes + select-all. |
 | `pageSize` | `number` | — | Rows per page (enables pagination when set). |
 | `bulkActions` | `BulkAction[]` | `[]` | Shown when rows are selected; `onRun(ids, clear)`. |
@@ -1065,8 +1065,11 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 | `emptyState` | `ReactNode` | — | Custom empty UI (use `<Empty>…</Empty>`). |
 | `loading` | `boolean` | `false` | Skeleton rows instead of data. |
 | `skeletonRows` | `number` | `5` | Skeleton row count while loading. |
+| `striped` | `boolean` | `false` | Alternating row backgrounds in rich mode. |
+| `pinColumns` | `boolean` | rich mode default | Pin first column and row ⋮ menu during horizontal scroll. |
+| `footer` | `ReactNode` | — | Extra content in the footer bar (right of row count). |
 
-**Column:** `{ key, label, sortable?, filterable?, align?: 'left' | 'center' | 'right', width?, render?: (value, row) => ReactNode }`. Without `render`, `row[key]` is shown.
+**Column:** `{ key, label?, header?, sortable?, filterable?, align?: 'left' | 'center' | 'right', width?, render?: (value, row) => ReactNode | (row) => ReactNode }`. Without `render`, `row[key]` is shown. `header` is an alias for `label`.
 
 ## Skeleton
 

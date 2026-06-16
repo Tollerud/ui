@@ -21,7 +21,7 @@ for (const file of files) {
   const source = readFileSync(join(componentsDir, file), 'utf8')
   const componentName = file.replace(/\.tsx$/, '')
 
-  const ifaceRe = /export\s+interface\s+(\w+Props)\s*(extends[^{]*)?\{([\s\S]*?)\n\}/g
+  const ifaceRe = /export\s+interface\s+(\w+Props)(?:<(?:[^<>]|<[^<>]*>)*>)?\s*(extends\s+[^{]+)?\s*\{([\s\S]*?)\n\}/g
   let match
   while ((match = ifaceRe.exec(source)) !== null) {
     const [, name, extendsClause = '', body] = match

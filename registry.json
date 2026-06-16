@@ -826,7 +826,7 @@
     },
     "data-table": {
       "name": "DataTable",
-      "description": "Data table with sort, column filters, search, segmented filter, selection, bulk actions, row menus, and pagination",
+      "description": "First-class data table — search, segmented or combobox filter, selection, bulk actions, row menus, sortable headers, striped rows, pagination footer",
       "files": [
         "components/DataTable.tsx"
       ],

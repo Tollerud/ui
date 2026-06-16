@@ -217,6 +217,7 @@ export { DataTable } from './DataTable'
 export type {
   DataTableProps,
   Column,
+  ColumnRender,
   DataTableFilter,
   DataTableBulkAction,
   DataTableRowMenuItem,

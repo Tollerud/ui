@@ -144,8 +144,13 @@ const CMD_SECTION_ENTRIES = [
 
   ['onboarding', 'Setup wizard', ['wizard']],
 
+  ['data-table', 'Props', ['datatable', 'props']],
   ['data-table', 'Simple table', ['datatable', 'package']],
-  ['data-table', 'Servers', ['datatable', 'table', 'bulk']],
+  ['data-table', 'Column filters', ['filterable', 'filter']],
+  ['data-table', 'Filter control', ['segmented', 'combobox', 'filter']],
+  ['data-table', 'Servers', ['datatable', 'table', 'bulk', 'rowmenu']],
+  ['data-table', 'Loading and footer', ['loading', 'skeleton', 'footer']],
+  ['data-table', 'Mobile and horizontal scroll', ['mobile', 'scroll', 'pincolumns']],
 
   ['console', 'Log viewer', ['logs', 'viewer']],
   ['console', 'Live log stream', ['stream']],

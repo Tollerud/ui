@@ -16,24 +16,53 @@ import {
 } from './DropdownMenu'
 import { Pagination } from './Pagination'
 import { Segmented } from './Segmented'
+import { Combobox } from './Combobox'
 import { Skeleton } from './Skeleton'
 
 /* ──────────────────── Sortable & Filterable Data Table ──────────────────── */
 
+export type ColumnRender<T> = ((value: unknown, row: T) => ReactNode) | ((row: T) => ReactNode)
+
 export interface Column<T> {
   key: string
-  label: string
+  /** Column heading — use `label` or `header` (alias). */
+  label?: string
+  header?: string
   sortable?: boolean
   filterable?: boolean
   align?: 'left' | 'center' | 'right'
   width?: string
+  render?: ColumnRender<T>
+}
+
+type NormalizedColumn<T> = Omit<Column<T>, 'label' | 'header' | 'render'> & {
+  label: string
   render?: (value: unknown, row: T) => ReactNode
+}
+
+function normalizeColumns<T>(columns: Column<T>[]): NormalizedColumn<T>[] {
+  return columns.map(({ header, label, render, ...col }) => ({
+    ...col,
+    label: label ?? header ?? col.key,
+    render: render
+      ? (value: unknown, row: T) => {
+          if (render.length <= 1) {
+            return (render as (row: T) => ReactNode)(row)
+          }
+          return (render as (value: unknown, row: T) => ReactNode)(value, row)
+        }
+      : undefined,
+  }))
 }
 
 export interface DataTableFilter {
   key: string
   options?: string[]
   allLabel?: string
+  /** Toolbar control — `segmented` (default) or searchable `combobox`. */
+  variant?: 'segmented' | 'combobox'
+  /** Combobox placeholder when `variant` is `combobox`. */
+  placeholder?: string
 }
 
 export interface DataTableBulkAction {
@@ -65,7 +94,7 @@ export interface DataTableProps<T extends Record<string, unknown>> {
   searchable?: boolean
   searchKeys?: (keyof T | string)[]
   searchPlaceholder?: string
-  /** Segmented filter on a single column value. */
+  /** Column filter in rich mode — segmented tabs or searchable combobox. */
   filter?: DataTableFilter
   selectable?: boolean
   pageSize?: number
@@ -75,6 +104,12 @@ export interface DataTableProps<T extends Record<string, unknown>> {
   emptyState?: ReactNode
   loading?: boolean
   skeletonRows?: number
+  /** Alternating row backgrounds in rich mode. */
+  striped?: boolean
+  /** Pin the first column and row-menu column during horizontal scroll (default: on in rich mode). */
+  pinColumns?: boolean
+  /** Extra content in the table footer bar (right of the row count). */
+  footer?: ReactNode
 }
 
 interface DataTableInnerProps<T extends Record<string, unknown>> extends DataTableProps<T> {
@@ -101,8 +136,12 @@ function DataTableInner<T extends Record<string, unknown>>({
   emptyState,
   loading = false,
   skeletonRows = 5,
+  striped = false,
+  footer,
+  pinColumns,
   forwardedRef,
 }: DataTableInnerProps<T>) {
+  const normalizedColumns = useMemo(() => normalizeColumns(columns), [columns])
   const tableData = useMemo(() => rows ?? data ?? [], [rows, data])
 
   const isRich =
@@ -115,6 +154,9 @@ function DataTableInner<T extends Record<string, unknown>>({
     bulkActions.length > 0 ||
     !!emptyState ||
     loading
+
+  const pinEdges = pinColumns ?? isRich
+  const tableMinWidth = Math.max(640, normalizedColumns.length * 120 + (selectable ? 40 : 0) + (rowMenu ? 44 : 0))
 
   const [sortKey, setSortKey] = useState<string | null>(null)
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
@@ -151,10 +193,16 @@ function DataTableInner<T extends Record<string, unknown>>({
     })
   }
 
-  const searchKeysResolved = searchKeys ?? columns.map((c) => c.key)
-  const filterOptions = filter
-    ? (filter.options ?? Array.from(new Set(tableData.map((r) => String(r[filter.key] ?? '')))))
-    : []
+  const searchKeysResolved = searchKeys ?? normalizedColumns.map((c) => c.key)
+  const filterSelectOptions = useMemo(() => {
+    if (!filter) return []
+    const options =
+      filter.options ?? Array.from(new Set(tableData.map((r) => String(r[filter.key] ?? ''))))
+    return [
+      { value: 'all', label: filter.allLabel ?? 'All' },
+      ...options.map((opt) => ({ value: opt, label: opt })),
+    ]
+  }, [filter, tableData])
 
   const filtered = useMemo(() => {
     let result = tableData
@@ -187,7 +235,7 @@ function DataTableInner<T extends Record<string, unknown>>({
 
   const sorted = useMemo(() => {
     if (!sortKey) return filtered
-    const col = columns.find((c) => c.key === sortKey)
+    const col = normalizedColumns.find((c) => c.key === sortKey)
     if (!col?.sortable) return filtered
 
     return [...filtered].sort((a, b) => {
@@ -203,7 +251,7 @@ function DataTableInner<T extends Record<string, unknown>>({
       const cmp = aStr.localeCompare(bStr, 'nb', { numeric: true })
       return sortDir === 'asc' ? cmp : -cmp
     })
-  }, [filtered, sortKey, sortDir, columns])
+  }, [filtered, sortKey, sortDir, normalizedColumns])
 
   const pageCount = pageSize ? Math.max(1, Math.ceil(sorted.length / pageSize)) : 1
   const currentPage = Math.min(page, pageCount)
@@ -229,8 +277,34 @@ function DataTableInner<T extends Record<string, unknown>>({
   }
 
   const hasActiveFilters = Object.values(filters).some((v) => v.trim() !== '')
-  const filterableColumns = columns.filter((c) => c.filterable)
-  const colSpan = columns.length + (selectable ? 1 : 0) + (rowMenu ? 1 : 0)
+  const filterableColumns = normalizedColumns.filter((c) => c.filterable)
+  const colSpan = normalizedColumns.length + (selectable ? 1 : 0) + (rowMenu ? 1 : 0)
+
+  const rowSurface = (rowIndex: number, isSelected: boolean) =>
+    cn(
+      isSelected && 'bg-tollerud-yellow/[0.05]',
+      striped && !isSelected && rowIndex % 2 === 0 && 'bg-tollerud-noir-950/40',
+      !isSelected && !(striped && rowIndex % 2 === 0) && isRich && 'bg-tollerud-noir-900',
+    )
+
+  const stickyHead = (edge: 'check' | 'first' | 'actions') =>
+    pinEdges &&
+    cn(
+      'sticky z-[3] bg-tollerud-noir-900',
+      edge === 'check' && 'left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]',
+      edge === 'first' && cn('left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]', selectable && 'left-10'),
+      edge === 'actions' && 'right-0 shadow-[-4px_0_12px_-6px_rgba(0,0,0,0.55)]',
+    )
+
+  const stickyBody = (edge: 'check' | 'first' | 'actions', rowIndex: number, isSelected: boolean) =>
+    pinEdges &&
+    cn(
+      'sticky z-[2] group-hover/tr:bg-tollerud-surface-raised/50',
+      rowSurface(rowIndex, isSelected),
+      edge === 'check' && 'left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]',
+      edge === 'first' && cn('left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]', selectable && 'left-10'),
+      edge === 'actions' && 'right-0 shadow-[-4px_0_12px_-6px_rgba(0,0,0,0.55)]',
+    )
 
   const sortIndicator = (key: string) => {
     const active = sortKey === key
@@ -247,16 +321,18 @@ function DataTableInner<T extends Record<string, unknown>>({
     )
   }
 
-  const headerCell = (col: Column<T>) => (
+  const headerCell = (col: NormalizedColumn<T>, columnIndex: number) => (
     <th
       key={col.key}
       className={cn(
-        'px-3 py-2.5 text-left text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider',
+        'px-3 py-2.5 text-left text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider whitespace-nowrap',
         col.sortable && 'cursor-pointer select-none hover:text-tollerud-text-primary transition-colors',
         col.align === 'right' && 'text-right',
         col.align === 'center' && 'text-center',
+        columnIndex === 0 && stickyHead('first'),
       )}
-      style={col.width ? { width: col.width } : undefined}
+      style={col.width ? { width: col.width, minWidth: col.width } : undefined}
+      aria-sort={col.sortable ? (sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
       onClick={() => col.sortable && toggleSort(col.key)}
     >
       <span
@@ -302,17 +378,20 @@ function DataTableInner<T extends Record<string, unknown>>({
           {Array.from({ length: skeletonRows }).map((_, i) => (
             <tr key={i} className="border-b border-tollerud-border/20">
               {selectable && (
-                <td className="px-3 py-2.5 w-10">
+                <td className={cn('px-3 py-2.5 w-10 min-w-10', stickyBody('check', i, false))}>
                   <Skeleton className="h-4 w-4 rounded" />
                 </td>
               )}
-              {columns.map((col, j) => (
-                <td key={col.key} className={cn('px-3 py-2.5', col.align === 'right' && 'text-right')}>
+              {normalizedColumns.map((col, j) => (
+                <td
+                  key={col.key}
+                  className={cn('px-3 py-2.5 whitespace-nowrap', col.align === 'right' && 'text-right', j === 0 && stickyBody('first', i, false))}
+                >
                   <Skeleton className={cn('h-3', j === 0 ? 'w-[70%]' : 'w-[55%]')} />
                 </td>
               ))}
               {rowMenu && (
-                <td className="px-3 py-2.5 w-11">
+                <td className={cn('px-3 py-2.5 w-11 min-w-11', stickyBody('actions', i, false))}>
                   <Skeleton className="h-4 w-4 rounded" />
                 </td>
               )}
@@ -346,35 +425,44 @@ function DataTableInner<T extends Record<string, unknown>>({
             <tr
               key={id}
               className={cn(
-                'border-b border-tollerud-border/20 transition-colors',
-                onRowClick && 'cursor-pointer hover:bg-tollerud-surface-raised/50',
-                isSelected && 'bg-tollerud-yellow/[0.05]',
+                'group/tr border-b border-tollerud-border/20 transition-colors',
+                (onRowClick || isRich) && 'hover:bg-tollerud-surface-raised/50',
+                onRowClick && 'cursor-pointer',
+                rowSurface(i, isSelected),
               )}
               onClick={() => onRowClick?.(row)}
             >
               {selectable && (
-                <td className="px-3 py-2.5 w-10" onClick={(e) => e.stopPropagation()}>
+                <td
+                  className={cn('px-3 py-2.5 w-10 min-w-10', stickyBody('check', i, isSelected))}
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <Checkbox checked={isSelected} onChange={() => toggleRow(id)} aria-label={`Select row ${id}`} />
                 </td>
               )}
-              {columns.map((col) => {
+              {normalizedColumns.map((col, columnIndex) => {
                 const value = row[col.key]
                 return (
                   <td
                     key={col.key}
                     className={cn(
-                      'px-3 py-2.5 text-tollerud-text-secondary',
+                      'px-3 py-2.5 text-tollerud-text-secondary whitespace-nowrap',
                       col.align === 'right' && 'text-right',
                       col.align === 'center' && 'text-center',
                       !col.render && 'font-mono text-xs',
+                      columnIndex === 0 && stickyBody('first', i, isSelected),
                     )}
+                    style={col.width ? { width: col.width, minWidth: col.width } : undefined}
                   >
                     {col.render ? col.render(value, row) : String(value ?? '—')}
                   </td>
                 )
               })}
               {rowMenu && (
-                <td className="px-2 py-2 w-11" onClick={(e) => e.stopPropagation()}>
+                <td
+                  className={cn('px-2 py-2 w-11 min-w-11', stickyBody('actions', i, isSelected))}
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button
@@ -416,11 +504,11 @@ function DataTableInner<T extends Record<string, unknown>>({
   }
 
   const table = (
-    <table className="w-full min-w-[640px] text-sm">
+    <table className="w-max min-w-full text-sm" style={{ minWidth: tableMinWidth }}>
       <thead>
         <tr className="border-b border-tollerud-border/30 bg-tollerud-noir-900">
           {selectable && (
-            <th className="px-3 py-2.5 w-10">
+            <th className={cn('px-3 py-2.5 w-10 min-w-10', stickyHead('check'))}>
               <Checkbox
                 checked={allOnPageSelected}
                 onChange={toggleAllOnPage}
@@ -428,12 +516,12 @@ function DataTableInner<T extends Record<string, unknown>>({
               />
             </th>
           )}
-          {columns.map((col) => headerCell(col))}
-          {rowMenu && <th className="w-11" />}
+          {normalizedColumns.map((col, columnIndex) => headerCell(col, columnIndex))}
+          {rowMenu && <th className={cn('w-11 min-w-11', stickyHead('actions'))} aria-label="Row actions" />}
         </tr>
         {!isRich && filterableColumns.length > 0 && (
           <tr className="border-b border-tollerud-border/20">
-            {columns.map((col) => (
+            {normalizedColumns.map((col) => (
               <th
                 key={`filter-${col.key}`}
                 className={cn('px-1.5 py-1', col.align === 'right' && 'text-right', col.align === 'center' && 'text-center')}
@@ -460,10 +548,21 @@ function DataTableInner<T extends Record<string, unknown>>({
     </table>
   )
 
+  const tableScroll = (
+    <div
+      className="tollerud-datatable-scroll min-w-0 w-full overflow-x-auto overscroll-x-contain touch-pan-x"
+      role="region"
+      aria-label="Scrollable table"
+      tabIndex={pinEdges ? 0 : undefined} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex -- keyboard horizontal scroll
+    >
+      {table}
+    </div>
+  )
+
   if (!isRich) {
     return (
-      <div ref={forwardedRef} className={cn('overflow-x-auto rounded-lg border border-tollerud-border/30', className)}>
-        {table}
+      <div ref={forwardedRef} className={cn('min-w-0 w-full rounded-lg border border-tollerud-border/30', className)}>
+        {tableScroll}
       </div>
     )
   }
@@ -474,7 +573,7 @@ function DataTableInner<T extends Record<string, unknown>>({
     <div
       ref={forwardedRef}
       className={cn(
-        'overflow-hidden rounded-lg border border-tollerud-border/30 bg-tollerud-noir-900',
+        'min-w-0 w-full overflow-hidden rounded-lg border border-tollerud-border/30 bg-tollerud-noir-900',
         className,
       )}
     >
@@ -482,7 +581,7 @@ function DataTableInner<T extends Record<string, unknown>>({
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-tollerud-border/30 px-4 py-3.5">
           <div className="flex flex-wrap items-center gap-2.5">
             {searchable && (
-              <div className="flex h-9 w-[230px] max-w-full items-center gap-2 rounded-lg border border-tollerud-border/30 bg-tollerud-noir-950 px-3">
+              <div className="flex h-9 w-full max-w-full sm:w-[230px] items-center gap-2 rounded-lg border border-tollerud-border/30 bg-tollerud-noir-950 px-3">
                 <Search size={15} className="shrink-0 text-tollerud-text-muted" aria-hidden />
                 <input
                   value={query}
@@ -505,20 +604,29 @@ function DataTableInner<T extends Record<string, unknown>>({
                 )}
               </div>
             )}
-            {filter && (
-              <Segmented
-                size="sm"
-                value={filterValue}
-                onChange={(value) => {
-                  setFilterValue(value)
-                  setPage(1)
-                }}
-                options={[
-                  { value: 'all', label: filter.allLabel ?? 'All' },
-                  ...filterOptions.map((opt) => ({ value: opt, label: opt })),
-                ]}
-              />
-            )}
+            {filter &&
+              (filter.variant === 'combobox' ? (
+                <Combobox
+                  value={filterValue}
+                  onChange={(value) => {
+                    setFilterValue(value)
+                    setPage(1)
+                  }}
+                  options={filterSelectOptions}
+                  placeholder={filter.placeholder ?? filter.allLabel ?? 'Filter…'}
+                  className="w-full sm:w-[200px]"
+                />
+              ) : (
+                <Segmented
+                  size="sm"
+                  value={filterValue}
+                  onChange={(value) => {
+                    setFilterValue(value)
+                    setPage(1)
+                  }}
+                  options={filterSelectOptions}
+                />
+              ))}
           </div>
           {toolbarRight}
         </div>
@@ -538,7 +646,7 @@ function DataTableInner<T extends Record<string, unknown>>({
                 size="sm"
                 onClick={() => action.onRun(selected, clearSelection)}
               >
-                {action.icon}
+                {action.icon ? <span className="mr-1.5 inline-flex shrink-0">{action.icon}</span> : null}
                 {action.label}
               </Button>
             ))}
@@ -549,7 +657,7 @@ function DataTableInner<T extends Record<string, unknown>>({
       {showEmpty ? (
         <div className="p-2">{emptyState ?? <div className="py-12 text-center text-sm text-tollerud-text-muted">No results.</div>}</div>
       ) : (
-        <div className="overflow-x-auto">{table}</div>
+        tableScroll
       )}
 
       {!loading && sorted.length > 0 && (
@@ -559,9 +667,12 @@ function DataTableInner<T extends Record<string, unknown>>({
               ? `Showing ${(currentPage - 1) * pageSize + 1}–${(currentPage - 1) * pageSize + pageRows.length} of ${sorted.length}`
               : `${sorted.length} row${sorted.length === 1 ? '' : 's'}`}
           </span>
-          {pageSize && pageCount > 1 && (
-            <Pagination page={currentPage} pageCount={pageCount} onChange={setPage} siblingCount={1} />
-          )}
+          <div className="flex flex-wrap items-center gap-3">
+            {footer}
+            {pageSize && pageCount > 1 && (
+              <Pagination page={currentPage} pageCount={pageCount} onChange={setPage} siblingCount={1} />
+            )}
+          </div>
         </div>
       )}
     </div>

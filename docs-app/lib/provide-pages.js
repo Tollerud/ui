@@ -15,7 +15,7 @@ export {
   PropTable,
 } from '../components/kit/primitives'
 export { Icons, Ico } from '../components/kit/icons'
-/** Docs DataTable — adapter over npm DataTable (`rows`/`header`/icon strings). */
+/** Docs DataTable — deprecated shim; resolves icon strings only. Prefer PackageDataTable / @tollerud/ui. */
 export { DataTable } from './docs-adapters'
 export { initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED } from '../components/kit/motion'
 export {

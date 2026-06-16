@@ -395,14 +395,8 @@ function FeatureCard({ icon, ...props }) {
   return <NpmFeatureCard icon={Icon ? <Icon size={20} /> : undefined} {...props} />
 }
 
-/** Maps docs DataTable prop shapes (`rows`, `header`, icon strings) to npm DataTable. */
+/** @deprecated Docs-only shim — npm DataTable now accepts `header`, row-only `render`, and `rows`. Icon strings still resolve here. */
 function DataTable({ rows, columns = [], bulkActions = [], rowMenu, ...props }) {
-  const npmColumns = columns.map(({ header, label, render, ...col }) => ({
-    ...col,
-    label: label ?? header ?? col.key,
-    render: render ? (_value, row) => render(row) : undefined,
-  }))
-
   const npmBulkActions = bulkActions.map((action) => ({
     ...action,
     icon:
@@ -425,7 +419,7 @@ function DataTable({ rows, columns = [], bulkActions = [], rowMenu, ...props }) 
   return (
     <NpmDataTable
       rows={rows}
-      columns={npmColumns}
+      columns={columns}
       bulkActions={npmBulkActions}
       rowMenu={npmRowMenu}
       {...props}

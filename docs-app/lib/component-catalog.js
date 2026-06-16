@@ -91,6 +91,15 @@ export const DEEP_LINKS = [
   // Infrastructure
   { page: 'infra', section: 'hostcard', title: 'HostCard', component: 'HostCard' },
   { page: 'infra', section: 'incidentcard', title: 'IncidentCard', component: 'IncidentCard' },
+
+  // Data table
+  { page: 'data-table', section: 'props', title: 'Props', component: 'DataTable', keywords: ['datatable', 'props'] },
+  { page: 'data-table', section: 'simple-table', title: 'Simple table', component: 'DataTable', keywords: ['sort', 'basic'] },
+  { page: 'data-table', section: 'column-filters', title: 'Column filters', component: 'DataTable', keywords: ['filterable'] },
+  { page: 'data-table', section: 'filter-control', title: 'Filter control', component: 'DataTable', keywords: ['segmented', 'combobox', 'filter'] },
+  { page: 'data-table', section: 'servers', title: 'Servers', component: 'DataTable', keywords: ['search', 'bulk', 'pagination', 'row menu'] },
+  { page: 'data-table', section: 'loading-and-footer', title: 'Loading and footer', component: 'DataTable', keywords: ['skeleton', 'footer'] },
+  { page: 'data-table', section: 'mobile-and-horizontal-scroll', title: 'Mobile and horizontal scroll', component: 'DataTable', keywords: ['mobile', 'scroll', 'pin'] },
 ]
 
 export function deepLinkPath(link) {

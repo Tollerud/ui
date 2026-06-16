@@ -339,6 +339,35 @@
       ]
     }
   ],
+  "DataTable": [
+    {
+      "name": "DataTableProps",
+      "props": [
+        "columns: Column<T>[]",
+        "data?: T[]",
+        "rows?: T[]",
+        "rowKey?: keyof T | ((row: T) => string | number)",
+        "onRowClick?: (row: T) => void",
+        "className?: string",
+        "emptyMessage?: string",
+        "searchable?: boolean",
+        "searchKeys?: (keyof T | string)[]",
+        "searchPlaceholder?: string",
+        "filter?: DataTableFilter",
+        "selectable?: boolean",
+        "pageSize?: number",
+        "bulkActions?: DataTableBulkAction[]",
+        "rowMenu?: (row: T) => DataTableRowMenuItem[]",
+        "toolbarRight?: ReactNode",
+        "emptyState?: ReactNode",
+        "loading?: boolean",
+        "skeletonRows?: number",
+        "striped?: boolean",
+        "pinColumns?: boolean",
+        "footer?: ReactNode"
+      ]
+    }
+  ],
   "DatePicker": [
     {
       "name": "DatePickerProps",

@@ -7,22 +7,35 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
-## 4.6.0 — 2026-06-16 — Add ButtonGroup
+## 4.6.0 — 2026-06-16 — Add ButtonGroup and first-class DataTable
 
-New fused action button row for independent clicks with text or icon-only `Button` children.
+New fused action button row and a production-ready data table with the full Servers example feature set built into `@tollerud/ui`.
 
 ### New components
 
 - `ButtonGroup` — wraps `<Button>` children with shared borders, internal dividers, default `size`, and `orientation?: 'horizontal' | 'vertical'`
 
+### DataTable
+
+Rich mode ships search, segmented filter, row selection, bulk-action bar, sortable headers (`aria-sort`), row menus, pagination footer, loading skeletons, custom empty states, and a focusable horizontal scroll region with pinned anchor columns on narrow viewports (`pinColumns`, default on in rich mode).
+
+- Column `header` is an alias for `label`
+- `render` accepts `(row) => …` or `(value, row) => …`
+- `striped` — alternating row backgrounds in rich mode
+- `pinColumns` — pin first column and row ⋮ menu during horizontal scroll (default on in rich mode)
+- `footer` — extra slot in the table footer bar
+- `filter.variant` — `segmented` (default) or `combobox` for the rich-mode column filter
+- Row hover in rich mode; bulk-action icons spaced correctly; `aria-sort` on sortable headers; focusable horizontal scroll region on mobile
+
 ### When to use
 
 - `ButtonGroup` — adjacent actions (Deploy, Cancel, ⋯)
 - `Segmented` — single selected option (sort mode, list/grid view)
+- `DataTable` — config-driven tables with optional search, filters, selection, and pagination
 
 ### Migration
 
-Nothing breaking. Add `ButtonGroup` where fused action toolbars were hand-rolled with `Cluster` + `Button`.
+Nothing breaking. `header` and row-only `render` work on the npm component directly — the docs adapter shim is no longer required for column config.
 
 ## 4.5.2 — 2026-06-16 — Fix Button height for icon-only labels
 

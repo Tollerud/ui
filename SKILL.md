@@ -592,14 +592,20 @@ import { DataTable } from '@tollerud/ui'
 
 // Rich: search, segmented filter, selection, bulk actions, row menus, pagination
 <DataTable
-  columns={[...]}
+  columns={[
+    { key: 'hostname', header: 'Host', sortable: true, render: (row) => row.hostname },
+    { key: 'status', label: 'Status', render: (_v, row) => <Badge>{row.status}</Badge> },
+  ]}
   data={hosts}
   rowKey="id"
   searchable
   searchKeys={['hostname', 'ip']}
   filter={{ key: 'region', allLabel: 'All regions' }}
+  // filter={{ key: 'region', allLabel: 'All regions', variant: 'combobox', placeholder: 'Filter region…' }}
   selectable
   pageSize={10}
+  striped
+  pinColumns
   bulkActions={[{ label: 'Restart', variant: 'ghost', onRun: (ids, clear) => { clear() } }]}
   rowMenu={(row) => [{ label: 'View logs', onSelect: () => {} }]}
   toolbarRight={<Button size="sm">Add host</Button>}
@@ -607,7 +613,7 @@ import { DataTable } from '@tollerud/ui'
 />
 ```
 
-`data` and `rows` are aliases. Column labels use `label` (docs demos may use `header` via the docs adapter only).
+Column headings use `label` or `header`. `render` accepts `(row) => …` or `(value, row) => …`.
 
 ### Infra / homelab set
 
