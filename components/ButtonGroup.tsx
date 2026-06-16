@@ -33,29 +33,20 @@ const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>(
         ref={ref}
         role="group"
         className={cn(
-          'inline-flex overflow-hidden rounded-lg border border-tollerud-border',
-          isHorizontal ? 'flex-row items-stretch' : 'flex-col items-stretch',
+          'tollerud-button-group inline-flex overflow-hidden rounded-lg border border-tollerud-border',
+          isHorizontal ? 'flex-row items-stretch' : 'tollerud-button-group--vertical flex-col items-stretch',
           className
         )}
         {...props}
       >
-        {items.map((child, index) => {
+        {items.map((child) => {
           if (!isButtonChild(child)) return child
-
-          const isFirst = index === 0
-          const isLast = index === items.length - 1
 
           return cloneElement(child, {
             size: child.props.size ?? size,
             className: cn(
               child.props.className,
-              'rounded-none border-0 shadow-none',
-              !isFirst && (isHorizontal ? 'border-l border-tollerud-border' : 'border-t border-tollerud-border'),
-              'relative focus-visible:z-10',
-              isFirst && isHorizontal && 'rounded-l-lg',
-              isLast && isHorizontal && 'rounded-r-lg',
-              isFirst && !isHorizontal && 'rounded-t-lg',
-              isLast && !isHorizontal && 'rounded-b-lg'
+              'tollerud-btn--grouped relative focus-visible:z-10'
             ),
           })
         })}

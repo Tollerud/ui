@@ -33,6 +33,24 @@ describe('ButtonGroup', () => {
     expect(buttons[1]).toHaveClass('tollerud-btn--sm')
   })
 
+  it('applies grouped modifier classes to fuse child button chrome', () => {
+    render(
+      <ButtonGroup>
+        <Button variant="secondary">Deploy</Button>
+        <Button variant="secondary">Cancel</Button>
+        <Button variant="ghost-destructive">Archive</Button>
+      </ButtonGroup>
+    )
+
+    const group = screen.getByRole('group')
+    expect(group).toHaveClass('tollerud-button-group')
+
+    const buttons = screen.getAllByRole('button')
+    for (const button of buttons) {
+      expect(button).toHaveClass('tollerud-btn--grouped')
+    }
+  })
+
   it('fires independent actions from each segment', async () => {
     const user = userEvent.setup()
     const onDeploy = vi.fn()

@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.5 — 2026-06-16 — ButtonGroup fusion and TopNav lockup
+
+Fix fused button chrome in groups and slightly enlarge the TopNav project title.
+
+### Fixed
+
+- `ButtonGroup` — child buttons no longer keep standalone border-radius/border from `.tollerud-btn` layer CSS; dividers use inset shadow so middle segments fuse cleanly with text labels
+
+### Changed
+
+- `TopNav` — project name uses `text-base`; desktop nav links get a little extra left margin after the monogram lockup
+
 ## 4.8.4 — 2026-06-16 — Button ghost semantic variants
 
 Ghost buttons that tint on hover for success, warning, and info — same pattern as `ghost-destructive`.

@@ -157,11 +157,11 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
           className="tollerud-focus-ring flex shrink-0 items-center gap-2 rounded-sm text-tollerud-text-primary no-underline"
         >
           <Monogram color="yellow" className="h-5 w-auto" />
-          <span className="text-sm font-semibold">{projectName}</span>
+          <span className="text-base font-semibold leading-tight">{projectName}</span>
         </a>
 
         {hasNavItems && (
-          <Cluster as="div" gap="md" className="hidden min-w-0 lg:flex">
+          <Cluster as="div" gap="md" className="ml-2 hidden min-w-0 lg:flex">
             {navItems.map((item) => (
               <TopNavLink key={`${item.href}-${String(item.label)}`} item={item} />
             ))}
