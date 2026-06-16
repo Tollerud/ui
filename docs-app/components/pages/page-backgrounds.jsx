@@ -176,6 +176,88 @@ function GradientReadabilityDemo({ treatment }) {
   );
 }
 
+const HERO_READABLE_SCRIM = `import { NoirGlowBackground } from '@tollerud/ui'
+
+export function HeroWithCopyScrim({ children }) {
+  return (
+    <section className="relative min-h-[420px] overflow-hidden">
+      <NoirGlowBackground intensity="medium" className="absolute inset-0" />
+      <div className="relative z-20 flex min-h-full items-center p-9">
+        <div className="hero-copy-scrim max-w-[520px]">{children}</div>
+      </div>
+    </section>
+  )
+}`
+
+const HERO_READABLE_SCRIM_CSS = `/* globals.css — local blur scrim behind copy only */
+.hero-copy-scrim {
+  margin: -24px -26px;
+  padding: 24px 26px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.54) 58%, rgba(0, 0, 0, 0.18));
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+  backdrop-filter: blur(16px) saturate(0.9);
+  -webkit-backdrop-filter: blur(16px) saturate(0.9);
+}`
+
+const HERO_READABLE_FULL_BLUR = `import { NoirGlowBackground } from '@tollerud/ui'
+
+export function HeroWithFullBlur({ children }) {
+  return (
+    <section className="relative min-h-[420px] overflow-hidden">
+      <NoirGlowBackground intensity="medium" className="absolute inset-0" />
+      <div className="hero-readable-fullblur absolute inset-0 z-10 pointer-events-none" aria-hidden />
+      <div className="relative z-20 flex min-h-full items-center p-9">
+        <div className="max-w-[520px]">{children}</div>
+      </div>
+    </section>
+  )
+}`
+
+const HERO_READABLE_FULL_BLUR_CSS = `/* globals.css — soft glass across the whole hero */
+.hero-readable-fullblur {
+  background:
+    radial-gradient(100% 100% at 50% 48%, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.46) 78%),
+    rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(14px) saturate(0.9);
+  -webkit-backdrop-filter: blur(14px) saturate(0.9);
+}`
+
+const HERO_READABLE_SHADOW = `import { NoirGlowBackground } from '@tollerud/ui'
+
+export function HeroWithLeftShadow({ children }) {
+  return (
+    <section className="relative min-h-[420px] overflow-hidden">
+      <NoirGlowBackground intensity="medium" className="absolute inset-0" />
+      <div className="hero-readable-shadow absolute inset-0 z-10 pointer-events-none" aria-hidden />
+      <div className="relative z-20 flex min-h-full items-center p-9">
+        <div className="max-w-[520px]">{children}</div>
+      </div>
+    </section>
+  )
+}`
+
+const HERO_READABLE_SHADOW_CSS = `/* globals.css — broad left-side shadow, shader stays visible on the right */
+.hero-readable-shadow {
+  background:
+    radial-gradient(90% 120% at 0% 50%, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.68) 38%, rgba(0, 0, 0, 0.28) 64%, transparent 82%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.18) 58%, transparent);
+}`
+
+const HERO_READABLE_EDGE = `import { NoirGlowBackground } from '@tollerud/ui'
+
+export function HeroWithEdgeShader({ children }) {
+  return (
+    <section className="relative min-h-[420px] overflow-hidden">
+      <NoirGlowBackground intensity="medium" scale={1.55} offsetX={0.38} className="absolute inset-0" />
+      <NoirGlowBackground intensity="subtle" speed="slow" scale={1.55} offsetX={-0.38} className="absolute inset-0" />
+      <div className="relative z-20 flex min-h-full items-center p-9">
+        <div className="max-w-[520px]">{children}</div>
+      </div>
+    </section>
+  )
+}`
+
 function PageBackgrounds() {
   return (
     <div>
@@ -220,12 +302,24 @@ function PageBackgrounds() {
       </Section>
 
       <Section title="Hero readability treatments" desc="Four ways to keep copy readable over the live grain gradient: a local blur scrim, a full-hero blur, a broad left-side shadow, or a scaled/offset shader that keeps motion toward the edges.">
-        <div style={{ display: 'grid', gap: 16 }}>
-          <GradientReadabilityDemo treatment="scrim"/>
-          <GradientReadabilityDemo treatment="heroBlur"/>
-          <GradientReadabilityDemo treatment="shadow"/>
-          <GradientReadabilityDemo treatment="edge"/>
-        </div>
+        <SubHead>Copy blur scrim</SubHead>
+        <GradientReadabilityDemo treatment="scrim"/>
+        <CodeSnippet name="hero-readable-scrim.jsx" code={HERO_READABLE_SCRIM}/>
+        <CodeSnippet name="hero-readable-scrim.css" code={HERO_READABLE_SCRIM_CSS}/>
+
+        <SubHead>Full hero blur</SubHead>
+        <GradientReadabilityDemo treatment="heroBlur"/>
+        <CodeSnippet name="hero-readable-fullblur.jsx" code={HERO_READABLE_FULL_BLUR}/>
+        <CodeSnippet name="hero-readable-fullblur.css" code={HERO_READABLE_FULL_BLUR_CSS}/>
+
+        <SubHead>Left shadow gradient</SubHead>
+        <GradientReadabilityDemo treatment="shadow"/>
+        <CodeSnippet name="hero-readable-shadow.jsx" code={HERO_READABLE_SHADOW}/>
+        <CodeSnippet name="hero-readable-shadow.css" code={HERO_READABLE_SHADOW_CSS}/>
+
+        <SubHead>Edge-biased shader</SubHead>
+        <GradientReadabilityDemo treatment="edge"/>
+        <CodeSnippet name="hero-readable-edge.jsx" code={HERO_READABLE_EDGE}/>
       </Section>
 
       <Section title="Animated grid" desc="A scrolling canvas grid that fades to #060606 at the edges and fills the square under the cursor. Direction, speed, cell size and colors are all props.">
