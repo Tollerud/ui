@@ -236,9 +236,9 @@ code, pre {
   background: var(--tollerud-surface-hover);
 }
 
-.tollerud-btn--sm  { padding: var(--tollerud-space-1) var(--tollerud-space-3); font-size: var(--tollerud-text-sm); }
-.tollerud-btn--md  { padding: var(--tollerud-space-2) var(--tollerud-space-4); font-size: var(--tollerud-text-base); }
-.tollerud-btn--lg  { padding: var(--tollerud-space-3) var(--tollerud-space-6); font-size: var(--tollerud-text-lg); }
+.tollerud-btn--sm  { height: 1.75rem; padding: 0 var(--tollerud-space-3); font-size: var(--tollerud-text-sm); line-height: 1; }
+.tollerud-btn--md  { height: 2.5rem; padding: 0 var(--tollerud-space-4); font-size: var(--tollerud-text-base); line-height: 1; }
+.tollerud-btn--lg  { height: 3rem; padding: 0 var(--tollerud-space-6); font-size: var(--tollerud-text-lg); line-height: 1; }
 
 /* ── Utility: Input ── */
 .tollerud-input {

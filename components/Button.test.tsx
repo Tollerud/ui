@@ -29,5 +29,20 @@ describe('Button', () => {
 
   it('exports buttonVariants helper', () => {
     expect(buttonVariants({ variant: 'terminal', size: 'sm' })).toContain('font-mono')
+    expect(buttonVariants({ variant: 'primary', size: 'sm' })).toContain('tollerud-btn--sm')
+  })
+
+  it('uses the same size class for text and icon-only buttons', () => {
+    render(
+      <>
+        <Button size="sm">Deploy</Button>
+        <Button size="sm" aria-label="Settings">
+          <span data-testid="icon" />
+        </Button>
+      </>
+    )
+    const buttons = screen.getAllByRole('button')
+    expect(buttons[0]).toHaveClass('tollerud-btn--sm')
+    expect(buttons[1]).toHaveClass('tollerud-btn--sm')
   })
 })

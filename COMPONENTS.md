@@ -136,7 +136,7 @@ These components assemble common page structures from the layout primitives and 
 | Destructive | `.tollerud-btn--destructive` | `<Button variant="destructive">` | Delete/remove |
 | Terminal | `.tollerud-btn--terminal` | `<Button variant="terminal">` | Dev tools, CLIs |
 
-Sizes: `--sm`, `--md`, `--lg`
+Sizes: `--sm` (28px), `--md` (40px), `--lg` (48px) — fixed height per size so text and icon-only buttons align in the same row.
 
 ```jsx
 <Button variant="primary" size="md" onClick={handleClick}>

@@ -7,6 +7,19 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.5.2 — 2026-06-16 — Fix Button height for icon-only labels
+
+Button sizes now use fixed heights so text and icon-only buttons align when placed in the same toolbar row.
+
+### Fixed
+
+- `Button` — `tollerud-btn--sm` / `--md` / `--lg` use fixed heights with centered flex layout; icon-only buttons no longer render shorter than labeled buttons
+- CSS layer + token button sizes updated to match the React component
+
+### Migration
+
+Nothing breaking. Drop-in fix for mixed text/icon button rows.
+
 ## 4.5.1 — 2026-06-16 — Fix Segmented height for icon labels
 
 Segment buttons now use a fixed height so text and icon labels align when multiple controls sit side by side.

@@ -263,9 +263,9 @@
   .tollerud-btn--destructive:hover {
     box-shadow: 0 0 12px rgba(239, 68, 68, 0.3);
   }
-  .tollerud-btn--sm  { padding: 0.25rem 0.75rem; font-size: 0.875rem; }
-  .tollerud-btn--md  { padding: 0.5rem 1rem; font-size: 1rem; }
-  .tollerud-btn--lg  { padding: 0.75rem 1.5rem; font-size: 1.125rem; }
+  .tollerud-btn--sm  { height: 1.75rem; padding: 0 0.75rem; font-size: 0.875rem; line-height: 1; }
+  .tollerud-btn--md  { height: 2.5rem; padding: 0 1rem; font-size: 1rem; line-height: 1; }
+  .tollerud-btn--lg  { height: 3rem; padding: 0 1.5rem; font-size: 1.125rem; line-height: 1; }
   .tollerud-btn:disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
 
   /* ═══ Terminal CTA ═══ */

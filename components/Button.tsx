@@ -21,9 +21,9 @@ const variantLayers = {
 } as const
 
 const sizes = {
-  sm: 'px-3 py-1 text-sm',
-  md: 'px-4 py-2 text-base',
-  lg: 'px-6 py-3 text-lg',
+  sm: 'tollerud-btn--sm',
+  md: 'tollerud-btn--md',
+  lg: 'tollerud-btn--lg',
 } as const
 
 export interface ButtonVariantProps {
@@ -33,7 +33,7 @@ export interface ButtonVariantProps {
 
 export function buttonVariants({ variant = 'secondary', size = 'md', className }: ButtonVariantProps & { className?: string } = {}) {
   return cn(
-    'tollerud-btn inline-flex items-center justify-center gap-2 font-semibold rounded transition-all duration-[150ms] focus-visible:outline-2 focus-visible:outline-tollerud-yellow focus-visible:outline-offset-2',
+    'tollerud-btn inline-flex items-center justify-center gap-2 font-semibold leading-none rounded transition-all duration-[150ms] focus-visible:outline-2 focus-visible:outline-tollerud-yellow focus-visible:outline-offset-2',
     'border cursor-pointer',
     'disabled:opacity-50 disabled:pointer-events-none',
     variants[variant],

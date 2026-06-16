@@ -39,7 +39,7 @@ function PageComponents({ go }) {
         </div>
       </Section>
 
-      <Section title="Button" component="Button" permalink="components/button" desc="Five variants, three sizes. Supports icons, loading spinners, disabled state, and icon-only. Primary is yellow; terminal carries the ❯ for technical actions.">
+      <Section title="Button" component="Button" permalink="components/button" desc="Five variants, three sizes with fixed height per size — text and icon-only buttons align in the same row. Supports loading spinners, disabled state, and aria-label for icon-only. Primary is yellow; terminal carries the ❯ for technical actions.">
         <Demo name="buttons" variant="center" code={`<Button variant="primary">Deploy</Button>
 <Button variant="secondary">Cancel</Button>
 <Button variant="ghost">More</Button>
@@ -66,7 +66,8 @@ function PageComponents({ go }) {
 {/* Loading */}
 <Button variant="primary" disabled><Spinner size={14}/>Deploying…</Button>
 
-{/* Icon-only */}
+{/* Icon-only — same height as text buttons at each size */}
+<Button variant="secondary" size="sm">Deploy</Button>
 <Button variant="ghost" size="sm" aria-label="Open settings"><Icons.settings size={16}/></Button>
 
 {/* Disabled */}
@@ -76,7 +77,10 @@ function PageComponents({ go }) {
           <Button variant="secondary"><Icons.refresh size={15}/>Restart</Button>
           <Button variant="destructive"><Icons.trash size={15}/>Delete</Button>
           <Button variant="primary" disabled><Spinner size={14}/>Deploying…</Button>
-          <Button variant="ghost" size="sm" aria-label="Open settings"><Icons.settings size={16}/></Button>
+          <div className="ds-row" style={{ gap: 10, alignItems: 'center' }}>
+            <Button variant="secondary" size="sm">Deploy</Button>
+            <Button variant="ghost" size="sm" aria-label="Open settings"><Icons.settings size={16}/></Button>
+          </div>
           <Button variant="primary" disabled>Disabled</Button>
           <Button variant="secondary" disabled>Disabled</Button>
         </Demo>

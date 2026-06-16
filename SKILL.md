@@ -304,7 +304,7 @@ npx tollerud-ui-audit
 
 **When a pattern is missing:** compose a local feature component under `src/features/…` that wraps `@tollerud/ui` exports — do not fork primitives into `components/ui`. See GETTING_STARTED.md → Consumer project checklist.
 
-**Button** — `variant`: `primary` · `secondary` · `ghost` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`.
+**Button** — `variant`: `primary` · `secondary` · `ghost` · `destructive` · `terminal`. `size`: `sm` · `md` · `lg`. `asChild?: boolean`. Each size uses a fixed height so text and icon-only buttons align in the same row.
 ```tsx
 <Button variant="primary" size="md">Deploy</Button>
 <Button variant="destructive">Delete host</Button>
@@ -701,6 +701,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **19 new components (`Divider`, `Pill`, `Avatar`/`AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `FormRow`, `Accordion`, `Slider`, `PasswordInput`, `Combobox`, `DatePicker`, `FileUpload`, `TagInput`, `PricingCard`) require `>= 1.0.9`**
 - **`Combobox` + `DatePicker` close on window resize (≥ 1.1.0)** — earlier versions left the popover open and misaligned after viewport changes
 - **`Segmented` icon segments match text height (≥ 4.5.1)** — earlier versions rendered icon-only segments ~4px shorter than text segments
+- **`Button` icon-only matches text height per size (≥ 4.5.2)** — earlier versions sized from padding + content, so icon-only buttons could render shorter than labeled buttons
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)
 
 ---

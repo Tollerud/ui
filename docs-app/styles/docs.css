@@ -997,7 +997,7 @@ html[data-theme="light"] .tollerud-display-shimmer {
 [data-density="compact"] .ds-table--rows td { padding-top: 7px; padding-bottom: 7px; }
 [data-density="compact"] .ds-formrow { padding: 11px 0; }
 [data-density="compact"] .ds-panel__head { padding: 9px 13px; }
-[data-density="compact"] .tollerud-btn--md { padding: 0.3rem 0.7rem; }
+[data-density="compact"] .tollerud-btn--md { height: 2.25rem; padding-left: 0.7rem; padding-right: 0.7rem; }
 [data-density="compact"] .ds-console__line { padding-top: 0.5px; padding-bottom: 0.5px; }
 
 /* Reduced motion — make everything static & legible */
