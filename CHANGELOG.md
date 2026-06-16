@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.13 — 2026-06-16 — DataTable full-row hover
+
+Row hover now applies to every cell, not only pinned columns.
+
+### Fixed
+
+- `DataTable` — opaque `group-hover/tr:bg-tollerud-noir-800` on all body cells so the entire row lightens on hover while pinned columns stay scroll-safe
+
+### Migration
+
+Nothing breaking.
+
 ## 4.6.12 — 2026-06-16 — DataTable mobile toolbar layout
 
 Search stacks above filter and toolbar actions on narrow viewports.

@@ -75,9 +75,13 @@ describe('DataTable', () => {
     )
 
     const pinnedCell = container.querySelector('tbody td.sticky')
+    const scrollCell = container.querySelector('tbody td:not(.sticky)')
     expect(pinnedCell).toBeTruthy()
+    expect(scrollCell).toBeTruthy()
     expect(pinnedCell).toHaveClass('bg-tollerud-noir-900')
+    expect(scrollCell).toHaveClass('bg-tollerud-noir-900')
     expect(pinnedCell).toHaveClass('group-hover/tr:bg-tollerud-noir-800')
+    expect(scrollCell).toHaveClass('group-hover/tr:bg-tollerud-noir-800')
     expect(pinnedCell).not.toHaveClass('group-hover/tr:bg-tollerud-surface-raised/50')
   })
 
@@ -100,7 +104,7 @@ describe('DataTable', () => {
     expect(screen.getByText(/showing 1–2 of 3/i)).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Scrollable table' })).toBeInTheDocument()
     const bodyRows = screen.getAllByRole('row').slice(1)
-    expect(bodyRows[0]).toHaveClass('bg-tollerud-noir-950/40')
+    expect(bodyRows[0].querySelector('td')).toHaveClass('bg-tollerud-noir-950')
   })
 
   it('exposes aria-sort on sorted column headers', async () => {

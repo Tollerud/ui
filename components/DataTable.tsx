@@ -301,21 +301,23 @@ function DataTableInner<T extends Record<string, unknown>>({
   const filterableColumns = normalizedColumns.filter((c) => c.filterable)
   const colSpan = normalizedColumns.length + (selectable ? 1 : 0) + (rowMenu ? 1 : 0)
 
-  const rowSurface = (rowIndex: number, isSelected: boolean) =>
-    cn(
-      isSelected && 'bg-tollerud-yellow/[0.05]',
-      striped && !isSelected && rowIndex % 2 === 0 && 'bg-tollerud-noir-950/40',
-      !isSelected && !(striped && rowIndex % 2 === 0) && isRich && 'bg-tollerud-noir-900',
-    )
+  const rowHoverable = Boolean(onRowClick || isRich)
 
-  /** Opaque sticky cell backgrounds — semi-transparent row hovers bleed through on horizontal scroll. */
-  const stickyRowSurface = (rowIndex: number, isSelected: boolean) =>
+  const cellSurface = (rowIndex: number, isSelected: boolean) =>
     cn(
-      'group-hover/tr:bg-tollerud-noir-800',
+      rowHoverable && 'transition-colors group-hover/tr:bg-tollerud-noir-800',
       isSelected && 'bg-tollerud-noir-900 ring-1 ring-inset ring-tollerud-yellow/25',
       !isSelected && striped && rowIndex % 2 === 0 && 'bg-tollerud-noir-950',
       !isSelected && !(striped && rowIndex % 2 === 0) && isRich && 'bg-tollerud-noir-900',
-      !isSelected && !isRich && 'bg-tollerud-noir-950',
+    )
+
+  const stickyPosition = (edge: 'check' | 'first' | 'actions') =>
+    pinEdges &&
+    cn(
+      'sticky z-[2]',
+      edge === 'check' && 'left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]',
+      edge === 'first' && cn('left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]', selectable && 'left-10'),
+      edge === 'actions' && 'right-0 shadow-[-4px_0_12px_-6px_rgba(0,0,0,0.55)]',
     )
 
   const stickyHead = (edge: 'check' | 'first' | 'actions') =>
@@ -327,15 +329,7 @@ function DataTableInner<T extends Record<string, unknown>>({
       edge === 'actions' && 'right-0 shadow-[-4px_0_12px_-6px_rgba(0,0,0,0.55)]',
     )
 
-  const stickyBody = (edge: 'check' | 'first' | 'actions', rowIndex: number, isSelected: boolean) =>
-    pinEdges &&
-    cn(
-      'sticky z-[2]',
-      stickyRowSurface(rowIndex, isSelected),
-      edge === 'check' && 'left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]',
-      edge === 'first' && cn('left-0 shadow-[4px_0_12px_-6px_rgba(0,0,0,0.55)]', selectable && 'left-10'),
-      edge === 'actions' && 'right-0 shadow-[-4px_0_12px_-6px_rgba(0,0,0,0.55)]',
-    )
+  const stickyBody = (edge: 'check' | 'first' | 'actions') => stickyPosition(edge)
 
   const sortIndicator = (key: string) => {
     const active = sortKey === key
@@ -409,20 +403,25 @@ function DataTableInner<T extends Record<string, unknown>>({
           {Array.from({ length: skeletonRows }).map((_, i) => (
             <tr key={i} className="border-b border-tollerud-border/20">
               {selectable && (
-                <td className={cn('px-3 py-2.5 w-10 min-w-10', stickyBody('check', i, false))}>
+                <td className={cn('px-3 py-2.5 w-10 min-w-10', cellSurface(i, false), stickyBody('check'))}>
                   <Skeleton className="h-4 w-4 rounded" />
                 </td>
               )}
               {normalizedColumns.map((col, j) => (
                 <td
                   key={columnReactKey(col, j)}
-                  className={cn('px-3 py-2.5 whitespace-nowrap', col.align === 'right' && 'text-right', j === 0 && stickyBody('first', i, false))}
+                  className={cn(
+                    'px-3 py-2.5 whitespace-nowrap',
+                    col.align === 'right' && 'text-right',
+                    cellSurface(i, false),
+                    j === 0 && stickyBody('first'),
+                  )}
                 >
                   <Skeleton className={cn('h-3', j === 0 ? 'w-[70%]' : 'w-[55%]')} />
                 </td>
               ))}
               {rowMenu && (
-                <td className={cn('px-3 py-2.5 w-11 min-w-11', stickyBody('actions', i, false))}>
+                <td className={cn('px-3 py-2.5 w-11 min-w-11', cellSurface(i, false), stickyBody('actions'))}>
                   <Skeleton className="h-4 w-4 rounded" />
                 </td>
               )}
@@ -456,16 +455,14 @@ function DataTableInner<T extends Record<string, unknown>>({
             <tr
               key={id}
               className={cn(
-                'group/tr border-b border-tollerud-border/20 transition-colors',
-                (onRowClick || isRich) && 'hover:bg-tollerud-surface-raised/50',
+                'group/tr border-b border-tollerud-border/20',
                 onRowClick && 'cursor-pointer',
-                rowSurface(i, isSelected),
               )}
               onClick={() => onRowClick?.(row)}
             >
               {selectable && (
                 <td
-                  className={cn('px-3 py-2.5 w-10 min-w-10', stickyBody('check', i, isSelected))}
+                  className={cn('px-3 py-2.5 w-10 min-w-10', cellSurface(i, isSelected), stickyBody('check'))}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <Checkbox checked={isSelected} onChange={() => toggleRow(id)} aria-label={`Select row ${id}`} />
@@ -481,7 +478,8 @@ function DataTableInner<T extends Record<string, unknown>>({
                       col.align === 'right' && 'text-right',
                       col.align === 'center' && 'text-center',
                       !col.render && 'font-mono text-xs',
-                      columnIndex === 0 && stickyBody('first', i, isSelected),
+                      cellSurface(i, isSelected),
+                      columnIndex === 0 && stickyBody('first'),
                     )}
                     style={col.width ? { width: col.width, minWidth: col.width } : undefined}
                   >
@@ -491,7 +489,7 @@ function DataTableInner<T extends Record<string, unknown>>({
               })}
               {rowMenu && (
                 <td
-                  className={cn('px-2 py-2 w-11 min-w-11', stickyBody('actions', i, isSelected))}
+                  className={cn('px-2 py-2 w-11 min-w-11', cellSurface(i, isSelected), stickyBody('actions'))}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <DropdownMenu>
