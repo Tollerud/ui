@@ -20,6 +20,7 @@ try {
 
 if (footerPkg.version !== pkg.version) {
   console.error(`@tollerud/footer v${footerPkg.version} !== @tollerud/ui v${pkg.version}`)
+  console.error('Run npm run sync:registry (or npm run sync:footer) after bumping package.json')
   process.exit(1)
 }
 
