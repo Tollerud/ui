@@ -7,6 +7,17 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.6 — 2026-06-16 — Toast visibility and settings nav spacing
+
+Larger toast chrome, longer default duration, and clearer spacing in settings section nav.
+
+### Changed
+
+- `Toast` / `useToast` — larger padding, type, and icons; default duration 4.5s (was 3.8s)
+- `Toaster` (Sonner) — matching larger text/padding; default duration 4.5s
+- `SettingsLayout` — `gap-xs` between sidebar nav items
+- `Stack` — `as="nav"` for semantic nav stacks
+
 ## 4.8.5 — 2026-06-16 — ButtonGroup fusion and TopNav lockup
 
 Fix fused button chrome in groups and slightly enlarge the TopNav project title.

@@ -649,7 +649,7 @@
 
 ## Stack — `StackProps` extends extends HTMLAttributes<HTMLDivElement>
 
-- `as?: 'div' | 'section' | 'article' | 'header' | 'footer'`
+- `as?: 'div' | 'section' | 'article' | 'header' | 'footer' | 'nav'`
 - `gap?: StackGap`
 - `align?: StackAlign`
 

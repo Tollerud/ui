@@ -27,7 +27,7 @@ const SettingsLayout = forwardRef<HTMLDivElement, SettingsLayoutProps>(
       <Stack ref={ref} gap="lg" className={cn('w-full', className)} {...props}>
         <PageHeader title={title} description={description} actions={actions} />
         <Split ratio="sidebar" gap="lg" align="start">
-          <nav className="rounded-lg border border-tollerud-border bg-tollerud-surface-raised p-2">
+          <Stack as="nav" gap="xs" className="rounded-lg border border-tollerud-border bg-tollerud-surface-raised p-2">
             {navItems.map((item) => {
               const active = item.active ?? item.id === activeId
               const isDanger = item.tone === 'danger'
@@ -63,7 +63,7 @@ const SettingsLayout = forwardRef<HTMLDivElement, SettingsLayoutProps>(
                 </button>
               )
             })}
-          </nav>
+          </Stack>
           <div>{children}</div>
         </Split>
       </Stack>

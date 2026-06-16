@@ -45,6 +45,8 @@ export interface ToastProviderProps {
   children: ReactNode
 }
 
+const DEFAULT_TOAST_DURATION_MS = 4500
+
 function ToastProvider({ children }: ToastProviderProps) {
   const [toasts, setToasts] = useState<ToastRecord[]>([])
 
@@ -53,7 +55,7 @@ function ToastProvider({ children }: ToastProviderProps) {
     setToasts((current) => [...current, { id, ...input }])
     window.setTimeout(() => {
       setToasts((current) => current.filter((toast) => toast.id !== id))
-    }, input.duration ?? 3800)
+    }, input.duration ?? DEFAULT_TOAST_DURATION_MS)
   }, [])
 
   const dismiss = useCallback((id: string) => {
@@ -74,7 +76,7 @@ function ToastProvider({ children }: ToastProviderProps) {
                 style={{ color: toneColors[tone] }}
                 aria-hidden
               >
-                <Icon size={18} />
+                <Icon size={20} />
               </span>
               <div className="min-w-0 flex-1">
                 <div className="tollerud-toast__title">{toast.title}</div>
@@ -88,7 +90,7 @@ function ToastProvider({ children }: ToastProviderProps) {
                 onClick={() => dismiss(toast.id)}
                 aria-label="Dismiss notification"
               >
-                <X size={14} aria-hidden />
+                <X size={16} aria-hidden />
               </button>
             </div>
           )

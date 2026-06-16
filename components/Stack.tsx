@@ -5,7 +5,7 @@ export type StackGap = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type StackAlign = 'start' | 'center' | 'end' | 'stretch'
 
 export interface StackProps extends HTMLAttributes<HTMLDivElement> {
-  as?: 'div' | 'section' | 'article' | 'header' | 'footer'
+  as?: 'div' | 'section' | 'article' | 'header' | 'footer' | 'nav'
   gap?: StackGap
   align?: StackAlign
 }
