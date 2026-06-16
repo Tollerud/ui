@@ -7,6 +7,25 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.6.6 — 2026-06-16 — Flip dropdowns upward near viewport edge
+
+Select, Combobox, and DatePicker open above the trigger when there is not enough space below.
+
+### Added
+
+- `lib/dropdown-placement` — shared viewport-aware placement hook (`useDropdownPlacement`, `getDropdownPlacement`)
+
+### Fixed
+
+- `Select` — menu flips to `bottom-full` when the footer or bottom of the viewport is tight (DataTable rows selector)
+- `Combobox` — listbox opens upward when needed; no longer closes on window resize
+- `DatePicker` — calendar panel opens upward when needed; no longer closes on window resize
+- `DropdownMenu` — `collisionPadding={8}` for Radix flip behavior at screen edges
+
+### Migration
+
+Nothing breaking. Placement is automatic.
+
 ## 4.6.5 — 2026-06-16 — Compact DataTable footer and js-yaml security fix
 
 Tighter rows-per-page control in the table footer; dependency override clears Dependabot alert #10.

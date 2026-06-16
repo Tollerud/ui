@@ -3,6 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { dropdownPlacementClasses, useDropdownPlacement } from '@/lib/dropdown-placement'
 
 export interface ComboboxOption {
   value: string
@@ -72,6 +73,7 @@ function Combobox({
 }: ComboboxProps) {
   const id = useId()
   const rootRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLUListElement>(null)
   const isControlled = valueProp !== undefined
   const [internalValue, setInternalValue] = useState(defaultValue)
   const value = isControlled ? valueProp : internalValue
@@ -79,6 +81,7 @@ function Combobox({
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
+  const placement = useDropdownPlacement(open, rootRef, listRef, { maxHeight: 256 })
 
   const isGrouped = Boolean(groups && groups.length > 0)
   const allOptions = useMemo(() => flattenOptions(options, groups), [options, groups])
@@ -107,15 +110,9 @@ function Combobox({
         setQuery('')
       }
     }
-    function onResize() {
-      setOpen(false)
-      setQuery('')
-    }
     document.addEventListener('mousedown', onClickOutside)
-    window.addEventListener('resize', onResize)
     return () => {
       document.removeEventListener('mousedown', onClickOutside)
-      window.removeEventListener('resize', onResize)
     }
   }, [open])
 
@@ -195,9 +192,13 @@ function Combobox({
 
       {open && (
         <ul
+          ref={listRef}
           id={`${id}-listbox`}
           role="listbox"
-          className="absolute top-full z-20 mt-1 max-h-64 w-full overflow-auto rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1 shadow-lg"
+          className={cn(
+            'absolute z-20 max-h-64 w-full overflow-auto rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1 shadow-lg',
+            dropdownPlacementClasses(placement),
+          )}
         >
           {filtered.length === 0 && (
             <li className="px-3 py-2 text-sm text-tollerud-text-muted">No results</li>

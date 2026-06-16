@@ -5,6 +5,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@/lib/utils': path.resolve(__dirname, './lib/utils.ts'),
+      '@/lib/dropdown-placement': path.resolve(__dirname, './lib/dropdown-placement.ts'),
     },
   },
   test: {

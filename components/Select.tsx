@@ -2,6 +2,7 @@
 
 import { type HTMLAttributes, forwardRef, useState, useRef, useEffect, useCallback, useId } from 'react'
 import { cn } from '@/lib/utils'
+import { dropdownPlacementClasses, useDropdownPlacement } from '@/lib/dropdown-placement'
 
 export interface SelectOption {
   value: string
@@ -28,6 +29,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     const listRef = useRef<HTMLDivElement>(null)
 
     const selectedOption = options.find((o) => o.value === value)
+    const placement = useDropdownPlacement(open, containerRef, listRef, { maxHeight: 240 })
 
     // Close on click outside
     useEffect(() => {
@@ -163,7 +165,8 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               ref={listRef}
               role="listbox"
               className={cn(
-                'absolute z-50 left-0 right-0 mt-1 py-1',
+                'absolute z-50 left-0 right-0 py-1',
+                dropdownPlacementClasses(placement),
                 'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
                 'shadow-[0_8px_24px_rgba(0,0,0,0.4)]',
                 'max-h-60 overflow-y-auto'

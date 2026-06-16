@@ -3,6 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { dropdownPlacementClasses, useDropdownPlacement } from '@/lib/dropdown-placement'
 
 export interface DatePickerProps {
   value?: Date | null
@@ -54,12 +55,14 @@ function DatePicker({
 }: DatePickerProps) {
   const id = useId()
   const rootRef = useRef<HTMLDivElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
   const isControlled = valueProp !== undefined
   const [internalValue, setInternalValue] = useState<Date | null>(defaultValue)
   const value = isControlled ? valueProp ?? null : internalValue
 
   const [open, setOpen] = useState(false)
   const [viewMonth, setViewMonth] = useState(() => startOfMonth(value ?? new Date()))
+  const placement = useDropdownPlacement(open, rootRef, panelRef, { maxHeight: 320 })
 
   const cells = useMemo(() => buildCalendarGrid(viewMonth), [viewMonth])
 
@@ -68,12 +71,9 @@ function DatePicker({
     function onClickOutside(e: MouseEvent) {
       if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false)
     }
-    function onResize() { setOpen(false) }
     document.addEventListener('mousedown', onClickOutside)
-    window.addEventListener('resize', onResize)
     return () => {
       document.removeEventListener('mousedown', onClickOutside)
-      window.removeEventListener('resize', onResize)
     }
   }, [open])
 
@@ -116,9 +116,13 @@ function DatePicker({
 
       {open && (
         <div
+          ref={panelRef}
           role="dialog"
           aria-label="Choose date"
-          className="absolute top-full z-50 mt-1 w-72 rounded-lg border border-tollerud-border bg-tollerud-surface-overlay p-3 shadow-lg"
+          className={cn(
+            'absolute z-50 w-72 rounded-lg border border-tollerud-border bg-tollerud-surface-overlay p-3 shadow-lg',
+            dropdownPlacementClasses(placement),
+          )}
         >
           <div className="mb-2 flex items-center justify-between">
             <button
