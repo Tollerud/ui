@@ -7,6 +7,15 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.9 — 2026-06-16 — Scrollable portalled menus inside Drawer/Sheet
+
+Fix Select, Combobox, and DropdownMenu lists that could not scroll when opened inside a modal drawer.
+
+### Fixed
+
+- `FloatingDropdownPortal` — stop wheel/touch propagation so react-remove-scroll (Radix Dialog/Sheet) does not block list scroll on portalled panels
+- `DropdownMenu` — same scroll-lock compatibility for Radix-portalled menus inside `Drawer` / `Sheet` / `Dialog`
+
 ## 4.8.8 — 2026-06-16 — Portalled dropdown shadow consistency
 
 Standard elevation for floating menus so portalled panels read clearly over tables and cards.

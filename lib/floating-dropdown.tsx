@@ -13,6 +13,7 @@ import {
   type DropdownPlacementOptions,
   type FloatingDropdownCoords,
 } from '@/lib/dropdown-placement'
+import { allowScrollInsideScrollLock } from '@/lib/scroll-lock-portal'
 import { cn } from '@/lib/utils'
 
 export function useFloatingDropdownCoords(
@@ -99,7 +100,10 @@ export function FloatingDropdownPortal({
       role={role}
       aria-label={ariaLabel}
       data-placement={coords.placement}
+      data-scroll-lock-scrollable=""
       className={cn('shadow-lg', className)}
+      onWheel={allowScrollInsideScrollLock}
+      onTouchMove={allowScrollInsideScrollLock}
       style={{
         position: 'fixed',
         top: coords.top,

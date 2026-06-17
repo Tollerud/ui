@@ -2,6 +2,7 @@
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { forwardRef } from 'react'
+import { allowScrollInsideScrollLock } from '@/lib/scroll-lock-portal'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── DropdownMenu ──────────────────── */
@@ -12,12 +13,21 @@ const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
 const DropdownMenuContent = forwardRef<
   React.ComponentRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, collisionPadding = 8, ...props }, ref) => (
+>(({ className, sideOffset = 4, collisionPadding = 8, onWheel, onTouchMove, ...props }, ref) => (
   <DropdownMenuPrimitive.Portal>
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
       collisionPadding={collisionPadding}
+      data-scroll-lock-scrollable=""
+      onWheel={(event) => {
+        allowScrollInsideScrollLock(event)
+        onWheel?.(event)
+      }}
+      onTouchMove={(event) => {
+        allowScrollInsideScrollLock(event)
+        onTouchMove?.(event)
+      }}
       className={cn(
         'z-50 min-w-[9rem] overflow-hidden rounded-lg border p-1 shadow-lg',
         'bg-tollerud-noir-850 border-tollerud-border/30 text-tollerud-text-primary',
