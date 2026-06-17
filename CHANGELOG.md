@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.11 — 2026-06-16 — Fix stale sheet overlay on navigation
+
+Prevent `tollerud-sheet-overlay` from staying in the DOM and blocking clicks after closing a drawer or switching routes.
+
+### Fixed
+
+- `Sheet` — wrap overlay and content in `DialogPrimitive.Portal` so Radix `Presence` unmounts `ModalScrollLockOverlay` when the sheet closes
+- `ModalScrollLockOverlay` — disable `RemoveScroll` when dialog content is not `data-state=open`
+- Closed sheet overlay — `pointer-events: none` during exit animation
+
 ## 4.8.10 — 2026-06-16 — Drawer dropdown scroll (RemoveScroll shards)
 
 Fix portalled Select/Combobox lists that still could not scroll inside Drawer/Sheet after v4.8.9.

@@ -1,6 +1,6 @@
 'use client'
 
-import { useLayoutEffect, useSyncExternalStore, type RefObject } from 'react'
+import { useLayoutEffect, useState, useSyncExternalStore, type RefObject } from 'react'
 
 type ShardRef = RefObject<HTMLElement | null>
 
@@ -69,6 +69,43 @@ export function useRegisterScrollLockPortalShard(
       cleanup?.()
     }
   }, [enabled, elementRef])
+}
+
+/** Track Radix dialog content open state via data-state on the content node. */
+export function useDialogContentOpenState(
+  contentRef: RefObject<HTMLElement | null>,
+): boolean {
+  const [open, setOpen] = useState(false)
+
+  useLayoutEffect(() => {
+    let observer: MutationObserver | undefined
+    let frame = 0
+
+    const bind = () => {
+      const source = contentRef.current
+      if (!source) return false
+
+      const sync = () => setOpen(source.getAttribute('data-state') === 'open')
+      sync()
+      observer = new MutationObserver(sync)
+      observer.observe(source, { attributes: true, attributeFilter: ['data-state'] })
+      return true
+    }
+
+    if (!bind()) {
+      frame = requestAnimationFrame(() => {
+        bind()
+      })
+    }
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      observer?.disconnect()
+      setOpen(false)
+    }
+  }, [contentRef])
+
+  return open
 }
 
 /** Copy data-state from dialog content to a custom overlay (Radix Overlay replacement). */

@@ -69,5 +69,20 @@ describe('Sheet', () => {
 
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    expect(document.querySelector('.tollerud-sheet-overlay')).not.toBeInTheDocument()
+  })
+
+  it('does not mount overlay when closed', () => {
+    render(
+      <Sheet open={false}>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Deploy logs</SheetTitle>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
+    )
+
+    expect(document.querySelector('.tollerud-sheet-overlay')).not.toBeInTheDocument()
   })
 })

@@ -68,7 +68,7 @@ const SheetContent = forwardRef<
   const composedRefs = useComposedRefs(forwardedRef, contentRef)
 
   return (
-    <>
+    <DialogPrimitive.Portal>
       <ModalScrollLockOverlay
         contentRef={contentRef}
         className="tollerud-sheet-overlay"
@@ -98,7 +98,7 @@ const SheetContent = forwardRef<
           <span className="sr-only">Close</span>
         </SheetClose>
       </DialogPrimitive.Content>
-    </>
+    </DialogPrimitive.Portal>
   )
 })
 SheetContent.displayName = 'SheetContent'

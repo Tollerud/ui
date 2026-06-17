@@ -1119,6 +1119,7 @@
   }
   .tollerud-sheet-overlay[data-state='closed'] {
     animation: tollerud-sheet-overlay-out var(--motion-duration-normal) var(--motion-ease-in) forwards;
+    pointer-events: none;
   }
   .tollerud-topnav-menu-overlay[data-state='open'] {
     animation: tollerud-sheet-overlay-in var(--motion-duration-normal) var(--motion-ease-out) forwards;
