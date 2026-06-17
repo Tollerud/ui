@@ -13,7 +13,7 @@ import {
   type DropdownPlacementOptions,
   type FloatingDropdownCoords,
 } from '@/lib/dropdown-placement'
-import { useRegisterScrollLockPortalShard } from '@/lib/modal-scroll-lock'
+import { useBypassModalScrollLock } from '@/lib/bypass-modal-scroll-lock'
 import { cn } from '@/lib/utils'
 
 export function useFloatingDropdownCoords(
@@ -89,7 +89,7 @@ export function FloatingDropdownPortal({
 }: FloatingDropdownPortalProps) {
   const coords = useFloatingDropdownCoords(open, anchorRef, popoverRef, placementOptions)
 
-  useRegisterScrollLockPortalShard(popoverRef, open && coords !== null)
+  useBypassModalScrollLock(popoverRef, open && coords !== null)
 
   if (!open || !coords || typeof document === 'undefined') return null
 
@@ -102,7 +102,7 @@ export function FloatingDropdownPortal({
       role={role}
       aria-label={ariaLabel}
       data-placement={coords.placement}
-      className={cn('shadow-lg', className)}
+      className={cn('pointer-events-auto shadow-lg', className)}
       style={{
         position: 'fixed',
         top: coords.top,

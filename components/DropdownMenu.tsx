@@ -3,7 +3,7 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { useComposedRefs } from '@radix-ui/react-compose-refs'
 import { forwardRef, useRef } from 'react'
-import { useRegisterScrollLockPortalShard } from '@/lib/modal-scroll-lock'
+import { useBypassModalScrollLock } from '@/lib/bypass-modal-scroll-lock'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── DropdownMenu ──────────────────── */
@@ -18,7 +18,7 @@ const DropdownMenuContent = forwardRef<
   const contentRef = useRef<HTMLDivElement>(null)
   const composedRefs = useComposedRefs(forwardedRef, contentRef)
 
-  useRegisterScrollLockPortalShard(contentRef, true)
+  useBypassModalScrollLock(contentRef, true)
 
   return (
   <DropdownMenuPrimitive.Portal>
@@ -27,7 +27,7 @@ const DropdownMenuContent = forwardRef<
       sideOffset={sideOffset}
       collisionPadding={collisionPadding}
       className={cn(
-        'z-50 min-w-[9rem] overflow-hidden rounded-lg border p-1 shadow-lg',
+        'pointer-events-auto z-50 min-w-[9rem] overflow-hidden rounded-lg border p-1 shadow-lg',
         'bg-tollerud-noir-850 border-tollerud-border/30 text-tollerud-text-primary',
         'data-[state=open]:animate-in data-[state=closed]:animate-out',
         'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',

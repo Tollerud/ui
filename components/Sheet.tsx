@@ -1,9 +1,7 @@
 'use client'
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { useComposedRefs } from '@radix-ui/react-compose-refs'
-import { type ComponentPropsWithoutRef, type ReactNode, Children, forwardRef, isValidElement, useRef } from 'react'
-import { ModalScrollLockProvider } from '@/lib/modal-scroll-lock'
+import { type ComponentPropsWithoutRef, type ReactNode, Children, forwardRef, isValidElement } from 'react'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── Sheet (slide-in panel) ──────────────────── */
@@ -63,19 +61,12 @@ SheetOverlay.displayName = 'SheetOverlay'
 const SheetContent = forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Content>,
   SheetContentProps
->(({ className, children, side = 'right', title = 'Panel', ...props }, forwardedRef) => {
-  const contentRef = useRef<HTMLDivElement>(null)
-  const composedRefs = useComposedRefs(forwardedRef, contentRef)
-
-  return (
-    <DialogPrimitive.Portal>
-      <ModalScrollLockProvider
-        contentRef={contentRef}
-        overlayClassName="tollerud-sheet-overlay"
-      >
-        <DialogPrimitive.Content
-        ref={composedRefs}
-        className={cn(
+>(({ className, children, side = 'right', title = 'Panel', ...props }, ref) => (
+  <DialogPrimitive.Portal>
+    <SheetOverlay />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
           'tollerud-sheet-panel fixed z-50 gap-4 bg-tollerud-noir-900 border-tollerud-border/30 p-6 shadow-xl',
           side === 'right' && [
             'tollerud-sheet-panel--right inset-y-0 right-0 h-full w-full max-w-md border-l',
@@ -98,10 +89,8 @@ const SheetContent = forwardRef<
           <span className="sr-only">Close</span>
         </SheetClose>
       </DialogPrimitive.Content>
-      </ModalScrollLockProvider>
-    </DialogPrimitive.Portal>
-  )
-})
+  </DialogPrimitive.Portal>
+))
 SheetContent.displayName = 'SheetContent'
 
 const SheetHeader = ({ className, ...props }: { className?: string; children?: ReactNode }) => (

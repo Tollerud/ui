@@ -7,6 +7,20 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.13 — 2026-06-16 — Drawer dropdown scroll and click fix
+
+Replace competing RemoveScroll shards with native scroll-lock bypass on portalled menus.
+
+### Fixed
+
+- `FloatingDropdownPortal` / `DropdownMenu` — native `wheel` / `touchmove` listeners (`stopImmediatePropagation` in capture + `stopPropagation` in bubble) so react-remove-scroll on Radix Dialog/Sheet does not block list scroll
+- Portalled menus — `pointer-events-auto` so items stay clickable when `body` is scroll-locked
+- `Sheet` / `Dialog` — restore Radix `Dialog.Overlay` only (removes second `RemoveScroll` from `ModalScrollLockProvider` that broke clicks in 4.8.12)
+
+### Removed
+
+- `ModalScrollLockProvider` and context shard registry — superseded by native bypass (4.8.10–4.8.12 approach)
+
 ## 4.8.12 — 2026-06-16 — Drawer dropdown scroll via context shards
 
 Wire portalled Select/Combobox lists into the active Sheet/Dialog RemoveScroll instance.

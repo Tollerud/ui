@@ -2,9 +2,7 @@
 
 import * as React from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { useComposedRefs } from '@radix-ui/react-compose-refs'
 import { X } from 'lucide-react'
-import { ModalScrollLockProvider } from '@/lib/modal-scroll-lock'
 import { cn } from '@/lib/utils'
 
 const Dialog = DialogPrimitive.Root
@@ -30,19 +28,12 @@ DialogOverlay.displayName = 'DialogOverlay'
 const DialogContent = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, forwardedRef) => {
-  const contentRef = React.useRef<HTMLDivElement>(null)
-  const composedRefs = useComposedRefs(forwardedRef, contentRef)
-
-  return (
-    <DialogPortal>
-      <ModalScrollLockProvider
-        contentRef={contentRef}
-        overlayClassName="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
-      >
-        <DialogPrimitive.Content
-        ref={composedRefs}
-        className={cn(
+>(({ className, children, ...props }, ref) => (
+  <DialogPortal>
+    <DialogOverlay />
+    <DialogPrimitive.Content
+      ref={ref}
+      className={cn(
           'fixed top-1/2 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2',
           'rounded-lg border border-tollerud-border/30 bg-tollerud-noir-900 p-6 shadow-xl',
           'data-[state=open]:animate-none data-[state=closed]:animate-none',
@@ -55,11 +46,9 @@ const DialogContent = React.forwardRef<
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
-      </DialogPrimitive.Content>
-      </ModalScrollLockProvider>
-    </DialogPortal>
-  )
-})
+    </DialogPrimitive.Content>
+  </DialogPortal>
+))
 DialogContent.displayName = 'DialogContent'
 
 const DialogHeader = ({

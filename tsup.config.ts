@@ -49,8 +49,6 @@ export default defineConfig({
     '@radix-ui/react-tabs',
     '@radix-ui/react-tooltip',
     '@radix-ui/react-slot',
-    '@radix-ui/react-compose-refs',
-    'react-remove-scroll',
     'class-variance-authority',
     'framer-motion',
     'lucide-react',
@@ -62,7 +60,7 @@ export default defineConfig({
       '@/lib/utils': './lib/utils.ts',
       '@/lib/dropdown-placement': './lib/dropdown-placement.ts',
       '@/lib/floating-dropdown': './lib/floating-dropdown.tsx',
-      '@/lib/modal-scroll-lock': './lib/modal-scroll-lock.tsx',
+      '@/lib/bypass-modal-scroll-lock': './lib/bypass-modal-scroll-lock.ts',
       '@/lib/use-mobile': './lib/use-mobile.ts',
       '@/lib/chart-series': './lib/chart-series.ts',
     }
