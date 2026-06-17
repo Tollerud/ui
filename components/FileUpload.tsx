@@ -8,6 +8,10 @@ export interface FileUploadProps {
   label?: string
   description?: React.ReactNode
   error?: string
+  /** Primary CTA in the drop zone. Default: `Click to upload` */
+  clickLabel?: React.ReactNode
+  /** Secondary drag hint after the CTA. Default: `or drag and drop`. Pass `null` or `''` to hide. */
+  dragLabel?: React.ReactNode
   /** Forwarded to the underlying `<input accept>` */
   accept?: string
   multiple?: boolean
@@ -27,6 +31,8 @@ function FileUpload({
   label,
   description,
   error,
+  clickLabel = 'Click to upload',
+  dragLabel = 'or drag and drop',
   accept,
   multiple,
   onFilesChange,
@@ -96,7 +102,13 @@ function FileUpload({
       >
         <Upload size={20} className="text-tollerud-text-muted" />
         <div className="text-sm text-tollerud-text-secondary">
-          <span className="font-medium text-tollerud-yellow">Click to upload</span> or drag and drop
+          <span className="font-medium text-tollerud-yellow">{clickLabel}</span>
+          {dragLabel != null && dragLabel !== '' ? (
+            <>
+              {' '}
+              {dragLabel}
+            </>
+          ) : null}
         </div>
         {description && <p className="text-xs text-tollerud-text-muted">{description}</p>}
         <input

@@ -10,4 +10,24 @@ describe('FileUpload', () => {
     const input = screen.getByLabelText('Compose file')
     expect(input).toHaveAttribute('type', 'file')
   })
+
+  it('renders custom drop zone labels for i18n', () => {
+    render(
+      <FileUpload
+        clickLabel="Klikk for å laste opp"
+        dragLabel="eller dra og slipp"
+        onFilesChange={vi.fn()}
+      />
+    )
+
+    expect(screen.getByText('Klikk for å laste opp')).toBeInTheDocument()
+    expect(screen.getByText('eller dra og slipp')).toBeInTheDocument()
+  })
+
+  it('hides drag hint when dragLabel is empty', () => {
+    render(<FileUpload clickLabel="Browse files" dragLabel="" onFilesChange={vi.fn()} />)
+
+    expect(screen.getByText('Browse files')).toBeInTheDocument()
+    expect(screen.queryByText(/drag and drop/i)).not.toBeInTheDocument()
+  })
 })

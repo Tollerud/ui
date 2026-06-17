@@ -323,6 +323,8 @@
 - `label?: string`
 - `description?: React.ReactNode`
 - `error?: string`
+- `clickLabel?: React.ReactNode`
+- `dragLabel?: React.ReactNode`
 - `accept?: string`
 - `multiple?: boolean`
 - `onFilesChange?: (files: File[]) => void`

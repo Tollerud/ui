@@ -949,6 +949,7 @@ Chip-style multi-value input. Enter or comma to add; Backspace removes the last 
 
 ```tsx
 <FileUpload label="Upload config" accept=".yaml,.json" multiple onFilesChange={handleFiles} />
+<FileUpload clickLabel="Klikk for å laste opp" dragLabel="eller dra og slipp" description="PDF · maks 10 MB" />
 ```
 
 ## Visual & branding

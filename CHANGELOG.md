@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.7 — 2026-06-16 — FileUpload i18n labels
+
+Configurable drop-zone CTA copy for custom text and translations.
+
+### Added
+
+- `FileUpload` — `clickLabel?` and `dragLabel?` override the default “Click to upload” / “or drag and drop” prompt (`dragLabel=""` hides the drag hint)
+
 ## 4.8.6 — 2026-06-16 — Toast visibility and settings nav spacing
 
 Larger toast chrome, longer default duration, and clearer spacing in settings section nav.

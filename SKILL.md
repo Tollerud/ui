@@ -508,9 +508,10 @@ With `collapseMobile`, viewports below `md` show only the selected label (with c
 <DatePicker label="Schedule deployment" value={date} onChange={setDate} />
 ```
 
-**FileUpload** — `accept?`, `multiple?`, `onFilesChange?`, `label?`, `description?`, `error?`.
+**FileUpload** — `accept?`, `multiple?`, `onFilesChange?`, `label?`, `description?`, `error?`, `clickLabel?`, `dragLabel?`.
 ```tsx
 <FileUpload label="Upload config" accept=".yaml,.json" onFilesChange={handleFiles} />
+<FileUpload clickLabel="Klikk for å laste opp" dragLabel="eller dra og slipp" />
 ```
 
 **PricingCard** — `name`, `price`, `period?`, `description?`, `features?: ReactNode[]`, `ctaLabel?`, `onCtaClick?`, `featured?`, `badge?`.

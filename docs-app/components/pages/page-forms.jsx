@@ -125,9 +125,20 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="File upload" desc="A drag-and-drop dropzone. Drop files or click to browse; accepted files are listed with a remove button.">
-        <Demo name="upload" variant="col" code={`<FileUpload multiple description="compose.yml, .env, certs · up to 10 MB" />`}>
-          <FileUpload multiple description="compose.yml, .env, certs · up to 10 MB"/>
+      <Section title="File upload" desc="A drag-and-drop dropzone. Drop files or click to browse; accepted files are listed with a remove button. Use clickLabel and dragLabel for i18n.">
+        <Demo name="upload" variant="col" code={`<FileUpload multiple description="compose.yml, .env, certs · up to 10 MB" />
+
+<FileUpload
+  clickLabel="Klikk for å laste opp"
+  dragLabel="eller dra og slipp"
+  description="PDF eller PNG · maks 10 MB"
+/>`}>
+          <FileUpload multiple description="compose.yml, .env, certs · up to 10 MB" />
+          <FileUpload
+            clickLabel="Klikk for å laste opp"
+            dragLabel="eller dra og slipp"
+            description="PDF eller PNG · maks 10 MB"
+          />
         </Demo>
       </Section>
 
