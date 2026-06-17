@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.12 — 2026-06-16 — Drawer dropdown scroll via context shards
+
+Wire portalled Select/Combobox lists into the active Sheet/Dialog RemoveScroll instance.
+
+### Fixed
+
+- `ModalScrollLockProvider` — React context bridge: wraps sheet/dialog content, owns `RemoveScroll` shards state, renders scrim
+- `FloatingDropdownPortal` / `DropdownMenu` — register portalled DOM nodes with the nearest provider on mount (React portals preserve context)
+- Replaces module-level shard registry that could not reach `RemoveScroll` when the overlay was only a sibling of content
+
 ## 4.8.11 — 2026-06-16 — Fix stale sheet overlay on navigation
 
 Prevent `tollerud-sheet-overlay` from staying in the DOM and blocking clicks after closing a drawer or switching routes.

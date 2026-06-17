@@ -3,7 +3,7 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { useComposedRefs } from '@radix-ui/react-compose-refs'
 import { forwardRef, useRef } from 'react'
-import { useRegisterScrollLockPortalShard } from '@/lib/scroll-lock-portal'
+import { useRegisterScrollLockPortalShard } from '@/lib/modal-scroll-lock'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── DropdownMenu ──────────────────── */

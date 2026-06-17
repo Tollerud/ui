@@ -13,7 +13,7 @@ import {
   type DropdownPlacementOptions,
   type FloatingDropdownCoords,
 } from '@/lib/dropdown-placement'
-import { useRegisterScrollLockPortalShard } from '@/lib/scroll-lock-portal'
+import { useRegisterScrollLockPortalShard } from '@/lib/modal-scroll-lock'
 import { cn } from '@/lib/utils'
 
 export function useFloatingDropdownCoords(

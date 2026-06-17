@@ -4,7 +4,7 @@ import * as React from 'react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useComposedRefs } from '@radix-ui/react-compose-refs'
 import { X } from 'lucide-react'
-import { ModalScrollLockOverlay } from '@/lib/modal-scroll-lock'
+import { ModalScrollLockProvider } from '@/lib/modal-scroll-lock'
 import { cn } from '@/lib/utils'
 
 const Dialog = DialogPrimitive.Root
@@ -36,11 +36,11 @@ const DialogContent = React.forwardRef<
 
   return (
     <DialogPortal>
-      <ModalScrollLockOverlay
+      <ModalScrollLockProvider
         contentRef={contentRef}
-        className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
-      />
-      <DialogPrimitive.Content
+        overlayClassName="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
+      >
+        <DialogPrimitive.Content
         ref={composedRefs}
         className={cn(
           'fixed top-1/2 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2',
@@ -56,6 +56,7 @@ const DialogContent = React.forwardRef<
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
+      </ModalScrollLockProvider>
     </DialogPortal>
   )
 })

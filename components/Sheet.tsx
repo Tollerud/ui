@@ -3,7 +3,7 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { useComposedRefs } from '@radix-ui/react-compose-refs'
 import { type ComponentPropsWithoutRef, type ReactNode, Children, forwardRef, isValidElement, useRef } from 'react'
-import { ModalScrollLockOverlay } from '@/lib/modal-scroll-lock'
+import { ModalScrollLockProvider } from '@/lib/modal-scroll-lock'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── Sheet (slide-in panel) ──────────────────── */
@@ -69,11 +69,11 @@ const SheetContent = forwardRef<
 
   return (
     <DialogPrimitive.Portal>
-      <ModalScrollLockOverlay
+      <ModalScrollLockProvider
         contentRef={contentRef}
-        className="tollerud-sheet-overlay"
-      />
-      <DialogPrimitive.Content
+        overlayClassName="tollerud-sheet-overlay"
+      >
+        <DialogPrimitive.Content
         ref={composedRefs}
         className={cn(
           'tollerud-sheet-panel fixed z-50 gap-4 bg-tollerud-noir-900 border-tollerud-border/30 p-6 shadow-xl',
@@ -98,6 +98,7 @@ const SheetContent = forwardRef<
           <span className="sr-only">Close</span>
         </SheetClose>
       </DialogPrimitive.Content>
+      </ModalScrollLockProvider>
     </DialogPrimitive.Portal>
   )
 })
