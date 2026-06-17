@@ -13,7 +13,7 @@ import {
   type DropdownPlacementOptions,
   type FloatingDropdownCoords,
 } from '@/lib/dropdown-placement'
-import { allowScrollInsideScrollLock } from '@/lib/scroll-lock-portal'
+import { useRegisterScrollLockPortalShard } from '@/lib/scroll-lock-portal'
 import { cn } from '@/lib/utils'
 
 export function useFloatingDropdownCoords(
@@ -89,6 +89,8 @@ export function FloatingDropdownPortal({
 }: FloatingDropdownPortalProps) {
   const coords = useFloatingDropdownCoords(open, anchorRef, popoverRef, placementOptions)
 
+  useRegisterScrollLockPortalShard(popoverRef, open && coords !== null)
+
   if (!open || !coords || typeof document === 'undefined') return null
 
   const resolvedWidth = width === 'anchor' ? coords.width : width
@@ -100,10 +102,7 @@ export function FloatingDropdownPortal({
       role={role}
       aria-label={ariaLabel}
       data-placement={coords.placement}
-      data-scroll-lock-scrollable=""
       className={cn('shadow-lg', className)}
-      onWheel={allowScrollInsideScrollLock}
-      onTouchMove={allowScrollInsideScrollLock}
       style={{
         position: 'fixed',
         top: coords.top,

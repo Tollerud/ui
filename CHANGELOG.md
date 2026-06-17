@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.10 — 2026-06-16 — Drawer dropdown scroll (RemoveScroll shards)
+
+Fix portalled Select/Combobox lists that still could not scroll inside Drawer/Sheet after v4.8.9.
+
+### Fixed
+
+- Register portalled menu DOM nodes as `react-remove-scroll` shards (native document listeners ignore React `stopPropagation`)
+- `Sheet` / `Dialog` — replace Radix `Dialog.Overlay` scroll-lock with `ModalScrollLockOverlay` that shards dialog content plus open portalled menus
+- `FloatingDropdownPortal` / `DropdownMenu` — auto-register while open
+
 ## 4.8.9 — 2026-06-16 — Scrollable portalled menus inside Drawer/Sheet
 
 Fix Select, Combobox, and DropdownMenu lists that could not scroll when opened inside a modal drawer.

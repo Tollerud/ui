@@ -4,7 +4,7 @@ Last updated: 2026-06-16
 
 Living roadmap for `@tollerud/ui`. Completed planning docs: [docs/archive/](docs/archive/).
 
-## npm package (components/*.tsx) — v4.8.9
+## npm package (components/*.tsx) — v4.8.10
 
 Shipped exports are documented in [SKILL.md](SKILL.md) and [COMPONENTS.md](COMPONENTS.md). Live demos: [design.tollerud.dev](https://design.tollerud.dev/).
 

@@ -1,7 +1,9 @@
 'use client'
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { type ComponentPropsWithoutRef, type ReactNode, Children, forwardRef, isValidElement } from 'react'
+import { useComposedRefs } from '@radix-ui/react-compose-refs'
+import { type ComponentPropsWithoutRef, type ReactNode, Children, forwardRef, isValidElement, useRef } from 'react'
+import { ModalScrollLockOverlay } from '@/lib/modal-scroll-lock'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── Sheet (slide-in panel) ──────────────────── */
@@ -61,35 +63,44 @@ SheetOverlay.displayName = 'SheetOverlay'
 const SheetContent = forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Content>,
   SheetContentProps
->(({ className, children, side = 'right', title = 'Panel', ...props }, ref) => (
-  <SheetOverlay>
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(
-        'tollerud-sheet-panel fixed z-50 gap-4 bg-tollerud-noir-900 border-tollerud-border/30 p-6 shadow-xl',
-        side === 'right' && [
-          'tollerud-sheet-panel--right inset-y-0 right-0 h-full w-full max-w-md border-l',
-        ],
-        side === 'left' && [
-          'tollerud-sheet-panel--left inset-y-0 left-0 h-full w-full max-w-md border-r',
-        ],
-        className
-      )}
-      {...props}
-    >
-      {!treeContainsDisplayName(children, 'SheetTitle') && (
-        <DialogPrimitive.Title className="tollerud-sr-only">{title}</DialogPrimitive.Title>
-      )}
-      {children}
-      <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-tollerud-text-muted hover:text-tollerud-text-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-        </svg>
-        <span className="sr-only">Close</span>
-      </SheetClose>
-    </DialogPrimitive.Content>
-  </SheetOverlay>
-))
+>(({ className, children, side = 'right', title = 'Panel', ...props }, forwardedRef) => {
+  const contentRef = useRef<HTMLDivElement>(null)
+  const composedRefs = useComposedRefs(forwardedRef, contentRef)
+
+  return (
+    <>
+      <ModalScrollLockOverlay
+        contentRef={contentRef}
+        className="tollerud-sheet-overlay"
+      />
+      <DialogPrimitive.Content
+        ref={composedRefs}
+        className={cn(
+          'tollerud-sheet-panel fixed z-50 gap-4 bg-tollerud-noir-900 border-tollerud-border/30 p-6 shadow-xl',
+          side === 'right' && [
+            'tollerud-sheet-panel--right inset-y-0 right-0 h-full w-full max-w-md border-l',
+          ],
+          side === 'left' && [
+            'tollerud-sheet-panel--left inset-y-0 left-0 h-full w-full max-w-md border-r',
+          ],
+          className
+        )}
+        {...props}
+      >
+        {!treeContainsDisplayName(children, 'SheetTitle') && (
+          <DialogPrimitive.Title className="tollerud-sr-only">{title}</DialogPrimitive.Title>
+        )}
+        {children}
+        <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-tollerud-text-muted hover:text-tollerud-text-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+          </svg>
+          <span className="sr-only">Close</span>
+        </SheetClose>
+      </DialogPrimitive.Content>
+    </>
+  )
+})
 SheetContent.displayName = 'SheetContent'
 
 const SheetHeader = ({ className, ...props }: { className?: string; children?: ReactNode }) => (

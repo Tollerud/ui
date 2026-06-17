@@ -49,6 +49,8 @@ export default defineConfig({
     '@radix-ui/react-tabs',
     '@radix-ui/react-tooltip',
     '@radix-ui/react-slot',
+    '@radix-ui/react-compose-refs',
+    'react-remove-scroll',
     'class-variance-authority',
     'framer-motion',
     'lucide-react',
@@ -58,6 +60,12 @@ export default defineConfig({
   esbuildOptions(options) {
     options.alias = {
       '@/lib/utils': './lib/utils.ts',
+      '@/lib/dropdown-placement': './lib/dropdown-placement.ts',
+      '@/lib/floating-dropdown': './lib/floating-dropdown.tsx',
+      '@/lib/scroll-lock-portal': './lib/scroll-lock-portal.ts',
+      '@/lib/modal-scroll-lock': './lib/modal-scroll-lock.tsx',
+      '@/lib/use-mobile': './lib/use-mobile.ts',
+      '@/lib/chart-series': './lib/chart-series.ts',
     }
   },
   onSuccess: async () => {

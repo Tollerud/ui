@@ -1,8 +1,9 @@
 'use client'
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import { forwardRef } from 'react'
-import { allowScrollInsideScrollLock } from '@/lib/scroll-lock-portal'
+import { useComposedRefs } from '@radix-ui/react-compose-refs'
+import { forwardRef, useRef } from 'react'
+import { useRegisterScrollLockPortalShard } from '@/lib/scroll-lock-portal'
 import { cn } from '@/lib/utils'
 
 /* ──────────────────── DropdownMenu ──────────────────── */
@@ -13,21 +14,18 @@ const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
 const DropdownMenuContent = forwardRef<
   React.ComponentRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, collisionPadding = 8, onWheel, onTouchMove, ...props }, ref) => (
+>(({ className, sideOffset = 4, collisionPadding = 8, ...props }, forwardedRef) => {
+  const contentRef = useRef<HTMLDivElement>(null)
+  const composedRefs = useComposedRefs(forwardedRef, contentRef)
+
+  useRegisterScrollLockPortalShard(contentRef, true)
+
+  return (
   <DropdownMenuPrimitive.Portal>
     <DropdownMenuPrimitive.Content
-      ref={ref}
+      ref={composedRefs}
       sideOffset={sideOffset}
       collisionPadding={collisionPadding}
-      data-scroll-lock-scrollable=""
-      onWheel={(event) => {
-        allowScrollInsideScrollLock(event)
-        onWheel?.(event)
-      }}
-      onTouchMove={(event) => {
-        allowScrollInsideScrollLock(event)
-        onTouchMove?.(event)
-      }}
       className={cn(
         'z-50 min-w-[9rem] overflow-hidden rounded-lg border p-1 shadow-lg',
         'bg-tollerud-noir-850 border-tollerud-border/30 text-tollerud-text-primary',
@@ -41,7 +39,8 @@ const DropdownMenuContent = forwardRef<
       {...props}
     />
   </DropdownMenuPrimitive.Portal>
-))
+  )
+})
 DropdownMenuContent.displayName = 'DropdownMenuContent'
 
 const DropdownMenuItem = forwardRef<
