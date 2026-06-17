@@ -198,7 +198,7 @@ function Combobox({
         id={`${id}-listbox`}
         role="listbox"
         placementOptions={{ maxHeight: 256 }}
-        className="overflow-auto rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1 shadow-lg"
+        className="overflow-auto rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1"
       >
         <ul className="m-0 list-none p-0">
           {filtered.length === 0 && (

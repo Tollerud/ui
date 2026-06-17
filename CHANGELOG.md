@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.8 — 2026-06-16 — Portalled dropdown shadow consistency
+
+Standard elevation for floating menus so portalled panels read clearly over tables and cards.
+
+### Changed
+
+- `FloatingDropdownPortal` — default `shadow-lg` (`--shadow-lg`) on all portalled panels
+- `Select`, `Combobox`, `DatePicker`, `Segmented` — removed one-off shadow utilities; inherit portal default
+- `DropdownMenu` — `shadow-lg` (was `shadow-md`) to match other popovers
+
 ## 4.8.7 — 2026-06-16 — FileUpload i18n labels
 
 Configurable drop-zone CTA copy for custom text and translations.

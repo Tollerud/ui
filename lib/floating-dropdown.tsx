@@ -13,6 +13,7 @@ import {
   type DropdownPlacementOptions,
   type FloatingDropdownCoords,
 } from '@/lib/dropdown-placement'
+import { cn } from '@/lib/utils'
 
 export function useFloatingDropdownCoords(
   open: boolean,
@@ -98,7 +99,7 @@ export function FloatingDropdownPortal({
       role={role}
       aria-label={ariaLabel}
       data-placement={coords.placement}
-      className={className}
+      className={cn('shadow-lg', className)}
       style={{
         position: 'fixed',
         top: coords.top,

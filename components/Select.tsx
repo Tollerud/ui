@@ -179,7 +179,6 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             className={cn(
               'overflow-y-auto py-1',
               'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
-              'shadow-[0_8px_24px_rgba(0,0,0,0.4)]',
             )}
           >
             {options.length === 0 && (

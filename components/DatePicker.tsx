@@ -126,7 +126,7 @@ function DatePicker({
         role="dialog"
         aria-label="Choose date"
         placementOptions={{ maxHeight: 320 }}
-        className="rounded-lg border border-tollerud-border bg-tollerud-surface-overlay p-3 shadow-lg"
+        className="rounded-lg border border-tollerud-border bg-tollerud-surface-overlay p-3"
       >
           <div className="mb-2 flex items-center justify-between">
             <button

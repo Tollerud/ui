@@ -128,7 +128,7 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
             id={listId}
             role="listbox"
             placementOptions={{ maxHeight: 240 }}
-            className="overflow-hidden rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1 shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
+            className="overflow-hidden rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1"
           >
             {options.map((opt, index) => {
               const active = opt.value === value
