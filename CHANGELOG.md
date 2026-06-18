@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.24 — 2026-06-18 — Add mobileMenuExtra slot to TopNav
+
+### Added
+
+- `TopNav` — `mobileMenuExtra?: ReactNode` renders at the bottom of the mobile nav sheet, below nav items and actions, separated by a divider. Consumer controls all markup — `TopNav` just provides the slot.
+
 ## 4.8.23 — 2026-06-18 — Fix PageShell inner wrapper flex chain
 
 ### Fixed

@@ -371,6 +371,7 @@ The monogram must always appear left of the project name with `gap-2`. Never sho
  projectName="Project Name"
  navItems={[{ label: 'Overview', href: '/overview', active: true }]}
  actions={<Button variant="primary" size="sm">Get started</Button>}
+ mobileMenuExtra={<p className="text-sm text-tollerud-text-muted">v2.4.1</p>}
 />
 ```
 

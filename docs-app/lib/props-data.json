@@ -1193,7 +1193,8 @@
         "actions?: ReactNode",
         "sticky?: boolean",
         "maxWidth?: TopNavMaxWidth",
-        "mobileMenuTitle?: string"
+        "mobileMenuTitle?: string",
+        "mobileMenuExtra?: ReactNode"
       ]
     }
   ]

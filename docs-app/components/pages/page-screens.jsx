@@ -69,7 +69,7 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle.">
+      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle. Pass mobileMenuExtra to inject an extra slot at the bottom of the mobile sheet, below all nav items and actions, separated by a divider — consumer controls all markup.">
         <Demo name="top-nav" variant="col" code={`<TopNav
   projectName="Mission Control"
   maxWidth="default"

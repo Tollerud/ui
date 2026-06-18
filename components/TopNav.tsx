@@ -93,6 +93,8 @@ export interface TopNavProps extends HTMLAttributes<HTMLElement> {
   maxWidth?: TopNavMaxWidth
   /** Screen reader title for the mobile menu dialog. */
   mobileMenuTitle?: string
+  /** Slot rendered at the bottom of the mobile nav sheet, below nav items and actions, separated by a divider. Consumer controls all markup. */
+  mobileMenuExtra?: ReactNode
 }
 
 function TopNavLink({
@@ -133,6 +135,7 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
       sticky = true,
       maxWidth = false,
       mobileMenuTitle = 'Navigation menu',
+      mobileMenuExtra,
       ...props
     },
     ref
@@ -142,7 +145,7 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
     const { inline: mobileInlineActions, menu: mobileMenuActions, desktop: desktopActions } =
       useMemo(() => partitionActions(actions), [actions])
     const hasDesktopActions = desktopActions.length > 0
-    const hasMobileMenuContent = hasNavItems || mobileMenuActions.length > 0
+    const hasMobileMenuContent = hasNavItems || mobileMenuActions.length > 0 || !!mobileMenuExtra
     const closeMobileMenu = () => setMobileOpen(false)
 
     const headerBar = (
@@ -238,6 +241,11 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
               >
                 {mobileMenuActions}
               </Cluster>
+            )}
+            {mobileMenuExtra && (
+              <div className="border-t border-tollerud-border pt-4">
+                {mobileMenuExtra}
+              </div>
             )}
           </div>
         </DialogPrimitive.Content>

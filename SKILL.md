@@ -243,7 +243,7 @@ import {
 Use these before rebuilding common pages with raw Tailwind:
 
 - **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`. Use `shimmer` (or `titleAccent`) to shimmer one word mid-sentence when `title` is a string — e.g. `title="Keep beer prices honest." shimmer="honest"`. Use `titleShimmer` for a second full shimmer line, or `PageHeaderShimmer` inside `title` for full control.
-- **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`, `maxWidth` (`default` | `wide` | `full` | `false`). Below `lg`, nav links and menu actions open in a modal overlay (backdrop, focus trap, Esc to close). Wrap actions in `TopNavAction` with `mobile?: 'inline' | 'menu' | 'hidden'` (default `menu`) to keep a primary CTA inline next to the menu toggle.
+- **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`, `maxWidth` (`default` | `wide` | `full` | `false`). Below `lg`, nav links and menu actions open in a modal overlay (backdrop, focus trap, Esc to close). Wrap actions in `TopNavAction` with `mobile?: 'inline' | 'menu' | 'hidden'` (default `menu`) to keep a primary CTA inline next to the menu toggle. Use `mobileMenuExtra?: ReactNode` to inject content at the bottom of the mobile sheet, below all nav items and actions, separated by a divider — consumer controls all markup.
 - **SidebarNav** — sidebar brand lockup with `projectName`, `projectSubtitle`, `groups` / `items`, icons, and active states.
 - **DashboardTopBar** — context top bar with `breadcrumb`, `pageTitle`, `actions`, mobile menu toggle. `showMobileLogo?: boolean` (default `true`) hides the mobile monogram when the consumer renders its own.
 - **DashboardShell** — docs-aligned app frame (default `variant="sidebar"`) with `sidebarGroups`, `sidebarItems`, `pageTitle`, `topActions`, `header`, `contentWidth`, `density`, `showMobileLogo`. Use `variant="topnav"` for horizontal TopNav layout.
@@ -795,6 +795,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)
 - **`StatCard` arrow direction fix (≥ 4.8.19)** — `direction: 'up'` now shows an up arrow (was showing down arrow due to inverted `rotate-180` condition)
 - **Form field height alignment (≥ 4.8.18)** — all form field triggers (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) use `text-base py-2.5`. Earlier versions mixed `text-sm`/`text-base` and `py-2`/`py-2.5`, causing height differences when combining field types.
+- **`TopNav` `mobileMenuExtra` slot (≥ 4.8.24)** — inject arbitrary content at the bottom of the mobile nav sheet, separated by a divider.
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)
 
 ---
