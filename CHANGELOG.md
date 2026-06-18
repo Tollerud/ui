@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.17 — 2026-06-18 — Align form input height across all field components
+
+### Fixed
+
+- `Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea` — all form fields now use `text-sm` (14px) and `py-2.5` padding, matching `Select`. Previously `Input`, `PasswordInput`, `DatePicker`, and `Textarea` used `text-base` (16px) with `py-2`, and `Combobox` used `py-2` with `text-sm`, causing inconsistent heights when mixing field types in the same form.
+
 ## 4.8.16 — 2026-06-18 — Fix SidebarNav scroll when nav items overflow
 
 ### Fixed

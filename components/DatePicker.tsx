@@ -105,7 +105,7 @@ function DatePicker({
         aria-haspopup="dialog"
         aria-expanded={open}
         className={cn(
-          'flex w-full items-center justify-between gap-2 rounded px-3 py-2 text-left text-base',
+          'flex w-full items-center justify-between gap-2 rounded px-3 py-2.5 text-left text-sm',
           'bg-tollerud-surface-raised border',
           'transition-[border-color] duration-[150ms]',
           'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_#E8D500]',

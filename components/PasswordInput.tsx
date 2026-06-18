@@ -26,7 +26,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             id={id}
             type={visible ? 'text' : 'password'}
             className={cn(
-              'w-full font-sans text-base px-3 py-2 pr-10 rounded',
+              'w-full font-sans text-sm px-3 py-2.5 pr-10 rounded',
               'bg-tollerud-surface-raised border',
               'text-tollerud-text-primary',
               'placeholder:text-tollerud-text-muted',
