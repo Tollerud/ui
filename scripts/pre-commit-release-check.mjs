@@ -64,9 +64,22 @@ if (oldVersion === version) process.exit(0)
 // Version was bumped — enforce the checklist
 let failed = false
 
-// 1. All required files must be staged
+// Generated files that are allowed to be unstaged only when unchanged since HEAD
+const GENERATED_FILES = new Set(['PROPS.generated.md', 'docs-app/lib/props-data.json'])
+
+function isUnchangedSinceHead(file) {
+  try {
+    execSync(`git diff --quiet HEAD -- "${file}"`, { stdio: 'pipe' })
+    return true
+  } catch {
+    return false
+  }
+}
+
+// 1. All required files must be staged (generated files may be absent if already current)
 for (const file of REQUIRED_FILES) {
   if (!staged.includes(file)) {
+    if (GENERATED_FILES.has(file) && isUnchangedSinceHead(file)) continue
     console.error(`pre-commit [release-checklist]: ${file} must be staged when bumping version (${oldVersion} → ${version})`)
     failed = true
   }

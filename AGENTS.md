@@ -530,6 +530,10 @@ The docs sidebar version reads live from `package.json` via `PACKAGE_VERSION` in
 - `SKILL.md` — add new components to the catalog, update version notes
 - `AGENTS.md` (this file) — update the component import blocks if new exports were added
 
+#### Sidebar scroll (≥ 4.8.16)
+
+`SidebarNav` nav content area now scrolls when items overflow the viewport. Earlier versions clipped nav items with no scroll on short viewports — a flex `min-h-0` fix.
+
 **Consumer styling / recipes / guardrails** (no version bump required for docs-only): also sync `GETTING_STARTED.md`, relevant `docs-app/components/pages/page-*.jsx`, `docs-app/lib/docs-routes.js`, and `docs-app/lib/component-catalog.js` — see [CONTRIBUTING.md](CONTRIBUTING.md) and `.cursor/rules/consumer-styling-docs.mdc`.
 
 ### 5. CHANGELOG.md format rules

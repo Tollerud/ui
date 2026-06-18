@@ -783,6 +783,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`Button` icon-only matches text height per size (≥ 4.5.2)** — earlier versions sized from padding + content, so icon-only buttons could render shorter than labeled buttons
 - **`Combobox` input uses `text-sm` (≥ 4.8.14)** — earlier versions used `text-base` (16px), mismatching the 14px dropdown items
 - **`StatCard` `change.tone` (≥ 4.8.15)** — optional `'success' | 'error' | 'warning' | 'info' | 'accent'` overrides the default up=green / down=red coloring
+- **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)
 
 ---

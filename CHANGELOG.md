@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.16 — 2026-06-18 — Fix SidebarNav scroll when nav items overflow
+
+### Fixed
+
+- `SidebarNav` — nav content area now scrolls independently when items overflow the viewport height. Added `min-h-0` alongside the existing `flex-1 overflow-y-auto` so the flex child actually creates a scroll context (classic flex `min-height: auto` bug).
+
 ## 4.8.15 — 2026-06-18 — StatCard change tone override
 
 ### Added

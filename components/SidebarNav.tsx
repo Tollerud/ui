@@ -127,7 +127,7 @@ const SidebarNav = forwardRef<HTMLElement, SidebarNavProps>(
           </div>
         </a>
         {navGroups.length > 0 && (
-          <nav className="flex-1 overflow-y-auto px-3 py-4 pb-6">
+          <nav className="flex-1 min-h-0 overflow-y-auto px-3 py-4 pb-6">
             {navGroups.map((group, groupIndex) => (
               <div className={cn('mb-[18px] last:mb-0')} key={group.label ? String(group.label) : groupIndex}>
                 {group.label && (
