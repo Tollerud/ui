@@ -14,7 +14,7 @@ export const DOC_SYMBOLS = [
   'Checkbox', 'Switch', 'RadioGroup', 'Radio', 'StatCard', 'Progress', 'Skeleton', 'Avatar',
   'Divider', 'Tabs', 'Segmented', 'Tooltip', 'Alert', 'Accordion', 'Breadcrumb', 'Pagination',
   'Slider', 'DropdownMenu', 'Dialog', 'EmptyState', 'LogViewer', 'Spinner', 'Panel', 'Meter',
-  'Stepper', 'PasswordInput', 'FormRow', 'PricingCard', 'Drawer', 'Combobox', 'AvatarGroup',
+  'Stepper', 'PasswordInput', 'PasswordStrength', 'FormRow', 'PricingCard', 'Drawer', 'Combobox', 'AvatarGroup',
   'Timeline', 'DatePicker', 'FileUpload', 'TagInput',
   'CodeBlock', 'Container', 'ActionRow', 'GlowCard', 'PackageDataTable', 'Toaster', 'toast',
   'Footer', 'BentoDashboard', 'NoirGlowBackground',

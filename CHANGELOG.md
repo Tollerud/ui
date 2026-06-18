@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.21 — 2026-06-18 — Add PasswordStrength component
+
+### Added
+
+- `PasswordStrength` — strength bar + rule checklist for signup and change-password flows. Accepts `value: string` and optional `rules?: PasswordRule[]` to override the defaults. Default rules: min 8 chars, uppercase, lowercase, number, special character. Strength level (weak / fair / good / strong) is derived from the fraction of rules passed and uses the existing error/warning/info/success tokens. Also exports `passwordRules` (the default rule array) for composing custom rule sets.
+
 ## 4.8.20 — 2026-06-18 — Add StatCard icon prop
 
 ### Added

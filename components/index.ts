@@ -273,6 +273,8 @@ export type { SliderProps } from './Slider'
 
 export { PasswordInput } from './PasswordInput'
 export type { PasswordInputProps } from './PasswordInput'
+export { PasswordStrength, passwordRules } from './PasswordStrength'
+export type { PasswordStrengthProps, PasswordRule } from './PasswordStrength'
 
 export { Combobox } from './Combobox'
 export type { ComboboxProps, ComboboxOption, ComboboxGroup } from './Combobox'

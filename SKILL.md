@@ -395,6 +395,15 @@ const [open, setOpen] = useState(false)
 **Container** — `as?: 'div' | 'section' | 'article' | 'main' | 'header' | 'footer'`, capped width + padding.
 
 **PasswordInput** — same API as `Input` (label, error, id, …) plus built-in show/hide toggle.
+
+**PasswordStrength** — `value`, `rules?: PasswordRule[]`. Strength bar + rule checklist for signup/change-password flows. Compose below a `PasswordInput`. Default rules: min 8 chars, uppercase, lowercase, number, special character. Export `passwordRules` to extend the defaults.
+```tsx
+const [pw, setPw] = useState('')
+<PasswordInput label="New password" value={pw} onChange={e => setPw(e.target.value)} />
+<PasswordStrength value={pw} />
+// Custom rules:
+<PasswordStrength value={pw} rules={[...passwordRules, { label: 'No spaces', test: v => !/\s/.test(v) }]} />
+```
 ```tsx
 <PasswordInput label="Password" placeholder="Enter password" error={errors.password} />
 ```

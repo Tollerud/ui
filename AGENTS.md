@@ -530,6 +530,24 @@ The docs sidebar version reads live from `package.json` via `PACKAGE_VERSION` in
 - `SKILL.md` — add new components to the catalog, update version notes
 - `AGENTS.md` (this file) — update the component import blocks if new exports were added
 
+#### PasswordStrength component (≥ 4.8.21)
+
+New `PasswordStrength` component — compose below any `PasswordInput` on signup/change-password forms.
+
+```tsx
+import { PasswordInput, PasswordStrength } from '@tollerud/ui'
+
+const [pw, setPw] = useState('')
+<PasswordInput label="New password" value={pw} onChange={e => setPw(e.target.value)} />
+<PasswordStrength value={pw} />
+```
+
+Custom rules via `passwordRules` export:
+```tsx
+import { PasswordStrength, passwordRules } from '@tollerud/ui'
+<PasswordStrength value={pw} rules={[...passwordRules, { label: 'No spaces', test: v => !/\s/.test(v) }]} />
+```
+
 #### StatCard icon prop (≥ 4.8.20)
 
 `StatCard` now accepts `icon?: ReactNode` — rendered beside the label. Pass a Lucide icon or any element.

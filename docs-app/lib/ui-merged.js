@@ -110,5 +110,6 @@ export const {
   Skeleton,
   Avatar,
   PasswordInput,
+  PasswordStrength,
   FormRow,
 } = NPM

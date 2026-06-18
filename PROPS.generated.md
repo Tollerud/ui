@@ -507,6 +507,12 @@
 - `label?: string`
 - `error?: string`
 
+## PasswordStrength — `PasswordStrengthProps`
+
+- `value: string`
+- `rules?: PasswordRule[]`
+- `className?: string`
+
 ## Pill — `PillProps` extends extends HTMLAttributes<HTMLSpanElement>
 
 - `variant?: keyof typeof pillVariants`

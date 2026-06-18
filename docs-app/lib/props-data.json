@@ -789,6 +789,16 @@
       ]
     }
   ],
+  "PasswordStrength": [
+    {
+      "name": "PasswordStrengthProps",
+      "props": [
+        "value: string",
+        "rules?: PasswordRule[]",
+        "className?: string"
+      ]
+    }
+  ],
   "Pill": [
     {
       "name": "PillProps",
