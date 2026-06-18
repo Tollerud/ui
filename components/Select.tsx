@@ -139,7 +139,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             aria-label={layout === 'inline' && label ? `${label}: ${selectedOption?.label ?? placeholder ?? 'Select'}` : undefined}
             className={cn(
               'font-sans w-full flex items-center justify-between rounded',
-              size === 'sm' ? 'px-2.5 py-1.5 text-xs' : 'px-3 py-2.5 text-sm',
+              size === 'sm' ? 'px-2.5 py-1.5 text-xs' : 'px-3 py-2.5 text-base',
               'bg-tollerud-surface-raised',
               'text-tollerud-text-primary text-left',
               'transition-all duration-150 ease-out cursor-pointer',

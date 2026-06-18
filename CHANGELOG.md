@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.18 — 2026-06-18 — Use text-base across all form field inputs
+
+### Fixed
+
+- `Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select` — all form field triggers now use `text-base` (16px). Previous releases mixed `text-sm` and `text-base`; 4.8.17 incorrectly standardised on `text-sm`. `text-base` is correct for form inputs (readability, prevents iOS auto-zoom on focus).
+
 ## 4.8.17 — 2026-06-18 — Align form input height across all field components
 
 ### Fixed

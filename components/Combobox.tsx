@@ -173,7 +173,7 @@ function Combobox({
           }}
           onKeyDown={onKeyDown}
           className={cn(
-            'w-full font-sans text-sm px-3 py-2.5 pr-9 rounded',
+            'w-full font-sans text-base px-3 py-2.5 pr-9 rounded',
             'bg-tollerud-surface-raised border',
             'text-tollerud-text-primary placeholder:text-tollerud-text-muted',
             'transition-[border-color] duration-[150ms]',
