@@ -381,9 +381,10 @@ const [open, setOpen] = useState(false)
 />
 ```
 
-**StatCard** — `label`, `value`, `change?: { value: string; direction: 'up' | 'down' }`, `accent?`.
+**StatCard** — `label`, `value`, `change?: { value: string; direction: 'up' | 'down'; tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `accent?`. `change.tone` overrides the default color (up=success, down=error) — use it when direction and semantic meaning differ (e.g. a price drop is good).
 ```tsx
 <StatCard label="Active Sessions" value={42} change={{ value: '+12%', direction: 'up' }} />
+<StatCard label="Endring siste periode" value="-3.2%" change={{ value: '-3.2%', direction: 'down', tone: 'success' }} />
 ```
 
 **CodeBlock** — `code?`, `promptPrefix?`, `showCopy?`. Renders a `<pre>`.
@@ -780,6 +781,8 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`Combobox` + `DatePicker` close on window resize (≥ 1.1.0)** — earlier versions left the popover open and misaligned after viewport changes
 - **`Segmented` icon segments match text height (≥ 4.5.1)** — earlier versions rendered icon-only segments ~4px shorter than text segments
 - **`Button` icon-only matches text height per size (≥ 4.5.2)** — earlier versions sized from padding + content, so icon-only buttons could render shorter than labeled buttons
+- **`Combobox` input uses `text-sm` (≥ 4.8.14)** — earlier versions used `text-base` (16px), mismatching the 14px dropdown items
+- **`StatCard` `change.tone` (≥ 4.8.15)** — optional `'success' | 'error' | 'warning' | 'info' | 'accent'` overrides the default up=green / down=red coloring
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)
 
 ---

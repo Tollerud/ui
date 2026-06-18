@@ -303,6 +303,7 @@ Built-in `⌘K` / `Ctrl+K` listener, arrow navigation, Esc to close, search acro
 
 ```tsx
 <StatCard label="Active Sessions" value={42} change={{ value: "+12%", direction: "up" }} />
+<StatCard label="Endring siste periode" value="-3.2%" change={{ value: "-3.2%", direction: "down", tone: "success" }} />
 ```
 
 ### CodeBlock
