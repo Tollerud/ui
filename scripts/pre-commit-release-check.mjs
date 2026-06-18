@@ -10,7 +10,6 @@
  */
 
 import { execSync } from 'child_process'
-import { readFileSync } from 'fs'
 
 const REQUIRED_FILES = [
   'CHANGELOG.md',
