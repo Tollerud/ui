@@ -490,6 +490,7 @@
 - `as?: 'div' | 'main'`
 - `background?: PageShellBackground`
 - `density?: PageShellDensity`
+- `contentClassName?: string`
 
 ## Pagination — `PaginationProps` extends extends Omit<HTMLAttributes<HTMLElement>, 'onChange'>
 

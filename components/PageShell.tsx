@@ -8,6 +8,7 @@ export interface PageShellProps extends HTMLAttributes<HTMLDivElement> {
   as?: 'div' | 'main'
   background?: PageShellBackground
   density?: PageShellDensity
+  contentClassName?: string
 }
 
 const backgroundClasses: Record<PageShellBackground, string> = {
@@ -17,7 +18,7 @@ const backgroundClasses: Record<PageShellBackground, string> = {
 }
 
 const PageShell = forwardRef<HTMLDivElement, PageShellProps>(
-  ({ as: Tag = 'main', background = 'plain', density, className, children, ...props }, ref) => {
+  ({ as: Tag = 'main', background = 'plain', density, className, contentClassName, children, ...props }, ref) => {
     const hasGrid = background === 'grid'
     const hasGlow = background === 'glow'
 
@@ -40,7 +41,7 @@ const PageShell = forwardRef<HTMLDivElement, PageShellProps>(
           </>
         )}
         {hasGrid && <div className="tollerud-grid-bg absolute inset-0" aria-hidden="true" />}
-        <div className="relative z-10">{children}</div>
+        <div className={cn('relative z-10 flex flex-col flex-1', contentClassName)}>{children}</div>
       </Tag>
     )
   }

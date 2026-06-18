@@ -557,6 +557,10 @@ import { Database } from 'lucide-react'
 <StatCard label="Storage" value="1.2 TB" icon={<Database size={14} />} />
 ```
 
+#### PageShell flex chain fix (≥ 4.8.23)
+
+`PageShell`'s inner content wrapper is now always `flex flex-col flex-1`. This means `className="flex flex-col min-h-screen"` on the outer shell correctly stretches content — header stays top, footer sticks bottom. `contentClassName` lets you add extra classes to the inner wrapper if needed.
+
 #### DashboardTopBar / DashboardShell showMobileLogo (≥ 4.8.22)
 
 `DashboardTopBar` and `DashboardShell` accept `showMobileLogo?: boolean` (default `true`). Pass `false` to hide the mobile monogram link when the consumer renders its own logo.

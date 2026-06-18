@@ -202,7 +202,7 @@ import {
 } from '@tollerud/ui'
 ```
 
-**PageShell** — `as?: 'div' | 'main'`, `background?: 'plain' | 'grid' | 'glow'`, `density?: 'comfortable' | 'compact'`. Full-page dark shell for app routes and marketing pages.
+**PageShell** — `as?: 'div' | 'main'`, `background?: 'plain' | 'grid' | 'glow'`, `density?: 'comfortable' | 'compact'`, `contentClassName?: string`. Full-page dark shell. The inner content wrapper is always `flex flex-col flex-1` so a `flex flex-col min-h-screen` outer shell correctly stretches content to fill the viewport. Use `contentClassName` to add extra classes to the inner wrapper.
 
 **Section** — `as?: 'section' | 'div' | 'article' | 'header' | 'footer'`, `size?: 'sm' | 'md' | 'lg' | 'hero'`, `width?: 'narrow' | 'default' | 'wide' | 'full'`. Consistent vertical rhythm and width constraints.
 

@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.23 — 2026-06-18 — Fix PageShell inner wrapper flex chain
+
+### Fixed
+
+- `PageShell` — inner content wrapper (`relative z-10`) now always applies `flex flex-col flex-1` so a `flex flex-col min-h-screen` outer shell correctly stretches content to fill the viewport. Added `contentClassName?: string` to customise the inner wrapper when needed.
+
 ## 4.8.22 — 2026-06-18 — Add showMobileLogo prop to DashboardTopBar and DashboardShell
 
 ### Added

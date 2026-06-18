@@ -754,7 +754,8 @@
       "props": [
         "as?: 'div' | 'main'",
         "background?: PageShellBackground",
-        "density?: PageShellDensity"
+        "density?: PageShellDensity",
+        "contentClassName?: string"
       ]
     }
   ],

@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.22**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.23**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -87,7 +87,7 @@ These primitives give consumer apps a component-first page structure before reac
 
 | Component | Key props | Use for |
 |-----------|-----------|---------|
-| `PageShell` | `background`, `density` | Full-page noir/grid/glow background and main landmark |
+| `PageShell` | `background`, `density`, `contentClassName` | Full-page noir/grid/glow background. Inner wrapper is always `flex flex-col flex-1` so `min-h-screen flex flex-col` layouts work correctly. |
 | `Section` | `size`, `width` | Consistent page sections |
 | `Stack` | `gap`, `align` | Vertical rhythm |
 | `Cluster` | `gap`, `align`, `justify` | Wrapping actions, badges, and toolbars |
