@@ -19,7 +19,7 @@ function PageLayout() {
         title="PageShell + Section"
         component="PageShell"
         permalink="layout/page-shell"
-        desc="Start pages with a dark shell and a semantic section instead of hand-writing page backgrounds and spacing."
+        desc="Start pages with a dark shell and a semantic section instead of hand-writing page backgrounds and spacing. The inner content wrapper is always flex flex-col flex-1 — add className='flex flex-col min-h-screen' to the shell and the flex chain works: header stays top, footer sticks bottom. Use contentClassName to add extra classes to the inner wrapper."
       >
         <Demo name="page-shell" variant="col" code={`<PageShell background="grid">
   <Section size="hero">
