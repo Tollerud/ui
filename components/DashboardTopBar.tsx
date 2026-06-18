@@ -15,6 +15,7 @@ export interface DashboardTopBarProps extends HTMLAttributes<HTMLElement> {
   menuOpen?: boolean
   onMenuToggle?: () => void
   sticky?: boolean
+  showMobileLogo?: boolean
 }
 
 const DashboardTopBar = forwardRef<HTMLElement, DashboardTopBarProps>(
@@ -29,6 +30,7 @@ const DashboardTopBar = forwardRef<HTMLElement, DashboardTopBarProps>(
       menuOpen = false,
       onMenuToggle,
       sticky = true,
+      showMobileLogo = true,
       ...props
     },
     ref
@@ -54,13 +56,15 @@ const DashboardTopBar = forwardRef<HTMLElement, DashboardTopBarProps>(
             {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         )}
-        <a
-          href={homeHref}
-          className="tollerud-focus-ring shrink-0 rounded-sm lg:hidden"
-          aria-label={typeof projectName === 'string' ? projectName : 'Home'}
-        >
-          <Monogram color="yellow" className="h-[22px] w-auto" />
-        </a>
+        {showMobileLogo && (
+          <a
+            href={homeHref}
+            className="tollerud-focus-ring shrink-0 rounded-sm lg:hidden"
+            aria-label={typeof projectName === 'string' ? projectName : 'Home'}
+          >
+            <Monogram color="yellow" className="h-[22px] w-auto" />
+          </a>
+        )}
         {(breadcrumb || pageTitle) && (
           <p className="min-w-0 truncate text-[13px] text-tollerud-text-muted">
             {breadcrumb && <span className="max-sm:hidden">{breadcrumb}</span>}

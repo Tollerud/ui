@@ -316,6 +316,7 @@
         "pageTitle?: ReactNode",
         "navItems?: TopNavItem[]",
         "topActions?: ReactNode",
+        "showMobileLogo?: boolean",
         "sidebar?: ReactNode",
         "header?: ReactNode",
         "density?: MainContentDensity",
@@ -335,7 +336,8 @@
         "actions?: ReactNode",
         "menuOpen?: boolean",
         "onMenuToggle?: () => void",
-        "sticky?: boolean"
+        "sticky?: boolean",
+        "showMobileLogo?: boolean"
       ]
     }
   ],

@@ -7,6 +7,13 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.22 — 2026-06-18 — Add showMobileLogo prop to DashboardTopBar and DashboardShell
+
+### Added
+
+- `DashboardTopBar` — `showMobileLogo?: boolean` (default `true`) gates the mobile monogram link. Pass `false` when the consumer renders its own logo in the top bar.
+- `DashboardShell` — threads `showMobileLogo` through to `DashboardTopBar`.
+
 ## 4.8.21 — 2026-06-18 — Add PasswordStrength component
 
 ### Added

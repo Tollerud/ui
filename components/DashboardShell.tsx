@@ -26,6 +26,7 @@ export interface DashboardShellProps extends HTMLAttributes<HTMLDivElement> {
   /** Topnav variant — horizontal links in TopNav. Also used as sidebar fallback when no sidebarGroups/sidebarItems. */
   navItems?: TopNavItem[]
   topActions?: ReactNode
+  showMobileLogo?: boolean
   /** Optional custom sidebar content below structured nav in the left rail. */
   sidebar?: ReactNode
   header?: ReactNode
@@ -67,6 +68,7 @@ const DashboardShell = forwardRef<HTMLDivElement, DashboardShellProps>(
       pageTitle,
       navItems,
       topActions,
+      showMobileLogo,
       sidebar,
       header,
       density,
@@ -150,6 +152,7 @@ const DashboardShell = forwardRef<HTMLDivElement, DashboardShellProps>(
               actions={topActions}
               menuOpen={mobileNavOpen}
               onMenuToggle={() => setMobileNavOpen((open) => !open)}
+              showMobileLogo={showMobileLogo}
             />
             <MainContent as="div" width={contentWidth} spacing="lg" density={density}>
               {header && <div className="mb-8">{header}</div>}

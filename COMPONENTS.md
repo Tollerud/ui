@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.21**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.22**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -116,8 +116,8 @@ These components assemble common page structures from the layout primitives and 
 | `PageHeader` | Page title, eyebrow, description, metadata, and actions |
 | `TopNav` | Branded monogram lockup, nav links, and top-level actions; `TopNavAction` controls mobile placement |
 | `SidebarNav` | Sidebar brand lockup and grouped navigation links |
-| `DashboardTopBar` | Context top bar with breadcrumb, page title, and actions |
-| `DashboardShell` | Docs-aligned app shell with sidebar nav and context top bar |
+| `DashboardTopBar` | Context top bar with breadcrumb, page title, and actions. `showMobileLogo={false}` hides the mobile monogram. |
+| `DashboardShell` | Docs-aligned app shell with sidebar nav and context top bar. Threads `showMobileLogo` to `DashboardTopBar`. |
 | `SettingsLayout` | Settings pages with section navigation |
 | `FormPanel` | Titled form surface with actions and footer |
 | `ResourceList` | List/table pages with filters, count, and empty state |

@@ -192,6 +192,7 @@
 - `pageTitle?: ReactNode`
 - `navItems?: TopNavItem[]`
 - `topActions?: ReactNode`
+- `showMobileLogo?: boolean`
 - `sidebar?: ReactNode`
 - `header?: ReactNode`
 - `density?: MainContentDensity`
@@ -207,6 +208,7 @@
 - `menuOpen?: boolean`
 - `onMenuToggle?: () => void`
 - `sticky?: boolean`
+- `showMobileLogo?: boolean`
 
 ## DataTable — `DataTableProps`
 
