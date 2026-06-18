@@ -24,3 +24,4 @@ tollerud-ui-*.tgz
 fixtures/consumer/node_modules
 fixtures/consumer/dist
 packages/footer/dist
+.claude/
