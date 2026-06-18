@@ -1,12 +1,13 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
+const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
 
 /* @tollerud/ui docs — Components gallery */
 function PageComponents({ go }) {
   const toast = useToast();
   const [density, setDensity] = useState('comfortable');
+  const [pwStrength, setPwStrength] = useState('');
   const [sort, setSort] = useState('kr-stk');
   const sortOptions = [
     { value: 'kr-l', label: 'kr/l' },
@@ -558,6 +559,26 @@ export function ButtonGlowRoot() {
                 onSelect: () => toast({ tone: 'info', title: 'Opening logs' }),
               }}
             />
+          </div>
+        </Demo>
+      </Section>
+
+      <Section title="Password strength" component="PasswordStrength" permalink="components/password-strength" desc="Compose below a PasswordInput on signup and change-password forms. Shows a segmented strength bar and a rule checklist. Pass a custom rules array to override the defaults.">
+        <Demo name="password-strength" variant="col" code={`const [pw, setPw] = useState('')
+
+<PasswordInput label="New password" value={pw} onChange={e => setPw(e.target.value)} />
+<PasswordStrength value={pw} />
+
+// Custom rules — spread passwordRules to keep the defaults and add your own
+<PasswordStrength
+  value={pw}
+  rules={[...passwordRules, { label: 'No spaces', test: v => !/\\s/.test(v) }]}
+/>`}>
+          <div style={{ width: '100%', maxWidth: 360 }}>
+            <PasswordInput label="New password" value={pwStrength} onChange={e => setPwStrength(e.target.value)} />
+            <div style={{ marginTop: 10 }}>
+              <PasswordStrength value={pwStrength} />
+            </div>
           </div>
         </Demo>
       </Section>
