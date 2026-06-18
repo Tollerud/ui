@@ -13,8 +13,10 @@ When changing any component API, fixing a bug, or bumping the version, ALL of th
 Then run:
 ```bash
 npm run sync:registry   # syncs registry.json + packages/footer/package.json
-npm run sync:footer     # (included above, but run explicitly if footer source changed)
+npm run docs:props      # regenerates PROPS.generated.md + docs-app/lib/props-data.json
 ```
+
+Stage the generated files — CI fails if they are stale.
 
 This is enforced by a git pre-commit hook (`scripts/pre-commit-release-check.mjs`). The hook will block a commit that bumps the version without touching all required files.
 

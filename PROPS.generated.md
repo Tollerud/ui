@@ -659,7 +659,11 @@
 
 - `label: string`
 - `value: string | number`
-- `change?: { value: string; direction: 'up' | 'down' }`
+- `change?: {`
+- `value: string`
+- `direction: 'up' | 'down'`
+- `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'`
+- `}`
 - `accent?: boolean`
 
 ## StatsSection — `StatsSectionProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>

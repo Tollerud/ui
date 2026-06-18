@@ -18,6 +18,8 @@ const REQUIRED_FILES = [
   'SKILL.md',
   'AGENTS.md',
   'registry.json',
+  'PROPS.generated.md',
+  'docs-app/lib/props-data.json',
 ]
 
 function getStagedFiles() {
