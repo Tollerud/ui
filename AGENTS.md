@@ -530,6 +530,15 @@ The docs sidebar version reads live from `package.json` via `PACKAGE_VERSION` in
 - `SKILL.md` — add new components to the catalog, update version notes
 - `AGENTS.md` (this file) — update the component import blocks if new exports were added
 
+#### StatCard icon prop (≥ 4.8.20)
+
+`StatCard` now accepts `icon?: ReactNode` — rendered beside the label. Pass a Lucide icon or any element.
+
+```tsx
+import { Database } from 'lucide-react'
+<StatCard label="Storage" value="1.2 TB" icon={<Database size={14} />} />
+```
+
 #### StatCard arrow direction (≥ 4.8.19)
 
 `direction: 'up'` shows an up arrow, `direction: 'down'` shows a down arrow. Earlier versions had these inverted.

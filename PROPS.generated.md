@@ -665,6 +665,7 @@
 - `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'`
 - `}`
 - `accent?: boolean`
+- `icon?: ReactNode`
 
 ## StatsSection — `StatsSectionProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 

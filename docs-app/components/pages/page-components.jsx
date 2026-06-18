@@ -256,13 +256,13 @@ export function ButtonGlowRoot() {
       </Section>
 
       <Section title="Stat card" component="StatCard" permalink="components/stat-card" desc="Compact metric tiles for dashboards, with optional trend.">
-        <Demo name="stats" code={`<StatCard label="Active Sessions" value="42" change={{ value: "12%", direction: "up" }} icon="activity" />
-<StatCard label="CPU Load" value="63%" change={{ value: "4%", direction: "down" }} icon="cpu" />
-<StatCard label="Storage" value="1.2 TB" icon="database" />`}>
+        <Demo name="stats" code={`<StatCard label="Active Sessions" value="42" change={{ value: "12%", direction: "up" }} icon={<Icons.activity />} />
+<StatCard label="CPU Load" value="63%" change={{ value: "4%", direction: "down" }} icon={<Icons.cpu />} />
+<StatCard label="Storage" value="1.2 TB" icon={<Icons.database />} />`}>
           <div className="ds-grid-3" style={{ width: '100%' }}>
-            <StatCard label="Active Sessions" value="42" change={{ value: '12%', direction: 'up' }} icon="activity"/>
-            <StatCard label="CPU Load" value="63%" change={{ value: '4%', direction: 'down' }} icon="cpu"/>
-            <StatCard label="Storage" value="1.2 TB" icon="database"/>
+            <StatCard label="Active Sessions" value="42" change={{ value: '12%', direction: 'up' }} icon={<Icons.activity />}/>
+            <StatCard label="CPU Load" value="63%" change={{ value: '4%', direction: 'down' }} icon={<Icons.cpu />}/>
+            <StatCard label="Storage" value="1.2 TB" icon={<Icons.database />}/>
           </div>
         </Demo>
       </Section>

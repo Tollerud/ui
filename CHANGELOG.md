@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.20 — 2026-06-18 — Add StatCard icon prop
+
+### Added
+
+- `StatCard` — `icon?: ReactNode` renders an icon alongside the label in the top row. Pass any icon element (e.g. a Lucide icon).
+
 ## 4.8.19 — 2026-06-18 — Fix StatCard arrow direction
 
 ### Fixed

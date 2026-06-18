@@ -1040,7 +1040,8 @@
         "direction: 'up' | 'down'",
         "tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'",
         "}",
-        "accent?: boolean"
+        "accent?: boolean",
+        "icon?: ReactNode"
       ]
     }
   ],

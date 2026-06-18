@@ -1,4 +1,4 @@
-import { type HTMLAttributes, forwardRef } from 'react'
+import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
 export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
@@ -11,10 +11,11 @@ export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
     tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'
   }
   accent?: boolean
+  icon?: ReactNode
 }
 
 const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
-  ({ className, label, value, change, accent, ...props }, ref) => {
+  ({ className, label, value, change, accent, icon, ...props }, ref) => {
     return (
       <div
         ref={ref}
@@ -36,9 +37,16 @@ const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
         )}
 
         <div className="flex items-start justify-between gap-2">
-          <p className="text-xs font-medium uppercase tracking-wider text-tollerud-text-muted">
-            {label}
-          </p>
+          <div className="flex items-center gap-2">
+            {icon && (
+              <span className="flex h-4 w-4 shrink-0 items-center justify-center text-tollerud-text-muted">
+                {icon}
+              </span>
+            )}
+            <p className="text-xs font-medium uppercase tracking-wider text-tollerud-text-muted">
+              {label}
+            </p>
+          </div>
           {change && (
             <span
               className={cn(

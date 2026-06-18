@@ -381,9 +381,9 @@ const [open, setOpen] = useState(false)
 />
 ```
 
-**StatCard** — `label`, `value`, `change?: { value: string; direction: 'up' | 'down'; tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `accent?`. `change.tone` overrides the default color (up=success, down=error) — use it when direction and semantic meaning differ (e.g. a price drop is good).
+**StatCard** — `label`, `value`, `icon?: ReactNode`, `change?: { value: string; direction: 'up' | 'down'; tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `accent?`. `change.tone` overrides the default color (up=success, down=error) — use it when direction and semantic meaning differ (e.g. a price drop is good).
 ```tsx
-<StatCard label="Active Sessions" value={42} change={{ value: '+12%', direction: 'up' }} />
+<StatCard label="Active Sessions" value={42} icon={<Activity size={14} />} change={{ value: '+12%', direction: 'up' }} />
 <StatCard label="Endring siste periode" value="-3.2%" change={{ value: '-3.2%', direction: 'down', tone: 'success' }} />
 ```
 
