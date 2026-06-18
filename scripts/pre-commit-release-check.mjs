@@ -19,6 +19,8 @@ const REQUIRED_FILES = [
   'registry.json',
   'PROPS.generated.md',
   'docs-app/lib/props-data.json',
+  'fixtures/consumer/package.json',
+  'fixtures/consumer/package-lock.json',
 ]
 
 function getStagedFiles() {
@@ -65,7 +67,12 @@ if (oldVersion === version) process.exit(0)
 let failed = false
 
 // Generated files that are allowed to be unstaged only when unchanged since HEAD
-const GENERATED_FILES = new Set(['PROPS.generated.md', 'docs-app/lib/props-data.json'])
+const GENERATED_FILES = new Set([
+  'PROPS.generated.md',
+  'docs-app/lib/props-data.json',
+  'fixtures/consumer/package.json',
+  'fixtures/consumer/package-lock.json',
+])
 
 function isUnchangedSinceHead(file) {
   try {
