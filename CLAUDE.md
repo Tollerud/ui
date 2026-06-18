@@ -10,6 +10,7 @@ When changing any component API, fixing a bug, or bumping the version, ALL of th
 4. `SKILL.md` — update prop docs for changed components + add a version note bullet in the Version notes section
 5. `AGENTS.md` — update usage examples for any changed components
 6. `COMPONENTS.md` — update version header + add/update component sections for any new or changed components
+7. `docs-app/` — update relevant page(s): add/update `desc` on the `Section`, add a `Demo` with a code snippet for any new prop or behaviour
 
 Then run:
 ```bash

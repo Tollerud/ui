@@ -110,6 +110,26 @@ function PageScreens({ go }) {
             className="rounded-lg border border-tollerud-border"
           />
         </Demo>
+        <Demo name="top-nav-mobile-extra" variant="col" desc="mobileMenuExtra — extra slot at the bottom of the mobile sheet" code={`<TopNav
+  projectName="Mission Control"
+  navItems={[{ label: 'Overview', href: '/', active: true }]}
+  mobileMenuExtra={
+    <p className="text-sm text-tollerud-text-muted">Signed in as ops@tollerud.dev</p>
+  }
+/>`}>
+          <TopNav
+            sticky={false}
+            projectName="Mission Control"
+            navItems={[
+              { label: 'Overview', href: '#', active: true },
+              { label: 'Hosts', href: '#' },
+            ]}
+            mobileMenuExtra={
+              <p style={{ fontSize: 13, color: 'var(--text-muted)', margin: 0 }}>Signed in as ops@tollerud.dev</p>
+            }
+            className="rounded-lg border border-tollerud-border"
+          />
+        </Demo>
       </Section>
 
       <Section title="DashboardShell" component="DashboardShell" permalink="screens/dashboard-shell" desc="Docs-aligned app shell: sidebar brand lockup, structured nav, context top bar, and main content. Use variant=&quot;topnav&quot; for the legacy horizontal TopNav layout. Pass showMobileLogo={false} to hide the mobile monogram when the consumer renders its own logo.">
