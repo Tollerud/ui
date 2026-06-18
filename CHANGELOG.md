@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.15 — 2026-06-18 — StatCard change tone override
+
+### Added
+
+- `StatCard` — `change.tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'` decouples the badge color from arrow direction. Useful when the semantic meaning of a change differs from its direction (e.g. a price drop is good). Omitting `tone` preserves the default: `up` = success (green), `down` = error (red).
+
+## 4.8.14 — 2026-06-18 — Fix Combobox input font size
+
+### Fixed
+
+- `Combobox` — input now uses `text-sm` (14px) to match dropdown items (was `text-base` / 16px)
+
 ## 4.8.13 — 2026-06-16 — Drawer dropdown scroll and click fix
 
 Replace competing RemoveScroll shards with native scroll-lock bypass on portalled menus.

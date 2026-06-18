@@ -4,7 +4,12 @@ import { cn } from '@/lib/utils'
 export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
   label: string
   value: string | number
-  change?: { value: string; direction: 'up' | 'down' }
+  change?: {
+    value: string
+    direction: 'up' | 'down'
+    /** Override the color. Omit to use the default (up=success, down=error). */
+    tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'
+  }
   accent?: boolean
 }
 
@@ -38,7 +43,12 @@ const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
             <span
               className={cn(
                 'inline-flex items-center gap-0.5 text-[11px] font-semibold whitespace-nowrap',
-                change.direction === 'up' ? 'text-tollerud-success' : 'text-tollerud-error'
+                change.tone === 'success' ? 'text-tollerud-success'
+                  : change.tone === 'error' ? 'text-tollerud-error'
+                  : change.tone === 'warning' ? 'text-tollerud-warning'
+                  : change.tone === 'info' ? 'text-tollerud-info'
+                  : change.tone === 'accent' ? 'text-tollerud-yellow'
+                  : change.direction === 'up' ? 'text-tollerud-success' : 'text-tollerud-error'
               )}
             >
               <svg
