@@ -16,6 +16,7 @@ const REQUIRED_FILES = [
   'COMPLETENESS_ROADMAP.md',
   'SKILL.md',
   'AGENTS.md',
+  'COMPONENTS.md',
   'registry.json',
   'PROPS.generated.md',
   'docs-app/lib/props-data.json',

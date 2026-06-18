@@ -9,6 +9,7 @@ When changing any component API, fixing a bug, or bumping the version, ALL of th
 3. `COMPLETENESS_ROADMAP.md` — update `### npm package (components/*.tsx) — vX.X.X` header
 4. `SKILL.md` — update prop docs for changed components + add a version note bullet in the Version notes section
 5. `AGENTS.md` — update usage examples for any changed components
+6. `COMPONENTS.md` — update version header + add/update component sections for any new or changed components
 
 Then run:
 ```bash

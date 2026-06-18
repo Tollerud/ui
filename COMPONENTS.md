@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.4.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.21**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -40,7 +40,7 @@ Use this map to pick the right layer — not every app needs infra widgets or gl
 
 All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted. Prop signatures: see [PROPS.generated.md](PROPS.generated.md).
 
-**Core & forms:** `Button`, `ButtonGroup`, `buttonVariants`, `cn`, `Card`, `Badge`, `StatusDot`, `Kbd`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `PasswordInput`, `Combobox`, `TagInput`, `Slider`, `FormRow`, `Container`, `CodeBlock`, `StatCard`, `ActionRow`, `CommandMenu`
+**Core & forms:** `Button`, `ButtonGroup`, `buttonVariants`, `cn`, `Card`, `Badge`, `StatusDot`, `Kbd`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `PasswordInput`, `PasswordStrength`, `passwordRules`, `Combobox`, `TagInput`, `Slider`, `FormRow`, `Container`, `CodeBlock`, `StatCard`, `ActionRow`, `CommandMenu`
 
 **Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `SidebarNav`, `DashboardTopBar`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
 
@@ -246,12 +246,15 @@ Variants: `outline` · `solid` · `accent`. CSS classes: `.tollerud-pill`, `.tol
 ## StatCard
 
 ```jsx
-<StatCard
-  label="Active Sessions"
-  value={42}
-  change={{ value: "+12%", direction: "up" }}
-/>
+<StatCard label="Active Sessions" value={42} icon={<Activity size={14} />}
+  change={{ value: '+12%', direction: 'up' }} />
+
+// tone overrides the default up=success / down=error color
+<StatCard label="Price change" value="-3.2%" icon={<TrendingDown size={14} />}
+  change={{ value: '-3.2%', direction: 'down', tone: 'success' }} />
 ```
+
+Props: `label`, `value`, `icon?: ReactNode`, `accent?`, `change?: { value, direction: 'up' | 'down', tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`.
 
 ## CodeBlock
 
@@ -595,6 +598,25 @@ A password field with a show/hide toggle. Same API as `Input` (`label`, `error`,
 ```tsx
 <PasswordInput label="Password" placeholder="••••••••" error={pwError} />
 ```
+
+### PasswordStrength
+
+Strength bar + rule checklist for signup and change-password flows. Compose below a `PasswordInput` and pass the same `value`.
+
+```tsx
+const [pw, setPw] = useState('')
+<PasswordInput label="New password" value={pw} onChange={e => setPw(e.target.value)} />
+<PasswordStrength value={pw} />
+```
+
+Default rules: min 8 characters, uppercase letter, lowercase letter, number, special character. Override with `rules` — use the exported `passwordRules` array as a base:
+
+```tsx
+import { PasswordStrength, passwordRules } from '@tollerud/ui'
+<PasswordStrength value={pw} rules={[...passwordRules, { label: 'No spaces', test: v => !/\s/.test(v) }]} />
+```
+
+Props: `value: string`, `rules?: { label: string; test: (value: string) => boolean }[]`.
 
 ### Spinner
 
