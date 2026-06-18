@@ -54,7 +54,7 @@ const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
               <svg
                 className={cn(
                   'w-3 h-3',
-                  change.direction === 'down' && 'rotate-180'
+                  change.direction === 'up' && 'rotate-180'
                 )}
                 viewBox="0 0 24 24"
                 fill="none"

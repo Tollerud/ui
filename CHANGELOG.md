@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.19 — 2026-06-18 — Fix StatCard arrow direction
+
+### Fixed
+
+- `StatCard` — `direction: 'up'` now shows an up arrow and `direction: 'down'` shows a down arrow. The `rotate-180` transform was applied to the wrong condition — the SVG path draws a down arrow by default, so the rotation was inverted.
+
 ## 4.8.18 — 2026-06-18 — Use text-base across all form field inputs
 
 ### Fixed

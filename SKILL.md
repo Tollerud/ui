@@ -784,6 +784,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`Combobox` input uses `text-sm` (≥ 4.8.14)** — earlier versions used `text-base` (16px), mismatching the 14px dropdown items
 - **`StatCard` `change.tone` (≥ 4.8.15)** — optional `'success' | 'error' | 'warning' | 'info' | 'accent'` overrides the default up=green / down=red coloring
 - **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)
+- **`StatCard` arrow direction fix (≥ 4.8.19)** — `direction: 'up'` now shows an up arrow (was showing down arrow due to inverted `rotate-180` condition)
 - **Form field height alignment (≥ 4.8.18)** — all form field triggers (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) use `text-base py-2.5`. Earlier versions mixed `text-sm`/`text-base` and `py-2`/`py-2.5`, causing height differences when combining field types.
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)
 

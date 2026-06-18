@@ -530,6 +530,10 @@ The docs sidebar version reads live from `package.json` via `PACKAGE_VERSION` in
 - `SKILL.md` — add new components to the catalog, update version notes
 - `AGENTS.md` (this file) — update the component import blocks if new exports were added
 
+#### StatCard arrow direction (≥ 4.8.19)
+
+`direction: 'up'` shows an up arrow, `direction: 'down'` shows a down arrow. Earlier versions had these inverted.
+
 #### Form field height alignment (≥ 4.8.18)
 
 All form fields (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) now share the same height: `text-base py-2.5`. Use them freely in the same form row without height shimming.
