@@ -40,20 +40,6 @@ function PageNavOverlays() {
         </Demo>
       </Section>
 
-      <Section title="Segmented control" desc="Switch between a small set of mutually exclusive views. Segment height stays consistent for text and icon labels.">
-        <Demo name="segmented" variant="center" code={`<Segmented options={[{ value: 'grid', label: 'Grid' }, { value: 'list', label: 'List' }]} />
-<Segmented options={[{ value: 'list', label: <ListIcon /> }, { value: 'grid', label: <GridIcon /> }]} />`}>
-          <div className="ds-row" style={{ gap: 14, alignItems: 'center' }}>
-            <Segmented options={[{ value: 'grid', label: 'Grid' }, { value: 'list', label: 'List' }, { value: 'graph', label: 'Graph' }]}/>
-            <Segmented options={[{ value: '24h', label: '24h' }, { value: '7d', label: '7d' }, { value: '30d', label: '30d' }]}/>
-            <Segmented options={[
-              { value: 'list', label: <Icons.menu size={16} aria-hidden /> },
-              { value: 'grid', label: <Icons.grid size={16} aria-hidden /> },
-            ]}/>
-          </div>
-        </Demo>
-      </Section>
-
       <Section title="Pagination" desc="Numbered pages with prev/next, keyboard and disabled-edge handling.">
         <Demo name="pagination" variant="center" code={`<Pagination total={7} current={1} />`}>
           <Pagination total={7} current={1}/>
