@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.25 — 2026-06-22 — Add searchPlacement prop to Combobox
+
+### Added
+
+- `Combobox` — `searchPlacement?: 'trigger' | 'dropdown'` (default `'trigger'`). In `'dropdown'` mode the trigger becomes a button showing the selected value (like `Select`), and the search input moves inside the popover with a search icon. Useful when a cleaner trigger is preferred or when the combobox sits next to other Select fields.
+
 ## 4.8.24 — 2026-06-18 — Add mobileMenuExtra slot to TopNav
 
 ### Added

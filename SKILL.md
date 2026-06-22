@@ -408,7 +408,7 @@ const [pw, setPw] = useState('')
 <PasswordInput label="Password" placeholder="Enter password" error={errors.password} />
 ```
 
-**Combobox** — searchable single-select. Flat `options: { value, label, disabled? }[]` or grouped `groups: { label, options }[]` with section titles in the dropdown. `value?`, `onChange?`, `placeholder?`, `filter?`, `label?`, `error?`.
+**Combobox** — searchable single-select. Flat `options: { value, label, disabled? }[]` or grouped `groups: { label, options }[]` with section titles in the dropdown. `value?`, `onChange?`, `placeholder?`, `filter?`, `label?`, `error?`, `searchPlacement?: 'trigger' | 'dropdown'` (default `'trigger'`; `'dropdown'` moves search inside the popover, trigger looks like a Select button).
 ```tsx
 <Combobox label="Connect to host" value={host} onChange={setHost} options={hostOptions} />
 
@@ -790,6 +790,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`Combobox` + `DatePicker` close on window resize (≥ 1.1.0)** — earlier versions left the popover open and misaligned after viewport changes
 - **`Segmented` icon segments match text height (≥ 4.5.1)** — earlier versions rendered icon-only segments ~4px shorter than text segments
 - **`Button` icon-only matches text height per size (≥ 4.5.2)** — earlier versions sized from padding + content, so icon-only buttons could render shorter than labeled buttons
+- **`Combobox` `searchPlacement` (≥ 4.8.25)** — `'dropdown'` moves the search input inside the popover; the trigger becomes a button like `Select`. Default `'trigger'` preserves prior behaviour.
 - **`Combobox` input uses `text-sm` (≥ 4.8.14)** — earlier versions used `text-base` (16px), mismatching the 14px dropdown items
 - **`StatCard` `change.tone` (≥ 4.8.15)** — optional `'success' | 'error' | 'warning' | 'info' | 'accent'` overrides the default up=green / down=red coloring
 - **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)

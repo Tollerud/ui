@@ -570,6 +570,14 @@ import { Database } from 'lucide-react'
 
 `direction: 'up'` shows an up arrow, `direction: 'down'` shows a down arrow. Earlier versions had these inverted.
 
+#### Combobox searchPlacement (≥ 4.8.25)
+
+`searchPlacement="dropdown"` moves the search input inside the popover; the trigger becomes a Select-style button. Default `"trigger"` keeps the original inline-search behaviour.
+
+```tsx
+<Combobox searchPlacement="dropdown" label="Host" options={hostOptions} value={host} onChange={setHost} />
+```
+
 #### Form field height alignment (≥ 4.8.18)
 
 All form fields (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) now share the same height: `text-base py-2.5`. Use them freely in the same form row without height shimming.

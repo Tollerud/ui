@@ -159,7 +159,7 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Combobox" permalink="forms/combobox" desc="Type in the field to filter options as you search. Keyboard navigation (↑/↓/Enter/Esc), optional grouped section titles that collapse when empty, and a no-results state.">
+      <Section title="Combobox" permalink="forms/combobox" desc="Searchable select with keyboard navigation (↑/↓/Enter/Esc), optional grouped sections, and a no-results state. Two search modes: searchPlacement='trigger' (default) keeps the search input as the trigger field; searchPlacement='dropdown' moves the search inside the popover so the trigger looks like a standard Select button.">
         <Demo name="combobox" variant="col" code={`// Flat list — type to filter hosts
 <Combobox
   label="Connect to host"
@@ -205,6 +205,25 @@ function PageForms() {
                 Type to filter across groups — try <span className="ds-mono">deploy</span> to collapse to the Actions section.
               </p>
             </div>
+          </div>
+        </Demo>
+        <Demo name="combobox-dropdown-search" variant="col" desc="searchPlacement='dropdown' — search lives inside the popover; trigger looks like a Select" code={`<Combobox
+  searchPlacement="dropdown"
+  label="Connect to host"
+  placeholder="Search hosts…"
+  value={host}
+  onChange={setHost}
+  options={servers}
+/>`}>
+          <div style={{ width: '100%', maxWidth: 360 }}>
+            <Combobox
+              searchPlacement="dropdown"
+              label="Connect to host"
+              placeholder="Search hosts…"
+              value={comboHost}
+              onChange={setComboHost}
+              options={servers}
+            />
           </div>
         </Demo>
       </Section>

@@ -271,6 +271,11 @@
         "label?: string",
         "error?: string",
         "filter?: (option: ComboboxOption, query: string) => boolean",
+        "* Where the search input lives.",
+        "* - `'trigger'` (default) — the trigger input doubles as the search field, matching the original behaviour.",
+        "* - `'dropdown'` — the trigger is a button showing the selected value; the search input appears at the top of the dropdown panel.",
+        "*/",
+        "searchPlacement?: 'trigger' | 'dropdown'",
         "className?: string",
         "disabled?: boolean"
       ]

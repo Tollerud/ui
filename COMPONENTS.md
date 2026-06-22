@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.24**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.25**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1138,7 +1138,9 @@ Searchable single-select with keyboard navigation (↑/↓/Enter/Esc). Pass flat
   ]} />
 ```
 
-Props: `options?: { value, label, disabled? }[]`, `groups?: { label, options }[]`, `value?`, `onChange?`, `label?`, `placeholder?`, `error?`, `filter?`.
+Props: `options?: { value, label, disabled? }[]`, `groups?: { label, options }[]`, `value?`, `onChange?`, `label?`, `placeholder?`, `error?`, `filter?`, `searchPlacement?: 'trigger' | 'dropdown'`.
+
+`searchPlacement="dropdown"` turns the trigger into a Select-style button and moves the search input inside the popover — useful when the combobox sits next to other Select fields or when a cleaner trigger is preferred.
 
 ### Avatar / AvatarGroup
 
