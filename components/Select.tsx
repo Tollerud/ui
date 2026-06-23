@@ -176,6 +176,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             popoverRef={listRef}
             role="listbox"
             placementOptions={{ maxHeight: 240 }}
+            onOutsideScroll={() => setOpen(false)}
             className={cn(
               'overflow-y-auto py-1',
               'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',

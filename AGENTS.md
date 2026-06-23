@@ -570,6 +570,10 @@ import { Database } from 'lucide-react'
 
 `direction: 'up'` shows an up arrow, `direction: 'down'` shows a down arrow. Earlier versions had these inverted.
 
+#### Portalled dropdown mobile scroll (≥ 4.8.26)
+
+`Combobox`, `Select`, `DatePicker`, and `Segmented` close when the page scrolls behind them on touch devices. Earlier versions tried to reposition via React state updates, causing a visible lag on every scroll tick.
+
 #### Combobox searchPlacement (≥ 4.8.25)
 
 `searchPlacement="dropdown"` moves the search input inside the popover; the trigger becomes a Select-style button. Default `"trigger"` keeps the original inline-search behaviour.

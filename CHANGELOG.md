@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.26 — 2026-06-23 — Fix mobile scroll lag on portalled dropdowns
+
+### Fixed
+
+- `FloatingDropdownPortal` — on touch devices (`pointer: coarse`), outside scroll now closes the dropdown instead of repositioning it. Repositioning via React state updates caused a visible one-frame lag on every scroll tick on mobile. Affects `Combobox`, `Select`, `DatePicker`, and `Segmented` (collapsed mobile mode).
+
 ## 4.8.25 — 2026-06-22 — Add searchPlacement prop to Combobox
 
 ### Added

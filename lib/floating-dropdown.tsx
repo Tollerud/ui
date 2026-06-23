@@ -21,6 +21,7 @@ export function useFloatingDropdownCoords(
   anchorRef: RefObject<HTMLElement | null>,
   popoverRef: RefObject<HTMLElement | null>,
   options: DropdownPlacementOptions = {},
+  onOutsideScroll?: () => void,
 ): FloatingDropdownCoords | null {
   const offset = options.offset ?? 4
   const maxHeight = options.maxHeight ?? 240
@@ -46,15 +47,30 @@ export function useFloatingDropdownCoords(
     if (popoverRef.current) observer?.observe(popoverRef.current)
     if (anchorRef.current) observer?.observe(anchorRef.current)
 
+    // On touch devices, close the dropdown when the page scrolls behind it
+    // rather than chasing the scroll with async React state updates (which lag).
+    // On desktop, reposition normally.
+    const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
+    const onScroll = (e: Event) => {
+      if (isTouchDevice && onOutsideScroll) {
+        const target = e.target as Node
+        if (!popoverRef.current?.contains(target)) {
+          onOutsideScroll()
+        }
+      } else {
+        update()
+      }
+    }
+
     window.addEventListener('resize', update)
-    window.addEventListener('scroll', update, true)
+    window.addEventListener('scroll', onScroll, true)
 
     return () => {
       observer?.disconnect()
       window.removeEventListener('resize', update)
-      window.removeEventListener('scroll', update, true)
+      window.removeEventListener('scroll', onScroll, true)
     }
-  }, [open, anchorRef, popoverRef, offset, maxHeight])
+  }, [open, anchorRef, popoverRef, offset, maxHeight, onOutsideScroll])
 
   return open ? coords : null
 }
@@ -72,6 +88,8 @@ export interface FloatingDropdownPortalProps {
   id?: string
   role?: string
   'aria-label'?: string
+  /** Called when the page scrolls on a touch device behind the open dropdown. Use to close the dropdown instead of repositioning (prevents visible scroll lag on mobile). */
+  onOutsideScroll?: () => void
 }
 
 export function FloatingDropdownPortal({
@@ -86,8 +104,9 @@ export function FloatingDropdownPortal({
   id,
   role,
   'aria-label': ariaLabel,
+  onOutsideScroll,
 }: FloatingDropdownPortalProps) {
-  const coords = useFloatingDropdownCoords(open, anchorRef, popoverRef, placementOptions)
+  const coords = useFloatingDropdownCoords(open, anchorRef, popoverRef, placementOptions, onOutsideScroll)
 
   useBypassModalScrollLock(popoverRef, open && coords !== null)
 

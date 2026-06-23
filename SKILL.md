@@ -796,6 +796,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)
 - **`StatCard` arrow direction fix (≥ 4.8.19)** — `direction: 'up'` now shows an up arrow (was showing down arrow due to inverted `rotate-180` condition)
 - **Form field height alignment (≥ 4.8.18)** — all form field triggers (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) use `text-base py-2.5`. Earlier versions mixed `text-sm`/`text-base` and `py-2`/`py-2.5`, causing height differences when combining field types.
+- **Portalled dropdown mobile scroll fix (≥ 4.8.26)** — `Combobox`, `Select`, `DatePicker`, and `Segmented` now close on outside scroll on touch devices instead of lagging to reposition.
 - **`TopNav` `mobileMenuExtra` slot (≥ 4.8.24)** — inject arbitrary content at the bottom of the mobile nav sheet, separated by a divider.
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)
 
