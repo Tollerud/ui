@@ -563,6 +563,10 @@
 
 - `eyebrow?: ReactNode`
 - `title: ReactNode`
+- `* When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`.`
+- `* e.g. title="Se hva dine favorittøl koster" shimmer="favorittøl"`
+- `*/`
+- `shimmer?: string`
 - `description?: ReactNode`
 - `actions?: ReactNode`
 - `visual?: ReactNode`

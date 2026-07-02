@@ -1,6 +1,5 @@
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
-import { Pill } from './Pill'
 
 export type PromoSectionVisualPlacement = 'right' | 'left'
 export type PromoSectionBackground = 'default' | 'raised'
@@ -10,6 +9,11 @@ export type PromoSectionContentWidth = 'sm' | 'md' | 'lg' | 'xl' | 'full'
 export interface PromoSectionProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   eyebrow?: ReactNode
   title: ReactNode
+  /**
+   * When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`.
+   * e.g. title="Se hva dine favorittøl koster" shimmer="favorittøl"
+   */
+  shimmer?: string
   description?: ReactNode
   actions?: ReactNode
   visual?: ReactNode
@@ -34,12 +38,26 @@ const textWidthClass: Record<PromoSectionTextWidth, string> = {
   wide: 'sm:grid-cols-[1.4fr_1fr]',
 }
 
+function renderTitle(title: ReactNode, shimmer: string | undefined): ReactNode {
+  if (!shimmer || typeof title !== 'string') return title
+  const index = title.indexOf(shimmer)
+  if (index === -1) return title
+  return (
+    <>
+      {title.slice(0, index)}
+      <span className="tollerud-display-shimmer">{shimmer}</span>
+      {title.slice(index + shimmer.length)}
+    </>
+  )
+}
+
 const PromoSection = forwardRef<HTMLDivElement, PromoSectionProps>(
   (
     {
       className,
       eyebrow,
       title,
+      shimmer,
       description,
       actions,
       visual,
@@ -56,12 +74,12 @@ const PromoSection = forwardRef<HTMLDivElement, PromoSectionProps>(
     const textCol = (
       <div className="flex flex-col justify-center gap-4" style={{ order: 0 }}>
         {eyebrow && (
-          <Pill variant="outline" className="self-start">
+          <div className="font-mono text-xs uppercase tracking-[0.22em] text-tollerud-yellow">
             {eyebrow}
-          </Pill>
+          </div>
         )}
         <h2 className="tollerud-display text-3xl leading-tight text-tollerud-text-primary sm:text-[40px]">
-          {title}
+          {renderTitle(title, shimmer)}
         </h2>
         {description && (
           <p className="text-[15px] leading-relaxed text-tollerud-text-primary/65">
@@ -97,7 +115,6 @@ const PromoSection = forwardRef<HTMLDivElement, PromoSectionProps>(
               className={cn(
                 'grid grid-cols-1 items-center gap-10 sm:gap-14',
                 textWidthClass[textWidth],
-                // On desktop, swap column order when visual is on the left
                 visualPlacement === 'left' && 'sm:[&>*:first-child]:order-1 sm:[&>*:last-child]:order-none'
               )}
             >

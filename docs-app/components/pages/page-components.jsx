@@ -267,10 +267,11 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="PromoSection" component="PromoSection" permalink="components/promo-section" desc="Two-column marketing block with a text column and a consumer-controlled visual slot. Collapses to single-column on mobile with text always first. background='raised' goes edge-to-edge with contentWidth capping the inner content. visualPlacement controls desktop column order. Without a visual, renders centered single-column.">
+      <Section title="PromoSection" component="PromoSection" permalink="components/promo-section" desc="Two-column marketing block with a text column and a consumer-controlled visual slot. Eyebrow matches PageHeader — mono uppercase yellow. Pass shimmer='word' to give one word in the title a shimmer accent. Collapses to single-column on mobile with text always first. background='raised' goes edge-to-edge with contentWidth capping the inner content.">
         <Demo name="promo-section" variant="col" code={`<PromoSection
   eyebrow="Prismatrise"
   title="Se hva dine favorittøl koster på dine butikker"
+  shimmer="favorittøl"
   description="Opprett en gratis konto og følg prisene på dine favorittøl. Sett opp varsler når prisen endrer seg."
   actions={
     <>
@@ -288,6 +289,7 @@ export function ButtonGlowRoot() {
           <PromoSection
             eyebrow="Prismatrise"
             title="Se hva dine favorittøl koster"
+            shimmer="favorittøl"
             description="Opprett en gratis konto og følg prisene på dine favorittøl. Sett opp varsler når prisen endrer seg."
             actions={
               <>

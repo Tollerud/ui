@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.30 — 2026-07-02 — PromoSection shimmer and PageHeader-style eyebrow
+
+### Changed
+
+- `PromoSection` — eyebrow now renders as `font-mono text-xs uppercase tracking-[0.22em] text-tollerud-yellow`, matching `PageHeader`. The previous `Pill` rendering is removed.
+
+### Added
+
+- `PromoSection` — `shimmer?: string` wraps the first matching substring of `title` in `.tollerud-display-shimmer`. Behaves identically to `PageHeader`'s `shimmer` prop. Only applies when `title` is a plain string.
+
 ## 4.8.29 — 2026-07-02 — Fix PromoSection mobile layout; add contentWidth prop
 
 ### Fixed

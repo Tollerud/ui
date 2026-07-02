@@ -654,7 +654,7 @@ import {
   textWidth="wide"
 />
 ```
-`HeroBlock.intense` mounts `NoirGlowBackground` (needs `@paper-design/shaders-react`). `PromoSection` — `visualPlacement?: "right" | "left"`, `background?: "default" | "raised"` (raised uses `border-y` for full-bleed), `textWidth?: "narrow" | "balanced" | "wide"`, `contentWidth?: "sm" | "md" | "lg" | "xl" | "full"` (default `"xl"`). Collapses to single column on mobile; visual always renders below text on mobile regardless of `visualPlacement`. Falls back to centered single-column when no `visual` prop is passed.
+`HeroBlock.intense` mounts `NoirGlowBackground` (needs `@paper-design/shaders-react`). `PromoSection` — `shimmer="word"` accents one word in `title` (string only); eyebrow is mono uppercase yellow matching `PageHeader`; `visualPlacement?: "right" | "left"`, `background?: "default" | "raised"` (raised uses `border-y` for full-bleed), `textWidth?: "narrow" | "balanced" | "wide"`, `contentWidth?: "sm" | "md" | "lg" | "xl" | "full"` (default `"xl"`). Collapses to single column on mobile; visual always renders below text on mobile. Falls back to centered single-column when no `visual` prop is passed.
 
 ### Data & tables
 
@@ -821,6 +821,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)
 - **`StatCard` arrow direction fix (≥ 4.8.19)** — `direction: 'up'` now shows an up arrow (was showing down arrow due to inverted `rotate-180` condition)
 - **Form field height alignment (≥ 4.8.18)** — all form field triggers (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) use `text-base py-2.5`. Earlier versions mixed `text-sm`/`text-base` and `py-2`/`py-2.5`, causing height differences when combining field types.
+- **`PromoSection` `shimmer` prop + PageHeader eyebrow (≥ 4.8.30)** — `shimmer="word"` accents one word in the title; eyebrow now matches `PageHeader` (mono uppercase yellow, not a Pill).
 - **`PromoSection` mobile fix + `contentWidth` (≥ 4.8.29)** — collapses to single column below `sm:`, text always first on mobile, `overflow-hidden` on visual slot. `contentWidth?: "sm"|"md"|"lg"|"xl"|"full"` (default `"xl"`) caps inner content while the wrapper can go full-bleed.
 - **`PromoSection` added (≥ 4.8.28)** — two-column marketing block; `visualPlacement`, `background`, `textWidth` control layout.
 - **`PriceDisplay` + `ListCard` added (≥ 4.8.27)** — new consumer-facing components for list rows.
