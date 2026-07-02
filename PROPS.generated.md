@@ -559,6 +559,17 @@
 - `featured?: boolean`
 - `badge?: React.ReactNode`
 
+## PromoSection — `PromoSectionProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
+
+- `eyebrow?: ReactNode`
+- `title: ReactNode`
+- `description?: ReactNode`
+- `actions?: ReactNode`
+- `visual?: ReactNode`
+- `visualPlacement?: PromoSectionVisualPlacement`
+- `background?: PromoSectionBackground`
+- `textWidth?: PromoSectionTextWidth`
+
 ## RadioGroup — `RadioGroupProps`
 
 - `label?: string`

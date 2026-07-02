@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard } = __p
+const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard, PromoSection } = __p
 
 /* @tollerud/ui docs — Components gallery */
 function PageComponents({ go }) {
@@ -264,6 +264,44 @@ export function ButtonGlowRoot() {
               <PriceDisplay primary="62,0 kr/l" secondary="31,00 kr" />
             </ListCard>
           </div>
+        </Demo>
+      </Section>
+
+      <Section title="PromoSection" component="PromoSection" permalink="components/promo-section" desc="Two-column marketing block with a text column and a consumer-controlled visual slot. Pass visualPlacement to flip the visual to the left. background='raised' adds a dark surface. textWidth controls the column ratio. Without a visual, renders as a centered single-column block.">
+        <Demo name="promo-section" variant="col" code={`<PromoSection
+  eyebrow="Prismatrise"
+  title="Se hva dine favorittøl koster på dine butikker"
+  description="Opprett en gratis konto og følg prisene på dine favorittøl. Sett opp varsler når prisen endrer seg."
+  actions={
+    <>
+      <Button variant="primary">Opprett konto gratis</Button>
+      <Button variant="secondary">Logg inn</Button>
+    </>
+  }
+  visual={
+    <Card accent style={{ width: '100%', minHeight: 120, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>App preview</span>
+    </Card>
+  }
+  background="raised"
+/>`}>
+          <PromoSection
+            eyebrow="Prismatrise"
+            title="Se hva dine favorittøl koster"
+            description="Opprett en gratis konto og følg prisene på dine favorittøl. Sett opp varsler når prisen endrer seg."
+            actions={
+              <>
+                <Button variant="primary">Opprett konto gratis</Button>
+                <Button variant="secondary">Logg inn</Button>
+              </>
+            }
+            visual={
+              <Card accent style={{ width: '100%', minHeight: 120, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>App preview</span>
+              </Card>
+            }
+            background="raised"
+          />
         </Demo>
       </Section>
 

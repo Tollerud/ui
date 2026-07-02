@@ -643,8 +643,18 @@ import {
 <HeroBlock eyebrow="homelab" title="Run your stack" intense actions={<Button>Deploy</Button>} />
 <FeatureCard icon={<Zap size={20} />} title="Instant deploys" description="…" />
 <CTABand title="Ship it" actions={<Button variant="primary">Get started</Button>} />
+<PromoSection
+  eyebrow="Feature"
+  title="Two-column callout"
+  description="Body text here."
+  actions={<Button variant="primary">Get started</Button>}
+  visual={<img src="/preview.png" />}
+  visualPlacement="right"
+  background="raised"
+  textWidth="wide"
+/>
 ```
-`HeroBlock.intense` mounts `NoirGlowBackground` (needs `@paper-design/shaders-react`).
+`HeroBlock.intense` mounts `NoirGlowBackground` (needs `@paper-design/shaders-react`). `PromoSection` — `visualPlacement?: "right" | "left"`, `background?: "default" | "raised"`, `textWidth?: "narrow" | "balanced" | "wide"`. Falls back to centered single-column when no `visual` prop is passed.
 
 ### Data & tables
 
@@ -811,6 +821,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)
 - **`StatCard` arrow direction fix (≥ 4.8.19)** — `direction: 'up'` now shows an up arrow (was showing down arrow due to inverted `rotate-180` condition)
 - **Form field height alignment (≥ 4.8.18)** — all form field triggers (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) use `text-base py-2.5`. Earlier versions mixed `text-sm`/`text-base` and `py-2`/`py-2.5`, causing height differences when combining field types.
+- **`PromoSection` added (≥ 4.8.28)** — two-column marketing block; `visualPlacement`, `background`, `textWidth` control layout. Collapses to single column on small screens.
 - **`PriceDisplay` + `ListCard` added (≥ 4.8.27)** — new consumer-facing components for list rows.
 - **`Card` `accent="filled"` (≥ 4.8.27)** — adds yellow fill in addition to border tint; existing `accent={true}` unchanged.
 - **`Sparkline` SVG clip fix (≥ 4.8.27)** — `overflow="hidden"` prevents stroke bleed at small sizes with `curve="step"` and `fill`.

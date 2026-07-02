@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.27**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.28**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -884,7 +884,7 @@ Live demos and prop tables: [design.tollerud.dev/charts](https://design.tollerud
 Full-width page sections used on the Blocks page.
 
 ```tsx
-import { HeroBlock, FeatureCard, CTABand } from '@tollerud/ui'
+import { HeroBlock, FeatureCard, CTABand, PromoSection } from '@tollerud/ui'
 ```
 
 ### HeroBlock
@@ -922,6 +922,34 @@ A centered closing call-to-action with an optional accent bar.
 ```
 
 Props: `title`, `description`, `actions`, `accentBar` (default true).
+
+### PromoSection
+
+Two-column marketing block — text on one side, any visual on the other. Collapses to single column on narrow viewports. Without a `visual` prop, renders as a centered single-column block.
+
+```tsx
+<PromoSection
+  eyebrow="Prismatrise"
+  title="Se hva dine favorittøl koster på dine butikker"
+  description="Opprett en gratis konto og følg prisene på dine favorittøl."
+  actions={<Button variant="primary">Opprett konto</Button>}
+  visual={<AppPreview />}
+  visualPlacement="right"
+  background="raised"
+  textWidth="wide"
+/>
+```
+
+| Prop | Type | Default | Notes |
+|------|------|---------|-------|
+| `eyebrow` | `ReactNode` | — | Small pill label above the title |
+| `title` | `ReactNode` | required | Main heading |
+| `description` | `ReactNode` | — | Body paragraph |
+| `actions` | `ReactNode` | — | Slot for buttons / links |
+| `visual` | `ReactNode` | — | Any preview, image, or graphic |
+| `visualPlacement` | `"right" \| "left"` | `"right"` | Which side the visual goes on |
+| `background` | `"default" \| "raised"` | `"default"` | `"raised"` adds `bg-tollerud-noir-900` + border |
+| `textWidth` | `"narrow" \| "balanced" \| "wide"` | `"wide"` | Column ratio (`1fr/1.4fr`, `1fr/1fr`, `1.4fr/1fr`) |
 
 ## Navigation primitives
 

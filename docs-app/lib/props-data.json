@@ -865,6 +865,22 @@
       ]
     }
   ],
+  "PromoSection": [
+    {
+      "name": "PromoSectionProps",
+      "extends": "extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>",
+      "props": [
+        "eyebrow?: ReactNode",
+        "title: ReactNode",
+        "description?: ReactNode",
+        "actions?: ReactNode",
+        "visual?: ReactNode",
+        "visualPlacement?: PromoSectionVisualPlacement",
+        "background?: PromoSectionBackground",
+        "textWidth?: PromoSectionTextWidth"
+      ]
+    }
+  ],
   "RadioGroup": [
     {
       "name": "RadioGroupProps",

@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.8.27",
+  "version": "4.8.28",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -1375,6 +1375,21 @@
         "tailwind-merge"
       ],
       "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "promo-section": {
+      "name": "PromoSection",
+      "description": "Two-column marketing block with text and a consumer-controlled visual slot. visualPlacement, background, textWidth control layout.",
+      "files": [
+        "components/PromoSection.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "pill"
+      ],
       "type": "components:ui"
     }
   }

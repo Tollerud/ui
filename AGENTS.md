@@ -201,7 +201,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@tollerud/ui'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@tollerud/ui'
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, Drawer } from '@tollerud/ui'
 import { Skeleton, Progress, Spinner, Toaster, ToastProvider, useToast, GlowCard, NoirGlowBackground, BentoDashboard, Alert } from '@tollerud/ui'
-import { BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand } from '@tollerud/ui'
+import { BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, PromoSection } from '@tollerud/ui'
 // Infra / homelab set
 import { HostCard, ServiceHealthCard, DockerStackCard, IncidentCard } from '@tollerud/ui'
 import { ApprovalCard, ActionDiff, AlertInbox, RollbackPlan, BackupStatusPanel } from '@tollerud/ui'
@@ -264,6 +264,27 @@ Hover card shell for list and grid rows. Renders as `<a>` when `href` is provide
 ```
 
 Props: `href?: string`, `highlight?: "cheapest" | false`, `external?: boolean`.
+
+### PromoSection
+
+```tsx
+<PromoSection
+  eyebrow="Prismatrise"
+  title="Se hva dine favorittøl koster på dine butikker"
+  description="Opprett en gratis konto og følg prisene på dine favorittøl."
+  actions={
+    <>
+      <Button asChild variant="primary"><Link href="/registrer">Opprett konto gratis</Link></Button>
+      <Button asChild variant="secondary"><Link href="/login">Logg inn</Link></Button>
+    </>
+  }
+  visual={<DummyPreview />}
+  visualPlacement="right"
+  background="raised"
+/>
+```
+
+Props: `eyebrow?`, `title`, `description?`, `actions?`, `visual?`, `visualPlacement?: "right" | "left"` (default `"right"`), `background?: "default" | "raised"` (default `"default"`), `textWidth?: "narrow" | "balanced" | "wide"` (default `"wide"`). Without a `visual`, renders as centered single-column.
 
 ### Badge
 

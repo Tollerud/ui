@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.28 — 2026-07-02 — Add PromoSection marketing block
+
+### Added
+
+- `PromoSection` — two-column marketing block with a text column and a consumer-controlled visual slot. Props: `eyebrow`, `title`, `description`, `actions`, `visual`, `visualPlacement?: "right" | "left"` (default `"right"`), `background?: "default" | "raised"` (default `"default"`), `textWidth?: "narrow" | "balanced" | "wide"` (default `"wide"`). Collapses to single-column on small viewports.
+
 ## 4.8.27 — 2026-07-02 — Add PriceDisplay and ListCard; extend Card accent; fix Sparkline clipping
 
 ### Added

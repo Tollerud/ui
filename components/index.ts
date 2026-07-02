@@ -322,6 +322,9 @@ export { ListCard } from './ListCard'
 export type { ListCardProps } from './ListCard'
 
 // ── Marketing blocks ──
+export { PromoSection } from './PromoSection'
+export type { PromoSectionProps, PromoSectionVisualPlacement, PromoSectionBackground, PromoSectionTextWidth } from './PromoSection'
+
 export { HeroBlock } from './HeroBlock'
 export type { HeroBlockProps } from './HeroBlock'
 
