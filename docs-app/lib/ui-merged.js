@@ -89,6 +89,8 @@ export {
 
 export { DataTable as PackageDataTable } from '@tollerud/ui'
 
+export { PriceDisplay, ListCard } from '@tollerud/ui'
+
 export { FeatureCard, PricingCard } from './docs-adapters'
 
 export const {

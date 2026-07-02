@@ -7,6 +7,21 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.27 — 2026-07-02 — Add PriceDisplay and ListCard; extend Card accent; fix Sparkline clipping
+
+### Added
+
+- `PriceDisplay` — compact price display with a primary value and an optional secondary `Badge`. `highlight="cheapest"` switches to success coloring. `align?: "left" | "right"` (default `"right"`) for list row and table cell use.
+- `ListCard` — hover card shell for list and grid items. Renders as `<a>` when `href` is provided. `highlight="cheapest"` applies a yellow border tint. Children are consumer-controlled.
+
+### Changed
+
+- `Card` — `accent` now accepts `true | "filled" | false`. `accent="filled"` adds `bg-tollerud-yellow/5` in addition to the yellow border tint, for callout boxes and cheapest-item highlights. Existing `accent={true}` behaviour is unchanged.
+
+### Fixed
+
+- `Sparkline` — added `viewBox` and `overflow="hidden"` to the SVG so stroke bleed from `strokeLinecap="round"` no longer escapes the element bounds at small sizes (e.g. `84×26` with `curve="step"` and `fill`).
+
 ## 4.8.26 — 2026-06-23 — Fix mobile scroll lag on portalled dropdowns
 
 ### Fixed

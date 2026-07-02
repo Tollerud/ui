@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
+const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard } = __p
 
 /* @tollerud/ui docs — Components gallery */
 function PageComponents({ go }) {
@@ -170,7 +170,7 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="Card" component="Card" permalink="components/card" desc="The default surface. Add an accent for a yellow-bordered, highlighted card.">
+      <Section title="Card" component="Card" permalink="components/card" desc="The default surface. accent={true} adds a yellow border tint. accent='filled' adds a yellow border + subtle yellow fill — use for callout boxes, cheapest-item highlights, and CTAs.">
         <Demo name="cards" code={`<Card>
   <Stack gap="sm">
     <StatusDot status="online" label="emma — ready" />
@@ -182,8 +182,14 @@ export function ButtonGlowRoot() {
     <StatusDot status="warning" label="iris — review" />
     <Badge variant="warning">attention</Badge>
   </Stack>
+</Card>
+<Card accent="filled">
+  <Stack gap="sm">
+    <StatusDot status="warning" label="pia — cheapest" />
+    <Badge variant="success">best price</Badge>
+  </Stack>
 </Card>`}>
-          <CardGrid columns={2}>
+          <CardGrid columns={3}>
             <Card>
               <Stack gap="sm">
                 <StatusDot status="online" label="emma — ready" />
@@ -196,7 +202,68 @@ export function ButtonGlowRoot() {
                 <Badge variant="warning">attention</Badge>
               </Stack>
             </Card>
+            <Card accent="filled">
+              <Stack gap="sm">
+                <StatusDot status="warning" label="pia — cheapest" />
+                <Badge variant="success">best price</Badge>
+              </Stack>
+            </Card>
           </CardGrid>
+        </Demo>
+      </Section>
+
+      <Section title="PriceDisplay" component="PriceDisplay" permalink="components/price-display" desc="Compact price display: a primary value with an optional secondary Badge below it. Use highlight='cheapest' to switch to success coloring for the best-value item. Defaults to right-aligned for use in list rows and table cells.">
+        <Demo name="price-display" variant="col" code={`<PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+<PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+<PriceDisplay primary="62,0 kr/l" secondary="31,00 kr" align="left" />`}>
+          <div className="ds-col" style={{ gap: 16, width: '100%', maxWidth: 320 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Vinmonopolet Majorstuen</span>
+              <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Meny Aker Brygge</span>
+              <PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Rema 1000 Grünerløkka</span>
+              <PriceDisplay primary="62,0 kr/l" secondary="31,00 kr" />
+            </div>
+          </div>
+        </Demo>
+      </Section>
+
+      <Section title="ListCard" component="ListCard" permalink="components/list-card" desc="Hover card shell for list and grid items. Pass href to render as a link. Use highlight='cheapest' for a yellow border tint on the best-value item. Children are fully consumer-controlled — compose with Cluster or Split for left/right layouts.">
+        <Demo name="list-card" variant="col" code={`<ListCard href="/beers/1">
+  <span>Hansa Pilsner 0,5l</span>
+</ListCard>
+<ListCard href="/beers/2" highlight="cheapest">
+  <span>Tuborg Classic 0,5l</span>
+  <Badge variant="success" style={{ marginLeft: 'auto' }}>cheapest</Badge>
+</ListCard>`}>
+          <div className="ds-col" style={{ gap: 8, width: '100%', maxWidth: 400 }}>
+            <ListCard href="#" onClick={e => e.preventDefault()}>
+              <Stack gap="xs" style={{ flex: 1 }}>
+                <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--foreground)' }}>Hansa Pilsner</span>
+                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>0,5 l · 4,7%</span>
+              </Stack>
+              <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+            </ListCard>
+            <ListCard href="#" highlight="cheapest" onClick={e => e.preventDefault()}>
+              <Stack gap="xs" style={{ flex: 1 }}>
+                <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--foreground)' }}>Tuborg Classic</span>
+                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>0,5 l · 4,6%</span>
+              </Stack>
+              <PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+            </ListCard>
+            <ListCard href="#" onClick={e => e.preventDefault()}>
+              <Stack gap="xs" style={{ flex: 1 }}>
+                <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--foreground)' }}>Ringnes 0,0%</span>
+                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>0,5 l · 0,0%</span>
+              </Stack>
+              <PriceDisplay primary="62,0 kr/l" secondary="31,00 kr" />
+            </ListCard>
+          </div>
         </Demo>
       </Section>
 

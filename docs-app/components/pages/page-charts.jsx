@@ -334,7 +334,7 @@ function PageCharts() {
         title="Sparkline"
         component="Sparkline"
         permalink="charts/sparkline"
-        desc='Compact inline SVG trend. Add curve="step", fill, and interactive for price-style micro charts with a hover dot — common in DataTable cells.'
+        desc='Compact inline SVG trend. Add curve="step", fill, and interactive for price-style micro charts with a hover dot — common in DataTable cells. The SVG is clipped to its viewBox so stroke bleed at small sizes (e.g. 84×26) is prevented.'
       >
         <Card>
           <div className="ds-col" style={{ gap: 14 }}>
@@ -372,6 +372,10 @@ function PageCharts() {
             width={160}
             height={36}
           />
+        </Demo>
+        <SubHead>Small size — step+fill at 84×26 (list row usage)</SubHead>
+        <Demo name="sparkline-step-small" variant="center" code={`<Sparkline data={[58, 57, 59, 56, 54, 53]} curve="step" fill width={84} height={26} />`}>
+          <Sparkline data={[58, 57, 59, 56, 54, 53]} curve="step" fill width={84} height={26} />
         </Demo>
       </Section>
 

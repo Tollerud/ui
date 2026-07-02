@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.8.26",
+  "version": "4.8.27",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -1297,6 +1297,34 @@
       "description": "Compact inline sparkline with optional step curve, fill, and hover dot",
       "files": [
         "components/Sparkline.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "type": "components:ui"
+    },
+    "price-display": {
+      "name": "PriceDisplay",
+      "description": "Compact price display with primary value and optional secondary Badge. highlight='cheapest' switches to success coloring.",
+      "files": [
+        "components/PriceDisplay.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "badge"
+      ],
+      "type": "components:ui"
+    },
+    "list-card": {
+      "name": "ListCard",
+      "description": "Hover card shell for list and grid items. Renders as <a> when href is provided. highlight='cheapest' applies yellow border tint.",
+      "files": [
+        "components/ListCard.tsx"
       ],
       "dependencies": [
         "clsx",

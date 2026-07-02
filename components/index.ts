@@ -315,6 +315,12 @@ export type { DonutProps, DonutSegment } from './Donut'
 export { Sparkline } from './Sparkline'
 export type { SparklineProps } from './Sparkline'
 
+export { PriceDisplay } from './PriceDisplay'
+export type { PriceDisplayProps } from './PriceDisplay'
+
+export { ListCard } from './ListCard'
+export type { ListCardProps } from './ListCard'
+
 // ── Marketing blocks ──
 export { HeroBlock } from './HeroBlock'
 export type { HeroBlockProps } from './HeroBlock'

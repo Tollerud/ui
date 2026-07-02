@@ -334,9 +334,24 @@ Opt-in on any element: add class `tollerud-btn-glow`. Subpath: `import { initBut
 </ButtonGroup>
 ```
 
-**Card** — `accent?: boolean`, `density?: 'comfortable' | 'compact'`. Plain `<div>` wrapper — safe to nest in `<Link>`.
+**Card** — `accent?: boolean | 'filled'`, `density?: 'comfortable' | 'compact'`. `accent={true}` = yellow border tint; `accent="filled"` = yellow border + `bg-tollerud-yellow/5` fill (callouts, cheapest-item highlights). Plain `<div>` wrapper — safe to nest in `<Link>`.
 ```tsx
 <Card accent>Highlighted with yellow border</Card>
+<Card accent="filled">Callout with yellow fill</Card>
+```
+
+**PriceDisplay** — compact price block: `primary: string` (large value), `secondary?: string` (Badge below), `highlight?: "cheapest" | false`, `align?: "left" | "right"` (default `"right"`). Designed for list rows and table cells.
+```tsx
+<PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+<PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+```
+
+**ListCard** — hover card shell: `href?: string` (renders as `<a>`), `highlight?: "cheapest" | false` (yellow border tint), `external?: boolean`. Children are consumer-controlled.
+```tsx
+<ListCard href="/beers/1">
+  <span>Hansa Pilsner</span>
+  <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+</ListCard>
 ```
 
 **Badge** — `variant`: `default` · `accent` · `success` · `error` · `info` · `warning`.
@@ -796,6 +811,9 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)
 - **`StatCard` arrow direction fix (≥ 4.8.19)** — `direction: 'up'` now shows an up arrow (was showing down arrow due to inverted `rotate-180` condition)
 - **Form field height alignment (≥ 4.8.18)** — all form field triggers (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) use `text-base py-2.5`. Earlier versions mixed `text-sm`/`text-base` and `py-2`/`py-2.5`, causing height differences when combining field types.
+- **`PriceDisplay` + `ListCard` added (≥ 4.8.27)** — new consumer-facing components for list rows.
+- **`Card` `accent="filled"` (≥ 4.8.27)** — adds yellow fill in addition to border tint; existing `accent={true}` unchanged.
+- **`Sparkline` SVG clip fix (≥ 4.8.27)** — `overflow="hidden"` prevents stroke bleed at small sizes with `curve="step"` and `fill`.
 - **Portalled dropdown mobile scroll fix (≥ 4.8.26)** — `Combobox`, `Select`, `DatePicker`, and `Segmented` now close on outside scroll on touch devices instead of lagging to reposition.
 - **`TopNav` `mobileMenuExtra` slot (≥ 4.8.24)** — inject arbitrary content at the bottom of the mobile nav sheet, separated by a divider.
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)

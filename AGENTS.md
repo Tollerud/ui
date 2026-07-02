@@ -233,7 +233,37 @@ Sizes: `sm` · `md` · `lg`
 ```tsx
 <Card>Content</Card>
 <Card accent>Highlighted with yellow border</Card>
+<Card accent="filled">Callout with yellow border + fill — for cheapest-item highlights and CTAs</Card>
 ```
+
+### PriceDisplay
+
+Compact price block for list rows and table cells.
+
+```tsx
+<PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+<PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+<PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" align="left" />
+```
+
+Props: `primary: string`, `secondary?: string`, `highlight?: "cheapest" | false`, `align?: "left" | "right"` (default `"right"`).
+
+### ListCard
+
+Hover card shell for list and grid rows. Renders as `<a>` when `href` is provided.
+
+```tsx
+<ListCard href="/beers/1">
+  <span>Hansa Pilsner</span>
+  <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+</ListCard>
+<ListCard href="/beers/2" highlight="cheapest">
+  <span>Tuborg Classic</span>
+  <PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+</ListCard>
+```
+
+Props: `href?: string`, `highlight?: "cheapest" | false`, `external?: boolean`.
 
 ### Badge
 

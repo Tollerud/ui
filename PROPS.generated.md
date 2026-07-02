@@ -117,7 +117,10 @@
 
 ## Card — `CardProps` extends extends HTMLAttributes<HTMLDivElement>
 
-- `accent?: boolean`
+- `* `true` — yellow border tint (`border-tollerud-yellow/25`), no fill.`
+- `* `"filled"` — yellow border + subtle yellow background fill (`bg-tollerud-yellow/5`). Use for callout boxes, cheapest-item highlights, and CTAs.`
+- `*/`
+- `accent?: boolean | 'filled'`
 - `density?: 'comfortable' | 'compact'`
 
 ## CardGrid — `CardGridProps` extends extends HTMLAttributes<HTMLDivElement>
@@ -413,6 +416,15 @@
 - `keys: string | string[]`
 - `size?: 'sm' | 'md'`
 
+## ListCard — `ListCardProps` extends extends HTMLAttributes<HTMLElement>
+
+- `href?: string`
+- `* `"cheapest"` applies a yellow border tint to flag the best-value item.`
+- `* `false` (default) uses the standard border.`
+- `*/`
+- `highlight?: 'cheapest' | false`
+- `external?: boolean`
+
 ## LogViewer — `LogViewerProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `lines: LogLine[]`
@@ -524,6 +536,16 @@
 ## Pill — `PillProps` extends extends HTMLAttributes<HTMLSpanElement>
 
 - `variant?: keyof typeof pillVariants`
+
+## PriceDisplay — `PriceDisplayProps` extends extends HTMLAttributes<HTMLDivElement>
+
+- `primary: string`
+- `secondary?: string`
+- `* `"cheapest"` switches the primary value to success color and the badge to `variant="success"`.`
+- `* `false` (default) uses muted text for the primary and default badge styling.`
+- `*/`
+- `highlight?: 'cheapest' | false`
+- `align?: 'left' | 'right'`
 
 ## PricingCard — `PricingCardProps` extends extends HTMLAttributes<HTMLDivElement>
 

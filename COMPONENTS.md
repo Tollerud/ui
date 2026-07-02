@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.26**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.27**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -183,7 +183,8 @@ Props: `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. C
 | Class | React | Props |
 |-------|-------|-------|
 | `.tollerud-card` | `<Card>` | — |
-| `.tollerud-card border-tollerud-yellow/25` | `<Card accent>` | accent: boolean |
+| `.tollerud-card border-tollerud-yellow/25` | `<Card accent>` | accent: `true` |
+| `.tollerud-card border-tollerud-yellow/25 bg-tollerud-yellow/5` | `<Card accent="filled">` | accent: `"filled"` |
 
 ```jsx
 <Card>
@@ -192,7 +193,38 @@ Props: `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. C
 <Card accent>
   <p>Highlighted card with yellow border</p>
 </Card>
+<Card accent="filled">
+  <p>Callout with yellow border + fill — cheapest-item highlights, CTAs</p>
+</Card>
 ```
+
+## PriceDisplay
+
+Compact price display for list rows and table cells. Primary value rendered large, optional secondary shown as a `Badge` below.
+
+```tsx
+<PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+<PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+```
+
+Props: `primary: string`, `secondary?: string`, `highlight?: "cheapest" | false`, `align?: "left" | "right"` (default `"right"`).
+
+## ListCard
+
+Hover card shell for list and grid items. Uses `border-tollerud-noir-800 bg-tollerud-noir-900/40` base with hover transitions. Renders as `<a>` when `href` is provided — children are consumer-controlled.
+
+```tsx
+<ListCard href="/beers/1">
+  <span>Hansa Pilsner</span>
+  <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+</ListCard>
+<ListCard href="/beers/2" highlight="cheapest">
+  <span>Tuborg Classic</span>
+  <PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+</ListCard>
+```
+
+Props: `href?: string`, `highlight?: "cheapest" | false`, `external?: boolean`.
 
 ## Badge
 
@@ -803,6 +835,8 @@ Types: `TimeSeriesPoint` — `{ date: Date | string | number; value: number; lab
 ```
 
 Props: `data: number[]`, `width?`, `height?`, `color?`, `curve?: 'linear' | 'step'`, `fill?`, `interactive?`. Deprecated aliases: `w`, `h`.
+
+The SVG is clipped to its viewBox so stroke bleed from `strokeLinecap="round"` does not escape the element at small sizes (e.g. `84×26` with `curve="step"` and `fill`).
 
 ### AreaChart
 
