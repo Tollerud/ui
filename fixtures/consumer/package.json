@@ -15,7 +15,7 @@
     "@radix-ui/react-tooltip": "^1.2.9",
     "@tollerud/ui": "file:../../tollerud-ui-4.8.28.tgz",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.40.0",
+    "framer-motion": "^12.42.2",
     "lucide-react": "^1.21.0",
     "next": "^16.2.9",
     "react": "^19.0.0",
