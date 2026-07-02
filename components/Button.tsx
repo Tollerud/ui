@@ -1,6 +1,7 @@
 import { type ButtonHTMLAttributes, forwardRef } from 'react'
-import { Slot } from '@radix-ui/react-slot'
+import { Slot, Slottable } from '@radix-ui/react-slot'
 import { cn } from '@/lib/utils'
+import { Spinner } from './Spinner'
 
 type GhostSemantic = 'success' | 'warning' | 'info' | 'error'
 
@@ -60,17 +61,24 @@ export function buttonVariants({ variant = 'secondary', size = 'md', className }
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariantProps {
   /** Render as the single child element (e.g. a `<Link>`) instead of a `<button>`, merging props and styles onto it. */
   asChild?: boolean
+  /** Show a spinner and disable the button while an async action is in progress. */
+  loading?: boolean
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'secondary', size = 'md', asChild = false, ...props }, ref) => {
+  ({ className, variant = 'secondary', size = 'md', asChild = false, loading, disabled, children, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button'
     return (
       <Comp
         ref={ref}
+        disabled={disabled || loading}
+        aria-busy={loading || undefined}
         className={buttonVariants({ variant, size, className })}
         {...props}
-      />
+      >
+        {loading && <Spinner size={14} aria-hidden="true" />}
+        <Slottable>{children}</Slottable>
+      </Comp>
     )
   }
 )

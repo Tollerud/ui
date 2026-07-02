@@ -6,10 +6,10 @@ import { cn } from '@/lib/utils'
 
 const TooltipProvider = TooltipPrimitive.Provider
 
-/* ── Mobile-friendly Tooltip ──
-   Opens on hover (desktop) AND on click/tap (mobile).
+/* ── Mobile + keyboard-friendly Tooltip ──
+   Opens on hover (desktop), focus (keyboard), and click/tap (mobile).
    Uses React context so the Trigger can toggle Root's open state.
-   Closes on second click/tap or click outside. */
+   Closes on blur, second click/tap, or click outside. */
 
 type TooltipContextValue = {
   open: boolean
@@ -43,7 +43,7 @@ Tooltip.displayName = 'Tooltip'
 const TooltipTrigger = React.forwardRef<
   React.ComponentRef<typeof TooltipPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>
->(({ onClick, onTouchStart, children, ...props }, ref) => {
+>(({ onClick, onTouchStart, onFocus, onBlur, children, ...props }, ref) => {
   const ctx = React.useContext(TooltipContext)
   const touchFired = React.useRef(false)
 
@@ -69,6 +69,14 @@ const TooltipTrigger = React.forwardRef<
           ctx.setOpen(true)
         }
         onTouchStart?.(e)
+      }}
+      onFocus={(e) => {
+        ctx?.setOpen(true)
+        onFocus?.(e)
+      }}
+      onBlur={(e) => {
+        ctx?.setOpen(false)
+        onBlur?.(e)
       }}
       {...props}
     >

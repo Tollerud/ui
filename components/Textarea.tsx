@@ -1,4 +1,4 @@
-import { type TextareaHTMLAttributes, forwardRef } from 'react'
+import { type TextareaHTMLAttributes, forwardRef, useId } from 'react'
 import { cn } from '@/lib/utils'
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -7,17 +7,24 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
 }
 
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, label, error, id, ...props }, ref) => {
+  ({ className, label, error, id, required, ...props }, ref) => {
+    const autoErrorId = useId()
+    const errorId = error ? autoErrorId : undefined
     return (
       <div className="flex flex-col gap-1">
         {label && (
           <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
             {label}
+            {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
           </label>
         )}
         <textarea
           ref={ref}
           id={id}
+          required={required}
+          aria-required={required || undefined}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
           className={cn(
             'font-sans text-base px-3 py-2.5 rounded min-h-[80px] resize-y',
             'bg-tollerud-surface-raised border',
@@ -31,7 +38,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         {error && (
-          <p className="text-xs text-tollerud-error mt-0.5">{error}</p>
+          <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>
         )}
       </div>
     )

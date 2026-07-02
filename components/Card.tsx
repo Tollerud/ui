@@ -1,4 +1,5 @@
 import { type HTMLAttributes, forwardRef } from 'react'
+import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@/lib/utils'
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
@@ -8,12 +9,15 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
    */
   accent?: boolean | 'filled'
   density?: 'comfortable' | 'compact'
+  /** Render as the single child element instead of a `<div>`, merging props and styles onto it. */
+  asChild?: boolean
 }
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, accent, density, ...props }, ref) => {
+  ({ className, accent, density, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : 'div'
     return (
-      <div
+      <Comp
         ref={ref}
         data-density={density ?? undefined}
         className={cn(

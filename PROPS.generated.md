@@ -104,6 +104,7 @@
 ## Button — `ButtonProps` extends extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariantProps
 
 - `asChild?: boolean`
+- `loading?: boolean`
 
 ## Button — `ButtonVariantProps`
 
@@ -122,6 +123,7 @@
 - `*/`
 - `accent?: boolean | 'filled'`
 - `density?: 'comfortable' | 'compact'`
+- `asChild?: boolean`
 
 ## CardGrid — `CardGridProps` extends extends HTMLAttributes<HTMLDivElement>
 
@@ -164,6 +166,7 @@
 - `searchPlacement?: 'trigger' | 'dropdown'`
 - `className?: string`
 - `disabled?: boolean`
+- `required?: boolean`
 
 ## CommandMenu — `CommandMenuProps`
 
@@ -255,6 +258,7 @@
 - `formatDate?: (date: Date) => string`
 - `className?: string`
 - `disabled?: boolean`
+- `required?: boolean`
 
 ## DetailPage — `DetailPageProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
@@ -340,6 +344,7 @@
 - `onFilesChange?: (files: File[]) => void`
 - `className?: string`
 - `disabled?: boolean`
+- `required?: boolean`
 
 ## FormPanel — `FormPanelProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
@@ -586,6 +591,7 @@
 - `name?: string`
 - `children?: React.ReactNode`
 - `className?: string`
+- `required?: boolean`
 
 ## RadioGroup — `RadioProps` extends extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>
 
@@ -631,6 +637,7 @@
 - `onChange?: (value: string) => void`
 - `layout?: 'stacked' | 'inline'`
 - `size?: 'md' | 'sm'`
+- `required?: boolean`
 
 ## ServiceHealthCard — `ServiceHealthCardProps` extends extends HTMLAttributes<HTMLDivElement>
 
@@ -757,6 +764,7 @@
 - `max?: number`
 - `className?: string`
 - `disabled?: boolean`
+- `required?: boolean`
 
 ## Textarea — `TextareaProps` extends extends TextareaHTMLAttributes<HTMLTextAreaElement>
 

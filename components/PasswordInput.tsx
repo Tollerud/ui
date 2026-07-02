@@ -1,6 +1,6 @@
 'use client'
 
-import { type InputHTMLAttributes, forwardRef, useState } from 'react'
+import { type InputHTMLAttributes, forwardRef, useId, useState } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -10,14 +10,17 @@ export interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputEl
 }
 
 const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  ({ className, label, error, id, ...props }, ref) => {
+  ({ className, label, error, id, required, ...props }, ref) => {
     const [visible, setVisible] = useState(false)
+    const autoErrorId = useId()
+    const errorId = error ? autoErrorId : undefined
 
     return (
       <div className="flex flex-col gap-1">
         {label && (
           <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
             {label}
+            {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
           </label>
         )}
         <div className="relative">
@@ -25,6 +28,10 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             ref={ref}
             id={id}
             type={visible ? 'text' : 'password'}
+            required={required}
+            aria-required={required || undefined}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={errorId}
             className={cn(
               'w-full font-sans text-base px-3 py-2.5 pr-10 rounded',
               'bg-tollerud-surface-raised border',
@@ -47,7 +54,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             {visible ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </div>
-        {error && <p className="text-xs text-tollerud-error mt-0.5">{error}</p>}
+        {error && <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>}
       </div>
     )
   }

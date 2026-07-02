@@ -84,6 +84,13 @@ function PageForms() {
             <Input label="Readonly" readOnly defaultValue="sk-tollerud-••••••••" style={{ cursor: 'default', opacity: 0.75 }}/>
           </div>
         </Demo>
+        <Demo name="input-required" variant="col" desc="required adds aria-required and a red * next to the label. error wires aria-invalid and aria-describedby to the message." code={`<Input label="Server name" required placeholder="e.g. emma.tollerud.no" />
+<Input label="API key" required error="API key is required" />`}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%', maxWidth: 320 }}>
+            <Input label="Server name" required placeholder="e.g. emma.tollerud.no" />
+            <Input label="API key" required error="API key is required" />
+          </div>
+        </Demo>
       </Section>
 
       <Section title="Textarea & Select" desc="Multiline entry and a styled native select with custom chevron.">

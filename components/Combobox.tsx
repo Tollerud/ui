@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useMemo, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { Check, ChevronDown, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { FloatingDropdownPortal } from '@/lib/floating-dropdown'
@@ -38,6 +38,7 @@ export interface ComboboxProps {
   searchPlacement?: 'trigger' | 'dropdown'
   className?: string
   disabled?: boolean
+  required?: boolean
 }
 
 const defaultFilter = (option: ComboboxOption, query: string) =>
@@ -64,22 +65,28 @@ function filterGroups(
     .filter((group) => group.options.length > 0)
 }
 
-function Combobox({
-  options = [],
-  groups,
-  value: valueProp,
-  defaultValue,
-  onChange,
-  placeholder = 'Search…',
-  label,
-  error,
-  filter = defaultFilter,
-  searchPlacement = 'trigger',
-  className,
-  disabled,
-}: ComboboxProps) {
+const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
+  {
+    options = [],
+    groups,
+    value: valueProp,
+    defaultValue,
+    onChange,
+    placeholder = 'Search…',
+    label,
+    error,
+    filter = defaultFilter,
+    searchPlacement = 'trigger',
+    className,
+    disabled,
+    required,
+  },
+  ref
+) {
   const id = useId()
-  const rootRef = useRef<HTMLDivElement>(null)
+  const autoErrorId = useId()
+  const errorId = error ? autoErrorId : undefined
+  const internalRootRef = useRef<HTMLDivElement>(null)
   const anchorRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
   const dropdownSearchRef = useRef<HTMLInputElement>(null)
@@ -110,11 +117,20 @@ function Combobox({
 
   const selected = allOptions.find((option) => option.value === value)
 
+  const setRootRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      internalRootRef.current = node
+      if (typeof ref === 'function') ref(node)
+      else if (ref) ref.current = node
+    },
+    [ref]
+  )
+
   useEffect(() => {
     if (!open) return
     function onClickOutside(e: MouseEvent) {
       const target = e.target as Node
-      if (rootRef.current?.contains(target)) return
+      if (internalRootRef.current?.contains(target)) return
       if (listRef.current?.contains(target)) return
       setOpen(false)
       setQuery('')
@@ -224,10 +240,11 @@ function Combobox({
   )
 
   return (
-    <div ref={rootRef} className={cn('relative flex flex-col gap-1', className)}>
+    <div ref={setRootRef} className={cn('relative flex flex-col gap-1', className)}>
       {label && (
         <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
           {label}
+          {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
         </label>
       )}
       <div ref={anchorRef} className="relative">
@@ -239,6 +256,9 @@ function Combobox({
             aria-expanded={open}
             aria-controls={`${id}-listbox`}
             aria-haspopup="listbox"
+            aria-required={required || undefined}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={errorId}
             disabled={disabled}
             onClick={() => {
               if (open) {
@@ -289,6 +309,9 @@ function Combobox({
               aria-expanded={open}
               aria-autocomplete="list"
               aria-controls={`${id}-listbox`}
+              aria-required={required || undefined}
+              aria-invalid={error ? true : undefined}
+              aria-describedby={errorId}
               disabled={disabled}
               value={open ? query : selected?.label ?? ''}
               placeholder={selected ? selected.label : placeholder}
@@ -362,10 +385,10 @@ function Combobox({
         )}
       </FloatingDropdownPortal>
 
-      {error && <p className="text-xs text-tollerud-error mt-0.5">{error}</p>}
+      {error && <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>}
     </div>
   )
-}
+})
 Combobox.displayName = 'Combobox'
 
 export { Combobox }

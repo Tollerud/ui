@@ -1,4 +1,4 @@
-import { type InputHTMLAttributes, forwardRef } from 'react'
+import { type InputHTMLAttributes, forwardRef, useId } from 'react'
 import { cn } from '@/lib/utils'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,17 +7,24 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, id, ...props }, ref) => {
+  ({ className, label, error, id, required, ...props }, ref) => {
+    const autoErrorId = useId()
+    const errorId = error ? autoErrorId : undefined
     return (
       <div className="flex flex-col gap-1">
         {label && (
           <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
             {label}
+            {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
           </label>
         )}
         <input
           ref={ref}
           id={id}
+          required={required}
+          aria-required={required || undefined}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
           className={cn(
             'font-sans text-base px-3 py-2.5 rounded',
             'bg-tollerud-surface-raised border',
@@ -31,7 +38,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {error && (
-          <p className="text-xs text-tollerud-error mt-0.5">{error}</p>
+          <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>
         )}
       </div>
     )

@@ -24,12 +24,15 @@ export interface RadioGroupProps {
   name?: string
   children?: React.ReactNode
   className?: string
+  required?: boolean
 }
 
 const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
-  ({ label, error, value, onChange, name: nameProp, children, className }, ref) => {
+  ({ label, error, value, onChange, name: nameProp, children, className, required }, ref) => {
     const autoName = useId()
+    const autoErrorId = useId()
     const name = nameProp ?? autoName
+    const errorId = error ? autoErrorId : undefined
 
     const wired = Children.map(children, (child) => {
       if (!isValidElement(child)) return child
@@ -51,15 +54,22 @@ const RadioGroup = forwardRef<HTMLFieldSetElement, RadioGroupProps>(
     })
 
     return (
-      <fieldset ref={ref} className={cn('flex flex-col gap-1', className)}>
+      <fieldset
+        ref={ref}
+        aria-required={required || undefined}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={errorId}
+        className={cn('flex flex-col gap-1', className)}
+      >
         {label && (
           <legend className="text-xs font-medium text-tollerud-text-muted mb-1">
             {label}
+            {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
           </legend>
         )}
         <div className="flex flex-col gap-2">{wired}</div>
         {error && (
-          <p className="text-xs text-tollerud-error mt-0.5">{error}</p>
+          <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>
         )}
       </fieldset>
     )

@@ -1,6 +1,6 @@
 'use client'
 
-import { type DragEvent, useId, useRef, useState } from 'react'
+import { type DragEvent, forwardRef, useId, useRef, useState } from 'react'
 import { Upload, X, File as FileIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -19,6 +19,7 @@ export interface FileUploadProps {
   onFilesChange?: (files: File[]) => void
   className?: string
   disabled?: boolean
+  required?: boolean
 }
 
 function formatBytes(bytes: number) {
@@ -27,19 +28,25 @@ function formatBytes(bytes: number) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
 }
 
-function FileUpload({
-  label,
-  description,
-  error,
-  clickLabel = 'Click to upload',
-  dragLabel = 'or drag and drop',
-  accept,
-  multiple,
-  onFilesChange,
-  className,
-  disabled,
-}: FileUploadProps) {
+const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(function FileUpload(
+  {
+    label,
+    description,
+    error,
+    clickLabel = 'Click to upload',
+    dragLabel = 'or drag and drop',
+    accept,
+    multiple,
+    onFilesChange,
+    className,
+    disabled,
+    required,
+  },
+  ref
+) {
   const id = useId()
+  const autoErrorId = useId()
+  const errorId = error ? autoErrorId : undefined
   const inputRef = useRef<HTMLInputElement>(null)
   const [files, setFiles] = useState<File[]>([])
   const [dragging, setDragging] = useState(false)
@@ -67,10 +74,11 @@ function FileUpload({
   }
 
   return (
-    <div className={cn('flex flex-col gap-1.5', className)}>
+    <div ref={ref} className={cn('flex flex-col gap-1.5', className)}>
       {label && (
         <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
           {label}
+          {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
         </label>
       )}
 
@@ -78,6 +86,7 @@ function FileUpload({
         role="button"
         tabIndex={disabled ? -1 : 0}
         aria-disabled={disabled}
+        aria-describedby={errorId}
         onClick={() => !disabled && inputRef.current?.click()}
         onKeyDown={(e) => {
           if (!disabled && (e.key === 'Enter' || e.key === ' ')) {
@@ -118,6 +127,10 @@ function FileUpload({
           accept={accept}
           multiple={multiple}
           disabled={disabled}
+          required={required}
+          aria-required={required || undefined}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
           onChange={(e) => addFiles(e.target.files)}
           className="sr-only"
         />
@@ -146,10 +159,10 @@ function FileUpload({
         </ul>
       )}
 
-      {error && <p className="text-xs text-tollerud-error">{error}</p>}
+      {error && <p id={errorId} className="text-xs text-tollerud-error">{error}</p>}
     </div>
   )
-}
+})
 FileUpload.displayName = 'FileUpload'
 
 export { FileUpload }

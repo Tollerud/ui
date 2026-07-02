@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.34 — 2026-07-02 — First-class a11y: aria wiring, Button loading, Tooltip focus, Card asChild, forwardRef
+
+### Added
+
+- `Button` — new `loading` prop renders an inline `Spinner`, sets `disabled` and `aria-busy="true"` while active. Width stays stable so the layout does not shift.
+
+- `Card` — new `asChild` prop (via Radix Slot) lets the card render as any element while keeping all visual classes.
+
+- `Tooltip` / `TooltipTrigger` — now opens on keyboard focus (`onFocus`) and closes on blur (`onBlur`), satisfying WCAG 2.1 SC 1.4.13. Mobile click/touch behaviour unchanged.
+
+### Changed
+
+- All form fields with an `error` prop (`Input`, `Textarea`, `PasswordInput`, `Select`, `Combobox`, `FileUpload`, `TagInput`, `DatePicker`, `RadioGroup`) — the error message element now carries a stable `id`, and the control receives `aria-describedby` and `aria-invalid="true"` when an error is present.
+
+- All form fields now accept a `required` prop (or pass it through from `HTMLAttributes`). Setting `required` adds `aria-required="true"` on the control and a red `*` marker next to the label (hidden from assistive technology via `aria-hidden`).
+
+- `FileUpload` and `Combobox` — wrapped with `forwardRef`. `FileUpload` forwards to the outer wrapper `<div>`; `Combobox` forwards to the root `<div>`.
+
 ## 4.8.33 — 2026-07-02 — Fix Card density, GlowCard glow, remove duplicate PasswordStrength doc
 
 ### Fixed

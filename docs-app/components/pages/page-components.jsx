@@ -113,6 +113,11 @@ export function ButtonGlowRoot() {
           <Button variant="ghost-warning">Pause</Button>
           <Button variant="ghost-info">Details</Button>
         </Demo>
+        <Demo name="button-loading" variant="center" desc="loading prop shows a Spinner, disables the button, and sets aria-busy." code={`<Button variant="primary" loading>Deploying…</Button>
+<Button variant="secondary" loading>Saving</Button>`}>
+          <Button variant="primary" loading>Deploying…</Button>
+          <Button variant="secondary" loading>Saving</Button>
+        </Demo>
       </Section>
 
       <Section title="Button group" component="ButtonGroup" permalink="components/button-group" desc="Fused action buttons for independent clicks — not a toggle. Wrap text or icon-only Button children; the group shares borders and height. Use Segmented when one option should stay selected.">
@@ -208,6 +213,13 @@ export function ButtonGlowRoot() {
               </Stack>
             </Card>
           </CardGrid>
+        </Demo>
+        <Demo name="card-as-child" desc="asChild lets the Card render as any element — here a link — while keeping all visual styles." code={`<Card asChild>
+  <a href="#">Visit docs →</a>
+</Card>`}>
+          <Card asChild style={{ display: 'block', maxWidth: 220 }}>
+            <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Visit docs →</a>
+          </Card>
         </Demo>
       </Section>
 

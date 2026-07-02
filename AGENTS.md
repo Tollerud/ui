@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.8.33** — `Card` density implemented; `GlowCard` glow fixed; docs in English.
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.8.34** — First-class a11y: `aria-invalid`/`aria-describedby`/`aria-required` on all form fields; `Button` `loading` prop; `Tooltip` keyboard focus; `Card` `asChild`; `FileUpload` and `Combobox` `forwardRef`.
 
 ---
 

@@ -19,10 +19,11 @@ export interface SelectProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onCha
   /** `inline` keeps the label on one row with the trigger — for dense toolbars and table footers. */
   layout?: 'stacked' | 'inline'
   size?: 'md' | 'sm'
+  required?: boolean
 }
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
-  ({ className, label, error, placeholder, options = [], value, onChange, layout = 'stacked', size = 'md', ...props }, ref) => {
+  ({ className, label, error, placeholder, options = [], value, onChange, layout = 'stacked', size = 'md', required, ...props }, ref) => {
     const [open, setOpen] = useState(false)
     const [highlightedIdx, setHighlightedIdx] = useState(0)
     const containerRef = useRef<HTMLDivElement>(null)
@@ -109,6 +110,8 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     }
 
     const triggerId = useId()
+    const autoErrorId = useId()
+    const errorId = error ? autoErrorId : undefined
 
     return (
       <div
@@ -125,6 +128,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             )}
           >
             {label}
+            {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
           </label>
         )}
         <div ref={containerRef} className={cn('relative', layout === 'inline' && 'min-w-0')}>
@@ -136,6 +140,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             onKeyDown={handleKeyDown}
             aria-haspopup="listbox"
             aria-expanded={open}
+            aria-describedby={errorId}
             aria-label={layout === 'inline' && label ? `${label}: ${selectedOption?.label ?? placeholder ?? 'Select'}` : undefined}
             className={cn(
               'font-sans w-full flex items-center justify-between rounded',
@@ -213,7 +218,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
           </FloatingDropdownPortal>
         </div>
         {error && (
-          <p className="text-xs text-tollerud-error mt-0.5">{error}</p>
+          <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>
         )}
       </div>
     )

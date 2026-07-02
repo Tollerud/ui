@@ -16,6 +16,7 @@ export interface DatePickerProps {
   formatDate?: (date: Date) => string
   className?: string
   disabled?: boolean
+  required?: boolean
 }
 
 const defaultFormat = (date: Date) =>
@@ -52,8 +53,11 @@ function DatePicker({
   formatDate = defaultFormat,
   className,
   disabled,
+  required,
 }: DatePickerProps) {
   const id = useId()
+  const autoErrorId = useId()
+  const errorId = error ? autoErrorId : undefined
   const rootRef = useRef<HTMLDivElement>(null)
   const anchorRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
@@ -91,6 +95,7 @@ function DatePicker({
       {label && (
         <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
           {label}
+          {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
         </label>
       )}
       <button
@@ -104,6 +109,7 @@ function DatePicker({
         }}
         aria-haspopup="dialog"
         aria-expanded={open}
+        aria-describedby={errorId}
         className={cn(
           'flex w-full items-center justify-between gap-2 rounded px-3 py-2.5 text-left text-base',
           'bg-tollerud-surface-raised border',
@@ -181,7 +187,7 @@ function DatePicker({
           </div>
       </FloatingDropdownPortal>
 
-      {error && <p className="text-xs text-tollerud-error mt-0.5">{error}</p>}
+      {error && <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>}
     </div>
   )
 }

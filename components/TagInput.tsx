@@ -15,6 +15,7 @@ export interface TagInputProps {
   max?: number
   className?: string
   disabled?: boolean
+  required?: boolean
 }
 
 function TagInput({
@@ -27,8 +28,11 @@ function TagInput({
   max,
   className,
   disabled,
+  required,
 }: TagInputProps) {
   const id = useId()
+  const autoErrorId = useId()
+  const errorId = error ? autoErrorId : undefined
   const isControlled = valueProp !== undefined
   const [internalTags, setInternalTags] = useState<string[]>(defaultValue)
   const tags = isControlled ? valueProp : internalTags
@@ -67,6 +71,7 @@ function TagInput({
       {label && (
         <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
           {label}
+          {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
         </label>
       )}
       <div
@@ -103,13 +108,16 @@ function TagInput({
           onKeyDown={onKeyDown}
           onBlur={() => addTag(draft)}
           placeholder={atMax ? '' : placeholder}
+          aria-required={required || undefined}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={errorId}
           className={cn(
             'min-w-[6rem] flex-1 bg-transparent py-0.5 text-sm text-tollerud-text-primary',
             'placeholder:text-tollerud-text-muted focus:outline-none'
           )}
         />
       </div>
-      {error && <p className="text-xs text-tollerud-error mt-0.5">{error}</p>}
+      {error && <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>}
     </div>
   )
 }

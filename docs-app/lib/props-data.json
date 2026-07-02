@@ -179,7 +179,8 @@
       "name": "ButtonProps",
       "extends": "extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariantProps",
       "props": [
-        "asChild?: boolean"
+        "asChild?: boolean",
+        "loading?: boolean"
       ]
     }
   ],
@@ -214,7 +215,8 @@
         "* `\"filled\"` — yellow border + subtle yellow background fill (`bg-tollerud-yellow/5`). Use for callout boxes, cheapest-item highlights, and CTAs.",
         "*/",
         "accent?: boolean | 'filled'",
-        "density?: 'comfortable' | 'compact'"
+        "density?: 'comfortable' | 'compact'",
+        "asChild?: boolean"
       ]
     }
   ],
@@ -280,7 +282,8 @@
         "*/",
         "searchPlacement?: 'trigger' | 'dropdown'",
         "className?: string",
-        "disabled?: boolean"
+        "disabled?: boolean",
+        "required?: boolean"
       ]
     }
   ],
@@ -391,7 +394,8 @@
         "placeholder?: string",
         "formatDate?: (date: Date) => string",
         "className?: string",
-        "disabled?: boolean"
+        "disabled?: boolean",
+        "required?: boolean"
       ]
     }
   ],
@@ -524,7 +528,8 @@
         "multiple?: boolean",
         "onFilesChange?: (files: File[]) => void",
         "className?: string",
-        "disabled?: boolean"
+        "disabled?: boolean",
+        "required?: boolean"
       ]
     }
   ],
@@ -898,7 +903,8 @@
         "onChange?: (value: string) => void",
         "name?: string",
         "children?: React.ReactNode",
-        "className?: string"
+        "className?: string",
+        "required?: boolean"
       ]
     },
     {
@@ -971,7 +977,8 @@
         "value?: string",
         "onChange?: (value: string) => void",
         "layout?: 'stacked' | 'inline'",
-        "size?: 'md' | 'sm'"
+        "size?: 'md' | 'sm'",
+        "required?: boolean"
       ]
     }
   ],
@@ -1175,7 +1182,8 @@
         "placeholder?: string",
         "max?: number",
         "className?: string",
-        "disabled?: boolean"
+        "disabled?: boolean",
+        "required?: boolean"
       ]
     }
   ],
