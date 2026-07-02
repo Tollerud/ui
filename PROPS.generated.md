@@ -485,11 +485,12 @@
 
 - `eyebrow?: ReactNode`
 - `title: ReactNode`
-- `* When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`.`
-- `* Use for a single word mid-sentence, e.g. title="Keep beer prices honest." shimmer="honest".`
+- `* When `title` is a string, wraps the first matching substring(s) in `.tollerud-display-shimmer`.`
+- `* Pass a string for a single accent or a string[] to shimmer multiple words/phrases.`
+- `* e.g. shimmer="honest" or shimmer={["beer", "prices"]}`
 - `*/`
-- `titleAccent?: string`
-- `shimmer?: string`
+- `titleAccent?: string | string[]`
+- `shimmer?: string | string[]`
 - `titleShimmer?: ReactNode`
 - `description?: ReactNode`
 - `actions?: ReactNode`
@@ -563,10 +564,11 @@
 
 - `eyebrow?: ReactNode`
 - `title: ReactNode`
-- `* When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`.`
-- `* e.g. title="Se hva dine favorittøl koster" shimmer="favorittøl"`
+- `* When `title` is a string, wraps the first matching substring(s) in `.tollerud-display-shimmer`.`
+- `* Pass a string for a single accent or a string[] to shimmer multiple words/phrases.`
+- `* e.g. shimmer="favorittøl" or shimmer={["favorittøl", "dine butikker"]}`
 - `*/`
-- `shimmer?: string`
+- `shimmer?: string | string[]`
 - `description?: ReactNode`
 - `actions?: ReactNode`
 - `visual?: ReactNode`

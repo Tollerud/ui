@@ -21,12 +21,13 @@ export interface PageHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 't
   eyebrow?: ReactNode
   title: ReactNode
   /**
-   * When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`.
-   * Use for a single word mid-sentence, e.g. title="Keep beer prices honest." shimmer="honest".
+   * When `title` is a string, wraps the first matching substring(s) in `.tollerud-display-shimmer`.
+   * Pass a string for a single accent or a string[] to shimmer multiple words/phrases.
+   * e.g. shimmer="honest" or shimmer={["beer", "prices"]}
    */
-  titleAccent?: string
-  /** Alias for `titleAccent` — the word (or phrase) in `title` to render with shimmer. */
-  shimmer?: string
+  titleAccent?: string | string[]
+  /** Alias for `titleAccent` — word(s) in `title` to render with shimmer. Accepts string or string[]. */
+  shimmer?: string | string[]
   /** Optional second title line rendered with display secondary + shimmer styles. */
   titleShimmer?: ReactNode
   description?: ReactNode
@@ -46,22 +47,34 @@ const titleShimmerSizes: Record<PageHeaderSize, string> = {
   lg: 'text-[40px] leading-[1]',
 }
 
-function renderAccentInTitle(text: string, accent: string): ReactNode {
-  if (!accent) return text
-  const index = text.indexOf(accent)
-  if (index === -1) return text
-  return (
-    <>
-      {text.slice(0, index)}
-      <PageHeaderShimmer>{accent}</PageHeaderShimmer>
-      {text.slice(index + accent.length)}
-    </>
-  )
+function renderAccentInTitle(text: string, accent: string | string[]): ReactNode {
+  const terms = (Array.isArray(accent) ? accent : [accent]).filter(Boolean)
+  if (terms.length === 0) return text
+
+  // Collect first occurrence of each term, sort left-to-right
+  const matches = terms
+    .map((term) => ({ term, index: text.indexOf(term) }))
+    .filter((m) => m.index !== -1)
+    .sort((a, b) => a.index - b.index)
+
+  if (matches.length === 0) return text
+
+  const nodes: ReactNode[] = []
+  let cursor = 0
+  for (const { term, index } of matches) {
+    if (index < cursor) continue // overlapping — skip
+    if (index > cursor) nodes.push(text.slice(cursor, index))
+    nodes.push(<PageHeaderShimmer key={index}>{term}</PageHeaderShimmer>)
+    cursor = index + term.length
+  }
+  if (cursor < text.length) nodes.push(text.slice(cursor))
+
+  return <>{nodes}</>
 }
 
 function renderPageHeaderTitle(
   title: ReactNode,
-  titleAccent: string | undefined,
+  titleAccent: string | string[] | undefined,
   titleShimmer: ReactNode | undefined,
   size: PageHeaderSize,
 ) {

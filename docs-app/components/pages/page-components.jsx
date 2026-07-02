@@ -271,7 +271,7 @@ export function ButtonGlowRoot() {
         <Demo name="promo-section" variant="col" code={`<PromoSection
   eyebrow="Prismatrise"
   title="Se hva dine favorittøl koster på dine butikker"
-  shimmer="favorittøl"
+  shimmer={["favorittøl", "dine butikker"]}
   description="Opprett en gratis konto og følg prisene på dine favorittøl. Sett opp varsler når prisen endrer seg."
   actions={
     <>
@@ -289,7 +289,7 @@ export function ButtonGlowRoot() {
           <PromoSection
             eyebrow="Prismatrise"
             title="Se hva dine favorittøl koster"
-            shimmer="favorittøl"
+            shimmer={["favorittøl", "dine butikker"]}
             description="Opprett en gratis konto og følg prisene på dine favorittøl. Sett opp varsler når prisen endrer seg."
             actions={
               <>

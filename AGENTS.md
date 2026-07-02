@@ -285,7 +285,7 @@ Props: `href?: string`, `highlight?: "cheapest" | false`, `external?: boolean`.
 />
 ```
 
-Props: `eyebrow?` (mono uppercase yellow, same as `PageHeader`), `title`, `shimmer?` (accents one word in `title` with shimmer — string title only), `description?`, `actions?`, `visual?`, `visualPlacement?: "right" | "left"` (default `"right"`), `background?: "default" | "raised"` (default `"default"`, raised uses `border-y` for full-bleed edge-to-edge), `textWidth?: "narrow" | "balanced" | "wide"` (default `"wide"`), `contentWidth?: "sm" | "md" | "lg" | "xl" | "full"` (default `"xl"`). Collapses to single column on mobile with text always first. Without a `visual`, renders as centered single-column.
+Props: `eyebrow?` (mono uppercase yellow, same as `PageHeader`), `title`, `shimmer?: string | string[]` (accents one or more words/phrases in `title`; array entries each get their own shimmer span), `description?`, `actions?`, `visual?`, `visualPlacement?: "right" | "left"` (default `"right"`), `background?: "default" | "raised"` (default `"default"`, raised uses `border-y` for full-bleed edge-to-edge), `textWidth?: "narrow" | "balanced" | "wide"` (default `"wide"`), `contentWidth?: "sm" | "md" | "lg" | "xl" | "full"` (default `"xl"`). Collapses to single column on mobile with text always first. Without a `visual`, renders as centered single-column.
 
 ### Badge
 

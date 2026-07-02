@@ -7,6 +7,13 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.31 — 2026-07-02 — Multi-word shimmer for PromoSection and PageHeader
+
+### Changed
+
+- `PromoSection` — `shimmer` now accepts `string | string[]`. Pass an array to accent multiple words or phrases independently. Single-string behaviour is unchanged.
+- `PageHeader` — `shimmer` / `titleAccent` now accept `string | string[]`. Same multi-accent behaviour. Overlapping matches are silently skipped; non-matching entries are ignored. No migration needed for existing single-string consumers.
+
 ## 4.8.30 — 2026-07-02 — PromoSection shimmer and PageHeader-style eyebrow
 
 ### Changed

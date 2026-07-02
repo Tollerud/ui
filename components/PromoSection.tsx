@@ -10,10 +10,11 @@ export interface PromoSectionProps extends Omit<HTMLAttributes<HTMLDivElement>, 
   eyebrow?: ReactNode
   title: ReactNode
   /**
-   * When `title` is a string, wraps the first matching substring in `.tollerud-display-shimmer`.
-   * e.g. title="Se hva dine favorittøl koster" shimmer="favorittøl"
+   * When `title` is a string, wraps the first matching substring(s) in `.tollerud-display-shimmer`.
+   * Pass a string for a single accent or a string[] to shimmer multiple words/phrases.
+   * e.g. shimmer="favorittøl" or shimmer={["favorittøl", "dine butikker"]}
    */
-  shimmer?: string
+  shimmer?: string | string[]
   description?: ReactNode
   actions?: ReactNode
   visual?: ReactNode
@@ -38,17 +39,29 @@ const textWidthClass: Record<PromoSectionTextWidth, string> = {
   wide: 'sm:grid-cols-[1.4fr_1fr]',
 }
 
-function renderTitle(title: ReactNode, shimmer: string | undefined): ReactNode {
+function renderTitle(title: ReactNode, shimmer: string | string[] | undefined): ReactNode {
   if (!shimmer || typeof title !== 'string') return title
-  const index = title.indexOf(shimmer)
-  if (index === -1) return title
-  return (
-    <>
-      {title.slice(0, index)}
-      <span className="tollerud-display-shimmer">{shimmer}</span>
-      {title.slice(index + shimmer.length)}
-    </>
-  )
+  const terms = (Array.isArray(shimmer) ? shimmer : [shimmer]).filter(Boolean)
+  if (terms.length === 0) return title
+
+  const matches = terms
+    .map((term) => ({ term, index: title.indexOf(term) }))
+    .filter((m) => m.index !== -1)
+    .sort((a, b) => a.index - b.index)
+
+  if (matches.length === 0) return title
+
+  const nodes: ReactNode[] = []
+  let cursor = 0
+  for (const { term, index } of matches) {
+    if (index < cursor) continue
+    if (index > cursor) nodes.push(title.slice(cursor, index))
+    nodes.push(<span key={index} className="tollerud-display-shimmer">{term}</span>)
+    cursor = index + term.length
+  }
+  if (cursor < title.length) nodes.push(title.slice(cursor))
+
+  return <>{nodes}</>
 }
 
 const PromoSection = forwardRef<HTMLDivElement, PromoSectionProps>(

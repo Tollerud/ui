@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.30**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.31**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -944,7 +944,7 @@ Two-column marketing block — text on one side, any visual on the other. Collap
 |------|------|---------|-------|
 | `eyebrow` | `ReactNode` | — | Mono uppercase yellow label, same style as `PageHeader` |
 | `title` | `ReactNode` | required | Main heading |
-| `shimmer` | `string` | — | Accents the first matching word in `title` with shimmer (string titles only) |
+| `shimmer` | `string \| string[]` | — | Accents one or more words/phrases in `title` with shimmer. Array entries each get their own span; overlapping/non-matching entries are skipped. |
 | `description` | `ReactNode` | — | Body paragraph |
 | `actions` | `ReactNode` | — | Slot for buttons / links |
 | `visual` | `ReactNode` | — | Any preview, image, or graphic |
