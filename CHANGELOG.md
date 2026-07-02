@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.32 — 2026-07-02 — Translate all docs demos to English
+
+### Changed (docs only)
+
+- All demo content in `docs-app/` is now in English. Affected sections: `PromoSection` (title, description, buttons, eyebrow), `PriceDisplay` (store names, currency changed to `$`), `ListCard` (beer names changed to English brands, prices in `$`), `Segmented` sort options (labels and values in English), `TimeSeriesChart` value suffix demos (`kr/l` → `$/gal`, `nb-NO` locale changed to `en-US`).
+
 ## 4.8.31 — 2026-07-02 — Multi-word shimmer for PromoSection and PageHeader
 
 ### Changed

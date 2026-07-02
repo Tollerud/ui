@@ -94,8 +94,7 @@ const TIME_SERIES_TOOLTIP = `<TimeSeriesChart
 const TIME_SERIES_VALUE_AFFIX = `<TimeSeriesChart
   data={points}
   curve="step"
-  locale="nb-NO"
-  valueSuffix=" kr/l"
+  valueSuffix=" $/gal"
 />`
 
 const TIME_SERIES_FORMAT_VALUE = `import { TimeSeriesChart, formatChartDecimal } from '@tollerud/ui'
@@ -103,8 +102,7 @@ const TIME_SERIES_FORMAT_VALUE = `import { TimeSeriesChart, formatChartDecimal }
 <TimeSeriesChart
   data={points}
   curve="step"
-  locale="nb-NO"
-  formatValue={(value) => formatChartDecimal(value, 'nb-NO', { suffix: ' kr/l' })}
+  formatValue={(value) => formatChartDecimal(value, 'en-US', { suffix: ' $/gal' })}
 />`
 
 const SPARKLINE_BASIC = `<Sparkline data={[12, 18, 14, 22, 19]} width={84} height={26} color="var(--tollerud-yellow-warm, #E8D500)" />`
@@ -288,21 +286,19 @@ function PageCharts() {
             data={RATE_SAMPLE}
             curve="step"
             height={220}
-            locale="nb-NO"
-            valueSuffix=" kr/l"
+            valueSuffix=" $/gal"
           />
         </Demo>
         <SubHead>formatValue</SubHead>
         <p className="ds-section__desc" style={{ marginTop: 0 }}>
-          <code className="ds-mono">formatValue</code> formats Y-axis ticks, the latest-value badge, and the default tooltip. It is independent of <code className="ds-mono">locale</code> (dates only). Use <code className="ds-mono">formatChartDecimal</code> for unit rates like kr/l.
+          <code className="ds-mono">formatValue</code> formats Y-axis ticks, the latest-value badge, and the default tooltip. It is independent of <code className="ds-mono">locale</code> (dates only). Use <code className="ds-mono">formatChartDecimal</code> for unit rates like $/gal.
         </p>
         <Demo name="time-series-format-value" variant="col" code={TIME_SERIES_FORMAT_VALUE}>
           <TimeSeriesChart
             data={RATE_SAMPLE}
             curve="step"
             height={220}
-            locale="nb-NO"
-            formatValue={(value) => formatChartDecimal(value, 'nb-NO', { suffix: ' kr/l' })}
+            formatValue={(value) => formatChartDecimal(value, 'en-US', { suffix: ' $/gal' })}
           />
         </Demo>
         <SubHead>Custom tooltip</SubHead>

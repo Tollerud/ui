@@ -8,11 +8,11 @@ function PageComponents({ go }) {
   const toast = useToast();
   const [density, setDensity] = useState('comfortable');
   const [pwStrength, setPwStrength] = useState('');
-  const [sort, setSort] = useState('kr-stk');
+  const [sort, setSort] = useState('price-unit');
   const sortOptions = [
-    { value: 'kr-l', label: 'kr/l' },
-    { value: 'kr-stk', label: 'kr/stk' },
-    { value: 'name', label: 'Navn' },
+    { value: 'price-per', label: '$/unit' },
+    { value: 'price-unit', label: '$/item' },
+    { value: 'name', label: 'Name' },
   ];
   const morePages = [
     { id: 'layout', icon: 'layers', t: 'Layout', d: 'Page shells, sections, stacks, grids, splits.' },
@@ -213,21 +213,21 @@ export function ButtonGlowRoot() {
       </Section>
 
       <Section title="PriceDisplay" component="PriceDisplay" permalink="components/price-display" desc="Compact price display: a primary value with an optional secondary Badge below it. Use highlight='cheapest' to switch to success coloring for the best-value item. Defaults to right-aligned for use in list rows and table cells.">
-        <Demo name="price-display" variant="col" code={`<PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
-<PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
-<PriceDisplay primary="62,0 kr/l" secondary="31,00 kr" align="left" />`}>
+        <Demo name="price-display" variant="col" code={`<PriceDisplay primary="$4.29/pt" secondary="$8.58" />
+<PriceDisplay primary="$3.99/pt" secondary="$7.98" highlight="cheapest" />
+<PriceDisplay primary="$4.79/pt" secondary="$9.58" align="left" />`}>
           <div className="ds-col" style={{ gap: 16, width: '100%', maxWidth: 320 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Vinmonopolet Majorstuen</span>
-              <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Total Wine · Downtown</span>
+              <PriceDisplay primary="$4.29/pt" secondary="$8.58" />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Meny Aker Brygge</span>
-              <PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Costco · Eastside</span>
+              <PriceDisplay primary="$3.99/pt" secondary="$7.98" highlight="cheapest" />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Rema 1000 Grünerløkka</span>
-              <PriceDisplay primary="62,0 kr/l" secondary="31,00 kr" />
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Whole Foods · Market</span>
+              <PriceDisplay primary="$4.79/pt" secondary="$9.58" />
             </div>
           </div>
         </Demo>
@@ -235,33 +235,33 @@ export function ButtonGlowRoot() {
 
       <Section title="ListCard" component="ListCard" permalink="components/list-card" desc="Hover card shell for list and grid items. Pass href to render as a link. Use highlight='cheapest' for a yellow border tint on the best-value item. Children are fully consumer-controlled — compose with Cluster or Split for left/right layouts.">
         <Demo name="list-card" variant="col" code={`<ListCard href="/beers/1">
-  <span>Hansa Pilsner 0,5l</span>
+  <span>Sierra Nevada Pale Ale · 16 oz</span>
 </ListCard>
 <ListCard href="/beers/2" highlight="cheapest">
-  <span>Tuborg Classic 0,5l</span>
+  <span>Lagunitas IPA · 16 oz</span>
   <Badge variant="success" style={{ marginLeft: 'auto' }}>cheapest</Badge>
 </ListCard>`}>
-          <div className="ds-col" style={{ gap: 8, width: '100%', maxWidth: 400 }}>
+          <div className="ds-col" style={{ gap: 8, width: '100%', maxWidth: 420 }}>
             <ListCard href="#" onClick={e => e.preventDefault()}>
               <Stack gap="xs" style={{ flex: 1 }}>
-                <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--foreground)' }}>Hansa Pilsner</span>
-                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>0,5 l · 4,7%</span>
+                <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--foreground)' }}>Sierra Nevada Pale Ale</span>
+                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>16 oz · 5.6%</span>
               </Stack>
-              <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
+              <PriceDisplay primary="$4.29/pt" secondary="$8.58" />
             </ListCard>
             <ListCard href="#" highlight="cheapest" onClick={e => e.preventDefault()}>
               <Stack gap="xs" style={{ flex: 1 }}>
-                <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--foreground)' }}>Tuborg Classic</span>
-                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>0,5 l · 4,6%</span>
+                <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--foreground)' }}>Lagunitas IPA</span>
+                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>16 oz · 6.2%</span>
               </Stack>
-              <PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+              <PriceDisplay primary="$3.99/pt" secondary="$7.98" highlight="cheapest" />
             </ListCard>
             <ListCard href="#" onClick={e => e.preventDefault()}>
               <Stack gap="xs" style={{ flex: 1 }}>
-                <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--foreground)' }}>Ringnes 0,0%</span>
-                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>0,5 l · 0,0%</span>
+                <span style={{ fontSize: 14, fontWeight: 500, color: 'var(--foreground)' }}>Heineken 0.0</span>
+                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>16 oz · 0.0%</span>
               </Stack>
-              <PriceDisplay primary="62,0 kr/l" secondary="31,00 kr" />
+              <PriceDisplay primary="$4.79/pt" secondary="$9.58" />
             </ListCard>
           </div>
         </Demo>
@@ -269,14 +269,14 @@ export function ButtonGlowRoot() {
 
       <Section title="PromoSection" component="PromoSection" permalink="components/promo-section" desc="Two-column marketing block with a text column and a consumer-controlled visual slot. Eyebrow matches PageHeader — mono uppercase yellow. Pass shimmer='word' to give one word in the title a shimmer accent. Collapses to single-column on mobile with text always first. background='raised' goes edge-to-edge with contentWidth capping the inner content.">
         <Demo name="promo-section" variant="col" code={`<PromoSection
-  eyebrow="Prismatrise"
-  title="Se hva dine favorittøl koster på dine butikker"
-  shimmer={["favorittøl", "dine butikker"]}
-  description="Opprett en gratis konto og følg prisene på dine favorittøl. Sett opp varsler når prisen endrer seg."
+  eyebrow="Beer prices"
+  title="See what your favourite beers cost across every store"
+  shimmer={["favourite beers", "every store"]}
+  description="Create a free account and track prices on your go-to beers. Set up alerts when prices change."
   actions={
     <>
-      <Button variant="primary">Opprett konto gratis</Button>
-      <Button variant="secondary">Logg inn</Button>
+      <Button variant="primary">Create free account</Button>
+      <Button variant="secondary">Sign in</Button>
     </>
   }
   visual={
@@ -287,14 +287,14 @@ export function ButtonGlowRoot() {
   background="raised"
 />`}>
           <PromoSection
-            eyebrow="Prismatrise"
-            title="Se hva dine favorittøl koster"
-            shimmer={["favorittøl", "dine butikker"]}
-            description="Opprett en gratis konto og følg prisene på dine favorittøl. Sett opp varsler når prisen endrer seg."
+            eyebrow="Beer prices"
+            title="See what your favourite beers cost across every store"
+            shimmer={["favourite beers", "every store"]}
+            description="Create a free account and track prices on your go-to beers. Set up alerts when prices change."
             actions={
               <>
-                <Button variant="primary">Opprett konto gratis</Button>
-                <Button variant="secondary">Logg inn</Button>
+                <Button variant="primary">Create free account</Button>
+                <Button variant="secondary">Sign in</Button>
               </>
             }
             visual={
