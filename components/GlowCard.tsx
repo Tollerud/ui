@@ -41,16 +41,17 @@ function GlowCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Follow-cursor glow */}
+      {/* Content */}
+      <div className="relative">{children}</div>
+      {/* Follow-cursor glow — rendered above content via isolation + screen blend so it shows through solid backgrounds */}
       <div
         className="pointer-events-none absolute inset-0 transition-opacity duration-300"
         style={{
           opacity: isHovered ? intensity : 0,
           background: `radial-gradient(600px circle at ${pos.x}% ${pos.y}%, ${glowColor}, transparent 70%)`,
+          mixBlendMode: 'screen',
         }}
       />
-      {/* Content */}
-      <div className="relative z-10">{children}</div>
     </div>
   )
 }

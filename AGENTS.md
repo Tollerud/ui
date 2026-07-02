@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.8.34** — First-class a11y: `aria-invalid`/`aria-describedby`/`aria-required` on all form fields; `Button` `loading` prop; `Tooltip` keyboard focus; `Card` `asChild`; `FileUpload` and `Combobox` `forwardRef`.
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.8.35** — Fix GlowCard glow visibility (overlay now uses mix-blend-mode: screen above content).: `aria-invalid`/`aria-describedby`/`aria-required` on all form fields; `Button` `loading` prop; `Tooltip` keyboard focus; `Card` `asChild`; `FileUpload` and `Combobox` `forwardRef`.
 
 ---
 

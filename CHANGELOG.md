@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.35 — 2026-07-03 — Fix GlowCard glow visibility
+
+### Fixed
+
+- `GlowCard` — glow was invisible when wrapping components with a solid background (e.g. `Card`). The overlay was rendered **behind** the content and blocked by the child's background color. Fixed by moving the overlay above the content in DOM order and adding `mix-blend-mode: screen`, so the radial gradient blends on top of whatever the children render. On the library's dark surfaces, `screen` adds luminosity without affecting pointer events.
+
 ## 4.8.34 — 2026-07-02 — First-class a11y: aria wiring, Button loading, Tooltip focus, Card asChild, forwardRef
 
 ### Added
