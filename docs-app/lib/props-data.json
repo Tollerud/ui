@@ -877,7 +877,8 @@
         "visual?: ReactNode",
         "visualPlacement?: PromoSectionVisualPlacement",
         "background?: PromoSectionBackground",
-        "textWidth?: PromoSectionTextWidth"
+        "textWidth?: PromoSectionTextWidth",
+        "contentWidth?: PromoSectionContentWidth"
       ]
     }
   ],

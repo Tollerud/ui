@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.28**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.29**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -948,8 +948,9 @@ Two-column marketing block — text on one side, any visual on the other. Collap
 | `actions` | `ReactNode` | — | Slot for buttons / links |
 | `visual` | `ReactNode` | — | Any preview, image, or graphic |
 | `visualPlacement` | `"right" \| "left"` | `"right"` | Which side the visual goes on |
-| `background` | `"default" \| "raised"` | `"default"` | `"raised"` adds `bg-tollerud-noir-900` + border |
+| `background` | `"default" \| "raised"` | `"default"` | `"raised"` adds `bg-noir-900` + `border-y` for full-bleed edge-to-edge |
 | `textWidth` | `"narrow" \| "balanced" \| "wide"` | `"wide"` | Column ratio (`1fr/1.4fr`, `1fr/1fr`, `1.4fr/1fr`) |
+| `contentWidth` | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `"xl"` | Max-width of the inner content; wrapper can be full-bleed |
 
 ## Navigation primitives
 

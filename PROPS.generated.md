@@ -569,6 +569,7 @@
 - `visualPlacement?: PromoSectionVisualPlacement`
 - `background?: PromoSectionBackground`
 - `textWidth?: PromoSectionTextWidth`
+- `contentWidth?: PromoSectionContentWidth`
 
 ## RadioGroup — `RadioGroupProps`
 

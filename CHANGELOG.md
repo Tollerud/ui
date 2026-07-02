@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.29 — 2026-07-02 — Fix PromoSection mobile layout; add contentWidth prop
+
+### Fixed
+
+- `PromoSection` — two-column grid now collapses to single-column on mobile (`grid-cols-1` below `sm:`). Text block is always first on mobile regardless of `visualPlacement`; the visual slot renders below it via CSS `order`.
+- `PromoSection` — visual slot now has `overflow-hidden` to prevent horizontal overflow on small viewports.
+- `PromoSection` — `background="raised"` now uses `border-y` instead of `border` so the block can go full-bleed edge-to-edge without visible corner borders.
+
+### Added
+
+- `PromoSection` — `contentWidth?: "sm" | "md" | "lg" | "xl" | "full"` (default `"xl"`) caps the inner content at a max-width while the outer wrapper can span the full viewport. Pair with `className="w-screen -mx-6"` or similar on the host page for a true full-bleed section.
+
 ## 4.8.28 — 2026-07-02 — Add PromoSection marketing block
 
 ### Added

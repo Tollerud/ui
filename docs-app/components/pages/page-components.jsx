@@ -267,7 +267,7 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="PromoSection" component="PromoSection" permalink="components/promo-section" desc="Two-column marketing block with a text column and a consumer-controlled visual slot. Pass visualPlacement to flip the visual to the left. background='raised' adds a dark surface. textWidth controls the column ratio. Without a visual, renders as a centered single-column block.">
+      <Section title="PromoSection" component="PromoSection" permalink="components/promo-section" desc="Two-column marketing block with a text column and a consumer-controlled visual slot. Collapses to single-column on mobile with text always first. background='raised' goes edge-to-edge with contentWidth capping the inner content. visualPlacement controls desktop column order. Without a visual, renders centered single-column.">
         <Demo name="promo-section" variant="col" code={`<PromoSection
   eyebrow="Prismatrise"
   title="Se hva dine favorittøl koster på dine butikker"

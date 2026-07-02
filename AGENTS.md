@@ -284,7 +284,7 @@ Props: `href?: string`, `highlight?: "cheapest" | false`, `external?: boolean`.
 />
 ```
 
-Props: `eyebrow?`, `title`, `description?`, `actions?`, `visual?`, `visualPlacement?: "right" | "left"` (default `"right"`), `background?: "default" | "raised"` (default `"default"`), `textWidth?: "narrow" | "balanced" | "wide"` (default `"wide"`). Without a `visual`, renders as centered single-column.
+Props: `eyebrow?`, `title`, `description?`, `actions?`, `visual?`, `visualPlacement?: "right" | "left"` (default `"right"`), `background?: "default" | "raised"` (default `"default"`, raised uses `border-y` for full-bleed edge-to-edge), `textWidth?: "narrow" | "balanced" | "wide"` (default `"wide"`), `contentWidth?: "sm" | "md" | "lg" | "xl" | "full"` (default `"xl"`). Collapses to single column on mobile with text always first. Without a `visual`, renders as centered single-column.
 
 ### Badge
 
