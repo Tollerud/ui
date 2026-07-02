@@ -7,7 +7,6 @@ const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea,
 function PageComponents({ go }) {
   const toast = useToast();
   const [density, setDensity] = useState('comfortable');
-  const [pwStrength, setPwStrength] = useState('');
   const [sort, setSort] = useState('price-unit');
   const sortOptions = [
     { value: 'price-per', label: '$/unit' },
@@ -666,26 +665,6 @@ export function ButtonGlowRoot() {
                 onSelect: () => toast({ tone: 'info', title: 'Opening logs' }),
               }}
             />
-          </div>
-        </Demo>
-      </Section>
-
-      <Section title="Password strength" component="PasswordStrength" permalink="components/password-strength" desc="Compose below a PasswordInput on signup and change-password forms. Shows a segmented strength bar and a rule checklist. Pass a custom rules array to override the defaults.">
-        <Demo name="password-strength" variant="col" code={`const [pw, setPw] = useState('')
-
-<PasswordInput label="New password" value={pw} onChange={e => setPw(e.target.value)} />
-<PasswordStrength value={pw} />
-
-// Custom rules — spread passwordRules to keep the defaults and add your own
-<PasswordStrength
-  value={pw}
-  rules={[...passwordRules, { label: 'No spaces', test: v => !/\\s/.test(v) }]}
-/>`}>
-          <div style={{ width: '100%', maxWidth: 360 }}>
-            <PasswordInput label="New password" value={pwStrength} onChange={e => setPwStrength(e.target.value)} />
-            <div style={{ marginTop: 10 }}>
-              <PasswordStrength value={pwStrength} />
-            </div>
           </div>
         </Demo>
       </Section>

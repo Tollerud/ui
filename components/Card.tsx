@@ -17,7 +17,9 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         ref={ref}
         data-density={density ?? undefined}
         className={cn(
-          'rounded-lg border bg-tollerud-surface-raised p-6 transition-[border-color] duration-[150ms]',
+          'rounded-lg border bg-tollerud-surface-raised p-6 transition-[border-color,padding] duration-[150ms]',
+          '[[data-density=compact]_&]:p-3',
+          density === 'compact' && 'p-3',
           accent ? 'border-tollerud-yellow/25' : 'border-tollerud-border',
           accent === 'filled' && 'bg-tollerud-yellow/5',
           'hover:border-tollerud-noir-500',

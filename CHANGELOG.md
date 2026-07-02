@@ -7,6 +7,17 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.33 — 2026-07-02 — Fix Card density, GlowCard glow, remove duplicate PasswordStrength doc
+
+### Fixed
+
+- `Card` — `density="compact"` now reduces padding to `p-3`. The `[[data-density=compact]_&]:p-3` Tailwind selector also makes all `Card`s inside a `data-density="compact"` wrapper compact without needing the prop on each card.
+- `GlowCard` — `intensity` now controls the **opacity** of the glow overlay (default 0.15) rather than a gradient color stop position. The previous implementation produced a small hard-edged circle of full-brightness yellow instead of a soft bloom. The gradient now always fades from full color at the cursor to transparent at 70% of the 600px radius, with `intensity` modulating how bright the entire overlay appears.
+
+### Changed (docs only)
+
+- `PasswordStrength` section removed from the Components page — it is documented on the Forms page only.
+
 ## 4.8.32 — 2026-07-02 — Translate all docs demos to English
 
 ### Changed (docs only)

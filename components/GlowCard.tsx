@@ -45,8 +45,8 @@ function GlowCard({
       <div
         className="pointer-events-none absolute inset-0 transition-opacity duration-300"
         style={{
-          opacity: isHovered ? 1 : 0,
-          background: `radial-gradient(600px circle at ${pos.x}% ${pos.y}%, ${glowColor} ${intensity * 100}%, transparent 70%)`,
+          opacity: isHovered ? intensity : 0,
+          background: `radial-gradient(600px circle at ${pos.x}% ${pos.y}%, ${glowColor}, transparent 70%)`,
         }}
       />
       {/* Content */}
