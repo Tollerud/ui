@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.8.38** — Combobox `searchPlacement="dropdown"` auto-focus fixed inside Dialog (callback ref + `queueMicrotask` + `useLayoutEffect` escape hatch). Full Dialog support: dropdowns no longer close the dialog on click, focus trap no longer blocks portalled inputs. `aria-invalid`/`aria-describedby`/`aria-required` on all form fields; `Button` `loading` prop; `Tooltip` keyboard focus; `Card` `asChild`; `FileUpload` and `Combobox` `forwardRef`.
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.8.39** — Combobox `searchPlacement="dropdown"` focus fully fixed inside Dialog: capture-phase `focusout` stop added to escape hatch to block Radix's second focus-redirection handler. Full Dialog support: dropdowns no longer close the dialog on click, focus trap no longer blocks portalled inputs. `aria-invalid`/`aria-describedby`/`aria-required` on all form fields; `Button` `loading` prop; `Tooltip` keyboard focus; `Card` `asChild`; `FileUpload` and `Combobox` `forwardRef`.
 
 ---
 

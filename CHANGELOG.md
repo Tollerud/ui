@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.39 — 2026-07-03 — Fix Combobox Dialog focus: stop focusout interception
+
+### Fixed
+
+- `FloatingDropdownPortal` `useDialogEscapeHatch` — Radix `FocusScope` has a second focus-redirection handler: a bubble-phase `focusout` listener on `document`. When focus moves from inside a Dialog to the portal search input, `focusout` fires first with `relatedTarget = portal input`. Since `container.contains(relatedTarget)` is false, Radix calls `focus(lastFocusedElement)` and steals focus back before `focusin` ever fires — making the v4.8.38 `focusin` escape hatch useless. Fixed by adding a capture-phase `focusout` listener on `document` that calls `stopPropagation()` when `relatedTarget` is inside the portal element. Capture phase fires before Radix's bubble-phase handler, so Radix never sees the event.
+
 ## 4.8.38 — 2026-07-03 — Fix Combobox dropdown search auto-focus inside Dialog
 
 ### Fixed

@@ -76,35 +76,53 @@ export function useFloatingDropdownCoords(
 }
 
 /**
- * Attach native event listeners to the portalled element that stop
- * `pointerdown` and `focusin` from bubbling to `document`.
+ * Attach native event listeners that prevent Radix Dialog's FocusScope and
+ * DismissableLayer from interfering with portalled interactive content.
  *
- * Without this, two problems arise when the portal is inside a Radix Dialog:
+ * Three problems arise when a portal (e.g. Combobox dropdown) is inside a Radix Dialog:
  *  1. Radix DismissableLayer sees `pointerdown` outside DialogContent → closes dialog.
- *  2. Radix FocusScope (trapped=true) sees `focusin` outside DialogContent → redirects
- *     focus back, making portalled inputs (e.g. the Combobox search field) unreachable.
+ *  2. Radix FocusScope `focusin` handler (bubble, document) sees focus outside
+ *     DialogContent → calls focus(lastFocusedElement), stealing focus back.
+ *  3. Radix FocusScope `focusout` handler (bubble, document) fires when focus leaves
+ *     DialogContent toward the portal. relatedTarget = portal element, which is outside
+ *     the container, so Radix calls focus(lastFocusedElement) — before focusin ever fires,
+ *     making the focusin escape useless.
  *
- * Both listeners use the bubble phase so they fire before the document-level handlers
- * Radix registers, and `stopPropagation()` prevents those handlers from executing.
+ * Fix for 1+2: bubble-phase listeners on the portal element stop pointerdown/focusin
+ * before they reach the document-level Radix handlers.
+ * Fix for 3: capture-phase focusout listener on document fires before Radix's bubble-phase
+ * handler; suppressed only when relatedTarget (the destination) is inside the portal.
  */
 function useDialogEscapeHatch(
   elementRef: RefObject<HTMLElement | null>,
   enabled: boolean,
 ) {
-  // useLayoutEffect (not useEffect) so listeners are attached synchronously
-  // during React's commit phase — before any queued microtask can call .focus()
-  // on a portalled input. This guarantees stopPropagation is in place before
-  // Radix Dialog's document-level focusin handler can redirect focus.
+  // useLayoutEffect so listeners are attached synchronously during React's commit phase,
+  // before the queueMicrotask-deferred .focus() call in the Combobox callback ref fires.
   useLayoutEffect(() => {
     if (!enabled) return
     const el = elementRef.current
     if (!el) return
+
     const stop = (e: Event) => e.stopPropagation()
+
+    // Stop pointerdown + focusin from reaching document-level Radix handlers (bubble phase).
     el.addEventListener('pointerdown', stop)
     el.addEventListener('focusin', stop)
+
+    // Stop focusout from reaching Radix's document-level bubble handler when focus is
+    // moving INTO the portal. Must be capture phase to fire before Radix's bubble handler.
+    const stopFocusOut = (e: FocusEvent) => {
+      if (e.relatedTarget instanceof Node && el.contains(e.relatedTarget)) {
+        e.stopPropagation()
+      }
+    }
+    document.addEventListener('focusout', stopFocusOut, { capture: true })
+
     return () => {
       el.removeEventListener('pointerdown', stop)
       el.removeEventListener('focusin', stop)
+      document.removeEventListener('focusout', stopFocusOut, { capture: true })
     }
   }, [enabled, elementRef])
 }
