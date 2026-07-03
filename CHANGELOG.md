@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.38 — 2026-07-03 — Fix Combobox dropdown search auto-focus inside Dialog
+
+### Fixed
+
+- `Combobox` `searchPlacement="dropdown"` — auto-focus on the search input now works correctly when the combobox is rendered inside a Radix `Dialog`. The previous `useEffect` on `[open, searchPlacement]` fired one render too early: `FloatingDropdownPortal` returns `null` on the first render after `open` becomes `true` (it needs a `useLayoutEffect` to compute coords first), so `dropdownSearchRef.current` was `null` when the effect ran. The fix uses a callback ref on the search input that calls `queueMicrotask(() => node.focus())` as soon as the input mounts. The microtask defers focus until after React's layout-effect phase, when `FloatingDropdownPortal`'s `useDialogEscapeHatch` (now upgraded from `useEffect` to `useLayoutEffect`) has already attached its `focusin` `stopPropagation` listener — so Radix Dialog's `FocusScope` never sees the focus event and cannot redirect it.
+
+- `FloatingDropdownPortal` — `useDialogEscapeHatch` changed from `useEffect` to `useLayoutEffect`. This guarantees the `pointerdown`/`focusin` stop-propagation listeners are attached synchronously during React's commit phase, before any microtask-deferred focus can fire. The `requestAnimationFrame` fallback for late-mounting refs is removed — `popoverRef.current` is always set by the time layout effects run (refs are updated before layout effects in React's commit order).
+
 ## 4.8.37 — 2026-07-03 — Combobox: replace setTimeout focus with useEffect
 
 ### Fixed

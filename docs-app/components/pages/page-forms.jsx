@@ -166,7 +166,7 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Combobox" permalink="forms/combobox" desc="Searchable select with keyboard navigation (↑/↓/Enter/Esc), optional grouped sections, and a no-results state. Two search modes: searchPlacement='trigger' (default) keeps the search input as the trigger field; searchPlacement='dropdown' moves the search inside the popover so the trigger looks like a standard Select button.">
+      <Section title="Combobox" permalink="forms/combobox" desc="Searchable select with keyboard navigation (↑/↓/Enter/Esc), optional grouped sections, and a no-results state. Two search modes: searchPlacement='trigger' (default) keeps the search input as the trigger field; searchPlacement='dropdown' moves the search inside the popover so the trigger looks like a standard Select button. Both modes work inside Radix Dialog — the dropdown auto-focuses its search input on open and does not close or steal focus from the dialog.">
         <Demo name="combobox" variant="col" code={`// Flat list — type to filter hosts
 <Combobox
   label="Connect to host"

@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  useEffect,
   useLayoutEffect,
   useState,
   type CSSProperties,
@@ -92,29 +91,18 @@ function useDialogEscapeHatch(
   elementRef: RefObject<HTMLElement | null>,
   enabled: boolean,
 ) {
-  useEffect(() => {
+  // useLayoutEffect (not useEffect) so listeners are attached synchronously
+  // during React's commit phase — before any queued microtask can call .focus()
+  // on a portalled input. This guarantees stopPropagation is in place before
+  // Radix Dialog's document-level focusin handler can redirect focus.
+  useLayoutEffect(() => {
     if (!enabled) return
-
-    let el: HTMLElement | null = null
-    let frame = 0
-
+    const el = elementRef.current
+    if (!el) return
     const stop = (e: Event) => e.stopPropagation()
-
-    const attach = () => {
-      el = elementRef.current
-      if (!el) return false
-      el.addEventListener('pointerdown', stop)
-      el.addEventListener('focusin', stop)
-      return true
-    }
-
-    if (!attach()) {
-      frame = requestAnimationFrame(() => attach())
-    }
-
+    el.addEventListener('pointerdown', stop)
+    el.addEventListener('focusin', stop)
     return () => {
-      if (frame) cancelAnimationFrame(frame)
-      if (!el) return
       el.removeEventListener('pointerdown', stop)
       el.removeEventListener('focusin', stop)
     }

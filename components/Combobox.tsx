@@ -89,7 +89,6 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
   const internalRootRef = useRef<HTMLDivElement>(null)
   const anchorRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
-  const dropdownSearchRef = useRef<HTMLInputElement>(null)
   const isControlled = valueProp !== undefined
   const [internalValue, setInternalValue] = useState(defaultValue)
   const value = isControlled ? valueProp : internalValue
@@ -141,16 +140,16 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
     }
   }, [open])
 
-  // Focus the dropdown search input after React commits the render.
-  // setTimeout is not used because the element may not exist in the DOM when
-  // the timer fires and because useEffect runs after commit (correct timing).
-  // The FloatingDropdownPortal's focusin stopPropagation ensures Radix Dialog's
-  // FocusScope does not redirect focus away from the portalled input.
-  useEffect(() => {
-    if (open && searchPlacement === 'dropdown') {
-      dropdownSearchRef.current?.focus()
+  // Focus the search input as soon as it mounts (the portal renders null until
+  // coords are computed, so a dep-effect on `open` always fires one render too
+  // early). queueMicrotask defers until after React's layout effects, ensuring
+  // FloatingDropdownPortal's useDialogEscapeHatch (useLayoutEffect) has already
+  // attached its focusin stopPropagation before the focus event fires.
+  const dropdownSearchCallbackRef = useCallback((node: HTMLInputElement | null) => {
+    if (node && searchPlacement === 'dropdown') {
+      queueMicrotask(() => node.focus())
     }
-  }, [open, searchPlacement])
+  }, [searchPlacement])
 
   const commit = (option: ComboboxOption) => {
     if (option.disabled) return
@@ -373,7 +372,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
             <div className="flex items-center gap-2 border-b border-tollerud-border px-3 py-2">
               <Search size={13} className="shrink-0 text-tollerud-text-muted" />
               <input
-                ref={dropdownSearchRef}
+                ref={dropdownSearchCallbackRef}
                 type="text"
                 placeholder={placeholder}
                 value={query}
