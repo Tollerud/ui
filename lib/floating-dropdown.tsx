@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  useEffect,
   useLayoutEffect,
   useState,
   type CSSProperties,
@@ -75,6 +76,51 @@ export function useFloatingDropdownCoords(
   return open ? coords : null
 }
 
+/**
+ * Attach native event listeners to the portalled element that stop
+ * `pointerdown` and `focusin` from bubbling to `document`.
+ *
+ * Without this, two problems arise when the portal is inside a Radix Dialog:
+ *  1. Radix DismissableLayer sees `pointerdown` outside DialogContent → closes dialog.
+ *  2. Radix FocusScope (trapped=true) sees `focusin` outside DialogContent → redirects
+ *     focus back, making portalled inputs (e.g. the Combobox search field) unreachable.
+ *
+ * Both listeners use the bubble phase so they fire before the document-level handlers
+ * Radix registers, and `stopPropagation()` prevents those handlers from executing.
+ */
+function useDialogEscapeHatch(
+  elementRef: RefObject<HTMLElement | null>,
+  enabled: boolean,
+) {
+  useEffect(() => {
+    if (!enabled) return
+
+    let el: HTMLElement | null = null
+    let frame = 0
+
+    const stop = (e: Event) => e.stopPropagation()
+
+    const attach = () => {
+      el = elementRef.current
+      if (!el) return false
+      el.addEventListener('pointerdown', stop)
+      el.addEventListener('focusin', stop)
+      return true
+    }
+
+    if (!attach()) {
+      frame = requestAnimationFrame(() => attach())
+    }
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      if (!el) return
+      el.removeEventListener('pointerdown', stop)
+      el.removeEventListener('focusin', stop)
+    }
+  }, [enabled, elementRef])
+}
+
 export interface FloatingDropdownPortalProps {
   open: boolean
   anchorRef: RefObject<HTMLElement | null>
@@ -107,8 +153,10 @@ export function FloatingDropdownPortal({
   onOutsideScroll,
 }: FloatingDropdownPortalProps) {
   const coords = useFloatingDropdownCoords(open, anchorRef, popoverRef, placementOptions, onOutsideScroll)
+  const isOpen = open && coords !== null
 
-  useBypassModalScrollLock(popoverRef, open && coords !== null)
+  useBypassModalScrollLock(popoverRef, isOpen)
+  useDialogEscapeHatch(popoverRef, isOpen)
 
   if (!open || !coords || typeof document === 'undefined') return null
 

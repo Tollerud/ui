@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.36 — 2026-07-03 — Fix Combobox dropdown unusable inside Dialog
+
+### Fixed
+
+- `Combobox` (and all portalled dropdowns: `Select`, `DatePicker`) — when rendered inside a Radix `Dialog`, two problems made the portalled dropdown non-interactive:
+  1. **Dialog closed on click** — Radix's `DismissableLayer` registered a `pointerdown` listener on `document` (bubble phase). Clicking inside the portalled dropdown bubbled to `document` where Radix saw it as an "outside click" and closed the dialog.
+  2. **Focus trap blocked typing** — Radix's `FocusScope` (`trapped={true}`) registered a `focusin` listener on `document` (bubble phase). When focus moved to the portalled search input, Radix immediately redirected it back into `DialogContent`, making the input unreachable.
+
+  Fixed in `lib/floating-dropdown.tsx` by attaching native `pointerdown` and `focusin` listeners (bubble phase) to the portal element. These fire before the document-level handlers Radix registers, and `stopPropagation()` prevents Radix from seeing either event. The fix is automatic — no consumer API changes needed.
+
 ## 4.8.35 — 2026-07-03 — Fix GlowCard glow visibility
 
 ### Fixed
