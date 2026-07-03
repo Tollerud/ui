@@ -141,6 +141,17 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
     }
   }, [open])
 
+  // Focus the dropdown search input after React commits the render.
+  // setTimeout is not used because the element may not exist in the DOM when
+  // the timer fires and because useEffect runs after commit (correct timing).
+  // The FloatingDropdownPortal's focusin stopPropagation ensures Radix Dialog's
+  // FocusScope does not redirect focus away from the portalled input.
+  useEffect(() => {
+    if (open && searchPlacement === 'dropdown') {
+      dropdownSearchRef.current?.focus()
+    }
+  }, [open, searchPlacement])
+
   const commit = (option: ComboboxOption) => {
     if (option.disabled) return
     if (!isControlled) setInternalValue(option.value)
@@ -267,7 +278,6 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
               } else {
                 setOpen(true)
                 setActiveIndex(0)
-                setTimeout(() => dropdownSearchRef.current?.focus(), 0)
               }
             }}
             onKeyDown={(e) => {
@@ -275,7 +285,6 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
                 e.preventDefault()
                 setOpen(true)
                 setActiveIndex(0)
-                setTimeout(() => dropdownSearchRef.current?.focus(), 0)
               } else if (e.key === 'Escape') {
                 setOpen(false)
                 setQuery('')

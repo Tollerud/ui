@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.37 — 2026-07-03 — Combobox: replace setTimeout focus with useEffect
+
+### Fixed
+
+- `Combobox` `searchPlacement="dropdown"` — replaced `setTimeout(() => dropdownSearchRef.current?.focus(), 0)` with a `useEffect` that runs when `open` and `searchPlacement` change. `setTimeout` is unreliable here: the element may not be in the DOM when the timer fires, and in the browser's event loop there is no guarantee about ordering relative to Radix's focus processing. `useEffect` runs after React has committed the render, guaranteeing the element exists. The `FloatingDropdownPortal` `focusin` stop-propagation added in v4.8.36 remains the essential piece that prevents Radix Dialog's FocusScope from redirecting focus away from the portalled input.
+
 ## 4.8.36 — 2026-07-03 — Fix Combobox dropdown unusable inside Dialog
 
 ### Fixed

@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.8.36** — Fix portalled dropdowns (Combobox, Select, DatePicker) inside Radix Dialog: dialog no longer closes on dropdown click, and focus is no longer trapped away from search inputs.: `aria-invalid`/`aria-describedby`/`aria-required` on all form fields; `Button` `loading` prop; `Tooltip` keyboard focus; `Card` `asChild`; `FileUpload` and `Combobox` `forwardRef`.
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.8.37** — Combobox searchPlacement="dropdown": replace setTimeout focus with useEffect (more reliable, pairs with v4.8.36 focusin fix).: dialog no longer closes on dropdown click, and focus is no longer trapped away from search inputs.: `aria-invalid`/`aria-describedby`/`aria-required` on all form fields; `Button` `loading` prop; `Tooltip` keyboard focus; `Card` `asChild`; `FileUpload` and `Combobox` `forwardRef`.
 
 ---
 
