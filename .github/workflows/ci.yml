@@ -135,11 +135,16 @@ jobs:
 
       # Requires Trusted Publishers (OIDC) on npmjs.com for @tollerud/ui + @tollerud/footer.
       # See: https://docs.npmjs.com/trusted-publishers
+      #
+      # --ignore-scripts skips prepublishOnly. The gate jobs (validate + e2e) already ran all
+      # checks; re-running them here via prepublishOnly causes test:consumer to call
+      # `npm install ../../tarball` while NODE_AUTH_TOKEN is active, which triggers an npm 11
+      # registry fetch for the not-yet-published version and fails with 404.
       - name: Publish @tollerud/ui to npm
         if: steps.version_check.outputs.skip == 'false' && steps.pre_publish.outputs.skip != 'true'
         run: |
           set -e
-          if ! npm publish --provenance --access public; then
+          if ! npm publish --provenance --access public --ignore-scripts; then
             LOCAL=$(node -p "require('./package.json').version")
             PUBLISHED=$(npm view @tollerud/ui version 2>/dev/null || echo "0.0.0")
             if [ "$LOCAL" = "$PUBLISHED" ]; then
@@ -154,7 +159,7 @@ jobs:
         working-directory: packages/footer
         run: |
           set -e
-          if ! npm publish --provenance --access public; then
+          if ! npm publish --provenance --access public --ignore-scripts; then
             LOCAL=$(node -p "require('./package.json').version")
             PUBLISHED=$(npm view @tollerud/footer version 2>/dev/null || echo "0.0.0")
             if [ "$LOCAL" = "$PUBLISHED" ]; then
