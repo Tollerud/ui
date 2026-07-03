@@ -4,9 +4,14 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate:
@@ -56,3 +61,123 @@ jobs:
       - run: npx playwright install chromium --with-deps
 
       - run: npm run test:e2e
+
+  publish:
+    needs: [validate, e2e]
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    # Queue overlapping publish runs so a later push waits for an in-flight publish
+    # to finish, then the version check can skip instead of racing npm publish.
+    concurrency:
+      group: publish-npm-${{ github.repository }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - run: corepack enable && corepack prepare npm@11.16.0 --activate
+
+      - run: npm ci
+
+      - run: npm run sync:registry
+
+      - name: Check if version already published
+        id: version_check
+        run: |
+          LOCAL=$(node -p "require('./package.json').version")
+          PUBLISHED=$(npm view @tollerud/ui version 2>/dev/null || echo "0.0.0")
+          FOOTER_PUBLISHED=$(npm view @tollerud/footer version 2>/dev/null || echo "0.0.0")
+          echo "local=$LOCAL" >> $GITHUB_OUTPUT
+          echo "published=$PUBLISHED" >> $GITHUB_OUTPUT
+          echo "footer_published=$FOOTER_PUBLISHED" >> $GITHUB_OUTPUT
+          if [ "$LOCAL" = "$PUBLISHED" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Version $LOCAL already on npm — skipping publish."
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "Publishing $LOCAL (was $PUBLISHED)."
+          fi
+
+      - run: npm run build
+        if: steps.version_check.outputs.skip == 'false'
+
+      - run: npm run sync:footer
+        if: steps.version_check.outputs.skip == 'false'
+
+      - name: Build @tollerud/footer
+        if: steps.version_check.outputs.skip == 'false'
+        working-directory: packages/footer
+        run: |
+          npm install
+          npm run build
+
+      - name: Re-check version before publish
+        id: pre_publish
+        if: steps.version_check.outputs.skip == 'false'
+        run: |
+          LOCAL=$(node -p "require('./package.json').version")
+          PUBLISHED=$(npm view @tollerud/ui version 2>/dev/null || echo "0.0.0")
+          if [ "$LOCAL" = "$PUBLISHED" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "Version $LOCAL reached npm during CI — skipping publish."
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      # Requires Trusted Publishers (OIDC) on npmjs.com for @tollerud/ui + @tollerud/footer.
+      # See: https://docs.npmjs.com/trusted-publishers
+      - name: Publish @tollerud/ui to npm
+        if: steps.version_check.outputs.skip == 'false' && steps.pre_publish.outputs.skip != 'true'
+        run: |
+          set -e
+          if ! npm publish --provenance --access public; then
+            LOCAL=$(node -p "require('./package.json').version")
+            PUBLISHED=$(npm view @tollerud/ui version 2>/dev/null || echo "0.0.0")
+            if [ "$LOCAL" = "$PUBLISHED" ]; then
+              echo "Version $LOCAL already on npm — treating as success."
+            else
+              exit 1
+            fi
+          fi
+
+      - name: Publish @tollerud/footer to npm
+        if: steps.version_check.outputs.skip == 'false' && steps.pre_publish.outputs.skip != 'true'
+        working-directory: packages/footer
+        run: |
+          set -e
+          if ! npm publish --provenance --access public; then
+            LOCAL=$(node -p "require('./package.json').version")
+            PUBLISHED=$(npm view @tollerud/footer version 2>/dev/null || echo "0.0.0")
+            if [ "$LOCAL" = "$PUBLISHED" ]; then
+              echo "Version $LOCAL already on npm — treating as success."
+            else
+              exit 1
+            fi
+          fi
+
+      - name: Create GitHub Release
+        if: steps.version_check.outputs.skip == 'false' && steps.pre_publish.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=${{ steps.version_check.outputs.local }}
+          if gh release view "v${VERSION}" >/dev/null 2>&1; then
+            echo "Release v${VERSION} already exists — skipping."
+          else
+            gh release create "v${VERSION}" \
+              --title "v${VERSION}" \
+              --generate-notes
+          fi
+
+      - name: Publish skipped
+        if: steps.version_check.outputs.skip == 'true' || steps.pre_publish.outputs.skip == 'true'
+        run: echo "No new version to publish."
