@@ -9,6 +9,8 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  # Needed to delete stale github-pages artifacts from earlier run attempts
+  actions: write
 
 concurrency:
   group: pages
@@ -37,6 +39,25 @@ jobs:
         run: cp _site/index.html _site/404.html
 
       - uses: actions/configure-pages@v6
+
+      # Artifacts persist across run *attempts*, so re-running this workflow
+      # (or just the failed deploy job) leaves the previous attempt's
+      # "github-pages" artifact in place; the new upload then makes two, and
+      # actions/deploy-pages hard-fails with "Multiple artifacts named
+      # github-pages". Delete leftovers before uploading so reruns are safe.
+      # (cancel-in-progress above only prevents duplicates from concurrent
+      # runs, not from reruns — seen live on run 28747351296, 2026-07-05.)
+      - name: Delete stale github-pages artifacts from earlier attempts
+        if: github.run_attempt != '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api "repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
+            --jq '.artifacts[] | select(.name == "github-pages") | .id' |
+          while read -r artifact_id; do
+            echo "Deleting stale github-pages artifact $artifact_id"
+            gh api -X DELETE "repos/${{ github.repository }}/actions/artifacts/$artifact_id"
+          done
 
       - uses: actions/upload-pages-artifact@v5
         with:
