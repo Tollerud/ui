@@ -42,7 +42,7 @@ describe('Select', () => {
       />
     )
 
-    await user.click(screen.getByRole('button', { name: 'Rows: 25' }))
+    await user.click(screen.getByRole('combobox', { name: 'Rows: 25' }))
 
     const listbox = screen.getByRole('listbox')
     expect(listbox).toHaveAttribute('data-placement', 'top')
@@ -65,7 +65,7 @@ describe('Select', () => {
       </div>,
     )
 
-    await user.click(screen.getByRole('button'))
+    await user.click(screen.getByRole('combobox'))
     expect(document.body.contains(screen.getByRole('listbox'))).toBe(true)
   })
 
@@ -85,7 +85,7 @@ describe('Select', () => {
       />
     )
 
-    await user.click(screen.getByRole('button'))
+    await user.click(screen.getByRole('combobox'))
     await user.click(screen.getByRole('option', { name: 'US' }))
     expect(onChange).toHaveBeenCalledWith('us')
   })

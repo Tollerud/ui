@@ -79,7 +79,7 @@ function TagInput({
           'flex flex-wrap items-center gap-1.5 rounded px-2.5 py-1.5',
           'bg-tollerud-surface-raised border',
           'transition-[border-color] duration-[150ms]',
-          'focus-within:border-tollerud-yellow focus-within:shadow-[0_0_0_1px_#E8D500]',
+          'focus-within:border-tollerud-yellow focus-within:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
           error ? 'border-tollerud-error' : 'border-tollerud-border',
           disabled && 'opacity-50 pointer-events-none'
         )}

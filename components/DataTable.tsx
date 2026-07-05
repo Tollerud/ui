@@ -23,7 +23,14 @@ import { Skeleton } from './Skeleton'
 
 /* ──────────────────── Sortable & Filterable Data Table ──────────────────── */
 
-export type ColumnRender<T> = ((value: unknown, row: T) => ReactNode) | ((row: T) => ReactNode)
+/**
+ * Cell renderer — always `(value, row)`. `value` is `row[key]`; ignore it
+ * (`(_value, row) => …`) when you only need the row.
+ * Before 4.8.40 a single-parameter `(row) => …` form was auto-detected from
+ * `fn.length`; that variant was removed because default/rest parameters made
+ * detection unreliable.
+ */
+export type ColumnRender<T> = (value: unknown, row: T) => ReactNode
 
 export interface Column<T> {
   key: string
@@ -37,23 +44,14 @@ export interface Column<T> {
   render?: ColumnRender<T>
 }
 
-type NormalizedColumn<T> = Omit<Column<T>, 'label' | 'header' | 'render'> & {
+type NormalizedColumn<T> = Omit<Column<T>, 'label' | 'header'> & {
   label: string
-  render?: (value: unknown, row: T) => ReactNode
 }
 
 function normalizeColumns<T>(columns: Column<T>[]): NormalizedColumn<T>[] {
-  return columns.map(({ header, label, render, ...col }) => ({
+  return columns.map(({ header, label, ...col }) => ({
     ...col,
     label: label ?? header ?? col.key,
-    render: render
-      ? (value: unknown, row: T) => {
-          if (render.length <= 1) {
-            return (render as (row: T) => ReactNode)(row)
-          }
-          return (render as (value: unknown, row: T) => ReactNode)(value, row)
-        }
-      : undefined,
   }))
 }
 
@@ -214,7 +212,10 @@ function DataTableInner<T extends Record<string, unknown>>({
     })
   }
 
-  const searchKeysResolved = searchKeys ?? normalizedColumns.map((c) => c.key)
+  const searchKeysResolved = useMemo(
+    () => searchKeys ?? normalizedColumns.map((c) => c.key),
+    [searchKeys, normalizedColumns],
+  )
   const filterSelectOptions = useMemo(() => {
     if (!filter) return []
     const options =
@@ -282,7 +283,9 @@ function DataTableInner<T extends Record<string, unknown>>({
 
   const clearSelection = () => setSelected([])
   const allOnPageSelected =
-    pageRows.length > 0 && pageRows.every((row) => selected.includes(getRowKey(row, 0)))
+    pageRows.length > 0 && pageRows.every((row, i) => selected.includes(getRowKey(row, i)))
+  const someOnPageSelected =
+    !allOnPageSelected && pageRows.some((row, i) => selected.includes(getRowKey(row, i)))
 
   const toggleAllOnPage = () => {
     const pageIds = pageRows.map((row, i) => getRowKey(row, i))
@@ -346,27 +349,9 @@ function DataTableInner<T extends Record<string, unknown>>({
     )
   }
 
-  const headerCell = (col: NormalizedColumn<T>, columnIndex: number, reactKey: string) => (
-    <th
-      key={reactKey}
-      className={cn(
-        'px-3 py-2.5 text-left text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider whitespace-nowrap',
-        col.sortable && 'cursor-pointer select-none hover:text-tollerud-text-primary transition-colors',
-        col.align === 'right' && 'text-right',
-        col.align === 'center' && 'text-center',
-        columnIndex === 0 && stickyHead('first'),
-      )}
-      style={col.width ? { width: col.width, minWidth: col.width } : undefined}
-      aria-sort={col.sortable ? (sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
-      onClick={() => col.sortable && toggleSort(col.key)}
-    >
-      <span
-        className={cn(
-          'inline-flex items-center gap-1',
-          col.align === 'right' && 'justify-end w-full',
-          col.align === 'center' && 'justify-center w-full',
-        )}
-      >
+  const headerCell = (col: NormalizedColumn<T>, columnIndex: number, reactKey: string) => {
+    const content = (
+      <>
         {col.label}
         {col.sortable && (isRich ? sortIndicator(col.key) : (
           <>
@@ -392,9 +377,42 @@ function DataTableInner<T extends Record<string, unknown>>({
             <path d="M4 4h16v2.172a2 2 0 0 1-.586 1.414L15 12v7l-6 2v-8.5L4.52 7.53A2 2 0 0 1 4 6.16V4z" />
           </svg>
         )}
-      </span>
-    </th>
-  )
+      </>
+    )
+    const contentAlignment = cn(
+      'inline-flex items-center gap-1',
+      col.align === 'right' && 'justify-end w-full',
+      col.align === 'center' && 'justify-center w-full',
+    )
+    return (
+      <th
+        key={reactKey}
+        className={cn(
+          'px-3 py-2.5 text-left text-xs font-semibold text-tollerud-text-muted uppercase tracking-wider whitespace-nowrap',
+          col.align === 'right' && 'text-right',
+          col.align === 'center' && 'text-center',
+          columnIndex === 0 && stickyHead('first'),
+        )}
+        style={col.width ? { width: col.width, minWidth: col.width } : undefined}
+        aria-sort={col.sortable ? (sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none') : undefined}
+      >
+        {col.sortable ? (
+          <button
+            type="button"
+            onClick={() => toggleSort(col.key)}
+            className={cn(
+              contentAlignment,
+              'cursor-pointer select-none uppercase tracking-wider hover:text-tollerud-text-primary transition-colors tollerud-focus-ring rounded-sm',
+            )}
+          >
+            {content}
+          </button>
+        ) : (
+          <span className={contentAlignment}>{content}</span>
+        )}
+      </th>
+    )
+  }
 
   const tableBody = () => {
     if (loading) {
@@ -532,6 +550,7 @@ function DataTableInner<T extends Record<string, unknown>>({
             <th className={cn('px-3 py-2.5 w-10 min-w-10', stickyHead('check'))}>
               <Checkbox
                 checked={allOnPageSelected}
+                indeterminate={someOnPageSelected}
                 onChange={toggleAllOnPage}
                 aria-label="Select all rows on page"
               />

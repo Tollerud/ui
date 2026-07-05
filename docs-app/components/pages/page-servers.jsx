@@ -15,12 +15,12 @@ const hosts = [
   data={hosts}
   rowKey="id"
   columns={[
-    { key: 'id', header: 'Host', sortable: true, render: (row) => row.id },
+    { key: 'id', header: 'Host', sortable: true, render: (_v, row) => row.id },
     {
       key: 'status',
       header: 'Status',
       sortable: true,
-      render: (row) => <Badge variant={row.status === 'online' ? 'success' : 'warning'}>{row.status}</Badge>,
+      render: (_v, row) => <Badge variant={row.status === 'online' ? 'success' : 'warning'}>{row.status}</Badge>,
     },
     { key: 'region', header: 'Region', sortable: true },
     { key: 'cpu', header: 'CPU', sortable: true, align: 'right' },
@@ -85,7 +85,7 @@ function PageServers() {
   const statusVariant = { online: 'success', warning: 'warning', offline: 'error' };
 
   const columns = [
-    { key: 'id', header: 'Host', sortable: true, render: (s) => (
+    { key: 'id', header: 'Host', sortable: true, render: (_v, s) => (
       <div className="ds-row" style={{ gap: 9 }}>
         <span style={{ color: 'var(--tollerud-yellow)' }}><Icons.server size={15}/></span>
         <div>
@@ -94,11 +94,11 @@ function PageServers() {
         </div>
       </div>
     ) },
-    { key: 'status', header: 'Status', sortable: true, render: (s) => <Badge variant={statusVariant[s.status]}>{s.status}</Badge> },
-    { key: 'region', header: 'Region', sortable: true, render: (s) => <span className="ds-mono" style={{ fontSize: 12.5 }}>{s.region}</span> },
-    { key: 'cpu', header: 'CPU', sortable: true, align: 'right', render: (s) => <span className="ds-mono" style={{ color: s.cpu > 80 ? 'var(--destructive)' : 'var(--text-secondary)' }}>{s.cpu}%</span> },
-    { key: 'load', header: 'Load · 7d', render: (s) => <Sparkline data={s.load} w={84} h={26} color={s.status === 'offline' ? '#666' : s.cpu > 80 ? '#EF4444' : '#E8D500'}/> },
-    { key: 'containers', header: 'Containers', sortable: true, align: 'right', render: (s) => <span className="ds-mono">{s.containers}</span> },
+    { key: 'status', header: 'Status', sortable: true, render: (_v, s) => <Badge variant={statusVariant[s.status]}>{s.status}</Badge> },
+    { key: 'region', header: 'Region', sortable: true, render: (_v, s) => <span className="ds-mono" style={{ fontSize: 12.5 }}>{s.region}</span> },
+    { key: 'cpu', header: 'CPU', sortable: true, align: 'right', render: (_v, s) => <span className="ds-mono" style={{ color: s.cpu > 80 ? 'var(--destructive)' : 'var(--text-secondary)' }}>{s.cpu}%</span> },
+    { key: 'load', header: 'Load · 7d', render: (_v, s) => <Sparkline data={s.load} w={84} h={26} color={s.status === 'offline' ? '#666' : s.cpu > 80 ? '#EF4444' : '#E8D500'}/> },
+    { key: 'containers', header: 'Containers', sortable: true, align: 'right', render: (_v, s) => <span className="ds-mono">{s.containers}</span> },
     { key: 'owner', header: 'Owner', sortable: true },
   ];
 
@@ -107,9 +107,9 @@ function PageServers() {
       <PageHeader icon="server" eyebrow="Examples · data table" title="Data Table"
         lede="Config-driven table from @tollerud/ui: search, segmented or combobox filters, sort, selection, bulk actions, per-row menus, pagination with optional rows-per-page selector, loading skeletons, and horizontal scroll with pinned columns."/>
 
-      <Section title="Props" component="DataTable" desc="Auto-generated from DataTableProps. Rich mode activates with searchable, selectable, pageSize, pageSizeOptions, rowMenu, filter, and related props."/>
+      <Section title="Props" component="DataTable" desc="Auto-generated from DataTableProps. Rich mode activates with searchable, selectable, pageSize, pageSizeOptions, rowMenu, filter, and related props. Column render is always (value, row) as of 4.8.40 — write (_v, row) => … when you only need the row; the old row-only form was removed."/>
 
-      <Section title="Simple table" desc="Bordered table with sortable headers. Add filterable: true on columns for per-column text filters (simple mode).">
+      <Section title="Simple table" desc="Bordered table with sortable headers — each sortable header is a real button, so Tab + Enter/Space sorts and aria-sort reflects the state (≥ 4.8.40). Add filterable: true on columns for per-column text filters (simple mode).">
         <Demo name="package-data-table" variant="col" code={`<DataTable
   columns={[
     { key: 'hostname', label: 'Host', sortable: true },

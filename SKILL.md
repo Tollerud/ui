@@ -370,6 +370,7 @@ Opt-in on any element: add class `tollerud-btn-glow`. Subpath: `import { initBut
 <Textarea label="Notes" rows={4} error={errors.notes} />
 <Select label="Region" options={[{ value: 'eu', label: 'EU' }]} value={region} onChange={setRegion} />
 <Checkbox label="Enable backups" checked={enabled} onChange={...} />
+<Checkbox label="Select all" indeterminate={someSelected && !allSelected} onChange={...} />
 <Switch label="Dark mode" defaultChecked />
 <RadioGroup label="Target" error={error}>
   <Radio value="staging" label="Staging" name="target" />
@@ -676,7 +677,7 @@ import { DataTable } from '@tollerud/ui'
 // Rich: search, segmented filter, selection, bulk actions, row menus, pagination
 <DataTable
   columns={[
-    { key: 'hostname', header: 'Host', sortable: true, render: (row) => row.hostname },
+    { key: 'hostname', header: 'Host', sortable: true, render: (_v, row) => row.hostname },
     { key: 'status', label: 'Status', render: (_v, row) => <Badge>{row.status}</Badge> },
   ]}
   data={hosts}
@@ -698,7 +699,7 @@ import { DataTable } from '@tollerud/ui'
 />
 ```
 
-Column headings use `label` or `header`. `render` accepts `(row) => …` or `(value, row) => …`.
+Column headings use `label` or `header`. `render` is always `(value, row) => …` (≥ 4.8.40; `value` is `row[key]` — write `(_v, row) => …` when you only need the row). The pre-4.8.40 single-parameter `(row) => …` form is gone: it silently receives the cell **value** now, so migrate by prepending `_v, ` to the parameter list. Sortable headers render a real `<button>` (keyboard-operable, `aria-sort` on the `<th>`). If rows are `selectable`, give them a stable `id`/`key` field or pass `rowKey` — index-fallback keys collide across pages.
 
 **Pagination** — pass `pageSize` (fixed) or add `pageSizeOptions={[10, 25, 50]}` for a compact inline footer **Rows** `Select`. Page state is internal. Footer shows `Showing 1–5 of N`; controls appear when `pageCount > 1`. Search/filter resets page to 1. Selection spans pages when `selectable` is set.
 
@@ -821,6 +822,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)
 - **`StatCard` arrow direction fix (≥ 4.8.19)** — `direction: 'up'` now shows an up arrow (was showing down arrow due to inverted `rotate-180` condition)
 - **Form field height alignment (≥ 4.8.18)** — all form field triggers (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) use `text-base py-2.5`. Earlier versions mixed `text-sm`/`text-base` and `py-2`/`py-2.5`, causing height differences when combining field types.
+- **Keyboard & screen-reader pass (≥ 4.8.40)** — `Combobox`/`Select`/`CommandMenu` announce the arrow-key highlight via `aria-activedescendant`; `Select`'s trigger is `role="combobox"` (query it with `getByRole('combobox')` in tests, not `'button'`). `DataTable` sortable headers are real `<button>`s inside the `<th>`. Escape on an open `Combobox`/`Select` no longer closes a surrounding Dialog. `CommandMenu` Enter now runs the highlighted *filtered* result. Focus rings use `var(--tollerud-yellow-warm)` instead of hardcoded `#E8D500`. `Checkbox` gains an `indeterminate` prop (dash indicator + native mixed state); `DataTable`'s select-all header checkbox uses it automatically for partial page selection. **Breaking:** `DataTable` `Column.render` is always `(value, row)` — the row-only `(row) => …` form was removed; migrate with `(_v, row) => …`.
 - **Portalled dropdowns work inside Radix Dialog (≥ 4.8.36–4.8.39)** — `Combobox`, `Select`, and `DatePicker` dropdowns no longer close the dialog on click, and `Combobox` `searchPlacement="dropdown"` auto-focuses the search input even when used inside a Dialog. Four-part fix across 4.8.36–4.8.39: stop `pointerdown`/`focusin` from reaching Radix's document handlers; fix focus timing with callback ref + `queueMicrotask`; upgrade escape hatch to `useLayoutEffect`; add capture-phase `focusout` listener on `document` to stop Radix's second focus-redirection handler (which fires on `focusout` before `focusin` even gets a chance). No consumer API changes.
 - **`GlowCard` visibility fix (≥ 4.8.35)** — glow was invisible when wrapping solid-background surfaces. Overlay now renders above content with `mix-blend-mode: screen`, making the radial gradient visible through any child background.
 - **First-class a11y + `Button` loading + `Card` asChild (≥ 4.8.34)** — all form fields with `error` now wire `aria-invalid` + `aria-describedby`; all form fields accept `required` with visual `*` and `aria-required`. `Button` gains `loading` prop (Spinner + `aria-busy`). `Tooltip` opens/closes on keyboard focus/blur. `Card` gains `asChild`. `FileUpload` and `Combobox` are now wrapped with `forwardRef`.

@@ -32,8 +32,8 @@ const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
         >
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#E8D500" stopOpacity="0.30" />
-              <stop offset="100%" stopColor="#E8D500" stopOpacity="0" />
+              <stop offset="0%" stopColor="var(--tollerud-yellow-warm, #E8D500)" stopOpacity="0.30" />
+              <stop offset="100%" stopColor="var(--tollerud-yellow-warm, #E8D500)" stopOpacity="0" />
             </linearGradient>
           </defs>
           {[0.25, 0.5, 0.75].map((g, i) => (
@@ -51,7 +51,7 @@ const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
           <polyline
             points={line}
             fill="none"
-            stroke="#E8D500"
+            stroke="var(--tollerud-yellow-warm, #E8D500)"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -63,7 +63,7 @@ const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
               cy={y(v)}
               r="2.5"
               fill="var(--card)"
-              stroke="#E8D500"
+              stroke="var(--tollerud-yellow-warm, #E8D500)"
               strokeWidth="1.5"
             />
           ))}

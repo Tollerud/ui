@@ -7,6 +7,54 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.40 — 2026-07-05 — Keyboard & screen-reader pass: aria-activedescendant, sortable header buttons, tokenized focus rings, Checkbox indeterminate
+
+### Breaking
+
+- `DataTable` — `Column.render` is now always `(value, row) => ReactNode`. The single-parameter `(row) => …` form is removed: it was auto-detected from the function's declared parameter count (`fn.length`), which silently broke with default or rest parameters (`(value = '—', row) => …` has length 0 and was treated as row-only).
+
+**Migration** — prepend `_v, ` to row-only callbacks:
+
+```tsx
+// Before
+{ key: 'status', render: (row) => <Badge>{row.status}</Badge> }
+
+// After
+{ key: 'status', render: (_v, row) => <Badge>{row.status}</Badge> }
+```
+
+TypeScript surfaces every un-migrated callback as a compile error (a typed row parameter is not assignable to `unknown`). In plain JS/JSX, an un-migrated callback silently receives the cell **value** as its first argument instead of the row — grep for `render: (` and check each single-parameter arrow.
+
+### Added
+
+- `Checkbox` — new `indeterminate` prop for mixed states (e.g. a select-all with only some rows selected). Sets the native `indeterminate` property (announced as "mixed" by screen readers) and shows a dash indicator instead of the checkmark. Cleared automatically when the user clicks the checkbox.
+
+- `DataTable` — the select-all header checkbox now shows the indeterminate state when only some rows on the current page are selected.
+
+### Fixed
+
+- `Combobox`, `Select`, `CommandMenu` — arrow-key highlight is now announced to screen readers. Options carry stable `id`s and the focused control sets `aria-activedescendant` to the highlighted option. `Select`'s trigger additionally gains `role="combobox"` and `aria-controls` (ARIA 1.2 select-only combobox pattern).
+
+- `DataTable` — sortable column headers now render a real `<button>` inside the `<th>`, so keyboard users can Tab to the header and sort with Enter/Space. Previously the `onClick` sat directly on the `<th>` and sorting was mouse-only. `aria-sort` behaviour is unchanged.
+
+- `DataTable` — the "select all on page" checkbox state was computed with a hardcoded row index. With index-fallback row keys (rows without an `id`/`key` field and no `rowKey` prop), selecting just the first row made the header checkbox report every row as selected.
+
+- `Combobox` — the highlighted option now scrolls into view while arrowing through lists taller than the dropdown (parity with `Select`).
+
+- `Combobox` / `Select` — pressing Escape while the dropdown is open no longer closes a surrounding Radix `Dialog`. The open dropdown consumes the event (innermost layer wins); with the dropdown closed, Escape propagates normally.
+
+- `CommandMenu` — keyboard navigation and Enter now operate on the *filtered* results. Previously the key handler indexed into the unfiltered item list, so with an active search query Enter could run a different command than the one highlighted. The highlighted row also scrolls into view in long lists.
+
+### Changed
+
+- Focus rings on `Input`, `Textarea`, `PasswordInput`, `Select`, `Combobox`, `DatePicker`, and `TagInput`, plus the `AreaChart` stroke and gradient, now use `var(--tollerud-yellow-warm)` (with `#E8D500` fallback) instead of a hardcoded hex — re-themed consumers get correctly tinted focus rings and charts. `Select`'s error-state focus ring uses `var(--tollerud-error)`.
+
+- `DataTable` — internal: the resolved search-keys array is memoized, so the filter pipeline no longer recomputes on every render when `searchKeys` is omitted.
+
+### Docs
+
+- Overview hero — the meta line ("registry components · foundation topics") now gets a dark pill backdrop in Bold mode so it stays legible where it crosses the yellow gradient.
+
 ## 4.8.39 — 2026-07-03 — Fix Combobox Dialog focus: stop focusout interception
 
 ### Fixed

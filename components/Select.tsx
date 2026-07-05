@@ -89,7 +89,9 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
 
       switch (e.key) {
         case 'Escape':
+          // Consume the event so a surrounding Dialog stays open.
           e.preventDefault()
+          e.stopPropagation()
           setOpen(false)
           break
         case 'ArrowDown':
@@ -112,6 +114,9 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
     const triggerId = useId()
     const autoErrorId = useId()
     const errorId = error ? autoErrorId : undefined
+    const listboxId = `${triggerId}-listbox`
+    const activeOptionId =
+      open && options.length > 0 ? `${triggerId}-option-${highlightedIdx}` : undefined
 
     return (
       <div
@@ -138,8 +143,11 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             type="button"
             onClick={() => setOpen(!open)}
             onKeyDown={handleKeyDown}
+            role="combobox"
             aria-haspopup="listbox"
             aria-expanded={open}
+            aria-controls={listboxId}
+            aria-activedescendant={activeOptionId}
             aria-describedby={errorId}
             aria-label={layout === 'inline' && label ? `${label}: ${selectedOption?.label ?? placeholder ?? 'Select'}` : undefined}
             className={cn(
@@ -149,8 +157,8 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               'text-tollerud-text-primary text-left',
               'transition-all duration-150 ease-out cursor-pointer',
               error
-                ? 'border-tollerud-error/70 focus:border-tollerud-error focus:shadow-[0_0_0_1px_#EF4444]'
-                : 'border-tollerud-border focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_#E8D500]',
+                ? 'border-tollerud-error/70 focus:border-tollerud-error focus:shadow-[0_0_0_1px_var(--tollerud-error,#EF4444)]'
+                : 'border-tollerud-border focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
               'border hover:border-tollerud-noir-400',
               'focus:outline-none',
               className
@@ -179,6 +187,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             open={open}
             anchorRef={containerRef}
             popoverRef={listRef}
+            id={listboxId}
             role="listbox"
             placementOptions={{ maxHeight: 240 }}
             onOutsideScroll={() => setOpen(false)}
@@ -196,6 +205,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               <button
                 key={opt.value}
                 type="button"
+                id={`${triggerId}-option-${idx}`}
                 role="option"
                 aria-selected={opt.value === value}
                 onClick={() => selectOption(opt)}

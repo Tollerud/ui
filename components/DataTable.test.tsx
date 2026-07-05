@@ -26,7 +26,7 @@ describe('DataTable', () => {
     expect(screen.getByText('emma')).toBeInTheDocument()
     expect(screen.getByText('miriam')).toBeInTheDocument()
 
-    await user.click(screen.getByRole('columnheader', { name: /host/i }))
+    await user.click(screen.getByRole('button', { name: /host/i }))
 
     const bodyRows = screen.getAllByRole('row').slice(1)
     expect(bodyRows[0]).toHaveTextContent('emma')
@@ -45,11 +45,11 @@ describe('DataTable', () => {
     expect(screen.getByText('No hosts found')).toBeInTheDocument()
   })
 
-  it('supports header alias and row-only render callbacks', () => {
+  it('supports header alias and (value, row) render callbacks', () => {
     render(
       <DataTable
         columns={[
-          { key: 'hostname', header: 'Host', render: (row) => <strong>{row.hostname}</strong> },
+          { key: 'hostname', header: 'Host', render: (_value, row) => <strong>{row.hostname}</strong> },
         ]}
         data={[{ id: '1', hostname: 'emma' }]}
         rowKey="id"
@@ -125,8 +125,14 @@ describe('DataTable', () => {
     const hostHeader = screen.getByRole('columnheader', { name: /host/i })
     expect(hostHeader).toHaveAttribute('aria-sort', 'none')
 
-    await user.click(hostHeader)
+    const sortButton = within(hostHeader).getByRole('button')
+    await user.click(sortButton)
     expect(hostHeader).toHaveAttribute('aria-sort', 'ascending')
+
+    // Keyboard users can sort too — the header control is a real button
+    sortButton.focus()
+    await user.keyboard('{Enter}')
+    expect(hostHeader).toHaveAttribute('aria-sort', 'descending')
   })
 
   it('lets users change rows per page with pageSizeOptions', async () => {
@@ -149,7 +155,7 @@ describe('DataTable', () => {
     expect(screen.queryByText('host-6')).not.toBeInTheDocument()
     expect(screen.getByText('Rows')).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Rows: 5' }))
+    await user.click(screen.getByRole('combobox', { name: 'Rows: 5' }))
     await user.click(screen.getByRole('option', { name: '10' }))
 
     expect(screen.getByText('host-10')).toBeInTheDocument()
@@ -210,6 +216,83 @@ describe('DataTable', () => {
     const group = screen.getByRole('group')
     expect(within(group).getByRole('button', { name: 'Restart' })).toBeInTheDocument()
     expect(within(group).getByRole('button', { name: 'Stop' })).toBeInTheDocument()
+  })
+
+  it('shows indeterminate select-all state with partial page selection', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <DataTable
+        columns={[{ key: 'hostname', label: 'Host' }]}
+        data={[
+          { id: '1', hostname: 'emma' },
+          { id: '2', hostname: 'pia' },
+        ]}
+        rowKey="id"
+        selectable
+      />
+    )
+
+    const selectAll = screen.getByRole('checkbox', { name: 'Select all rows on page' }) as HTMLInputElement
+    expect(selectAll.indeterminate).toBe(false)
+
+    await user.click(screen.getByRole('checkbox', { name: /select row 1/i }))
+    expect(selectAll.indeterminate).toBe(true)
+    expect(selectAll.checked).toBe(false)
+
+    await user.click(screen.getByRole('checkbox', { name: /select row 2/i }))
+    expect(selectAll.indeterminate).toBe(false)
+    expect(selectAll.checked).toBe(true)
+  })
+
+  it('combines sort, search, filter, pagination, and selection in rich mode', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <DataTable
+        columns={[
+          { key: 'hostname', label: 'Host', sortable: true },
+          { key: 'region', label: 'Region' },
+        ]}
+        data={[
+          { id: '1', hostname: 'delta', region: 'eu' },
+          { id: '2', hostname: 'alpha', region: 'eu' },
+          { id: '3', hostname: 'charlie', region: 'us' },
+          { id: '4', hostname: 'bravo', region: 'eu' },
+        ]}
+        rowKey="id"
+        searchable
+        searchKeys={['hostname']}
+        filter={{ key: 'region', allLabel: 'All' }}
+        selectable
+        pageSize={2}
+      />
+    )
+
+    // Filter to eu → 3 rows, 2 pages (Segmented renders a radiogroup)
+    await user.click(screen.getByRole('radio', { name: 'eu' }))
+    expect(screen.getByText(/showing 1–2 of 3/i)).toBeInTheDocument()
+    expect(screen.queryByText('charlie')).not.toBeInTheDocument()
+
+    // Sort by host → alpha, bravo on page 1
+    await user.click(within(screen.getByRole('columnheader', { name: /host/i })).getByRole('button'))
+    let bodyRows = screen.getAllByRole('row').slice(1)
+    expect(bodyRows[0]).toHaveTextContent('alpha')
+    expect(bodyRows[1]).toHaveTextContent('bravo')
+
+    // Select all on page, then go to page 2 — selection persists, header reflects page 2
+    await user.click(screen.getByRole('checkbox', { name: 'Select all rows on page' }))
+    expect(screen.getByText('selected')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: /next page|next/i }))
+    bodyRows = screen.getAllByRole('row').slice(1)
+    expect(bodyRows[0]).toHaveTextContent('delta')
+    const selectAll = screen.getByRole('checkbox', { name: 'Select all rows on page' }) as HTMLInputElement
+    expect(selectAll.checked).toBe(false)
+
+    // Search narrows within the active filter
+    await user.type(screen.getByPlaceholderText('Search…'), 'alp')
+    expect(screen.getByText('alpha')).toBeInTheDocument()
+    expect(screen.queryByText('delta')).not.toBeInTheDocument()
   })
 
   it('filters rows with combobox variant filter', async () => {

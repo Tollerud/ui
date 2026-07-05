@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.39**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.40**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -381,7 +381,7 @@ const servers = ['Emma', 'Miriam', 'Pia', 'Iris', 'Victoria', 'Embla']
 
 Features:
 - Built-in `⌘K` / `Ctrl+K` global listener
-- Arrow key navigation, `Enter` selects, `Esc` closes
+- Arrow key navigation, `Enter` selects, `Esc` closes — navigation tracks the *filtered* results (≥ 4.8.40), and the highlight is announced via `aria-activedescendant` and scrolled into view
 - Search filters across groups, labels, and descriptions
 - Auto-focus on open, body scroll lock
 - Footer keyboard hints
@@ -1345,7 +1345,11 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 
 **Pagination** — fully client-side; no `page` / `onPageChange` props. Pass `pageSize` (and optionally `pageSizeOptions`). The footer shows `Showing 1–5 of 12`. Page controls appear when `pageCount > 1`. Search and rich-mode filters reset to page 1. With `selectable`, checked rows persist across pages until cleared or bulk action runs `clear()`.
 
-**Column:** `{ key, label?, header?, sortable?, filterable?, align?: 'left' | 'center' | 'right', width?, render?: (value, row) => ReactNode | (row) => ReactNode }`. Without `render`, `row[key]` is shown. `header` is an alias for `label`.
+**Column:** `{ key, label?, header?, sortable?, filterable?, align?: 'left' | 'center' | 'right', width?, render?: (value, row) => ReactNode }`. Without `render`, `row[key]` is shown. `header` is an alias for `label`.
+
+**`render` signature (breaking in 4.8.40)** — `render` is always `(value, row) => …`; `value` is `row[key]`. The old single-parameter `(row) => …` form (auto-detected from `fn.length`) was removed because default/rest parameters made detection unreliable. **Migration:** prepend `_v, ` to row-only callbacks — `render: (row) => row.name` becomes `render: (_v, row) => row.name`. TypeScript flags un-migrated callbacks (a typed row parameter is not assignable to `unknown`); in plain JS the callback silently receives the cell value instead of the row.
+
+**Accessibility (≥ 4.8.40)** — sortable headers render a real `<button>` inside the `<th>` (Tab + Enter/Space sorts; `aria-sort` reflects state). With `selectable`, provide stable row keys (`id`/`key` field or `rowKey`) — index-fallback keys collide across pages and break selection state.
 
 ## Skeleton
 
@@ -1453,11 +1457,13 @@ Custom-styled checkbox with checkmark SVG and label.
 <Checkbox label="Enable backups" checked={...} onChange={...} />
 <Checkbox label="Send alerts" defaultChecked />
 <Checkbox label="Action" disabled />
+<Checkbox label="Select all" indeterminate onChange={...} />
 ```
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `label` | `string` | — | Label text (wraps input) |
+| `indeterminate` | `boolean` | `false` | Mixed state (≥ 4.8.40) — dash indicator + native `indeterminate` property (announced as "mixed"). Use for select-all with partial selection. |
 | All `<input type="checkbox">` props | — | — | checked, defaultChecked, disabled, onChange |
 
 ## Switch

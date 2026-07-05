@@ -5,6 +5,7 @@ import {
   type KeyboardEvent,
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
 } from 'react'
@@ -74,9 +75,31 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
+  const listId = useId()
 
-  // Flatten items with their group indices for keyboard navigation
-  const flatItems = groups.flatMap((g) => g.items)
+  // Filter groups based on query
+  const filteredGroups = customFilter
+    ? customFilter(query, groups)
+    : query.trim()
+      ? groups
+          .map((g) => ({
+            ...g,
+            items: g.items.filter(
+              (item) =>
+                item.label.toLowerCase().includes(query.toLowerCase()) ||
+                item.description
+                  ?.toLowerCase()
+                  .includes(query.toLowerCase()) ||
+                item.group?.toLowerCase().includes(query.toLowerCase())
+            ),
+          }))
+          .filter((g) => g.items.length > 0)
+      : groups
+
+  // Flattened *visible* items — keyboard navigation must track the filtered
+  // list, otherwise Enter can run a command hidden by the current query.
+  const currentFlat = filteredGroups.flatMap((g) => g.items)
+
   // Auto-close on Escape
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -89,7 +112,7 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
       if (e.key === 'ArrowDown') {
         e.preventDefault()
         setSelectedIndex((prev) =>
-          prev < flatItems.length - 1 ? prev + 1 : 0
+          prev < currentFlat.length - 1 ? prev + 1 : 0
         )
         return
       }
@@ -97,14 +120,14 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
       if (e.key === 'ArrowUp') {
         e.preventDefault()
         setSelectedIndex((prev) =>
-          prev > 0 ? prev - 1 : flatItems.length - 1
+          prev > 0 ? prev - 1 : currentFlat.length - 1
         )
         return
       }
 
       if (e.key === 'Enter') {
         e.preventDefault()
-        const item = flatItems[selectedIndex]
+        const item = currentFlat[selectedIndex]
         if (item && !item.disabled) {
           item.onSelect?.()
           onAction?.(item)
@@ -113,7 +136,7 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
         return
       }
     },
-    [flatItems, selectedIndex, onOpenChange, onAction]
+    [currentFlat, selectedIndex, onOpenChange, onAction]
   )
 
   // Open toggle via ⌘K / Ctrl+K
@@ -151,32 +174,20 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
     }
   }, [open])
 
-  // Filter groups based on query
-  const filteredGroups = customFilter
-    ? customFilter(query, groups)
-    : query.trim()
-      ? groups
-          .map((g) => ({
-            ...g,
-            items: g.items.filter(
-              (item) =>
-                item.label.toLowerCase().includes(query.toLowerCase()) ||
-                item.description
-                  ?.toLowerCase()
-                  .includes(query.toLowerCase()) ||
-                item.group?.toLowerCase().includes(query.toLowerCase())
-            ),
-          }))
-          .filter((g) => g.items.length > 0)
-      : groups
-
   // Re-index selection when results change
-  const currentFlat = filteredGroups.flatMap((g) => g.items)
   useEffect(() => {
     if (selectedIndex >= currentFlat.length) {
       setSelectedIndex(0)
     }
   }, [currentFlat.length, selectedIndex])
+
+  // Keep the highlighted row visible when arrowing through a long list
+  useEffect(() => {
+    if (!open) return
+    document
+      .getElementById(`${listId}-option-${selectedIndex}`)
+      ?.scrollIntoView({ block: 'nearest' })
+  }, [open, selectedIndex, listId])
 
   if (!open) return null
 
@@ -218,6 +229,15 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
             ref={inputRef}
             type="text"
             className="tollerud-cmd__input"
+            role="combobox"
+            aria-expanded={true}
+            aria-autocomplete="list"
+            aria-controls={listId}
+            aria-activedescendant={
+              currentFlat.length > 0
+                ? `${listId}-option-${Math.min(selectedIndex, currentFlat.length - 1)}`
+                : undefined
+            }
             placeholder={placeholder}
             value={query}
             onChange={(e) => {
@@ -231,7 +251,7 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
         </div>
 
         {/* Results */}
-        <div ref={listRef} className="tollerud-cmd__list" role="listbox" aria-label="Commands" tabIndex={-1}>
+        <div ref={listRef} id={listId} className="tollerud-cmd__list" role="listbox" aria-label="Commands" tabIndex={-1}>
           {filteredGroups.length === 0 && (
             <div className="tollerud-cmd__empty">{emptyMessage}</div>
           )}
@@ -250,6 +270,7 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
                   return (
                     <ActionRow
                       key={item.id}
+                      id={`${listId}-option-${flatIndex}`}
                       action={item}
                       highlighted={selectedIndex === flatIndex}
                       onClick={() => {

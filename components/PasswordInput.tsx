@@ -38,7 +38,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
               'text-tollerud-text-primary',
               'placeholder:text-tollerud-text-muted',
               'transition-[border-color] duration-[150ms]',
-              'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_#E8D500]',
+              'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
               error ? 'border-tollerud-error' : 'border-tollerud-border',
               className
             )}

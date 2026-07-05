@@ -314,12 +314,15 @@ Props: `eyebrow?` (mono uppercase yellow, same as `PageHeader`), `title`, `shimm
 <Textarea label="Notes" rows={4} error={errors.notes} />
 <Select label="Region" options={[{ value: 'eu', label: 'EU' }]} value={region} onChange={setRegion} />
 <Checkbox label="Enable backups" checked={enabled} onChange={...} />
+<Checkbox label="Select all" indeterminate={someSelected && !allSelected} onChange={...} />
 <Switch label="Dark mode" defaultChecked />
 <RadioGroup label="Target" error={error}>
   <Radio value="staging" label="Staging" name="target" />
   <Radio value="production" label="Production" name="target" />
 </RadioGroup>
 ```
+
+`Select`'s trigger is `role="combobox"` (≥ 4.8.40) — in tests query it with `getByRole('combobox')`, not `getByRole('button')`. Arrow-key highlight is announced via `aria-activedescendant`.
 
 ### Kbd — Keyboard shortcut chip
 
@@ -349,7 +352,7 @@ const [open, setOpen] = useState(false)
 />
 ```
 
-Built-in `⌘K` / `Ctrl+K` listener, arrow navigation, Esc to close, search across all groups.
+Built-in `⌘K` / `Ctrl+K` listener, arrow navigation, Esc to close, search across all groups. Keyboard navigation tracks the filtered results (≥ 4.8.40): Enter always runs the highlighted visible item, and the highlight is announced via `aria-activedescendant`.
 
 ### StatCard
 
@@ -380,6 +383,8 @@ Built-in `⌘K` / `Ctrl+K` listener, arrow navigation, Esc to close, search acro
 
 // Optional rich mode: searchable, filter, selectable, pageSize, bulkActions, rowMenu, toolbarRight, emptyState
 ```
+
+`render` is always `(value, row) => …` (≥ 4.8.40) — write `(_v, row) => …` when you only need the row. The old single-parameter `(row) => …` form was removed; migrate by prepending `_v, `. Sortable headers are real `<button>`s (keyboard-operable, ≥ 4.8.40). With `selectable`, always provide stable row keys via an `id`/`key` field or `rowKey`.
 
 ### Empty (empty states)
 

@@ -111,10 +111,10 @@ function PageBilling() {
           rowKey="id"
           pageSize={5}
           columns={[
-            { key: 'id', header: 'Invoice', sortable: true, render: (r) => <span className="ds-mono" style={{ fontSize: 12.5, color: 'var(--foreground)' }}>{r.id}</span> },
-            { key: 'date', header: 'Date', sortable: true, render: (r) => <span className="ds-mono" style={{ fontSize: 12.5 }}>{r.date}</span> },
-            { key: 'status', header: 'Status', sortable: true, render: (r) => <Badge variant={invStatus[r.status]}>{r.status}</Badge> },
-            { key: 'amount', header: 'Amount', align: 'right', sortable: true, render: (r) => <span className="ds-mono" style={{ color: 'var(--foreground)' }}>${r.amount.toFixed(2)}</span> },
+            { key: 'id', header: 'Invoice', sortable: true, render: (_v, r) => <span className="ds-mono" style={{ fontSize: 12.5, color: 'var(--foreground)' }}>{r.id}</span> },
+            { key: 'date', header: 'Date', sortable: true, render: (_v, r) => <span className="ds-mono" style={{ fontSize: 12.5 }}>{r.date}</span> },
+            { key: 'status', header: 'Status', sortable: true, render: (_v, r) => <Badge variant={invStatus[r.status]}>{r.status}</Badge> },
+            { key: 'amount', header: 'Amount', align: 'right', sortable: true, render: (_v, r) => <span className="ds-mono" style={{ color: 'var(--foreground)' }}>${r.amount.toFixed(2)}</span> },
           ]}
           rowMenu={(r) => [
             { label: 'Download PDF', icon: 'download', onSelect: () => toast({ tone: 'success', title: `Downloading ${r.id}.pdf` }) },

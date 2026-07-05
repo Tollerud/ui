@@ -134,6 +134,12 @@
 ## Checkbox — `CheckboxProps` extends extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>
 
 - `label?: string`
+- `* Mixed state — e.g. a select-all checkbox with only some rows selected.`
+- `* Sets the native `indeterminate` property (announced as "mixed" by screen`
+- `* readers) and shows a dash instead of a checkmark. Visual precedence over`
+- `* `checked`; cleared automatically when the user clicks the checkbox.`
+- `*/`
+- `indeterminate?: boolean`
 
 ## Cluster — `ClusterProps` extends extends HTMLAttributes<HTMLDivElement>
 

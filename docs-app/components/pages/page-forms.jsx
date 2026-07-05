@@ -103,8 +103,9 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Toggles" desc="Checkbox, switch and radio group — all keyboard accessible with custom indicators.">
+      <Section title="Toggles" desc="Checkbox, switch and radio group — all keyboard accessible with custom indicators. Checkbox supports indeterminate for mixed select-all states (≥ 4.8.40); DataTable's header checkbox uses it automatically.">
         <Demo name="toggles" code={`<Checkbox label="Enable backups" defaultChecked />
+<Checkbox label="Select all (partial)" indeterminate />
 <Switch label="Dark mode" defaultChecked />
 <RadioGroup label="Deploy target" value={target} onChange={setTarget}>
   <Radio value="staging" label="Staging" />
@@ -115,6 +116,7 @@ function PageForms() {
             <div className="ds-col" style={{ gap: 12 }}>
               <Checkbox label="Enable backups" defaultChecked/>
               <Checkbox label="Send alerts"/>
+              <Checkbox label="Select all (partial)" indeterminate/>
               <Checkbox label="Locked" disabled/>
             </div>
             <div className="ds-col" style={{ gap: 12 }}>
@@ -166,7 +168,7 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Combobox" permalink="forms/combobox" desc="Searchable select with keyboard navigation (↑/↓/Enter/Esc), optional grouped sections, and a no-results state. Two search modes: searchPlacement='trigger' (default) keeps the search input as the trigger field; searchPlacement='dropdown' moves the search inside the popover so the trigger looks like a standard Select button. Both modes work inside Radix Dialog — the dropdown auto-focuses its search input on open and does not close or steal focus from the dialog.">
+      <Section title="Combobox" permalink="forms/combobox" desc="Searchable select with keyboard navigation (↑/↓/Enter/Esc), optional grouped sections, and a no-results state. Two search modes: searchPlacement='trigger' (default) keeps the search input as the trigger field; searchPlacement='dropdown' moves the search inside the popover so the trigger looks like a standard Select button. Both modes work inside Radix Dialog — the dropdown auto-focuses its search input on open and does not close or steal focus from the dialog, and Esc closes only the dropdown (the dialog stays open). The arrow-key highlight is announced to screen readers via aria-activedescendant and scrolls into view in long lists (≥ 4.8.40).">
         <Demo name="combobox" variant="col" code={`// Flat list — type to filter hosts
 <Combobox
   label="Connect to host"

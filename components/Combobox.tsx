@@ -113,6 +113,8 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
 
   const highlightedIndex =
     filtered.length === 0 ? 0 : Math.min(activeIndex, filtered.length - 1)
+  const activeOptionId =
+    open && filtered.length > 0 ? `${id}-option-${highlightedIndex}` : undefined
 
   const selected = allOptions.find((option) => option.value === value)
 
@@ -139,6 +141,13 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
       document.removeEventListener('mousedown', onClickOutside)
     }
   }, [open])
+
+  // Keep the highlighted option visible while arrowing through a list taller
+  // than the dropdown. The options live in a portal, so resolve them by id.
+  useEffect(() => {
+    if (!activeOptionId) return
+    document.getElementById(activeOptionId)?.scrollIntoView({ block: 'nearest' })
+  }, [activeOptionId])
 
   // Focus the search input as soon as it mounts (the portal renders null until
   // coords are computed, so a dep-effect on `open` always fires one render too
@@ -172,8 +181,14 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
       const option = filtered[highlightedIndex]
       if (option) commit(option)
     } else if (e.key === 'Escape') {
-      setOpen(false)
-      setQuery('')
+      // Close only the innermost layer: consume the event while the dropdown
+      // is open so a surrounding Dialog stays open; let it through otherwise.
+      if (open) {
+        e.preventDefault()
+        e.stopPropagation()
+        setOpen(false)
+        setQuery('')
+      }
     }
   }
 
@@ -198,6 +213,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
                   return (
                     <li
                       key={option.value}
+                      id={`${id}-option-${index}`}
                       role="option"
                       aria-selected={isSelected}
                       onMouseDown={(e) => {
@@ -226,6 +242,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
             return (
               <li
                 key={option.value}
+                id={`${id}-option-${index}`}
                 role="option"
                 aria-selected={isSelected}
                 onMouseDown={(e) => {
@@ -285,15 +302,19 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
                 setOpen(true)
                 setActiveIndex(0)
               } else if (e.key === 'Escape') {
-                setOpen(false)
-                setQuery('')
+                if (open) {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setOpen(false)
+                  setQuery('')
+                }
               }
             }}
             className={cn(
               'w-full font-sans text-base px-3 py-2.5 rounded text-left flex items-center justify-between gap-2',
               'bg-tollerud-surface-raised border',
               'transition-[border-color] duration-[150ms]',
-              'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_#E8D500]',
+              'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
               error ? 'border-tollerud-error' : 'border-tollerud-border',
               disabled && 'opacity-50 pointer-events-none'
             )}
@@ -317,6 +338,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
               aria-expanded={open}
               aria-autocomplete="list"
               aria-controls={`${id}-listbox`}
+              aria-activedescendant={activeOptionId}
               aria-required={required || undefined}
               aria-invalid={error ? true : undefined}
               aria-describedby={errorId}
@@ -338,7 +360,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
                 'bg-tollerud-surface-raised border',
                 'text-tollerud-text-primary placeholder:text-tollerud-text-muted',
                 'transition-[border-color] duration-[150ms]',
-                'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_#E8D500]',
+                'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
                 error ? 'border-tollerud-error' : 'border-tollerud-border',
                 disabled && 'opacity-50 pointer-events-none'
               )}
@@ -374,6 +396,11 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
               <input
                 ref={dropdownSearchCallbackRef}
                 type="text"
+                role="combobox"
+                aria-expanded={true}
+                aria-autocomplete="list"
+                aria-controls={`${id}-listbox`}
+                aria-activedescendant={activeOptionId}
                 placeholder={placeholder}
                 value={query}
                 onChange={(e) => {
