@@ -63,10 +63,6 @@ TypeScript surfaces every un-migrated callback as a compile error (a typed row p
 
 - `DataTable` — internal: the resolved search-keys array is memoized, so the filter pipeline no longer recomputes on every render when `searchKeys` is omitted.
 
-### Docs
-
-- Overview hero — the meta line ("registry components · foundation topics") now gets a dark pill backdrop in Bold mode so it stays legible where it crosses the yellow gradient.
-
 ## 4.8.39 — 2026-07-03 — Fix Combobox Dialog focus: stop focusout interception
 
 ### Fixed

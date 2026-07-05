@@ -30,7 +30,7 @@ function PageOverview({ go }) {
           <div className="ds-hero__copy">
             <div className="ds-row" style={{ gap: 10, marginBottom: 22 }}>
               <span className="tollerud-pill tollerud-pill--outline">v{PACKAGE_VERSION} · noir + yellow</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: bold ? 'rgba(245,245,245,0.72)' : 'var(--text-muted)', ...(bold ? { background: 'rgba(0,0,0,0.55)', padding: '4px 10px', borderRadius: 999 } : {}) }}>{'>'}{REGISTRY_COMPONENT_COUNT} registry components · {FOUNDATION_TOPIC_COUNT} foundation topics</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: bold ? 'rgba(245,245,245,0.5)' : 'var(--text-muted)' }}>{'>'}{REGISTRY_COMPONENT_COUNT} registry components · {FOUNDATION_TOPIC_COUNT} foundation topics</span>
             </div>
             <h1 className="ds-hero__title" style={{ fontWeight: 600, letterSpacing: '-0.045em', lineHeight: 0.98, color: bold ? '#F5F5F5' : 'var(--foreground)' }}>
               Dark. Monochrome.<br/><span className="tollerud-display-shimmer">Yellow where it counts.</span>
