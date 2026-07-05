@@ -56,6 +56,17 @@ The `Kbd` component displays a keyboard shortcut chip. It accepts any string or 
 - Click outside to close
 - Hover follows keyboard selection
 
+### Charts (TimeSeriesChart, ≥ 4.8.42)
+
+Interactive charts share one keyboard contract (implemented in `lib/chart-interaction.tsx`; later chart phases adopt it):
+
+- `Tab` focuses the chart — the latest point becomes active (crosshair + tooltip shown, yellow focus ring)
+- `←` / `→` step one point back/forward
+- `Home` / `End` jump to the first/last point
+- `Esc` clears the active point — consumed only while a point is active, so a surrounding Dialog stays open
+- Keyboard-selected points are announced via a visually-hidden `aria-live="polite"` region ("1 Mar 2026: 42")
+- Clicking the chart does not steal a keyboard selection: focus gained from a pointer press skips the focus-selects-latest behavior
+
 ## Implementation rules
 
 1. **Every overlay must close on `Esc`.** If it doesn't, it's a bug.

@@ -202,6 +202,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, Drawer } from '@tollerud/ui'
 import { Skeleton, Progress, Spinner, Toaster, ToastProvider, useToast, GlowCard, NoirGlowBackground, BentoDashboard, Alert } from '@tollerud/ui'
 import { BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, PromoSection } from '@tollerud/ui'
+// TimeSeriesChart is keyboard accessible (≥ 4.8.42): Tab focuses, ←/→ step points, Home/End jump, Esc clears
 // Infra / homelab set
 import { HostCard, ServiceHealthCard, DockerStackCard, IncidentCard } from '@tollerud/ui'
 import { ApprovalCard, ActionDiff, AlertInbox, RollbackPlan, BackupStatusPanel } from '@tollerud/ui'

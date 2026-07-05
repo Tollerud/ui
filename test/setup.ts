@@ -8,6 +8,12 @@ expect.extend(axeMatchers)
 
 beforeAll(() => {
   Element.prototype.scrollIntoView = vi.fn()
+  class ResizeObserverStub {
+    observe = vi.fn()
+    unobserve = vi.fn()
+    disconnect = vi.fn()
+  }
+  vi.stubGlobal('ResizeObserver', ResizeObserverStub)
   vi.stubGlobal(
     'matchMedia',
     vi.fn((query: string) => ({

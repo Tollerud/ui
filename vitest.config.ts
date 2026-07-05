@@ -10,6 +10,7 @@ export default defineConfig({
       '@/lib/bypass-modal-scroll-lock': path.resolve(__dirname, './lib/bypass-modal-scroll-lock.ts'),
       '@/lib/use-mobile': path.resolve(__dirname, './lib/use-mobile.ts'),
       '@/lib/chart-series': path.resolve(__dirname, './lib/chart-series.ts'),
+      '@/lib/chart-interaction': path.resolve(__dirname, './lib/chart-interaction.tsx'),
     },
   },
   test: {

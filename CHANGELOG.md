@@ -7,6 +7,20 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.42 — 2026-07-05 — TimeSeriesChart keyboard navigation + shared chart interaction core
+
+First phase of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)): a shared interaction layer that later phases reuse for AreaChart, Sparkline, BarChart, and Donut.
+
+### Added
+
+- `TimeSeriesChart` — full keyboard support. Tab focuses the chart (yellow focus ring) and activates the latest point; ArrowLeft/ArrowRight step through points with the crosshair + tooltip following; Home/End jump to the first/last point; Escape clears the active point. Escape is consumed only while a point is active, so a surrounding Dialog stays open (same rule as `Combobox`/`Select`). Keyboard-selected points are announced to screen readers via a visually-hidden polite live region.
+
+- `lib/chart-interaction.tsx` (internal for now) — `useChartInteraction` (one active-index state shared by pointer, touch, and keyboard), `ChartTooltip` / `ChartTooltipLayer` (the tooltip bubble and clamped positioning extracted from TimeSeriesChart), `ChartLiveRegion`, and `clampTooltipX`. Not yet exported from the package barrel; later chart phases consume it, and it may be promoted to public API when the shape settles.
+
+### Changed
+
+- `TimeSeriesChart` — hover/touch behavior is unchanged, but the crosshair, hover dot, and tooltip now also render for keyboard-selected points. The latest-value badge hides while any point is active (previously only while hovering). Mouse, touch, and visual output are otherwise identical to 4.8.41.
+
 ## 4.8.41 — 2026-07-05 — Fix position:sticky broken for all PageShell descendants
 
 ### Fixed

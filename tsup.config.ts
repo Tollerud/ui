@@ -63,6 +63,7 @@ export default defineConfig({
       '@/lib/bypass-modal-scroll-lock': './lib/bypass-modal-scroll-lock.ts',
       '@/lib/use-mobile': './lib/use-mobile.ts',
       '@/lib/chart-series': './lib/chart-series.ts',
+      '@/lib/chart-interaction': './lib/chart-interaction.tsx',
     }
   },
   onSuccess: async () => {

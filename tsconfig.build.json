@@ -20,7 +20,8 @@
       "@/lib/floating-dropdown": ["./lib/floating-dropdown.tsx"],
       "@/lib/bypass-modal-scroll-lock": ["./lib/bypass-modal-scroll-lock.ts"],
       "@/lib/use-mobile": ["./lib/use-mobile.ts"],
-      "@/lib/chart-series": ["./lib/chart-series.ts"]
+      "@/lib/chart-series": ["./lib/chart-series.ts"],
+      "@/lib/chart-interaction": ["./lib/chart-interaction.tsx"]
     }
   },
   "include": ["components/**/*.ts", "components/**/*.tsx", "lib/**/*.ts", "lib/**/*.tsx", "types/**/*.d.ts"],

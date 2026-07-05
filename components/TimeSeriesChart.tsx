@@ -22,7 +22,6 @@ import {
   formatChartDateLong,
   formatChartDateShort,
   formatChartNumber,
-  indexFromPointer,
   niceTicks,
   parseChartDate,
   sortPointsByDate,
@@ -30,6 +29,13 @@ import {
   yScale,
   type ChartPadding,
 } from '@/lib/chart-series'
+import {
+  ChartLiveRegion,
+  ChartTooltip,
+  ChartTooltipLayer,
+  clampTooltipX,
+  useChartInteraction,
+} from '@/lib/chart-interaction'
 import { cn } from '@/lib/utils'
 import { Segmented } from './Segmented'
 
@@ -91,22 +97,13 @@ function defaultTooltip(
   formatValue: (v: number) => string,
   formatDate: (d: Date) => string,
 ) {
-  const date = parseChartDate(point.date)
   return (
-    <div className="min-w-[168px] rounded-lg border border-tollerud-noir-600 bg-tollerud-noir-800 px-3 py-2.5 shadow-lg">
-      <div className="text-lg font-semibold leading-tight text-tollerud-text-primary">
-        {formatValue(point.value)}
-      </div>
-      <div className="mt-0.5 text-xs text-tollerud-text-secondary">{formatDate(date)}</div>
-      {point.label ? (
-        <div className="mt-2 text-sm font-medium text-tollerud-text-primary">{point.label}</div>
-      ) : null}
-      {point.meta?.map((line, index) => (
-        <div key={`${index}-${line}`} className="mt-0.5 text-xs leading-snug text-tollerud-text-muted">
-          {line}
-        </div>
-      ))}
-    </div>
+    <ChartTooltip
+      title={formatValue(point.value)}
+      subtitle={formatDate(parseChartDate(point.date))}
+      label={point.label}
+      lines={point.meta}
+    />
   )
 }
 
@@ -140,7 +137,6 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
     const gradientId = useId().replace(/:/g, '')
     const svgRef = useRef<SVGSVGElement>(null)
     const [width, setWidth] = useState(640)
-    const [hoverIndex, setHoverIndex] = useState<number | null>(null)
     const [internalRange, setInternalRange] = useState(ranges?.[0]?.value ?? 'all')
 
     const activeRange = range ?? internalRange
@@ -178,6 +174,17 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       if (yAxis === 'none') return { ...base, left: 12, right: 12 }
       return base
     }, [paddingOverride, yAxis])
+
+    const {
+      activeIndex: pointIndex,
+      isKeyboard,
+      svgProps,
+    } = useChartInteraction({
+      svgRef,
+      count: values.length,
+      paddingLeft: padding.left,
+      paddingRight: padding.right,
+    })
 
     const plotLeft = padding.left
     const plotRight = width - padding.right
@@ -219,7 +226,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       return indexes
     }, [visiblePoints.length])
 
-    const activeIndex = hoverIndex ?? (values.length > 0 ? values.length - 1 : null)
+    const activeIndex = pointIndex ?? (values.length > 0 ? values.length - 1 : null)
     const activePoint = activeIndex != null ? visiblePoints[activeIndex] : null
 
     useEffect(() => {
@@ -232,12 +239,6 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       setWidth(el.getBoundingClientRect().width || 640)
       return () => ro.disconnect()
     }, [])
-
-    const handlePointer = (clientX: number) => {
-      const rect = svgRef.current?.getBoundingClientRect()
-      if (!rect || values.length === 0) return
-      setHoverIndex(indexFromPointer(clientX, rect, values.length, padding.left, padding.right))
-    }
 
     const handleRangeChange = (next: string) => {
       if (range === undefined) setInternalRange(next)
@@ -258,8 +259,11 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
 
     const crosshairX = activeIndex != null ? xAt(activeIndex) : null
     const crosshairY = activePoint ? yAt(activePoint.value) : null
-    const tooltipLeft =
-      crosshairX != null ? Math.min(Math.max(crosshairX, 88), width - 88) : width / 2
+    const tooltipLeft = crosshairX != null ? clampTooltipX(crosshairX, width) : width / 2
+    const announcement =
+      isKeyboard && activePoint && pointIndex != null
+        ? `${dateFormatter(parseChartDate(activePoint.date))}: ${valueFormatter(activePoint.value)}`
+        : null
 
     return (
       <div ref={ref} className={cn('w-full', className)} {...props}>
@@ -282,16 +286,10 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
             ref={svgRef}
             width={width}
             height={height}
-            className="block w-full touch-none select-none"
+            className="tollerud-focus-ring block w-full touch-none select-none"
             role="img"
             aria-label={ariaLabel ?? 'Time series chart'}
-            onMouseMove={(e) => handlePointer(e.clientX)}
-            onMouseLeave={() => setHoverIndex(null)}
-            onTouchMove={(e) => {
-              const touch = e.touches[0]
-              if (touch) handlePointer(touch.clientX)
-            }}
-            onTouchEnd={() => setHoverIndex(null)}
+            {...svgProps}
           >
             <defs>
               <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
@@ -359,7 +357,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
               </text>
             ))}
 
-            {showLatestValue && activePoint && hoverIndex === null && yAxis === 'right' ? (
+            {showLatestValue && activePoint && pointIndex === null && yAxis === 'right' ? (
               <line
                 x1={plotLeft}
                 x2={plotRight}
@@ -371,7 +369,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
               />
             ) : null}
 
-            {crosshairX != null && hoverIndex !== null ? (
+            {crosshairX != null && pointIndex !== null ? (
               <line
                 x1={crosshairX}
                 x2={crosshairX}
@@ -382,7 +380,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
               />
             ) : null}
 
-            {crosshairX != null && crosshairY != null && hoverIndex !== null ? (
+            {crosshairX != null && crosshairY != null && pointIndex !== null ? (
               <circle
                 cx={crosshairX}
                 cy={crosshairY}
@@ -394,18 +392,18 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
             ) : null}
           </svg>
 
-          {activePoint && hoverIndex !== null ? (
-            <div
-              className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full"
-              style={{ left: tooltipLeft, top: crosshairY != null ? crosshairY - 12 : plotTop }}
+          {activePoint && pointIndex !== null ? (
+            <ChartTooltipLayer
+              left={tooltipLeft}
+              top={crosshairY != null ? crosshairY - 12 : plotTop}
             >
               {renderTooltip
                 ? renderTooltip(activePoint, activeIndex!, valueFormatter(activePoint.value))
                 : defaultTooltip(activePoint, valueFormatter, dateFormatter)}
-            </div>
+            </ChartTooltipLayer>
           ) : null}
 
-          {showLatestValue && activePoint && hoverIndex === null && yAxis === 'right' ? (
+          {showLatestValue && activePoint && pointIndex === null && yAxis === 'right' ? (
             <div
               className="pointer-events-none absolute -translate-y-1/2 whitespace-nowrap rounded-md bg-tollerud-yellow px-2 py-0.5 text-[10px] font-semibold text-tollerud-noir-950"
               style={{ top: yAt(activePoint.value), right: 0 }}
@@ -414,6 +412,8 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
             </div>
           ) : null}
         </div>
+
+        <ChartLiveRegion message={announcement} />
       </div>
     )
   },

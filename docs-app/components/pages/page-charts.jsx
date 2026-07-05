@@ -217,7 +217,7 @@ function PageCharts() {
         title="TimeSeriesChart"
         component="TimeSeriesChart"
         permalink="charts/time-series-chart"
-        desc='Interactive wide SVG chart for dates + values. Use curve="step" for prices held between samples. Pass ranges with TIME_SERIES_PRESETS or custom durationMs filters, or filter data yourself and omit ranges.'
+        desc='Interactive wide SVG chart for dates + values. Fully keyboard accessible (≥ 4.8.42): Tab focuses the chart and activates the latest point, ←/→ step through points with the crosshair and tooltip following, Home/End jump to the ends, Esc clears — and screen readers hear each keyboard-selected point. Use curve="step" for prices held between samples. Pass ranges with TIME_SERIES_PRESETS or custom durationMs filters, or filter data yourself and omit ranges.'
       >
         <Card>
           <TimeSeriesChart
