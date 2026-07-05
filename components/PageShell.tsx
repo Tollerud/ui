@@ -27,7 +27,12 @@ const PageShell = forwardRef<HTMLDivElement, PageShellProps>(
         ref={ref}
         data-density={density ?? undefined}
         className={cn(
-          'relative min-h-screen overflow-hidden text-tollerud-text-primary',
+          // overflow-clip (not -hidden): hidden creates a scroll container, which
+          // silently breaks position:sticky for every descendant — sticky elements
+          // stick to their nearest scrolling ancestor, and the shell root never
+          // scrolls. clip contains the decorative grid/glow layers the same way
+          // without establishing a scroll container.
+          'relative min-h-screen overflow-clip text-tollerud-text-primary',
           backgroundClasses[background],
           className
         )}

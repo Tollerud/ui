@@ -132,7 +132,7 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="DashboardShell" component="DashboardShell" permalink="screens/dashboard-shell" desc="Docs-aligned app shell: sidebar brand lockup, structured nav, context top bar, and main content. Use variant=&quot;topnav&quot; for the legacy horizontal TopNav layout. Pass showMobileLogo={false} to hide the mobile monogram when the consumer renders its own logo.">
+      <Section title="DashboardShell" component="DashboardShell" permalink="screens/dashboard-shell" desc="Docs-aligned app shell: sidebar brand lockup, structured nav, context top bar, and main content. The sidebar stays pinned while the content scrolls on lg+ (≥ 4.8.41 — earlier versions scrolled it away: PageShell's overflow-hidden root disabled sticky for all descendants, and the flex row stretched the sidebar to full content height). Use variant=&quot;topnav&quot; for the legacy horizontal TopNav layout. Pass showMobileLogo={false} to hide the mobile monogram when the consumer renders its own logo.">
         <Demo
           name="dashboard-shell"
           variant="col"

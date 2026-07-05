@@ -455,6 +455,8 @@ Monogram sizing is handled automatically by `TopNav` and `Footer`. If you build 
 <Container>Content capped at 1100px with 24px padding</Container>
 ```
 
+`PageShell`'s root is `overflow-clip` (≥ 4.8.41), so `position: sticky` works anywhere inside it — sticky TopNav, DashboardShell sidebar, or your own `sticky top-*` elements. Don't add `overflow-hidden` to full-page wrappers; it creates a scroll container and silently disables sticky for all descendants.
+
 ### Component-first page layout
 
 ```tsx

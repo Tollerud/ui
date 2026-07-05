@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.40**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.41**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -87,7 +87,7 @@ These primitives give consumer apps a component-first page structure before reac
 
 | Component | Key props | Use for |
 |-----------|-----------|---------|
-| `PageShell` | `background`, `density`, `contentClassName` | Full-page noir/grid/glow background. Inner wrapper is always `flex flex-col flex-1` so `min-h-screen flex flex-col` layouts work correctly. |
+| `PageShell` | `background`, `density`, `contentClassName` | Full-page noir/grid/glow background. Inner wrapper is always `flex flex-col flex-1` so `min-h-screen flex flex-col` layouts work correctly. Root is `overflow-clip` (≥ 4.8.41) so `position: sticky` works for all descendants. |
 | `Section` | `size`, `width` | Consistent page sections |
 | `Stack` | `gap`, `align` | Vertical rhythm |
 | `Cluster` | `gap`, `align`, `justify` | Wrapping actions, badges, and toolbars |
@@ -117,7 +117,7 @@ These components assemble common page structures from the layout primitives and 
 | `TopNav` | Branded monogram lockup, nav links, and top-level actions; `TopNavAction` controls mobile placement; `mobileMenuExtra` injects a slot at the bottom of the mobile sheet |
 | `SidebarNav` | Sidebar brand lockup and grouped navigation links |
 | `DashboardTopBar` | Context top bar with breadcrumb, page title, and actions. `showMobileLogo={false}` hides the mobile monogram. |
-| `DashboardShell` | Docs-aligned app shell with sidebar nav and context top bar. Threads `showMobileLogo` to `DashboardTopBar`. |
+| `DashboardShell` | Docs-aligned app shell with sidebar nav and context top bar. Threads `showMobileLogo` to `DashboardTopBar`. Sidebar sticks on `lg+` (≥ 4.8.41). |
 | `SettingsLayout` | Settings pages with section navigation |
 | `FormPanel` | Titled form surface with actions and footer |
 | `ResourceList` | List/table pages with filters, count, and empty state |

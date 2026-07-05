@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.41 — 2026-07-05 — Fix position:sticky broken for all PageShell descendants
+
+### Fixed
+
+- `PageShell` — the root element used `overflow-hidden`, which establishes a scroll container. Per spec, `position: sticky` elements stick to their nearest scrolling ancestor — so every sticky descendant (`DashboardShell` sidebar, `TopNav sticky`, `DashboardTopBar`, any consumer sticky element) silently behaved as `position: relative` because the shell root itself never scrolls. Replaced with `overflow-clip`, which clips the decorative grid/glow layers identically but does **not** create a scroll container (supported in all evergreen browsers, Chrome 90+ / Firefox 81+ / Safari 16+).
+
+- `DashboardShell` — the sticky sidebar wrapper is a child of a `flex min-h-screen` row, so default `align-items: stretch` stretched it to the full content column height, leaving a sticky element zero travel room even with the `PageShell` fix. Added `lg:self-start` so the wrapper collapses to the sidebar's `h-screen` height and can stick. The mobile drawer is unaffected — below `lg` the wrapper is `position: fixed`, where `align-self` has no layout effect.
+
+Both fixes are required for the `DashboardShell` sidebar; `TopNav sticky`, `DashboardTopBar`, and consumer sticky elements only needed the `PageShell` fix. Reported and verified live in the Butikkpils consumer app. Regression tests assert `overflow-clip` on all `PageShell` backgrounds, no `overflow-hidden` ancestor above a sticky `TopNav`, and `lg:self-start` on the sidebar wrapper.
+
+Audited the rest of the library for the same pattern: all other `overflow-hidden` uses are on self-contained widgets (cards, progress tracks, dropdown panels) that never wrap page-level sticky content, and `DataTable`'s pinned columns stick within their own scroll region by design.
+
 ## 4.8.40 — 2026-07-05 — Keyboard & screen-reader pass: aria-activedescendant, sortable header buttons, tokenized focus rings, Checkbox indeterminate
 
 ### Breaking
