@@ -91,14 +91,18 @@
 
 ## BarChart — `BarChartProps` extends extends HTMLAttributes<HTMLDivElement>
 
-- `data: BarChartDatum[]`
+- `data?: BarChartDatum[]`
+- `series?: BarChartSeries[]`
+- `categories?: string[]`
+- `stacked?: boolean`
 - `height?: number`
-- `* Focusable bars with tooltips: Tab reaches the chart, ←/→ move between`
-- `* bars (roving tabindex), Home/End jump, Esc dismisses. Each bar carries an`
-- `* aria-label ("Oslo: 42") that screen readers announce on focus.`
+- `* Focusable bars/columns with tooltips: Tab reaches the chart, ←/→ move`
+- `* between targets (roving tabindex), Home/End jump, Esc dismisses. Each`
+- `* carries an aria-label announced on focus.`
 - `*/`
 - `interactive?: boolean`
 - `formatValue?: (value: number) => string`
+- `showLegend?: boolean`
 - `ariaLabel?: string`
 
 ## BentoDashboard — `BentoDashboardProps`

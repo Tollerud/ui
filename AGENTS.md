@@ -208,7 +208,8 @@ import { BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand,
 // TimeSeriesChart + AreaChart also render a visually-hidden SR data table (srTable, ≥ 4.8.45).
 // TimeSeriesChart takes `series={[{ label, points, color? }]}` for multi-line charts (≥ 4.8.46).
 // AreaChart is pixel-perfect responsive (≥ 4.8.47) — round markers at any width, no aspect distortion.
-// Sparkline + Donut take an opt-in `fluid` prop (≥ 4.8.48) to flex to their container; all charts now responsive
+// Sparkline + Donut take an opt-in `fluid` prop (≥ 4.8.48) to flex to their container; all charts now responsive.
+// BarChart takes `series={[{ label, values, color? }]}` + `categories` for grouped bars, `stacked` for stacked (≥ 4.8.49)
 // Infra / homelab set
 import { HostCard, ServiceHealthCard, DockerStackCard, IncidentCard } from '@tollerud/ui'
 import { ApprovalCard, ActionDiff, AlertInbox, RollbackPlan, BackupStatusPanel } from '@tollerud/ui'

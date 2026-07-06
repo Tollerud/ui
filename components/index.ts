@@ -290,7 +290,7 @@ export type { TagInputProps } from './TagInput'
 
 // ── Charts ──
 export { BarChart } from './BarChart'
-export type { BarChartProps, BarChartDatum } from './BarChart'
+export type { BarChartProps, BarChartDatum, BarChartSeries } from './BarChart'
 
 export { AreaChart } from './AreaChart'
 export type { AreaChartProps, AreaChartPoint } from './AreaChart'

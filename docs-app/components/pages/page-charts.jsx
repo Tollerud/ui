@@ -480,7 +480,7 @@ function PageCharts() {
         title="BarChart"
         component="BarChart"
         permalink="charts/bar-chart"
-        desc="Vertical bars with optional yellow accent on one series. Values render above each bar; pass formatValue to format them. Add interactive (≥ 4.8.44) for focusable bars: Tab reaches the chart, ←/→ move between bars, Home/End jump, Esc dismisses — each bar announces its label and value to screen readers, and hover or focus shows a tooltip. Bar-height transitions respect prefers-reduced-motion."
+        desc="Vertical bars with optional yellow accent on one series. Values render above each bar; pass formatValue to format them. Add interactive (≥ 4.8.44) for focusable bars: Tab reaches the chart, ←/→ move between bars, Home/End jump, Esc dismisses — each bar announces its label and value to screen readers, and hover or focus shows a tooltip. Bar-height transitions respect prefers-reduced-motion. For multiple series (≥ 4.8.49), pass series + categories for grouped bars, or add stacked for stacked bars — palette-cycled with a legend."
       >
         <Demo name="bar-chart" variant="center" code={BAR_CHART}>
           <Card style={{ width: '100%', maxWidth: 480 }}>
@@ -523,6 +523,70 @@ function PageCharts() {
                 { label: 'Oslo', value: 420, accent: true },
                 { label: 'Bergen', value: 280 },
                 { label: 'Tromsø', value: 150 },
+              ]}
+            />
+          </Card>
+        </Demo>
+        <SubHead>Grouped series (≥ 4.8.49)</SubHead>
+        <Demo
+          name="bar-chart-grouped"
+          variant="center"
+          desc="Pass series + categories for side-by-side bars per category; colors cycle the palette, legend renders above. Each bar is focusable when interactive."
+          code={`<BarChart
+  interactive
+  ariaLabel="Resource use by host"
+  formatValue={(v) => \`\${v}%\`}
+  categories={['emma', 'pia', 'iris']}
+  series={[
+    { label: 'CPU', values: [30, 60, 45] },
+    { label: 'Memory', values: [50, 40, 70] },
+  ]}
+/>`}
+        >
+          <Card style={{ width: '100%', maxWidth: 480 }}>
+            <SubHead>Resource use by host</SubHead>
+            <BarChart
+              interactive
+              ariaLabel="Resource use by host"
+              formatValue={(v) => `${v}%`}
+              categories={['emma', 'pia', 'iris']}
+              series={[
+                { label: 'CPU', values: [30, 60, 45] },
+                { label: 'Memory', values: [50, 40, 70] },
+              ]}
+            />
+          </Card>
+        </Demo>
+        <SubHead>Stacked series (≥ 4.8.49)</SubHead>
+        <Demo
+          name="bar-chart-stacked"
+          variant="center"
+          desc="Add stacked to stack series into one bar per category. Each column is focusable; the tooltip lists every series."
+          code={`<BarChart
+  stacked
+  interactive
+  ariaLabel="Spend by category"
+  formatValue={(v) => \`\${v}k\`}
+  categories={['Q1', 'Q2', 'Q3', 'Q4']}
+  series={[
+    { label: 'Compute', values: [12, 15, 14, 18] },
+    { label: 'Storage', values: [6, 7, 9, 8] },
+    { label: 'Network', values: [3, 4, 3, 5] },
+  ]}
+/>`}
+        >
+          <Card style={{ width: '100%', maxWidth: 480 }}>
+            <SubHead>Spend by category</SubHead>
+            <BarChart
+              stacked
+              interactive
+              ariaLabel="Spend by category"
+              formatValue={(v) => `${v}k`}
+              categories={['Q1', 'Q2', 'Q3', 'Q4']}
+              series={[
+                { label: 'Compute', values: [12, 15, 14, 18] },
+                { label: 'Storage', values: [6, 7, 9, 8] },
+                { label: 'Network', values: [3, 4, 3, 5] },
               ]}
             />
           </Card>

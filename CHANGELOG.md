@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.49 — 2026-07-07 — Stacked & grouped BarChart
+
+### Added
+
+- `BarChart` — new `series` prop (`BarChartSeries[]` = `{ label, values, color? }[]`) with `categories` renders multiple series as **grouped** bars (side by side per category) or **stacked** bars (`stacked`) — one bar per category with a segment per series. Colors cycle the `--chart-1…5` palette unless set explicitly. A swatch legend renders above (`showLegend`, default on). When `interactive`: grouped bars are individually focusable (roving tabindex, one aria-label per category·series); stacked columns are focusable per category with a tooltip and aria-label listing every series. New `BarChartSeries` type exported.
+
+### Changed
+
+- `BarChart` single-series usage (the `data` prop) is unchanged — same markup, values, accent bar, tooltips, and keyboard behavior as 4.8.48.
+
 ## 4.8.48 — 2026-07-07 — Fluid Sparkline & Donut
 
 Completes responsive charts — every chart can now flex to its container.
