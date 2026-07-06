@@ -217,7 +217,7 @@ function PageCharts() {
         title="TimeSeriesChart"
         component="TimeSeriesChart"
         permalink="charts/time-series-chart"
-        desc='Interactive wide SVG chart for dates + values. Fully keyboard accessible (≥ 4.8.42): Tab focuses the chart and activates the latest point, ←/→ step through points with the crosshair and tooltip following, Home/End jump to the ends, Esc clears — and screen readers hear each keyboard-selected point. Use curve="step" for prices held between samples. Pass ranges with TIME_SERIES_PRESETS or custom durationMs filters, or filter data yourself and omit ranges.'
+        desc='Interactive wide SVG chart for dates + values. Fully keyboard accessible (≥ 4.8.42): Tab focuses the chart and activates the latest point, ←/→ step through points with the crosshair and tooltip following, Home/End jump to the ends, Esc clears — and screen readers hear each keyboard-selected point. A visually-hidden data table (srTable, on by default; ≥ 4.8.45) exposes every point to screen readers. Use curve="step" for prices held between samples. Pass ranges with TIME_SERIES_PRESETS or custom durationMs filters, or filter data yourself and omit ranges.'
       >
         <Card>
           <TimeSeriesChart
@@ -379,7 +379,7 @@ function PageCharts() {
         title="AreaChart"
         component="AreaChart"
         permalink="charts/area-chart"
-        desc="Area/line chart for simple dashboards. Static and decorative by default; add interactive (≥ 4.8.43) for a crosshair, tooltip, and full keyboard navigation (Tab, ←/→, Home/End, Esc) with screen-reader announcements. Pass labeled points ({ value, label }) so tooltips and announcements name each point; plain number arrays keep working. Use TimeSeriesChart when you need dates, ranges, or axes."
+        desc="Area/line chart for simple dashboards. Static and decorative by default; add interactive (≥ 4.8.43) for a crosshair, tooltip, and full keyboard navigation (Tab, ←/→, Home/End, Esc) with screen-reader announcements plus a visually-hidden data table (srTable; ≥ 4.8.45). Pass labeled points ({ value, label }) so tooltips, announcements, and the table name each point; plain number arrays keep working. Use TimeSeriesChart when you need dates, ranges, or axes."
       >
         <Demo name="area-chart" variant="center" code={AREA_CHART}>
           <Card style={{ width: '100%', maxWidth: 480 }}>

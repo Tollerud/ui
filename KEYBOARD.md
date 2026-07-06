@@ -66,6 +66,7 @@ Interactive charts share one keyboard contract. Single-SVG charts (TimeSeriesCha
 - `Esc` clears the active point — consumed only while a point is active, so a surrounding Dialog stays open
 - Keyboard-selected points are announced via a visually-hidden `aria-live="polite"` region ("1 Mar 2026: 42")
 - Clicking the chart does not steal a keyboard selection: focus gained from a pointer press skips the focus-selects-latest behavior
+- Line/area charts also render a visually-hidden data table (`srTable`, ≥ 4.8.45) so screen-reader users can browse every point's value, not just hear the live-region announcements
 
 ## Implementation rules
 

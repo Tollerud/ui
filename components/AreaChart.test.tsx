@@ -20,7 +20,7 @@ describe('AreaChart', () => {
 
   it('supports keyboard navigation with tooltip and announcements when interactive', () => {
     const { container } = render(
-      <AreaChart data={labeled} interactive ariaLabel="Monthly output" formatValue={(v) => `v${v}`} />
+      <AreaChart data={labeled} interactive ariaLabel="Monthly output" formatValue={(v) => `v${v}`} srTable={false} />
     )
     const svg = screen.getByRole('img', { name: 'Monthly output' })
     expect(svg).toHaveAttribute('tabindex', '0')
@@ -48,6 +48,21 @@ describe('AreaChart', () => {
     const svg = screen.getByRole('img', { name: 'Area chart' })
     fireEvent.focus(svg)
     expect(screen.getByText('Mar#2=30')).toBeInTheDocument()
+  })
+
+  it('exposes a screen-reader data table when interactive, using point labels', () => {
+    render(<AreaChart data={labeled} interactive ariaLabel="Monthly output" formatValue={(v) => `v${v}`} />)
+    const table = screen.getByRole('table', { name: 'Monthly output' })
+    expect(table).toBeInTheDocument()
+    expect(screen.getByRole('rowheader', { name: 'Feb' })).toBeInTheDocument()
+    expect(screen.getByRole('cell', { name: 'v20' })).toBeInTheDocument()
+  })
+
+  it('omits the screen-reader table when static, but honors srTable override', () => {
+    const { rerender } = render(<AreaChart data={[1, 2, 3]} />)
+    expect(screen.queryByRole('table')).not.toBeInTheDocument()
+    rerender(<AreaChart data={labeled} srTable ariaLabel="Static but tabled" />)
+    expect(screen.getByRole('table', { name: 'Static but tabled' })).toBeInTheDocument()
   })
 
   it('has no axe violations static and with the keyboard tooltip open', async () => {

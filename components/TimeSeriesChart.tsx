@@ -31,6 +31,7 @@ import {
 } from '@/lib/chart-series'
 import {
   ChartLiveRegion,
+  ChartSrTable,
   ChartTooltip,
   ChartTooltipLayer,
   clampTooltipX,
@@ -80,6 +81,8 @@ export interface TimeSeriesChartProps extends Omit<HTMLAttributes<HTMLDivElement
   emptyMessage?: string
   locale?: string
   ariaLabel?: string
+  /** Visually-hidden data table exposing every point to screen readers (default on). Set `false` to opt out. */
+  srTable?: boolean
 }
 
 const MS_DAY = 24 * 60 * 60 * 1000
@@ -130,6 +133,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       emptyMessage = 'No data',
       locale = 'en-US',
       ariaLabel,
+      srTable = true,
       ...props
     },
     ref,
@@ -414,6 +418,17 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
         </div>
 
         <ChartLiveRegion message={announcement} />
+        {srTable ? (
+          <ChartSrTable
+            caption={ariaLabel ?? 'Time series chart'}
+            labelHeader="Date"
+            valueHeader="Value"
+            rows={visiblePoints.map((point) => ({
+              label: dateFormatter(parseChartDate(point.date)),
+              value: valueFormatter(point.value),
+            }))}
+          />
+        ) : null}
       </div>
     )
   },

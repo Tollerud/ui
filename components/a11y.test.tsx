@@ -10,6 +10,11 @@ import { Combobox } from './Combobox'
 import { DatePicker } from './DatePicker'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './Sheet'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './Tabs'
+import { TimeSeriesChart } from './TimeSeriesChart'
+import { AreaChart } from './AreaChart'
+import { BarChart } from './BarChart'
+import { Donut } from './Donut'
+import { Sparkline } from './Sparkline'
 
 const commandGroups = [
   {
@@ -108,6 +113,69 @@ describe('accessibility', () => {
 
     await user.click(screen.getByRole('button', { name: /schedule/i }))
     expect(screen.getByRole('dialog', { name: 'Choose date' })).toBeInTheDocument()
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('TimeSeriesChart (with SR data table) has no axe violations', async () => {
+    const { container } = render(
+      <TimeSeriesChart
+        data={[
+          { date: '2026-01-01', value: 10 },
+          { date: '2026-02-01', value: 20 },
+        ]}
+        ariaLabel="Prices over time"
+      />
+    )
+    expect(screen.getByRole('table', { name: 'Prices over time' })).toBeInTheDocument()
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('interactive AreaChart has no axe violations', async () => {
+    const { container } = render(
+      <AreaChart
+        interactive
+        ariaLabel="Requests"
+        data={[
+          { value: 10, label: 'Jan' },
+          { value: 20, label: 'Feb' },
+        ]}
+      />
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('interactive BarChart has no axe violations', async () => {
+    const { container } = render(
+      <BarChart
+        interactive
+        ariaLabel="Sales"
+        data={[
+          { label: 'Oslo', value: 42 },
+          { label: 'Bergen', value: 28 },
+        ]}
+      />
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('interactive Donut (palette defaults) has no axe violations', async () => {
+    const { container } = render(
+      <Donut
+        interactive
+        ariaLabel="Fuel mix"
+        segments={[
+          { label: 'Diesel', value: 60 },
+          { label: 'El', value: 40 },
+        ]}
+      />
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('interactive Sparkline has no axe violations', async () => {
+    const { container } = render(
+      <Sparkline interactive ariaLabel="Trend" data={[1, 3, 2, 5, 4]} />
+    )
     expect(await axe(container)).toHaveNoViolations()
   })
 })

@@ -36,6 +36,15 @@ Border colors are decorative and exempt from contrast requirements. Never put ye
 - Headings must follow a logical h1→h6 hierarchy
 - Alt text on meaningful images, `alt=""` on decorative
 
+## Charts
+
+Interactive charts (`interactive` prop; `TimeSeriesChart` always) share one keyboard contract — Tab focuses, ←/→ step points, Home/End jump, Esc clears — documented in `KEYBOARD.md` → Charts. For screen-reader data access:
+
+- **Line/area charts** (`TimeSeriesChart`, `AreaChart`) whose data lives only in SVG path geometry render a visually-hidden `<table>` (`srTable`, default on when the chart is interactive) so the actual numbers are browsable. Keyboard-driven point changes are announced through a polite live region.
+- **Bar and donut charts** expose their data as accessible text instead of a table: `BarChart` interactive bars carry per-bar `aria-label`s ("Oslo: 420 kr"); `Donut`'s legend is a semantic list. No `srTable` there — a table would duplicate what AT already reads.
+- **`Sparkline`** stays `aria-hidden` unless `interactive`; as a micro-chart it has no data table (per-cell tables would be noise in a `DataTable`).
+- Static (non-`interactive`) charts remain decorative `aria-hidden` graphics.
+
 ## Reduced Motion
 
 - Respect `prefers-reduced-motion: reduce`

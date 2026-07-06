@@ -23,7 +23,7 @@ describe('TimeSeriesChart', () => {
 
   it('supports keyboard navigation: focus selects latest, arrows move the crosshair', () => {
     const { container } = render(
-      <TimeSeriesChart data={data} formatValue={formatValue} ariaLabel="Prices" />
+      <TimeSeriesChart data={data} formatValue={formatValue} ariaLabel="Prices" srTable={false} />
     )
     const svg = screen.getByRole('img', { name: 'Prices' })
 
@@ -47,7 +47,7 @@ describe('TimeSeriesChart', () => {
     render(
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- test probe for event propagation, stands in for a Dialog layer
       <div onKeyDown={(e) => e.key === 'Escape' && outerEscape()}>
-        <TimeSeriesChart data={data} formatValue={formatValue} ariaLabel="Prices" />
+        <TimeSeriesChart data={data} formatValue={formatValue} ariaLabel="Prices" srTable={false} />
       </div>
     )
     const svg = screen.getByRole('img', { name: 'Prices' })
@@ -67,6 +67,21 @@ describe('TimeSeriesChart', () => {
   it('renders the empty state without data', () => {
     render(<TimeSeriesChart data={[]} emptyMessage="Nothing yet" />)
     expect(screen.getByText('Nothing yet')).toBeInTheDocument()
+  })
+
+  it('exposes a screen-reader data table by default and can opt out', () => {
+    const { rerender } = render(
+      <TimeSeriesChart data={data} formatValue={formatValue} ariaLabel="Prices" />
+    )
+    const table = screen.getByRole('table', { name: 'Prices' })
+    expect(table).toBeInTheDocument()
+    // One row per data point, each pairing date + value
+    const valueCell = screen.getByRole('cell', { name: 'val-30' })
+    expect(valueCell).toBeInTheDocument()
+    expect(screen.getAllByRole('row')).toHaveLength(data.length + 1) // + header row
+
+    rerender(<TimeSeriesChart data={data} formatValue={formatValue} ariaLabel="Prices" srTable={false} />)
+    expect(screen.queryByRole('table')).not.toBeInTheDocument()
   })
 
   it('has no axe violations idle and with the keyboard tooltip open', async () => {

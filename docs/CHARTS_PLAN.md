@@ -151,6 +151,15 @@ Each phase is self-contained and executable in a fresh session. Each phase that 
 
 ## Phase 5 — Screen-reader data access + keyboard contract docs
 
+> **Status: shipped in v4.8.45.** Scoping deviation from the sketch below,
+> made to honor this phase's own "no duplication" guard: `ChartSrTable` is
+> wired only into `TimeSeriesChart` (default on) and `AreaChart` (default =
+> `interactive`) — the charts whose data lives solely in SVG path geometry.
+> `BarChart` (per-bar `aria-label`s) and `Donut` (semantic legend list)
+> already expose their data as accessible text, so adding a table there would
+> duplicate what AT reads; `Sparkline` is excluded as a micro-chart. The a11y
+> suite gained no-violation entries for all five interactive charts.
+
 **What to implement**
 
 1. `ChartSrTable` in `lib/chart-interaction.tsx`: a visually-hidden (`sr-only`) `<table>` rendering the chart's data (caption = ariaLabel, columns = label/date + value via `formatChart*`). Wire into TimeSeriesChart, AreaChart, BarChart, Donut behind `srTable?: boolean` (default **true** when `interactive`, opt-out available). This is the "data table fallback" — SR users get the actual numbers, not just "Time series chart".

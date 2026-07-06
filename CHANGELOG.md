@@ -7,6 +7,22 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.45 — 2026-07-06 — Screen-reader data tables for line & area charts
+
+Phase 5 (final interactive phase) of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)): screen-reader users get the actual numbers behind the SVG, not just "Time series chart".
+
+### Added
+
+- `TimeSeriesChart` — renders a visually-hidden data table (one row per point, date + formatted value) so screen readers can browse the data. New `srTable` prop, default `true`; set `false` to opt out. This complements the live-region announcements from keyboard navigation.
+
+- `AreaChart` — same visually-hidden data table via a new `srTable` prop, defaulting to `interactive` (the SVG is `aria-hidden` when static, so no table then). Rows use each point's `label` when provided, otherwise "Point N".
+
+- `lib/chart-interaction.tsx` (internal) — new `ChartSrTable` component. Deliberately not wired into `BarChart` or `Donut`: their data is already exposed as accessible text (per-bar `aria-label`s, the semantic legend list), so a table would duplicate what assistive tech already reads. `Sparkline` is excluded as a micro-chart.
+
+### Changed
+
+- The accessibility test suite (`components/a11y.test.tsx`) now covers all five interactive charts (`TimeSeriesChart`, `AreaChart`, `BarChart`, `Donut`, `Sparkline`) with zero axe violations, including the new SR data tables.
+
 ## 4.8.44 — 2026-07-06 — BarChart focusable bars + Donut palette defaults and interactive legend
 
 Phases 3 and 4 of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)). Unlike the SVG-crosshair charts, these two move real focus between labeled elements, so screen readers announce each bar/legend row natively — no live region needed.

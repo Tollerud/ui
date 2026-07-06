@@ -94,7 +94,8 @@
         "interactive?: boolean",
         "formatValue?: (value: number) => string",
         "renderTooltip?: (point: AreaChartPoint, index: number, formattedValue: string) => ReactNode",
-        "ariaLabel?: string"
+        "ariaLabel?: string",
+        "srTable?: boolean"
       ]
     }
   ],
@@ -1250,7 +1251,8 @@
         "renderTooltip?: (point: TimeSeriesPoint, index: number, formattedValue: string) => ReactNode",
         "emptyMessage?: string",
         "locale?: string",
-        "ariaLabel?: string"
+        "ariaLabel?: string",
+        "srTable?: boolean"
       ]
     }
   ],

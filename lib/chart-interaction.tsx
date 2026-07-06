@@ -234,3 +234,58 @@ export function ChartLiveRegion({ message }: ChartLiveRegionProps) {
     </div>
   )
 }
+
+export interface ChartSrTableRow {
+  /** Category cell — a date, month, or point label. */
+  label: string
+  /** Value cell — already formatted for display. */
+  value: string
+}
+
+export interface ChartSrTableProps {
+  /** Table caption — usually the chart's `ariaLabel`. */
+  caption: string
+  /** Header for the category column (default "Point"). */
+  labelHeader?: string
+  /** Header for the value column (default "Value"). */
+  valueHeader?: string
+  rows: ChartSrTableRow[]
+}
+
+/**
+ * Visually-hidden data table — the "data table fallback" for line/area charts
+ * whose data lives only in SVG path geometry (`role="img"` with a single
+ * label). Screen-reader users get the actual numbers as a browsable table,
+ * alongside the live region's per-point announcements during keyboard nav.
+ *
+ * Not used for charts that already expose their data as accessible text
+ * (BarChart's per-bar `aria-label`s, Donut's semantic legend) — adding a table
+ * there would duplicate what assistive tech already reads.
+ */
+export function ChartSrTable({
+  caption,
+  labelHeader = 'Point',
+  valueHeader = 'Value',
+  rows,
+}: ChartSrTableProps) {
+  if (rows.length === 0) return null
+  return (
+    <table className="sr-only">
+      <caption>{caption}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{labelHeader}</th>
+          <th scope="col">{valueHeader}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row, index) => (
+          <tr key={index}>
+            <th scope="row">{row.label}</th>
+            <td>{row.value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
+}

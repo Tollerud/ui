@@ -4,6 +4,7 @@ import { type HTMLAttributes, type ReactNode, forwardRef, useId, useRef } from '
 import { formatChartNumber } from '@/lib/chart-series'
 import {
   ChartLiveRegion,
+  ChartSrTable,
   ChartTooltip,
   ChartTooltipLayer,
   useChartInteraction,
@@ -31,6 +32,8 @@ export interface AreaChartProps extends HTMLAttributes<HTMLDivElement> {
   renderTooltip?: (point: AreaChartPoint, index: number, formattedValue: string) => ReactNode
   /** Accessible name when `interactive` (default "Area chart"). */
   ariaLabel?: string
+  /** Visually-hidden data table for screen readers. Defaults to `interactive` (the SVG is `aria-hidden` when static). */
+  srTable?: boolean
 }
 
 const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
@@ -43,6 +46,7 @@ const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
       formatValue,
       renderTooltip,
       ariaLabel,
+      srTable,
       ...props
     },
     ref,
@@ -84,6 +88,7 @@ const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
       interactive && isKeyboard && activePoint && pointIndex != null
         ? `${activePoint.label ?? `Point ${pointIndex + 1} of ${points.length}`}: ${fmt(activePoint.value)}`
         : null
+    const showSrTable = srTable ?? interactive
 
     return (
       <div ref={ref} className={cn('relative w-full', className)} {...props}>
@@ -172,6 +177,15 @@ const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
         ) : null}
 
         {interactive ? <ChartLiveRegion message={announcement} /> : null}
+        {showSrTable ? (
+          <ChartSrTable
+            caption={ariaLabel ?? 'Area chart'}
+            rows={points.map((point, index) => ({
+              label: point.label ?? `Point ${index + 1}`,
+              value: fmt(point.value),
+            }))}
+          />
+        ) : null}
       </div>
     )
   },

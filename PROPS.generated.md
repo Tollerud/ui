@@ -63,6 +63,7 @@
 - `formatValue?: (value: number) => string`
 - `renderTooltip?: (point: AreaChartPoint, index: number, formattedValue: string) => ReactNode`
 - `ariaLabel?: string`
+- `srTable?: boolean`
 
 ## Avatar — `AvatarGroupProps` extends extends HTMLAttributes<HTMLDivElement>
 
@@ -828,6 +829,7 @@
 - `emptyMessage?: string`
 - `locale?: string`
 - `ariaLabel?: string`
+- `srTable?: boolean`
 
 ## Toast — `ToastProviderProps`
 
