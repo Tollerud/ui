@@ -9,7 +9,7 @@
 
 ## 4.8.46 — 2026-07-06 — Multi-series TimeSeriesChart
 
-Phase 6 (final) of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)) — the parked stretch item, now shipped.
+Phase 6 (final) of the charts plan ([docs/CHARTS_PLAN.md](docs/archive/CHARTS_PLAN.md)) — the parked stretch item, now shipped.
 
 ### Added
 
@@ -23,7 +23,7 @@ Phase 6 (final) of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)) 
 
 ## 4.8.45 — 2026-07-06 — Screen-reader data tables for line & area charts
 
-Phase 5 (final interactive phase) of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)): screen-reader users get the actual numbers behind the SVG, not just "Time series chart".
+Phase 5 (final interactive phase) of the charts plan ([docs/CHARTS_PLAN.md](docs/archive/CHARTS_PLAN.md)): screen-reader users get the actual numbers behind the SVG, not just "Time series chart".
 
 ### Added
 
@@ -39,7 +39,7 @@ Phase 5 (final interactive phase) of the charts plan ([docs/CHARTS_PLAN.md](docs
 
 ## 4.8.44 — 2026-07-06 — BarChart focusable bars + Donut palette defaults and interactive legend
 
-Phases 3 and 4 of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)). Unlike the SVG-crosshair charts, these two move real focus between labeled elements, so screen readers announce each bar/legend row natively — no live region needed.
+Phases 3 and 4 of the charts plan ([docs/CHARTS_PLAN.md](docs/archive/CHARTS_PLAN.md)). Unlike the SVG-crosshair charts, these two move real focus between labeled elements, so screen readers announce each bar/legend row natively — no live region needed.
 
 ### Added
 
@@ -57,7 +57,7 @@ Phases 3 and 4 of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)). 
 
 ## 4.8.43 — 2026-07-05 — AreaChart & Sparkline: interactive tooltips + keyboard navigation
 
-Phase 2 of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)) — both charts adopt the shared interaction core from 4.8.42.
+Phase 2 of the charts plan ([docs/CHARTS_PLAN.md](docs/archive/CHARTS_PLAN.md)) — both charts adopt the shared interaction core from 4.8.42.
 
 ### Added
 
@@ -73,7 +73,7 @@ Phase 2 of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)) — both
 
 ## 4.8.42 — 2026-07-05 — TimeSeriesChart keyboard navigation + shared chart interaction core
 
-First phase of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)): a shared interaction layer that later phases reuse for AreaChart, Sparkline, BarChart, and Donut.
+First phase of the charts plan ([docs/CHARTS_PLAN.md](docs/archive/CHARTS_PLAN.md)): a shared interaction layer that later phases reuse for AreaChart, Sparkline, BarChart, and Donut.
 
 ### Added
 

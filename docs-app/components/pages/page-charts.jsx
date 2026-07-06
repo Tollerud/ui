@@ -204,11 +204,20 @@ function PageCharts() {
         <TokenTable
           cols={['Component', 'Use when']}
           rows={[
-            ['<code>TimeSeriesChart</code>', 'Wide price/metric history — stepped curves, hover tooltip, range selector'],
-            ['<code>Sparkline</code>', 'Inline trends in tables, stat rows, or cards'],
-            ['<code>AreaChart</code>', 'Simple static trend — no interaction'],
-            ['<code>BarChart</code>', 'Category comparison with one highlighted bar'],
-            ['<code>Donut</code>', 'Part-to-whole breakdown with legend'],
+            ['<code>TimeSeriesChart</code>', 'Wide price/metric history — stepped/linear curves, hover + keyboard crosshair, range selector, one or many series'],
+            ['<code>Sparkline</code>', 'Inline trends in tables, stat rows, or cards — optional interactive tooltip'],
+            ['<code>AreaChart</code>', 'Simple trend — static by default, or interactive with tooltip + keyboard nav'],
+            ['<code>BarChart</code>', 'Category comparison — static, or interactive focusable bars with tooltips'],
+            ['<code>Donut</code>', 'Part-to-whole breakdown — palette-cycled legend, optionally interactive'],
+          ]}
+        />
+        <TokenTable
+          cols={['Interaction', 'Applies to']}
+          rows={[
+            ['<code>interactive</code> — crosshair/tooltip + keyboard (Tab, ←/→, Home/End, Esc), SR announcements', '<code>AreaChart</code>, <code>Sparkline</code>, <code>BarChart</code>, <code>Donut</code> (opt-in); <code>TimeSeriesChart</code> (always)'],
+            ['<code>srTable</code> — visually-hidden data table for screen readers', '<code>TimeSeriesChart</code> (default on), <code>AreaChart</code> (default = interactive)'],
+            ['<code>formatValue</code> / <code>ariaLabel</code> — value formatting + accessible name', 'all interactive charts'],
+            ['<code>CHART_SERIES_COLORS</code> — the <code>--chart-1…5</code> palette cycle', '<code>Donut</code> segments &amp; <code>TimeSeriesChart</code> series without an explicit color'],
           ]}
         />
       </Section>

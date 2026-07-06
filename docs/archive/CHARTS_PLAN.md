@@ -1,7 +1,9 @@
 # First-Class Charts Plan
 
-Status: **proposed** (move to `docs/archive/` when complete)
+Status: **complete** (archived 2026-07-06) — all six phases shipped in v4.8.42–46.
 Created: 2026-07-05 · Baseline: v4.8.41
+
+**Verification sweep (final phase) — passed 2026-07-06:** `npm run validate` green; anti-pattern greps clean (no `role="application"`/`aria-activedescendant` in charts, no charting deps, no raw hex outside `var()`); all newly-client charts (`AreaChart`, `BarChart`, `Donut`) carry `'use client'` and use hooks; main-barrel size 1.8 KB gzip (limit 220 KB — the gate measures the re-export entry, so charts added no measurable delta); `prefers-reduced-motion` guard confirmed in the built CSS for BarChart/Meter transitions; keyboard + SR paths verified live per phase and in `components/a11y.test.tsx` across all five interactive charts.
 
 Goal: bring every chart in `@tollerud/ui` up to the interaction/accessibility bar that `TimeSeriesChart` already sets — hover tooltips, crosshair, **keyboard navigation**, screen-reader access, token-driven theming, and one consistent API — with **no charting-library dependency**.
 

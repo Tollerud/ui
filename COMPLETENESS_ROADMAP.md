@@ -1,6 +1,6 @@
 # Tollerud User Interface — Roadmap
 
-Last updated: 2026-07-05
+Last updated: 2026-07-06
 
 Living roadmap for `@tollerud/ui`. Completed planning docs: [docs/archive/](docs/archive/).
 
@@ -14,6 +14,8 @@ Shipped exports are documented in [SKILL.md](SKILL.md) and [COMPONENTS.md](COMPO
 - [ ] Extend Playwright for subpath-import smoke page in docs or fixture
 
 ### Recently completed
+
+**First-class charts** — all six phases (v4.8.42–46): shared interaction core, keyboard navigation + tooltips across TimeSeriesChart / AreaChart / Sparkline / BarChart / Donut, tokenized theming (`--chart-1…5` palette), screen-reader data tables, and multi-series TimeSeriesChart. See [docs/archive/CHARTS_PLAN.md](docs/archive/CHARTS_PLAN.md).
 
 **Consumer styling** — layout primitives, screen patterns, component-first docs, agent-safe recipes, and `npx tollerud-ui-audit`. All phases done. See [docs/archive/CONSUMER_STYLING_ROADMAP.md](docs/archive/CONSUMER_STYLING_ROADMAP.md).
 
