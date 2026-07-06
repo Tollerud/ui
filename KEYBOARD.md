@@ -56,9 +56,9 @@ The `Kbd` component displays a keyboard shortcut chip. It accepts any string or 
 - Click outside to close
 - Hover follows keyboard selection
 
-### Charts (TimeSeriesChart, ≥ 4.8.42)
+### Charts (TimeSeriesChart ≥ 4.8.42; AreaChart & Sparkline with `interactive` ≥ 4.8.43)
 
-Interactive charts share one keyboard contract (implemented in `lib/chart-interaction.tsx`; later chart phases adopt it):
+Interactive charts share one keyboard contract (implemented in `lib/chart-interaction.tsx`):
 
 - `Tab` focuses the chart — the latest point becomes active (crosshair + tooltip shown, yellow focus ring)
 - `←` / `→` step one point back/forward

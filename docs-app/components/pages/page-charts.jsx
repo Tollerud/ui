@@ -330,7 +330,7 @@ function PageCharts() {
         title="Sparkline"
         component="Sparkline"
         permalink="charts/sparkline"
-        desc='Compact inline SVG trend. Add curve="step", fill, and interactive for price-style micro charts with a hover dot — common in DataTable cells. The SVG is clipped to its viewBox so stroke bleed at small sizes (e.g. 84×26) is prevented.'
+        desc='Compact inline SVG trend. Add curve="step", fill, and interactive for price-style micro charts — common in DataTable cells. Interactive sparklines (≥ 4.8.43) get a tooltip and keyboard navigation (Tab, ←/→, Home/End, Esc) with screen-reader announcements; pass formatValue and ariaLabel for meaningful output. The SVG is clipped to its viewBox so stroke bleed at small sizes (e.g. 84×26) is prevented.'
       >
         <Card>
           <div className="ds-col" style={{ gap: 14 }}>
@@ -379,12 +379,49 @@ function PageCharts() {
         title="AreaChart"
         component="AreaChart"
         permalink="charts/area-chart"
-        desc="Static area/line chart for simple dashboards. No hover or range selector — use TimeSeriesChart when you need interaction."
+        desc="Area/line chart for simple dashboards. Static and decorative by default; add interactive (≥ 4.8.43) for a crosshair, tooltip, and full keyboard navigation (Tab, ←/→, Home/End, Esc) with screen-reader announcements. Pass labeled points ({ value, label }) so tooltips and announcements name each point; plain number arrays keep working. Use TimeSeriesChart when you need dates, ranges, or axes."
       >
         <Demo name="area-chart" variant="center" code={AREA_CHART}>
           <Card style={{ width: '100%', maxWidth: 480 }}>
             <SubHead>CPU load · 24h</SubHead>
             <AreaChart data={[28, 35, 30, 44, 52, 48, 63, 58, 71, 65, 80, 62]} height={150} />
+          </Card>
+        </Demo>
+        <SubHead>Interactive — labeled points, keyboard accessible</SubHead>
+        <Demo
+          name="area-chart-interactive"
+          variant="center"
+          code={`<AreaChart
+  interactive
+  ariaLabel="Requests per hour"
+  formatValue={(v) => \`\${v} req\`}
+  data={[
+    { value: 420, label: '09:00' },
+    { value: 560, label: '10:00' },
+    { value: 610, label: '11:00' },
+    { value: 540, label: '12:00' },
+    { value: 720, label: '13:00' },
+    { value: 680, label: '14:00' },
+  ]}
+  height={150}
+/>`}
+        >
+          <Card style={{ width: '100%', maxWidth: 480 }}>
+            <SubHead>Requests per hour</SubHead>
+            <AreaChart
+              interactive
+              ariaLabel="Requests per hour"
+              formatValue={(v) => `${v} req`}
+              data={[
+                { value: 420, label: '09:00' },
+                { value: 560, label: '10:00' },
+                { value: 610, label: '11:00' },
+                { value: 540, label: '12:00' },
+                { value: 720, label: '13:00' },
+                { value: 680, label: '14:00' },
+              ]}
+              height={150}
+            />
           </Card>
         </Demo>
       </Section>

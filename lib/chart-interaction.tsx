@@ -22,6 +22,13 @@ export interface ChartInteractionOptions {
   count: number
   paddingLeft: number
   paddingRight: number
+  /**
+   * Set when the SVG uses a fixed viewBox stretched to the container
+   * (`preserveAspectRatio="none"`, e.g. AreaChart's 520-unit viewBox).
+   * Padding values are then given in viewBox units and scaled to client
+   * pixels before the pointer position is mapped to an index.
+   */
+  viewBoxWidth?: number
   /** Called when Escape clears an active point. */
   onEscape?: () => void
 }
@@ -51,6 +58,7 @@ export function useChartInteraction({
   count,
   paddingLeft,
   paddingRight,
+  viewBoxWidth,
   onEscape,
 }: ChartInteractionOptions): ChartInteraction {
   const [rawIndex, setRawIndex] = useState<number | null>(null)
@@ -72,10 +80,13 @@ export function useChartInteraction({
     (clientX: number) => {
       const rect = svgRef.current?.getBoundingClientRect()
       if (!rect || count === 0) return
+      const scale = viewBoxWidth && viewBoxWidth > 0 ? rect.width / viewBoxWidth : 1
       setIsKeyboard(false)
-      setRawIndex(indexFromPointer(clientX, rect, count, paddingLeft, paddingRight))
+      setRawIndex(
+        indexFromPointer(clientX, rect, count, paddingLeft * scale, paddingRight * scale),
+      )
     },
-    [count, paddingLeft, paddingRight, svgRef],
+    [count, paddingLeft, paddingRight, svgRef, viewBoxWidth],
   )
 
   const svgProps = useMemo<ChartInteraction['svgProps']>(
@@ -188,8 +199,9 @@ export function ChartTooltip({ title, subtitle, label, lines }: ChartTooltipProp
 }
 
 export interface ChartTooltipLayerProps {
-  left: number
-  top: number
+  /** Pixel value or any CSS length/percentage (e.g. `'42%'` for stretched viewBoxes). */
+  left: number | string
+  top: number | string
   children: ReactNode
 }
 

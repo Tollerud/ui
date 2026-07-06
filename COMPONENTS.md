@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.42**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.43**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -696,7 +696,9 @@ Props: `name`, `price`, `period?`, `description?`, `features?: ReactNode[]`, `ct
 
 Palette-aware SVG charts — no Recharts dependency. Yellow is the highlight series; grid and axis use `--chart-grid` and `--chart-axis` from `globals.css`.
 
-`TimeSeriesChart` is fully keyboard accessible (≥ 4.8.42): Tab focuses the chart and activates the latest point, ←/→ step through points (crosshair + tooltip follow), Home/End jump to the ends, Esc clears — consumed only while a point is active, so a surrounding Dialog stays open. Keyboard selections are announced to screen readers via a polite live region. See `KEYBOARD.md` → Charts for the full contract.
+`TimeSeriesChart` (≥ 4.8.42), plus `AreaChart` and `Sparkline` when `interactive` is set (≥ 4.8.43), share one keyboard contract: Tab focuses the chart and activates the latest point, ←/→ step through points (crosshair + tooltip follow), Home/End jump to the ends, Esc clears — consumed only while a point is active, so a surrounding Dialog stays open. Keyboard selections are announced to screen readers via a polite live region. See `KEYBOARD.md` → Charts for the full contract.
+
+`AreaChart` (≥ 4.8.43): `data` accepts `number[]` or labeled `{ value, label }[]`; `interactive`, `formatValue`, `renderTooltip(point, index, formattedValue)`, and `ariaLabel` enable the interactive layer. Static usage stays a decorative `aria-hidden` graphic. `Sparkline` interactive mode adds `formatValue` and `ariaLabel` for its tooltip and announcements.
 
 ```tsx
 import {

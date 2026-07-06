@@ -1,34 +1,102 @@
-import { type HTMLAttributes, forwardRef, useId } from 'react'
+'use client'
+
+import { type HTMLAttributes, type ReactNode, forwardRef, useId, useRef } from 'react'
+import { formatChartNumber } from '@/lib/chart-series'
+import {
+  ChartLiveRegion,
+  ChartTooltip,
+  ChartTooltipLayer,
+  useChartInteraction,
+} from '@/lib/chart-interaction'
 import { cn } from '@/lib/utils'
 
+export interface AreaChartPoint {
+  value: number
+  /** Tooltip title and screen-reader name for the point (e.g. a month). */
+  label?: string
+}
+
 export interface AreaChartProps extends HTMLAttributes<HTMLDivElement> {
-  data: number[]
+  /** Plain numbers (original API) or labeled points for interactive tooltips. */
+  data: number[] | AreaChartPoint[]
   height?: number
+  /**
+   * Hover/keyboard interactivity: crosshair, tooltip, arrow-key navigation,
+   * and screen-reader announcements. Off by default — the static chart stays
+   * a decorative `aria-hidden` graphic exactly as before 4.8.43.
+   */
+  interactive?: boolean
+  /** Formats tooltip values and announcements. Defaults to en-US number formatting. */
+  formatValue?: (value: number) => string
+  renderTooltip?: (point: AreaChartPoint, index: number, formattedValue: string) => ReactNode
+  /** Accessible name when `interactive` (default "Area chart"). */
+  ariaLabel?: string
 }
 
 const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
-  ({ className, data, height = 180, ...props }, ref) => {
+  (
+    {
+      className,
+      data,
+      height = 180,
+      interactive = false,
+      formatValue,
+      renderTooltip,
+      ariaLabel,
+      ...props
+    },
+    ref,
+  ) => {
     const gradientId = useId().replace(/:/g, '')
+    const svgRef = useRef<SVGSVGElement>(null)
+    const points: AreaChartPoint[] = data.map((d) =>
+      typeof d === 'number' ? { value: d } : d,
+    )
+    const values = points.map((p) => p.value)
     const w = 520
     const h = height
     const pad = 8
-    const max = Math.max(...data) * 1.1
-    const min = Math.min(...data, 0)
-    const span = Math.max(data.length - 1, 1)
+    const max = Math.max(...values) * 1.1
+    const min = Math.min(...values, 0)
+    const span = Math.max(values.length - 1, 1)
     const x = (i: number) => pad + (i / span) * (w - pad * 2)
     const y = (v: number) => h - pad - ((v - min) / (max - min || 1)) * (h - pad * 2)
-    const line = data.map((v, i) => `${x(i)},${y(v)}`).join(' ')
+    const line = values.map((v, i) => `${x(i)},${y(v)}`).join(' ')
     const area = `${pad},${h - pad} ${line} ${w - pad},${h - pad}`
 
+    const { activeIndex, isKeyboard, svgProps } = useChartInteraction({
+      svgRef,
+      count: values.length,
+      paddingLeft: pad,
+      paddingRight: pad,
+      viewBoxWidth: w,
+    })
+
+    const fmt = formatValue ?? ((v: number) => formatChartNumber(v))
+    const pointIndex = interactive ? activeIndex : null
+    const activePoint = pointIndex != null ? points[pointIndex] : null
+    // The 520-unit viewBox stretches to the container, so overlays anchored in
+    // HTML must use percentages, not viewBox pixels.
+    const tooltipLeftPct =
+      pointIndex != null ? Math.min(Math.max((x(pointIndex) / w) * 100, 16), 84) : 0
+    const tooltipTopPct = activePoint ? (y(activePoint.value) / h) * 100 : 0
+    const announcement =
+      interactive && isKeyboard && activePoint && pointIndex != null
+        ? `${activePoint.label ?? `Point ${pointIndex + 1} of ${points.length}`}: ${fmt(activePoint.value)}`
+        : null
+
     return (
-      <div ref={ref} className={cn('w-full', className)} {...props}>
+      <div ref={ref} className={cn('relative w-full', className)} {...props}>
         <svg
+          ref={svgRef}
           viewBox={`0 0 ${w} ${h}`}
-          className="w-full"
+          className={cn('w-full', interactive && 'tollerud-focus-ring touch-none select-none')}
           style={{ height }}
           preserveAspectRatio="none"
           role="img"
-          aria-hidden="true"
+          aria-hidden={interactive ? undefined : 'true'}
+          aria-label={interactive ? ariaLabel ?? 'Area chart' : undefined}
+          {...(interactive ? svgProps : null)}
         >
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
@@ -56,7 +124,7 @@ const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          {data.map((v, i) => (
+          {values.map((v, i) => (
             <circle
               key={i}
               cx={x(i)}
@@ -67,10 +135,46 @@ const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
               strokeWidth="1.5"
             />
           ))}
+
+          {pointIndex != null ? (
+            <line
+              x1={x(pointIndex)}
+              x2={x(pointIndex)}
+              y1={pad}
+              y2={h - pad}
+              stroke="var(--chart-axis)"
+              strokeWidth="1"
+            />
+          ) : null}
+          {activePoint && pointIndex != null ? (
+            <circle
+              cx={x(pointIndex)}
+              cy={y(activePoint.value)}
+              r="4"
+              fill="var(--card, #111111)"
+              stroke="var(--tollerud-yellow-warm, #E8D500)"
+              strokeWidth="2"
+            />
+          ) : null}
         </svg>
+
+        {activePoint && pointIndex != null ? (
+          <ChartTooltipLayer
+            left={`${tooltipLeftPct}%`}
+            top={`calc(${tooltipTopPct}% - 12px)`}
+          >
+            {renderTooltip ? (
+              renderTooltip(activePoint, pointIndex, fmt(activePoint.value))
+            ) : (
+              <ChartTooltip title={fmt(activePoint.value)} label={activePoint.label} />
+            )}
+          </ChartTooltipLayer>
+        ) : null}
+
+        {interactive ? <ChartLiveRegion message={announcement} /> : null}
       </div>
     )
-  }
+  },
 )
 AreaChart.displayName = 'AreaChart'
 

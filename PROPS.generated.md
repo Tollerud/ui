@@ -53,8 +53,16 @@
 
 ## AreaChart — `AreaChartProps` extends extends HTMLAttributes<HTMLDivElement>
 
-- `data: number[]`
+- `data: number[] | AreaChartPoint[]`
 - `height?: number`
+- `* Hover/keyboard interactivity: crosshair, tooltip, arrow-key navigation,`
+- `* and screen-reader announcements. Off by default — the static chart stays`
+- `* a decorative `aria-hidden` graphic exactly as before 4.8.43.`
+- `*/`
+- `interactive?: boolean`
+- `formatValue?: (value: number) => string`
+- `renderTooltip?: (point: AreaChartPoint, index: number, formattedValue: string) => ReactNode`
+- `ariaLabel?: string`
 
 ## Avatar — `AvatarGroupProps` extends extends HTMLAttributes<HTMLDivElement>
 
@@ -702,6 +710,8 @@
 - `curve?: 'linear' | 'step'`
 - `fill?: boolean`
 - `interactive?: boolean`
+- `formatValue?: (value: number) => string`
+- `ariaLabel?: string`
 
 ## Spinner — `SpinnerProps` extends extends HTMLAttributes<HTMLSpanElement>
 

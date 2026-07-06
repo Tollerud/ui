@@ -79,6 +79,14 @@ Each phase is self-contained and executable in a fresh session. Each phase that 
 
 ## Phase 2 — AreaChart & Sparkline to full parity
 
+> **Status: shipped in v4.8.43.** Deviations from the sketch below: AreaChart is
+> simply marked `'use client'` (like Sparkline/TimeSeriesChart) instead of a
+> static/interactive component split — client components still SSR and import
+> fine from RSC files, and the split wasn't worth the surface. The stretched
+> 520-unit viewBox is handled by a `viewBoxWidth` option on
+> `useChartInteraction` (scales padding to client px) plus percentage-based
+> `ChartTooltipLayer` positions.
+
 **What to implement**
 
 1. **AreaChart**: accept `data: number[] | AreaChartPoint[]` where `AreaChartPoint = { value: number; label?: string }` (plain numbers keep working). New optional props, mirroring TimeSeriesChart's names exactly: `interactive?: boolean` (default false), `formatValue?`, `renderTooltip?`, `ariaLabel?`. When `interactive`: add `'use client'`, wire `useChartPointer` + `useChartKeyboard` + `ChartTooltip` + `ChartLiveRegion`, render crosshair + hover dot (**copy** overlay JSX from TimeSeriesChart L374–394, coordinates from its own `x()`/`y()`). When not interactive: keep today's `aria-hidden` static output and server-safety — split the interactive layer into a child component so the static path stays server-renderable (pattern precedent: `Card` static vs `GlowCard` client).

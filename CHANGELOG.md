@@ -7,6 +7,22 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.43 — 2026-07-05 — AreaChart & Sparkline: interactive tooltips + keyboard navigation
+
+Phase 2 of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)) — both charts adopt the shared interaction core from 4.8.42.
+
+### Added
+
+- `AreaChart` — new `interactive` prop adds a crosshair, hover dot, tooltip, touch support, and the full chart keyboard contract (Tab focuses → latest point, ←/→ step, Home/End jump, Esc clears without closing a surrounding Dialog) with polite screen-reader announcements. New supporting props: `formatValue`, `renderTooltip(point, index, formattedValue)`, `ariaLabel`. `data` now also accepts labeled points (`{ value, label }[]`) so tooltips and announcements can name each point — plain `number[]` keeps working unchanged.
+
+- `Sparkline` — the existing `interactive` prop now also shows a tooltip and supports the same keyboard contract and announcements. New `formatValue` and `ariaLabel` props. Idle interactive sparklines keep marking the latest point with a dot, exactly as before.
+
+### Changed
+
+- `AreaChart` is now a client component (`'use client'`), matching `Sparkline` and `TimeSeriesChart`. It still server-renders and imports fine from Server Components; static (non-`interactive`) usage renders the identical decorative `aria-hidden` SVG as 4.8.42.
+
+- `lib/chart-interaction.tsx` (internal) — `useChartInteraction` gains a `viewBoxWidth` option that scales padding from viewBox units to client pixels for stretched-viewBox charts (AreaChart's 520-unit canvas), and `ChartTooltipLayer` accepts CSS length/percentage positions.
+
 ## 4.8.42 — 2026-07-05 — TimeSeriesChart keyboard navigation + shared chart interaction core
 
 First phase of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)): a shared interaction layer that later phases reuse for AreaChart, Sparkline, BarChart, and Donut.

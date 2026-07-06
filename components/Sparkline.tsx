@@ -1,15 +1,21 @@
 'use client'
 
-import { type HTMLAttributes, forwardRef, useId, useRef, useState } from 'react'
+import { type HTMLAttributes, forwardRef, useId, useRef } from 'react'
 import {
   buildLinearAreaPath,
   buildLinearPath,
   buildStepAreaPath,
   buildStepPath,
   computeYDomain,
-  indexFromPointer,
+  formatChartNumber,
   yScale,
 } from '@/lib/chart-series'
+import {
+  ChartLiveRegion,
+  ChartTooltip,
+  ChartTooltipLayer,
+  useChartInteraction,
+} from '@/lib/chart-interaction'
 import { cn } from '@/lib/utils'
 
 export interface SparklineProps extends HTMLAttributes<HTMLDivElement> {
@@ -23,7 +29,12 @@ export interface SparklineProps extends HTMLAttributes<HTMLDivElement> {
   color?: string
   curve?: 'linear' | 'step'
   fill?: boolean
+  /** Hover + keyboard interactivity: point dot, tooltip, arrow navigation, announcements. */
   interactive?: boolean
+  /** Formats tooltip values and announcements. Defaults to en-US number formatting. */
+  formatValue?: (value: number) => string
+  /** Accessible name when `interactive` (default "Sparkline"). */
+  ariaLabel?: string
 }
 
 const Sparkline = forwardRef<HTMLDivElement, SparklineProps>(
@@ -39,13 +50,14 @@ const Sparkline = forwardRef<HTMLDivElement, SparklineProps>(
       curve = 'linear',
       fill = false,
       interactive = false,
+      formatValue,
+      ariaLabel,
       ...props
     },
     ref,
   ) => {
     const gradientId = useId().replace(/:/g, '')
     const svgRef = useRef<SVGSVGElement>(null)
-    const [hoverIndex, setHoverIndex] = useState<number | null>(null)
 
     const resolvedWidth = width ?? w ?? 120
     const resolvedHeight = height ?? h ?? 34
@@ -69,27 +81,42 @@ const Sparkline = forwardRef<HTMLDivElement, SparklineProps>(
         ? buildStepAreaPath(data, xAt, yAt, baselineY)
         : buildLinearAreaPath(data, xAt, yAt, baselineY)
 
-    const activeIndex = hoverIndex ?? (interactive && data.length ? data.length - 1 : null)
+    const { activeIndex, isKeyboard, svgProps } = useChartInteraction({
+      svgRef,
+      count: data.length,
+      paddingLeft: padX,
+      paddingRight: padX,
+    })
 
-    const handlePointer = (clientX: number) => {
-      const rect = svgRef.current?.getBoundingClientRect()
-      if (!rect || !interactive || data.length === 0) return
-      setHoverIndex(indexFromPointer(clientX, rect, data.length, padX, padX))
-    }
+    const fmt = formatValue ?? ((v: number) => formatChartNumber(v))
+    const pointIndex = interactive ? activeIndex : null
+    // Idle interactive sparklines keep marking the latest value with a dot.
+    const dotIndex = pointIndex ?? (interactive && data.length ? data.length - 1 : null)
+    // The tooltip bubble is wider than most sparklines — pin it as close to the
+    // point as the chart width allows.
+    const tooltipMargin = Math.min(88, resolvedWidth / 2)
+    const tooltipLeft =
+      pointIndex != null
+        ? Math.min(Math.max(xAt(pointIndex), tooltipMargin), resolvedWidth - tooltipMargin)
+        : 0
+    const announcement =
+      interactive && isKeyboard && pointIndex != null
+        ? `Point ${pointIndex + 1} of ${data.length}: ${fmt(data[pointIndex]!)}`
+        : null
 
     return (
-      <div ref={ref} className={cn('inline-block', className)} {...props}>
+      <div ref={ref} className={cn('relative inline-block', className)} {...props}>
         <svg
           ref={svgRef}
           width={resolvedWidth}
           height={resolvedHeight}
           viewBox={`0 0 ${resolvedWidth} ${resolvedHeight}`}
           overflow="hidden"
-          className={cn('block', interactive && 'touch-none')}
+          className={cn('block', interactive && 'tollerud-focus-ring touch-none')}
           role="img"
           aria-hidden={!interactive}
-          onMouseMove={interactive ? (e) => handlePointer(e.clientX) : undefined}
-          onMouseLeave={interactive ? () => setHoverIndex(null) : undefined}
+          aria-label={interactive ? ariaLabel ?? 'Sparkline' : undefined}
+          {...(interactive ? svgProps : null)}
         >
           {fill ? (
             <defs>
@@ -108,10 +135,10 @@ const Sparkline = forwardRef<HTMLDivElement, SparklineProps>(
             strokeLinecap="round"
             strokeLinejoin="round"
           />
-          {interactive && activeIndex != null ? (
+          {dotIndex != null ? (
             <circle
-              cx={xAt(activeIndex)}
-              cy={yAt(data[activeIndex]!)}
+              cx={xAt(dotIndex)}
+              cy={yAt(data[dotIndex]!)}
               r="3"
               fill="var(--card, #111111)"
               stroke={color}
@@ -119,6 +146,14 @@ const Sparkline = forwardRef<HTMLDivElement, SparklineProps>(
             />
           ) : null}
         </svg>
+
+        {pointIndex != null ? (
+          <ChartTooltipLayer left={tooltipLeft} top={yAt(data[pointIndex]!) - 6}>
+            <ChartTooltip title={fmt(data[pointIndex]!)} />
+          </ChartTooltipLayer>
+        ) : null}
+
+        {interactive ? <ChartLiveRegion message={announcement} /> : null}
       </div>
     )
   },

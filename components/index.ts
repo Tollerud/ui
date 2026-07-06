@@ -293,7 +293,7 @@ export { BarChart } from './BarChart'
 export type { BarChartProps, BarChartDatum } from './BarChart'
 
 export { AreaChart } from './AreaChart'
-export type { AreaChartProps } from './AreaChart'
+export type { AreaChartProps, AreaChartPoint } from './AreaChart'
 
 export { TimeSeriesChart, TIME_SERIES_PRESETS } from './TimeSeriesChart'
 export type {
