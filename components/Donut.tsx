@@ -23,10 +23,16 @@ export interface DonutProps extends HTMLAttributes<HTMLDivElement> {
   interactive?: boolean
   /** Accessible legend name when `interactive` (default "Chart legend"). */
   ariaLabel?: string
+  /**
+   * Scale the ring down to fit narrow containers instead of a fixed `size`
+   * (capped at `size`, stays perfectly circular — a square viewBox scales
+   * uniformly). The legend wraps below the ring when space is tight.
+   */
+  fluid?: boolean
 }
 
 const Donut = forwardRef<HTMLDivElement, DonutProps>(
-  ({ className, segments, size = 160, interactive = false, ariaLabel, ...props }, ref) => {
+  ({ className, segments, size = 160, interactive = false, ariaLabel, fluid = false, ...props }, ref) => {
     const total = segments.reduce((a, s) => a + s.value, 0) || 1
     const r = size / 2 - 14
     const c = 2 * Math.PI * r
@@ -71,12 +77,17 @@ const Donut = forwardRef<HTMLDivElement, DonutProps>(
     }
 
     return (
-      <div ref={ref} className={cn('flex items-center gap-6', className)} {...props}>
+      <div
+        ref={ref}
+        className={cn('flex items-center gap-6', fluid && 'flex-wrap', className)}
+        {...props}
+      >
         <svg
           width={size}
           height={size}
           viewBox={`0 0 ${size} ${size}`}
-          className="-rotate-90"
+          className={cn('-rotate-90', fluid && 'h-auto w-full')}
+          style={fluid ? { maxWidth: size } : undefined}
           role="img"
           aria-hidden="true"
         >

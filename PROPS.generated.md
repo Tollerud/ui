@@ -314,6 +314,11 @@
 - `*/`
 - `interactive?: boolean`
 - `ariaLabel?: string`
+- `* Scale the ring down to fit narrow containers instead of a fixed `size``
+- `* (capped at `size`, stays perfectly circular — a square viewBox scales`
+- `* uniformly). The legend wraps below the ring when space is tight.`
+- `*/`
+- `fluid?: boolean`
 
 ## Drawer — `DrawerProps`
 
@@ -724,6 +729,12 @@
 - `color?: string`
 - `curve?: 'linear' | 'step'`
 - `fill?: boolean`
+- `* Fill the container width instead of a fixed `width` (measured with a`
+- `* ResizeObserver, plotted in pixels so dots stay round). `height` still`
+- `* applies. Off by default — Sparkline stays a fixed micro-chart for table`
+- `* cells.`
+- `*/`
+- `fluid?: boolean`
 - `interactive?: boolean`
 - `formatValue?: (value: number) => string`
 - `ariaLabel?: string`

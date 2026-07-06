@@ -49,4 +49,15 @@ describe('Sparkline', () => {
     fireEvent.focus(screen.getByRole('img', { name: 'Trend' }))
     expect(await axe(container)).toHaveNoViolations()
   })
+
+  it('fills its container when fluid (opt-in), staying fixed otherwise', () => {
+    const { container, rerender } = render(<Sparkline data={[1, 2, 3]} />)
+    // Default: fixed, inline-block, no w-full
+    expect(container.firstElementChild).toHaveClass('inline-block')
+    expect(container.querySelector('svg')).not.toHaveClass('w-full')
+
+    rerender(<Sparkline data={[1, 2, 3]} fluid />)
+    expect(container.firstElementChild).toHaveClass('w-full')
+    expect(container.querySelector('svg')).toHaveClass('w-full')
+  })
 })

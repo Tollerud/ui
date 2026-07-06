@@ -1,6 +1,6 @@
 'use client'
 
-import { type HTMLAttributes, forwardRef, useId, useRef } from 'react'
+import { type HTMLAttributes, forwardRef, useEffect, useId, useRef, useState } from 'react'
 import {
   buildLinearAreaPath,
   buildLinearPath,
@@ -29,6 +29,13 @@ export interface SparklineProps extends HTMLAttributes<HTMLDivElement> {
   color?: string
   curve?: 'linear' | 'step'
   fill?: boolean
+  /**
+   * Fill the container width instead of a fixed `width` (measured with a
+   * ResizeObserver, plotted in pixels so dots stay round). `height` still
+   * applies. Off by default — Sparkline stays a fixed micro-chart for table
+   * cells.
+   */
+  fluid?: boolean
   /** Hover + keyboard interactivity: point dot, tooltip, arrow navigation, announcements. */
   interactive?: boolean
   /** Formats tooltip values and announcements. Defaults to en-US number formatting. */
@@ -49,6 +56,7 @@ const Sparkline = forwardRef<HTMLDivElement, SparklineProps>(
       color = 'var(--tollerud-yellow-warm, #E8D500)',
       curve = 'linear',
       fill = false,
+      fluid = false,
       interactive = false,
       formatValue,
       ariaLabel,
@@ -58,8 +66,21 @@ const Sparkline = forwardRef<HTMLDivElement, SparklineProps>(
   ) => {
     const gradientId = useId().replace(/:/g, '')
     const svgRef = useRef<SVGSVGElement>(null)
+    const [measuredWidth, setMeasuredWidth] = useState(0)
 
-    const resolvedWidth = width ?? w ?? 120
+    useEffect(() => {
+      if (!fluid) return
+      const el = svgRef.current?.parentElement
+      if (!el) return
+      const ro = new ResizeObserver(([entry]) => {
+        if (entry) setMeasuredWidth(entry.contentRect.width)
+      })
+      ro.observe(el)
+      setMeasuredWidth(el.getBoundingClientRect().width || 0)
+      return () => ro.disconnect()
+    }, [fluid])
+
+    const resolvedWidth = fluid ? measuredWidth || 320 : width ?? w ?? 120
     const resolvedHeight = height ?? h ?? 34
     const padX = 1
     const padY = 2
@@ -105,14 +126,14 @@ const Sparkline = forwardRef<HTMLDivElement, SparklineProps>(
         : null
 
     return (
-      <div ref={ref} className={cn('relative inline-block', className)} {...props}>
+      <div ref={ref} className={cn('relative', fluid ? 'block w-full' : 'inline-block', className)} {...props}>
         <svg
           ref={svgRef}
           width={resolvedWidth}
           height={resolvedHeight}
           viewBox={`0 0 ${resolvedWidth} ${resolvedHeight}`}
           overflow="hidden"
-          className={cn('block', interactive && 'tollerud-focus-ring touch-none')}
+          className={cn('block', fluid && 'w-full', interactive && 'tollerud-focus-ring touch-none')}
           role="img"
           aria-hidden={!interactive}
           aria-label={interactive ? ariaLabel ?? 'Sparkline' : undefined}

@@ -54,6 +54,21 @@ describe('Donut', () => {
     expect(rows[1]).toHaveFocus()
   })
 
+  it('scales to its container when fluid (opt-in), fixed size otherwise', () => {
+    const { container, rerender } = render(<Donut segments={segments} size={160} />)
+    let svg = container.querySelector('svg')!
+    expect(svg).toHaveAttribute('width', '160')
+    expect(svg).not.toHaveClass('w-full')
+
+    rerender(<Donut segments={segments} size={160} fluid />)
+    svg = container.querySelector('svg')!
+    // Uniform CSS scale (square viewBox) — stays circular, capped at size
+    expect(svg).toHaveClass('w-full')
+    expect(svg).toHaveClass('h-auto')
+    expect(svg).toHaveStyle({ maxWidth: '160px' })
+    expect(container.firstElementChild).toHaveClass('flex-wrap')
+  })
+
   it('has no axe violations static and interactive', async () => {
     const staticRender = render(<Donut segments={segments} />)
     expect(await axe(staticRender.container)).toHaveNoViolations()

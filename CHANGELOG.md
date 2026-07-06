@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.48 — 2026-07-07 — Fluid Sparkline & Donut
+
+Completes responsive charts — every chart can now flex to its container.
+
+### Added
+
+- `Sparkline` — new `fluid` prop fills the container width instead of a fixed `width`. It measures the real width with a `ResizeObserver` and plots in pixels, so the dots stay round. `height` still applies. Off by default, so table-cell sparklines keep their fixed micro size.
+
+- `Donut` — new `fluid` prop scales the ring down to fit narrow containers (capped at `size`, so it never grows past it). The square viewBox scales uniformly, so the ring stays perfectly circular with no distortion and no `ResizeObserver`; the legend wraps below the ring when space is tight. Off by default.
+
+Together with `TimeSeriesChart`, `AreaChart`, `BarChart`, and `Meter` (already fluid-width), all chart components are now responsive.
+
 ## 4.8.47 — 2026-07-06 — Fix AreaChart aspect-ratio distortion
 
 ### Fixed

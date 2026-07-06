@@ -412,6 +412,17 @@ function PageCharts() {
         <Demo name="sparkline-step-small" variant="center" code={`<Sparkline data={[58, 57, 59, 56, 54, 53]} curve="step" fill width={84} height={26} />`}>
           <Sparkline data={[58, 57, 59, 56, 54, 53]} curve="step" fill width={84} height={26} />
         </Demo>
+        <SubHead>Fluid — fills its container (≥ 4.8.48)</SubHead>
+        <Demo
+          name="sparkline-fluid"
+          variant="col"
+          desc="Add fluid to fill the container width instead of a fixed width; dots stay round (pixel-plotted). height still applies."
+          code={`<Sparkline data={[12, 18, 14, 22, 19, 26, 23, 31]} fluid height={48} fill curve="step" />`}
+        >
+          <div style={{ width: '100%' }}>
+            <Sparkline data={[12, 18, 14, 22, 19, 26, 23, 31]} fluid height={48} fill curve="step" />
+          </div>
+        </Demo>
       </Section>
 
       <Section
@@ -522,7 +533,7 @@ function PageCharts() {
         title="Donut"
         component="Donut"
         permalink="charts/donut"
-        desc="Donut chart with segment legend and percentages. Segment colors are optional (≥ 4.8.44) — omitted colors cycle the --chart-1…5 palette (also exported as CHART_SERIES_COLORS). Add interactive for a focusable legend: Tab reaches it, ↑/↓ move between rows, hover or focus highlights the arc, dims the others, and reveals the raw value — each row announces label, value, and share to screen readers."
+        desc="Donut chart with segment legend and percentages. Segment colors are optional (≥ 4.8.44) — omitted colors cycle the --chart-1…5 palette (also exported as CHART_SERIES_COLORS). Add interactive for a focusable legend: Tab reaches it, ↑/↓ move between rows, hover or focus highlights the arc, dims the others, and reveals the raw value — each row announces label, value, and share to screen readers. Add fluid (≥ 4.8.48) to scale the ring down to fit narrow containers (capped at size, stays circular; legend wraps below)."
       >
         <Demo name="donut-chart" variant="center" code={DONUT_CHART}>
           <Card>
