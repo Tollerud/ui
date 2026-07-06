@@ -177,6 +177,13 @@ Each phase is self-contained and executable in a fresh session. Each phase that 
 
 ## Phase 6 (stretch, separate decision) — Multi-series TimeSeriesChart
 
+> **Status: shipped in v4.8.46** (built ahead of the "wait for consumer need"
+> guidance, at the maintainer's direction). Single- and multi-series share one
+> render path: `data` normalizes to a 1-element series list, so single-series
+> output is byte-identical (area fill + latest badge gated to `!isMulti`).
+> Series are index-aligned (documented). `ChartTooltip` gained colored `rows`
+> and `ChartSrTable` became N-column to support it.
+
 Held out of scope deliberately: `series?: { label, points, color? }[]` on TimeSeriesChart with palette cycling, shared crosshair across series, stacked tooltip. It builds cleanly on Phases 1+4 (`CHART_SERIES_COLORS`, shared tooltip accepts `lines`). Do not start until 1–5 shipped and the consumer (Butikkpils) actually needs it — it roughly doubles TimeSeriesChart's geometry surface.
 
 ---

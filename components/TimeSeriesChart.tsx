@@ -12,6 +12,7 @@ import {
   useState,
 } from 'react'
 import {
+  CHART_SERIES_COLORS,
   DEFAULT_CHART_PADDING,
   buildLinearAreaPath,
   buildLinearPath,
@@ -49,6 +50,14 @@ export interface TimeSeriesPoint {
   meta?: string[]
 }
 
+export interface TimeSeriesSeries {
+  /** Series name — shown in the legend, tooltip rows, and SR table header. */
+  label: string
+  points: TimeSeriesPoint[]
+  /** Line color; defaults to the `--chart-1…5` palette cycled by position. */
+  color?: string
+}
+
 export interface TimeSeriesRange {
   value: string
   label: ReactNode
@@ -58,7 +67,15 @@ export interface TimeSeriesRange {
 }
 
 export interface TimeSeriesChartProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-  data: TimeSeriesPoint[]
+  /** Single series. Ignored when `series` is provided. */
+  data?: TimeSeriesPoint[]
+  /**
+   * Multiple index-aligned series (same dates by position). Takes precedence
+   * over `data`. Each series gets a line + crosshair dot; the tooltip and SR
+   * table stack all series at the active point. Area fill and the latest-value
+   * badge are single-series only.
+   */
+  series?: TimeSeriesSeries[]
   height?: number
   curve?: 'linear' | 'step'
   yAxis?: 'left' | 'right' | 'none'
@@ -71,18 +88,28 @@ export interface TimeSeriesChartProps extends Omit<HTMLAttributes<HTMLDivElement
   valueSuffix?: string
   formatDate?: (date: Date) => string
   formatAxisDate?: (date: Date) => string
-  /** Pin the latest value on the Y axis */
+  /** Pin the latest value on the Y axis (single series only). */
   showLatestValue?: boolean
   ranges?: TimeSeriesRange[]
   range?: string
   onRangeChange?: (value: string) => void
   toolbarLeft?: ReactNode
+  /** Single-series only — for multi-series the stacked tooltip is used. */
   renderTooltip?: (point: TimeSeriesPoint, index: number, formattedValue: string) => ReactNode
+  /** Show a swatch legend above the chart (multi-series; default on). */
+  showLegend?: boolean
   emptyMessage?: string
   locale?: string
   ariaLabel?: string
   /** Visually-hidden data table exposing every point to screen readers (default on). Set `false` to opt out. */
   srTable?: boolean
+}
+
+interface NormalizedSeries {
+  label: string
+  color: string
+  visiblePoints: TimeSeriesPoint[]
+  values: number[]
 }
 
 const MS_DAY = 24 * 60 * 60 * 1000
@@ -94,6 +121,8 @@ export const TIME_SERIES_PRESETS: TimeSeriesRange[] = [
   { value: '2y', label: '2 yr', durationMs: 730 * MS_DAY },
   { value: 'all', label: 'All' },
 ]
+
+const SINGLE_SERIES_COLOR = 'var(--tollerud-yellow-warm, #E8D500)'
 
 function defaultTooltip(
   point: TimeSeriesPoint,
@@ -115,6 +144,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
     {
       className,
       data,
+      series,
       height = 280,
       curve = 'step',
       yAxis = 'right',
@@ -130,6 +160,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       onRangeChange,
       toolbarLeft,
       renderTooltip,
+      showLegend = true,
       emptyMessage = 'No data',
       locale = 'en-US',
       ariaLabel,
@@ -143,6 +174,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
     const [width, setWidth] = useState(640)
     const [internalRange, setInternalRange] = useState(ranges?.[0]?.value ?? 'all')
 
+    const isMulti = Boolean(series && series.length > 0)
     const activeRange = range ?? internalRange
     const activeRangeDef = ranges?.find((r) => r.value === activeRange)
 
@@ -164,13 +196,33 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       [formatAxisDate, locale],
     )
 
-    const visiblePoints = useMemo(() => {
-      const sorted = sortPointsByDate(data)
-      return filterPointsByDuration(sorted, activeRangeDef?.durationMs)
-    }, [data, activeRangeDef?.durationMs])
+    const seriesList = useMemo<NormalizedSeries[]>(() => {
+      const raw =
+        isMulti && series
+          ? series.map((s, index) => ({
+              label: s.label,
+              color: s.color ?? CHART_SERIES_COLORS[index % CHART_SERIES_COLORS.length]!,
+              points: s.points,
+            }))
+          : [{ label: '', color: SINGLE_SERIES_COLOR, points: data ?? [] }]
+      return raw.map((s) => {
+        const visiblePoints = filterPointsByDuration(
+          sortPointsByDate(s.points),
+          activeRangeDef?.durationMs,
+        )
+        return {
+          label: s.label,
+          color: s.color,
+          visiblePoints,
+          values: visiblePoints.map((p) => p.value),
+        }
+      })
+    }, [isMulti, series, data, activeRangeDef?.durationMs])
 
-    const values = useMemo(() => visiblePoints.map((p) => p.value), [visiblePoints])
-    const domain = useMemo(() => computeYDomain(values), [values])
+    const primaryPoints = seriesList[0]?.visiblePoints ?? []
+    const xCount = primaryPoints.length
+    const allValues = useMemo(() => seriesList.flatMap((s) => s.values), [seriesList])
+    const domain = useMemo(() => computeYDomain(allValues), [allValues])
 
     const padding = useMemo<ChartPadding>(() => {
       const base = { ...DEFAULT_CHART_PADDING, ...paddingOverride }
@@ -179,13 +231,9 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       return base
     }, [paddingOverride, yAxis])
 
-    const {
-      activeIndex: pointIndex,
-      isKeyboard,
-      svgProps,
-    } = useChartInteraction({
+    const { activeIndex: pointIndex, isKeyboard, svgProps } = useChartInteraction({
       svgRef,
-      count: values.length,
+      count: xCount,
       paddingLeft: padding.left,
       paddingRight: padding.right,
     })
@@ -199,39 +247,41 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
     const baselineY = plotBottom
 
     const xAt = useCallback(
-      (index: number) => xScaleIndex(index, values.length, plotLeft, plotWidth),
-      [plotLeft, plotWidth, values.length],
+      (index: number) => xScaleIndex(index, xCount, plotLeft, plotWidth),
+      [plotLeft, plotWidth, xCount],
     )
     const yAt = useCallback(
       (value: number) => yScale(value, domain, plotTop, plotHeight),
       [domain, plotHeight, plotTop],
     )
 
-    const linePath = useMemo(() => {
-      if (curve === 'step') return buildStepPath(values, xAt, yAt)
-      return buildLinearPath(values, xAt, yAt)
-    }, [curve, values, xAt, yAt])
+    const buildLine = useCallback(
+      (values: number[]) =>
+        curve === 'step' ? buildStepPath(values, xAt, yAt) : buildLinearPath(values, xAt, yAt),
+      [curve, xAt, yAt],
+    )
 
     const areaPath = useMemo(() => {
+      if (isMulti) return ''
+      const values = seriesList[0]?.values ?? []
       if (curve === 'step') return buildStepAreaPath(values, xAt, yAt, baselineY)
       return buildLinearAreaPath(values, xAt, yAt, baselineY)
-    }, [baselineY, curve, values, xAt, yAt])
+    }, [isMulti, seriesList, baselineY, curve, xAt, yAt])
 
     const yTicks = useMemo(() => niceTicks(domain.min, domain.max, 4), [domain])
     const xLabelIndexes = useMemo(() => {
-      if (visiblePoints.length <= 1) return [0]
+      if (xCount <= 1) return [0]
       const maxLabels = 7
-      const step = Math.max(1, Math.floor((visiblePoints.length - 1) / (maxLabels - 1)))
+      const step = Math.max(1, Math.floor((xCount - 1) / (maxLabels - 1)))
       const indexes: number[] = []
-      for (let i = 0; i < visiblePoints.length; i += step) indexes.push(i)
-      if (indexes[indexes.length - 1] !== visiblePoints.length - 1) {
-        indexes.push(visiblePoints.length - 1)
-      }
+      for (let i = 0; i < xCount; i += step) indexes.push(i)
+      if (indexes[indexes.length - 1] !== xCount - 1) indexes.push(xCount - 1)
       return indexes
-    }, [visiblePoints.length])
+    }, [xCount])
 
-    const activeIndex = pointIndex ?? (values.length > 0 ? values.length - 1 : null)
-    const activePoint = activeIndex != null ? visiblePoints[activeIndex] : null
+    const activeIndex = pointIndex ?? (xCount > 0 ? xCount - 1 : null)
+    // Single-series active point (drives area-mode tooltip + latest badge).
+    const activePoint = !isMulti && activeIndex != null ? primaryPoints[activeIndex] : null
 
     useEffect(() => {
       const el = svgRef.current?.parentElement
@@ -249,7 +299,7 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
       onRangeChange?.(next)
     }
 
-    if (visiblePoints.length === 0) {
+    if (xCount === 0) {
       return (
         <div
           ref={ref}
@@ -262,18 +312,60 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
     }
 
     const crosshairX = activeIndex != null ? xAt(activeIndex) : null
-    const crosshairY = activePoint ? yAt(activePoint.value) : null
+    // Value at the active index for a given series, or null when it has no point there.
+    const valueAt = (s: NormalizedSeries) =>
+      activeIndex != null ? s.visiblePoints[activeIndex]?.value ?? null : null
+    // Tooltip anchors above the topmost active point across series.
+    const anchorY =
+      activeIndex != null
+        ? Math.min(
+            ...seriesList.map((s) => {
+              const v = valueAt(s)
+              return v != null ? yAt(v) : Number.POSITIVE_INFINITY
+            }),
+          )
+        : Number.POSITIVE_INFINITY
+    const crosshairY =
+      !isMulti && activePoint ? yAt(activePoint.value) : Number.isFinite(anchorY) ? anchorY : plotTop
     const tooltipLeft = crosshairX != null ? clampTooltipX(crosshairX, width) : width / 2
+    const activeDate =
+      activeIndex != null && primaryPoints[activeIndex]
+        ? dateFormatter(parseChartDate(primaryPoints[activeIndex]!.date))
+        : ''
+
     const announcement =
-      isKeyboard && activePoint && pointIndex != null
-        ? `${dateFormatter(parseChartDate(activePoint.date))}: ${valueFormatter(activePoint.value)}`
+      isKeyboard && pointIndex != null
+        ? isMulti
+          ? `${activeDate}: ${seriesList
+              .map((s) => {
+                const v = valueAt(s)
+                return `${s.label} ${v != null ? valueFormatter(v) : '—'}`
+              })
+              .join(', ')}`
+          : activePoint
+            ? `${activeDate}: ${valueFormatter(activePoint.value)}`
+            : null
         : null
 
     return (
       <div ref={ref} className={cn('w-full', className)} {...props}>
-        {(ranges?.length || toolbarLeft) && (
+        {(ranges?.length || toolbarLeft || (isMulti && showLegend)) && (
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex min-w-0 flex-1 items-center gap-3">{toolbarLeft}</div>
+            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-4 gap-y-1.5">
+              {toolbarLeft}
+              {isMulti && showLegend
+                ? seriesList.map((s) => (
+                    <span key={s.label} className="inline-flex items-center gap-1.5 text-xs text-tollerud-text-secondary">
+                      <span
+                        className="h-2 w-2 shrink-0 rounded-[2px]"
+                        style={{ background: s.color }}
+                        aria-hidden="true"
+                      />
+                      {s.label}
+                    </span>
+                  ))
+                : null}
+            </div>
             {ranges?.length ? (
               <Segmented
                 size="sm"
@@ -339,15 +431,18 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
               )
             })}
 
-            <path d={areaPath} fill={`url(#${gradientId})`} />
-            <path
-              d={linePath}
-              fill="none"
-              stroke="var(--tollerud-yellow-warm, #E8D500)"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            {!isMulti ? <path d={areaPath} fill={`url(#${gradientId})`} /> : null}
+            {seriesList.map((s) => (
+              <path
+                key={s.label || 'series'}
+                d={buildLine(s.values)}
+                fill="none"
+                stroke={s.color}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            ))}
 
             {xLabelIndexes.map((index) => (
               <text
@@ -357,11 +452,11 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
                 textAnchor="middle"
                 className="fill-[var(--chart-axis)] text-[11px]"
               >
-                {axisDateFormatter(parseChartDate(visiblePoints[index]!.date))}
+                {axisDateFormatter(parseChartDate(primaryPoints[index]!.date))}
               </text>
             ))}
 
-            {showLatestValue && activePoint && pointIndex === null && yAxis === 'right' ? (
+            {!isMulti && showLatestValue && activePoint && pointIndex === null && yAxis === 'right' ? (
               <line
                 x1={plotLeft}
                 x2={plotRight}
@@ -384,30 +479,48 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
               />
             ) : null}
 
-            {crosshairX != null && crosshairY != null && pointIndex !== null ? (
-              <circle
-                cx={crosshairX}
-                cy={crosshairY}
-                r="5"
-                fill="var(--card, #111111)"
-                stroke="var(--tollerud-yellow-warm, #E8D500)"
-                strokeWidth="2"
-              />
-            ) : null}
+            {crosshairX != null && pointIndex !== null
+              ? seriesList.map((s) => {
+                  const v = valueAt(s)
+                  if (v == null) return null
+                  return (
+                    <circle
+                      key={s.label || 'series'}
+                      cx={crosshairX}
+                      cy={yAt(v)}
+                      r="5"
+                      fill="var(--card, #111111)"
+                      stroke={s.color}
+                      strokeWidth="2"
+                    />
+                  )
+                })
+              : null}
           </svg>
 
-          {activePoint && pointIndex !== null ? (
-            <ChartTooltipLayer
-              left={tooltipLeft}
-              top={crosshairY != null ? crosshairY - 12 : plotTop}
-            >
-              {renderTooltip
-                ? renderTooltip(activePoint, activeIndex!, valueFormatter(activePoint.value))
-                : defaultTooltip(activePoint, valueFormatter, dateFormatter)}
+          {pointIndex !== null && (isMulti || activePoint) ? (
+            <ChartTooltipLayer left={tooltipLeft} top={crosshairY - 12}>
+              {isMulti ? (
+                <ChartTooltip
+                  title={activeDate}
+                  rows={seriesList.map((s) => {
+                    const v = valueAt(s)
+                    return {
+                      label: s.label,
+                      value: v != null ? valueFormatter(v) : '—',
+                      color: s.color,
+                    }
+                  })}
+                />
+              ) : renderTooltip ? (
+                renderTooltip(activePoint!, activeIndex!, valueFormatter(activePoint!.value))
+              ) : (
+                defaultTooltip(activePoint!, valueFormatter, dateFormatter)
+              )}
             </ChartTooltipLayer>
           ) : null}
 
-          {showLatestValue && activePoint && pointIndex === null && yAxis === 'right' ? (
+          {!isMulti && showLatestValue && activePoint && pointIndex === null && yAxis === 'right' ? (
             <div
               className="pointer-events-none absolute -translate-y-1/2 whitespace-nowrap rounded-md bg-tollerud-yellow px-2 py-0.5 text-[10px] font-semibold text-tollerud-noir-950"
               style={{ top: yAt(activePoint.value), right: 0 }}
@@ -421,11 +534,15 @@ const TimeSeriesChart = forwardRef<HTMLDivElement, TimeSeriesChartProps>(
         {srTable ? (
           <ChartSrTable
             caption={ariaLabel ?? 'Time series chart'}
-            labelHeader="Date"
-            valueHeader="Value"
-            rows={visiblePoints.map((point) => ({
-              label: dateFormatter(parseChartDate(point.date)),
-              value: valueFormatter(point.value),
+            columns={['Date', ...(isMulti ? seriesList.map((s) => s.label) : ['Value'])]}
+            rows={primaryPoints.map((point, index) => ({
+              header: dateFormatter(parseChartDate(point.date)),
+              cells: isMulti
+                ? seriesList.map((s) => {
+                    const v = s.visiblePoints[index]?.value
+                    return v != null ? valueFormatter(v) : ''
+                  })
+                : [valueFormatter(point.value)],
             }))}
           />
         ) : null}

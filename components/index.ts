@@ -299,6 +299,7 @@ export { TimeSeriesChart, TIME_SERIES_PRESETS } from './TimeSeriesChart'
 export type {
   TimeSeriesChartProps,
   TimeSeriesPoint,
+  TimeSeriesSeries,
   TimeSeriesRange,
 } from './TimeSeriesChart'
 export {

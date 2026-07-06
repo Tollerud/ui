@@ -810,7 +810,13 @@
 
 ## TimeSeriesChart — `TimeSeriesChartProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 
-- `data: TimeSeriesPoint[]`
+- `data?: TimeSeriesPoint[]`
+- `* Multiple index-aligned series (same dates by position). Takes precedence`
+- `* over `data`. Each series gets a line + crosshair dot; the tooltip and SR`
+- `* table stack all series at the active point. Area fill and the latest-value`
+- `* badge are single-series only.`
+- `*/`
+- `series?: TimeSeriesSeries[]`
 - `height?: number`
 - `curve?: 'linear' | 'step'`
 - `yAxis?: 'left' | 'right' | 'none'`
@@ -826,6 +832,7 @@
 - `onRangeChange?: (value: string) => void`
 - `toolbarLeft?: ReactNode`
 - `renderTooltip?: (point: TimeSeriesPoint, index: number, formattedValue: string) => ReactNode`
+- `showLegend?: boolean`
 - `emptyMessage?: string`
 - `locale?: string`
 - `ariaLabel?: string`

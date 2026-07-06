@@ -67,6 +67,7 @@ Interactive charts share one keyboard contract. Single-SVG charts (TimeSeriesCha
 - Keyboard-selected points are announced via a visually-hidden `aria-live="polite"` region ("1 Mar 2026: 42")
 - Clicking the chart does not steal a keyboard selection: focus gained from a pointer press skips the focus-selects-latest behavior
 - Line/area charts also render a visually-hidden data table (`srTable`, ≥ 4.8.45) so screen-reader users can browse every point's value, not just hear the live-region announcements
+- Multi-series `TimeSeriesChart` (`series` prop, ≥ 4.8.46): the same crosshair spans all series; the stacked tooltip, live-region announcement, and SR table cover every series at the active point
 
 ## Implementation rules
 

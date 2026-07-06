@@ -167,22 +167,33 @@ export function clampTooltipX(x: number, width: number, margin = 88): number {
   return Math.min(Math.max(x, margin), width - margin)
 }
 
+export interface ChartTooltipRow {
+  label: ReactNode
+  value: ReactNode
+  /** Series swatch color — renders a small square before the label. */
+  color?: string
+}
+
 export interface ChartTooltipProps {
-  /** Main value line, large. */
-  title: ReactNode
-  /** Secondary line under the value — usually the formatted date/label. */
+  /** Main line — a value (single series) or a date header (multi-series). Optional. */
+  title?: ReactNode
+  /** Secondary line under the title — usually the formatted date/label. */
   subtitle?: ReactNode
   /** Emphasized label line (e.g. series or store name). */
   label?: ReactNode
   /** Extra muted lines. */
   lines?: string[]
+  /** Multi-series rows, each a color swatch + label + value. */
+  rows?: ChartTooltipRow[]
 }
 
 /** Default tooltip bubble — shared visual for every chart. */
-export function ChartTooltip({ title, subtitle, label, lines }: ChartTooltipProps) {
+export function ChartTooltip({ title, subtitle, label, lines, rows }: ChartTooltipProps) {
   return (
     <div className="min-w-[168px] rounded-lg border border-tollerud-noir-600 bg-tollerud-noir-800 px-3 py-2.5 shadow-lg">
-      <div className="text-lg font-semibold leading-tight text-tollerud-text-primary">{title}</div>
+      {title != null ? (
+        <div className="text-lg font-semibold leading-tight text-tollerud-text-primary">{title}</div>
+      ) : null}
       {subtitle != null ? (
         <div className="mt-0.5 text-xs text-tollerud-text-secondary">{subtitle}</div>
       ) : null}
@@ -194,6 +205,23 @@ export function ChartTooltip({ title, subtitle, label, lines }: ChartTooltipProp
           {line}
         </div>
       ))}
+      {rows?.length ? (
+        <div className="mt-1.5 flex flex-col gap-1">
+          {rows.map((row, index) => (
+            <div key={index} className="flex items-center gap-2 text-xs">
+              {row.color ? (
+                <span
+                  className="h-2 w-2 shrink-0 rounded-[2px]"
+                  style={{ background: row.color }}
+                  aria-hidden="true"
+                />
+              ) : null}
+              <span className="text-tollerud-text-secondary">{row.label}</span>
+              <span className="ml-auto font-medium text-tollerud-text-primary">{row.value}</span>
+            </div>
+          ))}
+        </div>
+      ) : null}
     </div>
   )
 }
@@ -236,19 +264,17 @@ export function ChartLiveRegion({ message }: ChartLiveRegionProps) {
 }
 
 export interface ChartSrTableRow {
-  /** Category cell — a date, month, or point label. */
-  label: string
-  /** Value cell — already formatted for display. */
-  value: string
+  /** Category cell — a date, month, or point label (rendered as a row header). */
+  header: string
+  /** One value cell per data column, already formatted for display. */
+  cells: string[]
 }
 
 export interface ChartSrTableProps {
   /** Table caption — usually the chart's `ariaLabel`. */
   caption: string
-  /** Header for the category column (default "Point"). */
-  labelHeader?: string
-  /** Header for the value column (default "Value"). */
-  valueHeader?: string
+  /** Column headers; the first names the category column, the rest name value columns (one per series). */
+  columns: string[]
   rows: ChartSrTableRow[]
 }
 
@@ -257,32 +283,33 @@ export interface ChartSrTableProps {
  * whose data lives only in SVG path geometry (`role="img"` with a single
  * label). Screen-reader users get the actual numbers as a browsable table,
  * alongside the live region's per-point announcements during keyboard nav.
+ * Supports multiple value columns for multi-series charts.
  *
  * Not used for charts that already expose their data as accessible text
  * (BarChart's per-bar `aria-label`s, Donut's semantic legend) — adding a table
  * there would duplicate what assistive tech already reads.
  */
-export function ChartSrTable({
-  caption,
-  labelHeader = 'Point',
-  valueHeader = 'Value',
-  rows,
-}: ChartSrTableProps) {
+export function ChartSrTable({ caption, columns, rows }: ChartSrTableProps) {
   if (rows.length === 0) return null
   return (
     <table className="sr-only">
       <caption>{caption}</caption>
       <thead>
         <tr>
-          <th scope="col">{labelHeader}</th>
-          <th scope="col">{valueHeader}</th>
+          {columns.map((column, index) => (
+            <th key={index} scope="col">
+              {column}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
         {rows.map((row, index) => (
           <tr key={index}>
-            <th scope="row">{row.label}</th>
-            <td>{row.value}</td>
+            <th scope="row">{row.header}</th>
+            {row.cells.map((cell, cellIndex) => (
+              <td key={cellIndex}>{cell}</td>
+            ))}
           </tr>
         ))}
       </tbody>

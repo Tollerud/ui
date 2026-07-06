@@ -217,7 +217,7 @@ function PageCharts() {
         title="TimeSeriesChart"
         component="TimeSeriesChart"
         permalink="charts/time-series-chart"
-        desc='Interactive wide SVG chart for dates + values. Fully keyboard accessible (≥ 4.8.42): Tab focuses the chart and activates the latest point, ←/→ step through points with the crosshair and tooltip following, Home/End jump to the ends, Esc clears — and screen readers hear each keyboard-selected point. A visually-hidden data table (srTable, on by default; ≥ 4.8.45) exposes every point to screen readers. Use curve="step" for prices held between samples. Pass ranges with TIME_SERIES_PRESETS or custom durationMs filters, or filter data yourself and omit ranges.'
+        desc='Interactive wide SVG chart for dates + values. Fully keyboard accessible (≥ 4.8.42): Tab focuses the chart and activates the latest point, ←/→ step through points with the crosshair and tooltip following, Home/End jump to the ends, Esc clears — and screen readers hear each keyboard-selected point. A visually-hidden data table (srTable, on by default; ≥ 4.8.45) exposes every point to screen readers. Pass series instead of data for multiple lines (≥ 4.8.46) — shared crosshair, stacked tooltip, palette-cycled colors. Use curve="step" for prices held between samples. Pass ranges with TIME_SERIES_PRESETS or custom durationMs filters, or filter data yourself and omit ranges.'
       >
         <Card>
           <TimeSeriesChart
@@ -316,10 +316,40 @@ function PageCharts() {
             )}
           />
         </Demo>
+        <SubHead>Multiple series — shared crosshair, stacked tooltip</SubHead>
+        <Demo
+          name="time-series-multi"
+          variant="col"
+          desc="Pass series instead of data: each series gets a palette-cycled line (or its own color), one crosshair and stacked tooltip span all series, and the SR data table gains a column per series. Series should share dates by position. Area fill and the latest-value badge are single-series only."
+          code={`<TimeSeriesChart
+  ariaLabel="Fuel prices by type"
+  curve="linear"
+  height={240}
+  valueSuffix=" kr"
+  series={[
+    { label: 'Diesel', points: dieselPoints },
+    { label: 'Petrol', points: petrolPoints },
+    { label: 'Electric', points: electricPoints, color: 'var(--chart-3)' },
+  ]}
+/>`}
+        >
+          <TimeSeriesChart
+            ariaLabel="Fuel prices by type"
+            curve="linear"
+            height={240}
+            valueSuffix=" kr"
+            series={[
+              { label: 'Diesel', points: BASIC_SAMPLE },
+              { label: 'Petrol', points: BASIC_SAMPLE.map((p) => ({ ...p, value: Math.round(p.value * 0.82) })) },
+              { label: 'Electric', points: BASIC_SAMPLE.map((p) => ({ ...p, value: Math.round(p.value * 0.55) })) },
+            ]}
+          />
+        </Demo>
         <TokenTable
           cols={['Type', 'Shape']}
           rows={[
             ['<code>TimeSeriesPoint</code>', '<code>{ date, value, label?, meta? }</code> — <code>date</code> accepts <code>Date</code>, ISO string, or timestamp'],
+            ['<code>TimeSeriesSeries</code>', '<code>{ label, points, color? }</code> — pass an array as <code>series</code> for multi-line charts (≥ 4.8.46); omit <code>color</code> to cycle <code>--chart-1…5</code>'],
             ['<code>TimeSeriesRange</code>', '<code>{ value, label, durationMs?, disabled? }</code> — omit <code>durationMs</code> for all time'],
             ['<code>TIME_SERIES_PRESETS</code>', 'English defaults: 3 mo · 6 mo · 1 yr · 2 yr · All'],
           ]}

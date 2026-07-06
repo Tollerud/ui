@@ -205,7 +205,8 @@ import { BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand,
 // All charts are keyboard accessible with `interactive`: TimeSeriesChart (≥ 4.8.42), AreaChart/Sparkline
 // (≥ 4.8.43), BarChart/Donut (≥ 4.8.44) — Tab, ←/→, Home/End, Esc; tooltips + SR announcements included.
 // Donut segment colors are optional (cycle CHART_SERIES_COLORS = --chart-1…5).
-// TimeSeriesChart + AreaChart also render a visually-hidden SR data table (srTable, ≥ 4.8.45)
+// TimeSeriesChart + AreaChart also render a visually-hidden SR data table (srTable, ≥ 4.8.45).
+// TimeSeriesChart takes `series={[{ label, points, color? }]}` for multi-line charts (≥ 4.8.46)
 // Infra / homelab set
 import { HostCard, ServiceHealthCard, DockerStackCard, IncidentCard } from '@tollerud/ui'
 import { ApprovalCard, ActionDiff, AlertInbox, RollbackPlan, BackupStatusPanel } from '@tollerud/ui'

@@ -180,9 +180,10 @@ const AreaChart = forwardRef<HTMLDivElement, AreaChartProps>(
         {showSrTable ? (
           <ChartSrTable
             caption={ariaLabel ?? 'Area chart'}
+            columns={['Point', 'Value']}
             rows={points.map((point, index) => ({
-              label: point.label ?? `Point ${index + 1}`,
-              value: fmt(point.value),
+              header: point.label ?? `Point ${index + 1}`,
+              cells: [fmt(point.value)],
             }))}
           />
         ) : null}

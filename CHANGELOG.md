@@ -7,6 +7,20 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.46 — 2026-07-06 — Multi-series TimeSeriesChart
+
+Phase 6 (final) of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)) — the parked stretch item, now shipped.
+
+### Added
+
+- `TimeSeriesChart` — new `series` prop (`TimeSeriesSeries[]` = `{ label, points, color? }[]`) renders multiple lines on one chart. Colors cycle the `--chart-1…5` palette unless given explicitly. A single shared crosshair spans all series with a dot per line, and the tooltip stacks each series' value (color swatch + label + value) at the active point. Keyboard navigation, the live-region announcement, and the SR data table all cover every series — the table gains one value column per series. A swatch legend renders above the chart (`showLegend`, default on). Series should be index-aligned (share dates by position).
+
+### Changed
+
+- `TimeSeriesChart` single-series usage (the `data` prop) is unchanged — same area fill, gradient, latest-value badge, tooltip, and output as 4.8.45. Multi-series mode omits the area fill and latest-value badge (single-series concepts); `renderTooltip` applies to single-series only.
+
+- `lib/chart-interaction.tsx` (internal) — `ChartTooltip` gained optional colored `rows` for stacked multi-series tooltips; `ChartSrTable` now takes `columns` + per-row `cells` so it can render one column per series (`AreaChart` and single-series `TimeSeriesChart` updated to the new shape, output identical).
+
 ## 4.8.45 — 2026-07-06 — Screen-reader data tables for line & area charts
 
 Phase 5 (final interactive phase) of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)): screen-reader users get the actual numbers behind the SVG, not just "Time series chart".
