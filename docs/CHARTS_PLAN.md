@@ -106,6 +106,10 @@ Each phase is self-contained and executable in a fresh session. Each phase that 
 
 ## Phase 3 — BarChart: per-bar focus, tooltips, reduced motion
 
+> **Status: shipped in v4.8.44** (together with Phase 4). Bars are focusable
+> `role="img"` divs with roving tabindex — no live region needed since real
+> focus moves and aria-labels announce natively.
+
 **What to implement**
 
 1. Each bar wrapper becomes focusable when new `interactive?: boolean` is set: `tabIndex={0}`, `.tollerud-focus-ring`, `aria-label` per bar ("Oslo: 42"), hover/focus shows `ChartTooltip` anchored to the bar (absolute positioning within the already-`relative` container; clamp like TimeSeriesChart L261–262). ArrowLeft/Right move focus between bars (roving tabindex — **copy** the roving pattern from `components/Segmented.tsx`, which already implements it for its radiogroup).
@@ -123,6 +127,11 @@ Each phase is self-contained and executable in a fresh session. Each phase that 
 ---
 
 ## Phase 4 — Donut: palette defaults, legend interactivity, a11y
+
+> **Status: shipped in v4.8.44** (together with Phase 3). Legend interactivity
+> is behind an `interactive` prop (not always-on) so static Donuts gain no tab
+> stops; `CHART_SERIES_COLORS` lives in `lib/chart-series.ts` and is exported
+> from the barrel.
 
 **What to implement**
 

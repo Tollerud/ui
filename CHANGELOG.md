@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.44 — 2026-07-06 — BarChart focusable bars + Donut palette defaults and interactive legend
+
+Phases 3 and 4 of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)). Unlike the SVG-crosshair charts, these two move real focus between labeled elements, so screen readers announce each bar/legend row natively — no live region needed.
+
+### Added
+
+- `BarChart` — new `interactive` prop makes each bar a focusable target with a roving tabindex: Tab reaches the chart, ←/→ move between bars, Home/End jump, Esc dismisses (consumed only while a bar is focused). Hover or focus shows a tooltip; each bar carries an aria-label ("Oslo: 420 kr"). New `formatValue` (formats the visible value labels, tooltips, and aria-labels — default unchanged raw numbers) and `ariaLabel` (group name) props.
+
+- `Donut` — `segment.color` is now optional: omitted colors cycle the `--chart-1…5` palette tokens, which were defined in `globals-layers.css` but previously unused by any component. The cycle is exported as `CHART_SERIES_COLORS` from the package barrel for consumer reuse. New `interactive` prop makes the legend rows focusable (roving tabindex, ↑/↓ or ←/→, Home/End, Esc): the active row highlights its arc, dims the others to 35 % opacity, and reveals the raw value next to the percentage. Rows carry aria-labels ("Diesel: 420, 42%"). New `ariaLabel` names the legend list.
+
+### Changed
+
+- `BarChart` and `Donut` are now client components (`'use client'`), consistent with the other interactive charts. Static usage renders identical output to 4.8.43 — no new tab stops, no roles, no visual changes.
+
+- `BarChart` bar-height and `Meter` fill-width transitions now respect `prefers-reduced-motion` (`motion-reduce:transition-none`).
+
+- `Donut` legend markup is now a semantic `<ul>`/`<li>` list (visually identical).
+
 ## 4.8.43 — 2026-07-05 — AreaChart & Sparkline: interactive tooltips + keyboard navigation
 
 Phase 2 of the charts plan ([docs/CHARTS_PLAN.md](docs/CHARTS_PLAN.md)) — both charts adopt the shared interaction core from 4.8.42.

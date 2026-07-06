@@ -430,7 +430,7 @@ function PageCharts() {
         title="BarChart"
         component="BarChart"
         permalink="charts/bar-chart"
-        desc="Vertical bars with optional yellow accent on one series. Values render above each bar."
+        desc="Vertical bars with optional yellow accent on one series. Values render above each bar; pass formatValue to format them. Add interactive (≥ 4.8.44) for focusable bars: Tab reaches the chart, ←/→ move between bars, Home/End jump, Esc dismisses — each bar announces its label and value to screen readers, and hover or focus shows a tooltip. Bar-height transitions respect prefers-reduced-motion."
       >
         <Demo name="bar-chart" variant="center" code={BAR_CHART}>
           <Card style={{ width: '100%', maxWidth: 480 }}>
@@ -448,13 +448,42 @@ function PageCharts() {
             />
           </Card>
         </Demo>
+        <SubHead>Interactive — focusable bars with tooltips</SubHead>
+        <Demo
+          name="bar-chart-interactive"
+          variant="center"
+          code={`<BarChart
+  interactive
+  ariaLabel="Sales by city"
+  formatValue={(v) => \`\${v} kr\`}
+  data={[
+    { label: 'Oslo', value: 420, accent: true },
+    { label: 'Bergen', value: 280 },
+    { label: 'Tromsø', value: 150 },
+  ]}
+/>`}
+        >
+          <Card style={{ width: '100%', maxWidth: 480 }}>
+            <SubHead>Sales by city</SubHead>
+            <BarChart
+              interactive
+              ariaLabel="Sales by city"
+              formatValue={(v) => `${v} kr`}
+              data={[
+                { label: 'Oslo', value: 420, accent: true },
+                { label: 'Bergen', value: 280 },
+                { label: 'Tromsø', value: 150 },
+              ]}
+            />
+          </Card>
+        </Demo>
       </Section>
 
       <Section
         title="Donut"
         component="Donut"
         permalink="charts/donut"
-        desc="Donut chart with segment legend and percentages. Pass explicit segment colors — use chart tokens or Tollerud yellow for the primary slice."
+        desc="Donut chart with segment legend and percentages. Segment colors are optional (≥ 4.8.44) — omitted colors cycle the --chart-1…5 palette (also exported as CHART_SERIES_COLORS). Add interactive for a focusable legend: Tab reaches it, ↑/↓ move between rows, hover or focus highlights the arc, dims the others, and reveals the raw value — each row announces label, value, and share to screen readers."
       >
         <Demo name="donut-chart" variant="center" code={DONUT_CHART}>
           <Card>
@@ -465,6 +494,36 @@ function PageCharts() {
                 { label: 'pia', value: 25, color: '#FFB800' },
                 { label: 'iris', value: 18, color: '#666666' },
                 { label: 'free', value: 12, color: '#333333' },
+              ]}
+            />
+          </Card>
+        </Demo>
+        <SubHead>Palette defaults + interactive legend</SubHead>
+        <Demo
+          name="donut-chart-interactive"
+          variant="center"
+          code={`// No colors needed — segments cycle CHART_SERIES_COLORS (--chart-1…5)
+<Donut
+  interactive
+  ariaLabel="Fuel mix"
+  segments={[
+    { label: 'Diesel', value: 420 },
+    { label: 'Bensin', value: 380 },
+    { label: 'El', value: 200 },
+    { label: 'Hybrid', value: 120 },
+  ]}
+/>`}
+        >
+          <Card>
+            <SubHead>Fuel mix</SubHead>
+            <Donut
+              interactive
+              ariaLabel="Fuel mix"
+              segments={[
+                { label: 'Diesel', value: 420 },
+                { label: 'Bensin', value: 380 },
+                { label: 'El', value: 200 },
+                { label: 'Hybrid', value: 120 },
               ]}
             />
           </Card>

@@ -302,6 +302,7 @@ export type {
   TimeSeriesRange,
 } from './TimeSeriesChart'
 export {
+  CHART_SERIES_COLORS,
   formatChartDecimal,
   formatChartNumber,
   formatChartDateLong,

@@ -12,6 +12,20 @@ export const DEFAULT_CHART_PADDING: ChartPadding = {
   left: 12,
 }
 
+/**
+ * Multi-series color cycle — the `--chart-1…5` tokens from globals-layers.css
+ * with their literal values as fallbacks. `Donut` cycles these for segments
+ * without an explicit `color`; consumers can reuse the cycle for their own
+ * series (badges, custom charts, DataTable cell accents).
+ */
+export const CHART_SERIES_COLORS = [
+  'var(--chart-1, #FFFF00)',
+  'var(--chart-2, #FFB800)',
+  'var(--chart-3, #22C55E)',
+  'var(--chart-4, #3B82F6)',
+  'var(--chart-5, #EF4444)',
+] as const
+
 export function parseChartDate(input: Date | string | number): Date {
   if (input instanceof Date) return input
   if (typeof input === 'number') return new Date(input)

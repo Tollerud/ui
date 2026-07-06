@@ -56,9 +56,9 @@ The `Kbd` component displays a keyboard shortcut chip. It accepts any string or 
 - Click outside to close
 - Hover follows keyboard selection
 
-### Charts (TimeSeriesChart ≥ 4.8.42; AreaChart & Sparkline with `interactive` ≥ 4.8.43)
+### Charts (TimeSeriesChart ≥ 4.8.42; AreaChart & Sparkline ≥ 4.8.43; BarChart & Donut ≥ 4.8.44 — all with `interactive`)
 
-Interactive charts share one keyboard contract (implemented in `lib/chart-interaction.tsx`):
+Interactive charts share one keyboard contract. Single-SVG charts (TimeSeriesChart, AreaChart, Sparkline) keep focus on the SVG and announce via a live region (`lib/chart-interaction.tsx`); BarChart bars and Donut legend rows are individually focusable with a roving tabindex, so their aria-labels are announced natively on focus. Donut also accepts ↑/↓ (vertical list):
 
 - `Tab` focuses the chart — the latest point becomes active (crosshair + tooltip shown, yellow focus ring)
 - `←` / `→` step one point back/forward

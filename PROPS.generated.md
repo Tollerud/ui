@@ -92,6 +92,13 @@
 
 - `data: BarChartDatum[]`
 - `height?: number`
+- `* Focusable bars with tooltips: Tab reaches the chart, ←/→ move between`
+- `* bars (roving tabindex), Home/End jump, Esc dismisses. Each bar carries an`
+- `* aria-label ("Oslo: 42") that screen readers announce on focus.`
+- `*/`
+- `interactive?: boolean`
+- `formatValue?: (value: number) => string`
+- `ariaLabel?: string`
 
 ## BentoDashboard — `BentoDashboardProps`
 
@@ -299,6 +306,13 @@
 
 - `segments: DonutSegment[]`
 - `size?: number`
+- `* Focusable legend rows that highlight their arc: Tab reaches the legend,`
+- `* ↑/↓ (or ←/→) move between rows, Home/End jump, Esc dismisses. Rows carry`
+- `* aria-labels ("Diesel: 420, 38%") announced on focus; the active row shows`
+- `* its value next to the percentage and dims the other arcs.`
+- `*/`
+- `interactive?: boolean`
+- `ariaLabel?: string`
 
 ## Drawer — `DrawerProps`
 

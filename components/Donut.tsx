@@ -1,23 +1,74 @@
-import { type HTMLAttributes, forwardRef } from 'react'
+'use client'
+
+import { type HTMLAttributes, forwardRef, useRef, useState } from 'react'
+import { CHART_SERIES_COLORS } from '@/lib/chart-series'
 import { cn } from '@/lib/utils'
 
 export interface DonutSegment {
   label: string
   value: number
-  color: string
+  /** Optional since 4.8.44 — omitted colors cycle the `--chart-1…5` palette. */
+  color?: string
 }
 
 export interface DonutProps extends HTMLAttributes<HTMLDivElement> {
   segments: DonutSegment[]
   size?: number
+  /**
+   * Focusable legend rows that highlight their arc: Tab reaches the legend,
+   * ↑/↓ (or ←/→) move between rows, Home/End jump, Esc dismisses. Rows carry
+   * aria-labels ("Diesel: 420, 38%") announced on focus; the active row shows
+   * its value next to the percentage and dims the other arcs.
+   */
+  interactive?: boolean
+  /** Accessible legend name when `interactive` (default "Chart legend"). */
+  ariaLabel?: string
 }
 
 const Donut = forwardRef<HTMLDivElement, DonutProps>(
-  ({ className, segments, size = 160, ...props }, ref) => {
+  ({ className, segments, size = 160, interactive = false, ariaLabel, ...props }, ref) => {
     const total = segments.reduce((a, s) => a + s.value, 0) || 1
     const r = size / 2 - 14
     const c = 2 * Math.PI * r
     let offset = 0
+
+    const colorAt = (index: number) =>
+      segments[index]!.color ?? CHART_SERIES_COLORS[index % CHART_SERIES_COLORS.length]!
+    const pctAt = (index: number) => Math.round((segments[index]!.value / total) * 100)
+
+    const rowRefs = useRef<(HTMLLIElement | null)[]>([])
+    const [rovingIndex, setRovingIndex] = useState(0)
+    const [focusedIndex, setFocusedIndex] = useState<number | null>(null)
+    const [hoverIndex, setHoverIndex] = useState<number | null>(null)
+    const activeIndex = interactive ? (hoverIndex ?? focusedIndex) : null
+
+    const moveFocus = (next: number) => {
+      const clamped = Math.max(0, Math.min(segments.length - 1, next))
+      setRovingIndex(clamped)
+      rowRefs.current[clamped]?.focus()
+    }
+
+    const onRowKeyDown = (e: React.KeyboardEvent<HTMLLIElement>, index: number) => {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        e.preventDefault()
+        moveFocus(index - 1)
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+        e.preventDefault()
+        moveFocus(index + 1)
+      } else if (e.key === 'Home') {
+        e.preventDefault()
+        moveFocus(0)
+      } else if (e.key === 'End') {
+        e.preventDefault()
+        moveFocus(segments.length - 1)
+      } else if (e.key === 'Escape') {
+        if (focusedIndex != null) {
+          e.preventDefault()
+          e.stopPropagation()
+          e.currentTarget.blur()
+        }
+      }
+    }
 
     return (
       <div ref={ref} className={cn('flex items-center gap-6', className)} {...props}>
@@ -47,8 +98,9 @@ const Donut = forwardRef<HTMLDivElement, DonutProps>(
                 cy={size / 2}
                 r={r}
                 fill="none"
-                stroke={s.color}
+                stroke={colorAt(i)}
                 strokeWidth="14"
+                strokeOpacity={activeIndex != null && activeIndex !== i ? 0.35 : 1}
                 strokeDasharray={`${Math.max(0.1, len - gap)} ${c - (len - gap)}`}
                 strokeDashoffset={-offset}
                 strokeLinecap="butt"
@@ -58,20 +110,41 @@ const Donut = forwardRef<HTMLDivElement, DonutProps>(
             return el
           })}
         </svg>
-        <div className="flex flex-col gap-2">
+        <ul
+          className="m-0 flex list-none flex-col gap-2 p-0"
+          aria-label={interactive ? ariaLabel ?? 'Chart legend' : undefined}
+        >
           {segments.map((s, i) => (
-            <div key={i} className="flex items-center gap-2 text-[13px]">
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- focusable info target (roving tabindex), not an actionable control: focus/hover highlights the arc and the aria-label is announced natively; there is nothing to activate
+            <li
+              key={i}
+              ref={(node) => {
+                rowRefs.current[i] = node
+              }}
+              className={cn(
+                'flex items-center gap-2 rounded text-[13px]',
+                interactive && 'tollerud-focus-ring',
+                interactive && activeIndex != null && activeIndex !== i && 'opacity-50',
+              )}
+              aria-label={interactive ? `${s.label}: ${s.value}, ${pctAt(i)}%` : undefined}
+              tabIndex={interactive ? (i === rovingIndex ? 0 : -1) : undefined}
+              onFocus={interactive ? () => setFocusedIndex(i) : undefined}
+              onBlur={interactive ? () => setFocusedIndex(null) : undefined}
+              onMouseEnter={interactive ? () => setHoverIndex(i) : undefined}
+              onMouseLeave={interactive ? () => setHoverIndex(null) : undefined}
+              onKeyDown={interactive ? (e) => onRowKeyDown(e, i) : undefined}
+            >
               <span
                 className="h-2.5 w-2.5 shrink-0 rounded-[3px]"
-                style={{ background: s.color }}
+                style={{ background: colorAt(i) }}
               />
               <span className="min-w-[70px] text-tollerud-text-primary">{s.label}</span>
               <span className="font-mono text-tollerud-text-muted">
-                {Math.round((s.value / total) * 100)}%
+                {activeIndex === i ? `${s.value} · ${pctAt(i)}%` : `${pctAt(i)}%`}
               </span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     )
   }
