@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.47 — 2026-07-06 — Fix AreaChart aspect-ratio distortion
+
+### Fixed
+
+- `AreaChart` — point markers rendered as ellipses and stroke widths looked stretched on containers wider than 520px. The SVG used a fixed `viewBox="0 0 520 h"` with `preserveAspectRatio="none"`, so filling the container width scaled the coordinate system non-uniformly. It now measures its real rendered width with a `ResizeObserver` and plots in pixels (the same approach as `TimeSeriesChart`), so circles stay round and strokes uniform at any width — still fully responsive. The interactive tooltip anchors in pixels rather than percentages.
+
+- `lib/chart-interaction.tsx` (internal) — removed the now-unused `viewBoxWidth` option from `useChartInteraction` (it existed only to rescale pointer coordinates for AreaChart's stretched viewBox).
+
 ## 4.8.46 — 2026-07-06 — Multi-series TimeSeriesChart
 
 Phase 6 (final) of the charts plan ([docs/CHARTS_PLAN.md](docs/archive/CHARTS_PLAN.md)) — the parked stretch item, now shipped.

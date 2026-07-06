@@ -22,13 +22,6 @@ export interface ChartInteractionOptions {
   count: number
   paddingLeft: number
   paddingRight: number
-  /**
-   * Set when the SVG uses a fixed viewBox stretched to the container
-   * (`preserveAspectRatio="none"`, e.g. AreaChart's 520-unit viewBox).
-   * Padding values are then given in viewBox units and scaled to client
-   * pixels before the pointer position is mapped to an index.
-   */
-  viewBoxWidth?: number
   /** Called when Escape clears an active point. */
   onEscape?: () => void
 }
@@ -58,7 +51,6 @@ export function useChartInteraction({
   count,
   paddingLeft,
   paddingRight,
-  viewBoxWidth,
   onEscape,
 }: ChartInteractionOptions): ChartInteraction {
   const [rawIndex, setRawIndex] = useState<number | null>(null)
@@ -80,13 +72,10 @@ export function useChartInteraction({
     (clientX: number) => {
       const rect = svgRef.current?.getBoundingClientRect()
       if (!rect || count === 0) return
-      const scale = viewBoxWidth && viewBoxWidth > 0 ? rect.width / viewBoxWidth : 1
       setIsKeyboard(false)
-      setRawIndex(
-        indexFromPointer(clientX, rect, count, paddingLeft * scale, paddingRight * scale),
-      )
+      setRawIndex(indexFromPointer(clientX, rect, count, paddingLeft, paddingRight))
     },
-    [count, paddingLeft, paddingRight, svgRef, viewBoxWidth],
+    [count, paddingLeft, paddingRight, svgRef],
   )
 
   const svgProps = useMemo<ChartInteraction['svgProps']>(

@@ -18,6 +18,16 @@ describe('AreaChart', () => {
     expect(container.querySelectorAll('circle')).toHaveLength(3)
   })
 
+  it('renders pixel-perfect (no stretched viewBox) so point markers stay round', () => {
+    const { container } = render(<AreaChart data={[1, 2, 3]} height={150} />)
+    const svg = container.querySelector('svg')!
+    // Pixel-based like TimeSeriesChart — no fixed viewBox stretched by
+    // preserveAspectRatio="none" (which turns circles into ellipses).
+    expect(svg).not.toHaveAttribute('preserveAspectRatio', 'none')
+    expect(svg).toHaveAttribute('width')
+    expect(svg).toHaveAttribute('height', '150')
+  })
+
   it('supports keyboard navigation with tooltip and announcements when interactive', () => {
     const { container } = render(
       <AreaChart data={labeled} interactive ariaLabel="Monthly output" formatValue={(v) => `v${v}`} srTable={false} />

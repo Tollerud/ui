@@ -89,7 +89,7 @@
         "height?: number",
         "* Hover/keyboard interactivity: crosshair, tooltip, arrow-key navigation,",
         "* and screen-reader announcements. Off by default — the static chart stays",
-        "* a decorative `aria-hidden` graphic exactly as before 4.8.43.",
+        "* a decorative `aria-hidden` graphic.",
         "*/",
         "interactive?: boolean",
         "formatValue?: (value: number) => string",

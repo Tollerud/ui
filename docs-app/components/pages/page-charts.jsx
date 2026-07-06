@@ -418,7 +418,7 @@ function PageCharts() {
         title="AreaChart"
         component="AreaChart"
         permalink="charts/area-chart"
-        desc="Area/line chart for simple dashboards. Static and decorative by default; add interactive (≥ 4.8.43) for a crosshair, tooltip, and full keyboard navigation (Tab, ←/→, Home/End, Esc) with screen-reader announcements plus a visually-hidden data table (srTable; ≥ 4.8.45). Pass labeled points ({ value, label }) so tooltips, announcements, and the table name each point; plain number arrays keep working. Use TimeSeriesChart when you need dates, ranges, or axes."
+        desc="Area/line chart for simple dashboards. Static and decorative by default; add interactive (≥ 4.8.43) for a crosshair, tooltip, and full keyboard navigation (Tab, ←/→, Home/End, Esc) with screen-reader announcements plus a visually-hidden data table (srTable; ≥ 4.8.45). Pass labeled points ({ value, label }) so tooltips, announcements, and the table name each point; plain number arrays keep working. Fluid width with round markers at any size (≥ 4.8.47 — plotted in real pixels, not a stretched viewBox). Use TimeSeriesChart when you need dates, ranges, or axes."
       >
         <Demo name="area-chart" variant="center" code={AREA_CHART}>
           <Card style={{ width: '100%', maxWidth: 480 }}>
