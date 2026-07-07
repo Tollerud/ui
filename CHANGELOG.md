@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.51 — 2026-07-07 — New: Heatmap (calendar activity grid)
+
+### Added
+
+- `Heatmap` — a calendar activity heatmap (GitHub-contributions style): `data` of `{ date, value }` renders as week columns × weekday rows, cells colored by intensity buckets (a yellow-on-noir scale, overridable via `colors`). Hover shows a date + value tooltip; a visually-hidden data table (`srTable`, default on) gives screen readers every valued day. Props: `startDate`/`endDate` (default from data range), `weekStartsOn` (0 Sun / 1 Mon, default Mon), `formatValue`/`formatDate`/`locale`, `showLegend` (Less→More scale), `cellSize`/`cellGap`, `ariaLabel`. New `Heatmap`/`HeatmapDatum` exports.
+
+This completes the chart set expansion: stacked/grouped `BarChart` (4.8.49), `Gauge` (4.8.50), and `Heatmap` (4.8.51).
+
 ## 4.8.50 — 2026-07-07 — New: Gauge (radial dial)
 
 ### Added

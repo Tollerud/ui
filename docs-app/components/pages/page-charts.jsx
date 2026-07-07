@@ -17,6 +17,7 @@ const {
   AreaChart,
   Donut,
   Gauge,
+  Heatmap,
 } = __p
 
 /* @tollerud/ui docs — Charts */
@@ -184,8 +185,26 @@ function buildPriceSeries() {
   return points
 }
 
+function buildHeatmapSample() {
+  // ~17 weeks of daily deploy counts
+  const start = new Date('2026-03-02') // a Monday
+  const data = []
+  for (let i = 0; i < 119; i++) {
+    const date = new Date(start)
+    date.setDate(start.getDate() + i)
+    const weekend = date.getDay() === 0 || date.getDay() === 6
+    const roll = Math.random()
+    let value = 0
+    if (!weekend && roll > 0.25) value = Math.floor(Math.random() * 12) + 1
+    else if (weekend && roll > 0.8) value = Math.floor(Math.random() * 3) + 1
+    if (value > 0) data.push({ date, value })
+  }
+  return data
+}
+
 function PageCharts() {
   const priceData = useMemo(() => buildPriceSeries(), [])
+  const heatmapData = useMemo(() => buildHeatmapSample(), [])
   const [range, setRange] = useState('3m')
   const [rangeNb, setRangeNb] = useState('3m')
 
@@ -212,6 +231,7 @@ function PageCharts() {
             ['<code>BarChart</code>', 'Category comparison — static, or interactive focusable bars with tooltips'],
             ['<code>Donut</code>', 'Part-to-whole breakdown — palette-cycled legend, optionally interactive'],
             ['<code>Gauge</code>', 'Single metric as a radial dial — disk %, load, quota; tone thresholds'],
+            ['<code>Heatmap</code>', 'Activity over time — calendar/contributions grid with intensity buckets'],
           ]}
         />
         <TokenTable
@@ -672,6 +692,32 @@ function PageCharts() {
         >
           <Card style={{ display: 'flex', justifyContent: 'center' }}>
             <Gauge value={2.4} min={0} max={4} label="Load avg" formatValue={(v) => v.toFixed(1)} />
+          </Card>
+        </Demo>
+      </Section>
+
+      <Section
+        title="Heatmap"
+        component="Heatmap"
+        permalink="charts/heatmap"
+        desc="Calendar activity heatmap (≥ 4.8.51) — GitHub-contributions style. Pass data of { date, value }; cells are laid out as week columns × weekday rows and bucketed into four intensity levels (a yellow-on-noir scale, overridable via colors). Hover a cell for a date + value tooltip; the grid is aria-hidden with a visually-hidden data table as the screen-reader surface. Set weekStartsOn, startDate/endDate, formatValue/formatDate, and showLegend as needed."
+      >
+        <Demo
+          name="heatmap"
+          variant="col"
+          code={`<Heatmap
+  data={deploysByDay}         // [{ date: '2026-03-02', value: 4 }, …]
+  ariaLabel="Deploy activity"
+  formatValue={(v) => \`\${v} deploys\`}
+/>`}
+        >
+          <Card style={{ overflowX: 'auto' }}>
+            <SubHead>Deploy activity · 17 weeks</SubHead>
+            <Heatmap
+              data={heatmapData}
+              ariaLabel="Deploy activity"
+              formatValue={(v) => `${v} deploys`}
+            />
           </Card>
         </Demo>
       </Section>

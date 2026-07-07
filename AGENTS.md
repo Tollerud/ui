@@ -192,6 +192,7 @@ import { Divider, Pill, Avatar, AvatarGroup } from '@tollerud/ui'
 import { Breadcrumb, Pagination, Segmented, Stepper } from '@tollerud/ui'
 import { Panel, Meter, Gauge, PricingCard } from '@tollerud/ui'
 // Gauge (≥ 4.8.50): radial dial for a single metric — <Gauge value={72} label="Disk" formatValue={v=>`${v}%`} tone="warning" />
+// Heatmap (≥ 4.8.51): calendar activity grid — <Heatmap data={[{date, value}]} ariaLabel="Deploys" />
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@tollerud/ui'
 import { DatePicker, FileUpload } from '@tollerud/ui'
 // Overlays & feedback

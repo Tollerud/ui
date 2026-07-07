@@ -462,7 +462,7 @@ const [pw, setPw] = useState('')
 import {
   Divider, Pill, Avatar, AvatarGroup,
   Breadcrumb, Pagination, Segmented, Stepper,
-  Panel, Meter, Gauge, Accordion, AccordionItem, AccordionTrigger, AccordionContent,
+  Panel, Meter, Gauge, Heatmap, Accordion, AccordionItem, AccordionTrigger, AccordionContent,
   DatePicker, FileUpload, PricingCard,
 } from '@tollerud/ui'
 ```
@@ -827,6 +827,8 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`SidebarNav` scroll fix (≥ 4.8.16)** — nav content area now scrolls when items overflow the viewport height (missing `min-h-0` on the flex child prevented the scroll context from forming)
 - **`StatCard` arrow direction fix (≥ 4.8.19)** — `direction: 'up'` now shows an up arrow (was showing down arrow due to inverted `rotate-180` condition)
 - **Form field height alignment (≥ 4.8.18)** — all form field triggers (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`, `Select`) use `text-base py-2.5`. Earlier versions mixed `text-sm`/`text-base` and `py-2`/`py-2.5`, causing height differences when combining field types.
+- **`Heatmap` (≥ 4.8.51)** — calendar activity grid (`data` of `{ date, value }`): week columns × weekday rows, intensity-bucketed cells, hover tooltip, Less→More legend, and an SR data table. `weekStartsOn`, `colors`, `startDate`/`endDate`, `formatValue`/`formatDate`.
+- **`Gauge` (≥ 4.8.50)** — radial dial for a single metric (see the Gauge prop entry above).
 - **Stacked/grouped `BarChart` (≥ 4.8.49)** — pass `series={[{ label, values, color? }]}` + `categories={[...]}` for grouped bars, add `stacked` for stacked. Palette-cycled, legend, focusable bars/columns with tooltips. Single-series `data` unchanged.
 - **All charts responsive (≥ 4.8.48)** — `Sparkline` and `Donut` gain an opt-in `fluid` prop (fill container width / scale ring to fit, both non-breaking); `TimeSeriesChart`, `AreaChart`, `BarChart`, `Meter` are already fluid-width. Sparkline fluid keeps dots round (pixel-plotted); Donut fluid stays circular (uniform scale, legend wraps).
 - **`AreaChart` renders pixel-perfect (≥ 4.8.47)** — it now measures its width and plots in pixels instead of stretching a fixed `viewBox`, so point markers stay round and strokes uniform at any container width. No API change.

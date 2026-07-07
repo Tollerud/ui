@@ -315,6 +315,8 @@ export type { ChartDecimalFormatOptions } from '../lib/chart-series'
 
 export { Donut } from './Donut'
 export type { DonutProps, DonutSegment } from './Donut'
+export { Heatmap } from './Heatmap'
+export type { HeatmapProps, HeatmapDatum } from './Heatmap'
 
 export { Sparkline } from './Sparkline'
 export type { SparklineProps } from './Sparkline'

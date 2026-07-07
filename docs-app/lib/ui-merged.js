@@ -22,6 +22,7 @@ export {
   ToastProvider,
   useToast,
   Gauge,
+  Heatmap,
 } from '@tollerud/ui'
 
 export {

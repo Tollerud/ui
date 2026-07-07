@@ -427,6 +427,25 @@
 - `columns?: GridColumns`
 - `gap?: GridGap`
 
+## Heatmap — `HeatmapProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>
+
+- `data: HeatmapDatum[]`
+- `startDate?: Date | string | number`
+- `endDate?: Date | string | number`
+- `weekStartsOn?: 0 | 1`
+- `* Five cell colors by intensity: index 0 = zero/no activity, 1–4 = light→`
+- `* strong. Defaults to a yellow-on-noir scale.`
+- `*/`
+- `colors?: [string, string, string, string, string]`
+- `formatValue?: (value: number) => string`
+- `formatDate?: (date: Date) => string`
+- `locale?: string`
+- `showLegend?: boolean`
+- `cellSize?: number`
+- `cellGap?: number`
+- `ariaLabel?: string`
+- `srTable?: boolean`
+
 ## HeroBlock — `HeroBlockProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 - `eyebrow?: React.ReactNode`

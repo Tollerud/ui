@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.50**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.51**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -615,6 +615,20 @@ Radial dial for a single metric (disk %, load, quota) — a 270° arc with a bot
 ```
 
 Props: `value`, `min?`/`max?` (default 0–100), `label?`, `formatValue?`, `tone?: 'default' | 'success' | 'warning' | 'error'` (token-backed, same as Meter), `size?` (default 160), `thickness?` (default 12), `fluid?` (scale to container, stays circular), `ariaLabel?`. Exposes `role="meter"` with `aria-valuenow`/`min`/`max`; arc animation respects `prefers-reduced-motion`.
+
+### Heatmap
+
+Calendar activity heatmap — GitHub-contributions style. Since 4.8.51.
+
+```tsx
+<Heatmap
+  data={[{ date: '2026-01-05', value: 3 }, { date: '2026-01-06', value: 8 }]}
+  ariaLabel="Deploy activity"
+  formatValue={(v) => `${v} deploys`}
+/>
+```
+
+Props: `data` (`{ date, value }[]`), `startDate?`/`endDate?` (default from data range), `weekStartsOn?` (`0` Sun / `1` Mon, default Mon), `colors?` (5 intensity colors, default yellow-on-noir), `formatValue?`/`formatDate?`/`locale?`, `showLegend?` (Less→More, default on), `cellSize?`/`cellGap?`, `ariaLabel?`, `srTable?`. Cells bucket into 4 intensity levels by value; the grid is `aria-hidden` with a visually-hidden data table as the screen-reader surface, and hover shows a date + value tooltip.
 
 ### Stepper
 
