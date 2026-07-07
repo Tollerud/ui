@@ -853,6 +853,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`Card` `accent="filled"` (≥ 4.8.27)** — adds yellow fill in addition to border tint; existing `accent={true}` unchanged.
 - **`Sparkline` SVG clip fix (≥ 4.8.27)** — `overflow="hidden"` prevents stroke bleed at small sizes with `curve="step"` and `fill`.
 - **Portalled dropdown mobile scroll fix (≥ 4.8.26)** — `Combobox`, `Select`, `DatePicker`, and `Segmented` now close on outside scroll on touch devices instead of lagging to reposition.
+- **iOS Safari Combobox fix (≥ 4.8.53)** — `searchPlacement="dropdown"` was unusable on iOS: the 14px auto-focused search input triggered auto-zoom, and the zoom's scroll event immediately dismissed the panel. The in-dropdown search input now renders ≥16px on coarse pointers (`pointer-coarse:text-base`, desktop unchanged), and portalled dropdowns only dismiss on a genuine touch drag — focus/zoom-induced scrolls reposition instead of closing. Also stops non-search dropdowns from closing when iOS scrolls a focused field above the keyboard.
 - **`TopNav` `mobileMenuExtra` slot (≥ 4.8.24)** — inject arbitrary content at the bottom of the mobile nav sheet, separated by a divider.
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)
 

@@ -47,15 +47,31 @@ export function useFloatingDropdownCoords(
     if (popoverRef.current) observer?.observe(popoverRef.current)
     if (anchorRef.current) observer?.observe(anchorRef.current)
 
-    // On touch devices, close the dropdown when the page scrolls behind it
-    // rather than chasing the scroll with async React state updates (which lag).
+    // On touch devices, close the dropdown when the user scrolls the page behind
+    // it rather than chasing the scroll with async React state updates (which lag).
     // On desktop, reposition normally.
+    //
+    // BUT only dismiss on a *genuine* touch drag. iOS Safari fires `scroll` for
+    // programmatic reasons too — auto-zooming a focused <16px input, or scrolling
+    // a focused field above the on-screen keyboard. Those must reposition, not
+    // close, otherwise a dropdown with an auto-focused search field closes the
+    // instant it opens. We track whether a real finger drag is in progress and
+    // only dismiss then; all other scrolls fall through to update().
     const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
+    let touchDragging = false
+    const onTouchStart = () => { touchDragging = false }
+    const onTouchMove = () => { touchDragging = true }
+    const onTouchEnd = () => { touchDragging = false }
     const onScroll = (e: Event) => {
       if (isTouchDevice && onOutsideScroll) {
         const target = e.target as Node
-        if (!popoverRef.current?.contains(target)) {
+        // Scroll inside the popover (e.g. the options list) never dismisses.
+        if (popoverRef.current?.contains(target)) return
+        // Ignore focus/zoom-induced scrolls; only a user drag closes the panel.
+        if (touchDragging) {
           onOutsideScroll()
+        } else {
+          update()
         }
       } else {
         update()
@@ -64,11 +80,17 @@ export function useFloatingDropdownCoords(
 
     window.addEventListener('resize', update)
     window.addEventListener('scroll', onScroll, true)
+    window.addEventListener('touchstart', onTouchStart, { passive: true })
+    window.addEventListener('touchmove', onTouchMove, { passive: true })
+    window.addEventListener('touchend', onTouchEnd, { passive: true })
 
     return () => {
       observer?.disconnect()
       window.removeEventListener('resize', update)
       window.removeEventListener('scroll', onScroll, true)
+      window.removeEventListener('touchstart', onTouchStart)
+      window.removeEventListener('touchmove', onTouchMove)
+      window.removeEventListener('touchend', onTouchEnd)
     }
   }, [open, anchorRef, popoverRef, offset, maxHeight, onOutsideScroll])
 

@@ -642,11 +642,13 @@ import { Database } from 'lucide-react'
 
 #### Portalled dropdown mobile scroll (≥ 4.8.26)
 
-`Combobox`, `Select`, `DatePicker`, and `Segmented` close when the page scrolls behind them on touch devices. Earlier versions tried to reposition via React state updates, causing a visible lag on every scroll tick.
+`Combobox`, `Select`, `DatePicker`, and `Segmented` close when the user scrolls the page behind them on touch devices. Earlier versions tried to reposition via React state updates, causing a visible lag on every scroll tick.
+
+Since ≥ 4.8.53 only a *genuine touch drag* dismisses the panel: iOS also fires `scroll` programmatically when auto-zooming a focused input or scrolling a focused field above the on-screen keyboard, and those now reposition the dropdown instead of closing it. This is what made `searchPlacement="dropdown"` unusable on iOS Safari before 4.8.53.
 
 #### Combobox searchPlacement (≥ 4.8.25)
 
-`searchPlacement="dropdown"` moves the search input inside the popover; the trigger becomes a Select-style button. Default `"trigger"` keeps the original inline-search behaviour.
+`searchPlacement="dropdown"` moves the search input inside the popover; the trigger becomes a Select-style button. Default `"trigger"` keeps the original inline-search behaviour. On touch devices the in-dropdown search field renders at ≥16px (≥ 4.8.53) so iOS Safari does not auto-zoom on focus.
 
 ```tsx
 <Combobox searchPlacement="dropdown" label="Host" options={hostOptions} value={host} onChange={setHost} />

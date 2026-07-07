@@ -408,7 +408,10 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
                   setActiveIndex(0)
                 }}
                 onKeyDown={onKeyDown}
-                className="w-full bg-transparent text-sm text-tollerud-text-primary placeholder:text-tollerud-text-muted focus:outline-none"
+                // pointer-coarse:text-base forces ≥16px on touch devices so iOS
+                // Safari does not auto-zoom (and trigger a scroll) when the field
+                // is focused on open. Desktop keeps the 14px (text-sm) sizing.
+                className="w-full bg-transparent text-sm pointer-coarse:text-base text-tollerud-text-primary placeholder:text-tollerud-text-muted focus:outline-none"
               />
             </div>
             <div className="overflow-auto py-1" style={{ maxHeight: 256 }}>

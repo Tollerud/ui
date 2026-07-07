@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.53 — 2026-07-07 — Fix: Combobox unusable on iOS Safari + touch dropdowns dismissing on focus/zoom scroll
+
+### Fixed
+
+`Combobox` with `searchPlacement="dropdown"` was unusable on iOS Safari. Two compounding defects are addressed.
+
+The in-dropdown search input was `text-sm` (14px). iOS Safari auto-zooms any focused input below 16px, and the input is auto-focused on open. It now renders at ≥16px on coarse-pointer devices (`pointer-coarse:text-base`) so focusing it no longer triggers a zoom. Desktop sizing is unchanged (14px).
+
+Portalled dropdowns (`Combobox`, `Select`, `DatePicker`, `Segmented`) closed on *any* scroll behind them on touch devices — including the programmatic scroll iOS emits when auto-zooming a focused input or scrolling a focused field above the on-screen keyboard. `useFloatingDropdownCoords` now dismisses only on a genuine user touch drag (gated on `touchstart`/`touchmove`); focus- and zoom-induced scrolls reposition the panel instead of closing it.
+
+Net effect: `searchPlacement="dropdown"` now opens, stays open, and is searchable on iOS Safari, and non-search dropdowns no longer dismiss unexpectedly when the page scrolls to reveal a focused field.
+
 ## 4.8.52 — 2026-07-07 — Fix: chart SR data table inflated page height
 
 ### Fixed
