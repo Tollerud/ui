@@ -7,6 +7,22 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.56 — 2026-07-07 — Portalled dropdowns now positioned by Floating UI
+
+### Changed
+
+Replaced the hand-rolled positioning in `FloatingDropdownPortal` (`Combobox`, `Select`, `DatePicker`, `Segmented`) with **Floating UI** — the same engine Radix Popover and shadcn/ui use. `autoUpdate` keeps the panel glued to its trigger across scroll, resize, layout shifts, and mobile viewport changes (iOS keyboard, zoom, address bar), and the `flip` / `shift` / `size` middleware handle top/bottom flipping, staying in view, and height clamping. This resolves the iOS Combobox saga from 4.8.53–4.8.55 (auto-zoom, floating, top/bottom flip, detachment) with a battle-tested library instead of bespoke scroll/touch heuristics.
+
+Behaviour change: on touch devices the dropdowns now **stay open and reposition** while the page scrolls, matching Radix Popover / shadcn, instead of closing on scroll (the workaround added in 4.8.26). Outside-click and Escape still close them.
+
+### Removed
+
+Deleted the internal `lib/dropdown-placement.ts` module (`getDropdownPlacement`, `getFloatingDropdownCoords`, `useDropdownPlacement`, `dropdownPlacementClasses`) and the `onOutsideScroll` prop on `FloatingDropdownPortal` — both superseded by Floating UI. These were internal; no public component API changed.
+
+### Internal
+
+Added `mergeRefs` to `lib/utils`. Added `@floating-ui/react-dom` as a dev dependency (bundled into the package output; not a new peer dependency).
+
 ## 4.8.55 — 2026-07-07 — Fix: mobile dropdown detached from its trigger after opening
 
 ### Fixed

@@ -383,7 +383,6 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
         id={`${id}-listbox`}
         role="listbox"
         placementOptions={{ maxHeight: 320 }}
-        onOutsideScroll={() => { setOpen(false); setQuery('') }}
         className={cn(
           'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
           searchPlacement === 'dropdown' ? 'overflow-hidden' : 'overflow-auto py-1'

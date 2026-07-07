@@ -650,6 +650,8 @@ Since ≥ 4.8.54 placement is sticky: filtering a `Combobox` to fewer results no
 
 Since ≥ 4.8.55 the touch handler separates the two kinds of mobile scroll. A programmatic settle scroll (iOS lifting the focused search input above the keyboard, the address bar collapsing, a focus/zoom nudge — no finger drag) repositions the panel so it stays glued to the trigger; a user fling and its momentum tail dismiss it. Repositions are coalesced to one per frame and `visualViewport` resize is handled, so it tracks the field without floating. Desktop still repositions on scroll/resize to track the anchor.
 
+Since ≥ 4.8.56 all of the above is handled by **Floating UI** (the engine behind Radix Popover / shadcn) instead of bespoke code. `Combobox`, `Select`, `DatePicker`, and `Segmented` use `useFloating` with `autoUpdate` + `flip`/`shift`/`size`, so the panel flips, shifts, clamps height, and stays glued across scroll, resize, and iOS keyboard/zoom/address-bar changes. On touch it now stays open and repositions on scroll rather than closing; outside-click and Escape still dismiss it. The `FloatingDropdownPortal` `onOutsideScroll` prop and the internal `lib/dropdown-placement.ts` helpers were removed — internal only, no public component API changed.
+
 #### Combobox searchPlacement (≥ 4.8.25)
 
 `searchPlacement="dropdown"` moves the search input inside the popover; the trigger becomes a Select-style button. Default `"trigger"` keeps the original inline-search behaviour. On touch devices the in-dropdown search field renders at ≥16px (≥ 4.8.53) so iOS Safari does not auto-zoom on focus.

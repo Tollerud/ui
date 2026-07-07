@@ -128,7 +128,6 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
             id={listId}
             role="listbox"
             placementOptions={{ maxHeight: 240 }}
-            onOutsideScroll={() => setExpanded(false)}
             className="overflow-hidden rounded-lg border border-tollerud-border bg-tollerud-surface-overlay py-1"
           >
             {options.map((opt, index) => {

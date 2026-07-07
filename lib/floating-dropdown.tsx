@@ -2,130 +2,30 @@
 
 import {
   useLayoutEffect,
-  useRef,
-  useState,
+  useMemo,
   type CSSProperties,
   type ReactNode,
   type RefObject,
 } from 'react'
 import { createPortal } from 'react-dom'
 import {
-  getFloatingDropdownCoords,
-  type DropdownPlacement,
-  type DropdownPlacementOptions,
-  type FloatingDropdownCoords,
-} from '@/lib/dropdown-placement'
+  useFloating,
+  autoUpdate,
+  offset as offsetMiddleware,
+  flip,
+  shift,
+  size,
+} from '@floating-ui/react-dom'
 import { useBypassModalScrollLock } from '@/lib/bypass-modal-scroll-lock'
-import { cn } from '@/lib/utils'
+import { cn, mergeRefs } from '@/lib/utils'
 
-export function useFloatingDropdownCoords(
-  open: boolean,
-  anchorRef: RefObject<HTMLElement | null>,
-  popoverRef: RefObject<HTMLElement | null>,
-  options: DropdownPlacementOptions = {},
-  onOutsideScroll?: () => void,
-): FloatingDropdownCoords | null {
-  const offset = options.offset ?? 4
-  const maxHeight = options.maxHeight ?? 240
-  const [coords, setCoords] = useState<FloatingDropdownCoords | null>(null)
-  // Last placement, so update() can keep the same side while it fits (hysteresis).
-  const placementRef = useRef<DropdownPlacement | undefined>(undefined)
-
-  useLayoutEffect(() => {
-    if (!open || !anchorRef.current) {
-      setCoords(null)
-      placementRef.current = undefined
-      return
-    }
-
-    const update = () => {
-      if (!anchorRef.current) return
-      const next = getFloatingDropdownCoords(
-        anchorRef.current,
-        popoverRef.current,
-        { offset, maxHeight },
-        placementRef.current,
-      )
-      placementRef.current = next.placement
-      setCoords(next)
-    }
-
-    update()
-
-    // The ResizeObserver keeps placement correct after the popover mounts and
-    // when its content resizes (e.g. filtering a Combobox). It fires on size
-    // changes only — never on scroll — so it does not chase the viewport. This
-    // runs on every device.
-    const observer =
-      typeof ResizeObserver !== 'undefined'
-        ? new ResizeObserver(update)
-        : null
-    if (popoverRef.current) observer?.observe(popoverRef.current)
-    if (anchorRef.current) observer?.observe(anchorRef.current)
-
-    const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
-
-    if (isTouchDevice) {
-      // Mobile has two kinds of scroll and they need opposite responses:
-      //
-      //  • A programmatic "settle" scroll — iOS scrolling the page to lift the
-      //    focused search input above the keyboard, the address bar collapsing,
-      //    a focus/zoom nudge on open. The anchor moves, so we must reposition
-      //    to stay glued to it. These carry no finger drag.
-      //  • A user fling and its momentum tail. The user is scrolling the content
-      //    behind the panel, so we dismiss (repositioning would just chase the
-      //    fling and float around, which is why we don't reposition here).
-      //
-      // `touchScrolled` distinguishes them: it is armed on touchmove and stays
-      // armed through the inertial tail (reset only on the next touchstart), so a
-      // fling and its momentum both dismiss, while a plain tap-to-open leaves it
-      // false and the settle scroll repositions. Repositions are coalesced to one
-      // per frame so an animating address bar cannot cause visible float.
-      let touchScrolled = false
-      let rafId = 0
-      const scheduleUpdate = () => {
-        if (rafId) return
-        rafId = requestAnimationFrame(() => { rafId = 0; update() })
-      }
-      const onTouchStart = () => { touchScrolled = false }
-      const onTouchMove = () => { touchScrolled = true }
-      const onScroll = (e: Event) => {
-        // Scrolling inside the popover (e.g. the options list) is never outside.
-        if (popoverRef.current?.contains(e.target as Node)) return
-        if (touchScrolled) {
-          onOutsideScroll?.()
-        } else {
-          scheduleUpdate()
-        }
-      }
-      // visualViewport resize fires for the keyboard, zoom, and address bar —
-      // none of which fire a window `scroll` — so reposition on those too.
-      const vv = typeof window !== 'undefined' ? window.visualViewport : null
-      window.addEventListener('scroll', onScroll, true)
-      window.addEventListener('touchstart', onTouchStart, { passive: true })
-      window.addEventListener('touchmove', onTouchMove, { passive: true })
-      vv?.addEventListener('resize', scheduleUpdate)
-      return () => {
-        observer?.disconnect()
-        if (rafId) cancelAnimationFrame(rafId)
-        window.removeEventListener('scroll', onScroll, true)
-        window.removeEventListener('touchstart', onTouchStart)
-        window.removeEventListener('touchmove', onTouchMove)
-        vv?.removeEventListener('resize', scheduleUpdate)
-      }
-    }
-
-    // Desktop: reposition on scroll/resize so the panel tracks the anchor.
-    window.addEventListener('resize', update)
-    window.addEventListener('scroll', update, true)
-    return () => {
-      observer?.disconnect()
-      window.removeEventListener('resize', update)
-      window.removeEventListener('scroll', update, true)
-    }
-  }, [open, anchorRef, popoverRef, offset, maxHeight, onOutsideScroll])
-
-  return open ? coords : null
+/** Positioning options for {@link FloatingDropdownPortal}. */
+export interface DropdownPlacementOptions {
+  /** Gap between the anchor and the panel in px. Default 4 (Tailwind `mt-1`). */
+  offset?: number
+  /** Upper bound on the panel height in px; the panel also never exceeds the
+   *  space Floating UI has available, so it shrinks to fit small viewports. */
+  maxHeight?: number
 }
 
 /**
@@ -193,8 +93,6 @@ export interface FloatingDropdownPortalProps {
   id?: string
   role?: string
   'aria-label'?: string
-  /** Called when the page scrolls on a touch device behind the open dropdown. Use to close the dropdown instead of repositioning (prevents visible scroll lag on mobile). */
-  onOutsideScroll?: () => void
 }
 
 export function FloatingDropdownPortal({
@@ -209,33 +107,69 @@ export function FloatingDropdownPortal({
   id,
   role,
   'aria-label': ariaLabel,
-  onOutsideScroll,
 }: FloatingDropdownPortalProps) {
-  const coords = useFloatingDropdownCoords(open, anchorRef, popoverRef, placementOptions, onOutsideScroll)
-  const isOpen = open && coords !== null
+  const gap = placementOptions?.offset ?? 4
+  const maxHeight = placementOptions?.maxHeight ?? 240
 
+  // Floating UI is the same positioning engine Radix Popover / shadcn use.
+  // `autoUpdate` keeps the panel glued to the trigger across scroll, resize,
+  // layout shifts, and mobile viewport changes (iOS keyboard/zoom/address bar),
+  // so we no longer hand-roll scroll/touch listeners. `flip` swaps top/bottom
+  // when space runs out, `shift` nudges it back into view, and `size` caps the
+  // height to the smaller of `maxHeight` and the room actually available.
+  const { refs, floatingStyles, placement, isPositioned } = useFloating({
+    open,
+    strategy: 'fixed',
+    placement: 'bottom-start',
+    whileElementsMounted: autoUpdate,
+    middleware: [
+      offsetMiddleware(gap),
+      flip({ padding: 8 }),
+      shift({ padding: 8 }),
+      size({
+        padding: 8,
+        apply({ rects, availableHeight, elements }) {
+          elements.floating.style.width =
+            width === 'anchor' ? `${rects.reference.width}px` : `${width}px`
+          elements.floating.style.maxHeight = `${Math.min(maxHeight, availableHeight)}px`
+        },
+      }),
+    ],
+  })
+
+  // The caller owns `anchorRef`; feed its current node to Floating UI's reference.
+  useLayoutEffect(() => {
+    refs.setReference(anchorRef.current)
+  }, [refs, anchorRef, open])
+
+  // One ref on the portal element must feed both the caller's popoverRef (used
+  // by the outside-click / Dialog-escape helpers) and Floating UI's floating slot.
+  const setFloatingRef = useMemo(
+    () => mergeRefs<HTMLElement>(popoverRef, refs.setFloating),
+    [popoverRef, refs],
+  )
+
+  const isOpen = open && isPositioned
   useBypassModalScrollLock(popoverRef, isOpen)
   useDialogEscapeHatch(popoverRef, isOpen)
 
-  if (!open || !coords || typeof document === 'undefined') return null
+  if (!open || typeof document === 'undefined') return null
 
-  const resolvedWidth = width === 'anchor' ? coords.width : width
+  const side = placement.split('-')[0] === 'top' ? 'top' : 'bottom'
 
   return createPortal(
     <div
-      ref={popoverRef as RefObject<HTMLDivElement>}
+      ref={setFloatingRef}
       id={id}
       role={role}
       aria-label={ariaLabel}
-      data-placement={coords.placement}
+      data-placement={side}
       className={cn('pointer-events-auto shadow-lg', className)}
       style={{
-        position: 'fixed',
-        top: coords.top,
-        left: coords.left,
-        width: resolvedWidth,
-        maxHeight: coords.maxHeight,
+        ...floatingStyles,
         zIndex: 50,
+        // Avoid a flash at (0,0) before the first measurement resolves.
+        visibility: isPositioned ? 'visible' : 'hidden',
         ...style,
       }}
     >
