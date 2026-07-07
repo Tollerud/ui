@@ -401,6 +401,19 @@
 - `htmlFor?: string`
 - `layout?: 'settings' | 'stack'`
 
+## Gauge — `GaugeProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>
+
+- `value: number`
+- `min?: number`
+- `max?: number`
+- `label?: ReactNode`
+- `formatValue?: (value: number) => string`
+- `tone?: keyof typeof gaugeTones`
+- `size?: number`
+- `thickness?: number`
+- `fluid?: boolean`
+- `ariaLabel?: string`
+
 ## GlowCard — `GlowCardProps`
 
 - `children: ReactNode`

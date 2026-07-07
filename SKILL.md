@@ -462,7 +462,7 @@ const [pw, setPw] = useState('')
 import {
   Divider, Pill, Avatar, AvatarGroup,
   Breadcrumb, Pagination, Segmented, Stepper,
-  Panel, Meter, Accordion, AccordionItem, AccordionTrigger, AccordionContent,
+  Panel, Meter, Gauge, Accordion, AccordionItem, AccordionTrigger, AccordionContent,
   DatePicker, FileUpload, PricingCard,
 } from '@tollerud/ui'
 ```
@@ -517,6 +517,11 @@ With `collapseMobile`, viewports below `md` show only the selected label (with c
 **Meter** — `value`, `max?` (default 100), `label?`, `showValue?`, `tone?: 'default' | 'success' | 'warning' | 'error'`.
 ```tsx
 <Meter value={72} label="RAM" showValue tone="warning" />
+```
+
+**Gauge** (≥ 4.8.50) — radial dial for a single metric. `value`, `min?`/`max?` (0–100), `label?`, `formatValue?`, `tone?` (same tones as Meter), `size?`, `thickness?`, `fluid?`. `role="meter"` with aria value range.
+```tsx
+<Gauge value={72} label="Disk" formatValue={(v) => `${v}%`} tone="warning" />
 ```
 
 **Accordion** — compound. `multiple?: boolean`, `defaultOpen?: string | string[]`. Items use `value` prop to identify.

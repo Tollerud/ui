@@ -16,6 +16,7 @@ const {
   BarChart,
   AreaChart,
   Donut,
+  Gauge,
 } = __p
 
 /* @tollerud/ui docs — Charts */
@@ -27,6 +28,7 @@ const CHART_IMPORT = `import {
   AreaChart,
   Donut,
   Sparkline,
+  Gauge,
 } from '@tollerud/ui'`
 
 const TIME_SERIES_BASIC = `<TimeSeriesChart
@@ -209,6 +211,7 @@ function PageCharts() {
             ['<code>AreaChart</code>', 'Simple trend — static by default, or interactive with tooltip + keyboard nav'],
             ['<code>BarChart</code>', 'Category comparison — static, or interactive focusable bars with tooltips'],
             ['<code>Donut</code>', 'Part-to-whole breakdown — palette-cycled legend, optionally interactive'],
+            ['<code>Gauge</code>', 'Single metric as a radial dial — disk %, load, quota; tone thresholds'],
           ]}
         />
         <TokenTable
@@ -640,6 +643,35 @@ function PageCharts() {
                 { label: 'Hybrid', value: 120 },
               ]}
             />
+          </Card>
+        </Demo>
+      </Section>
+
+      <Section
+        title="Gauge"
+        component="Gauge"
+        permalink="charts/gauge"
+        desc="Radial dial for a single metric — disk %, load, quota (≥ 4.8.50). A 270° arc fills from bottom-left clockwise. Set tone (default/success/warning/error, token-backed like Meter) to signal thresholds, min/max for a custom range, and formatValue for the centered number. Exposes role=meter with the aria value range; the arc animation respects prefers-reduced-motion. Add fluid to scale it to the container. Complements the linear Meter."
+      >
+        <Demo
+          name="gauge"
+          variant="center"
+          code={`<Gauge value={72} label="Disk" formatValue={(v) => \`\${v}%\`} tone="warning" />`}
+        >
+          <Card style={{ display: 'flex', gap: 32, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Gauge value={41} label="CPU" formatValue={(v) => `${v}%`} tone="success" />
+            <Gauge value={72} label="Disk" formatValue={(v) => `${v}%`} tone="warning" />
+            <Gauge value={94} label="Memory" formatValue={(v) => `${v}%`} tone="error" />
+          </Card>
+        </Demo>
+        <SubHead>Custom range</SubHead>
+        <Demo
+          name="gauge-range"
+          variant="center"
+          code={`<Gauge value={2.4} min={0} max={4} label="Load avg" formatValue={(v) => v.toFixed(1)} />`}
+        >
+          <Card style={{ display: 'flex', justifyContent: 'center' }}>
+            <Gauge value={2.4} min={0} max={4} label="Load avg" formatValue={(v) => v.toFixed(1)} />
           </Card>
         </Demo>
       </Section>

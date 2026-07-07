@@ -190,7 +190,8 @@ import { PageHeader, TopNav, TopNavAction, SidebarNav, DashboardTopBar, Dashboar
 // Primitives & navigation (added in 1.0.9)
 import { Divider, Pill, Avatar, AvatarGroup } from '@tollerud/ui'
 import { Breadcrumb, Pagination, Segmented, Stepper } from '@tollerud/ui'
-import { Panel, Meter, PricingCard } from '@tollerud/ui'
+import { Panel, Meter, Gauge, PricingCard } from '@tollerud/ui'
+// Gauge (≥ 4.8.50): radial dial for a single metric — <Gauge value={72} label="Disk" formatValue={v=>`${v}%`} tone="warning" />
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@tollerud/ui'
 import { DatePicker, FileUpload } from '@tollerud/ui'
 // Overlays & feedback

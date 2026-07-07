@@ -21,6 +21,7 @@ export {
   Drawer,
   ToastProvider,
   useToast,
+  Gauge,
 } from '@tollerud/ui'
 
 export {

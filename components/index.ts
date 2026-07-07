@@ -258,6 +258,8 @@ export type { PanelProps } from './Panel'
 
 export { Meter } from './Meter'
 export type { MeterProps } from './Meter'
+export { Gauge } from './Gauge'
+export type { GaugeProps } from './Gauge'
 
 export { FormRow } from './FormRow'
 export type { FormRowProps } from './FormRow'

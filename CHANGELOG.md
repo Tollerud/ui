@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.50 — 2026-07-07 — New: Gauge (radial dial)
+
+### Added
+
+- `Gauge` — a new radial gauge for a single metric (disk %, load, quota). A 270° dial with a bottom gap, filling from bottom-left clockwise. Props: `value`, `min`/`max` (default 0–100), `label`, `formatValue`, `tone` (`default` yellow / `success` / `warning` / `error`, token-backed like `Meter`), `size`, `thickness`, and `fluid` (scales to the container, stays circular). Exposes `role="meter"` with `aria-valuenow`/`min`/`max` and an accessible name; the arc animation respects `prefers-reduced-motion`. Complements the linear `Meter`.
+
 ## 4.8.49 — 2026-07-07 — Stacked & grouped BarChart
 
 ### Added
