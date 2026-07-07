@@ -644,7 +644,9 @@ import { Database } from 'lucide-react'
 
 `Combobox`, `Select`, `DatePicker`, and `Segmented` close when the user scrolls the page behind them on touch devices. Earlier versions tried to reposition via React state updates, causing a visible lag on every scroll tick.
 
-Since ≥ 4.8.53 only a *genuine touch drag* dismisses the panel: iOS also fires `scroll` programmatically when auto-zooming a focused input or scrolling a focused field above the on-screen keyboard, and those now reposition the dropdown instead of closing it. This is what made `searchPlacement="dropdown"` unusable on iOS Safari before 4.8.53.
+Since ≥ 4.8.53 only a *genuine touch drag* dismisses the panel: iOS also fires `scroll` programmatically when auto-zooming a focused input or scrolling a focused field above the on-screen keyboard. This is what made `searchPlacement="dropdown"` unusable on iOS Safari before 4.8.53.
+
+Since ≥ 4.8.54 the panel is placed once on touch and stays put — it does not reposition on scroll/resize, because iOS fires those constantly (momentum, rubber-banding, address-bar collapse, focus zoom) and repositioning made the panel float around. Placement is also sticky: filtering a `Combobox` to fewer results no longer flips it top↔bottom. Desktop still repositions on scroll/resize to track the anchor.
 
 #### Combobox searchPlacement (≥ 4.8.25)
 

@@ -17,6 +17,13 @@ export function getDropdownPlacement(
   anchor: HTMLElement,
   popover: HTMLElement | null | undefined,
   options: DropdownPlacementOptions = {},
+  /**
+   * The placement currently in use, if the dropdown is already open. When the
+   * current side still has room, it is kept (hysteresis) so that shrinking the
+   * content — e.g. filtering a Combobox down to one result — does not flip the
+   * panel from top to bottom (or vice-versa) mid-interaction.
+   */
+  current?: DropdownPlacement,
 ): DropdownPlacement {
   const offset = options.offset ?? DEFAULT_OFFSET
   const maxHeight = options.maxHeight ?? 240
@@ -28,6 +35,10 @@ export function getDropdownPlacement(
 
   const spaceBelow = window.innerHeight - rect.bottom - offset
   const spaceAbove = rect.top - offset
+
+  // Prefer keeping the side we already committed to while it still fits.
+  if (current === 'bottom' && spaceBelow >= measuredHeight) return 'bottom'
+  if (current === 'top' && spaceAbove >= measuredHeight) return 'top'
 
   if (spaceBelow >= measuredHeight) return 'bottom'
   if (spaceAbove >= measuredHeight) return 'top'
@@ -51,11 +62,13 @@ export function getFloatingDropdownCoords(
   anchor: HTMLElement,
   popover: HTMLElement | null | undefined,
   options: DropdownPlacementOptions = {},
+  /** Current placement, for hysteresis — see {@link getDropdownPlacement}. */
+  current?: DropdownPlacement,
 ): FloatingDropdownCoords {
   const offset = options.offset ?? DEFAULT_OFFSET
   const maxHeight = options.maxHeight ?? 240
   const rect = anchor.getBoundingClientRect()
-  const placement = getDropdownPlacement(anchor, popover, options)
+  const placement = getDropdownPlacement(anchor, popover, options, current)
   const measuredHeight = popover
     ? Math.min(popover.getBoundingClientRect().height || maxHeight, maxHeight)
     : maxHeight

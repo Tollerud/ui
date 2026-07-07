@@ -2,6 +2,7 @@
 
 import {
   useLayoutEffect,
+  useRef,
   useState,
   type CSSProperties,
   type ReactNode,
@@ -10,6 +11,7 @@ import {
 import { createPortal } from 'react-dom'
 import {
   getFloatingDropdownCoords,
+  type DropdownPlacement,
   type DropdownPlacementOptions,
   type FloatingDropdownCoords,
 } from '@/lib/dropdown-placement'
@@ -26,20 +28,34 @@ export function useFloatingDropdownCoords(
   const offset = options.offset ?? 4
   const maxHeight = options.maxHeight ?? 240
   const [coords, setCoords] = useState<FloatingDropdownCoords | null>(null)
+  // Last placement, so update() can keep the same side while it fits (hysteresis).
+  const placementRef = useRef<DropdownPlacement | undefined>(undefined)
 
   useLayoutEffect(() => {
     if (!open || !anchorRef.current) {
       setCoords(null)
+      placementRef.current = undefined
       return
     }
 
     const update = () => {
       if (!anchorRef.current) return
-      setCoords(getFloatingDropdownCoords(anchorRef.current, popoverRef.current, { offset, maxHeight }))
+      const next = getFloatingDropdownCoords(
+        anchorRef.current,
+        popoverRef.current,
+        { offset, maxHeight },
+        placementRef.current,
+      )
+      placementRef.current = next.placement
+      setCoords(next)
     }
 
     update()
 
+    // The ResizeObserver keeps placement correct after the popover mounts and
+    // when its content resizes (e.g. filtering a Combobox). It fires on size
+    // changes only — never on scroll — so it does not chase the viewport. This
+    // runs on every device.
     const observer =
       typeof ResizeObserver !== 'undefined'
         ? new ResizeObserver(update)
@@ -47,50 +63,48 @@ export function useFloatingDropdownCoords(
     if (popoverRef.current) observer?.observe(popoverRef.current)
     if (anchorRef.current) observer?.observe(anchorRef.current)
 
-    // On touch devices, close the dropdown when the user scrolls the page behind
-    // it rather than chasing the scroll with async React state updates (which lag).
-    // On desktop, reposition normally.
-    //
-    // BUT only dismiss on a *genuine* touch drag. iOS Safari fires `scroll` for
-    // programmatic reasons too — auto-zooming a focused <16px input, or scrolling
-    // a focused field above the on-screen keyboard. Those must reposition, not
-    // close, otherwise a dropdown with an auto-focused search field closes the
-    // instant it opens. We track whether a real finger drag is in progress and
-    // only dismiss then; all other scrolls fall through to update().
     const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
-    let touchDragging = false
-    const onTouchStart = () => { touchDragging = false }
-    const onTouchMove = () => { touchDragging = true }
-    const onTouchEnd = () => { touchDragging = false }
-    const onScroll = (e: Event) => {
-      if (isTouchDevice && onOutsideScroll) {
-        const target = e.target as Node
-        // Scroll inside the popover (e.g. the options list) never dismisses.
-        if (popoverRef.current?.contains(target)) return
-        // Ignore focus/zoom-induced scrolls; only a user drag closes the panel.
-        if (touchDragging) {
-          onOutsideScroll()
-        } else {
-          update()
-        }
-      } else {
-        update()
+
+    if (isTouchDevice) {
+      // Mobile: place once and keep the panel stable. Repositioning on every
+      // scroll/resize tick makes it float around, because iOS fires a storm of
+      // those events — momentum & rubber-band scrolling, address-bar collapse,
+      // and the programmatic scroll/zoom triggered by focusing the search input.
+      // Instead we leave the panel where it was placed and only dismiss it when
+      // the user performs a genuine finger drag to scroll the page behind it.
+      if (!onOutsideScroll) {
+        return () => observer?.disconnect()
+      }
+      let touchDragging = false
+      const onTouchStart = () => { touchDragging = false }
+      const onTouchMove = () => { touchDragging = true }
+      const onTouchEnd = () => { touchDragging = false }
+      const onScroll = (e: Event) => {
+        // Scrolling inside the popover (e.g. the options list) never dismisses.
+        if (popoverRef.current?.contains(e.target as Node)) return
+        // Only a real user drag closes the panel; ignore focus/zoom scrolls.
+        if (touchDragging) onOutsideScroll()
+      }
+      window.addEventListener('scroll', onScroll, true)
+      window.addEventListener('touchstart', onTouchStart, { passive: true })
+      window.addEventListener('touchmove', onTouchMove, { passive: true })
+      window.addEventListener('touchend', onTouchEnd, { passive: true })
+      return () => {
+        observer?.disconnect()
+        window.removeEventListener('scroll', onScroll, true)
+        window.removeEventListener('touchstart', onTouchStart)
+        window.removeEventListener('touchmove', onTouchMove)
+        window.removeEventListener('touchend', onTouchEnd)
       }
     }
 
+    // Desktop: reposition on scroll/resize so the panel tracks the anchor.
     window.addEventListener('resize', update)
-    window.addEventListener('scroll', onScroll, true)
-    window.addEventListener('touchstart', onTouchStart, { passive: true })
-    window.addEventListener('touchmove', onTouchMove, { passive: true })
-    window.addEventListener('touchend', onTouchEnd, { passive: true })
-
+    window.addEventListener('scroll', update, true)
     return () => {
       observer?.disconnect()
       window.removeEventListener('resize', update)
-      window.removeEventListener('scroll', onScroll, true)
-      window.removeEventListener('touchstart', onTouchStart)
-      window.removeEventListener('touchmove', onTouchMove)
-      window.removeEventListener('touchend', onTouchEnd)
+      window.removeEventListener('scroll', update, true)
     }
   }, [open, anchorRef, popoverRef, offset, maxHeight, onOutsideScroll])
 

@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.54 — 2026-07-07 — Fix: portalled dropdowns floating/flipping on mobile scroll
+
+### Fixed
+
+Follow-up to 4.8.53. Two mobile placement defects in the portalled dropdowns (`Combobox`, `Select`, `DatePicker`, `Segmented`):
+
+The panel floated around while scrolling on iOS. 4.8.53 repositioned the panel on every non-drag scroll event, and iOS fires a storm of them — momentum and rubber-band scrolling, address-bar collapse, and the programmatic scroll from focusing the search input. `useFloatingDropdownCoords` no longer repositions on window scroll/resize on touch devices; it places the panel once and keeps it stable, dismissing only on a genuine finger drag. Desktop still tracks the anchor on scroll/resize.
+
+The panel flipped between top and bottom placement while filtering. Narrowing a `Combobox` to a single result shrank the popover, and placement was recomputed from scratch each time, so a top-placed panel could snap to the bottom mid-type. Placement is now sticky (`getDropdownPlacement` accepts the current side): once open, the panel keeps its side as long as it still fits.
+
 ## 4.8.53 — 2026-07-07 — Fix: Combobox unusable on iOS Safari + touch dropdowns dismissing on focus/zoom scroll
 
 ### Fixed
