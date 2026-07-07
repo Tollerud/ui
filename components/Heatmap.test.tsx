@@ -59,6 +59,16 @@ describe('Heatmap', () => {
     expect(screen.queryByRole('table')).not.toBeInTheDocument()
   })
 
+  it('hides the SR table via an sr-only wrapper div, not the table itself', () => {
+    // Regression: sr-only on a <table> is ignored (tables treat height:1px as a
+    // minimum), so the full-height table inflates scrollHeight and leaves a big
+    // empty area. The class must be on a wrapping <div>.
+    render(<Heatmap data={data} ariaLabel="Deploys" />)
+    const table = screen.getByRole('table', { name: 'Deploys' })
+    expect(table).not.toHaveClass('sr-only')
+    expect(table.closest('.sr-only')).not.toBeNull()
+  })
+
   it('has no axe violations', async () => {
     const { container } = render(<Heatmap data={data} ariaLabel="Deploy activity" />)
     expect(await axe(container)).toHaveNoViolations()

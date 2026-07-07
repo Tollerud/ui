@@ -280,28 +280,36 @@ export interface ChartSrTableProps {
  */
 export function ChartSrTable({ caption, columns, rows }: ChartSrTableProps) {
   if (rows.length === 0) return null
+  // The sr-only class must live on a wrapping <div>, not the <table>: a
+  // `display: table` element ignores `height: 1px` (height is a minimum for
+  // tables), so an sr-only <table> keeps its full content height and, being
+  // absolutely positioned, inflates the page's scrollHeight — leaving a large
+  // empty area at the bottom. A block <div> collapses to 1px and clips the
+  // table with overflow:hidden.
   return (
-    <table className="sr-only">
-      <caption>{caption}</caption>
-      <thead>
-        <tr>
-          {columns.map((column, index) => (
-            <th key={index} scope="col">
-              {column}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((row, index) => (
-          <tr key={index}>
-            <th scope="row">{row.header}</th>
-            {row.cells.map((cell, cellIndex) => (
-              <td key={cellIndex}>{cell}</td>
+    <div className="sr-only">
+      <table>
+        <caption>{caption}</caption>
+        <thead>
+          <tr>
+            {columns.map((column, index) => (
+              <th key={index} scope="col">
+                {column}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr key={index}>
+              <th scope="row">{row.header}</th>
+              {row.cells.map((cell, cellIndex) => (
+                <td key={cellIndex}>{cell}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }

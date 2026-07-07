@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.52 — 2026-07-07 — Fix: chart SR data table inflated page height
+
+### Fixed
+
+- `ChartSrTable` (the visually-hidden data table behind `TimeSeriesChart`, `AreaChart`, and `Heatmap`) put the `sr-only` class directly on the `<table>`. A `display: table` element treats `height: 1px` as a **minimum**, so the table kept its full content height while absolutely positioned — inflating the document's `scrollHeight` and leaving a large empty area below the page. Most visible on `/charts` with the 71-row `Heatmap` table (page height ballooned to ~19,600px). Fixed by moving `sr-only` to a wrapping `<div>` (a block element collapses to 1px and clips the table with `overflow: hidden`). The table stays fully accessible; no API change.
+
 ## 4.8.51 — 2026-07-07 — New: Heatmap (calendar activity grid)
 
 ### Added
