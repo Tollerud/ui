@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.54**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.8.55**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1235,7 +1235,7 @@ Searchable single-select with keyboard navigation (↑/↓/Enter/Esc). Pass flat
 
 Props: `options?: { value, label, disabled? }[]`, `groups?: { label, options }[]`, `value?`, `onChange?`, `label?`, `placeholder?`, `error?`, `filter?`, `searchPlacement?: 'trigger' | 'dropdown'`.
 
-`searchPlacement="dropdown"` turns the trigger into a Select-style button and moves the search input inside the popover — useful when the combobox sits next to other Select fields or when a cleaner trigger is preferred. On touch devices (≥ 4.8.53) the in-dropdown search field renders at ≥16px so iOS Safari does not auto-zoom on focus, and the popover no longer closes on the focus/zoom scroll that zoom emits — only a real touch drag dismisses it. Since 4.8.54 the panel is also placed once and stays put on mobile (it no longer floats while scrolling), and its top/bottom side is sticky so filtering results does not flip it.
+`searchPlacement="dropdown"` turns the trigger into a Select-style button and moves the search input inside the popover — useful when the combobox sits next to other Select fields or when a cleaner trigger is preferred. On touch devices (≥ 4.8.53) the in-dropdown search field renders at ≥16px so iOS Safari does not auto-zoom on focus, and the popover no longer closes on the focus/zoom scroll that zoom emits — only a real touch drag dismisses it. Since 4.8.54 its top/bottom side is sticky so filtering results does not flip it, and since 4.8.55 the panel stays glued to its trigger on mobile — a settle scroll (keyboard/address bar) repositions it, while a user fling dismisses it — without floating.
 
 ### Avatar / AvatarGroup
 

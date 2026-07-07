@@ -66,35 +66,52 @@ export function useFloatingDropdownCoords(
     const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
 
     if (isTouchDevice) {
-      // Mobile: place once and keep the panel stable. Repositioning on every
-      // scroll/resize tick makes it float around, because iOS fires a storm of
-      // those events — momentum & rubber-band scrolling, address-bar collapse,
-      // and the programmatic scroll/zoom triggered by focusing the search input.
-      // Instead we leave the panel where it was placed and only dismiss it when
-      // the user performs a genuine finger drag to scroll the page behind it.
-      if (!onOutsideScroll) {
-        return () => observer?.disconnect()
+      // Mobile has two kinds of scroll and they need opposite responses:
+      //
+      //  • A programmatic "settle" scroll — iOS scrolling the page to lift the
+      //    focused search input above the keyboard, the address bar collapsing,
+      //    a focus/zoom nudge on open. The anchor moves, so we must reposition
+      //    to stay glued to it. These carry no finger drag.
+      //  • A user fling and its momentum tail. The user is scrolling the content
+      //    behind the panel, so we dismiss (repositioning would just chase the
+      //    fling and float around, which is why we don't reposition here).
+      //
+      // `touchScrolled` distinguishes them: it is armed on touchmove and stays
+      // armed through the inertial tail (reset only on the next touchstart), so a
+      // fling and its momentum both dismiss, while a plain tap-to-open leaves it
+      // false and the settle scroll repositions. Repositions are coalesced to one
+      // per frame so an animating address bar cannot cause visible float.
+      let touchScrolled = false
+      let rafId = 0
+      const scheduleUpdate = () => {
+        if (rafId) return
+        rafId = requestAnimationFrame(() => { rafId = 0; update() })
       }
-      let touchDragging = false
-      const onTouchStart = () => { touchDragging = false }
-      const onTouchMove = () => { touchDragging = true }
-      const onTouchEnd = () => { touchDragging = false }
+      const onTouchStart = () => { touchScrolled = false }
+      const onTouchMove = () => { touchScrolled = true }
       const onScroll = (e: Event) => {
-        // Scrolling inside the popover (e.g. the options list) never dismisses.
+        // Scrolling inside the popover (e.g. the options list) is never outside.
         if (popoverRef.current?.contains(e.target as Node)) return
-        // Only a real user drag closes the panel; ignore focus/zoom scrolls.
-        if (touchDragging) onOutsideScroll()
+        if (touchScrolled) {
+          onOutsideScroll?.()
+        } else {
+          scheduleUpdate()
+        }
       }
+      // visualViewport resize fires for the keyboard, zoom, and address bar —
+      // none of which fire a window `scroll` — so reposition on those too.
+      const vv = typeof window !== 'undefined' ? window.visualViewport : null
       window.addEventListener('scroll', onScroll, true)
       window.addEventListener('touchstart', onTouchStart, { passive: true })
       window.addEventListener('touchmove', onTouchMove, { passive: true })
-      window.addEventListener('touchend', onTouchEnd, { passive: true })
+      vv?.addEventListener('resize', scheduleUpdate)
       return () => {
         observer?.disconnect()
+        if (rafId) cancelAnimationFrame(rafId)
         window.removeEventListener('scroll', onScroll, true)
         window.removeEventListener('touchstart', onTouchStart)
         window.removeEventListener('touchmove', onTouchMove)
-        window.removeEventListener('touchend', onTouchEnd)
+        vv?.removeEventListener('resize', scheduleUpdate)
       }
     }
 

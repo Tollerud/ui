@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.55 — 2026-07-07 — Fix: mobile dropdown detached from its trigger after opening
+
+### Fixed
+
+Follow-up to 4.8.54. Placing the panel once and never repositioning left it stranded away from its trigger on iOS: after opening, the page scrolls to lift the focused search input above the keyboard (and the address bar collapses), moving the anchor while the panel stayed put.
+
+`useFloatingDropdownCoords` now tells the two kinds of mobile scroll apart. A programmatic settle scroll (keyboard/address-bar/focus, no finger drag) repositions the panel so it stays glued to the trigger; a user fling and its momentum tail dismiss it. The distinction is armed on `touchmove` and held through the inertial tail, so a plain tap-to-open repositions while a fling closes. Repositions are coalesced to one per animation frame, and `visualViewport` resize (keyboard/zoom/address bar, which fires no `scroll` event) is also handled, so the panel tracks the field without visibly floating.
+
 ## 4.8.54 — 2026-07-07 — Fix: portalled dropdowns floating/flipping on mobile scroll
 
 ### Fixed
