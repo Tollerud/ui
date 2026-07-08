@@ -708,6 +708,7 @@
 - `fadeEdges?: boolean`
 - `ariaLabel?: string`
 - `itemWidth?: number | string`
+- `visibleCount?: number`
 - `trackClassName?: string`
 
 ## Section — `SectionProps` extends extends HTMLAttributes<HTMLDivElement>

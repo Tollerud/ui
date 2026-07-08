@@ -1328,6 +1328,7 @@
   }
 
   .tollerud-scroll-rail {
+    container-type: inline-size;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
     scrollbar-width: thin;

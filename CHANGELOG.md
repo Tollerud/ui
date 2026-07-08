@@ -7,6 +7,17 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.2 — 2026-07-09 — ScrollRail visibleCount for fill-row-then-scroll layouts
+
+### Changed
+
+- `ScrollRail` peek padding and peek width inset now apply **only when content overflows** — no empty gutter when all items fit in the row.
+- Scrollport sets `container-type: inline-size` and exposes `--scroll-rail-gap`, `--scroll-rail-peek`, and `--scroll-rail-peek-inset` CSS variables aligned with `gap` / `peek` props.
+
+### New
+
+- `ScrollRail` **`visibleCount`** — number of items visible in the scrollport at once. When child count ≤ `visibleCount`, items expand to fill the row evenly; when child count exceeds it, each slot locks to `1/visibleCount` of the scrollport (minus gaps and peek) and the rest scroll horizontally. Replaces consumer `@container` + `calc(100cqw …)` workarounds for achievement rails and product rows.
+
 ## 4.9.1 — 2026-07-08 — Dialog layout, sizes, and DialogPanel
 
 ### Changed

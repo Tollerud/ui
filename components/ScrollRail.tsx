@@ -3,12 +3,15 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import {
   Children,
+  type CSSProperties,
   type HTMLAttributes,
   type KeyboardEvent,
+  type ReactNode,
   forwardRef,
   isValidElement,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -25,20 +28,32 @@ const peekValues: Record<Exclude<ScrollRailPeek, false>, string> = {
   lg: '2.5rem',
 }
 
-const gaps: Record<ScrollRailGap, string> = {
-  xs: 'gap-2',
-  sm: 'gap-3',
-  md: 'gap-4',
-  lg: 'gap-6',
+/** Rem values aligned with Tailwind gap utilities — exposed as `--scroll-rail-gap`. */
+export const scrollRailGapValues: Record<ScrollRailGap, string> = {
+  xs: '0.5rem',
+  sm: '0.75rem',
+  md: '1rem',
+  lg: '1.5rem',
 }
+
+const VISIBLE_COUNT_ITEM_WIDTH =
+  'calc((100cqw - (var(--scroll-rail-columns) - 1) * var(--scroll-rail-gap) - var(--scroll-rail-peek-inset)) / var(--scroll-rail-columns))'
 
 function normalizeItemWidth(itemWidth: number | string): string {
   return typeof itemWidth === 'number' ? `${itemWidth}px` : itemWidth
 }
 
+function countScrollRailChildren(children: ReactNode): number {
+  let count = 0
+  Children.forEach(children, (child) => {
+    if (child != null && child !== false) count += 1
+  })
+  return count
+}
+
 export interface ScrollRailProps extends HTMLAttributes<HTMLDivElement> {
   as?: 'div' | 'section'
-  /** How much of the next item to reveal at rest. `false` disables peek spacing. */
+  /** How much of the next item to reveal when overflowing. `false` disables peek; peek applies only when the row scrolls. */
   peek?: ScrollRailPeek
   gap?: ScrollRailGap
   /** Show prev/next controls, or `'auto'` only when content overflows. */
@@ -47,8 +62,10 @@ export interface ScrollRailProps extends HTMLAttributes<HTMLDivElement> {
   fadeEdges?: boolean
   /** Accessible name for the scroll region. */
   ariaLabel?: string
-  /** Uniform child width (e.g. `280` or `'280px'`). Omit for intrinsic child widths. */
+  /** Fixed uniform child width (e.g. `280` or `'280px'`). Percentages are track-relative — prefer `visibleCount` for column layouts. */
   itemWidth?: number | string
+  /** Items visible at once; fills row when count ≤ this, scrolls when above (viewport-relative sizing). */
+  visibleCount?: number
   trackClassName?: string
 }
 
@@ -62,6 +79,7 @@ const ScrollRail = forwardRef<HTMLDivElement, ScrollRailProps>(
       fadeEdges = true,
       ariaLabel = 'Scrollable content',
       itemWidth,
+      visibleCount,
       className,
       trackClassName,
       children,
@@ -74,6 +92,19 @@ const ScrollRail = forwardRef<HTMLDivElement, ScrollRailProps>(
     const [canScrollLeft, setCanScrollLeft] = useState(false)
     const [canScrollRight, setCanScrollRight] = useState(false)
     const [overflows, setOverflows] = useState(false)
+
+    const childCount = useMemo(() => countScrollRailChildren(children), [children])
+    const gapValue = scrollRailGapValues[gap]
+    const peekValue = peek ? peekValues[peek] : undefined
+
+    const usesVisibleCount = visibleCount != null && visibleCount > 0
+    const overflowsByCount = usesVisibleCount && childCount > visibleCount
+    const layoutColumns = usesVisibleCount
+      ? overflowsByCount
+        ? visibleCount
+        : Math.max(childCount, 1)
+      : undefined
+    const effectivePeekInset = overflowsByCount && peekValue ? peekValue : '0px'
 
     const updateScrollState = useCallback(() => {
       const el = scrollRef.current
@@ -95,11 +126,17 @@ const ScrollRail = forwardRef<HTMLDivElement, ScrollRailProps>(
       if (el.firstElementChild) ro.observe(el.firstElementChild)
 
       return () => ro.disconnect()
-    }, [updateScrollState, children])
+    }, [updateScrollState, children, layoutColumns, effectivePeekInset])
 
     const showControls = controls === true || (controls === 'auto' && overflows)
-    const peekValue = peek ? peekValues[peek] : undefined
-    const itemBasis = itemWidth ? normalizeItemWidth(itemWidth) : undefined
+    const itemBasis = !usesVisibleCount && itemWidth ? normalizeItemWidth(itemWidth) : undefined
+
+    const scrollportStyle = {
+      '--scroll-rail-gap': gapValue,
+      '--scroll-rail-peek': peekValue ?? '0px',
+      '--scroll-rail-peek-inset': effectivePeekInset,
+      ...(layoutColumns != null ? { '--scroll-rail-columns': layoutColumns } : {}),
+    } as CSSProperties
 
     const scrollByPage = useCallback((direction: -1 | 1) => {
       const el = scrollRef.current
@@ -129,6 +166,16 @@ const ScrollRail = forwardRef<HTMLDivElement, ScrollRailProps>(
 
     const wrappedChildren = Children.map(children, (child) => {
       if (!isValidElement(child)) return child
+      if (usesVisibleCount) {
+        return (
+          <div
+            className="min-w-0 shrink-0"
+            style={{ flexBasis: VISIBLE_COUNT_ITEM_WIDTH, width: VISIBLE_COUNT_ITEM_WIDTH }}
+          >
+            {child}
+          </div>
+        )
+      }
       if (itemBasis) {
         return (
           <div className="shrink-0" style={{ flexBasis: itemBasis, width: itemBasis }}>
@@ -140,16 +187,7 @@ const ScrollRail = forwardRef<HTMLDivElement, ScrollRailProps>(
     })
 
     return (
-      <Tag
-        ref={ref}
-        className={cn('relative min-w-0 w-full', className)}
-        style={
-          peekValue
-            ? ({ ...style, '--scroll-rail-peek': peekValue } as React.CSSProperties)
-            : style
-        }
-        {...props}
-      >
+      <Tag ref={ref} className={cn('relative min-w-0 w-full', className)} style={style} {...props}>
         {fadeEdges && canScrollLeft ? (
           <div
             aria-hidden
@@ -206,15 +244,17 @@ const ScrollRail = forwardRef<HTMLDivElement, ScrollRailProps>(
           tabIndex={showControls ? 0 : undefined} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex -- keyboard horizontal scroll
           onScroll={updateScrollState}
           onKeyDown={showControls ? onKeyDown : undefined}
-          className="tollerud-scroll-rail min-w-0 w-full overflow-x-auto overscroll-x-contain"
+          className="tollerud-scroll-rail @container min-w-0 w-full overflow-x-auto overscroll-x-contain"
+          style={scrollportStyle}
         >
           <div
             className={cn(
-              'flex w-max min-w-full',
-              gaps[gap],
-              peekValue && 'pe-[var(--scroll-rail-peek)]',
+              'tollerud-scroll-rail-track flex',
+              usesVisibleCount && !overflowsByCount ? 'w-full' : 'w-max min-w-full',
+              overflowsByCount && peekValue && 'pe-[var(--scroll-rail-peek-inset)]',
               trackClassName
             )}
+            style={{ gap: 'var(--scroll-rail-gap)' }}
           >
             {wrappedChildren}
           </div>

@@ -498,7 +498,8 @@ Monogram sizing is handled automatically by `TopNav` and `Footer`. If you build 
   <Card><StatusDot status="warning" label="iris" /></Card>
  </CardGrid>
 </ResourceList>
-```
+
+`ScrollRail` with `visibleCount={4}` (≥ 4.9.2) fills the row when ≤4 achievement cards, scrolls when more — no consumer `@container` width math.
 
 ### Density
 

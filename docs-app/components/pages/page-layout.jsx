@@ -117,8 +117,25 @@ function PageLayout() {
         title="ScrollRail"
         component="ScrollRail"
         permalink="layout/scroll-rail"
-        desc="Horizontal scroll rail for card rows, image strips, and any overflow content. Continuous scroll with a peek of the next item, optional edge fades (default on), and optional prev/next controls (`controls` or `controls='auto'` when content overflows). Does not block vertical page scroll on touch."
+        desc="Horizontal scroll rail for card rows, image strips, and overflow content. Use `visibleCount` when N items should fill the row and the rest scroll (achievement rails, product rows). Use `itemWidth` for fixed-pixel cards. Continuous scroll with peek (only when overflowing), edge fades (default on), and optional controls."
       >
+        <Demo
+          name="scroll-rail-visible-count"
+          variant="col"
+          code={`<ScrollRail visibleCount={4} gap="md" peek="md" controls="auto" ariaLabel="Achievements">
+  {trophies.map((t) => (
+    <Card key={t.id}>{t.name}</Card>
+  ))}
+</ScrollRail>`}
+        >
+          <ScrollRail visibleCount={4} gap="md" peek="md" controls="auto" ariaLabel="Achievements">
+            {['Gold', 'Silver', 'Bronze', 'First visit', 'Ten reviews'].map((label) => (
+              <Card key={label}>
+                <StatusDot status="online" label={label} />
+              </Card>
+            ))}
+          </ScrollRail>
+        </Demo>
         <Demo
           name="scroll-rail-cards"
           variant="col"
