@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.9.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.9.1**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -44,7 +44,7 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 
 **Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `ScrollRail`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `SidebarNav`, `DashboardTopBar`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Gauge`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
 
-**Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Drawer`, `Toaster` (Sonner), `ToastProvider` / `useToast`, `Empty` (+ compound parts), `EmptyState`, `Skeleton`, `Progress`, `Spinner`
+**Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogBody`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`, `DialogPanel`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Drawer`, `Toaster` (Sonner), `ToastProvider` / `useToast`, `Empty` (+ compound parts), `EmptyState`, `Skeleton`, `Progress`, `Spinner`
 
 **Data & infra:** `DataTable`, `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `ActionDiff`, `LogViewer`, `AlertInbox`, `Timeline`, `RollbackPlan`, `BackupStatusPanel`
 
@@ -1203,17 +1203,36 @@ Radix-based slide-over panel for detail views and forms. Use the compound API (`
 
 Standard Radix/shadcn composition patterns. All require a client boundary in the consuming file.
 
+`DialogContent` accepts `size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'` (default `md`, `max-w-xl`). Header and footer render in bordered regions; body scrolls when content is tall. Prefer **`DialogPanel`** for controlled dialogs with `open` / `onClose` / `title` / `description` / `footer` (same ergonomics as `Drawer`).
+
 ```tsx
-<Dialog>
-  <DialogTrigger asChild><Button>Open</Button></DialogTrigger>
-  <DialogContent>
+<Dialog open={open} onOpenChange={setOpen}>
+  <DialogContent size="lg">
     <DialogHeader>
       <DialogTitle>Restart container</DialogTitle>
       <DialogDescription>This will interrupt active connections.</DialogDescription>
     </DialogHeader>
-    <DialogFooter><Button variant="destructive">Restart</Button></DialogFooter>
+    <DialogBody>
+      <Input label="Reason" />
+    </DialogBody>
+    <DialogFooter>
+      <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+      <Button variant="destructive">Restart</Button>
+    </DialogFooter>
   </DialogContent>
 </Dialog>
+
+<DialogPanel
+  open={open}
+  onClose={() => setOpen(false)}
+  size="md"
+  title="Stop all containers?"
+  description="This stops 4 running services."
+  footer={<>
+    <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+    <Button variant="destructive">Stop</Button>
+  </>}
+/>
 
 <TooltipProvider>
   <Tooltip>

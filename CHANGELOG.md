@@ -7,6 +7,19 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.1 — 2026-07-08 — Dialog layout, sizes, and DialogPanel
+
+### Changed
+
+- `DialogContent` default width is now `md` (`max-w-xl`, 576px) instead of `max-w-lg` (512px). Pass `size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'` for confirmations, forms, and wide detail views.
+- `DialogHeader` and `DialogFooter` now use bordered regions (matching `Drawer` / `Sheet` polish). Body content scrolls inside the panel when it overflows (`max-h-[min(85dvh,900px)]`).
+- `DialogContent` partitions children into header, scrollable body, and footer automatically.
+
+### New
+
+- `DialogBody` — explicit scrollable body slot for long forms and log viewers.
+- `DialogPanel` — controlled helper with `open`, `onClose`, `title`, `description`, `footer`, and `size` (same ergonomics as `Drawer`).
+
 ## 4.9.0 — 2026-07-08 — Add ScrollRail horizontal scroll primitive
 
 ### New components

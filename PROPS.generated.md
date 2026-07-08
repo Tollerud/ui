@@ -295,6 +295,22 @@
 - `meta?: ReactNode`
 - `aside?: ReactNode`
 
+## Dialog — `DialogContentProps` extends extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+
+- `size?: DialogSize`
+- `showClose?: boolean`
+
+## Dialog — `DialogPanelProps`
+
+- `open: boolean`
+- `onClose?: () => void`
+- `title?: ReactNode`
+- `description?: ReactNode`
+- `children?: ReactNode`
+- `footer?: ReactNode`
+- `size?: DialogSize`
+- `showClose?: boolean`
+
 ## Divider — `DividerProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `orientation?: 'horizontal' | 'vertical'`

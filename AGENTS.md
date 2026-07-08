@@ -198,7 +198,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@t
 import { DatePicker, FileUpload } from '@tollerud/ui'
 // Overlays & feedback
 import { Empty, EmptyHeader, EmptyIcon, EmptyTitle, EmptyDescription, EmptyContent, EmptyState } from '@tollerud/ui'
-import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from '@tollerud/ui'
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogBody, DialogFooter, DialogTitle, DialogDescription, DialogPanel } from '@tollerud/ui'
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@tollerud/ui'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@tollerud/ui'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@tollerud/ui'

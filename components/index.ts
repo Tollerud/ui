@@ -171,8 +171,8 @@ export { Monogram } from './Monogram'
 export type { MonogramProps, MonogramColor } from './Monogram'
 
 // ── Overlay / Utility ──
-export { Dialog, DialogPortal, DialogOverlay, DialogClose, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from './Dialog'
-export type { } from './Dialog'
+export { Dialog, DialogPortal, DialogOverlay, DialogClose, DialogTrigger, DialogContent, DialogHeader, DialogBody, DialogFooter, DialogTitle, DialogDescription, DialogPanel } from './Dialog'
+export type { DialogContentProps, DialogPanelProps, DialogSize } from './Dialog'
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './Tooltip'
 export type { } from './Tooltip'

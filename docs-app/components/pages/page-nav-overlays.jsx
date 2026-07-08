@@ -69,10 +69,10 @@ function PageNavOverlays() {
         </Demo>
       </Section>
 
-      <Section title="Dialog" permalink="navigation/dialog" desc="A focused modal for confirmation. Escape or backdrop click closes; destructive intent reads in the copy.">
+      <Section title="Dialog" permalink="navigation/dialog" desc="A focused modal for confirmation and forms. Use compound parts (`DialogHeader`, `DialogBody`, `DialogFooter`) or the controlled `DialogPanel` helper (same API as `Drawer`). Default width is `md` (`max-w-xl`); pass `size` for `sm`, `lg`, `xl`, or `full`. Escape or backdrop click closes.">
         <Demo name="dialog" variant="center" code={`<Button variant="destructive" onClick={() => setOpen(true)}>Stop containers</Button>
 
-<Dialog open={open} onClose={close}
+<DialogPanel open={open} onClose={close} size="md"
   title="Stop all containers on emma?"
   description="This stops 4 running services. They can be restarted from the dashboard."
   footer={<>
@@ -80,13 +80,28 @@ function PageNavOverlays() {
     <Button variant="destructive" onClick={confirm}>Stop</Button>
   </>} />`}>
           <Button variant="destructive" onClick={() => setDialog(true)}>Stop containers</Button>
-          <Dialog open={dialog} onClose={() => setDialog(false)}
+          <Dialog open={dialog} onClose={() => setDialog(false)} size="md"
             title="Stop all containers on emma?"
             description="This stops 4 running services. They can be restarted from the dashboard at any time."
             footer={<>
               <Button variant="ghost" onClick={() => setDialog(false)}>Cancel</Button>
               <Button variant="destructive" onClick={() => { setDialog(false); toast({ tone: 'error', title: 'emma — 4 containers stopped' }); }}>Stop</Button>
             </>}/>
+        </Demo>
+        <Demo name="dialog-lg" variant="col" code={`<DialogPanel open={open} onClose={close} size="lg"
+  title="Edit product"
+  description="Update pricing and availability."
+  footer={<>
+    <Button variant="ghost" onClick={close}>Cancel</Button>
+    <Button variant="primary" onClick={save}>Save</Button>
+  </>}>
+  <Input label="Name" defaultValue="Hansa Pilsner" />
+  <Input label="Price" defaultValue="29,00 kr" />
+</DialogPanel>`}>
+          <Button variant="secondary" onClick={() => setDialog(true)}>Open wide form dialog</Button>
+          <p style={{ fontSize: 13, color: 'var(--text-muted)', margin: '8px 0 0' }}>
+            Re-open the confirm dialog above, or use <code>size="lg"</code> / <code>xl</code> / <code>full</code> for forms and detail views.
+          </p>
         </Demo>
       </Section>
 

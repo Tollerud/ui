@@ -26,12 +26,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuLabel,
-  Dialog as NpmDialog,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
+  DialogPanel,
   LogViewer,
   Panel as NpmPanel,
   Meter as NpmMeter,
@@ -206,20 +201,18 @@ function DropdownMenu({ trigger, items }) {
   )
 }
 
-function Dialog({ open, onClose, title, description, children, footer }) {
+function Dialog({ open, onClose, title, description, children, footer, size }) {
   return (
-    <NpmDialog open={open} onOpenChange={(next) => !next && onClose?.()}>
-      <DialogContent>
-        {(title || description) && (
-          <DialogHeader>
-            {title ? <DialogTitle>{title}</DialogTitle> : null}
-            {description ? <DialogDescription>{description}</DialogDescription> : null}
-          </DialogHeader>
-        )}
-        {children}
-        {footer ? <DialogFooter>{footer}</DialogFooter> : null}
-      </DialogContent>
-    </NpmDialog>
+    <DialogPanel
+      open={open}
+      onClose={onClose}
+      title={title}
+      description={description}
+      footer={footer}
+      size={size}
+    >
+      {children}
+    </DialogPanel>
   )
 }
 

@@ -556,7 +556,7 @@ With `collapseMobile`, viewports below `md` show only the selected label (with c
 
 ```tsx
 import {
-  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, DialogClose,
+  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogBody, DialogFooter, DialogTitle, DialogDescription, DialogClose, DialogPanel,
   Tooltip, TooltipTrigger, TooltipContent, TooltipProvider,
   Tabs, TabsList, TabsTrigger, TabsContent,
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel,
@@ -564,7 +564,7 @@ import {
   Drawer, Toaster, ToastProvider, useToast,
 } from '@tollerud/ui'
 ```
-- `Dialog` / `Sheet` / `DropdownMenu` follow the standard shadcn/Radix composition pattern — `Trigger` wraps the activating element with `asChild`. `Sheet` takes a `side?: 'left' | 'right'`.
+- `Dialog` / `Sheet` / `DropdownMenu` follow the standard shadcn/Radix composition pattern — `Trigger` wraps the activating element with `asChild`. `DialogContent` takes `size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'` (default `md`) and partitions `DialogHeader` / body / `DialogFooter` with bordered regions and a scrollable body. Prefer **`DialogPanel`** for controlled dialogs: `open`, `onClose`, `title`, `description`, `footer`, `size` (≥ 4.9.1, same ergonomics as `Drawer`). `Sheet` takes `side?: 'left' | 'right'`.
 - `Drawer` — controlled API: `open`, `onClose`, `side`, `title`, `description`, `footer`, `width`.
 - `Tooltip` requires a `<TooltipProvider>` ancestor.
 - `Toaster` — Sonner renderer; mount once, call `toast()` from `sonner`.
@@ -861,6 +861,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **Portalled dropdowns use Floating UI (≥ 4.8.56)** — supersedes the bespoke positioning in 4.8.26–4.8.55. `Combobox`, `Select`, `DatePicker`, and `Segmented` are now positioned by Floating UI (the engine behind Radix Popover / shadcn) with `autoUpdate` + `flip`/`shift`/`size`, so they flip, shift, clamp height, and stay glued to the trigger across scroll, resize, and iOS keyboard/zoom/address-bar changes. On touch they now stay open and reposition on scroll instead of closing (the 4.8.26 close-on-scroll workaround is gone); outside-click and Escape still dismiss. The internal `lib/dropdown-placement.ts` helpers and the `FloatingDropdownPortal` `onOutsideScroll` prop were removed (internal only — no public component API changed).
 - **`DataTable` touch scroll fix (≥ 4.8.57)** — removed `touch-pan-x` from the horizontal scroll wrapper, which blocked vertical page scroll on mobile when a swipe started on table rows or headers. Horizontal scroll for wide tables is unchanged (`overflow-x-auto` + `overscroll-x-contain`).
 - **`ScrollRail` (≥ 4.9.0)** — horizontal scroll rail for card rows, image strips, and overflow content. `peek` (`sm`/`md`/`lg`), `fadeEdges` (default on), optional `controls` (`true` or `'auto'`), uniform `itemWidth` for product-card rows. Continuous scroll; does not use `touch-pan-x`.
+- **`Dialog` layout + sizes (≥ 4.9.1)** — `DialogContent` `size` presets (`sm`–`full`, default `md` / `max-w-xl`), bordered `DialogHeader`/`DialogFooter`, scrollable body, new `DialogBody` slot, and `DialogPanel` controlled helper (`open`/`onClose`/`title`/`description`/`footer`).
 - **`TopNav` `mobileMenuExtra` slot (≥ 4.8.24)** — inject arbitrary content at the bottom of the mobile nav sheet, separated by a divider.
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)
 
