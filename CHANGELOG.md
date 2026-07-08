@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.3 — 2026-07-09 — ScrollRail item wrappers stretch for h-full children
+
+### Changed
+
+- `ScrollRail` item wrappers use `flex h-full flex-col` so children with `h-full` or `flex-1` fill the slot height without consumer boilerplate.
+
 ## 4.9.2 — 2026-07-09 — ScrollRail visibleCount for fill-row-then-scroll layouts
 
 ### Changed

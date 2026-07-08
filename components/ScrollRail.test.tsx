@@ -139,4 +139,15 @@ describe('ScrollRail', () => {
     expect(track).toHaveClass('w-full')
     expect(track).not.toHaveClass('pe-[var(--scroll-rail-peek-inset)]')
   })
+
+  it('wraps items in a flex column shell so h-full on children works', () => {
+    const { container } = render(
+      <ScrollRail visibleCount={4} ariaLabel="Shell">
+        <div data-testid="card">Card</div>
+      </ScrollRail>
+    )
+
+    const shell = container.querySelector('[data-testid="card"]')?.parentElement
+    expect(shell).toHaveClass('flex', 'h-full', 'flex-col', 'shrink-0')
+  })
 })

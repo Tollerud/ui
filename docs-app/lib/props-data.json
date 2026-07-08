@@ -1050,23 +1050,12 @@
       "extends": "extends HTMLAttributes<HTMLDivElement>",
       "props": [
         "as?: 'div' | 'section'",
-        "* How much of the next item to reveal when content overflows.",
-        "* `false` disables peek spacing. Peek is only applied when the row scrolls.",
-        "*/",
         "peek?: ScrollRailPeek",
         "gap?: ScrollRailGap",
         "controls?: ScrollRailControls",
         "fadeEdges?: boolean",
         "ariaLabel?: string",
-        "* Fixed uniform child width (e.g. `280` or `'280px'`).",
-        "* Percentages are relative to the **flex track**, not the scrollport — prefer `visibleCount` for",
-        "* “N cards fill the row, rest scroll” layouts.",
-        "*/",
         "itemWidth?: number | string",
-        "* Number of items visible in the scrollport at once. When child count is less than or equal to",
-        "* this value, items expand to fill the row evenly. When child count exceeds it, each slot locks to",
-        "* `1/visibleCount` of the scrollport (minus gaps and peek) and the rest scroll horizontally.",
-        "*/",
         "visibleCount?: number",
         "trackClassName?: string"
       ]

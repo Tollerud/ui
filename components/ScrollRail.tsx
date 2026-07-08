@@ -39,6 +39,9 @@ export const scrollRailGapValues: Record<ScrollRailGap, string> = {
 const VISIBLE_COUNT_ITEM_WIDTH =
   'calc((100cqw - (var(--scroll-rail-columns) - 1) * var(--scroll-rail-gap) - var(--scroll-rail-peek-inset)) / var(--scroll-rail-columns))'
 
+/** Item shell — stretch slot height so `h-full` on children works without consumer boilerplate. */
+const ITEM_SHELL = 'flex h-full shrink-0 flex-col'
+
 function normalizeItemWidth(itemWidth: number | string): string {
   return typeof itemWidth === 'number' ? `${itemWidth}px` : itemWidth
 }
@@ -169,7 +172,7 @@ const ScrollRail = forwardRef<HTMLDivElement, ScrollRailProps>(
       if (usesVisibleCount) {
         return (
           <div
-            className="min-w-0 shrink-0"
+            className={cn(ITEM_SHELL, 'min-w-0')}
             style={{ flexBasis: VISIBLE_COUNT_ITEM_WIDTH, width: VISIBLE_COUNT_ITEM_WIDTH }}
           >
             {child}
@@ -178,12 +181,12 @@ const ScrollRail = forwardRef<HTMLDivElement, ScrollRailProps>(
       }
       if (itemBasis) {
         return (
-          <div className="shrink-0" style={{ flexBasis: itemBasis, width: itemBasis }}>
+          <div className={ITEM_SHELL} style={{ flexBasis: itemBasis, width: itemBasis }}>
             {child}
           </div>
         )
       }
-      return <div className="shrink-0">{child}</div>
+      return <div className={ITEM_SHELL}>{child}</div>
     })
 
     return (
