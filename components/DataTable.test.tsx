@@ -102,7 +102,9 @@ describe('DataTable', () => {
     )
 
     expect(screen.getByText(/showing 1–2 of 3/i)).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Scrollable table' })).toBeInTheDocument()
+    const scrollRegion = screen.getByRole('region', { name: 'Scrollable table' })
+    expect(scrollRegion).toBeInTheDocument()
+    expect(scrollRegion).not.toHaveClass('touch-pan-x')
     const bodyRows = screen.getAllByRole('row').slice(1)
     expect(bodyRows[0].querySelector('td')).toHaveClass('bg-tollerud-noir-950')
   })

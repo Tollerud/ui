@@ -395,7 +395,7 @@ Built-in `⌘K` / `Ctrl+K` listener, arrow navigation, Esc to close, search acro
 // Optional rich mode: searchable, filter, selectable, pageSize, bulkActions, rowMenu, toolbarRight, emptyState
 ```
 
-`render` is always `(value, row) => …` (≥ 4.8.40) — write `(_v, row) => …` when you only need the row. The old single-parameter `(row) => …` form was removed; migrate by prepending `_v, `. Sortable headers are real `<button>`s (keyboard-operable, ≥ 4.8.40). With `selectable`, always provide stable row keys via an `id`/`key` field or `rowKey`.
+`render` is always `(value, row) => …` (≥ 4.8.40) — write `(_v, row) => …` when you only need the row. The old single-parameter `(row) => …` form was removed; migrate by prepending `_v, `. Sortable headers are real `<button>`s (keyboard-operable, ≥ 4.8.40). With `selectable`, always provide stable row keys via an `id`/`key` field or `rowKey`. Since ≥ 4.8.57 the horizontal scroll wrapper no longer uses `touch-pan-x`, so vertical page scroll works on mobile when a swipe starts on table rows (horizontal scroll for wide tables is unchanged).
 
 ### Empty (empty states)
 

@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.8.57 — 2026-07-08 — Fix: DataTable no longer blocks vertical page scroll on touch
+
+### Fixed
+
+`DataTable`'s horizontal scroll wrapper used Tailwind `touch-pan-x` (`touch-action: pan-x`), which told the browser to handle only horizontal gestures on the table. On mobile, when a swipe started on table rows or headers, vertical page scroll was blocked — the page felt stuck unless the touch began outside the table. Removed `touch-pan-x`; `overflow-x-auto` and `overscroll-x-contain` still handle horizontal scroll for wide tables with pinned columns.
+
 ## 4.8.56 — 2026-07-07 — Portalled dropdowns now positioned by Floating UI
 
 ### Changed

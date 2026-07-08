@@ -604,7 +604,7 @@ function DataTableInner<T extends Record<string, unknown>>({
 
   const tableScroll = (
     <div
-      className="tollerud-datatable-scroll min-w-0 w-full overflow-x-auto overscroll-x-contain touch-pan-x"
+      className="tollerud-datatable-scroll min-w-0 w-full overflow-x-auto overscroll-x-contain"
       role="region"
       aria-label="Scrollable table"
       tabIndex={pinEdges ? 0 : undefined} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex -- keyboard horizontal scroll
