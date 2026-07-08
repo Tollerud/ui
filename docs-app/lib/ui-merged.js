@@ -59,6 +59,7 @@ export {
   Cluster,
   Grid,
   CardGrid,
+  ScrollRail,
   Split,
   MainContent,
   PageHeader as PackagePageHeader,

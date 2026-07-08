@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.0 — 2026-07-08 — Add ScrollRail horizontal scroll primitive
+
+### New components
+
+- `ScrollRail` — horizontal scroll rail for card rows, image strips, and any overflow content. Continuous scroll with configurable **peek** (`sm` / `md` / `lg`) so the next item shows a sliver, **fadeEdges** (default on) at scroll boundaries, and optional **controls** (`true` or `'auto'` when content overflows). Uniform `itemWidth` for product-card rows; omit for intrinsic child widths. Keyboard ←/→ when controls are shown; does not use `touch-pan-x`, so vertical page scroll works when a swipe starts on the rail.
+
 ## 4.8.57 — 2026-07-08 — Fix: DataTable no longer blocks vertical page scroll on touch
 
 ### Fixed

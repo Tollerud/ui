@@ -1021,6 +1021,22 @@
       ]
     }
   ],
+  "ScrollRail": [
+    {
+      "name": "ScrollRailProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "as?: 'div' | 'section'",
+        "peek?: ScrollRailPeek",
+        "gap?: ScrollRailGap",
+        "controls?: ScrollRailControls",
+        "fadeEdges?: boolean",
+        "ariaLabel?: string",
+        "itemWidth?: number | string",
+        "trackClassName?: string"
+      ]
+    }
+  ],
   "Section": [
     {
       "name": "SectionProps",

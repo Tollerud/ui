@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, StatusDot, CodeBlock, PageShell, LayoutSection, Stack, Cluster, Grid, CardGrid, Split, MainContent, Demo, PageHeader, Section, Icons } = __p
+const { Button, Card, Badge, StatusDot, CodeBlock, PageShell, LayoutSection, Stack, Cluster, Grid, CardGrid, ScrollRail, Split, MainContent, Demo, PageHeader, Section, Icons } = __p
 
 /* @tollerud/ui docs — Layout primitives */
 
@@ -110,6 +110,50 @@ function PageLayout() {
             <CodeBlock code="systemctl status tollerud-agent" />
             <CodeBlock code="docker compose ps" />
           </Grid>
+        </Demo>
+      </Section>
+
+      <Section
+        title="ScrollRail"
+        component="ScrollRail"
+        permalink="layout/scroll-rail"
+        desc="Horizontal scroll rail for card rows, image strips, and any overflow content. Continuous scroll with a peek of the next item, optional edge fades (default on), and optional prev/next controls (`controls` or `controls='auto'` when content overflows). Does not block vertical page scroll on touch."
+      >
+        <Demo
+          name="scroll-rail-cards"
+          variant="col"
+          code={`<ScrollRail peek="md" itemWidth={260} controls="auto" ariaLabel="Featured hosts">
+  <Card><StatusDot status="online" label="Emma" /></Card>
+  <Card><StatusDot status="warning" label="Iris" /></Card>
+  <Card><StatusDot status="idle" label="Pia" /></Card>
+  <Card><StatusDot status="online" label="Miriam" /></Card>
+</ScrollRail>`}
+        >
+          <ScrollRail peek="md" itemWidth={260} controls="auto" ariaLabel="Featured hosts">
+            <Card><StatusDot status="online" label="Emma" /></Card>
+            <Card><StatusDot status="warning" label="Iris" /></Card>
+            <Card><StatusDot status="idle" label="Pia" /></Card>
+            <Card><StatusDot status="online" label="Miriam" /></Card>
+          </ScrollRail>
+        </Demo>
+        <Demo
+          name="scroll-rail-images"
+          variant="col"
+          code={`<ScrollRail peek="sm" gap="sm" controls ariaLabel="Deployment photos">
+  <img src="/photo-1.jpg" alt="Rack overview" className="h-28 w-44 rounded-lg object-cover" />
+  <img src="/photo-2.jpg" alt="Cable management" className="h-28 w-44 rounded-lg object-cover" />
+</ScrollRail>`}
+        >
+          <ScrollRail peek="sm" gap="sm" controls ariaLabel="Deployment photos">
+            {['Rack overview', 'Cable management', 'PDU detail', 'Label pass'].map((label) => (
+              <div
+                key={label}
+                className="flex h-28 w-44 shrink-0 items-end rounded-lg border border-tollerud-border/30 bg-tollerud-noir-800 p-3"
+              >
+                <span className="text-xs text-tollerud-text-secondary">{label}</span>
+              </div>
+            ))}
+          </ScrollRail>
         </Demo>
       </Section>
 

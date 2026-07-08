@@ -683,6 +683,17 @@
 - `executing?: boolean`
 - `loading?: boolean`
 
+## ScrollRail — `ScrollRailProps` extends extends HTMLAttributes<HTMLDivElement>
+
+- `as?: 'div' | 'section'`
+- `peek?: ScrollRailPeek`
+- `gap?: ScrollRailGap`
+- `controls?: ScrollRailControls`
+- `fadeEdges?: boolean`
+- `ariaLabel?: string`
+- `itemWidth?: number | string`
+- `trackClassName?: string`
+
 ## Section — `SectionProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `as?: 'section' | 'div' | 'article' | 'header' | 'footer'`

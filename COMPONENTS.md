@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.8.57**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.9.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -42,7 +42,7 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 
 **Core & forms:** `Button`, `ButtonGroup`, `buttonVariants`, `cn`, `Card`, `Badge`, `StatusDot`, `Kbd`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `PasswordInput`, `PasswordStrength`, `passwordRules`, `Combobox`, `TagInput`, `Slider`, `FormRow`, `Container`, `CodeBlock`, `StatCard`, `ActionRow`, `CommandMenu`
 
-**Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `SidebarNav`, `DashboardTopBar`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Gauge`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
+**Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `ScrollRail`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `SidebarNav`, `DashboardTopBar`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Gauge`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
 
 **Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Drawer`, `Toaster` (Sonner), `ToastProvider` / `useToast`, `Empty` (+ compound parts), `EmptyState`, `Skeleton`, `Progress`, `Spinner`
 
@@ -92,9 +92,30 @@ These primitives give consumer apps a component-first page structure before reac
 | `Stack` | `gap`, `align` | Vertical rhythm |
 | `Cluster` | `gap`, `align`, `justify` | Wrapping actions, badges, and toolbars |
 | `Grid` | `columns`, `gap` | Generic responsive grids |
-| `CardGrid` | `columns`, `gap` | Card collections |
+| `CardGrid` | `columns`, `gap` | Card collections that should all be visible in a responsive grid |
+| `ScrollRail` | `peek`, `gap`, `controls`, `fadeEdges`, `itemWidth`, `ariaLabel` | Horizontal card rows, image strips, and overflow content with peek + optional controls (≥ 4.9.0) |
 | `Split` | `ratio`, `gap`, `reverse` | Content/aside two-column layouts |
 | `MainContent` | `width`, `spacing`, `density` | App route content wrapper |
+
+### ScrollRail
+
+Horizontal scroll rail for card rows, image strips, and any content wider than its container. Continuous scroll (not snap-carousel). Peek shows a sliver of the next item; edge fades default on; controls optional (`true` or `'auto'` when overflowed).
+
+```tsx
+<ScrollRail peek="md" itemWidth={260} controls="auto" ariaLabel="Featured products">
+  <Card>…</Card>
+  <Card>…</Card>
+</ScrollRail>
+```
+
+| Prop | Type | Default | Notes |
+|------|------|---------|-------|
+| `peek` | `false \| 'sm' \| 'md' \| 'lg'` | `'md'` | How much of the next item to reveal |
+| `gap` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` | Spacing between items |
+| `controls` | `boolean \| 'auto'` | `false` | Prev/next buttons; `'auto'` when content overflows |
+| `fadeEdges` | `boolean` | `true` | Gradient masks at scroll boundaries |
+| `itemWidth` | `number \| string` | — | Uniform child width; omit for intrinsic widths |
+| `ariaLabel` | `string` | `'Scrollable content'` | Accessible name for the scroll region |
 
 ## Screen patterns
 

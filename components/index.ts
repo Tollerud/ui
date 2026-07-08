@@ -50,6 +50,14 @@ export type { GridProps, GridColumns, GridGap } from './Grid'
 export { CardGrid } from './CardGrid'
 export type { CardGridProps, CardGridColumns, CardGridGap } from './CardGrid'
 
+export { ScrollRail } from './ScrollRail'
+export type {
+  ScrollRailProps,
+  ScrollRailPeek,
+  ScrollRailGap,
+  ScrollRailControls,
+} from './ScrollRail'
+
 export { Split } from './Split'
 export type { SplitProps, SplitRatio, SplitGap, SplitAlign } from './Split'
 

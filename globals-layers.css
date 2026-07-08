@@ -1326,6 +1326,17 @@
     outline: 2px solid var(--tollerud-yellow);
     outline-offset: 2px;
   }
+
+  .tollerud-scroll-rail {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .tollerud-scroll-rail:focus-visible {
+    outline: 2px solid var(--tollerud-yellow);
+    outline-offset: 2px;
+  }
 }
 
 @layer utilities {

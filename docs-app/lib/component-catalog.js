@@ -45,6 +45,7 @@ export const DEEP_LINKS = [
   { page: 'layout', section: 'stack-cluster', title: 'Cluster', component: 'Cluster', keywords: ['actions', 'toolbar', 'wrap'] },
   { page: 'layout', section: 'grid-cardgrid', title: 'Grid', component: 'Grid', keywords: ['columns', 'responsive'] },
   { page: 'layout', section: 'grid-cardgrid', title: 'CardGrid', component: 'CardGrid', keywords: ['cards', 'responsive'] },
+  { page: 'layout', section: 'scroll-rail', title: 'ScrollRail', component: 'ScrollRail', keywords: ['scroll', 'horizontal', 'carousel', 'peek', 'cards', 'images'] },
   { page: 'layout', section: 'split-maincontent', title: 'Split', component: 'Split', keywords: ['aside', 'two column'] },
   { page: 'layout', section: 'split-maincontent', title: 'MainContent', component: 'MainContent', keywords: ['main', 'content', 'width'] },
 
