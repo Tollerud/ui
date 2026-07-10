@@ -259,9 +259,19 @@ Sizes: `sm` · `md` · `lg`
     <Button variant="primary" size="sm">Restart</Button>
   </CardFooter>
 </Card>
+
+<Card>
+  <CardHeader actions={<CardChange value="+12%" direction="up" />}>
+    <CardTitle>Active sessions</CardTitle>
+    <CardDescription>Last 24h</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-2xl font-bold">42</p>
+  </CardContent>
+</Card>
 ```
 
-`CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5). Header/footer bands use a subtle surface darken, not page-level black (≥ 4.9.6).
+`CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5). Header/footer bands use a subtle surface darken, not page-level black (≥ 4.9.6). `CardChange` (≥ 4.9.7) — shared up/down chip; `CardHeader` `actions` slot for trailing content.
 
 ### PriceDisplay
 

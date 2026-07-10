@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import {
   Card,
+  CardChange,
   CardContent,
   CardDescription,
   CardFooter,
@@ -64,5 +65,20 @@ describe('Card', () => {
 
     expect(screen.getByTestId('card')).toHaveClass('bg-tollerud-surface-raised')
     expect(screen.getByTestId('content')).toHaveClass('bg-tollerud-surface-raised')
+  })
+
+  it('renders CardHeader actions with CardChange', () => {
+    render(
+      <Card>
+        <CardHeader actions={<CardChange value="+12%" direction="up" />}>
+          <CardTitle>Active sessions</CardTitle>
+          <CardDescription>Last 24h</CardDescription>
+        </CardHeader>
+        <CardContent>42</CardContent>
+      </Card>,
+    )
+
+    expect(screen.getByText('+12%')).toBeInTheDocument()
+    expect(screen.getByText('+12%')).toHaveClass('text-tollerud-success')
   })
 })

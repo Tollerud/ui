@@ -1,5 +1,6 @@
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
+import { CardChange } from './Card'
 
 export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
   label: string
@@ -31,7 +32,6 @@ const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
         )}
         {...props}
       >
-        {/* Accent top bar */}
         {accent && (
           <span className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-tollerud-yellow/60 to-transparent" />
         )}
@@ -48,39 +48,13 @@ const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
             </p>
           </div>
           {change && (
-            <span
-              className={cn(
-                'inline-flex items-center gap-0.5 text-[11px] font-semibold whitespace-nowrap',
-                change.tone === 'success' ? 'text-tollerud-success'
-                  : change.tone === 'error' ? 'text-tollerud-error'
-                  : change.tone === 'warning' ? 'text-tollerud-warning'
-                  : change.tone === 'info' ? 'text-tollerud-info'
-                  : change.tone === 'accent' ? 'text-tollerud-yellow'
-                  : change.direction === 'up' ? 'text-tollerud-success' : 'text-tollerud-error'
-              )}
-            >
-              <svg
-                className={cn(
-                  'w-3 h-3',
-                  change.direction === 'up' && 'rotate-180'
-                )}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 5v14M5 12l7 7 7-7" />
-              </svg>
-              {change.value}
-            </span>
+            <CardChange value={change.value} direction={change.direction} tone={change.tone} />
           )}
         </div>
 
         <p
           className={cn(
-            'text-2xl font-bold tracking-tight mt-1',
+            'mt-1 text-2xl font-bold tracking-tight',
             accent ? 'text-tollerud-yellow' : 'text-tollerud-text-primary'
           )}
         >

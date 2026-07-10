@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.9.6**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.9.7**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -220,7 +220,7 @@ Props: `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. C
 | `.tollerud-card border-tollerud-yellow/25` | `<Card accent>` | accent: `true` |
 | `.tollerud-card border-tollerud-yellow/25 bg-tollerud-yellow/5` | `<Card accent="filled">` | accent: `"filled"` |
 
-Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. Header/footer use a subtle darker band (≥ 4.9.6: `color-mix` on raised surface, not page-level black); body keeps the raised surface.
+Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. `CardHeader` accepts `actions` (≥ 4.9.7) for trailing chips or buttons. `CardChange` (≥ 4.9.7) — shared up/down delta chip, also used by `StatCard`.
 
 ```jsx
 <Card>
@@ -241,6 +241,15 @@ Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardC
   <CardFooter className="justify-end">
     <Button variant="primary" size="sm">Deploy</Button>
   </CardFooter>
+</Card>
+<Card>
+  <CardHeader actions={<CardChange value="+12%" direction="up" />}>
+    <CardTitle>Active sessions</CardTitle>
+    <CardDescription>Last 24h</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-2xl font-bold">42</p>
+  </CardContent>
 </Card>
 ```
 

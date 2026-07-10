@@ -136,6 +136,16 @@
 - `size?: ButtonGroupSize`
 - `orientation?: ButtonGroupOrientation`
 
+## Card — `CardChangeProps` extends extends HTMLAttributes<HTMLSpanElement>
+
+- `value: string`
+- `direction: 'up' | 'down'`
+- `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'`
+
+## Card — `CardHeaderProps` extends extends HTMLAttributes<HTMLDivElement>
+
+- `actions?: ReactNode`
+
 ## Card — `CardProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `* `true` — yellow border tint (`border-tollerud-yellow/25`), no fill.`

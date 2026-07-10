@@ -19,6 +19,18 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   asChild?: boolean
 }
 
+export interface CardChangeProps extends HTMLAttributes<HTMLSpanElement> {
+  value: string
+  direction: 'up' | 'down'
+  /** Override the color. Omit to use the default (up=success, down=error). */
+  tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'
+}
+
+export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
+  /** Trailing header content — change chip, buttons, badge, etc. */
+  actions?: ReactNode
+}
+
 const STRUCTURED_CARD_PARTS = new Set([
   'CardHeader',
   'CardTitle',
@@ -75,8 +87,49 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 )
 Card.displayName = 'Card'
 
-const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+const CardChange = forwardRef<HTMLSpanElement, CardChangeProps>(
+  ({ className, value, direction, tone, ...props }, ref) => (
+    <span
+      ref={ref}
+      className={cn(
+        'inline-flex items-center gap-0.5 text-[11px] font-semibold whitespace-nowrap',
+        tone === 'success'
+          ? 'text-tollerud-success'
+          : tone === 'error'
+            ? 'text-tollerud-error'
+            : tone === 'warning'
+              ? 'text-tollerud-warning'
+              : tone === 'info'
+                ? 'text-tollerud-info'
+                : tone === 'accent'
+                  ? 'text-tollerud-yellow'
+                  : direction === 'up'
+                    ? 'text-tollerud-success'
+                    : 'text-tollerud-error',
+        className
+      )}
+      {...props}
+    >
+      <svg
+        className={cn('h-3 w-3', direction === 'up' && 'rotate-180')}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
+        <path d="M12 5v14M5 12l7 7 7-7" />
+      </svg>
+      {value}
+    </span>
+  )
+)
+CardChange.displayName = 'CardChange'
+
+const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
+  ({ className, actions, children, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -86,7 +139,16 @@ const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
         className
       )}
       {...props}
-    />
+    >
+      {actions ? (
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex min-w-0 flex-col gap-1">{children}</div>
+          <div className="flex shrink-0 items-center gap-2">{actions}</div>
+        </div>
+      ) : (
+        children
+      )}
+    </div>
   )
 )
 CardHeader.displayName = 'CardHeader'
@@ -138,4 +200,12 @@ const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 )
 CardFooter.displayName = 'CardFooter'
 
-export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
+export {
+  Card,
+  CardChange,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+}

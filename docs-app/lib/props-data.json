@@ -238,6 +238,22 @@
         "density?: 'comfortable' | 'compact'",
         "asChild?: boolean"
       ]
+    },
+    {
+      "name": "CardChangeProps",
+      "extends": "extends HTMLAttributes<HTMLSpanElement>",
+      "props": [
+        "value: string",
+        "direction: 'up' | 'down'",
+        "tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'"
+      ]
+    },
+    {
+      "name": "CardHeaderProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "actions?: ReactNode"
+      ]
     }
   ],
   "CardGrid": [

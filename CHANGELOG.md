@@ -7,6 +7,17 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.7 — 2026-07-10 — CardChange and CardHeader actions
+
+### New
+
+- `CardChange` — shared up/down delta chip (`value`, `direction`, optional `tone`). Used by `StatCard` and available on any structured card header.
+- `CardHeader` — `actions?: ReactNode` slot for trailing header content (change chip, buttons, badge).
+
+### Changed
+
+- `StatCard` — change indicator now renders via `CardChange` (same look, shared primitive).
+
 ## 4.9.6 — 2026-07-10 — Softer Card header/footer bands
 
 ### Changed

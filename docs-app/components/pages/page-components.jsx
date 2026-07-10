@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, ButtonGroup, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard, PromoSection } = __p
+const { Button, ButtonGroup, Card, CardChange, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard, PromoSection } = __p
 
 /* @tollerud/ui docs — Components gallery */
 function PageComponents({ go }) {
@@ -174,7 +174,7 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="Card" component="Card" permalink="components/card" desc="The default surface. accent={true} adds a yellow border tint. accent='filled' adds a yellow border + subtle yellow fill — use for callout boxes, cheapest-item highlights, and CTAs. Optional CardHeader / CardContent / CardFooter compound parts add darker header/footer bands.">
+      <Section title="Card" component="Card" permalink="components/card" desc="The default surface. accent={true} adds a yellow border tint. accent='filled' adds a yellow border + subtle yellow fill. Optional CardHeader / CardContent / CardFooter compound parts. CardHeader accepts an actions slot — use CardChange for StatCard-style up/down deltas.">
         <Demo name="cards" code={`<Card>
   <Stack gap="sm">
     <StatusDot status="online" label="emma — ready" />
@@ -243,6 +243,29 @@ export function ButtonGlowRoot() {
               <Button variant="secondary" size="sm">Cancel</Button>
               <Button variant="primary" size="sm">Restart</Button>
             </CardFooter>
+          </Card>
+        </Demo>
+        <Demo
+          name="card-header-change"
+          desc="CardChange shares the StatCard up/down chip. Pass it to CardHeader actions for metric-style headers."
+          code={`<Card>
+  <CardHeader actions={<CardChange value="+12%" direction="up" />}>
+    <CardTitle>Active sessions</CardTitle>
+    <CardDescription>Last 24h</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-2xl font-bold text-tollerud-text-primary">42</p>
+  </CardContent>
+</Card>`}
+        >
+          <Card style={{ maxWidth: 320 }}>
+            <CardHeader actions={<CardChange value="+12%" direction="up" />}>
+              <CardTitle>Active sessions</CardTitle>
+              <CardDescription>Last 24h</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold text-tollerud-text-primary">42</p>
+            </CardContent>
           </Card>
         </Demo>
         <Demo name="card-as-child" desc="asChild lets the Card render as any element — here a link — while keeping all visual styles." code={`<Card asChild>

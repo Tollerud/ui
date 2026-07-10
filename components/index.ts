@@ -13,13 +13,14 @@ export type { AlertProps } from './Alert'
 
 export {
   Card,
+  CardChange,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
   CardFooter,
 } from './Card'
-export type { CardProps } from './Card'
+export type { CardProps, CardChangeProps, CardHeaderProps } from './Card'
 
 export { Badge } from './Badge'
 export type { BadgeProps } from './Badge'
