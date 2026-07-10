@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.9.8**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.9.9**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -342,7 +342,7 @@ Variants: `outline` · `solid` · `accent`. CSS classes: `.tollerud-pill`, `.tol
   change={{ value: '-3.2%', direction: 'down', tone: 'success' }} />
 ```
 
-Props: `label`, `value`, `icon?: ReactNode`, `accent?`, `change?: { value, direction: 'up' | 'down', tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`.
+Props: `label`, `value`, `icon?: ReactNode`, `accent?`, `change?: { value?: string, direction: 'up' | 'down' | 'flat', tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`.
 
 ## CodeBlock
 

@@ -1,14 +1,14 @@
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
-import { CardChange } from './Card'
+import { CardChange, type CardChangeDirection } from './Card'
 
 export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
   label: string
   value: string | number
   change?: {
-    value: string
-    direction: 'up' | 'down'
-    /** Override the color. Omit to use the default (up=success, down=error). */
+    value?: string
+    direction: CardChangeDirection
+    /** Override the color. Omit to use the default (up=success, down=error, flat=info). */
     tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'
   }
   accent?: boolean

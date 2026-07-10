@@ -410,10 +410,11 @@ const [open, setOpen] = useState(false)
 />
 ```
 
-**StatCard** — `label`, `value`, `icon?: ReactNode`, `change?: { value: string; direction: 'up' | 'down'; tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `accent?`. `change.tone` overrides the default color (up=success, down=error) — use it when direction and semantic meaning differ (e.g. a price drop is good).
+**StatCard** — `label`, `value`, `icon?: ReactNode`, `change?: { value?: string; direction: 'up' | 'down' | 'flat'; tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `accent?`. `change.tone` overrides the default color (up=success, down=error, flat=info). `flat` defaults label to `—` when `value` is omitted.
 ```tsx
 <StatCard label="Active Sessions" value={42} icon={<Activity size={14} />} change={{ value: '+12%', direction: 'up' }} />
 <StatCard label="Endring siste periode" value="-3.2%" change={{ value: '-3.2%', direction: 'down', tone: 'success' }} />
+<StatCard label="Uptime" value="99.9%" change={{ direction: 'flat' }} />
 ```
 
 **CodeBlock** — `code?`, `promptPrefix?`, `showCopy?`. Renders a `<pre>`.
@@ -873,6 +874,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **`DataTable` touch scroll fix (≥ 4.8.57)** — removed `touch-pan-x` from the horizontal scroll wrapper, which blocked vertical page scroll on mobile when a swipe started on table rows or headers. Horizontal scroll for wide tables is unchanged (`overflow-x-auto` + `overscroll-x-contain`).
 - **`ScrollRail` (≥ 4.9.0)** — horizontal scroll rail for card rows, image strips, and overflow content. `visibleCount` (≥ 4.9.2) for N-fill-then-scroll layouts; `peek`/`controls`/`fadeEdges` only when overflowing; `itemWidth` for fixed-pixel strips. Item wrappers stretch slot height (≥ 4.9.3) so `h-full` on children works without extra markup. Does not use `touch-pan-x`.
 - **`PriceDisplay` `size` (≥ 4.9.4)** — `size?: "sm" | "md" | "lg"` scales primary value and secondary badge together. **≥ 4.9.5:** primary size classes are literal (fixes production purge).
+- **`CardChange` `flat` (≥ 4.9.9)** — `direction: "flat"` for unchanged: minus icon, default `text-tollerud-info`, label defaults to `—`.
 - **`Card` compound parts (≥ 4.9.4)** — `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter` with darker header/footer bands. Plain `<Card>` padding unchanged. **≥ 4.9.5:** `CardContent` explicitly keeps the raised surface background. **≥ 4.9.6:** header/footer bands use subtle `color-mix` on raised surface instead of `noir-950`. **≥ 4.9.7:** `CardChange` up/down chip + `CardHeader` `actions` slot; `StatCard` uses `CardChange` internally. **≥ 4.9.8:** `accent={true}` adds subtle yellow band tint on header/footer (body stays raised).
 - **`DataTable` selection borders (≥ 4.9.4)** — selected rows use a uniform background instead of per-cell inset rings (no doubled borders between adjacent cells).
 - **`Dialog` layout + sizes (≥ 4.9.1)** — `DialogContent` `size` presets (`sm`–`full`, default `md` / `max-w-xl`), bordered `DialogHeader`/`DialogFooter`, scrollable body, new `DialogBody` slot, and `DialogPanel` controlled helper (`open`/`onClose`/`title`/`description`/`footer`).

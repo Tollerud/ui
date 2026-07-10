@@ -20,7 +20,7 @@ export {
   CardContent,
   CardFooter,
 } from './Card'
-export type { CardProps, CardChangeProps, CardHeaderProps } from './Card'
+export type { CardProps, CardChangeProps, CardChangeDirection, CardHeaderProps } from './Card'
 
 export { Badge } from './Badge'
 export type { BadgeProps } from './Badge'

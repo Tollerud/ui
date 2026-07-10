@@ -243,8 +243,8 @@
       "name": "CardChangeProps",
       "extends": "extends HTMLAttributes<HTMLSpanElement>",
       "props": [
-        "value: string",
-        "direction: 'up' | 'down'",
+        "value?: string",
+        "direction: CardChangeDirection",
         "tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'"
       ]
     },
@@ -1261,8 +1261,8 @@
         "label: string",
         "value: string | number",
         "change?: {",
-        "value: string",
-        "direction: 'up' | 'down'",
+        "value?: string",
+        "direction: CardChangeDirection",
         "tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'",
         "}",
         "accent?: boolean",

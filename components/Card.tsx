@@ -19,10 +19,13 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   asChild?: boolean
 }
 
+export type CardChangeDirection = 'up' | 'down' | 'flat'
+
 export interface CardChangeProps extends HTMLAttributes<HTMLSpanElement> {
-  value: string
-  direction: 'up' | 'down'
-  /** Override the color. Omit to use the default (up=success, down=error). */
+  /** Change label — defaults to `—` when `direction` is `flat`. */
+  value?: string
+  direction: CardChangeDirection
+  /** Override the color. Omit to use the default (up=success, down=error, flat=info). */
   tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'
 }
 
@@ -88,43 +91,63 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 Card.displayName = 'Card'
 
 const CardChange = forwardRef<HTMLSpanElement, CardChangeProps>(
-  ({ className, value, direction, tone, ...props }, ref) => (
-    <span
-      ref={ref}
-      className={cn(
-        'inline-flex items-center gap-0.5 text-[11px] font-semibold whitespace-nowrap',
-        tone === 'success'
-          ? 'text-tollerud-success'
-          : tone === 'error'
-            ? 'text-tollerud-error'
-            : tone === 'warning'
-              ? 'text-tollerud-warning'
-              : tone === 'info'
-                ? 'text-tollerud-info'
-                : tone === 'accent'
-                  ? 'text-tollerud-yellow'
-                  : direction === 'up'
-                    ? 'text-tollerud-success'
-                    : 'text-tollerud-error',
-        className
-      )}
-      {...props}
-    >
-      <svg
-        className={cn('h-3 w-3', direction === 'up' && 'rotate-180')}
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
+  ({ className, value, direction, tone, ...props }, ref) => {
+    const label = value ?? (direction === 'flat' ? '—' : undefined)
+
+    return (
+      <span
+        ref={ref}
+        className={cn(
+          'inline-flex items-center gap-0.5 text-[11px] font-semibold whitespace-nowrap',
+          tone === 'success'
+            ? 'text-tollerud-success'
+            : tone === 'error'
+              ? 'text-tollerud-error'
+              : tone === 'warning'
+                ? 'text-tollerud-warning'
+                : tone === 'info'
+                  ? 'text-tollerud-info'
+                  : tone === 'accent'
+                    ? 'text-tollerud-yellow'
+                    : direction === 'up'
+                      ? 'text-tollerud-success'
+                      : direction === 'down'
+                        ? 'text-tollerud-error'
+                        : 'text-tollerud-info',
+          className
+        )}
+        {...props}
       >
-        <path d="M12 5v14M5 12l7 7 7-7" />
-      </svg>
-      {value}
-    </span>
-  )
+        {direction === 'flat' ? (
+          <svg
+            className="h-3 w-3"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            strokeLinecap="round"
+            aria-hidden
+          >
+            <path d="M5 12h14" />
+          </svg>
+        ) : (
+          <svg
+            className={cn('h-3 w-3', direction === 'up' && 'rotate-180')}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M12 5v14M5 12l7 7 7-7" />
+          </svg>
+        )}
+        {label}
+      </span>
+    )
+  }
 )
 CardChange.displayName = 'CardChange'
 

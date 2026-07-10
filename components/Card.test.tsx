@@ -95,4 +95,11 @@ describe('Card', () => {
     expect(screen.getByTestId('card')).toHaveAttribute('data-accent', 'accent')
     expect(screen.getByTestId('header').className).toMatch(/tollerud-yellow/)
   })
+
+  it('renders flat unchanged state with info color and em dash default', () => {
+    render(<CardChange direction="flat" data-testid="change" />)
+
+    expect(screen.getByTestId('change')).toHaveClass('text-tollerud-info')
+    expect(screen.getByTestId('change')).toHaveTextContent('—')
+  })
 })

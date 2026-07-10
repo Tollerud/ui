@@ -138,8 +138,8 @@
 
 ## Card — `CardChangeProps` extends extends HTMLAttributes<HTMLSpanElement>
 
-- `value: string`
-- `direction: 'up' | 'down'`
+- `value?: string`
+- `direction: CardChangeDirection`
 - `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'`
 
 ## Card — `CardHeaderProps` extends extends HTMLAttributes<HTMLDivElement>
@@ -838,8 +838,8 @@
 - `label: string`
 - `value: string | number`
 - `change?: {`
-- `value: string`
-- `direction: 'up' | 'down'`
+- `value?: string`
+- `direction: CardChangeDirection`
 - `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'`
 - `}`
 - `accent?: boolean`

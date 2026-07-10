@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.9 — 2026-07-10 — CardChange flat (unchanged) state
+
+### Changed
+
+- `CardChange` — `direction: "flat"` for unchanged metrics: minus icon, default `text-tollerud-info` (blue), label defaults to `—` when `value` is omitted. `StatCard` `change.direction` accepts `flat` as well.
+
 ## 4.9.8 — 2026-07-10 — Subtle accent tint on Card header/footer bands
 
 ### Changed

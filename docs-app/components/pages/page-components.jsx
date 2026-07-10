@@ -270,26 +270,40 @@ export function ButtonGlowRoot() {
         </Demo>
         <Demo
           name="card-header-change"
-          desc="CardChange shares the StatCard up/down chip. Pass it to CardHeader actions for metric-style headers."
-          code={`<Card>
-  <CardHeader actions={<CardChange value="+12%" direction="up" />}>
-    <CardTitle>Active sessions</CardTitle>
-    <CardDescription>Last 24h</CardDescription>
-  </CardHeader>
-  <CardContent>
-    <p className="text-2xl font-bold text-tollerud-text-primary">42</p>
-  </CardContent>
-</Card>`}
+          desc="CardChange: up (green), down (red), flat (info blue, em dash — for unchanged). Pass to CardHeader actions."
+          code={`<CardHeader actions={<CardChange value="+12%" direction="up" />}>…</CardHeader>
+<CardHeader actions={<CardChange value="-3%" direction="down" />}>…</CardHeader>
+<CardHeader actions={<CardChange direction="flat" />}>…</CardHeader>`}
         >
-          <Card style={{ maxWidth: 320 }}>
-            <CardHeader actions={<CardChange value="+12%" direction="up" />}>
-              <CardTitle>Active sessions</CardTitle>
-              <CardDescription>Last 24h</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold text-tollerud-text-primary">42</p>
-            </CardContent>
-          </Card>
+          <div className="ds-col" style={{ gap: 12, maxWidth: 320 }}>
+            <Card>
+              <CardHeader actions={<CardChange value="+12%" direction="up" />}>
+                <CardTitle>Active sessions</CardTitle>
+                <CardDescription>Last 24h</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-2xl font-bold text-tollerud-text-primary">42</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader actions={<CardChange value="-3%" direction="down" />}>
+                <CardTitle>Error rate</CardTitle>
+                <CardDescription>Last 24h</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-2xl font-bold text-tollerud-text-primary">0.4%</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader actions={<CardChange direction="flat" />}>
+                <CardTitle>Uptime</CardTitle>
+                <CardDescription>Last 24h</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-2xl font-bold text-tollerud-text-primary">99.9%</p>
+              </CardContent>
+            </Card>
+          </div>
         </Demo>
         <Demo name="card-as-child" desc="asChild lets the Card render as any element — here a link — while keeping all visual styles." code={`<Card asChild>
   <a href="#">Visit docs →</a>
