@@ -7,6 +7,13 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.5 — 2026-07-10 — Fix PriceDisplay size classes and CardContent background
+
+### Fixed
+
+- `PriceDisplay` — `size` now applies literal Tailwind classes so the primary value scales correctly in production builds (dynamic class maps were purged).
+- `Card` — `CardContent` explicitly uses `bg-tollerud-surface-raised` so the body band stays visible between darker header/footer regions.
+
 ## 4.9.4 — 2026-07-10 — Card header/footer bands and DataTable selection borders
 
 ### Changed

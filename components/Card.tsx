@@ -40,6 +40,9 @@ function usesStructuredLayout(children: ReactNode) {
 const cardRegionPadding =
   'px-6 py-4 group-data-[density=compact]/card:px-3 group-data-[density=compact]/card:py-3'
 
+const cardBodyBg =
+  'bg-tollerud-surface-raised group-data-[accent=filled]/card:bg-tollerud-yellow/5'
+
 const cardBandBg =
   'bg-tollerud-noir-950 group-data-[accent=filled]/card:bg-[color-mix(in_srgb,var(--tollerud-yellow)_8%,var(--tollerud-noir-950))]'
 
@@ -109,7 +112,11 @@ CardDescription.displayName = 'CardDescription'
 
 const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex-1', cardRegionPadding, className)} {...props} />
+    <div
+      ref={ref}
+      className={cn('flex-1', cardBodyBg, cardRegionPadding, className)}
+      {...props}
+    />
   )
 )
 CardContent.displayName = 'CardContent'

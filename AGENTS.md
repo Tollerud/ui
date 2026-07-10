@@ -261,6 +261,8 @@ Sizes: `sm` · `md` · `lg`
 </Card>
 ```
 
+`CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5).
+
 ### PriceDisplay
 
 Compact price block for list rows and table cells.

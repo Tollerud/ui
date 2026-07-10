@@ -52,4 +52,16 @@ describe('Card', () => {
     expect(screen.getByRole('heading', { name: 'Deploy' })).toBeInTheDocument()
     expect(screen.getByText('emma.tollerud.no')).toBeInTheDocument()
   })
+
+  it('keeps raised surface background on structured card content', () => {
+    render(
+      <Card data-testid="card">
+        <CardHeader>Header</CardHeader>
+        <CardContent data-testid="content">Body</CardContent>
+      </Card>,
+    )
+
+    expect(screen.getByTestId('card')).toHaveClass('bg-tollerud-surface-raised')
+    expect(screen.getByTestId('content')).toHaveClass('bg-tollerud-surface-raised')
+  })
 })

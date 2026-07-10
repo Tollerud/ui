@@ -22,40 +22,19 @@ export interface PriceDisplayProps extends HTMLAttributes<HTMLDivElement> {
   size?: PriceDisplaySize
 }
 
-const sizeStyles: Record<
-  PriceDisplaySize,
-  { root: string; primary: string; badge: string }
-> = {
-  sm: {
-    root: 'gap-0.5',
-    primary: 'text-sm font-semibold',
-    badge: 'px-1.5 py-px text-[10px]',
-  },
-  md: {
-    root: 'gap-1',
-    primary: 'text-base font-semibold',
-    badge: '',
-  },
-  lg: {
-    root: 'gap-1.5',
-    primary: 'text-lg font-semibold',
-    badge: 'px-2.5 py-0.5 text-sm',
-  },
-}
-
 const PriceDisplay = forwardRef<HTMLDivElement, PriceDisplayProps>(
   (
     { className, primary, secondary, highlight = false, align = 'right', size = 'md', ...props },
     ref,
   ) => {
-    const styles = sizeStyles[size]
-
     return (
       <div
         ref={ref}
         className={cn(
           'flex flex-col',
-          styles.root,
+          size === 'sm' && 'gap-0.5',
+          size === 'md' && 'gap-1',
+          size === 'lg' && 'gap-1.5',
           align === 'right' ? 'items-end' : 'items-start',
           className,
         )}
@@ -63,8 +42,10 @@ const PriceDisplay = forwardRef<HTMLDivElement, PriceDisplayProps>(
       >
         <span
           className={cn(
-            styles.primary,
-            'tabular-nums leading-none',
+            'font-semibold tabular-nums leading-none',
+            size === 'sm' && 'text-sm',
+            size === 'md' && 'text-base',
+            size === 'lg' && 'text-lg',
             highlight === 'cheapest' ? 'text-tollerud-success' : 'text-tollerud-text-primary',
           )}
         >
@@ -73,7 +54,10 @@ const PriceDisplay = forwardRef<HTMLDivElement, PriceDisplayProps>(
         {secondary && (
           <Badge
             variant={highlight === 'cheapest' ? 'success' : 'default'}
-            className={styles.badge}
+            className={cn(
+              size === 'sm' && 'px-1.5 py-px text-[10px]',
+              size === 'lg' && 'px-2.5 py-0.5 text-sm',
+            )}
           >
             {secondary}
           </Badge>
