@@ -306,10 +306,15 @@ function DataTableInner<T extends Record<string, unknown>>({
 
   const rowHoverable = Boolean(onRowClick || isRich)
 
+  const selectedRowBg = 'bg-[color-mix(in_srgb,var(--tollerud-yellow)_7%,var(--tollerud-noir-900))]'
+  const selectedRowHoverBg =
+    'group-hover/tr:bg-[color-mix(in_srgb,var(--tollerud-yellow)_12%,var(--tollerud-noir-800))]'
+
   const cellSurface = (rowIndex: number, isSelected: boolean) =>
     cn(
-      rowHoverable && 'transition-colors group-hover/tr:bg-tollerud-noir-800',
-      isSelected && 'bg-tollerud-noir-900 ring-1 ring-inset ring-tollerud-yellow/25',
+      'transition-colors',
+      rowHoverable && (isSelected ? selectedRowHoverBg : 'group-hover/tr:bg-tollerud-noir-800'),
+      isSelected && selectedRowBg,
       !isSelected && striped && rowIndex % 2 === 0 && 'bg-tollerud-noir-950',
       !isSelected && !(striped && rowIndex % 2 === 0) && isRich && 'bg-tollerud-noir-900',
     )

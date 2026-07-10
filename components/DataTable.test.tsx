@@ -378,4 +378,33 @@ describe('DataTable', () => {
     await user.click(screen.getByRole('button', { name: 'Restart' }))
     expect(onRun).toHaveBeenCalledWith(['1'], expect.any(Function))
   })
+
+  it('uses a uniform row background for selection instead of per-cell inset rings', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <DataTable
+        columns={[
+          { key: 'hostname', label: 'Host' },
+          { key: 'region', label: 'Region' },
+        ]}
+        data={[
+          { id: '1', hostname: 'emma', region: 'eu' },
+          { id: '2', hostname: 'pia', region: 'us' },
+        ]}
+        rowKey="id"
+        selectable
+      />
+    )
+
+    await user.click(screen.getByRole('checkbox', { name: /select row 1/i }))
+
+    const emmaRow = screen.getByText('emma').closest('tr')!
+    const cells = emmaRow.querySelectorAll('td')
+
+    for (const cell of cells) {
+      expect(cell.className).not.toMatch(/ring-inset/)
+      expect(cell.className).toMatch(/color-mix/)
+    }
+  })
 })
