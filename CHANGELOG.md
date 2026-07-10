@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.6 — 2026-07-10 — Softer Card header/footer bands
+
+### Changed
+
+- `Card` — `CardHeader` and `CardFooter` use a subtle `color-mix` darken of the raised surface instead of page-level `noir-950`, so section bands no longer read as black trays.
+
 ## 4.9.5 — 2026-07-10 — Fix PriceDisplay size classes and CardContent background
 
 ### Fixed

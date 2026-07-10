@@ -216,7 +216,7 @@ export function ButtonGlowRoot() {
         </Demo>
         <Demo
           name="card-sections"
-          desc="CardHeader and CardFooter use a darker band (noir-950) with a thin border at the seam — no doubled lines between regions."
+          desc="CardHeader and CardFooter use a subtle darker band with a thin border at the seam — not page-level black."
           code={`<Card>
   <CardHeader>
     <CardTitle>Restart emma</CardTitle>

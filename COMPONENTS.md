@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.9.5**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.9.6**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -220,7 +220,7 @@ Props: `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. C
 | `.tollerud-card border-tollerud-yellow/25` | `<Card accent>` | accent: `true` |
 | `.tollerud-card border-tollerud-yellow/25 bg-tollerud-yellow/5` | `<Card accent="filled">` | accent: `"filled"` |
 
-Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. Header/footer use a darker `noir-950` band; body keeps the raised surface.
+Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. Header/footer use a subtle darker band (≥ 4.9.6: `color-mix` on raised surface, not page-level black); body keeps the raised surface.
 
 ```jsx
 <Card>

@@ -47,8 +47,9 @@ describe('Card', () => {
     )
 
     expect(screen.getByTestId('card')).toHaveClass('p-0')
-    expect(screen.getByTestId('header')).toHaveClass('bg-tollerud-noir-950')
-    expect(screen.getByTestId('footer')).toHaveClass('bg-tollerud-noir-950')
+    expect(screen.getByTestId('header').className).toMatch(/color-mix/)
+    expect(screen.getByTestId('footer').className).toMatch(/color-mix/)
+    expect(screen.getByTestId('header').className).not.toMatch(/noir-950/)
     expect(screen.getByRole('heading', { name: 'Deploy' })).toBeInTheDocument()
     expect(screen.getByText('emma.tollerud.no')).toBeInTheDocument()
   })

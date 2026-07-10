@@ -261,7 +261,7 @@ Sizes: `sm` · `md` · `lg`
 </Card>
 ```
 
-`CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5).
+`CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5). Header/footer bands use a subtle surface darken, not page-level black (≥ 4.9.6).
 
 ### PriceDisplay
 

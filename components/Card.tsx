@@ -43,8 +43,9 @@ const cardRegionPadding =
 const cardBodyBg =
   'bg-tollerud-surface-raised group-data-[accent=filled]/card:bg-tollerud-yellow/5'
 
+/** Slight darken of the card surface — not page-level noir-950. */
 const cardBandBg =
-  'bg-tollerud-noir-950 group-data-[accent=filled]/card:bg-[color-mix(in_srgb,var(--tollerud-yellow)_8%,var(--tollerud-noir-950))]'
+  'bg-[color-mix(in_srgb,var(--tollerud-black)_6%,var(--tollerud-surface-raised))] group-data-[accent=filled]/card:bg-[color-mix(in_srgb,var(--tollerud-black)_5%,var(--tollerud-yellow)_5%)]'
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, accent, density, asChild = false, children, ...props }, ref) => {
