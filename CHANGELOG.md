@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.4 — 2026-07-10 — Card header/footer bands and DataTable selection borders
+
+### Changed
+
+- `Card` — optional compound parts: `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. Header and footer use a darker `noir-950` band (yellow-tinted on `accent="filled"`) with a single seam border — no doubled lines between regions. Plain `<Card>…</Card>` keeps default `p-6` padding.
+- `DataTable` — row selection uses a uniform opaque background instead of per-cell inset rings, fixing double borders between adjacent selected cells.
+- `PriceDisplay` — `size?: "sm" | "md" | "lg"` (default `"md"`) scales the primary value and secondary badge together for dense table cells or prominent list rows.
+
 ## 4.9.3 — 2026-07-09 — ScrollRail item wrappers stretch for h-full children
 
 ### Changed

@@ -336,16 +336,27 @@ Opt-in on any element: add class `tollerud-btn-glow`. Subpath: `import { initBut
 </ButtonGroup>
 ```
 
-**Card** — `accent?: boolean | 'filled'`, `density?: 'comfortable' | 'compact'`. `accent={true}` = yellow border tint; `accent="filled"` = yellow border + `bg-tollerud-yellow/5` fill (callouts, cheapest-item highlights). Plain `<div>` wrapper — safe to nest in `<Link>`.
+**Card** — `accent?: boolean | 'filled'`, `density?: 'comfortable' | 'compact'`. `accent={true}` = yellow border tint; `accent="filled"` = yellow border + `bg-tollerud-yellow/5` fill (callouts, cheapest-item highlights). Plain `<div>` wrapper — safe to nest in `<Link>`. Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter` — header/footer use a darker `noir-950` band with a single seam border.
 ```tsx
 <Card accent>Highlighted with yellow border</Card>
 <Card accent="filled">Callout with yellow fill</Card>
+<Card>
+  <CardHeader>
+    <CardTitle>Deploy</CardTitle>
+    <CardDescription>emma.tollerud.no</CardDescription>
+  </CardHeader>
+  <CardContent>…</CardContent>
+  <CardFooter className="justify-end">
+    <Button variant="primary" size="sm">Deploy</Button>
+  </CardFooter>
+</Card>
 ```
 
-**PriceDisplay** — compact price block: `primary: string` (large value), `secondary?: string` (Badge below), `highlight?: "cheapest" | false`, `align?: "left" | "right"` (default `"right"`). Designed for list rows and table cells.
+**PriceDisplay** — compact price block: `primary: string` (large value), `secondary?: string` (Badge below), `highlight?: "cheapest" | false`, `align?: "left" | "right"` (default `"right"`), `size?: "sm" | "md" | "lg"` (default `"md"`). Designed for list rows and table cells.
 ```tsx
 <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
 <PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+<PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" size="sm" />
 ```
 
 **ListCard** — hover card shell: `href?: string` (renders as `<a>`), `highlight?: "cheapest" | false` (yellow border tint), `external?: boolean`. Children are consumer-controlled.
@@ -861,6 +872,9 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 - **Portalled dropdowns use Floating UI (≥ 4.8.56)** — supersedes the bespoke positioning in 4.8.26–4.8.55. `Combobox`, `Select`, `DatePicker`, and `Segmented` are now positioned by Floating UI (the engine behind Radix Popover / shadcn) with `autoUpdate` + `flip`/`shift`/`size`, so they flip, shift, clamp height, and stay glued to the trigger across scroll, resize, and iOS keyboard/zoom/address-bar changes. On touch they now stay open and reposition on scroll instead of closing (the 4.8.26 close-on-scroll workaround is gone); outside-click and Escape still dismiss. The internal `lib/dropdown-placement.ts` helpers and the `FloatingDropdownPortal` `onOutsideScroll` prop were removed (internal only — no public component API changed).
 - **`DataTable` touch scroll fix (≥ 4.8.57)** — removed `touch-pan-x` from the horizontal scroll wrapper, which blocked vertical page scroll on mobile when a swipe started on table rows or headers. Horizontal scroll for wide tables is unchanged (`overflow-x-auto` + `overscroll-x-contain`).
 - **`ScrollRail` (≥ 4.9.0)** — horizontal scroll rail for card rows, image strips, and overflow content. `visibleCount` (≥ 4.9.2) for N-fill-then-scroll layouts; `peek`/`controls`/`fadeEdges` only when overflowing; `itemWidth` for fixed-pixel strips. Item wrappers stretch slot height (≥ 4.9.3) so `h-full` on children works without extra markup. Does not use `touch-pan-x`.
+- **`Card` compound parts (≥ 4.9.4)** — `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter` with darker header/footer bands. Plain `<Card>` padding unchanged.
+- **`PriceDisplay` `size` (≥ 4.9.4)** — `size?: "sm" | "md" | "lg"` scales primary value and secondary badge together.
+- **`DataTable` selection borders (≥ 4.9.4)** — selected rows use a uniform background instead of per-cell inset rings (no doubled borders between adjacent cells).
 - **`Dialog` layout + sizes (≥ 4.9.1)** — `DialogContent` `size` presets (`sm`–`full`, default `md` / `max-w-xl`), bordered `DialogHeader`/`DialogFooter`, scrollable body, new `DialogBody` slot, and `DialogPanel` controlled helper (`open`/`onClose`/`title`/`description`/`footer`).
 - **`TopNav` `mobileMenuExtra` slot (≥ 4.8.24)** — inject arbitrary content at the bottom of the mobile nav sheet, separated by a divider.
 - Always pin to the latest patch and check `CHANGELOG.md` in the design-system repo for breaking changes (e.g. the 1.0.5 yellow token rename: `tollerud-yellow-bright` → `tollerud-yellow`, old `tollerud-yellow` `#E8D500` → `tollerud-yellow-warm`)

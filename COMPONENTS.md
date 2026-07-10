@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.9.3**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.9.4**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -220,6 +220,8 @@ Props: `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. C
 | `.tollerud-card border-tollerud-yellow/25` | `<Card accent>` | accent: `true` |
 | `.tollerud-card border-tollerud-yellow/25 bg-tollerud-yellow/5` | `<Card accent="filled">` | accent: `"filled"` |
 
+Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. Header/footer use a darker `noir-950` band; body keeps the raised surface.
+
 ```jsx
 <Card>
   <StatusDot status="online" label="Emma — ready" />
@@ -230,6 +232,16 @@ Props: `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. C
 <Card accent="filled">
   <p>Callout with yellow border + fill — cheapest-item highlights, CTAs</p>
 </Card>
+<Card>
+  <CardHeader>
+    <CardTitle>Deploy</CardTitle>
+    <CardDescription>emma.tollerud.no</CardDescription>
+  </CardHeader>
+  <CardContent>…</CardContent>
+  <CardFooter className="justify-end">
+    <Button variant="primary" size="sm">Deploy</Button>
+  </CardFooter>
+</Card>
 ```
 
 ## PriceDisplay
@@ -239,9 +251,10 @@ Compact price display for list rows and table cells. Primary value rendered larg
 ```tsx
 <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
 <PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+<PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" size="sm" />
 ```
 
-Props: `primary: string`, `secondary?: string`, `highlight?: "cheapest" | false`, `align?: "left" | "right"` (default `"right"`).
+Props: `primary: string`, `secondary?: string`, `highlight?: "cheapest" | false`, `align?: "left" | "right"` (default `"right"`), `size?: "sm" | "md" | "lg"` (default `"md"`).
 
 ## ListCard
 

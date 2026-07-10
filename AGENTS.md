@@ -245,6 +245,20 @@ Sizes: `sm` · `md` · `lg`
 <Card>Content</Card>
 <Card accent>Highlighted with yellow border</Card>
 <Card accent="filled">Callout with yellow border + fill — for cheapest-item highlights and CTAs</Card>
+
+<Card>
+  <CardHeader>
+    <CardTitle>Restart emma</CardTitle>
+    <CardDescription>Stops 4 running services.</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <StatusDot status="online" label="emma.tollerud.no" />
+  </CardContent>
+  <CardFooter className="justify-end">
+    <Button variant="secondary" size="sm">Cancel</Button>
+    <Button variant="primary" size="sm">Restart</Button>
+  </CardFooter>
+</Card>
 ```
 
 ### PriceDisplay
@@ -254,10 +268,11 @@ Compact price block for list rows and table cells.
 ```tsx
 <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" />
 <PriceDisplay primary="54,5 kr/l" secondary="27,25 kr" highlight="cheapest" />
+<PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" size="sm" />
 <PriceDisplay primary="58,0 kr/l" secondary="29,00 kr" align="left" />
 ```
 
-Props: `primary: string`, `secondary?: string`, `highlight?: "cheapest" | false`, `align?: "left" | "right"` (default `"right"`).
+Props: `primary: string`, `secondary?: string`, `highlight?: "cheapest" | false`, `align?: "left" | "right"` (default `"right"`), `size?: "sm" | "md" | "lg"` (default `"md"`).
 
 ### ListCard
 

@@ -638,6 +638,7 @@
 - `*/`
 - `highlight?: 'cheapest' | false`
 - `align?: 'left' | 'right'`
+- `size?: PriceDisplaySize`
 
 ## PricingCard — `PricingCardProps` extends extends HTMLAttributes<HTMLDivElement>
 

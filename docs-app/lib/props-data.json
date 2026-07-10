@@ -953,7 +953,8 @@
         "* `false` (default) uses muted text for the primary and default badge styling.",
         "*/",
         "highlight?: 'cheapest' | false",
-        "align?: 'left' | 'right'"
+        "align?: 'left' | 'right'",
+        "size?: PriceDisplaySize"
       ]
     }
   ],

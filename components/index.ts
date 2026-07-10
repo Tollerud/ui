@@ -11,7 +11,14 @@ export type { ButtonGroupProps, ButtonGroupSize, ButtonGroupOrientation } from '
 export { Alert } from './Alert'
 export type { AlertProps } from './Alert'
 
-export { Card } from './Card'
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from './Card'
 export type { CardProps } from './Card'
 
 export { Badge } from './Badge'
@@ -330,7 +337,7 @@ export { Sparkline } from './Sparkline'
 export type { SparklineProps } from './Sparkline'
 
 export { PriceDisplay } from './PriceDisplay'
-export type { PriceDisplayProps } from './PriceDisplay'
+export type { PriceDisplayProps, PriceDisplaySize } from './PriceDisplay'
 
 export { ListCard } from './ListCard'
 export type { ListCardProps } from './ListCard'

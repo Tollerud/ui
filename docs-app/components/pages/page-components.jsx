@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard, PromoSection } = __p
+const { Button, ButtonGroup, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard, PromoSection } = __p
 
 /* @tollerud/ui docs — Components gallery */
 function PageComponents({ go }) {
@@ -174,7 +174,7 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="Card" component="Card" permalink="components/card" desc="The default surface. accent={true} adds a yellow border tint. accent='filled' adds a yellow border + subtle yellow fill — use for callout boxes, cheapest-item highlights, and CTAs.">
+      <Section title="Card" component="Card" permalink="components/card" desc="The default surface. accent={true} adds a yellow border tint. accent='filled' adds a yellow border + subtle yellow fill — use for callout boxes, cheapest-item highlights, and CTAs. Optional CardHeader / CardContent / CardFooter compound parts add darker header/footer bands.">
         <Demo name="cards" code={`<Card>
   <Stack gap="sm">
     <StatusDot status="online" label="emma — ready" />
@@ -214,6 +214,37 @@ export function ButtonGlowRoot() {
             </Card>
           </CardGrid>
         </Demo>
+        <Demo
+          name="card-sections"
+          desc="CardHeader and CardFooter use a darker band (noir-950) with a thin border at the seam — no doubled lines between regions."
+          code={`<Card>
+  <CardHeader>
+    <CardTitle>Restart emma</CardTitle>
+    <CardDescription>Stops 4 running services. They can be restarted from the dashboard.</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <StatusDot status="online" label="emma.tollerud.no — SSH connected" />
+  </CardContent>
+  <CardFooter className="justify-end">
+    <Button variant="secondary" size="sm">Cancel</Button>
+    <Button variant="primary" size="sm">Restart</Button>
+  </CardFooter>
+</Card>`}
+        >
+          <Card style={{ maxWidth: 420 }}>
+            <CardHeader>
+              <CardTitle>Restart emma</CardTitle>
+              <CardDescription>Stops 4 running services. They can be restarted from the dashboard.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <StatusDot status="online" label="emma.tollerud.no — SSH connected" />
+            </CardContent>
+            <CardFooter className="justify-end">
+              <Button variant="secondary" size="sm">Cancel</Button>
+              <Button variant="primary" size="sm">Restart</Button>
+            </CardFooter>
+          </Card>
+        </Demo>
         <Demo name="card-as-child" desc="asChild lets the Card render as any element — here a link — while keeping all visual styles." code={`<Card asChild>
   <a href="#">Visit docs →</a>
 </Card>`}>
@@ -223,10 +254,11 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="PriceDisplay" component="PriceDisplay" permalink="components/price-display" desc="Compact price display: a primary value with an optional secondary Badge below it. Use highlight='cheapest' to switch to success coloring for the best-value item. Defaults to right-aligned for use in list rows and table cells.">
+      <Section title="PriceDisplay" component="PriceDisplay" permalink="components/price-display" desc="Compact price display: a primary value with an optional secondary Badge below it. Use highlight='cheapest' for success coloring. size='sm' | 'md' | 'lg' scales the block for table cells or prominent rows. Defaults to right-aligned.">
         <Demo name="price-display" variant="col" code={`<PriceDisplay primary="$4.29/pt" secondary="$8.58" />
 <PriceDisplay primary="$3.99/pt" secondary="$7.98" highlight="cheapest" />
-<PriceDisplay primary="$4.79/pt" secondary="$9.58" align="left" />`}>
+<PriceDisplay primary="$4.79/pt" secondary="$9.58" size="sm" />
+<PriceDisplay primary="$4.79/pt" secondary="$9.58" size="lg" align="left" />`}>
           <div className="ds-col" style={{ gap: 16, width: '100%', maxWidth: 320 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Total Wine · Downtown</span>
@@ -237,8 +269,12 @@ export function ButtonGlowRoot() {
               <PriceDisplay primary="$3.99/pt" secondary="$7.98" highlight="cheapest" />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Whole Foods · Market</span>
-              <PriceDisplay primary="$4.79/pt" secondary="$9.58" />
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Whole Foods · compact</span>
+              <PriceDisplay primary="$4.79/pt" secondary="$9.58" size="sm" />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Featured · large</span>
+              <PriceDisplay primary="$4.79/pt" secondary="$9.58" size="lg" />
             </div>
           </div>
         </Demo>
