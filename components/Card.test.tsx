@@ -81,4 +81,18 @@ describe('Card', () => {
     expect(screen.getByText('+12%')).toBeInTheDocument()
     expect(screen.getByText('+12%')).toHaveClass('text-tollerud-success')
   })
+
+  it('tints header bands when accent is border-only', () => {
+    render(
+      <Card accent data-testid="card">
+        <CardHeader data-testid="header">
+          <CardTitle>Highlighted</CardTitle>
+        </CardHeader>
+        <CardContent>Body</CardContent>
+      </Card>,
+    )
+
+    expect(screen.getByTestId('card')).toHaveAttribute('data-accent', 'accent')
+    expect(screen.getByTestId('header').className).toMatch(/tollerud-yellow/)
+  })
 })

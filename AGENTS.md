@@ -271,7 +271,7 @@ Sizes: `sm` · `md` · `lg`
 </Card>
 ```
 
-`CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5). Header/footer bands use a subtle surface darken, not page-level black (≥ 4.9.6). `CardChange` (≥ 4.9.7) — shared up/down chip; `CardHeader` `actions` slot for trailing content.
+`CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5). Header/footer bands use a subtle surface darken (≥ 4.9.6). `accent={true}` adds a light yellow band tint on header/footer (≥ 4.9.8); `accent="filled"` tints all regions more strongly.
 
 ### PriceDisplay
 

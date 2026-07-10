@@ -246,6 +246,29 @@ export function ButtonGlowRoot() {
           </Card>
         </Demo>
         <Demo
+          name="card-sections-accent"
+          desc="accent={true} tints header/footer bands subtly (yellow border + ~4% yellow band). accent='filled' is stronger on all regions."
+          code={`<Card accent>
+  <CardHeader>
+    <CardTitle>Review required</CardTitle>
+    <CardDescription>iris.tollerud.no</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <Badge variant="warning">Attention</Badge>
+  </CardContent>
+</Card>`}
+        >
+          <Card accent style={{ maxWidth: 320 }}>
+            <CardHeader>
+              <CardTitle>Review required</CardTitle>
+              <CardDescription>iris.tollerud.no</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Badge variant="warning">Attention</Badge>
+            </CardContent>
+          </Card>
+        </Demo>
+        <Demo
           name="card-header-change"
           desc="CardChange shares the StatCard up/down chip. Pass it to CardHeader actions for metric-style headers."
           code={`<Card>

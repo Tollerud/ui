@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.9.8 — 2026-07-10 — Subtle accent tint on Card header/footer bands
+
+### Changed
+
+- `Card` — `accent={true}` on structured cards now adds a subtle yellow tint to `CardHeader` / `CardFooter` bands (~4% yellow into raised surface), matching the yellow border without a full `accent="filled"` callout. Body stays `surface-raised`.
+
 ## 4.9.7 — 2026-07-10 — CardChange and CardHeader actions
 
 ### New
