@@ -10,7 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@paper-design/shaders-react": "^0.0.76",
+    "@paper-design/shaders-react": "^0.0.77",
     "@tollerud/email": "^4.12.0",
     "@tollerud/ui": "file:..",
     "clsx": "^2.1.1",
