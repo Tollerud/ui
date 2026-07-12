@@ -6,7 +6,7 @@
     "build": "next build"
   },
   "dependencies": {
-    "@paper-design/shaders-react": "^0.0.76",
+    "@paper-design/shaders-react": "^0.0.77",
     "@radix-ui/react-dialog": "^1.1.18",
     "@radix-ui/react-dropdown-menu": "^2.1.19",
     "@radix-ui/react-progress": "^1.1.11",
