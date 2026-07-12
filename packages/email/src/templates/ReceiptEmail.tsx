@@ -14,6 +14,22 @@ export interface ReceiptLineItem {
   amount: string
 }
 
+/** Overridable copy — pass any subset to reword or localize. */
+export interface ReceiptEmailCopy {
+  preview: (productName: string, orderId: string) => string
+  heading: string
+  intro: (name: string | undefined, orderId: string, date: string) => string
+  totalLabel: string
+}
+
+const defaultCopy: ReceiptEmailCopy = {
+  preview: (p, orderId) => `Your ${p} receipt · ${orderId}`,
+  heading: 'Receipt',
+  intro: (name, orderId, date) =>
+    `${name ? `Thanks, ${name}. ` : 'Thanks. '}Here's your receipt for order ${orderId} on ${date}.`,
+  totalLabel: 'Total',
+}
+
 export interface ReceiptEmailProps {
   name?: string
   productName?: string
@@ -27,6 +43,8 @@ export interface ReceiptEmailProps {
   /** Optional branded header (monogram + project name) at the top. */
   header?: EmailHeaderProps
   footer?: EmailFooterProps
+  /** Override any of the template's copy (for rewording or i18n). */
+  copy?: Partial<ReceiptEmailCopy>
 }
 
 const cell = {
@@ -47,15 +65,14 @@ export function ReceiptEmail({
   total,
   header,
   footer,
+  copy,
 }: ReceiptEmailProps) {
+  const c = { ...defaultCopy, ...copy }
   return (
-    <EmailLayout preview={`Your ${productName} receipt · ${orderId}`}>
+    <EmailLayout preview={c.preview(productName, orderId)}>
       {header ? <EmailHeader {...header} /> : null}
-      <EmailHeading>Receipt</EmailHeading>
-      <EmailText tone="muted">
-        {name ? `Thanks, ${name}. ` : 'Thanks. '}Here's your receipt for order{' '}
-        {orderId} on {date}.
-      </EmailText>
+      <EmailHeading>{c.heading}</EmailHeading>
+      <EmailText tone="muted">{c.intro(name, orderId, date)}</EmailText>
       <EmailDivider />
       <Section>
         {items.map((item, i) => (
@@ -78,7 +95,7 @@ export function ReceiptEmail({
         <Row>
           <Column>
             <Text style={{ ...cell, fontWeight: 600, color: t.color.textPrimary }}>
-              Total
+              {c.totalLabel}
             </Text>
           </Column>
           <Column style={{ textAlign: 'right' }}>

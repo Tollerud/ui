@@ -14,6 +14,8 @@ export interface EmailLayoutProps {
   preview?: string
   /** Optional lang attribute for the <html> element. Defaults to "en". */
   lang?: string
+  /** Escape hatch: inline styles merged onto the content card, overriding defaults. */
+  style?: React.CSSProperties
   children: React.ReactNode
 }
 
@@ -27,7 +29,7 @@ export interface EmailLayoutProps {
  * Outlook.com and Gmail still may nudge colors; that's why every surface also
  * carries an explicit bgcolor.
  */
-export function EmailLayout({ preview, lang = 'en', children }: EmailLayoutProps) {
+export function EmailLayout({ preview, lang = 'en', style, children }: EmailLayoutProps) {
   return (
     <Html lang={lang}>
       <Head>
@@ -62,6 +64,7 @@ export function EmailLayout({ preview, lang = 'en', children }: EmailLayoutProps
                 border: `1px solid ${t.color.border}`,
                 borderRadius: t.radius.lg,
                 padding: t.space[8],
+                ...style,
               }}
             >
               {children}

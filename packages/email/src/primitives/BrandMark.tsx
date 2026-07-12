@@ -26,16 +26,18 @@ export interface BrandMarkProps {
    */
   src?: string
   alt?: string
+  /** Escape hatch: inline styles merged last, overriding the defaults. */
+  style?: React.CSSProperties
 }
 
 /**
  * The Tollerud monogram for email. Prefer `src` (a hosted PNG/GIF) for full
  * client coverage; the inline-SVG fallback is best-effort.
  */
-export function BrandMark({ color = 'yellow', height = 24, src, alt = 'Tollerud' }: BrandMarkProps) {
+export function BrandMark({ color = 'yellow', height = 24, src, alt = 'Tollerud', style }: BrandMarkProps) {
   const width = Math.round(height * ASPECT)
   if (src) {
-    return <Img src={src} alt={alt} height={height} width={width} style={{ display: 'block' }} />
+    return <Img src={src} alt={alt} height={height} width={width} style={{ display: 'block', ...style }} />
   }
   return (
     <svg
@@ -45,7 +47,7 @@ export function BrandMark({ color = 'yellow', height = 24, src, alt = 'Tollerud'
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       aria-label={alt}
-      style={{ display: 'block' }}
+      style={{ display: 'block', ...style }}
     >
       <title>{alt}</title>
       <path d={MONOGRAM_PATH} fill={MARK_COLORS[color]} fillRule="evenodd" />

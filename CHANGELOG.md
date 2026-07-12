@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.12.0 — 2026-07-12 — Email: overridable copy (i18n) + style escape hatches
+
+### Added
+
+- `@tollerud/email` templates gain an overridable `copy` prop. Each template exports a `*Copy` interface (`WelcomeEmailCopy`, `VerifyEmailCopy`, `PasswordResetEmailCopy`, `ReceiptEmailCopy`) whose dynamic lines are functions (so interpolated values still flow through) and static lines are strings. Pass any subset to reword — or to localize (e.g. Norwegian) — without forking the template. Defaults are unchanged.
+
+- `@tollerud/email` primitives gain an optional `style` escape hatch — `EmailLayout` (content card), `EmailHeader`, `EmailFooter`, `EmailButton`, `EmailHeading`, `EmailText`, `EmailDivider`, and `BrandMark`. Inline styles are merged **last**, so they override the token defaults for one-off tweaks. The brand tokens remain the defaults.
+
+### Notes
+
+- Both additions are non-breaking — existing usage renders identically. The visual design stays token-locked by default; `style` is a deliberate per-instance opt-out, not a theme.
+
 ## 4.11.0 — 2026-07-12 — Email branded header + Tollerud footer
 
 ### Added

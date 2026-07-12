@@ -5,11 +5,13 @@ import { emailTheme as t } from '../theme'
 export interface EmailTextProps {
   /** `muted` uses secondary text color; `fine` is small print. */
   tone?: 'default' | 'muted' | 'fine'
+  /** Escape hatch: inline styles merged last, overriding the token defaults. */
+  style?: React.CSSProperties
   children: React.ReactNode
 }
 
 /** Body copy. Tone controls color + size for secondary and fine-print text. */
-export function EmailText({ tone = 'default', children }: EmailTextProps) {
+export function EmailText({ tone = 'default', style, children }: EmailTextProps) {
   const isFine = tone === 'fine'
   return (
     <Text
@@ -19,6 +21,7 @@ export function EmailText({ tone = 'default', children }: EmailTextProps) {
         fontFamily: t.font.sans,
         fontSize: isFine ? t.size.sm : t.size.base,
         lineHeight: 1.6,
+        ...style,
       }}
     >
       {children}

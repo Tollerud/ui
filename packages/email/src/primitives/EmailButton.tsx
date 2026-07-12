@@ -6,6 +6,8 @@ export interface EmailButtonProps {
   href: string
   /** Visual weight. `primary` is the yellow accent; `secondary` is outlined. */
   variant?: 'primary' | 'secondary'
+  /** Escape hatch: inline styles merged last, overriding the token defaults. */
+  style?: React.CSSProperties
   children: React.ReactNode
 }
 
@@ -15,7 +17,7 @@ export interface EmailButtonProps {
  * Tollerud yellow with black text — a deliberately high-contrast pairing that
  * reads correctly even in clients that force dark-mode inversion.
  */
-export function EmailButton({ href, variant = 'primary', children }: EmailButtonProps) {
+export function EmailButton({ href, variant = 'primary', style, children }: EmailButtonProps) {
   const isPrimary = variant === 'primary'
   return (
     <Button
@@ -34,6 +36,7 @@ export function EmailButton({ href, variant = 'primary', children }: EmailButton
         padding: `${t.space[3]} ${t.space[6]}`,
         textDecoration: 'none',
         textAlign: 'center',
+        ...style,
       }}
     >
       {children}

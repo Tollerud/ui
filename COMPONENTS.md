@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.11.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.12.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1680,7 +1680,9 @@ const html = await render(
 
 **Primitives:** `EmailLayout`, `EmailHeader` (branded top: monogram + project name large — `productName`, `monogram`, `logoSrc`, `align`, `divider`), `BrandMark` (the monogram; inline SVG or hosted `src`), `EmailButton` (`variant: 'primary' | 'secondary'`), `EmailHeading` (`as: 'h1' | 'h2' | 'h3'`), `EmailText` (`tone: 'default' | 'muted' | 'fine'`), `EmailDivider` (`variant: 'default' | 'accent'`), `EmailFooter` (the Tollerud footer — monogram + "A Tollerud Project" → tollerud.no; `labels`, `address`, `unsubscribeUrl`, `links`).
 
-**Templates:** `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail` — each accepts an optional `header?: EmailHeaderProps` for the branded top.
+**Templates:** `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail` — each accepts an optional `header?: EmailHeaderProps` for the branded top, plus an overridable `copy` prop (each exports a `*Copy` type; dynamic lines are functions) for rewording or i18n.
+
+**Configurability:** content + branding are fully prop-driven; template copy is overridable via `copy` (enables e.g. Norwegian); every primitive takes an optional `style` escape hatch (merged last, overrides the token defaults) for one-off tweaks. Visual design otherwise stays token-locked to the brand.
 
 **Rendering:** `render`, `pretty`, `toPlainText` (re-exported from `@react-email/render`).
 

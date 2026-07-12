@@ -79,7 +79,34 @@ const html = await render(
 
 **Templates** — `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`,
 `ReceiptEmail`. Each accepts an optional `header?: EmailHeaderProps` to render
-the branded header at the top.
+the branded header at the top, and an overridable `copy` prop (see below).
+
+### Configurability
+
+- **Content + branding** are fully prop-driven (`name`, `productName`, URLs,
+  `header`, `footer`, `labels`, …).
+- **Copy / i18n** — every template takes a `copy` prop. Each exports a `*Copy`
+  interface whose dynamic lines are functions (so interpolated values still
+  flow through) and static lines are strings. Pass any subset to reword or
+  localize; defaults are unchanged.
+
+  ```tsx
+  <WelcomeEmail
+    name="Mathias" productName="Graphify" ctaUrl={url} ctaLabel="Åpne dashbordet"
+    copy={{
+      heading: (n) => `Velkommen${n ? ', ' + n : ''}.`,
+      body: (p) => `Din ${p}-konto er klar. Ta en titt rundt.`,
+      help: 'Trenger du hjelp? Bare svar på denne e-posten.',
+    }}
+  />
+  ```
+
+- **Style escape hatch** — every primitive takes an optional `style` merged
+  **last**, overriding the token defaults for one-off tweaks:
+  `<EmailButton href={url} style={{ borderRadius: '999px' }}>Pill</EmailButton>`.
+- **Visual design** otherwise stays token-locked to the Tollerud brand by
+  default — colors, fonts, spacing, and sizes come from the shared tokens, so
+  emails stay on-brand unless you deliberately override via `style`.
 
 ### Monogram in email
 

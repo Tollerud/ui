@@ -7,6 +7,25 @@ import { EmailButton } from '../primitives/EmailButton'
 import { EmailDivider } from '../primitives/EmailDivider'
 import { EmailFooter, type EmailFooterProps } from '../primitives/EmailFooter'
 
+/**
+ * Overridable copy. Dynamic lines are functions so interpolated values still
+ * flow through; pass any subset to localize or reword (e.g. Norwegian).
+ */
+export interface WelcomeEmailCopy {
+  preview: (productName: string) => string
+  heading: (name?: string) => string
+  body: (productName: string) => string
+  help: string
+}
+
+const defaultCopy: WelcomeEmailCopy = {
+  preview: (p) => `Welcome to ${p}`,
+  heading: (name) => `Welcome${name ? `, ${name}` : ''}.`,
+  body: (p) =>
+    `Your ${p} account is ready. Jump in and take a look around — everything's set up and waiting for you.`,
+  help: "Need a hand getting started? Just reply to this email and we'll help you out.",
+}
+
 export interface WelcomeEmailProps {
   /** Recipient's first name or handle. */
   name?: string
@@ -18,6 +37,8 @@ export interface WelcomeEmailProps {
   /** Optional branded header (monogram + project name) at the top. */
   header?: EmailHeaderProps
   footer?: EmailFooterProps
+  /** Override any of the template's copy (for rewording or i18n). */
+  copy?: Partial<WelcomeEmailCopy>
 }
 
 /** Onboarding welcome email. */
@@ -28,21 +49,17 @@ export function WelcomeEmail({
   ctaLabel = 'Open your dashboard',
   header,
   footer,
+  copy,
 }: WelcomeEmailProps) {
+  const c = { ...defaultCopy, ...copy }
   return (
-    <EmailLayout preview={`Welcome to ${productName}`}>
+    <EmailLayout preview={c.preview(productName)}>
       {header ? <EmailHeader {...header} /> : null}
-      <EmailHeading>Welcome{name ? `, ${name}` : ''}.</EmailHeading>
-      <EmailText>
-        Your {productName} account is ready. Jump in and take a look around —
-        everything's set up and waiting for you.
-      </EmailText>
+      <EmailHeading>{c.heading(name)}</EmailHeading>
+      <EmailText>{c.body(productName)}</EmailText>
       <EmailButton href={ctaUrl}>{ctaLabel}</EmailButton>
       <EmailDivider variant="accent" />
-      <EmailText tone="muted">
-        Need a hand getting started? Just reply to this email and we'll help you
-        out.
-      </EmailText>
+      <EmailText tone="muted">{c.help}</EmailText>
       <EmailFooter {...footer} />
     </EmailLayout>
   )

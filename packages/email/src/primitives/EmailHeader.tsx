@@ -20,6 +20,8 @@ export interface EmailHeaderProps {
   align?: 'left' | 'center'
   /** Hairline divider beneath the header. Default true. */
   divider?: boolean
+  /** Escape hatch: inline styles merged onto the header section, overriding defaults. */
+  style?: React.CSSProperties
 }
 
 /**
@@ -35,6 +37,7 @@ export function EmailHeader({
   color = 'yellow',
   align = 'left',
   divider = true,
+  style,
 }: EmailHeaderProps) {
   const markHeight = 30
   const name = (
@@ -59,6 +62,7 @@ export function EmailHeader({
         paddingBottom: t.space[6],
         marginBottom: t.space[6],
         borderBottom: divider ? `1px solid ${t.color.border}` : undefined,
+        ...style,
       }}
     >
       {align === 'center' ? (

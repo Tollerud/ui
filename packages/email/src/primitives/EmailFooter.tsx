@@ -37,6 +37,8 @@ export interface EmailFooterProps {
   unsubscribeUrl?: string
   /** Optional secondary links (e.g. Privacy, Terms). */
   links?: EmailFooterLink[]
+  /** Escape hatch: inline styles merged onto the footer section, overriding defaults. */
+  style?: React.CSSProperties
 }
 
 /**
@@ -53,6 +55,7 @@ export function EmailFooter({
   address,
   unsubscribeUrl,
   links = [],
+  style,
 }: EmailFooterProps) {
   const l = { ...defaultLabels, ...labels }
   const attribution = l.attribution?.trim()
@@ -79,6 +82,7 @@ export function EmailFooter({
         marginTop: t.space[8],
         paddingTop: t.space[6],
         borderTop: `1px solid ${t.color.border}`,
+        ...style,
       }}
     >
       <Row>

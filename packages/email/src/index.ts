@@ -21,15 +21,22 @@ export {
   type EmailFooterLabels,
 } from './primitives/EmailFooter'
 
-// Ready-made templates.
-export { WelcomeEmail, type WelcomeEmailProps } from './templates/WelcomeEmail'
-export { VerifyEmail, type VerifyEmailProps } from './templates/VerifyEmail'
+// Ready-made templates. Each accepts `header`, `footer`, and an overridable
+// `copy` (for rewording / i18n).
+export {
+  WelcomeEmail,
+  type WelcomeEmailProps,
+  type WelcomeEmailCopy,
+} from './templates/WelcomeEmail'
+export { VerifyEmail, type VerifyEmailProps, type VerifyEmailCopy } from './templates/VerifyEmail'
 export {
   PasswordResetEmail,
   type PasswordResetEmailProps,
+  type PasswordResetEmailCopy,
 } from './templates/PasswordResetEmail'
 export {
   ReceiptEmail,
   type ReceiptEmailProps,
+  type ReceiptEmailCopy,
   type ReceiptLineItem,
 } from './templates/ReceiptEmail'

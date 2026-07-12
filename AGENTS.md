@@ -257,6 +257,23 @@ const custom = await render(
 
 Primitives: `EmailLayout`, `EmailHeader` (monogram + project name large), `BrandMark`, `EmailButton`, `EmailHeading`, `EmailText`, `EmailDivider`, `EmailFooter` (Tollerud footer → tollerud.no). Templates: `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail` (each takes optional `header`). The monogram is inline SVG by default; pass `logoSrc` a hosted image for Outlook/Gmail coverage.
 
+Configurability (≥ 4.12.0): every template takes an overridable `copy` prop (each exports a `*Copy` type; dynamic lines are functions) — reword or localize without forking. Every primitive takes an optional `style` escape hatch (merged last, overrides token defaults). Visual design otherwise stays token-locked.
+
+```tsx
+// Localize (Norwegian) via `copy`, tweak one primitive via `style`
+const html = await render(
+  <WelcomeEmail
+    name="Mathias" productName="Graphify" ctaUrl={url} ctaLabel="Åpne dashbordet"
+    copy={{
+      heading: (n) => `Velkommen${n ? ', ' + n : ''}.`,
+      body: (p) => `Din ${p}-konto er klar. Ta en titt rundt.`,
+    }}
+    footer={{ labels: { tollerudProject: 'Et Tollerud-prosjekt' } }}
+  />,
+)
+// <EmailButton href={url} style={{ borderRadius: '999px' }}>Pill</EmailButton>
+```
+
 ### Button
 
 ```tsx
