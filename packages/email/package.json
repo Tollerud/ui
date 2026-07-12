@@ -30,8 +30,7 @@
   ],
   "scripts": {
     "build": "tsup --config tsup.config.ts",
-    "typecheck": "tsc --noEmit",
-    "build:previews": "node scripts/build-previews.mjs"
+    "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
     "react": ">=18",

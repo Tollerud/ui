@@ -19,11 +19,6 @@ npm run docs:props      # regenerates PROPS.generated.md + docs-app/lib/props-da
 npm run validate        # also updates fixtures/consumer/package.json + package-lock.json
 ```
 
-If any `@tollerud/email` template or primitive changed, also regenerate the docs email previews:
-```bash
-npm run gen:email-previews   # rewrites docs-app/public/email/*.html (embedded in the docs Email page)
-```
-
 Stage all generated files — CI fails if they are stale.
 
 This is enforced by a git pre-commit hook (`scripts/pre-commit-release-check.mjs`). The hook will block a commit that bumps the version without touching all required files.

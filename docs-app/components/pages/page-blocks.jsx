@@ -54,9 +54,45 @@ function PageBlocks() {
           </>}/>
       </Section>
 
-      <Section title="Footer" desc="Site footer with monogram lockup and attribution line. Exported from @tollerud/ui (also available as @tollerud/footer).">
+      <Section title="Footer" desc="Site footer with monogram lockup and attribution line. Exported from @tollerud/ui (also available as @tollerud/footer). labels sets the wordmark; layout switches stacking; accent uses the yellow surface.">
         <Demo name="footer" variant="col" code={`<Footer labels={{ tollerudProject: 'A Tollerud Project', allRightsReserved: 'All rights reserved.' }} />`}>
           <Footer labels={{ tollerudProject: 'A Tollerud Project', allRightsReserved: 'All rights reserved.' }} />
+        </Demo>
+        <SubHead>Attribution</SubHead>
+        <Demo
+          name="footer-attribution"
+          variant="col"
+          code={`<Footer
+  labels={{
+    tollerudProject: 'A Tollerud Project',
+    attribution: 'for Advania Norge AS.',
+    allRightsReserved: 'All rights reserved.',
+  }}
+/>`}
+        >
+          <Footer
+            labels={{
+              tollerudProject: 'A Tollerud Project',
+              attribution: 'for Advania Norge AS.',
+              allRightsReserved: 'All rights reserved.',
+            }}
+          />
+        </Demo>
+        <SubHead>Row layout</SubHead>
+        <Demo
+          name="footer-row"
+          variant="col"
+          code={`<Footer layout="row" labels={{ tollerudProject: 'A Tollerud Project', allRightsReserved: 'All rights reserved.' }} />`}
+        >
+          <Footer layout="row" labels={{ tollerudProject: 'A Tollerud Project', allRightsReserved: 'All rights reserved.' }} />
+        </Demo>
+        <SubHead>Accent surface</SubHead>
+        <Demo
+          name="footer-accent"
+          variant="col"
+          code={`<Footer accent labels={{ tollerudProject: 'A Tollerud Project', allRightsReserved: 'All rights reserved.' }} />`}
+        >
+          <Footer accent labels={{ tollerudProject: 'A Tollerud Project', allRightsReserved: 'All rights reserved.' }} />
         </Demo>
       </Section>
 
