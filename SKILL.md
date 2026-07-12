@@ -829,6 +829,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 
 ## Version notes
 
+- **`@tollerud/email` package (≥ 4.10.0)** — HTML email is a separate render target, so it ships as its own package, not through `@tollerud/ui`. It shares *tokens* (not components) via the generated `lib/tokens.ts` — token values are inlined as literals because `var(--tollerud-*)` doesn't resolve in mail clients. Built on React Email. Primitives: `EmailLayout`, `EmailButton`, `EmailHeading`, `EmailText`, `EmailDivider`, `EmailFooter`. Templates: `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail`. Render with the re-exported `render`. See `packages/email/README.md`. Do **not** import web `@tollerud/ui` components into emails — they break in Outlook/Gmail.
 - **`asChild` / `buttonVariants` require `@tollerud/ui >= 1.0.7`**
 - **Server Component import safety requires `@tollerud/ui >= 1.0.8`** (earlier versions crash when imported into a Server Component file — the bundle wasn't marked `'use client'`)
 - **19 new components (`Divider`, `Pill`, `Avatar`/`AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `FormRow`, `Accordion`, `Slider`, `PasswordInput`, `Combobox`, `DatePicker`, `FileUpload`, `TagInput`, `PricingCard`) require `>= 1.0.9`**

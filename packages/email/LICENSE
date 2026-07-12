@@ -1,0 +1,95 @@
+MIT License
+
+Copyright (c) 2026 Mathias Tollerud
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+TRADEMARK AND BRAND ASSET NOTICE
+
+The MIT license above applies to the source code and non-brand documentation
+in this repository. It does NOT grant any rights to the Tollerud trademarks,
+trade dress, or brand assets described below.
+
+The following are trademarks and brand assets of Mathias Tollerud
+("the Mark Owner") and are NOT covered by the MIT license:
+
+  - The name "Tollerud" when used as a brand or product identifier
+  - The Tollerud monogram and logotype (including geometry embedded in source
+    and all files under brand/)
+  - Tollerud avatars and portrait assets (files under brand/)
+  - The package names "@tollerud/ui" and "@tollerud/footer" as brand identifiers
+  - The yellow (#FFFF00) + black/white visual identity when used to identify
+    Tollerud UI as a product or design system (not when using Tollerud UI
+    tokens and components inside your app as intended)
+
+PERMITTED USES
+
+You MAY:
+
+  1. Reference "Tollerud UI" or "@tollerud/ui" accurately in documentation,
+     blog posts, talks, or dependency lists to describe what your project uses.
+
+  2. Use Tollerud brand assets (monogram, logotype, avatars, and files under
+     brand/) when your project declares a dependency on @tollerud/ui or
+     @tollerud/footer — through the component APIs (e.g. <Footer />,
+     <Monogram />) or documented subpath imports (e.g.
+     @tollerud/ui/brand/tollerud-avatar.svg). Use in your application's UI
+     only; do not repackage or redistribute the assets as a separate design
+     system, asset pack, or template.
+
+  3. Build and distribute products — including commercial and agency work —
+     using @tollerud/ui components, provided that:
+       a. Tollerud brand assets are NOT presented as your own or your client's
+          brand, AND
+       b. Credit to Tollerud is included somewhere in your project
+          (e.g. in the README, a credits page, or package.json), such as:
+          "UI components powered by Tollerud UI (github.com/Tollerud/ui)"
+
+PROHIBITED USES
+
+You MAY NOT, without prior written permission from the Mark Owner:
+
+  1. Use "Tollerud", the monogram, avatars, or any confusingly similar mark as
+     the name or logo of your own product, service, company, or design system.
+
+  2. Modify or adapt Tollerud brand assets and present the result as an
+     official or affiliated Tollerud asset.
+
+  3. Fork this repository and retain Tollerud brand assets (files under brand/,
+     monogram geometry, or the @tollerud/* package namespace) in any publicly
+     distributed or published fork. Forks must remove or replace all Tollerud
+     brand assets and must not use the @tollerud npm scope.
+
+  4. Imply or suggest endorsement, sponsorship, or affiliation with Mathias
+     Tollerud or Tollerud UI without prior written agreement.
+
+  5. Extract brand assets from the package for standalone redistribution,
+     resale, or inclusion in another npm package, design system, or template
+     library — even if the surrounding code is MIT-licensed.
+
+Brand asset terms for files under brand/ are also described in brand/LICENSE.
+
+REQUESTING PERMISSION
+
+For uses not covered above, contact: mathias@tollerud.no
+
+This trademark notice does not alter the terms of the MIT license as applied
+to the software portions of this repository.

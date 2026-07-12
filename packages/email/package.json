@@ -1,13 +1,13 @@
 {
-  "name": "@tollerud/footer",
+  "name": "@tollerud/email",
   "version": "4.10.0",
-  "description": "Tollerud branded footer — synced from @tollerud/ui Footer export",
+  "description": "Tollerud branded email primitives + templates — React Email, tokens synced from @tollerud/ui",
   "private": false,
   "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Tollerud/ui.git",
-    "directory": "packages/footer"
+    "directory": "packages/email"
   },
   "homepage": "https://design.tollerud.dev/",
   "license": "MIT",
@@ -37,8 +37,8 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.0.0"
+    "@react-email/components": "^1.0.12",
+    "@react-email/render": "^2.1.0"
   },
   "publishConfig": {
     "access": "public"

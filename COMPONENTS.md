@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.9.9**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.10.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -51,6 +51,8 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 **Visual & marketing:** `Monogram`, `GlowCard`, `NoirGlowBackground`, `BentoDashboard`, `TimeSeriesChart`, `TIME_SERIES_PRESETS`, `formatChartDecimal`, `formatChartNumber`, `formatChartDateShort`, `formatChartDateLong`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `HeroBlock`, `FeatureCard`, `CTABand`
 
 **Footer:** `Footer` — also published as [`@tollerud/footer`](https://www.npmjs.com/package/@tollerud/footer)
+
+**Email:** HTML email is a separate render target — see the [`@tollerud/email`](#tollerudemail--html-email) sibling package below, not the `@tollerud/ui` exports above.
 
 ## NoirGlowBackground
 
@@ -1655,3 +1657,31 @@ Footer bar with Tollerud monogram and branding link. The component is re-exporte
 | Card | ✅ | ✅ | — | — | — | — | — |
 | StatusDot | ✅ | — | — | — | — | — | — |
 | Footer | ✅ | — | — | — | — | — | — |
+
+## @tollerud/email — HTML email
+
+HTML email is a **separate render target** from the browser (table layout, inline-only styles, no CSS variables), so it ships as its own package — `@tollerud/email` — rather than through the `@tollerud/ui` exports above. It shares Tollerud's *design tokens*, not the web components: token values are inlined as literals via the generated `lib/tokens.ts`, because `var(--tollerud-*)` does not resolve in mail clients.
+
+Built on [React Email](https://react.email/). Each project composes its own templates from the shared primitives.
+
+```tsx
+import { render, WelcomeEmail } from '@tollerud/email'
+
+const html = await render(
+  <WelcomeEmail
+    name="Mathias"
+    productName="Graphify"
+    ctaUrl="https://app.example.com/dashboard"
+    footer={{ brandName: 'Tollerud', address: 'Oslo, Norway', unsubscribeUrl }}
+  />,
+)
+// hand `html` to your mailer (Resend, SES, Nodemailer, …)
+```
+
+**Primitives:** `EmailLayout`, `EmailButton` (`variant: 'primary' | 'secondary'`), `EmailHeading` (`as: 'h1' | 'h2' | 'h3'`), `EmailText` (`tone: 'default' | 'muted' | 'fine'`), `EmailDivider` (`variant: 'default' | 'accent'`), `EmailFooter`.
+
+**Templates:** `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail`.
+
+**Rendering:** `render`, `pretty`, `toPlainText` (re-exported from `@react-email/render`).
+
+Dark-mode: primitives carry explicit `bgcolor` + `color-scheme` meta so the noir palette survives clients that force inversion. See `packages/email/README.md` for client-support caveats.

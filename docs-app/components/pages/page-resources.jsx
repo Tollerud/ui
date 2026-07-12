@@ -17,6 +17,46 @@ function PageResources({ go }) {
         lede="Migration notes, agent skills, and contributor workflows for @tollerud/ui."
       />
 
+      <Section
+        title="Email (@tollerud/email)"
+        desc="HTML email is a separate render target — table layout, inline styles, no CSS variables. It ships as its own package that shares Tollerud's tokens (inlined as literals), not the web components. Built on React Email. Never render @tollerud/ui components into email."
+      >
+        <div className="ds-col" style={{ gap: 12 }}>
+          <Card>
+            <div style={{ fontWeight: 600, color: 'var(--foreground)', marginBottom: 6 }}>
+              Primitives &amp; templates
+            </div>
+            <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
+              Primitives: <code className="ds-mono">EmailLayout</code>, <code className="ds-mono">EmailButton</code>, <code className="ds-mono">EmailHeading</code>, <code className="ds-mono">EmailText</code>, <code className="ds-mono">EmailDivider</code>, <code className="ds-mono">EmailFooter</code>. Templates: <code className="ds-mono">WelcomeEmail</code>, <code className="ds-mono">VerifyEmail</code>, <code className="ds-mono">PasswordResetEmail</code>, <code className="ds-mono">ReceiptEmail</code>. Render with the re-exported <code className="ds-mono">render</code>.
+            </p>
+          </Card>
+          <CodeSnippet
+            name="email.tsx"
+            code={`import { render, WelcomeEmail, EmailLayout, EmailButton, EmailText } from '@tollerud/email'
+
+// Ready-made template
+const html = await render(
+  <WelcomeEmail name="Mathias" productName="Graphify" ctaUrl={dashboardUrl} />,
+)
+
+// Or compose your own from primitives
+const custom = await render(
+  <EmailLayout preview="Your report is ready">
+    <EmailText>Your weekly report is ready to view.</EmailText>
+    <EmailButton href={reportUrl}>View report</EmailButton>
+  </EmailLayout>,
+)
+// hand the HTML to your mailer (Resend, SES, Nodemailer, …)`}
+          />
+          <Button asChild variant="secondary" size="sm">
+            <a href="https://github.com/Tollerud/ui/blob/main/packages/email/README.md" target="_blank" rel="noreferrer">
+              @tollerud/email README
+              <Icons.arrowRight size={14} />
+            </a>
+          </Button>
+        </div>
+      </Section>
+
       <Section title="Migration" desc="Breaking changes ship with CHANGELOG entries. Recent majors to know about.">
         <div className="ds-col" style={{ gap: 12 }}>
           <Card>

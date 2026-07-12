@@ -1,10 +1,10 @@
 # Tollerud User Interface — Roadmap
 
-Last updated: 2026-07-06
+Last updated: 2026-07-12
 
 Living roadmap for `@tollerud/ui`. Completed planning docs: [docs/archive/](docs/archive/).
 
-## npm package (components/*.tsx) — v4.9.9
+## npm package (components/*.tsx) — v4.10.0
 
 Shipped exports are documented in [SKILL.md](SKILL.md) and [COMPONENTS.md](COMPONENTS.md). Live demos: [design.tollerud.dev](https://design.tollerud.dev/).
 
@@ -12,8 +12,11 @@ Shipped exports are documented in [SKILL.md](SKILL.md) and [COMPONENTS.md](COMPO
 
 - [ ] Broader unit + a11y test coverage on interactive components (Combobox, DatePicker, CommandMenu)
 - [ ] Extend Playwright for subpath-import smoke page in docs or fixture
+- [ ] `@tollerud/email` — expand template set (magic-link, invoice, digest) and add cross-client snapshot checks
 
 ### Recently completed
+
+**@tollerud/email** (v4.10.0) — new sibling package for on-brand HTML email built on React Email: email-safe primitives + ready templates, sharing tokens (not components) with `@tollerud/ui` via the generated `lib/tokens.ts`. See [CHANGELOG.md](CHANGELOG.md).
 
 **First-class charts** — all six phases (v4.8.42–46): shared interaction core, keyboard navigation + tooltips across TimeSeriesChart / AreaChart / Sparkline / BarChart / Donut, tokenized theming (`--chart-1…5` palette), screen-reader data tables, and multi-series TimeSeriesChart. See [docs/archive/CHARTS_PLAN.md](docs/archive/CHARTS_PLAN.md).
 

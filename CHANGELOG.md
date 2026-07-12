@@ -7,6 +7,28 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.10.0 — 2026-07-12 — @tollerud/email package + shared token module
+
+### Added
+
+- `@tollerud/email` — a new sibling package for building on-brand, client-tested HTML emails with React Email. Ships email-safe primitives (`EmailLayout`, `EmailButton`, `EmailHeading`, `EmailText`, `EmailDivider`, `EmailFooter`) and ready-made templates (`WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail`), plus a re-exported `render`.
+
+- `lib/tokens.ts` — a generated JS token module (79 concrete values) parsed from the `:root` block of `tokens.css`. It exists so non-CSS consumers can read literal token values; `tokens.css` remains the author-facing source of truth. Email needs this because `var(--tollerud-*)` does not resolve in mail clients — every value is inlined.
+
+### Why email is a separate package
+
+Email is a different render target from the browser: table-based layout, inline-only styles, no CSS custom properties, and aggressive client quirks (Outlook, Gmail). Shipping the web `@tollerud/ui` components into inboxes would break in many clients, so `@tollerud/email` shares the *design tokens* rather than the components. Each project composes its own templates from the shared primitives.
+
+### Tooling
+
+- `npm run gen:tokens` regenerates `lib/tokens.ts`; `verify:tokens` drift-checks it in `validate`.
+
+- `npm run sync:email` syncs the email package's tokens + version; `verify:email-sync` enforces lockstep in `validate`. `sync:registry` now version-locks both `@tollerud/footer` and `@tollerud/email`.
+
+### Dark-mode note
+
+The email primitives carry explicit `bgcolor` + `color-scheme` meta so the noir palette survives clients that force color inversion. See `packages/email/README.md`.
+
 ## 4.9.9 — 2026-07-10 — CardChange flat (unchanged) state
 
 ### Changed
