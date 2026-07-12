@@ -41,6 +41,22 @@ jobs:
           grep -q 'globals-v3.css' /tmp/pack.txt
           grep -q 'GETTING_STARTED.md' /tmp/pack.txt
 
+      - name: Verify @tollerud/email tarball contents
+        working-directory: packages/email
+        run: |
+          npm install
+          npm run build
+          npm pack --dry-run 2>&1 | tee /tmp/pack-email.txt
+          grep -q 'dist/index.js' /tmp/pack-email.txt
+          grep -q 'dist/index.d.ts' /tmp/pack-email.txt
+          grep -q 'README.md' /tmp/pack-email.txt
+          grep -q 'LICENSE' /tmp/pack-email.txt
+          # Guard: never ship source or node_modules
+          if grep -qE 'src/|node_modules/' /tmp/pack-email.txt; then
+            echo "email tarball contains src/ or node_modules/ — check package.json files field"
+            exit 1
+          fi
+
   e2e:
     runs-on: ubuntu-latest
     steps:
@@ -113,9 +129,19 @@ jobs:
       - run: npm run sync:footer
         if: steps.version_check.outputs.skip == 'false'
 
+      - run: npm run sync:email
+        if: steps.version_check.outputs.skip == 'false'
+
       - name: Build @tollerud/footer
         if: steps.version_check.outputs.skip == 'false'
         working-directory: packages/footer
+        run: |
+          npm install
+          npm run build
+
+      - name: Build @tollerud/email
+        if: steps.version_check.outputs.skip == 'false'
+        working-directory: packages/email
         run: |
           npm install
           npm run build
@@ -133,8 +159,13 @@ jobs:
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
 
-      # Requires Trusted Publishers (OIDC) on npmjs.com for @tollerud/ui + @tollerud/footer.
+      # Requires Trusted Publishers (OIDC) on npmjs.com for @tollerud/ui + @tollerud/footer + @tollerud/email.
       # See: https://docs.npmjs.com/trusted-publishers
+      #
+      # NOTE: @tollerud/email is a new package. Its first publish needs a Trusted Publisher
+      # configured for the package on npmjs.com (or a one-time manual `npm publish`). Until
+      # then the email publish step is best-effort (continue-on-error) so the ui/footer
+      # release and GitHub Release still complete; re-run once trusted publishing is set up.
       #
       # --ignore-scripts skips prepublishOnly. The gate jobs (validate + e2e) already ran all
       # checks; re-running them here via prepublishOnly causes test:consumer to call
@@ -165,6 +196,27 @@ jobs:
             if [ "$LOCAL" = "$PUBLISHED" ]; then
               echo "Version $LOCAL already on npm — treating as success."
             else
+              exit 1
+            fi
+          fi
+
+      # Best-effort: a brand-new package's first OIDC publish needs a Trusted Publisher
+      # configured on npmjs.com. If it isn't yet, don't fail the release — log and move on.
+      - name: Publish @tollerud/email to npm
+        if: steps.version_check.outputs.skip == 'false' && steps.pre_publish.outputs.skip != 'true'
+        continue-on-error: true
+        working-directory: packages/email
+        run: |
+          set -e
+          if ! npm publish --provenance --access public --ignore-scripts; then
+            LOCAL=$(node -p "require('./package.json').version")
+            PUBLISHED=$(npm view @tollerud/email version 2>/dev/null || echo "0.0.0")
+            if [ "$LOCAL" = "$PUBLISHED" ]; then
+              echo "Version $LOCAL already on npm — treating as success."
+            else
+              echo "::warning::@tollerud/email@$LOCAL was not published. If this is the"
+              echo "::warning::first publish, configure a Trusted Publisher for @tollerud/email"
+              echo "::warning::on npmjs.com (or run a one-time manual npm publish), then re-run."
               exit 1
             fi
           fi
