@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.10.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.11.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1678,10 +1678,10 @@ const html = await render(
 // hand `html` to your mailer (Resend, SES, Nodemailer, …)
 ```
 
-**Primitives:** `EmailLayout`, `EmailButton` (`variant: 'primary' | 'secondary'`), `EmailHeading` (`as: 'h1' | 'h2' | 'h3'`), `EmailText` (`tone: 'default' | 'muted' | 'fine'`), `EmailDivider` (`variant: 'default' | 'accent'`), `EmailFooter`.
+**Primitives:** `EmailLayout`, `EmailHeader` (branded top: monogram + project name large — `productName`, `monogram`, `logoSrc`, `align`, `divider`), `BrandMark` (the monogram; inline SVG or hosted `src`), `EmailButton` (`variant: 'primary' | 'secondary'`), `EmailHeading` (`as: 'h1' | 'h2' | 'h3'`), `EmailText` (`tone: 'default' | 'muted' | 'fine'`), `EmailDivider` (`variant: 'default' | 'accent'`), `EmailFooter` (the Tollerud footer — monogram + "A Tollerud Project" → tollerud.no; `labels`, `address`, `unsubscribeUrl`, `links`).
 
-**Templates:** `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail`.
+**Templates:** `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail` — each accepts an optional `header?: EmailHeaderProps` for the branded top.
 
 **Rendering:** `render`, `pretty`, `toPlainText` (re-exported from `@react-email/render`).
 
-Dark-mode: primitives carry explicit `bgcolor` + `color-scheme` meta so the noir palette survives clients that force inversion. See `packages/email/README.md` for client-support caveats.
+Dark-mode: primitives carry explicit `bgcolor` + `color-scheme` meta so the noir palette survives clients that force inversion. The monogram is inline SVG by default (renders in Apple Mail / iOS; pass `logoSrc` for a hosted image where Outlook/Gmail strip SVG). See `packages/email/README.md` for client-support caveats.

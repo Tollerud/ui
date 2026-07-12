@@ -1,6 +1,6 @@
 {
   "name": "@tollerud/footer",
-  "version": "4.10.0",
+  "version": "4.11.0",
   "description": "Tollerud branded footer — synced from @tollerud/ui Footer export",
   "private": false,
   "type": "module",

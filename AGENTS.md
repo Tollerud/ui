@@ -230,24 +230,32 @@ import { Footer, Monogram } from '@tollerud/ui' // or: import { Footer } from '@
 HTML email is a **separate render target** — table layout, inline styles, no CSS variables. Never render `@tollerud/ui` web components into email (they break in Outlook/Gmail). Use `@tollerud/email`, which shares Tollerud's *tokens* (inlined as literals) and is built on React Email. Compose your own templates from the primitives, or use a ready template:
 
 ```tsx
-import { render, WelcomeEmail, EmailLayout, EmailButton, EmailText } from '@tollerud/email'
+import { render, WelcomeEmail, EmailLayout, EmailHeader, EmailButton, EmailText, EmailFooter } from '@tollerud/email'
 
-// Ready template
+// Ready template — opt into the branded header (monogram + project name) via `header`
 const html = await render(
-  <WelcomeEmail name="Mathias" productName="Graphify" ctaUrl={dashboardUrl} />,
+  <WelcomeEmail
+    name="Mathias"
+    productName="Graphify"
+    ctaUrl={dashboardUrl}
+    header={{ productName: 'Graphify' }}
+    footer={{ labels: { tollerudProject: 'A Tollerud Project' }, unsubscribeUrl }}
+  />,
 )
 
 // Or compose your own
 const custom = await render(
   <EmailLayout preview="Your report is ready">
+    <EmailHeader productName="Graphify" />
     <EmailText>Your weekly report is ready to view.</EmailText>
     <EmailButton href={reportUrl}>View report</EmailButton>
+    <EmailFooter unsubscribeUrl={unsubscribeUrl} />
   </EmailLayout>,
 )
 // hand the HTML to your mailer (Resend, SES, Nodemailer, …)
 ```
 
-Primitives: `EmailLayout`, `EmailButton`, `EmailHeading`, `EmailText`, `EmailDivider`, `EmailFooter`. Templates: `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail`.
+Primitives: `EmailLayout`, `EmailHeader` (monogram + project name large), `BrandMark`, `EmailButton`, `EmailHeading`, `EmailText`, `EmailDivider`, `EmailFooter` (Tollerud footer → tollerud.no). Templates: `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail` (each takes optional `header`). The monogram is inline SVG by default; pass `logoSrc` a hosted image for Outlook/Gmail coverage.
 
 ### Button
 

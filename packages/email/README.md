@@ -35,7 +35,8 @@ const html = await render(
     name="Mathias"
     productName="Graphify"
     ctaUrl="https://app.example.com/dashboard"
-    footer={{ brandName: 'Tollerud', address: 'Oslo, Norway', unsubscribeUrl }}
+    header={{ productName: 'Graphify' }}
+    footer={{ labels: { tollerudProject: 'A Tollerud Project' }, address: 'Oslo, Norway', unsubscribeUrl }}
   />,
 )
 
@@ -45,13 +46,15 @@ await mailer.send({ to, subject: 'Welcome to Graphify', html })
 Or build your own from primitives:
 
 ```tsx
-import { render, EmailLayout, EmailHeading, EmailText, EmailButton } from '@tollerud/email'
+import { render, EmailLayout, EmailHeader, EmailHeading, EmailText, EmailButton, EmailFooter } from '@tollerud/email'
 
 const html = await render(
   <EmailLayout preview="Your report is ready">
+    <EmailHeader productName="Graphify" />
     <EmailHeading>Weekly report</EmailHeading>
     <EmailText>Your report for last week is ready to view.</EmailText>
     <EmailButton href={reportUrl}>View report</EmailButton>
+    <EmailFooter unsubscribeUrl={reportUrl} />
   </EmailLayout>,
 )
 ```
@@ -66,14 +69,26 @@ const html = await render(
 | Component | Key props |
 |-----------|-----------|
 | `EmailLayout` | `preview?`, `lang?` — the `<Html>/<Head>/<Body>` shell + dark surface |
+| `EmailHeader` | `productName`, `monogram?`, `logoSrc?`, `color?`, `align?: 'left' \| 'center'`, `divider?` — branded top (monogram + project name large) |
+| `BrandMark` | `color?: 'yellow' \| 'white' \| 'black'`, `height?`, `src?` — the monogram (inline SVG, or hosted image via `src`) |
 | `EmailButton` | `href`, `variant?: 'primary' \| 'secondary'` |
 | `EmailHeading` | `as?: 'h1' \| 'h2' \| 'h3'` |
 | `EmailText` | `tone?: 'default' \| 'muted' \| 'fine'` |
 | `EmailDivider` | `variant?: 'default' \| 'accent'` |
-| `EmailFooter` | `brandName?`, `address?`, `unsubscribeUrl?`, `links?` |
+| `EmailFooter` | `labels?` (`tollerudProject`/`attribution`/`allRightsReserved`), `monogram?`, `logoSrc?`, `address?`, `unsubscribeUrl?`, `links?` — the Tollerud footer, → tollerud.no |
 
 **Templates** — `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`,
-`ReceiptEmail`.
+`ReceiptEmail`. Each accepts an optional `header?: EmailHeaderProps` to render
+the branded header at the top.
+
+### Monogram in email
+
+`EmailHeader` and `EmailFooter` show the Tollerud monogram via `BrandMark`. By
+default it's an **inline SVG** — crisp in Apple Mail / iOS Mail / some webmail,
+but **stripped by Outlook desktop and Gmail**. Where full coverage matters, host
+a PNG/GIF of the monogram and pass its URL as `logoSrc` (header) or `logoSrc`
+(footer). The large project name in the header always renders, so the brand
+reads even where the mark doesn't.
 
 **Tokens** — `tokens` (raw values, synced from `@tollerud/ui`) and `emailTheme`
 (email semantic mapping).

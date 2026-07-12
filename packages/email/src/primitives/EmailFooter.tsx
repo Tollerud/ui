@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Column, Link, Row, Section, Text } from '@react-email/components'
+import { BrandMark, type BrandMarkColor } from './BrandMark'
 import { emailTheme as t } from '../theme'
 
 export interface EmailFooterLink {
@@ -7,29 +8,63 @@ export interface EmailFooterLink {
   href: string
 }
 
+export interface EmailFooterLabels {
+  /** Text for the tollerud.no link. Default "A Tollerud Project". */
+  tollerudProject: string
+  /** Optional middle segment after the link (e.g. "for Advania Norge AS."). */
+  attribution?: string
+  /** Default "All rights reserved." */
+  allRightsReserved: string
+}
+
+const defaultLabels: EmailFooterLabels = {
+  tollerudProject: 'A Tollerud Project',
+  allRightsReserved: 'All rights reserved.',
+}
+
 export interface EmailFooterProps {
-  /** Company / sender name shown in the copyright line. */
-  brandName?: string
-  /** Optional physical address line (CAN-SPAM compliance). */
+  /** Wordmark labels — mirrors the web Footer's FooterLabels. */
+  labels?: Partial<EmailFooterLabels>
+  /** Show the Tollerud monogram. Default true. */
+  monogram?: boolean
+  /** Hosted image URL for the monogram (recommended — see BrandMark). */
+  logoSrc?: string
+  /** Monogram color. Default yellow. */
+  color?: BrandMarkColor
+  /** Optional physical address line (CAN-SPAM). */
   address?: string
-  /** Optional unsubscribe URL — rendered as a link when provided. */
+  /** Optional unsubscribe URL — rendered as a link when provided (CAN-SPAM). */
   unsubscribeUrl?: string
   /** Optional secondary links (e.g. Privacy, Terms). */
   links?: EmailFooterLink[]
 }
 
 /**
- * Email footer echoing the web Footer's restrained, monochrome tone. Kept
- * table-based (Row/Column) so it aligns in Outlook. Include an address and
- * unsubscribe link for bulk mail to stay CAN-SPAM compliant.
+ * The Tollerud email footer — monogram + the "A Tollerud Project" wordmark
+ * linking to tollerud.no, mirroring the web Footer. Table-based (Row/Column)
+ * so it aligns in Outlook. Pass `address` + `unsubscribeUrl` for bulk mail to
+ * stay CAN-SPAM compliant.
  */
 export function EmailFooter({
-  brandName = 'Tollerud',
+  labels,
+  monogram = true,
+  logoSrc,
+  color = 'yellow',
   address,
   unsubscribeUrl,
   links = [],
 }: EmailFooterProps) {
+  const l = { ...defaultLabels, ...labels }
+  const attribution = l.attribution?.trim()
   const year = new Date().getFullYear()
+
+  const wordmark = {
+    margin: 0,
+    color: t.color.textSecondary,
+    fontFamily: t.font.sans,
+    fontSize: t.size.sm,
+    lineHeight: 1.6,
+  } as const
   const fine = {
     margin: 0,
     color: t.color.textMuted,
@@ -37,31 +72,56 @@ export function EmailFooter({
     fontSize: t.size.xs,
     lineHeight: 1.6,
   } as const
+
   return (
-    <Section style={{ padding: `${t.space[6]} ${t.space[4]} 0` }}>
+    <Section
+      style={{
+        marginTop: t.space[8],
+        paddingTop: t.space[6],
+        borderTop: `1px solid ${t.color.border}`,
+      }}
+    >
       <Row>
-        <Column>
-          <Text style={fine}>
-            © {year} {brandName}
-            {address ? ` · ${address}` : ''}
+        {monogram ? (
+          <Column style={{ width: '1%', paddingRight: t.space[3], verticalAlign: 'middle' }}>
+            <BrandMark color={color} height={20} src={logoSrc} />
+          </Column>
+        ) : null}
+        <Column style={{ verticalAlign: 'middle' }}>
+          <Text style={wordmark}>
+            <Link
+              href="https://tollerud.no"
+              style={{
+                color: t.color.textSecondary,
+                textDecoration: 'underline',
+                textDecorationColor: t.color.accent,
+                textUnderlineOffset: '4px',
+              }}
+            >
+              {l.tollerudProject}
+            </Link>
+            {attribution ? ` ${attribution}` : ''} {l.allRightsReserved}
           </Text>
         </Column>
       </Row>
-      {(links.length > 0 || unsubscribeUrl) && (
+
+      {(address || links.length > 0 || unsubscribeUrl) && (
         <Row>
           <Column>
-            <Text style={{ ...fine, marginTop: t.space[2] }}>
-              {links.map((l, i) => (
-                <React.Fragment key={l.href}>
-                  {i > 0 ? ' · ' : ''}
-                  <Link href={l.href} style={{ color: t.color.textSecondary }}>
-                    {l.label}
+            <Text style={{ ...fine, marginTop: t.space[3] }}>
+              {`© ${year}`}
+              {address ? ` · ${address}` : ''}
+              {links.map((link) => (
+                <React.Fragment key={link.href}>
+                  {' · '}
+                  <Link href={link.href} style={{ color: t.color.textSecondary }}>
+                    {link.label}
                   </Link>
                 </React.Fragment>
               ))}
               {unsubscribeUrl ? (
                 <>
-                  {links.length > 0 ? ' · ' : ''}
+                  {' · '}
                   <Link href={unsubscribeUrl} style={{ color: t.color.textSecondary }}>
                     Unsubscribe
                   </Link>

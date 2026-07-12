@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.11.0 — 2026-07-12 — Email branded header + Tollerud footer
+
+### Added
+
+- `@tollerud/email` `EmailHeader` — optional branded header ("logo lockup"): the Tollerud monogram beside the project name in large display type, with an optional hairline divider. Props: `productName`, `monogram` (default `true`), `logoSrc`/`logoAlt` (hosted-image escape hatch), `color`, `align` (`'left' | 'center'`), `divider`.
+
+- `@tollerud/email` `BrandMark` — the Tollerud monogram for email. Inline SVG by default (renders in Apple Mail / iOS Mail / some webmail); pass `src` for a hosted image where clients strip SVG (Outlook desktop, Gmail). `color` (`'yellow' | 'white' | 'black'`), `height`.
+
+- All four templates (`WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail`) gain an optional `header?: EmailHeaderProps` — pass it to render the branded header at the top.
+
+### Changed
+
+- `@tollerud/email` `EmailFooter` now renders the real Tollerud footer — the monogram plus the "A Tollerud Project" wordmark linking to tollerud.no, mirroring the web `Footer`. The monogram geometry is synced from `components/monogram-geometry.ts` (single source of truth, shared with `@tollerud/footer`).
+
+### Breaking
+
+- `@tollerud/email` `EmailFooter` props changed. The generic `brandName` prop was removed in favor of `labels` (mirroring the web `Footer` `FooterLabels`: `tollerudProject`, `attribution?`, `allRightsReserved`), plus `monogram` / `logoSrc` / `color`. `address`, `unsubscribeUrl`, and `links` are unchanged. Migrate `footer={{ brandName: 'X', … }}` to `footer={{ labels: { tollerudProject: 'A Tollerud Project' }, … }}`.
+
 ## 4.10.0 — 2026-07-12 — @tollerud/email package + shared token module
 
 ### Added

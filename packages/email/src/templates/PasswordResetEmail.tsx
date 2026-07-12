@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { EmailLayout } from '../primitives/EmailLayout'
+import { EmailHeader, type EmailHeaderProps } from '../primitives/EmailHeader'
 import { EmailHeading } from '../primitives/EmailHeading'
 import { EmailText } from '../primitives/EmailText'
 import { EmailButton } from '../primitives/EmailButton'
@@ -12,6 +13,8 @@ export interface PasswordResetEmailProps {
   resetUrl: string
   /** Optional expiry hint, e.g. "1 hour". */
   expiresIn?: string
+  /** Optional branded header (monogram + project name) at the top. */
+  header?: EmailHeaderProps
   footer?: EmailFooterProps
 }
 
@@ -21,10 +24,12 @@ export function PasswordResetEmail({
   productName = 'Tollerud',
   resetUrl,
   expiresIn = '1 hour',
+  header,
   footer,
 }: PasswordResetEmailProps) {
   return (
     <EmailLayout preview={`Reset your ${productName} password`}>
+      {header ? <EmailHeader {...header} /> : null}
       <EmailHeading>Reset your password</EmailHeading>
       <EmailText>
         {name ? `Hi ${name}, we` : 'We'} received a request to reset the password

@@ -26,14 +26,19 @@ if (emailPkg.version !== pkg.version) {
   process.exit(1)
 }
 
-const tokensPath = join(root, 'packages/email/src/tokens.ts')
-const before = readFileSync(tokensPath, 'utf8')
+const syncedFiles = [
+  'packages/email/src/tokens.ts',
+  'packages/email/src/monogram-geometry.ts',
+]
+const before = syncedFiles.map((f) => readFileSync(join(root, f), 'utf8'))
 execSync('node scripts/sync-email-package.mjs', { cwd: root, stdio: 'pipe' })
-const after = readFileSync(tokensPath, 'utf8')
+const after = syncedFiles.map((f) => readFileSync(join(root, f), 'utf8'))
 
-if (before !== after) {
-  console.error('packages/email/src/tokens.ts is out of sync — run npm run sync:email')
-  process.exit(1)
+for (let i = 0; i < syncedFiles.length; i++) {
+  if (before[i] !== after[i]) {
+    console.error(`${syncedFiles[i]} is out of sync — run npm run sync:email`)
+    process.exit(1)
+  }
 }
 
 console.log(`Email package lockstep OK (v${pkg.version})`)

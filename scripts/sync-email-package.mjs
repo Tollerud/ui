@@ -2,11 +2,13 @@
 /**
  * Syncs @tollerud/email with @tollerud/ui:
  *   - copies lib/tokens.ts → packages/email/src/tokens.ts (token source of truth)
+ *   - copies components/monogram-geometry.ts → packages/email/src/monogram-geometry.ts
  *   - copies root LICENSE
  *   - locks packages/email/package.json version to the root version
  *
  * The primitives and templates under packages/email/src are authored in place
- * (email is its own render target), so only tokens + version are synced here.
+ * (email is its own render target), so only shared tokens/geometry + version are
+ * synced here.
  */
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -24,6 +26,12 @@ const tokens = readFileSync(join(root, 'lib/tokens.ts'), 'utf8').replace(
   '// AUTO-GENERATED — synced from @tollerud/ui lib/tokens.ts by scripts/sync-email-package.mjs.\n// Do not edit by hand. Run `npm run sync:email` after `npm run gen:tokens`.',
 )
 writeFileSync(join(srcDir, 'tokens.ts'), tokens)
+
+// Monogram geometry — single source of truth shared with @tollerud/footer.
+copyFileSync(
+  join(root, 'components/monogram-geometry.ts'),
+  join(srcDir, 'monogram-geometry.ts'),
+)
 
 copyFileSync(join(root, 'LICENSE'), join(emailRoot, 'LICENSE'))
 

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Column, Row, Section, Text } from '@react-email/components'
 import { EmailLayout } from '../primitives/EmailLayout'
+import { EmailHeader, type EmailHeaderProps } from '../primitives/EmailHeader'
 import { EmailHeading } from '../primitives/EmailHeading'
 import { EmailText } from '../primitives/EmailText'
 import { EmailDivider } from '../primitives/EmailDivider'
@@ -23,6 +24,8 @@ export interface ReceiptEmailProps {
   items: ReceiptLineItem[]
   /** Pre-formatted total, e.g. "$49.00". */
   total: string
+  /** Optional branded header (monogram + project name) at the top. */
+  header?: EmailHeaderProps
   footer?: EmailFooterProps
 }
 
@@ -42,10 +45,12 @@ export function ReceiptEmail({
   date,
   items,
   total,
+  header,
   footer,
 }: ReceiptEmailProps) {
   return (
     <EmailLayout preview={`Your ${productName} receipt · ${orderId}`}>
+      {header ? <EmailHeader {...header} /> : null}
       <EmailHeading>Receipt</EmailHeading>
       <EmailText tone="muted">
         {name ? `Thanks, ${name}. ` : 'Thanks. '}Here's your receipt for order{' '}

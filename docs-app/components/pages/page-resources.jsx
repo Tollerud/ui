@@ -27,23 +27,31 @@ function PageResources({ go }) {
               Primitives &amp; templates
             </div>
             <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
-              Primitives: <code className="ds-mono">EmailLayout</code>, <code className="ds-mono">EmailButton</code>, <code className="ds-mono">EmailHeading</code>, <code className="ds-mono">EmailText</code>, <code className="ds-mono">EmailDivider</code>, <code className="ds-mono">EmailFooter</code>. Templates: <code className="ds-mono">WelcomeEmail</code>, <code className="ds-mono">VerifyEmail</code>, <code className="ds-mono">PasswordResetEmail</code>, <code className="ds-mono">ReceiptEmail</code>. Render with the re-exported <code className="ds-mono">render</code>.
+              Primitives: <code className="ds-mono">EmailLayout</code>, <code className="ds-mono">EmailHeader</code> (monogram + project name large), <code className="ds-mono">BrandMark</code>, <code className="ds-mono">EmailButton</code>, <code className="ds-mono">EmailHeading</code>, <code className="ds-mono">EmailText</code>, <code className="ds-mono">EmailDivider</code>, <code className="ds-mono">EmailFooter</code> (Tollerud footer → tollerud.no). Templates: <code className="ds-mono">WelcomeEmail</code>, <code className="ds-mono">VerifyEmail</code>, <code className="ds-mono">PasswordResetEmail</code>, <code className="ds-mono">ReceiptEmail</code> — each takes an optional <code className="ds-mono">header</code>. Render with the re-exported <code className="ds-mono">render</code>.
             </p>
           </Card>
           <CodeSnippet
             name="email.tsx"
-            code={`import { render, WelcomeEmail, EmailLayout, EmailButton, EmailText } from '@tollerud/email'
+            code={`import { render, WelcomeEmail, EmailLayout, EmailHeader, EmailButton, EmailText, EmailFooter } from '@tollerud/email'
 
-// Ready-made template
+// Ready-made template — opt into the branded header (monogram + project name)
 const html = await render(
-  <WelcomeEmail name="Mathias" productName="Graphify" ctaUrl={dashboardUrl} />,
+  <WelcomeEmail
+    name="Mathias"
+    productName="Graphify"
+    ctaUrl={dashboardUrl}
+    header={{ productName: 'Graphify' }}
+    footer={{ labels: { tollerudProject: 'A Tollerud Project' }, unsubscribeUrl }}
+  />,
 )
 
 // Or compose your own from primitives
 const custom = await render(
   <EmailLayout preview="Your report is ready">
+    <EmailHeader productName="Graphify" />
     <EmailText>Your weekly report is ready to view.</EmailText>
     <EmailButton href={reportUrl}>View report</EmailButton>
+    <EmailFooter unsubscribeUrl={unsubscribeUrl} />
   </EmailLayout>,
 )
 // hand the HTML to your mailer (Resend, SES, Nodemailer, …)`}

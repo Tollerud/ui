@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { EmailLayout } from '../primitives/EmailLayout'
+import { EmailHeader, type EmailHeaderProps } from '../primitives/EmailHeader'
 import { EmailHeading } from '../primitives/EmailHeading'
 import { EmailText } from '../primitives/EmailText'
 import { EmailButton } from '../primitives/EmailButton'
@@ -14,6 +15,8 @@ export interface WelcomeEmailProps {
   /** Primary CTA destination (e.g. dashboard). */
   ctaUrl: string
   ctaLabel?: string
+  /** Optional branded header (monogram + project name) at the top. */
+  header?: EmailHeaderProps
   footer?: EmailFooterProps
 }
 
@@ -23,10 +26,12 @@ export function WelcomeEmail({
   productName = 'Tollerud',
   ctaUrl,
   ctaLabel = 'Open your dashboard',
+  header,
   footer,
 }: WelcomeEmailProps) {
   return (
     <EmailLayout preview={`Welcome to ${productName}`}>
+      {header ? <EmailHeader {...header} /> : null}
       <EmailHeading>Welcome{name ? `, ${name}` : ''}.</EmailHeading>
       <EmailText>
         Your {productName} account is ready. Jump in and take a look around —

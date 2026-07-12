@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { EmailLayout } from '../primitives/EmailLayout'
+import { EmailHeader, type EmailHeaderProps } from '../primitives/EmailHeader'
 import { EmailHeading } from '../primitives/EmailHeading'
 import { EmailText } from '../primitives/EmailText'
 import { EmailButton } from '../primitives/EmailButton'
@@ -13,6 +14,8 @@ export interface VerifyEmailProps {
   verifyUrl: string
   /** Optional expiry hint shown as fine print, e.g. "24 hours". */
   expiresIn?: string
+  /** Optional branded header (monogram + project name) at the top. */
+  header?: EmailHeaderProps
   footer?: EmailFooterProps
 }
 
@@ -22,10 +25,12 @@ export function VerifyEmail({
   productName = 'Tollerud',
   verifyUrl,
   expiresIn,
+  header,
   footer,
 }: VerifyEmailProps) {
   return (
     <EmailLayout preview={`Confirm your email for ${productName}`}>
+      {header ? <EmailHeader {...header} /> : null}
       <EmailHeading>Confirm your email</EmailHeading>
       <EmailText>
         {name ? `Hi ${name}, one` : 'One'} last step — confirm this is your email
