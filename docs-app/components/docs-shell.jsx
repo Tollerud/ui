@@ -40,6 +40,7 @@ import PageBilling from './pages/page-billing'
 import PageAuth from './pages/page-auth'
 import PageChangelog from './pages/page-changelog'
 import PageResources from './pages/page-resources'
+import PageEmail from './pages/page-email'
 
 const CANONICAL_PAGES = {
   overview: PageOverview,
@@ -63,6 +64,7 @@ const CANONICAL_PAGES = {
   billing: PageBilling,
   auth: PageAuth,
   resources: PageResources,
+  email: PageEmail,
   changelog: PageChangelog,
 }
 

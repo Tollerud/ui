@@ -62,6 +62,7 @@ export const NAV = [
     group: 'Resources',
     items: [
       { id: 'resources', label: 'Guides', icon: 'folder' },
+      { id: 'email', label: 'Email', icon: 'mail' },
       { id: 'changelog', label: 'Changelog', icon: 'clock' },
     ],
   },
@@ -89,6 +90,7 @@ export const PAGE_TITLES = {
   billing: 'Billing',
   auth: 'Sign in',
   resources: 'Guides',
+  email: 'Email',
   changelog: 'Changelog',
 }
 

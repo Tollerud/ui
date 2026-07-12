@@ -97,7 +97,8 @@
     "validate": "npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath && npm run test:drift && npm run test:package && npm run test:size && npm run test:props && npm run verify:tokens && npm run verify:footer-sync && npm run verify:email-sync && npm run build:docs && npm run test:consumer-styling && npm run test:consumer",
     "prepublishOnly": "npm run sync:registry && npm run typecheck && npm run lint && npm run test && npm run build && npm run test:subpath && npm run test:drift && npm run test:package && npm run test:size && npm run test:props && npm run verify:tokens && npm run verify:footer-sync && npm run verify:email-sync && npm run test:consumer",
     "build:docs": "node scripts/build-docs.mjs",
-    "preview:docs": "npx --yes serve _site -l 4173"
+    "preview:docs": "npx --yes serve _site -l 4173",
+    "gen:email-previews": "npm --prefix packages/email run build && node packages/email/scripts/build-previews.mjs"
   },
   "peerDependencies": {
     "@paper-design/shaders-react": "^0.0.76",
