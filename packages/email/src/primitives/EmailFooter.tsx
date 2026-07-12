@@ -67,6 +67,7 @@ export function EmailFooter({
     fontFamily: t.font.sans,
     fontSize: t.size.sm,
     lineHeight: 1.6,
+    textAlign: 'right',
   } as const
   const fine = {
     margin: 0,
@@ -91,7 +92,7 @@ export function EmailFooter({
             <BrandMark color={color} height={20} src={logoSrc} />
           </Column>
         ) : null}
-        <Column style={{ verticalAlign: 'middle' }}>
+        <Column style={{ verticalAlign: 'middle', textAlign: 'right' }}>
           <Text style={wordmark}>
             <Link
               href="https://tollerud.no"
@@ -99,12 +100,13 @@ export function EmailFooter({
                 color: t.color.textSecondary,
                 textDecoration: 'underline',
                 textDecorationColor: t.color.accent,
+                textDecorationThickness: '2px',
                 textUnderlineOffset: '4px',
               }}
             >
               {l.tollerudProject}
             </Link>
-            {attribution ? ` ${attribution}` : ''} {l.allRightsReserved}
+            .{attribution ? ` ${attribution}` : ''} {l.allRightsReserved}
           </Text>
         </Column>
       </Row>

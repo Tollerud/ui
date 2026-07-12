@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.12.0",
+  "version": "4.12.1",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {

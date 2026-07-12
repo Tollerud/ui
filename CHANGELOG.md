@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.12.1 — 2026-07-12 — Email footer polish
+
+### Changed
+
+- `@tollerud/email` `EmailFooter` — the wordmark line is now right-aligned with the monogram kept on the left (monogram left, "A Tollerud Project. All rights reserved." right). The wordmark reads "A Tollerud Project." with a period, and the yellow underline under the tollerud.no link is now 2px thick. No API change — `labels` / `monogram` / `address` / `unsubscribeUrl` / `links` are unchanged.
+
 ## 4.12.0 — 2026-07-12 — Email: overridable copy (i18n) + style escape hatches
 
 ### Added

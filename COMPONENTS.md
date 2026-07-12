@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.12.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.12.1**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1678,7 +1678,7 @@ const html = await render(
 // hand `html` to your mailer (Resend, SES, Nodemailer, …)
 ```
 
-**Primitives:** `EmailLayout`, `EmailHeader` (branded top: monogram + project name large — `productName`, `monogram`, `logoSrc`, `align`, `divider`), `BrandMark` (the monogram; inline SVG or hosted `src`), `EmailButton` (`variant: 'primary' | 'secondary'`), `EmailHeading` (`as: 'h1' | 'h2' | 'h3'`), `EmailText` (`tone: 'default' | 'muted' | 'fine'`), `EmailDivider` (`variant: 'default' | 'accent'`), `EmailFooter` (the Tollerud footer — monogram + "A Tollerud Project" → tollerud.no; `labels`, `address`, `unsubscribeUrl`, `links`).
+**Primitives:** `EmailLayout`, `EmailHeader` (branded top: monogram + project name large — `productName`, `monogram`, `logoSrc`, `align`, `divider`), `BrandMark` (the monogram; inline SVG or hosted `src`), `EmailButton` (`variant: 'primary' | 'secondary'`), `EmailHeading` (`as: 'h1' | 'h2' | 'h3'`), `EmailText` (`tone: 'default' | 'muted' | 'fine'`), `EmailDivider` (`variant: 'default' | 'accent'`), `EmailFooter` (the Tollerud footer — monogram left, "A Tollerud Project." wordmark right-aligned with a 2px yellow underline → tollerud.no; `labels`, `address`, `unsubscribeUrl`, `links`).
 
 **Templates:** `WelcomeEmail`, `VerifyEmail`, `PasswordResetEmail`, `ReceiptEmail` — each accepts an optional `header?: EmailHeaderProps` for the branded top, plus an overridable `copy` prop (each exports a `*Copy` type; dynamic lines are functions) for rewording or i18n.
 
