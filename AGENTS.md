@@ -23,8 +23,9 @@ npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
   @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress \
   @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip \
   lucide-react framer-motion sonner
-# Optional — only if using NoirGlowBackground
-npm install @paper-design/shaders-react
+# Optional — only if using NoirGlowBackground.
+# Pinned by @tollerud/ui's peer (^0.0.77) — install the matching version, don't bump it independently.
+npm install @paper-design/shaders-react@0.0.77
 ```
 
 For the footer alone (no full Tollerud UI dependency):

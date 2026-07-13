@@ -1,4 +1,9 @@
 version: 2
+
+# @paper-design/shaders-react is pinned by @tollerud/ui's peer dependency and
+# must move in lockstep (peer + all consumers) — never bumped independently. It
+# is ignored in every directory below and bumped manually with a ui release.
+
 updates:
   - package-ecosystem: npm
     directory: /
@@ -16,6 +21,8 @@ updates:
         update-types: [version-update:semver-major]
       - dependency-name: "@eslint/js"
         update-types: [version-update:semver-major]
+      # Pinned by @tollerud/ui's peer — bump in lockstep, not independently.
+      - dependency-name: "@paper-design/shaders-react"
   - package-ecosystem: npm
     directory: /docs-app
     schedule:
@@ -24,6 +31,8 @@ updates:
       docs-app:
         patterns: ["*"]
         update-types: [minor, patch]
+    ignore:
+      - dependency-name: "@paper-design/shaders-react"
   - package-ecosystem: npm
     directory: /fixtures/consumer
     schedule:
@@ -32,6 +41,8 @@ updates:
       consumer-fixture:
         patterns: ["*"]
         update-types: [minor, patch]
+    ignore:
+      - dependency-name: "@paper-design/shaders-react"
   - package-ecosystem: npm
     directory: /packages/footer
     schedule:
@@ -40,6 +51,8 @@ updates:
       footer:
         patterns: ["*"]
         update-types: [minor, patch]
+    ignore:
+      - dependency-name: "@paper-design/shaders-react"
   - package-ecosystem: npm
     directory: /packages/email
     schedule:
@@ -48,3 +61,5 @@ updates:
       email:
         patterns: ["*"]
         update-types: [minor, patch]
+    ignore:
+      - dependency-name: "@paper-design/shaders-react"

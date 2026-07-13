@@ -7,6 +7,16 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.13.1 — 2026-07-13 — shaders-react peer → 0.0.77 (lockstep)
+
+### Changed
+
+- The optional `@paper-design/shaders-react` peer dependency (used by `NoirGlowBackground`) advances from `^0.0.76` to `^0.0.77`. It is pinned by this peer and must move in **lockstep** — the peer, docs-app, and the consumer fixtures are bumped together. Consumers should update `@paper-design/shaders-react` to `0.0.77` to match; don't bump it independently.
+
+- Dependabot now **ignores** `@paper-design/shaders-react` in every directory so it is never bumped on its own — it is advanced manually alongside a `@tollerud/ui` release.
+
+- Rolled the pending Dependabot consumer-fixture group into the fixture: `@radix-ui/react-dialog` 1.1.19, `@radix-ui/react-dropdown-menu` 2.1.20, `@radix-ui/react-progress` 1.1.12, `lucide-react` 1.24.0, `@types/node` 26.1.1.
+
 ## 4.13.0 — 2026-07-13 — Email: light-first theme + Gmail fixes
 
 ### Fixed
