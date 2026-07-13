@@ -17,6 +17,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./test/setup.ts'],
     include: ['**/*.{test,spec}.{ts,tsx}'],
-    exclude: ['**/node_modules/**', '**/dist/**', 'docs', 'docs-app', 'e2e'],
+    // packages/email is standalone (not a workspace) and has its own vitest —
+    // see `npm run test:email`. Its render tests need @react-email/*, which the
+    // root install does not provide, so keep them out of the root run.
+    exclude: ['**/node_modules/**', '**/dist/**', 'docs', 'docs-app', 'e2e', 'packages/email/**'],
   },
 })
