@@ -28,6 +28,13 @@ if (!existsSync(join(docsApp, 'node_modules/next'))) {
   execSync('npm install', { cwd: docsApp, stdio: 'inherit' })
 }
 
+// The docs configurator aliases @tollerud/email to packages/email/src, whose
+// @react-email/* imports resolve from packages/email/node_modules — so it must
+// be installed (source only; no build needed).
+if (!existsSync(join(root, 'packages/email/node_modules/@react-email'))) {
+  execSync('npm install', { cwd: join(root, 'packages/email'), stdio: 'inherit' })
+}
+
 execSync('npm run build', { cwd: docsApp, stdio: 'inherit' })
 
 const cssBundle = collectCssFiles(join(root, '_site/_next/static'))
