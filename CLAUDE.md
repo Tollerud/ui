@@ -14,10 +14,13 @@ When changing any component API, fixing a bug, or bumping the version, ALL of th
 
 Then run:
 ```bash
-npm run sync:registry   # syncs registry.json + packages/footer/package.json + packages/email/package.json
-npm run docs:props      # regenerates PROPS.generated.md + docs-app/lib/props-data.json
-npm run validate        # also updates fixtures/consumer/package.json + package-lock.json
+npm run sync:registry      # syncs registry.json + packages/footer/package.json + packages/email/package.json
+npm run docs:props         # regenerates PROPS.generated.md + docs-app/lib/props-data.json
+npm run check:ignored-deps # flag Dependabot-ignored deps that are behind (e.g. @paper-design/shaders-react)
+npm run validate           # also updates fixtures/consumer/package.json + package-lock.json
 ```
+
+`check:ignored-deps` is the release checkpoint for **lockstep-pinned** deps: if `@paper-design/shaders-react` shows BEHIND, bump it in lockstep (peer + docs-app + fixtures + examples) as part of the release. A monthly `stale-ignore-audit` workflow does the same check and opens a tracking issue between releases.
 
 Stage all generated files — CI fails if they are stale.
 

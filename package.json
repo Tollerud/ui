@@ -90,6 +90,7 @@
     "test:size": "node scripts/test-size.mjs",
     "sync:registry": "node scripts/sync-registry-version.mjs",
     "changelog:draft": "node scripts/changelog-draft.mjs",
+    "check:ignored-deps": "node scripts/check-ignored-deps.mjs",
     "changeset": "changeset",
     "version:release": "changeset version && npm run sync:registry && npm run sync:footer && npm run sync:email",
     "docs:props": "node scripts/generate-props.mjs",

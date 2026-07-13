@@ -1,0 +1,56 @@
+name: Stale ignored-dependency audit
+
+# Dependabot won't PR anything in its `ignore` list, so those deps can rot
+# silently. This runs monthly, compares each ignored dep to the latest on npm,
+# and opens/updates a single tracking issue when any have fallen behind.
+
+on:
+  schedule:
+    - cron: '0 9 1 * *' # 09:00 UTC on the 1st of each month
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+
+      - name: Audit ignored dependencies
+        id: audit
+        run: |
+          node scripts/check-ignored-deps.mjs | tee report.md
+          echo "count=$(grep -oE 'BEHIND_COUNT=[0-9]+' report.md | cut -d= -f2)" >> "$GITHUB_OUTPUT"
+
+      - name: Open or update tracking issue
+        if: steps.audit.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITLE="🔒 Ignored dependencies are behind"
+          cat >> report.md <<'EOF'
+
+          ---
+          These packages are in `.github/dependabot.yml`'s ignore list, so Dependabot won't open PRs for them. Review and bump manually:
+
+          - `@paper-design/shaders-react` — bump in **lockstep** (peer + docs-app + fixtures + examples) with a `@tollerud/ui` release. See CLAUDE.md.
+          - `eslint` / `@eslint/js` majors — held until `eslint-plugin-jsx-a11y` declares eslint@10 peer support; re-check and drop the ignore when it does.
+
+          _Auto-generated monthly by `.github/workflows/stale-ignore-audit.yml`._
+          EOF
+          NUM=$(gh issue list --state open --search "in:title $TITLE" --json number,title \
+            --jq ".[] | select(.title==\"$TITLE\") | .number" | head -1)
+          if [ -n "$NUM" ]; then
+            gh issue edit "$NUM" --body-file report.md
+            echo "Updated issue #$NUM"
+          else
+            gh issue create --title "$TITLE" --body-file report.md --label dependencies 2>/dev/null \
+              || gh issue create --title "$TITLE" --body-file report.md
+          fi
