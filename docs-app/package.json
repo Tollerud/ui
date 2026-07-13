@@ -11,8 +11,6 @@
   },
   "dependencies": {
     "@paper-design/shaders-react": "^0.0.77",
-    "@react-email/components": "^1.0.12",
-    "@react-email/render": "^2.1.0",
     "@tollerud/ui": "file:..",
     "clsx": "^2.1.1",
     "lucide-react": "^1.18.0",
