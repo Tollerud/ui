@@ -8,7 +8,7 @@
  * Reports anything that's fallen behind.
  *
  * Used by:
- *   - .github/workflows/stale-ignore-audit.yml (monthly → opens a tracking issue)
+ *   - .github/workflows/stale-ignore-audit.yml (weekly → opens a tracking issue)
  *   - the release ritual (`npm run check:ignored-deps`) so lockstep-pinned deps
  *     like @paper-design/shaders-react get bumped when a ui release goes out.
  *

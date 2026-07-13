@@ -12,10 +12,10 @@ updates:
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
+      interval: daily
     groups:
-      # Bundle all minor + patch bumps into one PR per week. Majors still open
-      # individually so they get reviewed on their own.
+      # Bundle all minor + patch bumps into one PR per run (daily, auto-merged).
+      # Majors still open individually so they get reviewed on their own.
       root-npm:
         patterns: ["*"]
         update-types: [minor, patch]
@@ -33,7 +33,7 @@ updates:
   - package-ecosystem: npm
     directory: /docs-app
     schedule:
-      interval: weekly
+      interval: daily
     groups:
       docs-app:
         patterns: ["*"]
@@ -45,7 +45,7 @@ updates:
   - package-ecosystem: npm
     directory: /fixtures/consumer
     schedule:
-      interval: weekly
+      interval: daily
     groups:
       consumer-fixture:
         patterns: ["*"]
@@ -57,7 +57,7 @@ updates:
   - package-ecosystem: npm
     directory: /packages/footer
     schedule:
-      interval: weekly
+      interval: daily
     groups:
       footer:
         patterns: ["*"]
@@ -69,7 +69,7 @@ updates:
   - package-ecosystem: npm
     directory: /packages/email
     schedule:
-      interval: weekly
+      interval: daily
     groups:
       email:
         patterns: ["*"]

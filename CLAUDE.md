@@ -21,7 +21,7 @@ npm run check:ignored-deps # flag Dependabot-ignored deps that are behind (e.g. 
 npm run validate           # also updates fixtures/consumer/package.json + package-lock.json
 ```
 
-`check:ignored-deps` is the release checkpoint for **lockstep-pinned** deps: if `@paper-design/shaders-react` shows BEHIND, bump it in lockstep (peer + docs-app + fixtures + examples) as part of the release. A monthly `stale-ignore-audit` workflow does the same check and opens a tracking issue between releases.
+`check:ignored-deps` is the release checkpoint for **lockstep-pinned** deps: if `@paper-design/shaders-react` shows BEHIND, bump it in lockstep (peer + docs-app + fixtures + examples) as part of the release. A weekly `stale-ignore-audit` workflow does the same check and opens a tracking issue between releases.
 
 Stage all generated files — CI fails if they are stale.
 

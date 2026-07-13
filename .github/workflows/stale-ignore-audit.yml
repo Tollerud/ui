@@ -1,12 +1,12 @@
 name: Stale ignored-dependency audit
 
 # Dependabot won't PR anything in its `ignore` list, so those deps can rot
-# silently. This runs monthly, compares each ignored dep to the latest on npm,
+# silently. This runs weekly, compares each ignored dep to the latest on npm,
 # and opens/updates a single tracking issue when any have fallen behind.
 
 on:
   schedule:
-    - cron: '0 9 1 * *' # 09:00 UTC on the 1st of each month
+    - cron: '0 9 * * 1' # 09:00 UTC every Monday
   workflow_dispatch:
 
 permissions:
@@ -44,7 +44,7 @@ jobs:
           - `eslint` / `@eslint/js` majors — held until `eslint-plugin-jsx-a11y` declares eslint@10 peer support; re-check and drop the ignore when it does.
           - `typescript` major (TS 7) — held until `typescript-eslint` ships a TS 7-compatible release (its peer caps at `<6.1.0`); bump TS + typescript-eslint together when it does.
 
-          _Auto-generated monthly by `.github/workflows/stale-ignore-audit.yml`._
+          _Auto-generated weekly by `.github/workflows/stale-ignore-audit.yml`._
           EOF
           NUM=$(gh issue list --state open --search "in:title $TITLE" --json number,title \
             --jq ".[] | select(.title==\"$TITLE\") | .number" | head -1)
