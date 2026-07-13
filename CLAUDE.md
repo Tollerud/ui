@@ -2,7 +2,7 @@
 
 ## Release checklist (mandatory on every version bump)
 
-When changing any component API, fixing a bug, or bumping the version, ALL of these must be done in the same commit — not separately, not skipped:
+When changing any component API — including the sibling packages `@tollerud/email` and `@tollerud/footer` — fixing a bug, or bumping the version, ALL of these must be done in the same commit. Versions are **lockstep**: `@tollerud/ui`, `@tollerud/footer`, and `@tollerud/email` always ship the same version (an email-only change is still a full release). Not separately, not skipped:
 
 1. `package.json` — bump `version`
 2. `CHANGELOG.md` — new entry at top: `## version — YYYY-MM-DD — Title` with blank lines between every block
@@ -11,6 +11,7 @@ When changing any component API, fixing a bug, or bumping the version, ALL of th
 5. `AGENTS.md` — update usage examples for any changed components
 6. `COMPONENTS.md` — update version header + add/update component sections for any new or changed components
 7. `docs-app/` — update relevant page(s): add/update `desc` on the `Section`, add a `Demo` with a code snippet for any new prop or behaviour
+8. `packages/email/README.md` — update for any `@tollerud/email` API change. If the monogram changed, re-run `node scripts/gen-email-monogram.mjs` (rewrites `brand/email-monogram-*.png`)
 
 Then run:
 ```bash
@@ -25,6 +26,13 @@ npm run validate           # also updates fixtures/consumer/package.json + packa
 Stage all generated files — CI fails if they are stale.
 
 This is enforced by a git pre-commit hook (`scripts/pre-commit-release-check.mjs`). The hook will block a commit that bumps the version without touching all required files.
+
+## After publishing (post-release follow-ups)
+
+Publishing is done by CI on push to `main`. A couple of things can only be done **after** the new version is live on npm — they need a **second commit**:
+
+- **docs-app `@tollerud/email` bump** — the live docs Email configurator imports the *published* `@tollerud/email`, so an email change isn't visible until you bump it: `cd docs-app && npm install @tollerud/email@^X.Y.Z`, then commit + push. (It can't be installed before publish — ERESOLVE against the not-yet-published version.)
+- **Lockstep consumers of `@paper-design/shaders-react`** — when the peer advances, `examples/next-starter` (and `fixtures/consumer`) can only install the new version after the matching `@tollerud/ui` is on npm. Align them in a follow-up commit. See the release-checkpoint note above.
 
 ## Validate before pushing
 
