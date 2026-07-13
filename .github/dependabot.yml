@@ -4,6 +4,12 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    groups:
+      # Bundle all minor + patch bumps into one PR per week. Majors still open
+      # individually so they get reviewed on their own.
+      root-npm:
+        patterns: ["*"]
+        update-types: [minor, patch]
     ignore:
       # eslint-plugin-jsx-a11y does not declare eslint@10 peer support yet
       - dependency-name: eslint
@@ -14,11 +20,31 @@ updates:
     directory: /docs-app
     schedule:
       interval: weekly
+    groups:
+      docs-app:
+        patterns: ["*"]
+        update-types: [minor, patch]
   - package-ecosystem: npm
     directory: /fixtures/consumer
     schedule:
       interval: weekly
+    groups:
+      consumer-fixture:
+        patterns: ["*"]
+        update-types: [minor, patch]
   - package-ecosystem: npm
     directory: /packages/footer
     schedule:
       interval: weekly
+    groups:
+      footer:
+        patterns: ["*"]
+        update-types: [minor, patch]
+  - package-ecosystem: npm
+    directory: /packages/email
+    schedule:
+      interval: weekly
+    groups:
+      email:
+        patterns: ["*"]
+        update-types: [minor, patch]
