@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Heading } from '@react-email/components'
-import { emailTheme as t } from '../theme'
+import { emailTheme as t, emailClass } from '../theme'
 
 export interface EmailHeadingProps {
   /** Heading level → default size. Defaults to 1. */
@@ -21,6 +21,7 @@ export function EmailHeading({ as = 'h1', style, children }: EmailHeadingProps) 
   return (
     <Heading
       as={as}
+      className={emailClass.heading}
       style={{
         margin: `0 0 ${t.space[4]}`,
         color: t.color.textPrimary,

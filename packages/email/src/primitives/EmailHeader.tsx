@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Column, Row, Section } from '@react-email/components'
-import { BrandMark, type BrandMarkColor } from './BrandMark'
-import { emailTheme as t } from '../theme'
+import { BrandMark } from './BrandMark'
+import { emailTheme as t, emailClass } from '../theme'
 
 export interface EmailHeaderProps {
   /** Project / product name, shown large as the brand wordmark. */
@@ -9,13 +9,11 @@ export interface EmailHeaderProps {
   /** Show the Tollerud monogram beside the name. Default true. */
   monogram?: boolean
   /**
-   * Hosted image URL for the monogram (recommended for full client coverage —
-   * see BrandMark). When omitted, an inline-SVG monogram is used.
+   * Custom logo image URL. When omitted, the hosted Tollerud monogram is used
+   * (dark on light backgrounds, yellow in dark mode). See BrandMark.
    */
   logoSrc?: string
   logoAlt?: string
-  /** Monogram color. Default yellow. */
-  color?: BrandMarkColor
   /** Alignment of the lockup. Default left. */
   align?: 'left' | 'center'
   /** Hairline divider beneath the header. Default true. */
@@ -34,7 +32,6 @@ export function EmailHeader({
   monogram = true,
   logoSrc,
   logoAlt,
-  color = 'yellow',
   align = 'left',
   divider = true,
   style,
@@ -42,6 +39,7 @@ export function EmailHeader({
   const markHeight = 30
   const name = (
     <span
+      className={emailClass.heading}
       style={{
         color: t.color.textPrimary,
         fontFamily: t.font.sans,
@@ -58,6 +56,7 @@ export function EmailHeader({
 
   return (
     <Section
+      className={divider ? emailClass.border : undefined}
       style={{
         paddingBottom: t.space[6],
         marginBottom: t.space[6],
@@ -73,7 +72,7 @@ export function EmailHeader({
                 <tbody>
                   <tr>
                     <td>
-                      <BrandMark color={color} height={markHeight} src={logoSrc} alt={logoAlt} />
+                      <BrandMark height={markHeight} src={logoSrc} alt={logoAlt} />
                     </td>
                   </tr>
                 </tbody>
@@ -86,7 +85,7 @@ export function EmailHeader({
         <Row>
           {monogram ? (
             <Column style={{ width: '1%', paddingRight: t.space[3], verticalAlign: 'middle' }}>
-              <BrandMark color={color} height={markHeight} src={logoSrc} alt={logoAlt} />
+              <BrandMark height={markHeight} src={logoSrc} alt={logoAlt} />
             </Column>
           ) : null}
           <Column style={{ verticalAlign: 'middle' }}>{name}</Column>

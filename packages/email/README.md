@@ -68,9 +68,9 @@ const html = await render(
 
 | Component | Key props |
 |-----------|-----------|
-| `EmailLayout` | `preview?`, `lang?` — the `<Html>/<Head>/<Body>` shell + dark surface |
-| `EmailHeader` | `productName`, `monogram?`, `logoSrc?`, `color?`, `align?: 'left' \| 'center'`, `divider?` — branded top (monogram + project name large) |
-| `BrandMark` | `color?: 'yellow' \| 'white' \| 'black'`, `height?`, `src?` — the monogram (inline SVG, or hosted image via `src`) |
+| `EmailLayout` | `preview?`, `lang?` — the `<Html>/<Head>/<Body>` shell (light default + dark-mode `<style>`) |
+| `EmailHeader` | `productName`, `monogram?`, `logoSrc?`, `align?: 'left' \| 'center'`, `divider?` — branded top (monogram + project name large) |
+| `BrandMark` | `height?`, `src?` — the monogram (hosted PNG; auto dark-on-light / yellow-in-dark, or your own via `src`) |
 | `EmailButton` | `href`, `variant?: 'primary' \| 'secondary'` |
 | `EmailHeading` | `as?: 'h1' \| 'h2' \| 'h3'` |
 | `EmailText` | `tone?: 'default' \| 'muted' \| 'fine'` |
@@ -110,29 +110,32 @@ the branded header at the top, and an overridable `copy` prop (see below).
 
 ### Monogram in email
 
-`EmailHeader` and `EmailFooter` show the Tollerud monogram via `BrandMark`. By
-default it's an **inline SVG** — crisp in Apple Mail / iOS Mail / some webmail,
-but **stripped by Outlook desktop and Gmail**. Where full coverage matters, host
-a PNG/GIF of the monogram and pass its URL as `logoSrc` (header) or `logoSrc`
-(footer). The large project name in the header always renders, so the brand
-reads even where the mark doesn't.
+`EmailHeader` and `EmailFooter` show the Tollerud monogram via `BrandMark`, as a
+**hosted PNG** — inline SVG is stripped by Gmail and Outlook. By default it uses
+the dark monogram on light backgrounds and swaps to the yellow monogram in dark
+mode (`design.tollerud.dev/brand/email-monogram-{dark,yellow}.png`; regenerate
+with `node scripts/gen-email-monogram.mjs`). Pass `logoSrc` to use your own
+hosted image (a single image, no dark-mode swap). The large project name in the
+header always renders too, so the brand reads regardless.
 
 **Tokens** — `tokens` (raw values, synced from `@tollerud/ui`) and `emailTheme`
 (email semantic mapping).
 
-## Dark mode caveat
+## Theme & dark mode
 
-Tollerud's palette is dark (near-black surface, yellow accent). Email dark-mode
-support is genuinely uneven:
+The email is **light by default** — a light background is the only thing that
+renders predictably in every client, including Gmail. (Gmail ignores
+`color-scheme`, applies its own color transforms to dark emails, and strips
+inline SVG, so a dark-first email breaks there.)
 
-- Primitives set explicit `bgcolor` + inline `background-color` on every surface,
-  plus `color-scheme` / `supported-color-schemes` meta so Apple Mail and iOS Mail
-  respect the palette instead of re-inverting it.
-- The primary button is yellow with **black** text — a deliberately
-  high-contrast pairing that survives clients that force inversion.
-- Outlook.com and some Gmail contexts may still nudge colors. Test in
-  [Litmus](https://litmus.com/) or [Email on Acid](https://www.emailonacid.com/)
-  before a large send.
+- Inline styles are light (white card, dark text, yellow button); surfaces also
+  carry `bgcolor` attributes.
+- A `@media (prefers-color-scheme: dark)` `<style>` block restores the noir
+  palette on clients that honor it — **Apple Mail, iOS Mail**. Gmail ignores it
+  and keeps the safe light rendering.
+- The yellow button stays `#FFFF00` with **black** text in both modes.
+- Still test in [Litmus](https://litmus.com/) or
+  [Email on Acid](https://www.emailonacid.com/) before a large send.
 
 ## Compliance
 

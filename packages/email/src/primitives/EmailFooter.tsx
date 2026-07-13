@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Column, Link, Row, Section, Text } from '@react-email/components'
-import { BrandMark, type BrandMarkColor } from './BrandMark'
-import { emailTheme as t } from '../theme'
+import { BrandMark } from './BrandMark'
+import { emailTheme as t, emailClass } from '../theme'
 
 export interface EmailFooterLink {
   label: string
@@ -27,10 +27,8 @@ export interface EmailFooterProps {
   labels?: Partial<EmailFooterLabels>
   /** Show the Tollerud monogram. Default true. */
   monogram?: boolean
-  /** Hosted image URL for the monogram (recommended — see BrandMark). */
+  /** Custom logo image URL. Defaults to the hosted Tollerud monogram — see BrandMark. */
   logoSrc?: string
-  /** Monogram color. Default yellow. */
-  color?: BrandMarkColor
   /** Optional physical address line (CAN-SPAM). */
   address?: string
   /** Optional unsubscribe URL — rendered as a link when provided (CAN-SPAM). */
@@ -51,7 +49,6 @@ export function EmailFooter({
   labels,
   monogram = true,
   logoSrc,
-  color = 'yellow',
   address,
   unsubscribeUrl,
   links = [],
@@ -79,6 +76,7 @@ export function EmailFooter({
 
   return (
     <Section
+      className={emailClass.border}
       style={{
         marginTop: t.space[8],
         paddingTop: t.space[6],
@@ -89,17 +87,17 @@ export function EmailFooter({
       <Row>
         {monogram ? (
           <Column style={{ width: '1%', paddingRight: t.space[3], verticalAlign: 'middle' }}>
-            <BrandMark color={color} height={20} src={logoSrc} />
+            <BrandMark height={20} src={logoSrc} />
           </Column>
         ) : null}
         <Column style={{ verticalAlign: 'middle', textAlign: 'right' }}>
-          <Text style={wordmark}>
+          <Text className={emailClass.muted} style={wordmark}>
             <Link
               href="https://tollerud.no"
               style={{
                 color: t.color.textSecondary,
                 textDecoration: 'underline',
-                textDecorationColor: t.color.accent,
+                textDecorationColor: t.color.accentLine,
                 textDecorationThickness: '2px',
                 textUnderlineOffset: '4px',
               }}
@@ -114,7 +112,7 @@ export function EmailFooter({
       {(address || links.length > 0 || unsubscribeUrl) && (
         <Row>
           <Column>
-            <Text style={{ ...fine, marginTop: t.space[3] }}>
+            <Text className={emailClass.fine} style={{ ...fine, marginTop: t.space[3] }}>
               {`© ${year}`}
               {address ? ` · ${address}` : ''}
               {links.map((link) => (

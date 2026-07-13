@@ -7,7 +7,7 @@ import {
   Preview,
   Section,
 } from '@react-email/components'
-import { emailTheme as t } from '../theme'
+import { emailTheme as t, emailClass, darkModeCss } from '../theme'
 
 export interface EmailLayoutProps {
   /** Inbox preview line (hidden preheader text). */
@@ -20,24 +20,23 @@ export interface EmailLayoutProps {
 }
 
 /**
- * Root shell for a Tollerud email: <Html>/<Head>/<Body> with the noir palette
- * applied via explicit bgcolor + inline styles so it survives clients that
- * strip <style> blocks or force color inversion.
- *
- * Dark-mode note: `color-scheme`/`supported-color-schemes` meta tags tell
- * Apple Mail and iOS Mail to respect our dark palette instead of re-inverting.
- * Outlook.com and Gmail still may nudge colors; that's why every surface also
- * carries an explicit bgcolor.
+ * Root shell for a Tollerud email: <Html>/<Head>/<Body>, light by default so it
+ * renders consistently everywhere (Gmail included). Clients that support
+ * `prefers-color-scheme: dark` (Apple Mail, iOS Mail) get the noir palette via
+ * the injected dark-mode <style>; every surface also carries a `bgcolor`
+ * attribute for the clients that ignore CSS backgrounds.
  */
 export function EmailLayout({ preview, lang = 'en', style, children }: EmailLayoutProps) {
   return (
     <Html lang={lang}>
       <Head>
-        <meta name="color-scheme" content="dark" />
-        <meta name="supported-color-schemes" content="dark" />
+        <meta name="color-scheme" content="light dark" />
+        <meta name="supported-color-schemes" content="light dark" />
+        <style dangerouslySetInnerHTML={{ __html: darkModeCss }} />
       </Head>
       {preview ? <Preview>{preview}</Preview> : null}
       <Body
+        className={emailClass.body}
         style={{
           margin: 0,
           padding: 0,
@@ -48,6 +47,8 @@ export function EmailLayout({ preview, lang = 'en', style, children }: EmailLayo
         }}
       >
         <Section
+          className={emailClass.page}
+          bgcolor={t.color.page}
           style={{ backgroundColor: t.color.page, padding: `${t.space[8]} 0` }}
         >
           <Container
@@ -59,6 +60,8 @@ export function EmailLayout({ preview, lang = 'en', style, children }: EmailLayo
             }}
           >
             <Section
+              className={emailClass.card}
+              bgcolor={t.color.surface}
               style={{
                 backgroundColor: t.color.surface,
                 border: `1px solid ${t.color.border}`,

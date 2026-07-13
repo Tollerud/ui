@@ -9,7 +9,7 @@ export { emailTheme, type EmailTheme } from './theme'
 // Primitives.
 export { EmailLayout, type EmailLayoutProps } from './primitives/EmailLayout'
 export { EmailHeader, type EmailHeaderProps } from './primitives/EmailHeader'
-export { BrandMark, type BrandMarkProps, type BrandMarkColor } from './primitives/BrandMark'
+export { BrandMark, type BrandMarkProps } from './primitives/BrandMark'
 export { EmailButton, type EmailButtonProps } from './primitives/EmailButton'
 export { EmailHeading, type EmailHeadingProps } from './primitives/EmailHeading'
 export { EmailText, type EmailTextProps } from './primitives/EmailText'

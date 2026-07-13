@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Hr } from '@react-email/components'
-import { emailTheme as t } from '../theme'
+import { emailTheme as t, emailClass } from '../theme'
 
 export interface EmailDividerProps {
   /** `accent` renders a short yellow rule; default is a full-width hairline. */
@@ -14,9 +14,10 @@ export function EmailDivider({ variant = 'default', style }: EmailDividerProps) 
   const isAccent = variant === 'accent'
   return (
     <Hr
+      className={isAccent ? undefined : emailClass.border}
       style={{
         border: 'none',
-        borderTop: `1px solid ${isAccent ? t.color.accent : t.color.border}`,
+        borderTop: `1px solid ${isAccent ? t.color.accentLine : t.color.border}`,
         width: isAccent ? '48px' : '100%',
         margin: `${t.space[6]} 0`,
         ...style,

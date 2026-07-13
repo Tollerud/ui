@@ -57,9 +57,9 @@ function PageEmail() {
 <EmailButton href={url} style={{ borderRadius: '999px' }}>Pill</EmailButton>`}
           />
           <Card>
-            <div style={{ fontWeight: 600, color: 'var(--foreground)', marginBottom: 6 }}>Monogram in email</div>
+            <div style={{ fontWeight: 600, color: 'var(--foreground)', marginBottom: 6 }}>Light-first + monogram</div>
             <p style={{ fontSize: 13.5, color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
-              The monogram is inline SVG by default (renders in Apple Mail / iOS Mail). Where Outlook desktop and Gmail strip SVG, pass <code className="ds-mono">logoSrc</code> a hosted PNG/GIF; the large project name always renders regardless.
+              Email is <strong>light by default</strong> so it renders correctly in Gmail; a <code className="ds-mono">prefers-color-scheme: dark</code> block restores the noir look in Apple Mail / iOS. The monogram is a <strong>hosted PNG</strong> (Gmail strips inline SVG) — dark on light, yellow in dark; override with <code className="ds-mono">logoSrc</code>.
             </p>
           </Card>
           <Button asChild variant="secondary" size="sm">

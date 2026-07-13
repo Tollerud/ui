@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.13.0 — 2026-07-13 — Email: light-first theme + Gmail fixes
+
+### Fixed
+
+- `@tollerud/email` now renders correctly in **Gmail**, where the previous dark-first design broke (white background, mis-colored button, missing monogram). Gmail ignores `color-scheme`, applies its own color transforms to dark emails, and strips inline SVG — so the email is now **light by default**, which every client (Gmail included) renders predictably.
+
+### Changed
+
+- **Light-first theme with a dark-mode enhancement.** Inline styles are light (white card on a light-gray page, dark text); a `@media (prefers-color-scheme: dark)` `<style>` block restores the noir palette on clients that support it (Apple Mail, iOS Mail). The email carries `<meta name="color-scheme" content="light dark">` and `bgcolor` attributes on its surfaces.
+
+- **Monogram is now a hosted PNG**, not inline SVG (which Gmail/Outlook strip). `BrandMark` renders the dark monogram on light backgrounds and swaps to the yellow monogram in dark mode. Hosted at `design.tollerud.dev/brand/email-monogram-{dark,yellow}.png`; regenerate with `node scripts/gen-email-monogram.mjs`. Override with `logoSrc` for your own hosted image.
+
+- The yellow accent **button keeps `#FFFF00` with black text in both modes** (it reads on light and dark), so it no longer gets mangled by Gmail dark mode. Accent lines (dividers, the footer underline) use the warmer `#E8D500` so they stay visible on white.
+
+### Breaking
+
+- `@tollerud/email` — the `color` prop was removed from `BrandMark`, `EmailHeader`, and `EmailFooter`, and the `BrandMarkColor` type is no longer exported. The monogram color is now chosen automatically by color-scheme (dark on light, yellow on dark). Remove any `color="…"` on these components; pass `logoSrc` instead to supply your own mark.
+
 ## 4.12.1 — 2026-07-12 — Email footer polish
 
 ### Changed

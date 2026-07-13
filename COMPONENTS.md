@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.12.1**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.13.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1686,4 +1686,4 @@ const html = await render(
 
 **Rendering:** `render`, `pretty`, `toPlainText` (re-exported from `@react-email/render`).
 
-Dark-mode: primitives carry explicit `bgcolor` + `color-scheme` meta so the noir palette survives clients that force inversion. The monogram is inline SVG by default (renders in Apple Mail / iOS; pass `logoSrc` for a hosted image where Outlook/Gmail strip SVG). See `packages/email/README.md` for client-support caveats.
+Theme: email is **light by default** (white card, dark text, yellow accent button) so it renders consistently everywhere including Gmail; a `@media (prefers-color-scheme: dark)` block restores the noir palette in Apple Mail / iOS Mail. The monogram is a **hosted PNG** (`BrandMark` — dark mark on light, yellow mark in dark; inline SVG was stripped by Gmail/Outlook); override with `logoSrc`. The `color` prop on `BrandMark`/`EmailHeader`/`EmailFooter` was removed in 4.13.0 (monogram color is auto-selected). See `packages/email/README.md` for client-support caveats.

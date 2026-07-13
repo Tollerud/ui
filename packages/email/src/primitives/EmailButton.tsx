@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button } from '@react-email/components'
-import { emailTheme as t } from '../theme'
+import { emailTheme as t, emailClass } from '../theme'
 
 export interface EmailButtonProps {
   href: string
@@ -14,14 +14,16 @@ export interface EmailButtonProps {
 /**
  * Call-to-action button. Wraps React Email's <Button>, which emits the MSO
  * padding hack so Outlook renders the padding correctly. The primary variant is
- * Tollerud yellow with black text — a deliberately high-contrast pairing that
- * reads correctly even in clients that force dark-mode inversion.
+ * Tollerud yellow with black text in both light and dark mode — a deliberately
+ * high-contrast pairing that reads on either background. The secondary variant
+ * follows the card surface, so it flips with the dark-mode <style> overrides.
  */
 export function EmailButton({ href, variant = 'primary', style, children }: EmailButtonProps) {
   const isPrimary = variant === 'primary'
   return (
     <Button
       href={href}
+      className={isPrimary ? undefined : `${emailClass.card} ${emailClass.text} ${emailClass.border}`}
       style={{
         display: 'inline-block',
         boxSizing: 'border-box',
