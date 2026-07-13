@@ -29,9 +29,10 @@ This is enforced by a git pre-commit hook (`scripts/pre-commit-release-check.mjs
 
 ## After publishing (post-release follow-ups)
 
-Publishing is done by CI on push to `main`. A couple of things can only be done **after** the new version is live on npm — they need a **second commit**:
+Publishing is done by CI on push to `main`. The docs Email configurator compiles `@tollerud/email` from **local source** (aliased in `docs-app/next.config.mjs` to `../packages/email/src`), so it always reflects the current code — **no docs-app bump is needed** after an email release.
 
-- **docs-app `@tollerud/email` bump** — the live docs Email configurator imports the *published* `@tollerud/email`, so an email change isn't visible until you bump it: `cd docs-app && npm install @tollerud/email@^X.Y.Z`, then commit + push. (It can't be installed before publish — ERESOLVE against the not-yet-published version.)
+The one thing that can only be done **after** the new version is live on npm (a **second commit**):
+
 - **Lockstep consumers of `@paper-design/shaders-react`** — when the peer advances, `examples/next-starter` (and `fixtures/consumer`) can only install the new version after the matching `@tollerud/ui` is on npm. Align them in a follow-up commit. See the release-checkpoint note above.
 
 ## Validate before pushing

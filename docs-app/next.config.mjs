@@ -14,6 +14,10 @@ const nextConfig = {
   turbopack: {
     resolveAlias: {
       '@tollerud/ui': '../dist/index.js',
+      // Compile @tollerud/email from local source so the docs configurator always
+      // reflects the current package (no post-publish version bump). Its runtime
+      // deps (@react-email/*) resolve from docs-app, keeping a single React.
+      '@tollerud/email': '../packages/email/src/index.ts',
       '@/lib/utils': '../lib/utils.ts',
       '@paper-design/shaders-react': './node_modules/@paper-design/shaders-react',
     },
