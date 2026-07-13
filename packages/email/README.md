@@ -134,6 +134,13 @@ inline SVG, so a dark-first email breaks there.)
   palette on clients that honor it — **Apple Mail, iOS Mail**. Gmail ignores it
   and keeps the safe light rendering.
 - The yellow button stays `#FFFF00` with **black** text in both modes.
+- `EmailFooter`'s "A Tollerud Project" link shares the footer's muted class, so
+  the whole wordmark ("A Tollerud Project. … All rights reserved.") recolors
+  together under the dark-mode block. The fine-print line below it is centered.
+- Any custom text you render outside the primitives (e.g. a bespoke table) must
+  carry the matching `t-*` class — `emailClass.text` / `.muted` / `.fine` — or
+  its inline light color won't be recolored by the dark-mode block and it will
+  render dark-on-dark. `ReceiptEmail`'s line-item table is wired this way.
 - Still test in [Litmus](https://litmus.com/) or
   [Email on Acid](https://www.emailonacid.com/) before a large send.
 

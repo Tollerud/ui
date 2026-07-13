@@ -6,7 +6,7 @@ import { EmailHeading } from '../primitives/EmailHeading'
 import { EmailText } from '../primitives/EmailText'
 import { EmailDivider } from '../primitives/EmailDivider'
 import { EmailFooter, type EmailFooterProps } from '../primitives/EmailFooter'
-import { emailTheme as t } from '../theme'
+import { emailTheme as t, emailClass } from '../theme'
 
 export interface ReceiptLineItem {
   description: string
@@ -78,12 +78,12 @@ export function ReceiptEmail({
         {items.map((item, i) => (
           <Row key={i} style={{ marginBottom: t.space[2] }}>
             <Column style={{ verticalAlign: 'top' }}>
-              <Text style={{ ...cell, color: t.color.textPrimary }}>
+              <Text className={emailClass.text} style={{ ...cell, color: t.color.textPrimary }}>
                 {item.description}
               </Text>
             </Column>
             <Column style={{ verticalAlign: 'top', textAlign: 'right' }}>
-              <Text style={{ ...cell, color: t.color.textPrimary }}>
+              <Text className={emailClass.text} style={{ ...cell, color: t.color.textPrimary }}>
                 {item.amount}
               </Text>
             </Column>
@@ -94,17 +94,18 @@ export function ReceiptEmail({
       <Section>
         <Row>
           <Column>
-            <Text style={{ ...cell, fontWeight: 600, color: t.color.textPrimary }}>
+            <Text className={emailClass.text} style={{ ...cell, fontWeight: 600, color: t.color.textPrimary }}>
               {c.totalLabel}
             </Text>
           </Column>
           <Column style={{ textAlign: 'right' }}>
             <Text
+              className={emailClass.text}
               style={{
                 ...cell,
                 fontWeight: 700,
                 fontSize: t.size.lg,
-                color: t.color.accent,
+                color: t.color.textPrimary,
               }}
             >
               {total}

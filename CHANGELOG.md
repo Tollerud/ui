@@ -7,6 +7,28 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.13.2 — 2026-07-13 — Email dark-mode fixes: footer wordmark + receipt table
+
+### Fixed
+
+- `EmailFooter` — the "A Tollerud Project" link now carries the `muted` class so the `@media (prefers-color-scheme: dark)` override recolors it alongside "All rights reserved." In dark clients (Apple Mail / iOS) the link previously kept its light-mode `#52525B` while the surrounding text lightened to `#AAAAAA`, so the wordmark rendered in two colors. Light mode is unaffected.
+
+- `ReceiptEmail` — the line items, "Total" label, and total value are hand-rolled `Text` cells that were missed by the 4.13.0 light-first migration: they had light-mode inline colors but no `t-*` class, so the dark-mode override never reached them and they rendered dark-on-dark (invisible) in Apple Mail / iOS. They now carry the `text` class.
+
+- `ReceiptEmail` — the total value was painted with the yellow accent (`#FFFF00`), which is unreadable on the white card that every client (including Gmail) renders. It is now `textPrimary`, with emphasis from weight and size instead of color.
+
+- `VerifyEmail` — the raw verification URL is now wrapped in a `word-break: break-all` span so a long token wraps inside the card instead of stretching it and forcing horizontal scroll.
+
+### Changed
+
+- `EmailFooter` — the fine-print line (`© YEAR · address · Unsubscribe`) is now center-aligned. No API change.
+
+- `EmailText` — the `fine` tone now matches the footer's fine print: `xs` size, the `fine` class, and the muted text color. It was previously a shrunk `muted` tone (`sm` size, secondary color, `muted` class), so "fine" print rendered larger and a shade darker than the footer's. Templates that use `tone="fine"` (the verify link, expiry notes, the reset note) now render as true fine print.
+
+### Added
+
+- `packages/email/src/email.test.tsx` — a render-test suite (22 cases) covering every primitive and template. It guards the light-first dark-mode contract (every text-colored element carries a `t-*` class; every applied class has a matching dark-mode rule), the footer wordmark link's `muted` class, the `EmailText` tone map, and that `ReceiptEmail` never paints text with the yellow accent.
+
 ## 4.13.1 — 2026-07-13 — shaders-react peer → 0.0.77 (lockstep)
 
 ### Changed

@@ -72,6 +72,7 @@ export function EmailFooter({
     fontFamily: t.font.sans,
     fontSize: t.size.xs,
     lineHeight: 1.6,
+    textAlign: 'center',
   } as const
 
   return (
@@ -94,6 +95,7 @@ export function EmailFooter({
           <Text className={emailClass.muted} style={wordmark}>
             <Link
               href="https://tollerud.no"
+              className={emailClass.muted}
               style={{
                 color: t.color.textSecondary,
                 textDecoration: 'underline',

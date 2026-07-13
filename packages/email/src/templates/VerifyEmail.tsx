@@ -61,7 +61,7 @@ export function VerifyEmail({
       <EmailText tone="fine">
         {c.linkHelp}
         <br />
-        {verifyUrl}
+        <span style={{ wordBreak: 'break-all' }}>{verifyUrl}</span>
       </EmailText>
       {expiresIn ? <EmailText tone="fine">{c.expiresNote(expiresIn)}</EmailText> : null}
       <EmailFooter {...footer} />

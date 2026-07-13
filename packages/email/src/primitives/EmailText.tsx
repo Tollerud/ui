@@ -10,17 +10,26 @@ export interface EmailTextProps {
   children: React.ReactNode
 }
 
+// Per-tone class / color / size, kept in sync with the dark-mode `<style>`
+// block so every tone recolors. `fine` matches the footer's fine print
+// (`t-fine` + muted color + xs size), not a shrunk `muted`.
+const TONE = {
+  default: { className: emailClass.text, color: t.color.textPrimary, size: t.size.base },
+  muted: { className: emailClass.muted, color: t.color.textSecondary, size: t.size.base },
+  fine: { className: emailClass.fine, color: t.color.textMuted, size: t.size.xs },
+} as const
+
 /** Body copy. Tone controls color + size for secondary and fine-print text. */
 export function EmailText({ tone = 'default', style, children }: EmailTextProps) {
-  const isFine = tone === 'fine'
+  const s = TONE[tone]
   return (
     <Text
-      className={tone === 'default' ? emailClass.text : emailClass.muted}
+      className={s.className}
       style={{
         margin: `0 0 ${t.space[4]}`,
-        color: tone === 'default' ? t.color.textPrimary : t.color.textSecondary,
+        color: s.color,
         fontFamily: t.font.sans,
-        fontSize: isFine ? t.size.sm : t.size.base,
+        fontSize: s.size,
         lineHeight: 1.6,
         ...style,
       }}

@@ -1,6 +1,6 @@
 {
   "name": "@tollerud/email",
-  "version": "4.13.1",
+  "version": "4.13.2",
   "description": "Tollerud branded email primitives + templates — React Email, tokens synced from @tollerud/ui",
   "private": false,
   "type": "module",
