@@ -3,6 +3,10 @@ version: 2
 # @paper-design/shaders-react is pinned by @tollerud/ui's peer dependency and
 # must move in lockstep (peer + all consumers) — never bumped independently. It
 # is ignored in every directory below and bumped manually with a ui release.
+#
+# `typescript` majors are held everywhere: lint runs on typescript-eslint, which
+# has no TypeScript 7-compatible release yet (peer caps at <6.1.0). Bump TS +
+# typescript-eslint together once support ships. Minor/patch TS still flows.
 
 updates:
   - package-ecosystem: npm
@@ -21,6 +25,9 @@ updates:
         update-types: [version-update:semver-major]
       - dependency-name: "@eslint/js"
         update-types: [version-update:semver-major]
+      # typescript-eslint has no TypeScript 7 support yet — hold the TS major
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
       # Pinned by @tollerud/ui's peer — bump in lockstep, not independently.
       - dependency-name: "@paper-design/shaders-react"
   - package-ecosystem: npm
@@ -32,6 +39,8 @@ updates:
         patterns: ["*"]
         update-types: [minor, patch]
     ignore:
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
       - dependency-name: "@paper-design/shaders-react"
   - package-ecosystem: npm
     directory: /fixtures/consumer
@@ -42,6 +51,8 @@ updates:
         patterns: ["*"]
         update-types: [minor, patch]
     ignore:
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
       - dependency-name: "@paper-design/shaders-react"
   - package-ecosystem: npm
     directory: /packages/footer
@@ -52,6 +63,8 @@ updates:
         patterns: ["*"]
         update-types: [minor, patch]
     ignore:
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
       - dependency-name: "@paper-design/shaders-react"
   - package-ecosystem: npm
     directory: /packages/email
@@ -62,4 +75,6 @@ updates:
         patterns: ["*"]
         update-types: [minor, patch]
     ignore:
+      - dependency-name: typescript
+        update-types: [version-update:semver-major]
       - dependency-name: "@paper-design/shaders-react"

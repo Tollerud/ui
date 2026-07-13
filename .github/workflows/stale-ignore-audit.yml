@@ -42,6 +42,7 @@ jobs:
 
           - `@paper-design/shaders-react` — bump in **lockstep** (peer + docs-app + fixtures + examples) with a `@tollerud/ui` release. See CLAUDE.md.
           - `eslint` / `@eslint/js` majors — held until `eslint-plugin-jsx-a11y` declares eslint@10 peer support; re-check and drop the ignore when it does.
+          - `typescript` major (TS 7) — held until `typescript-eslint` ships a TS 7-compatible release (its peer caps at `<6.1.0`); bump TS + typescript-eslint together when it does.
 
           _Auto-generated monthly by `.github/workflows/stale-ignore-audit.yml`._
           EOF
