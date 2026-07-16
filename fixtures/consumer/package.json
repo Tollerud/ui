@@ -22,13 +22,13 @@
     "react-dom": "^19.0.0",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.0.0",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.3.3"
   },
   "overrides": {
     "postcss": ">=8.5.10"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.2",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.1.1",
     "@types/react": "^19.0.0",
     "typescript": "^6.0.3"
