@@ -73,14 +73,14 @@ function PasswordStrength({ value, rules = DEFAULT_RULES, className }: PasswordS
             <div
               key={i}
               className={cn(
-                'h-1 flex-1 rounded-full transition-colors duration-300',
+                'h-1 flex-1 rounded-full transition-colors duration-slow ease-out',
                 i < passed ? STRENGTH_COLORS[strength] : 'bg-tollerud-border'
               )}
             />
           ))}
         </div>
         {value.length > 0 && (
-          <span className={cn('text-[11px] font-semibold w-10 text-right transition-colors duration-300', STRENGTH_TEXT[strength])}>
+          <span className={cn('text-[11px] font-semibold w-10 text-right transition-colors duration-slow ease-out', STRENGTH_TEXT[strength])}>
             {STRENGTH_LABELS[strength]}
           </span>
         )}
@@ -96,7 +96,7 @@ function PasswordStrength({ value, rules = DEFAULT_RULES, className }: PasswordS
               <X size={12} className="text-tollerud-text-muted shrink-0" strokeWidth={2.5} />
             )}
             <span className={cn(
-              'text-xs transition-colors duration-150',
+              'text-xs transition-colors duration-fast',
               results[i] ? 'text-tollerud-text-secondary' : 'text-tollerud-text-muted'
             )}>
               {rule.label}

@@ -5,6 +5,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@/lib/utils': path.resolve(__dirname, './lib/utils.ts'),
+      '@/lib/motion': path.resolve(__dirname, './lib/motion.ts'),
       '@/lib/dropdown-placement': path.resolve(__dirname, './lib/dropdown-placement.ts'),
       '@/lib/floating-dropdown': path.resolve(__dirname, './lib/floating-dropdown.tsx'),
       '@/lib/bypass-modal-scroll-lock': path.resolve(__dirname, './lib/bypass-modal-scroll-lock.ts'),

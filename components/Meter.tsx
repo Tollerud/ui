@@ -40,7 +40,7 @@ const Meter = forwardRef<HTMLDivElement, MeterProps>(
           className="h-1.5 w-full overflow-hidden rounded-full bg-tollerud-surface-raised"
         >
           <div
-            className={cn('h-full rounded-full transition-[width] duration-300 motion-reduce:transition-none', meterTones[tone])}
+            className={cn('h-full rounded-full transition-[width] duration-slow ease-out motion-reduce:transition-none', meterTones[tone])}
             style={{ width: `${pct}%` }}
           />
         </div>

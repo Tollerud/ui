@@ -55,7 +55,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           {/* Custom box */}
           <span
             className={cn(
-              'relative h-4 w-4 rounded border transition-all duration-[150ms]',
+              'relative h-4 w-4 rounded border transition-all duration-fast',
               'flex items-center justify-center',
               'bg-tollerud-surface-raised border-tollerud-border',
               'peer-focus-visible:outline-2 peer-focus-visible:outline-tollerud-yellow',
@@ -69,7 +69,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           >
             {/* Checkmark SVG — visible when checked (via peer on sibling input) */}
             <svg
-              className="tollerud-checkbox-check pointer-events-none h-3 w-3 text-tollerud-black opacity-0 transition-opacity duration-[150ms]"
+              className="tollerud-checkbox-check pointer-events-none h-3 w-3 text-tollerud-black opacity-0 transition-opacity duration-fast"
               viewBox="0 0 12 12"
               fill="none"
               aria-hidden="true"
@@ -84,7 +84,7 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             </svg>
             {/* Dash SVG — visible when indeterminate */}
             <svg
-              className="tollerud-checkbox-dash pointer-events-none absolute inset-0 m-auto h-3 w-3 text-tollerud-black opacity-0 transition-opacity duration-[150ms]"
+              className="tollerud-checkbox-dash pointer-events-none absolute inset-0 m-auto h-3 w-3 text-tollerud-black opacity-0 transition-opacity duration-fast"
               viewBox="0 0 12 12"
               fill="none"
               aria-hidden="true"

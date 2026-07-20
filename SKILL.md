@@ -175,6 +175,27 @@ For a real `<button>` (form submit, logout, toggle, dialog/menu trigger), just u
 
 Standard focus ring (apply to every interactive element): `focus-visible:outline-2 focus-visible:outline-tollerud-yellow focus-visible:outline-offset-2`
 
+## Motion tokens
+
+Every transition/animation uses these tokens — never a raw `ms` value or a bare `transition-*` class with no duration.
+
+| Token | Value | Tailwind class | Use |
+|---|---|---|---|
+| `--motion-duration-fast` | 150ms | `duration-fast` | Hover/focus color, border, opacity, small transforms — the default for interactive chrome |
+| `--motion-duration-normal` | 250ms | `duration-normal` | Overlay enter/exit (Sheet, Dialog, TopNav menu, CommandMenu), sliding panels |
+| `--motion-duration-slow` | 350ms | `duration-slow` | Larger/more deliberate movement: value-bar fills (Meter, Progress, PasswordStrength), decorative glow fades |
+| `--motion-ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | `ease-out` | Entrances — element appearing or growing into place |
+| `--motion-ease-in` | `cubic-bezier(0.7, 0, 0.84, 0)` | `ease-in` | Exits — element leaving or shrinking away |
+| `--motion-ease-in-out` | `cubic-bezier(0.4, 0, 0.2, 1)` | `ease-in-out` | Default for anything that isn't a clear enter/exit (color/border transitions) |
+
+The Tailwind preset maps `duration-fast/normal/slow` and `ease-out/in/in-out` to these exact values — always prefer the class over an arbitrary value (`duration-[150ms]`) or Tailwind's numeric scale (`duration-150`), both of which silently drift from the token if it ever changes.
+
+In CSS (`globals-layers.css`), use `var(--motion-duration-*)` / `var(--motion-ease-*)` directly. `--transition-fast/normal/slow` also exist as shorthand aliases (`<duration> <easing>` in one var) — they resolve to the same tokens, not independent values.
+
+In JS-driven animation (framer-motion, etc.) where CSS custom properties aren't available, import `motionDuration` / `motionEase` from `lib/motion.ts` — hand-mirrored constants of the same tokens (duration in seconds, easing as cubic-bezier arrays). Don't hardcode duration/easing literals in a `transition` prop.
+
+**Documented exception:** chart value-transitions (`BarChart`, `Gauge` bar/arc fills on data update) use `duration-500 ease-out`, outside the fast/normal/slow scale. Data visualizations read better with a longer, self-consistent fill timing than UI chrome does — this is intentional, not drift.
+
 ---
 
 ## Component catalog (verified against actual exports)
@@ -824,11 +845,13 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 | Introduce non-system chromatic colors (blue, green, purple) for decoration | Only the yellow accent + monochrome grays (status semantics are the lone exception) |
 | Nest `<a>`/`<Link>` inside `<Button>` (or vice versa) | Invalid HTML — use `asChild` or `buttonVariants()` instead |
 | Import a component name you saw in older docs without checking it exists | Verify against this catalog or `components/index.ts`. Common renames: `EmptyState` → `Empty`, `Toast` → `Toaster` + `sonner`'s `toast()`, `Drawer` → `Sheet`. Charts (`BarChart`, `AreaChart`, `Donut`, `Sparkline`) and marketing blocks (`HeroBlock`, `FeatureCard`, `CTABand`) ship since **v1.4.0**. Brand assets: `@tollerud/ui/brand/*` (not repo root). |
+| Hardcode a transition duration/easing (`duration-[150ms]`, `duration-150`, a bare `transition-colors` with no duration, `ease: 'easeOut'` in framer-motion) | Use the Motion tokens (`duration-fast/normal/slow`, `ease-out/in/in-out`, or `lib/motion.ts` for JS-driven animation) — see Motion tokens above |
 
 ---
 
 ## Version notes
 
+- **Motion token consolidation (≥ 4.13.3)** — every component now uses the `duration-fast/normal/slow` + `ease-out/in/in-out` Tailwind classes (mapped to `--motion-duration-*`/`--motion-ease-*` in the preset) instead of arbitrary values (`duration-[150ms]`), Tailwind's numeric scale (`duration-150`), or bare `transition-*` with no duration. `lib/motion.ts` exports the same tokens as JS constants for framer-motion (`StatusDot`). `--transition-fast/normal/slow` in `globals-layers.css` are now aliases of the motion tokens rather than a separately hardcoded set. No API change — visual timing on a handful of components shifted slightly (e.g. 200ms → 150ms, 300ms → 350ms) to land on a token.
 - **`@tollerud/email` dark-mode fixes (≥ 4.13.2)** — `EmailFooter`'s "A Tollerud Project" link now shares the `muted` class so it recolors with the surrounding text under `prefers-color-scheme: dark` (previously it kept the light-mode color in Apple Mail / iOS, so the wordmark showed two colors), and its fine-print line (`© YEAR · address · Unsubscribe`) is now center-aligned. `ReceiptEmail`'s line items / total were missed by the 4.13.0 light-first migration — they now carry the `text` class (were dark-on-dark in Apple Mail / iOS), and the total is `textPrimary` instead of the yellow accent (was unreadable on the white card). `EmailText`'s `fine` tone is now true fine print (`xs` + muted color + `fine` class) instead of a shrunk `muted`, and `VerifyEmail` wraps the raw link so long tokens don't stretch the card. A render-test suite (`packages/email/src/email.test.tsx`) now guards the dark-mode contract. No API change.
 - **`@paper-design/shaders-react` peer → `^0.0.77` (≥ 4.13.1)** — the optional peer (used by `NoirGlowBackground`) is pinned by `@tollerud/ui` and moves in lockstep. Consumers should install `@paper-design/shaders-react@0.0.77`; don't bump it independently of `@tollerud/ui`.
 - **`@tollerud/email` light-first + Gmail fixes (≥ 4.13.0)** — email is now light by default (white card, dark text, yellow button) so it renders correctly in Gmail, where the old dark-first design broke (white bg, mis-colored button, missing monogram). A `@media prefers-color-scheme: dark` block restores the noir look in Apple Mail / iOS. The monogram is a hosted PNG (Gmail strips inline SVG), auto dark-on-light / yellow-on-dark; override with `logoSrc`. **Breaking:** the `color` prop was removed from `BrandMark`/`EmailHeader`/`EmailFooter` and `BrandMarkColor` is no longer exported.

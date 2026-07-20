@@ -109,7 +109,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
         onClick={() => toggle(value)}
         className={cn(
           'flex w-full items-center justify-between gap-4 px-4 py-3.5 text-left text-sm font-medium',
-          'text-tollerud-text-primary hover:bg-tollerud-surface-hover transition-colors duration-[150ms]',
+          'text-tollerud-text-primary hover:bg-tollerud-surface-hover transition-colors duration-fast',
           className
         )}
         {...props}
@@ -117,7 +117,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
         {children}
         <ChevronDown
           size={16}
-          className={cn('shrink-0 text-tollerud-text-muted transition-transform duration-[200ms]', open && 'rotate-180')}
+          className={cn('shrink-0 text-tollerud-text-muted transition-transform duration-fast', open && 'rotate-180')}
         />
       </button>
     )

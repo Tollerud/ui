@@ -113,7 +113,7 @@ function DatePicker({
         className={cn(
           'flex w-full items-center justify-between gap-2 rounded px-3 py-2.5 text-left text-base',
           'bg-tollerud-surface-raised border',
-          'transition-[border-color] duration-[150ms]',
+          'transition-[border-color] duration-fast',
           'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
           error ? 'border-tollerud-error' : 'border-tollerud-border',
           value ? 'text-tollerud-text-primary' : 'text-tollerud-text-muted',
@@ -172,7 +172,7 @@ function DatePicker({
                   type="button"
                   onClick={() => select(date)}
                   className={cn(
-                    'h-8 w-8 rounded-full text-sm transition-colors duration-[150ms]',
+                    'h-8 w-8 rounded-full text-sm transition-colors duration-fast',
                     selected
                       ? 'bg-tollerud-yellow text-tollerud-noir-black font-medium'
                       : 'text-tollerud-text-secondary hover:bg-tollerud-surface-hover',

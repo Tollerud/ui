@@ -58,6 +58,7 @@ export default defineConfig({
   esbuildOptions(options) {
     options.alias = {
       '@/lib/utils': './lib/utils.ts',
+      '@/lib/motion': './lib/motion.ts',
       '@/lib/floating-dropdown': './lib/floating-dropdown.tsx',
       '@/lib/bypass-modal-scroll-lock': './lib/bypass-modal-scroll-lock.ts',
       '@/lib/use-mobile': './lib/use-mobile.ts',

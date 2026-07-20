@@ -78,7 +78,7 @@ function TagInput({
         className={cn(
           'flex flex-wrap items-center gap-1.5 rounded px-2.5 py-1.5',
           'bg-tollerud-surface-raised border',
-          'transition-[border-color] duration-[150ms]',
+          'transition-[border-color] duration-fast',
           'focus-within:border-tollerud-yellow focus-within:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
           error ? 'border-tollerud-error' : 'border-tollerud-border',
           disabled && 'opacity-50 pointer-events-none'
@@ -94,7 +94,7 @@ function TagInput({
               type="button"
               aria-label={`Remove ${tag}`}
               onClick={() => removeTag(i)}
-              className="text-tollerud-text-muted hover:text-tollerud-text-primary transition-colors duration-[150ms]"
+              className="text-tollerud-text-muted hover:text-tollerud-text-primary transition-colors duration-fast"
             >
               <X size={12} />
             </button>

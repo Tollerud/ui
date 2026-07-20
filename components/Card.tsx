@@ -72,7 +72,7 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
         data-density={density ?? undefined}
         data-accent={accent === 'filled' ? 'filled' : accent ? 'accent' : undefined}
         className={cn(
-          'group/card rounded-lg border bg-tollerud-surface-raised transition-[border-color,padding] duration-[150ms]',
+          'group/card rounded-lg border bg-tollerud-surface-raised transition-[border-color,padding] duration-fast',
           structured ? 'flex flex-col overflow-hidden p-0' : 'p-6',
           !structured && '[[data-density=compact]_&]:p-3',
           !structured && density === 'compact' && 'p-3',

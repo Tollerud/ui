@@ -16,6 +16,7 @@
     "ignoreDeprecations": "6.0",
     "paths": {
       "@/lib/utils": ["./lib/utils.ts"],
+      "@/lib/motion": ["./lib/motion.ts"],
       "@/lib/dropdown-placement": ["./lib/dropdown-placement.ts"],
       "@/lib/floating-dropdown": ["./lib/floating-dropdown.tsx"],
       "@/lib/bypass-modal-scroll-lock": ["./lib/bypass-modal-scroll-lock.ts"],

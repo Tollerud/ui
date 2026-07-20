@@ -26,7 +26,7 @@ const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(
                 <a
                   href={item.href}
                   onClick={item.onClick}
-                  className="text-tollerud-text-secondary hover:text-tollerud-text-primary transition-colors duration-[150ms]"
+                  className="text-tollerud-text-secondary hover:text-tollerud-text-primary transition-colors duration-fast"
                 >
                   {item.label}
                 </a>

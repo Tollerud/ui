@@ -24,7 +24,7 @@ const ServiceHealthCard = forwardRef<HTMLDivElement, ServiceHealthCardProps>(
         ref={ref}
         className={cn(
           'rounded-lg border bg-tollerud-surface-raised p-4',
-          'transition-[border-color] duration-[150ms]',
+          'transition-[border-color] duration-fast',
           status === 'offline' && 'border-tollerud-error/40',
           status === 'warning' && 'border-tollerud-yellow/30',
           status === 'online' && 'border-tollerud-border hover:border-tollerud-noir-500',

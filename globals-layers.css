@@ -138,10 +138,10 @@
     );
     --tollerud-shimmer-highlight: #FFFDE6;
 
-    /* ═══ Transition ═══ */
-    --transition-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow:   350ms cubic-bezier(0.4, 0, 0.2, 1);
+    /* ═══ Transition (shorthand aliases of the Motion Tokens above) ═══ */
+    --transition-fast:   var(--motion-duration-fast) var(--motion-ease-in-out);
+    --transition-normal: var(--motion-duration-normal) var(--motion-ease-in-out);
+    --transition-slow:   var(--motion-duration-slow) var(--motion-ease-in-out);
   }
 
   /* ═══ Base Reset ═══ */

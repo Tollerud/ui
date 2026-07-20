@@ -91,7 +91,7 @@ const AlertInbox = forwardRef<HTMLDivElement, AlertInboxProps>(
                   className={cn(
                     'absolute bottom-2 right-3 text-[10px] font-medium px-2 py-0.5 rounded',
                     'text-tollerud-yellow/70 hover:text-tollerud-yellow hover:bg-tollerud-yellow/10',
-                    'opacity-0 group-hover:opacity-100 transition-opacity duration-150'
+                    'opacity-0 group-hover:opacity-100 transition-opacity duration-fast'
                   )}
                 >
                   Acknowledge

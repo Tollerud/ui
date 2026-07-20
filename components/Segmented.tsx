@@ -34,7 +34,7 @@ const shellClass =
 
 function segmentButtonClass(active: boolean, size: 'sm' | 'md', disabled?: boolean) {
   return cn(
-    'inline-flex items-center justify-center rounded-md font-medium leading-none transition-colors duration-[150ms] tollerud-focus-ring',
+    'inline-flex items-center justify-center rounded-md font-medium leading-none transition-colors duration-fast tollerud-focus-ring',
     size === 'sm' ? 'h-7 px-2.5 text-xs' : 'h-8 px-3.5 text-sm',
     active
       ? 'bg-tollerud-yellow text-tollerud-noir-black'
@@ -116,7 +116,7 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
               <ChevronDown
                 size={size === 'sm' ? 14 : 16}
                 aria-hidden
-                className={cn('transition-transform duration-[150ms]', expanded && 'rotate-180')}
+                className={cn('transition-transform duration-fast', expanded && 'rotate-180')}
               />
             </button>
           </div>
@@ -141,7 +141,7 @@ const Segmented = forwardRef<HTMLDivElement, SegmentedProps>(
                   disabled={opt.disabled}
                   onClick={() => !opt.disabled && handleSelect(opt.value)}
                   className={cn(
-                    'w-full text-left px-3 py-2 text-sm transition-colors duration-75 cursor-pointer',
+                    'w-full text-left px-3 py-2 text-sm transition-colors duration-fast cursor-pointer',
                     active ? 'text-tollerud-yellow' : 'text-tollerud-text-primary',
                     'hover:bg-tollerud-noir-700/60',
                     active && 'bg-tollerud-noir-700',

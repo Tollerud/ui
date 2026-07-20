@@ -37,7 +37,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
               'bg-tollerud-surface-raised border',
               'text-tollerud-text-primary',
               'placeholder:text-tollerud-text-muted',
-              'transition-[border-color] duration-[150ms]',
+              'transition-[border-color] duration-fast',
               'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
               error ? 'border-tollerud-error' : 'border-tollerud-border',
               className
@@ -49,7 +49,7 @@ const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             onClick={() => setVisible((v) => !v)}
             aria-label={visible ? 'Hide password' : 'Show password'}
             aria-pressed={visible}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-tollerud-text-muted hover:text-tollerud-text-secondary transition-colors duration-[150ms]"
+            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-tollerud-text-muted hover:text-tollerud-text-secondary transition-colors duration-fast"
           >
             {visible ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>

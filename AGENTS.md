@@ -175,6 +175,21 @@ When contributing **to this repository**, changing `components/*.tsx` is expecte
 | `tollerud-text-secondary` | `#AAAAAA` | Secondary / labels |
 | `tollerud-text-muted` | `#666666` | Placeholders, hints |
 
+## Motion Tokens
+
+Never hardcode a duration/easing — always use these (full detail + rationale in [SKILL.md](SKILL.md#motion-tokens)):
+
+| Token | Value | Tailwind class |
+|-------|-------|----------------|
+| `--motion-duration-fast` | 150ms | `duration-fast` |
+| `--motion-duration-normal` | 250ms | `duration-normal` |
+| `--motion-duration-slow` | 350ms | `duration-slow` |
+| `--motion-ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | `ease-out` |
+| `--motion-ease-in` | `cubic-bezier(0.7, 0, 0.84, 0)` | `ease-in` |
+| `--motion-ease-in-out` | `cubic-bezier(0.4, 0, 0.2, 1)` | `ease-in-out` |
+
+In framer-motion or other JS-driven animation, import `motionDuration`/`motionEase` from `lib/motion.ts` instead of hardcoding literals.
+
 ---
 
 ## Components

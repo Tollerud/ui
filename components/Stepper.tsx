@@ -40,7 +40,7 @@ const Stepper = forwardRef<HTMLOListElement, StepperProps>(
               <div className={cn('flex items-center', vertical ? 'flex-col' : 'flex-row gap-2 w-full')}>
                 <span
                   className={cn(
-                    'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium transition-colors duration-[150ms]',
+                    'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium transition-colors duration-fast',
                     status === 'complete' && 'bg-tollerud-yellow text-tollerud-noir-black',
                     status === 'active' && 'border-2 border-tollerud-yellow text-tollerud-yellow',
                     status === 'upcoming' && 'border border-tollerud-border text-tollerud-text-muted'

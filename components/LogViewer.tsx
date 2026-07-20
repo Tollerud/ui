@@ -127,7 +127,7 @@ const LogViewer = forwardRef<HTMLDivElement, LogViewerProps>(
                   'w-40 text-[11px] px-2 py-1 rounded bg-tollerud-noir-800',
                   'border border-tollerud-noir-600 text-tollerud-foreground',
                   'placeholder:text-tollerud-noir-400 outline-none',
-                  'focus:border-tollerud-yellow/50 transition-colors'
+                  'focus:border-tollerud-yellow/50 transition-colors duration-fast'
                 )}
               />
             )}

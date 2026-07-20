@@ -183,6 +183,12 @@ module.exports = {
         slow:   '350ms',
       },
       transitionTimingFunction: {
+        // Mirror the --motion-ease-* CSS custom properties (globals-layers.css)
+        // so `ease-out`/`ease-in`/`ease-in-out` match the design system's curves,
+        // not the browser defaults.
+        out:    'cubic-bezier(0.16, 1, 0.3, 1)',
+        in:     'cubic-bezier(0.7, 0, 0.84, 0)',
+        'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
         'tollerud-ease': 'cubic-bezier(0.4, 0, 0.2, 1)',
       },
     },

@@ -48,7 +48,7 @@ export interface ButtonVariantProps {
 
 export function buttonVariants({ variant = 'secondary', size = 'md', className }: ButtonVariantProps & { className?: string } = {}) {
   return cn(
-    'tollerud-btn inline-flex items-center justify-center gap-2 font-semibold leading-none rounded transition-all duration-[150ms] focus-visible:outline-2 focus-visible:outline-tollerud-yellow focus-visible:outline-offset-2',
+    'tollerud-btn inline-flex items-center justify-center gap-2 font-semibold leading-none rounded transition-all duration-fast focus-visible:outline-2 focus-visible:outline-tollerud-yellow focus-visible:outline-offset-2',
     'border cursor-pointer',
     'disabled:opacity-50 disabled:pointer-events-none',
     variants[variant],

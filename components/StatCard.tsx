@@ -23,7 +23,7 @@ const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
         className={cn(
           'group relative rounded-lg border p-4',
           'bg-tollerud-surface-raised',
-          'transition-all duration-200 ease-out',
+          'transition-all duration-fast ease-out',
           'hover:translate-y-[-1px]',
           accent
             ? 'border-tollerud-yellow/20 hover:border-tollerud-yellow/40 hover:shadow-[0_0_20px_rgba(232,213,0,0.08)]'

@@ -16,7 +16,7 @@ export interface ListCardProps extends HTMLAttributes<HTMLElement> {
 }
 
 const listCardBase =
-  'group flex w-full items-center gap-3 rounded-lg border bg-tollerud-noir-900/40 px-4 py-3 transition-[border-color,background-color] duration-[150ms]'
+  'group flex w-full items-center gap-3 rounded-lg border bg-tollerud-noir-900/40 px-4 py-3 transition-[border-color,background-color] duration-fast'
 
 const listCardBorder = (highlight: ListCardProps['highlight']) =>
   highlight === 'cheapest'

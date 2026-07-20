@@ -3,6 +3,7 @@
 import { type HTMLAttributes, forwardRef } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { motionDuration, motionEase } from '@/lib/motion'
 
 type Status = 'online' | 'offline' | 'warning' | 'idle'
 
@@ -53,8 +54,8 @@ const StatusDot = forwardRef<HTMLSpanElement, StatusDotProps>(
             scaleY: [1, 0.6, 1],
           }}
           transition={{
-            duration: 0.4,
-            ease: 'easeOut',
+            duration: motionDuration.slow,
+            ease: motionEase.out,
             times: [0, 0.3, 1],
           }}
           className={cn(
@@ -64,7 +65,7 @@ const StatusDot = forwardRef<HTMLSpanElement, StatusDotProps>(
           )}
           style={{
             ...(shouldPulse && pulseColor ? ({ '--pulse-color': pulseColor } as React.CSSProperties) : {}),
-            animation: shouldPulse ? 'tollerud-dot-pulse 2s ease-in-out infinite' : undefined,
+            animation: shouldPulse ? 'tollerud-dot-pulse 2s var(--motion-ease-in-out) infinite' : undefined,
           } as React.CSSProperties}
         />
         {label && <span>{label}</span>}

@@ -101,7 +101,7 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(function FileUplo
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
         className={cn(
-          'flex flex-col items-center justify-center gap-2 rounded border border-dashed px-6 py-8 text-center cursor-pointer transition-colors duration-[150ms]',
+          'flex flex-col items-center justify-center gap-2 rounded border border-dashed px-6 py-8 text-center cursor-pointer transition-colors duration-fast',
           dragging
             ? 'border-tollerud-yellow bg-tollerud-yellow/[0.06]'
             : 'border-tollerud-border bg-tollerud-surface-raised hover:border-tollerud-text-secondary',
@@ -150,7 +150,7 @@ const FileUpload = forwardRef<HTMLDivElement, FileUploadProps>(function FileUplo
                 type="button"
                 aria-label={`Remove ${file.name}`}
                 onClick={() => removeAt(i)}
-                className="shrink-0 text-tollerud-text-muted hover:text-tollerud-text-primary transition-colors duration-[150ms]"
+                className="shrink-0 text-tollerud-text-muted hover:text-tollerud-text-primary transition-colors duration-fast"
               >
                 <X size={14} />
               </button>

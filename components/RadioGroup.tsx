@@ -108,7 +108,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
           {/* Custom radio circle */}
           <span
             className={cn(
-              'flex h-4 w-4 items-center justify-center rounded-full border transition-all duration-[150ms]',
+              'flex h-4 w-4 items-center justify-center rounded-full border transition-all duration-fast',
               'bg-tollerud-surface-raised border-tollerud-border',
               'peer-focus-visible:outline-2 peer-focus-visible:outline-tollerud-yellow',
               'peer-checked:border-tollerud-yellow',
@@ -117,7 +117,7 @@ const Radio = forwardRef<HTMLInputElement, RadioProps>(
             )}
           >
             {/* Inner dot — visible when checked (via peer on sibling input) */}
-            <span className="pointer-events-none h-2 w-2 rounded-full bg-tollerud-yellow opacity-0 transition-opacity duration-[150ms]" />
+            <span className="pointer-events-none h-2 w-2 rounded-full bg-tollerud-yellow opacity-0 transition-opacity duration-fast" />
           </span>
         </span>
         {label && <span>{label}</span>}

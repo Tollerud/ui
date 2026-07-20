@@ -91,7 +91,7 @@ const ActionDiff = forwardRef<HTMLDivElement, ActionDiffProps>(
                 <tr
                   key={i}
                   className={cn(
-                    'transition-colors duration-[100ms]',
+                    'transition-colors duration-fast',
                     diffStyles[line.type]
                   )}
                 >

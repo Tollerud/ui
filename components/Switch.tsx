@@ -28,7 +28,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
         <span
           className={cn(
             'relative inline-flex items-center h-5 w-9 flex-shrink-0 rounded-full',
-            'transition-colors duration-200 ease-out',
+            'transition-colors duration-fast ease-out',
             isOn ? 'bg-tollerud-yellow group-hover:bg-tollerud-yellow-warm' : 'bg-tollerud-noir-600 group-hover:bg-tollerud-noir-500'
           )}
         >
@@ -48,7 +48,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
           <span
             className={cn(
               'block h-3.5 w-3.5 rounded-full shadow-sm pointer-events-none',
-              'transition-all duration-200 ease-out',
+              'transition-all duration-fast ease-out',
               isOn ? 'translate-x-[18px] bg-tollerud-black' : 'translate-x-[3px] bg-tollerud-white'
             )}
           />

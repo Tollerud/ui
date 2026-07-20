@@ -90,7 +90,7 @@ export function Footer({
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  'underline decoration-tollerud-yellow decoration-[3px] underline-offset-[4px] hover:opacity-80 transition-opacity',
+                  'underline decoration-tollerud-yellow decoration-[3px] underline-offset-[4px] hover:opacity-80 transition-opacity duration-fast',
                   classNameLink,
                 )}
                 style={{

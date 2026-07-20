@@ -79,7 +79,7 @@ const RollbackPlan = forwardRef<HTMLDivElement, RollbackPlanProps>(
               key={step.id}
               className={cn(
                 'flex items-start gap-3 px-3 py-2 rounded-md',
-                'transition-colors duration-[150ms]',
+                'transition-colors duration-fast',
                 step.status === 'failed' && 'bg-tollerud-error/5',
                 step.status === 'running' && 'bg-tollerud-yellow/5'
               )}

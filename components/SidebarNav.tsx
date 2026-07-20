@@ -36,7 +36,7 @@ function SidebarNavLink({
   onItemSelect?: (item: SidebarNavItem) => void
 }) {
   const className = cn(
-    'tollerud-focus-ring flex w-full items-center gap-2.5 rounded-md border-0 bg-transparent px-2.5 py-1.5 text-left text-[13.5px] font-medium text-tollerud-text-secondary transition-colors',
+    'tollerud-focus-ring flex w-full items-center gap-2.5 rounded-md border-0 bg-transparent px-2.5 py-1.5 text-left text-[13.5px] font-medium text-tollerud-text-secondary transition-colors duration-fast',
     'hover:bg-tollerud-noir-800 hover:text-tollerud-text-primary',
     item.active &&
       'bg-tollerud-yellow/10 text-tollerud-text-primary shadow-[inset_2px_0_0_0] shadow-tollerud-yellow'

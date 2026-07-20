@@ -33,7 +33,7 @@ function getPageRange(page: number, pageCount: number, siblingCount: number): (n
 }
 
 const navButtonClasses =
-  'inline-flex h-8 min-w-8 items-center justify-center rounded px-2 text-sm transition-colors duration-[150ms] disabled:opacity-40 disabled:pointer-events-none'
+  'inline-flex h-8 min-w-8 items-center justify-center rounded px-2 text-sm transition-colors duration-fast disabled:opacity-40 disabled:pointer-events-none'
 
 const Pagination = forwardRef<HTMLElement, PaginationProps>(
   ({ className, page, pageCount, onChange, siblingCount = 1, ...props }, ref) => {

@@ -62,7 +62,7 @@ const CodeBlock = forwardRef<HTMLPreElement, CodeBlockProps>(
             onClick={handleCopy}
             className={cn(
               'absolute top-2 right-2 px-2 py-1 rounded text-xs font-medium',
-              'opacity-0 group-hover:opacity-100 transition-all',
+              'opacity-0 group-hover:opacity-100 transition-all duration-fast',
               'bg-tollerud-noir-800 border border-tollerud-border/30 text-tollerud-text-muted',
               'hover:bg-tollerud-surface-raised hover:text-tollerud-text-primary',
               copied && 'opacity-100 bg-tollerud-success/15 text-tollerud-success border-tollerud-success/40'

@@ -7,6 +7,22 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.13.3 — 2026-07-20 — Motion token consolidation
+
+### Changed
+
+- Every component now uses the `duration-fast`/`duration-normal`/`duration-slow` and `ease-out`/`ease-in`/`ease-in-out` Tailwind classes (mapped in the preset to `--motion-duration-*` / `--motion-ease-*`) instead of arbitrary values (`duration-[150ms]`), Tailwind's numeric scale (`duration-150`), or a bare `transition-*` class with no duration at all. Roughly 40 components were touched (`Button`, `Accordion`, `Dialog`, `Sheet`, `Tabs`, `Select`, `Switch`, `Progress`, `Meter`, and more).
+
+- `globals-layers.css` — `--transition-fast/normal/slow` are now shorthand aliases of `--motion-duration-*` + `--motion-ease-in-out` instead of a second, independently hardcoded set of the same values.
+
+- `tollerud-preset.cjs` — `transitionTimingFunction` now maps `out`/`in`/`in-out` to the same cubic-beziers as `--motion-ease-out/in/in-out`, so Tailwind's `ease-out`/`ease-in`/`ease-in-out` utilities match the CSS tokens instead of the browser defaults. `transitionDuration` (`fast`/`normal`/`slow`) already existed but was unused before this release.
+
+- `StatusDot` — the framer-motion pulse transition now reads `motionDuration`/`motionEase` from the new `lib/motion.ts` (a hand-mirrored JS copy of the CSS motion tokens) instead of hardcoding `duration: 0.4, ease: 'easeOut'`.
+
+- A handful of components' visual timing shifted slightly to land on a token: 75–100ms transitions now run at 150ms (`fast`), several 200ms/300ms transitions now run at 150ms or 350ms depending on which token they were closer to. Chart value-transitions (`BarChart`, `Gauge`) intentionally keep their own 500ms timing — see the new Motion tokens section in SKILL.md/AGENTS.md for the documented exception.
+
+No API change.
+
 ## 4.13.2 — 2026-07-13 — Email dark-mode fixes: footer wordmark + receipt table
 
 ### Fixed

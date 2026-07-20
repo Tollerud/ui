@@ -92,7 +92,7 @@ const DialogContent = React.forwardRef<
         ) : null}
         {footer}
         {showClose ? (
-          <DialogPrimitive.Close className="absolute top-4 right-4 rounded-sm p-1 text-tollerud-text-muted transition-colors hover:text-tollerud-foreground tollerud-focus-ring">
+          <DialogPrimitive.Close className="absolute top-4 right-4 rounded-sm p-1 text-tollerud-text-muted transition-colors duration-fast hover:text-tollerud-foreground tollerud-focus-ring">
             <X className="h-4 w-4" aria-hidden />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>

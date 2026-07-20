@@ -312,7 +312,7 @@ function DataTableInner<T extends Record<string, unknown>>({
 
   const cellSurface = (rowIndex: number, isSelected: boolean) =>
     cn(
-      'transition-colors',
+      'transition-colors duration-fast',
       rowHoverable && (isSelected ? selectedRowHoverBg : 'group-hover/tr:bg-tollerud-noir-800'),
       isSelected && selectedRowBg,
       !isSelected && striped && rowIndex % 2 === 0 && 'bg-tollerud-noir-950',
@@ -345,7 +345,7 @@ function DataTableInner<T extends Record<string, unknown>>({
       <ChevronDown
         size={12}
         className={cn(
-          'shrink-0 transition-transform duration-150',
+          'shrink-0 transition-transform duration-fast',
           active ? 'text-tollerud-yellow opacity-100' : 'opacity-25',
           active && sortDir === 'desc' && 'rotate-180'
         )}

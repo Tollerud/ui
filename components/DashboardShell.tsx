@@ -132,7 +132,7 @@ const DashboardShell = forwardRef<HTMLDivElement, DashboardShellProps>(
               // column height by default, leaving a sticky sidebar zero travel room.
               // self-start collapses the wrapper to the aside's h-screen so it can
               // stick. No effect below lg where the wrapper is position:fixed.
-              'fixed inset-y-0 left-0 z-50 transition-transform duration-300 ease-out lg:sticky lg:top-0 lg:z-30 lg:translate-x-0 lg:self-start',
+              'fixed inset-y-0 left-0 z-50 transition-transform duration-normal ease-out lg:sticky lg:top-0 lg:z-30 lg:translate-x-0 lg:self-start',
               mobileNavOpen ? 'translate-x-0' : '-translate-x-full'
             )}
           >

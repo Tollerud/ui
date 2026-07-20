@@ -37,7 +37,7 @@ const IncidentCard = forwardRef<HTMLDivElement, IncidentCardProps>(
         ref={ref}
         className={cn(
           'rounded-lg border bg-tollerud-surface-raised p-4',
-          'transition-[border-color] duration-[150ms]',
+          'transition-[border-color] duration-fast',
           style.border,
           acknowledged && 'opacity-50',
           loading && 'animate-pulse',

@@ -34,7 +34,7 @@ const SettingsLayout = forwardRef<HTMLDivElement, SettingsLayoutProps>(
               const content = (
                 <span
                   className={cn(
-                    'block rounded-md px-3 py-2 text-sm transition-colors',
+                    'block rounded-md px-3 py-2 text-sm transition-colors duration-fast',
                     isDanger && !active && 'text-tollerud-error',
                     isDanger && active && 'bg-tollerud-error/10 text-tollerud-error',
                     !isDanger && active && 'bg-tollerud-yellow text-tollerud-noir-950',

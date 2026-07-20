@@ -155,7 +155,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
               size === 'sm' ? 'px-2.5 py-1.5 text-xs' : 'px-3 py-2.5 text-base',
               'bg-tollerud-surface-raised',
               'text-tollerud-text-primary text-left',
-              'transition-all duration-150 ease-out cursor-pointer',
+              'transition-all duration-fast ease-out cursor-pointer',
               error
                 ? 'border-tollerud-error/70 focus:border-tollerud-error focus:shadow-[0_0_0_1px_var(--tollerud-error,#EF4444)]'
                 : 'border-tollerud-border focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
@@ -169,7 +169,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             </span>
             <svg
               className={cn(
-                'h-4 w-4 text-tollerud-text-muted transition-transform duration-150 flex-shrink-0',
+                'h-4 w-4 text-tollerud-text-muted transition-transform duration-fast flex-shrink-0',
                 open && 'rotate-180'
               )}
               fill="none"
@@ -210,7 +210,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
                 onClick={() => selectOption(opt)}
                 onMouseEnter={() => setHighlightedIdx(idx)}
                 className={cn(
-                  'w-full text-sm text-left px-3 py-2 transition-colors duration-75',
+                  'w-full text-sm text-left px-3 py-2 transition-colors duration-fast',
                   'cursor-pointer',
                   opt.value === value
                     ? 'text-tollerud-yellow'

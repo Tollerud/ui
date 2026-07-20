@@ -313,7 +313,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
             className={cn(
               'w-full font-sans text-base px-3 py-2.5 rounded text-left flex items-center justify-between gap-2',
               'bg-tollerud-surface-raised border',
-              'transition-[border-color] duration-[150ms]',
+              'transition-[border-color] duration-fast',
               'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
               error ? 'border-tollerud-error' : 'border-tollerud-border',
               disabled && 'opacity-50 pointer-events-none'
@@ -325,7 +325,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
             <ChevronDown
               size={15}
               className={cn(
-                'shrink-0 text-tollerud-text-muted transition-transform duration-[150ms]',
+                'shrink-0 text-tollerud-text-muted transition-transform duration-fast',
                 open && 'rotate-180'
               )}
             />
@@ -359,7 +359,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
                 'w-full font-sans text-base px-3 py-2.5 pr-9 rounded',
                 'bg-tollerud-surface-raised border',
                 'text-tollerud-text-primary placeholder:text-tollerud-text-muted',
-                'transition-[border-color] duration-[150ms]',
+                'transition-[border-color] duration-fast',
                 'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
                 error ? 'border-tollerud-error' : 'border-tollerud-border',
                 disabled && 'opacity-50 pointer-events-none'
@@ -368,7 +368,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
             <ChevronDown
               size={15}
               className={cn(
-                'pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-tollerud-text-muted transition-transform duration-[150ms]',
+                'pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-tollerud-text-muted transition-transform duration-fast',
                 open && 'rotate-180'
               )}
             />

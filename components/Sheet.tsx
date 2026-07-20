@@ -82,7 +82,7 @@ const SheetContent = forwardRef<
           <DialogPrimitive.Title className="tollerud-sr-only">{title}</DialogPrimitive.Title>
         )}
         {children}
-        <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity text-tollerud-text-muted hover:text-tollerud-text-primary">
+        <SheetClose className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100 transition-opacity duration-fast text-tollerud-text-muted hover:text-tollerud-text-primary">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M18 6 6 18" /><path d="m6 6 12 12" />
           </svg>

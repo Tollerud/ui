@@ -45,7 +45,7 @@ const ApprovalCard = forwardRef<HTMLDivElement, ApprovalCardProps>(
         ref={ref}
         className={cn(
           'rounded-lg border bg-tollerud-surface-raised p-4',
-          'transition-all duration-[150ms]',
+          'transition-all duration-fast',
           stateStyles[state],
           loading && 'animate-pulse',
           className
@@ -70,7 +70,7 @@ const ApprovalCard = forwardRef<HTMLDivElement, ApprovalCardProps>(
               disabled={disabled}
               onClick={onApprove}
               className={cn(
-                'flex-1 rounded-md px-3 py-1.5 text-xs font-semibold transition-all',
+                'flex-1 rounded-md px-3 py-1.5 text-xs font-semibold transition-all duration-fast',
                 'bg-tollerud-success text-tollerud-text-inverse',
                 'hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed'
               )}
@@ -82,7 +82,7 @@ const ApprovalCard = forwardRef<HTMLDivElement, ApprovalCardProps>(
               disabled={disabled}
               onClick={onReject}
               className={cn(
-                'flex-1 rounded-md px-3 py-1.5 text-xs font-semibold transition-all',
+                'flex-1 rounded-md px-3 py-1.5 text-xs font-semibold transition-all duration-fast',
                 'bg-tollerud-error text-white',
                 'hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed'
               )}
