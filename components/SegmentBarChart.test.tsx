@@ -29,7 +29,7 @@ describe('SegmentBarChart', () => {
 
   it('cycles SEGMENT_BAR_COLORS when color is omitted', () => {
     const { container } = render(<SegmentBarChart segments={SAMPLE} />)
-    const bar = container.querySelector('.flex.w-full.overflow-hidden.rounded-full')
+    const bar = container.querySelector('.flex.w-full.overflow-hidden.rounded-lg')
     const barSegments = bar?.querySelectorAll(':scope > div') ?? []
     expect(barSegments).toHaveLength(4)
     expect(barSegments[0]).toHaveAttribute('style', expect.stringContaining('--tollerud-yellow'))

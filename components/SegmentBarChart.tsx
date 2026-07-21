@@ -113,8 +113,8 @@ const SegmentBarChart = forwardRef<HTMLDivElement, SegmentBarChartProps>(
       <div ref={ref} className={cn('w-full', className)} {...props}>
         <div
           className={cn(
-            'flex w-full overflow-hidden rounded-full',
-            interactive && 'tollerud-focus-ring rounded-full',
+            'flex w-full overflow-hidden rounded-lg',
+            interactive && 'tollerud-focus-ring rounded-lg',
           )}
           style={{ height }}
           role={interactive ? 'group' : 'img'}
