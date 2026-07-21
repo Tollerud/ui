@@ -41,6 +41,12 @@ function ValidationForm() {
 function PageForms() {
   const [comboHost, setComboHost] = useState('emma');
   const [comboTarget, setComboTarget] = useState('deploy');
+  const [comboCategory, setComboCategory] = useState('electronics');
+  const [categoryOptions, setCategoryOptions] = useState([
+    { value: 'electronics', label: 'Electronics' },
+    { value: 'furniture', label: 'Furniture' },
+    { value: 'clothing', label: 'Clothing' },
+  ]);
   const servers = [
     { value: 'emma', label: 'emma.tollerud.no' }, { value: 'miriam', label: 'miriam.tollerud.no' },
     { value: 'pia', label: 'pia.tollerud.no' }, { value: 'iris', label: 'iris.tollerud.no' },
@@ -168,7 +174,7 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Combobox" permalink="forms/combobox" desc="Searchable select with keyboard navigation (↑/↓/Enter/Esc), optional grouped sections, and a no-results state. Two search modes: searchPlacement='trigger' (default) keeps the search input as the trigger field; searchPlacement='dropdown' moves the search inside the popover so the trigger looks like a standard Select button. Both modes work inside Radix Dialog — the dropdown auto-focuses its search input on open and does not close or steal focus from the dialog, and Esc closes only the dropdown (the dialog stays open). The arrow-key highlight is announced to screen readers via aria-activedescendant and scrolls into view in long lists (≥ 4.8.40). On iOS Safari (≥ 4.8.53) the in-dropdown search field renders at ≥16px so focusing it does not auto-zoom, and the popover no longer closes on the focus/zoom scroll iOS emits — only a genuine touch drag dismisses it. Since 4.8.56 the popover is positioned by Floating UI (the same engine as Radix Popover / shadcn): it flips, shifts, clamps its height, and stays glued to the trigger across scroll, resize, and mobile viewport changes (iOS keyboard/zoom/address bar). On touch it stays open and repositions while scrolling; outside-click and Esc still dismiss it.">
+      <Section title="Combobox" permalink="forms/combobox" desc="Searchable select with keyboard navigation (↑/↓/Enter/Esc), optional grouped sections, and a no-results state. Two search modes: searchPlacement='trigger' (default) keeps the search input as the trigger field; searchPlacement='dropdown' moves the search inside the popover so the trigger looks like a standard Select button. Both modes work inside Radix Dialog — the dropdown auto-focuses its search input on open and does not close or steal focus from the dialog, and Esc closes only the dropdown (the dialog stays open). The arrow-key highlight is announced to screen readers via aria-activedescendant and scrolls into view in long lists (≥ 4.8.40). On iOS Safari (≥ 4.8.53) the in-dropdown search field renders at ≥16px so focusing it does not auto-zoom, and the popover no longer closes on the focus/zoom scroll iOS emits — only a genuine touch drag dismisses it. Since 4.8.56 the popover is positioned by Floating UI (the same engine as Radix Popover / shadcn): it flips, shifts, clamps its height, and stays glued to the trigger across scroll, resize, and mobile viewport changes (iOS keyboard/zoom/address bar). On touch it stays open and repositions while scrolling; outside-click and Esc still dismiss it. Since 4.14.0, onCreateOption opts into a 'Create «query»' row for fields where the value a user wants may not exist yet — e.g. a category picker.">
         <Demo name="combobox" variant="col" code={`// Flat list — type to filter hosts
 <Combobox
   label="Connect to host"
@@ -233,6 +239,43 @@ function PageForms() {
               onChange={setComboHost}
               options={servers}
             />
+          </div>
+        </Demo>
+        <Demo name="combobox-create-option" variant="col" desc="onCreateOption — lets users add a value that doesn't exist yet, e.g. a new product category" code={`const [category, setCategory] = useState('electronics');
+const [categoryOptions, setCategoryOptions] = useState([
+  { value: 'electronics', label: 'Electronics' },
+  { value: 'furniture', label: 'Furniture' },
+  { value: 'clothing', label: 'Clothing' },
+]);
+
+<Combobox
+  label="Product category"
+  placeholder="Search or create a category…"
+  value={category}
+  onChange={setCategory}
+  options={categoryOptions}
+  onCreateOption={(label) => {
+    const value = label.toLowerCase().replace(/\\s+/g, '-');
+    setCategoryOptions((prev) => [...prev, { value, label }]);
+    return value; // omit to use the typed label as the value
+  }}
+/>`}>
+          <div className="ds-col" style={{ width: '100%', maxWidth: 360, gap: 6 }}>
+            <Combobox
+              label="Product category"
+              placeholder="Search or create a category…"
+              value={comboCategory}
+              onChange={setComboCategory}
+              options={categoryOptions}
+              onCreateOption={(label) => {
+                const value = label.toLowerCase().replace(/\s+/g, '-');
+                setCategoryOptions((prev) => [...prev, { value, label }]);
+                return value;
+              }}
+            />
+            <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>
+              Try typing <span className="ds-mono">Outdoor</span> — no match, so a "Create" row appears.
+            </p>
           </div>
         </Demo>
       </Section>

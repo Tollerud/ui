@@ -7,6 +7,20 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.14.0 — 2026-07-21 — Combobox create-option support
+
+### Added
+
+- `Combobox` gains `onCreateOption` — when set, a `Create "<query>"` row appears at the end of the list whenever the search text has no exact (case-insensitive) label match among the options, so users can add a value that doesn't exist yet (e.g. a new category) without leaving the field. The row shows alongside partial matches, not just on a true empty result, matching the pattern used by MUI Autocomplete's `freeSolo` and react-select's `Creatable`.
+
+- Selecting the create row calls `onCreateOption(label)` with the trimmed query. Return a string to use as the new option's value (e.g. a server-generated id); return nothing and the typed text is used as both label and value. The component tracks created options locally so the newly selected value displays its label correctly even before the consumer's `options`/`groups` prop catches up.
+
+- New `createOptionLabel?: (query: string) => string` prop customizes the row's text. Defaults to `Create "<query>"`.
+
+- The create row participates in arrow-key navigation and `aria-activedescendant` alongside regular options; Enter or click both commit it.
+
+No API change to existing props — `onCreateOption` is opt-in.
+
 ## 4.13.3 — 2026-07-20 — Motion token consolidation
 
 ### Changed

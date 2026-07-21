@@ -1,7 +1,7 @@
 'use client'
 
 import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
-import { Check, ChevronDown, Search } from 'lucide-react'
+import { Check, ChevronDown, Plus, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { FloatingDropdownPortal } from '@/lib/floating-dropdown'
 
@@ -36,6 +36,17 @@ export interface ComboboxProps {
    * - `'dropdown'` — the trigger is a button showing the selected value; the search input appears at the top of the dropdown panel.
    */
   searchPlacement?: 'trigger' | 'dropdown'
+  /**
+   * Enables "create a new option" — when set, a `Create "<query>"` row appears at the
+   * end of the list whenever the search text has no exact (case-insensitive) label match,
+   * so users can add an option that doesn't exist yet without leaving the field. Called
+   * with the trimmed query when that row is chosen; return a string to use as the new
+   * option's value (e.g. a generated id), or return nothing to use the typed text as both
+   * label and value.
+   */
+  onCreateOption?: (label: string) => string | void
+  /** Customizes the create row's label. Defaults to `Create "<query>"`. */
+  createOptionLabel?: (query: string) => string
   className?: string
   disabled?: boolean
   required?: boolean
@@ -77,6 +88,8 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
     error,
     filter = defaultFilter,
     searchPlacement = 'trigger',
+    onCreateOption,
+    createOptionLabel = (query) => `Create "${query}"`,
     className,
     disabled,
     required,
@@ -96,6 +109,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
+  const [createdOptions, setCreatedOptions] = useState<ComboboxOption[]>([])
 
   const isGrouped = Boolean(groups && groups.length > 0)
   const allOptions = useMemo(() => flattenOptions(options, groups), [options, groups])
@@ -111,12 +125,28 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
     return options.filter((option) => filter(option, query))
   }, [filteredGroups, filter, isGrouped, options, query])
 
-  const highlightedIndex =
-    filtered.length === 0 ? 0 : Math.min(activeIndex, filtered.length - 1)
-  const activeOptionId =
-    open && filtered.length > 0 ? `${id}-option-${highlightedIndex}` : undefined
+  const lookupOptions = useMemo(() => {
+    if (createdOptions.length === 0) return allOptions
+    return [...allOptions, ...createdOptions.filter((c) => !allOptions.some((o) => o.value === c.value))]
+  }, [allOptions, createdOptions])
 
-  const selected = allOptions.find((option) => option.value === value)
+  const trimmedQuery = query.trim()
+  const showCreateOption =
+    Boolean(onCreateOption) &&
+    trimmedQuery !== '' &&
+    !lookupOptions.some((option) => option.label.toLowerCase() === trimmedQuery.toLowerCase())
+  const rowCount = filtered.length + (showCreateOption ? 1 : 0)
+  const createRowIndex = filtered.length
+
+  const highlightedIndex = rowCount === 0 ? 0 : Math.min(activeIndex, rowCount - 1)
+  const activeOptionId =
+    open && rowCount > 0
+      ? highlightedIndex === createRowIndex && showCreateOption
+        ? `${id}-option-create`
+        : `${id}-option-${highlightedIndex}`
+      : undefined
+
+  const selected = lookupOptions.find((option) => option.value === value)
 
   const setRootRef = useCallback(
     (node: HTMLDivElement | null) => {
@@ -168,16 +198,34 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
     setQuery('')
   }
 
+  const commitCreate = () => {
+    const label = trimmedQuery
+    if (!label) return
+    const returned = onCreateOption?.(label)
+    const newValue = typeof returned === 'string' && returned ? returned : label
+    setCreatedOptions((prev) =>
+      prev.some((o) => o.value === newValue) ? prev : [...prev, { value: newValue, label }]
+    )
+    if (!isControlled) setInternalValue(newValue)
+    onChange?.(newValue)
+    setOpen(false)
+    setQuery('')
+  }
+
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault()
       setOpen(true)
-      setActiveIndex((index) => Math.min(index + 1, filtered.length - 1))
+      setActiveIndex((index) => Math.min(index + 1, rowCount - 1))
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       setActiveIndex((index) => Math.max(index - 1, 0))
     } else if (e.key === 'Enter') {
       e.preventDefault()
+      if (showCreateOption && highlightedIndex === createRowIndex) {
+        commitCreate()
+        return
+      }
       const option = filtered[highlightedIndex]
       if (option) commit(option)
     } else if (e.key === 'Escape') {
@@ -196,7 +244,7 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
 
   const optionList = (
     <ul className="m-0 list-none p-0">
-      {filtered.length === 0 && (
+      {filtered.length === 0 && !showCreateOption && (
         <li className="px-3 py-2 text-sm text-tollerud-text-muted">No results</li>
       )}
 
@@ -263,6 +311,28 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
               </li>
             )
           })}
+
+      {showCreateOption && (
+        <li
+          id={`${id}-option-create`}
+          role="option"
+          aria-selected={false}
+          onMouseDown={(e) => {
+            e.preventDefault()
+            commitCreate()
+          }}
+          onMouseEnter={() => setActiveIndex(createRowIndex)}
+          className={cn(
+            'flex items-center gap-2 px-3 py-2 text-sm cursor-pointer',
+            createRowIndex === highlightedIndex
+              ? 'bg-tollerud-surface-hover text-tollerud-text-primary'
+              : 'text-tollerud-text-secondary'
+          )}
+        >
+          <Plus size={14} className="shrink-0 text-tollerud-yellow" />
+          {createOptionLabel(trimmedQuery)}
+        </li>
+      )}
     </ul>
   )
 

@@ -195,4 +195,139 @@ describe('Combobox', () => {
     await user.keyboard('{ArrowDown}{Enter}')
     expect(onChange).toHaveBeenCalledWith('deploy')
   })
+
+  describe('onCreateOption', () => {
+    it('shows a create row when the query has no exact match and commits it on click', async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+      const onCreateOption = vi.fn()
+
+      render(
+        <Combobox
+          label="Category"
+          value=""
+          onChange={onChange}
+          onCreateOption={onCreateOption}
+          options={[{ value: 'shoes', label: 'Shoes' }]}
+        />
+      )
+
+      const input = screen.getByRole('combobox')
+      await user.click(input)
+      await user.type(input, 'Hats')
+
+      const createRow = screen.getByRole('option', { name: 'Create "Hats"' })
+      await user.click(createRow)
+
+      expect(onCreateOption).toHaveBeenCalledWith('Hats')
+      expect(onChange).toHaveBeenCalledWith('Hats')
+    })
+
+    it('does not show a create row when the query exactly matches an existing option', async () => {
+      const user = userEvent.setup()
+
+      render(
+        <Combobox
+          label="Category"
+          value=""
+          onChange={vi.fn()}
+          onCreateOption={vi.fn()}
+          options={[{ value: 'shoes', label: 'Shoes' }]}
+        />
+      )
+
+      const input = screen.getByRole('combobox')
+      await user.click(input)
+      await user.type(input, 'Shoes')
+
+      expect(screen.queryByRole('option', { name: /Create/ })).not.toBeInTheDocument()
+    })
+
+    it('shows the create row alongside partial matches', async () => {
+      const user = userEvent.setup()
+
+      render(
+        <Combobox
+          label="Category"
+          value=""
+          onChange={vi.fn()}
+          onCreateOption={vi.fn()}
+          options={[{ value: 'shoes', label: 'Shoes' }]}
+        />
+      )
+
+      const input = screen.getByRole('combobox')
+      await user.click(input)
+      await user.type(input, 'Sho')
+
+      expect(screen.getByRole('option', { name: 'Shoes' })).toBeInTheDocument()
+      expect(screen.getByRole('option', { name: 'Create "Sho"' })).toBeInTheDocument()
+    })
+
+    it('is not shown when onCreateOption is not provided', async () => {
+      const user = userEvent.setup()
+
+      render(
+        <Combobox
+          label="Category"
+          value=""
+          onChange={vi.fn()}
+          options={[{ value: 'shoes', label: 'Shoes' }]}
+        />
+      )
+
+      const input = screen.getByRole('combobox')
+      await user.click(input)
+      await user.type(input, 'Hats')
+
+      expect(screen.getByText('No results')).toBeInTheDocument()
+    })
+
+    it('uses a returned value from onCreateOption instead of the typed label', async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+
+      render(
+        <Combobox
+          label="Category"
+          value=""
+          onChange={onChange}
+          onCreateOption={() => 'cat_new_123'}
+          options={[{ value: 'shoes', label: 'Shoes' }]}
+        />
+      )
+
+      const input = screen.getByRole('combobox')
+      await user.click(input)
+      await user.type(input, 'Hats')
+      await user.click(screen.getByRole('option', { name: 'Create "Hats"' }))
+
+      expect(onChange).toHaveBeenCalledWith('cat_new_123')
+    })
+
+    it('supports a custom createOptionLabel and keyboard selection', async () => {
+      const user = userEvent.setup()
+      const onChange = vi.fn()
+
+      render(
+        <Combobox
+          label="Category"
+          value=""
+          onChange={onChange}
+          onCreateOption={vi.fn()}
+          createOptionLabel={(q) => `Add new category "${q}"`}
+          options={[{ value: 'shoes', label: 'Shoes' }]}
+        />
+      )
+
+      const input = screen.getByRole('combobox')
+      await user.click(input)
+      await user.type(input, 'Hats')
+
+      expect(screen.getByRole('option', { name: 'Add new category "Hats"' })).toBeInTheDocument()
+
+      await user.keyboard('{ArrowDown}{Enter}')
+      expect(onChange).toHaveBeenCalledWith('Hats')
+    })
+  })
 })

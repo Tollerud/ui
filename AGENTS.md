@@ -751,6 +751,23 @@ Since ≥ 4.8.55 the touch handler separates the two kinds of mobile scroll. A p
 
 Since ≥ 4.8.56 all of the above is handled by **Floating UI** (the engine behind Radix Popover / shadcn) instead of bespoke code. `Combobox`, `Select`, `DatePicker`, and `Segmented` use `useFloating` with `autoUpdate` + `flip`/`shift`/`size`, so the panel flips, shifts, clamps height, and stays glued across scroll, resize, and iOS keyboard/zoom/address-bar changes. On touch it now stays open and repositions on scroll rather than closing; outside-click and Escape still dismiss it. The `FloatingDropdownPortal` `onOutsideScroll` prop and the internal `lib/dropdown-placement.ts` helpers were removed — internal only, no public component API changed.
 
+#### Combobox onCreateOption (≥ 4.14.0)
+
+Opt-in "create a new option" row for cases like a category field where the value a user wants may not exist yet. Set `onCreateOption` and a `Create "<query>"` row appears at the end of the list whenever the search text has no exact (case-insensitive) label match — shown alongside partial matches, not only when the list is fully empty. Selecting it (click or Enter) calls `onCreateOption(label)` with the trimmed query; return a string to use as the new option's value (e.g. an id from your backend), or return nothing to use the typed text as both label and value. `createOptionLabel?: (query: string) => string` customizes the row's text (default `Create "<query>"`). The component tracks created options locally so the label displays correctly even before `options`/`groups` is updated to include it.
+
+```tsx
+<Combobox
+  label="Category"
+  value={category}
+  onChange={setCategory}
+  options={categoryOptions}
+  onCreateOption={(label) => {
+    const id = createCategory(label) // persist however you like
+    return id // optional — omit to use the typed label as the value
+  }}
+/>
+```
+
 #### Combobox searchPlacement (≥ 4.8.25)
 
 `searchPlacement="dropdown"` moves the search input inside the popover; the trigger becomes a Select-style button. Default `"trigger"` keeps the original inline-search behaviour. On touch devices the in-dropdown search field renders at ≥16px (≥ 4.8.53) so iOS Safari does not auto-zoom on focus.

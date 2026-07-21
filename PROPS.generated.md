@@ -200,6 +200,15 @@
 - `* - `'dropdown'` — the trigger is a button showing the selected value; the search input appears at the top of the dropdown panel.`
 - `*/`
 - `searchPlacement?: 'trigger' | 'dropdown'`
+- `* Enables "create a new option" — when set, a `Create "<query>"` row appears at the`
+- `* end of the list whenever the search text has no exact (case-insensitive) label match,`
+- `* so users can add an option that doesn't exist yet without leaving the field. Called`
+- `* with the trimmed query when that row is chosen; return a string to use as the new`
+- `* option's value (e.g. a generated id), or return nothing to use the typed text as both`
+- `* label and value.`
+- `*/`
+- `onCreateOption?: (label: string) => string | void`
+- `createOptionLabel?: (query: string) => string`
 - `className?: string`
 - `disabled?: boolean`
 - `required?: boolean`

@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.13.3**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.14.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1308,11 +1308,18 @@ Searchable single-select with keyboard navigation (↑/↓/Enter/Esc). Pass flat
     { label: 'Servers', options: hostOptions },
     { label: 'Actions', options: actionOptions },
   ]} />
+
+// Let users add an option that doesn't exist yet
+<Combobox label="Category" value={category} onChange={setCategory}
+  options={categoryOptions}
+  onCreateOption={(label) => createCategory(label)} />
 ```
 
-Props: `options?: { value, label, disabled? }[]`, `groups?: { label, options }[]`, `value?`, `onChange?`, `label?`, `placeholder?`, `error?`, `filter?`, `searchPlacement?: 'trigger' | 'dropdown'`.
+Props: `options?: { value, label, disabled? }[]`, `groups?: { label, options }[]`, `value?`, `onChange?`, `label?`, `placeholder?`, `error?`, `filter?`, `searchPlacement?: 'trigger' | 'dropdown'`, `onCreateOption?: (label: string) => string | void`, `createOptionLabel?: (query: string) => string`.
 
 `searchPlacement="dropdown"` turns the trigger into a Select-style button and moves the search input inside the popover — useful when the combobox sits next to other Select fields or when a cleaner trigger is preferred. On touch devices (≥ 4.8.53) the in-dropdown search field renders at ≥16px so iOS Safari does not auto-zoom on focus, and the popover no longer closes on the focus/zoom scroll that zoom emits — only a real touch drag dismisses it. Since 4.8.56 the popover is positioned by Floating UI (the same engine as Radix Popover / shadcn), so it flips, shifts, clamps its height, and stays glued to the trigger across scroll, resize, and mobile viewport changes (iOS keyboard/zoom/address bar). On touch it now stays open and repositions while scrolling rather than closing; outside-click and Escape still dismiss it.
+
+`onCreateOption` (≥ 4.14.0) opts into a "create a new option" row — useful for fields like category pickers where the value a user wants may not exist yet. A `Create "<query>"` row appears at the end of the list whenever the search text has no exact (case-insensitive) label match, shown alongside partial matches rather than only on a true empty result. Selecting it calls `onCreateOption(label)`; return a string to use as the new option's value, or return nothing to use the typed label as the value. `createOptionLabel` customizes the row's text.
 
 ### Avatar / AvatarGroup
 
