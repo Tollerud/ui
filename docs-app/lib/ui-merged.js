@@ -85,6 +85,7 @@ export {
   TIME_SERIES_PRESETS,
   formatChartDecimal,
   Donut,
+  SegmentBarChart,
   Sparkline,
   HeroBlock,
   CTABand,

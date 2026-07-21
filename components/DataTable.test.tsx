@@ -344,6 +344,21 @@ describe('DataTable', () => {
     expect(within(actionRow).getByRole('button', { name: 'Add host' })).toBeInTheDocument()
   })
 
+  it('aligns toolbarRight to the end when search and filter are absent', () => {
+    const { container } = render(
+      <DataTable
+        columns={[{ key: 'hostname', label: 'Host' }]}
+        data={[{ id: '1', hostname: 'emma' }]}
+        rowKey="id"
+        toolbarRight={<button type="button">Add host</button>}
+      />,
+    )
+
+    const toolbar = container.querySelector('.border-b.border-tollerud-border\\/30.px-4.py-3\\.5')
+    expect(toolbar).toHaveClass('sm:justify-end')
+    expect(toolbar).not.toHaveClass('sm:justify-between')
+  })
+
   it('supports search, selection, and pagination in rich mode', async () => {
     const user = userEvent.setup()
     const onRun = vi.fn()

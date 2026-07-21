@@ -322,6 +322,7 @@ export type {
 } from './TimeSeriesChart'
 export {
   CHART_SERIES_COLORS,
+  SEGMENT_BAR_COLORS,
   formatChartDecimal,
   formatChartNumber,
   formatChartDateLong,
@@ -331,6 +332,8 @@ export type { ChartDecimalFormatOptions } from '../lib/chart-series'
 
 export { Donut } from './Donut'
 export type { DonutProps, DonutSegment } from './Donut'
+export { SegmentBarChart } from './SegmentBarChart'
+export type { SegmentBarChartProps, SegmentBarChartSegment } from './SegmentBarChart'
 export { Heatmap } from './Heatmap'
 export type { HeatmapProps, HeatmapDatum } from './Heatmap'
 

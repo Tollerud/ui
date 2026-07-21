@@ -110,6 +110,7 @@ export const DEEP_LINKS = [
   { page: 'charts', section: 'area-chart', title: 'AreaChart', component: 'AreaChart', keywords: ['area', 'static'] },
   { page: 'charts', section: 'bar-chart', title: 'BarChart', component: 'BarChart', keywords: ['bar', 'comparison'] },
   { page: 'charts', section: 'donut', title: 'Donut', component: 'Donut', keywords: ['pie', 'segment'] },
+  { page: 'charts', section: 'segment-bar', title: 'SegmentBarChart', component: 'SegmentBarChart', keywords: ['stacked', 'proportion', 'breakdown', 'horizontal'] },
 ]
 
 export function deepLinkPath(link) {

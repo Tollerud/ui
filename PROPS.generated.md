@@ -737,6 +737,19 @@
 - `size?: SectionSize`
 - `width?: SectionWidth`
 
+## SegmentBarChart — `SegmentBarChartProps` extends extends HTMLAttributes<HTMLDivElement>
+
+- `segments: SegmentBarChartSegment[]`
+- `height?: number`
+- `showPercentLabels?: boolean`
+- `minPercentLabel?: number`
+- `formatValue?: (value: number) => string`
+- `* Focusable segments with tooltips: Tab reaches the bar, ←/→ move between`
+- `* segments (roving tabindex), Home/End jump, Esc dismisses.`
+- `*/`
+- `interactive?: boolean`
+- `ariaLabel?: string`
+
 ## Segmented — `SegmentedProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>
 
 - `options: SegmentedOption[]`

@@ -7,6 +7,22 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.15.0 — 2026-07-21 — SegmentBarChart + DataTable toolbar alignment
+
+### Added
+
+- `SegmentBarChart` — horizontal stacked proportion bar for category breakdowns (spend, budget, usage shares). One rounded bar with in-bar percentage labels (hidden below `minPercentLabel`, default 8%) and a responsive two-column legend (swatch + label + formatted value). Segment colors default to `SEGMENT_BAR_COLORS` — a yellow-on-noir intensity scale exported from the package barrel. Opt-in `interactive` makes segments focusable with tooltips and keyboard navigation (←/→, Home/End, Esc).
+
+- `SEGMENT_BAR_COLORS` — five-step yellow intensity cycle (`tollerud-yellow` → warm gold → muted noir mixes) for monochrome proportion charts.
+
+### Fixed
+
+- `DataTable` — `toolbarRight` aligns to the end on desktop when search and filter are absent (previously sat flush left). Mobile stacked layout unchanged.
+
+### Docs
+
+- Servers page — new **Toolbar actions** demo with `ButtonGroup` in `toolbarRight`.
+
 ## 4.14.0 — 2026-07-21 — Combobox create-option support
 
 ### Added

@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.14.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.15.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -687,6 +687,24 @@ Calendar activity heatmap — GitHub-contributions style. Since 4.8.51.
 ```
 
 Props: `data` (`{ date, value }[]`), `startDate?`/`endDate?` (default from data range), `weekStartsOn?` (`0` Sun / `1` Mon, default Mon), `colors?` (5 intensity colors, default yellow-on-noir), `formatValue?`/`formatDate?`/`locale?`, `showLegend?` (Less→More, default on), `cellSize?`/`cellGap?`, `ariaLabel?`, `srTable?`. Cells bucket into 4 intensity levels by value; the grid is `aria-hidden` with a visually-hidden data table as the screen-reader surface, and hover shows a date + value tooltip.
+
+### SegmentBarChart
+
+Horizontal stacked proportion bar — one rounded bar showing parts of a whole, with in-bar percentage labels and a legend grid below. Since 4.15.0.
+
+```tsx
+<SegmentBarChart
+  segments={[
+    { label: 'Mat & drikke', value: 6490 },
+    { label: 'Drikke', value: 3150 },
+    { label: 'Leie', value: 2400 },
+    { label: 'Utstyr', value: 890 },
+  ]}
+  formatValue={(v) => `${v} kr`}
+/>
+```
+
+Props: `segments` (`{ label, value, color? }[]`), `height?` (default 36), `showPercentLabels?` (default on), `minPercentLabel?` (default 8), `formatValue?`, `interactive?`, `ariaLabel?`. Colors cycle `SEGMENT_BAR_COLORS` when omitted. Legend uses one column on mobile, two on `sm+`.
 
 ### Stepper
 

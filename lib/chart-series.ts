@@ -26,6 +26,19 @@ export const CHART_SERIES_COLORS = [
   'var(--chart-5, #EF4444)',
 ] as const
 
+/**
+ * Yellow-on-noir intensity scale for `SegmentBarChart` — brightest segment first,
+ * then warm yellow, then progressively muted golds. Cycles when there are more
+ * segments than colors.
+ */
+export const SEGMENT_BAR_COLORS = [
+  'var(--tollerud-yellow, #FFFF00)',
+  'var(--tollerud-yellow-warm, #E8D500)',
+  'color-mix(in srgb, var(--tollerud-yellow-warm, #E8D500) 65%, var(--tollerud-noir-700, #222222))',
+  'color-mix(in srgb, var(--tollerud-yellow-warm, #E8D500) 38%, var(--tollerud-noir-700, #222222))',
+  'var(--tollerud-noir-600, #333333)',
+] as const
+
 export function parseChartDate(input: Date | string | number): Date {
   if (input instanceof Date) return input
   if (typeof input === 'number') return new Date(input)

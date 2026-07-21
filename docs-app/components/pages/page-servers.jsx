@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, PropTable, ToastProvider, useToast, Icons, Ico, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
+const { Button, ButtonGroup, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, PropTable, ToastProvider, useToast, Icons, Ico, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
 
 const SERVERS_CODE = `import { DataTable, Button, Badge, Empty } from '@tollerud/ui'
 import { RefreshCw, Trash2, ExternalLink, Plus } from 'lucide-react'
@@ -223,6 +223,40 @@ function PageServers() {
             </Demo>
           </div>
         </div>
+      </Section>
+
+      <Section title="Toolbar actions" desc="Pass global table actions via toolbarRight — a single Button or a fused ButtonGroup. On mobile, search stacks full width on top; filter and toolbarRight stay paired on one row below (actions align end when there is no filter).">
+        <Demo
+          name="data-table-toolbar"
+          variant="col"
+          code={`toolbarRight={
+  <ButtonGroup size="sm">
+    <Button variant="secondary">Export</Button>
+    <Button variant="primary">Add host</Button>
+  </ButtonGroup>
+}`}
+        >
+          <PackageDataTable
+            data={ALL}
+            rowKey="id"
+            columns={[
+              { key: 'id', label: 'Host', sortable: true },
+              { key: 'region', label: 'Region', sortable: true },
+              { key: 'owner', label: 'Owner', sortable: true },
+            ]}
+            searchable
+            searchKeys={['id', 'owner']}
+            searchPlaceholder="Search host, owner…"
+            filter={{ key: 'region', allLabel: 'All regions', variant: 'combobox', placeholder: 'Region…' }}
+            pageSize={5}
+            toolbarRight={
+              <ButtonGroup size="sm">
+                <Button variant="secondary" size="sm" onClick={() => toast({ tone: 'info', title: 'Export started' })}>Export</Button>
+                <Button variant="primary" size="sm" onClick={() => toast({ tone: 'accent', title: 'Add host' })}>Add host</Button>
+              </ButtonGroup>
+            }
+          />
+        </Demo>
       </Section>
 
       <Section title="Servers" desc="Full rich table — the canonical pattern for homelab and ops lists. Multiple bulk actions fuse in ButtonGroup; use toolbarRight for your own ButtonGroup or single buttons.">

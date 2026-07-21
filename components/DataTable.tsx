@@ -637,7 +637,12 @@ function DataTableInner<T extends Record<string, unknown>>({
       )}
     >
       {(searchable || filter || toolbarRight) && (
-        <div className="flex flex-col gap-2.5 border-b border-tollerud-border/30 px-4 py-3.5 sm:flex-row sm:items-center sm:justify-between">
+        <div
+          className={cn(
+            'flex flex-col gap-2.5 border-b border-tollerud-border/30 px-4 py-3.5 sm:flex-row sm:items-center',
+            searchable ? 'sm:justify-between' : 'sm:justify-end',
+          )}
+        >
           {searchable && (
             <div className="flex h-9 w-full items-center gap-2 rounded-lg border border-tollerud-border/30 bg-tollerud-noir-950 px-3 sm:w-[230px] sm:shrink-0">
               <Search size={15} className="shrink-0 text-tollerud-text-muted" aria-hidden />

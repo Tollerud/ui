@@ -225,7 +225,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@tollerud/ui'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@tollerud/ui'
 import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, Drawer } from '@tollerud/ui'
 import { Skeleton, Progress, Spinner, Toaster, ToastProvider, useToast, GlowCard, NoirGlowBackground, BentoDashboard, Alert } from '@tollerud/ui'
-import { BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, PromoSection } from '@tollerud/ui'
+import { BarChart, AreaChart, Donut, SegmentBarChart, Sparkline, HeroBlock, FeatureCard, CTABand, PromoSection } from '@tollerud/ui'
 // All charts are keyboard accessible with `interactive`: TimeSeriesChart (≥ 4.8.42), AreaChart/Sparkline
 // (≥ 4.8.43), BarChart/Donut (≥ 4.8.44) — Tab, ←/→, Home/End, Esc; tooltips + SR announcements included.
 // Donut segment colors are optional (cycle CHART_SERIES_COLORS = --chart-1…5).
@@ -234,6 +234,7 @@ import { BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand,
 // AreaChart is pixel-perfect responsive (≥ 4.8.47) — round markers at any width, no aspect distortion.
 // Sparkline + Donut take an opt-in `fluid` prop (≥ 4.8.48) to flex to their container; all charts now responsive.
 // BarChart takes `series={[{ label, values, color? }]}` + `categories` for grouped bars, `stacked` for stacked (≥ 4.8.49)
+// SegmentBarChart (≥ 4.15.0): horizontal proportion bar — <SegmentBarChart segments={[{label, value}]} formatValue={v=>`${v} kr`} />
 // Infra / homelab set
 import { HostCard, ServiceHealthCard, DockerStackCard, IncidentCard } from '@tollerud/ui'
 import { ApprovalCard, ActionDiff, AlertInbox, RollbackPlan, BackupStatusPanel } from '@tollerud/ui'

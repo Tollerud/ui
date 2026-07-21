@@ -16,6 +16,7 @@ const {
   BarChart,
   AreaChart,
   Donut,
+  SegmentBarChart,
   Gauge,
   Heatmap,
 } = __p
@@ -28,6 +29,7 @@ const CHART_IMPORT = `import {
   BarChart,
   AreaChart,
   Donut,
+  SegmentBarChart,
   Sparkline,
   Gauge,
 } from '@tollerud/ui'`
@@ -230,6 +232,7 @@ function PageCharts() {
             ['<code>AreaChart</code>', 'Simple trend — static by default, or interactive with tooltip + keyboard nav'],
             ['<code>BarChart</code>', 'Category comparison — static, or interactive focusable bars with tooltips'],
             ['<code>Donut</code>', 'Part-to-whole breakdown — palette-cycled legend, optionally interactive'],
+            ['<code>SegmentBarChart</code>', 'Horizontal stacked proportion bar — category spend/budget splits with in-bar % labels'],
             ['<code>Gauge</code>', 'Single metric as a radial dial — disk %, load, quota; tone thresholds'],
             ['<code>Heatmap</code>', 'Activity over time — calendar/contributions grid with intensity buckets'],
           ]}
@@ -237,10 +240,11 @@ function PageCharts() {
         <TokenTable
           cols={['Interaction', 'Applies to']}
           rows={[
-            ['<code>interactive</code> — crosshair/tooltip + keyboard (Tab, ←/→, Home/End, Esc), SR announcements', '<code>AreaChart</code>, <code>Sparkline</code>, <code>BarChart</code>, <code>Donut</code> (opt-in); <code>TimeSeriesChart</code> (always)'],
+            ['<code>interactive</code> — crosshair/tooltip + keyboard (Tab, ←/→, Home/End, Esc), SR announcements', '<code>AreaChart</code>, <code>Sparkline</code>, <code>BarChart</code>, <code>Donut</code>, <code>SegmentBarChart</code> (opt-in); <code>TimeSeriesChart</code> (always)'],
             ['<code>srTable</code> — visually-hidden data table for screen readers', '<code>TimeSeriesChart</code> (default on), <code>AreaChart</code> (default = interactive)'],
             ['<code>formatValue</code> / <code>ariaLabel</code> — value formatting + accessible name', 'all interactive charts'],
             ['<code>CHART_SERIES_COLORS</code> — the <code>--chart-1…5</code> palette cycle', '<code>Donut</code> segments &amp; <code>TimeSeriesChart</code> series without an explicit color'],
+            ['<code>SEGMENT_BAR_COLORS</code> — yellow-on-noir intensity scale', '<code>SegmentBarChart</code> segments without an explicit color'],
           ]}
         />
       </Section>
@@ -692,6 +696,66 @@ function PageCharts() {
         >
           <Card style={{ display: 'flex', justifyContent: 'center' }}>
             <Gauge value={2.4} min={0} max={4} label="Load avg" formatValue={(v) => v.toFixed(1)} />
+          </Card>
+        </Demo>
+      </Section>
+
+      <Section
+        title="SegmentBarChart"
+        component="SegmentBarChart"
+        permalink="charts/segment-bar"
+        desc="Horizontal stacked proportion bar (≥ 4.15.0) — one rounded bar showing parts of a whole, with in-bar percentage labels and a two-column legend below. Segment colors default to SEGMENT_BAR_COLORS (yellow-on-noir intensity scale). Add interactive for focusable segments with tooltips and keyboard navigation (←/→, Home/End, Esc)."
+      >
+        <Demo
+          name="segment-bar-chart"
+          variant="col"
+          code={`<SegmentBarChart
+  segments={[
+    { label: 'Mat & drikke', value: 6490 },
+    { label: 'Drikke', value: 3150 },
+    { label: 'Leie', value: 2400 },
+    { label: 'Utstyr', value: 890 },
+  ]}
+  formatValue={(v) => \`\${v} kr\`}
+  ariaLabel="Spend by category"
+/>`}
+        >
+          <Card style={{ maxWidth: 520 }}>
+            <SubHead>Brukt per kategori</SubHead>
+            <SegmentBarChart
+              segments={[
+                { label: 'Mat & drikke', value: 6490 },
+                { label: 'Drikke', value: 3150 },
+                { label: 'Leie', value: 2400 },
+                { label: 'Utstyr', value: 890 },
+              ]}
+              formatValue={(v) => `${v} kr`}
+              ariaLabel="Spend by category"
+            />
+          </Card>
+        </Demo>
+        <SubHead>Interactive segments</SubHead>
+        <Demo
+          name="segment-bar-chart-interactive"
+          variant="col"
+          code={`<SegmentBarChart
+  interactive
+  segments={[…]}
+  formatValue={(v) => \`\${v} kr\`}
+/>`}
+        >
+          <Card style={{ maxWidth: 520 }}>
+            <SubHead>Brukt per kategori</SubHead>
+            <SegmentBarChart
+              interactive
+              segments={[
+                { label: 'Mat & drikke', value: 6490 },
+                { label: 'Drikke', value: 3150 },
+                { label: 'Leie', value: 2400 },
+                { label: 'Utstyr', value: 890 },
+              ]}
+              formatValue={(v) => `${v} kr`}
+            />
           </Card>
         </Demo>
       </Section>

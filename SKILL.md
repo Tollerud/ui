@@ -510,7 +510,7 @@ const [pw, setPw] = useState('')
 import {
   Divider, Pill, Avatar, AvatarGroup,
   Breadcrumb, Pagination, Segmented, Stepper,
-  Panel, Meter, Gauge, Heatmap, Accordion, AccordionItem, AccordionTrigger, AccordionContent,
+  Panel, Meter, Gauge, Heatmap, SegmentBarChart, Accordion, AccordionItem, AccordionTrigger, AccordionContent,
   DatePicker, FileUpload, PricingCard,
 } from '@tollerud/ui'
 ```
@@ -570,6 +570,17 @@ With `collapseMobile`, viewports below `md` show only the selected label (with c
 **Gauge** (≥ 4.8.50) — radial dial for a single metric. `value`, `min?`/`max?` (0–100), `label?`, `formatValue?`, `tone?` (same tones as Meter), `size?`, `thickness?`, `fluid?`. `role="meter"` with aria value range.
 ```tsx
 <Gauge value={72} label="Disk" formatValue={(v) => `${v}%`} tone="warning" />
+```
+
+**SegmentBarChart** (≥ 4.15.0) — horizontal stacked proportion bar for category breakdowns. `segments: { label, value, color? }[]`, `formatValue?`, `showPercentLabels?`, `minPercentLabel?`, `interactive?`, `height?`. Colors cycle `SEGMENT_BAR_COLORS` (yellow-on-noir intensity).
+```tsx
+<SegmentBarChart
+  segments={[
+    { label: 'Mat & drikke', value: 6490 },
+    { label: 'Drikke', value: 3150 },
+  ]}
+  formatValue={(v) => `${v} kr`}
+/>
 ```
 
 **Accordion** — compound. `multiple?: boolean`, `defaultOpen?: string | string[]`. Items use `value` prop to identify.
@@ -864,6 +875,7 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 
 ## Version notes
 
+- **`SegmentBarChart` + DataTable toolbar fix (≥ 4.15.0)** — new `SegmentBarChart` component: horizontal stacked proportion bar with in-bar % labels and a responsive legend grid; colors cycle `SEGMENT_BAR_COLORS` (yellow-on-noir). `DataTable` `toolbarRight` now aligns end on desktop when search/filter are absent.
 - **`Combobox` create-option support (≥ 4.14.0)** — new `onCreateOption?: (label: string) => string | void` prop: when set, a `Create "<query>"` row appears at the end of the list whenever the search text has no exact (case-insensitive) label match, shown alongside partial matches, not just on a true empty result. Selecting it calls `onCreateOption(label)`; return a string to use as the new option's value, or return nothing to use the typed label as the value. `createOptionLabel?: (query: string) => string` customizes the row's text (default `Create "<query>"`). Opt-in — no change for existing usage.
 - **Motion token consolidation (≥ 4.13.3)** — every component now uses the `duration-fast/normal/slow` + `ease-out/in/in-out` Tailwind classes (mapped to `--motion-duration-*`/`--motion-ease-*` in the preset) instead of arbitrary values (`duration-[150ms]`), Tailwind's numeric scale (`duration-150`), or bare `transition-*` with no duration. `lib/motion.ts` exports the same tokens as JS constants for framer-motion (`StatusDot`). `--transition-fast/normal/slow` in `globals-layers.css` are now aliases of the motion tokens rather than a separately hardcoded set. No API change — visual timing on a handful of components shifted slightly (e.g. 200ms → 150ms, 300ms → 350ms) to land on a token.
 - **`@tollerud/email` dark-mode fixes (≥ 4.13.2)** — `EmailFooter`'s "A Tollerud Project" link now shares the `muted` class so it recolors with the surrounding text under `prefers-color-scheme: dark` (previously it kept the light-mode color in Apple Mail / iOS, so the wordmark showed two colors), and its fine-print line (`© YEAR · address · Unsubscribe`) is now center-aligned. `ReceiptEmail`'s line items / total were missed by the 4.13.0 light-first migration — they now carry the `text` class (were dark-on-dark in Apple Mail / iOS), and the total is `textPrimary` instead of the yellow accent (was unreadable on the white card). `EmailText`'s `fine` tone is now true fine print (`xs` + muted color + `fine` class) instead of a shrunk `muted`, and `VerifyEmail` wraps the raw link so long tokens don't stretch the card. A render-test suite (`packages/email/src/email.test.tsx`) now guards the dark-mode contract. No API change.
