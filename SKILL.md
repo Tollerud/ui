@@ -357,7 +357,7 @@ Opt-in on any element: add class `tollerud-btn-glow`. Subpath: `import { initBut
 </ButtonGroup>
 ```
 
-**Card** — `accent?: boolean | 'filled'`, `density?: 'comfortable' | 'compact'`. `accent={true}` = yellow border + subtle yellow header/footer band tint on structured cards (≥ 4.9.8); `accent="filled"` = yellow border + stronger yellow fill on all regions. Plain `<div>` wrapper — safe to nest in `<Link>`. Compound parts: `CardHeader` (`actions`), `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`, `CardChange`.
+**Card** — `accent?: boolean | 'filled'`, `density?: 'comfortable' | 'compact'`. `accent={true}` = yellow border + subtle yellow header/footer band tint on structured cards (≥ 4.9.8); `accent="filled"` = yellow border + stronger yellow fill on all regions. Plain `<div>` wrapper — safe to nest in `<Link>`. Compound parts: `CardHeader` (`actions`), `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`, `CardChange`. `CardHeader`/`CardContent`/`CardFooter` each also take their own `accent?: boolean | 'filled'` (≥ 4.16.0) that overrides the parent `Card`'s accent for just that region — omit it to keep inheriting.
 ```tsx
 <Card accent>Highlighted with yellow border</Card>
 <Card accent="filled">Callout with yellow fill</Card>
@@ -370,6 +370,11 @@ Opt-in on any element: add class `tollerud-btn-glow`. Subpath: `import { initBut
   <CardFooter className="justify-end">
     <Button variant="primary" size="sm">Deploy</Button>
   </CardFooter>
+</Card>
+{/* Only the header is tinted — Card itself is plain */}
+<Card>
+  <CardHeader accent="filled"><CardTitle>Over budget</CardTitle></CardHeader>
+  <CardContent>…</CardContent>
 </Card>
 ```
 
@@ -393,7 +398,7 @@ Opt-in on any element: add class `tollerud-btn-glow`. Subpath: `import { initBut
 <Badge variant="success">Online</Badge>
 ```
 
-**StatusDot** — `status`: `online` · `offline` · `warning` · `idle` (exported as `Status`); `label?`, `noPulse?`.
+**StatusDot** — `status`: `online` · `offline` · `warning` · `idle` · `info` (≥ 4.16.0, exported as `Status`); `label?`, `noPulse?`. `info` is a static blue dot (no pulse, like `idle`).
 ```tsx
 <StatusDot status="online" label="SSH Connected" />
 ```
@@ -431,11 +436,12 @@ const [open, setOpen] = useState(false)
 />
 ```
 
-**StatCard** — `label`, `value`, `icon?: ReactNode`, `change?: { value?: string; direction: 'up' | 'down' | 'flat'; tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `accent?`. `change.tone` overrides the default color (up=success, down=error, flat=info). `flat` defaults label to `—` when `value` is omitted.
+**StatCard** — `label`, `value`, `icon?: ReactNode`, `change?: { value?: string; direction: 'up' | 'down' | 'flat'; tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `accent?: boolean`, `tone?: 'success' | 'error' | 'warning' | 'info'` (≥ 4.16.0). `change.tone` overrides the default color (up=success, down=error, flat=info). `flat` defaults label to `—` when `value` is omitted. `tone` colors the value text + border independently of `accent` — use it for a status-carrying figure (e.g. an over-budget total) without the yellow brand-accent look; `tone` takes precedence if both are somehow set, so pick one per card.
 ```tsx
 <StatCard label="Active Sessions" value={42} icon={<Activity size={14} />} change={{ value: '+12%', direction: 'up' }} />
 <StatCard label="Endring siste periode" value="-3.2%" change={{ value: '-3.2%', direction: 'down', tone: 'success' }} />
 <StatCard label="Uptime" value="99.9%" change={{ direction: 'flat' }} />
+<StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" />
 ```
 
 **CodeBlock** — `code?`, `promptPrefix?`, `showCopy?`. Renders a `<pre>`.
@@ -767,6 +773,26 @@ Column headings use `label` or `header`. `render` is always `(value, row) => …
 
 **Pagination** — pass `pageSize` (fixed) or add `pageSizeOptions={[10, 25, 50]}` for a compact inline footer **Rows** `Select`. Page state is internal. Footer shows `Showing 1–5 of N`; controls appear when `pageCount > 1`. Search/filter resets page to 1. Selection spans pages when `selectable` is set.
 
+**Table** (≥ 4.16.0) — plain static table primitives with no sorting, filtering, search, or pagination: `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`. Use this for a fixed comparison table or small dataset; use `DataTable` when you need the interactivity. `TableHead`/`TableCell` take `align?: 'left' | 'center' | 'right'`. `TableRow` takes `highlight?: boolean` to tint the row. `TableCell` takes `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'` to color a computed value.
+```tsx
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Ingrediens</TableHead>
+      <TableHead align="right">For 8</TableHead>
+      <TableHead align="right">For 14</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow highlight>
+      <TableCell>Laks, filet</TableCell>
+      <TableCell align="right">3,2 kg</TableCell>
+      <TableCell align="right" tone="accent">5,6 kg</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
 ### Infra / homelab set
 
 ```tsx
@@ -787,6 +813,11 @@ import type { IncidentSeverity } from '@tollerud/ui'
 <LogViewer lines={[{ text: 'Health check passed', level: 'info', timestamp: '14:32:01', source: 'hermes' }]} follow searchable showLineNumbers height="300px" />
 <AlertInbox alerts={[{ id: '1', title: 'emma high CPU', severity: 'high', timestamp: '14:32', acknowledged: false }]} onAcknowledge={(id) => {}} />
 <Timeline items={[{ id: '1', time: '14:32', title: 'Deploy started', status: 'online' }]} active loading={false} />
+{/* variant="flat" (≥ 4.16.0): no connector line, timestamp below the title — for activity/audit-log lists. title accepts ReactNode, status accepts 'info' (blue) */}
+<Timeline
+  variant="flat"
+  items={[{ id: '1', time: '12 min siden', title: <><strong>Karoline</strong> krysset av «Laks, filet»</>, status: 'online' }]}
+/>
 <RollbackPlan name="hermes-v2.1-rollback" steps={[{ id: '1', label: 'Stop container', status: 'success' }]} executing />
 <BackupStatusPanel jobs={[{ name: 'nightly-db', status: 'online', lastRun: '02:00', nextRun: 'tomorrow 02:00', size: '4.2 GB' }]} totalSize="120 GB" />
 ```
@@ -874,6 +905,8 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 ---
 
 ## Version notes
+
+- **`Table` primitives, per-region `Card` accent, `StatCard` tone (≥ 4.16.0)** — new static `Table`/`TableHeader`/`TableBody`/`TableFooter`/`TableRow`/`TableHead`/`TableCell`/`TableCaption` (no sort/filter/search/pagination — use `DataTable` for that). `CardHeader`/`CardContent`/`CardFooter` gain their own `accent?: boolean | 'filled'` that overrides the parent `Card`'s accent for just that region. `StatCard` gains `tone?: 'success' | 'error' | 'warning' | 'info'` for coloring the value independently of `accent`. `Timeline`'s `title` is now `ReactNode` (was `string`) and it gains `variant?: 'connected' | 'flat'` (flat drops the connector line, puts the timestamp below the title) plus an `info` status. `StatusDot` gains an `info` status (static blue dot). No breaking changes — all opt-in.
 
 - **`SegmentBarChart` + DataTable toolbar fix (≥ 4.15.0)** — new `SegmentBarChart` component: horizontal stacked proportion bar with in-bar % labels and a responsive legend grid; colors cycle `SEGMENT_BAR_COLORS` (yellow-on-noir). `DataTable` `toolbarRight` now aligns end on desktop when search/filter are absent.
 - **`Combobox` create-option support (≥ 4.14.0)** — new `onCreateOption?: (label: string) => string | void` prop: when set, a `Create "<query>"` row appears at the end of the list whenever the search text has no exact (case-insensitive) label match, shown alongside partial matches, not just on a true empty result. Selecting it calls `onCreateOption(label)`; return a string to use as the new option's value, or return nothing to use the typed label as the value. `createOptionLabel?: (query: string) => string` customizes the row's text (default `Create "<query>"`). Opt-in — no change for existing usage.

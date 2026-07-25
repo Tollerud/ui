@@ -202,6 +202,7 @@ All components import from `@tollerud/ui`. Use named imports.
 // Core / forms
 import { Button, ButtonGroup, buttonVariants, cn, Card, Badge, Input, StatusDot, Kbd } from '@tollerud/ui'
 import { CommandMenu, ActionRow, DataTable, LogViewer, Timeline, CodeBlock, StatCard, Container } from '@tollerud/ui'
+import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } from '@tollerud/ui'
 import { Checkbox, Switch, RadioGroup, Radio, Select, Textarea } from '@tollerud/ui'
 import { PasswordInput, Combobox, TagInput, Slider, FormRow } from '@tollerud/ui'
 // Layout primitives (added in 4.2.0)
@@ -341,9 +342,17 @@ Sizes: `sm` · `md` · `lg`
   </CardContent>
 </Card>
 <CardChange direction="flat" />
+
+{/* Per-region accent (≥ 4.16.0) — only the header is tinted, Card itself stays plain */}
+<Card>
+  <CardHeader accent="filled">
+    <CardTitle>Brukt av budsjett</CardTitle>
+  </CardHeader>
+  <CardContent>12 930 kr / 2 700 kr</CardContent>
+</Card>
 ```
 
-`CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5). Header/footer bands use a subtle surface darken (≥ 4.9.6). `accent={true}` adds a light yellow band tint on header/footer (≥ 4.9.8); `accent="filled"` tints all regions more strongly.
+`CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5). Header/footer bands use a subtle surface darken (≥ 4.9.6). `accent={true}` adds a light yellow band tint on header/footer (≥ 4.9.8); `accent="filled"` tints all regions more strongly. `CardHeader`/`CardContent`/`CardFooter` each also take their own `accent?: boolean | 'filled'` (≥ 4.16.0) that overrides the parent `Card`'s accent for just that one region — leave it unset to keep inheriting.
 
 ### PriceDisplay
 
@@ -415,6 +424,7 @@ Props: `eyebrow?` (mono uppercase yellow, same as `PageHeader`), `title`, `shimm
 <StatusDot status="warning" label="CPU 87%" />
 <StatusDot status="offline" label="Unreachable" />
 <StatusDot status="idle" label="Idle" />
+<StatusDot status="info" label="Note added" /> {/* ≥ 4.16.0 — static blue dot, no pulse */}
 ```
 
 ### Input / Textarea / Select / Checkbox / Switch / RadioGroup
@@ -469,6 +479,7 @@ Built-in `⌘K` / `Ctrl+K` listener, arrow navigation, Esc to close, search acro
 ```tsx
 <StatCard label="Active Sessions" value={42} change={{ value: "+12%", direction: "up" }} />
 <StatCard label="Endring siste periode" value="-3.2%" change={{ value: "-3.2%", direction: "down", tone: "success" }} />
+<StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" /> {/* ≥ 4.16.0 — tone colors the value + border independently of accent */}
 ```
 
 ### CodeBlock
@@ -492,6 +503,43 @@ Built-in `⌘K` / `Ctrl+K` listener, arrow navigation, Esc to close, search acro
 />
 
 // Optional rich mode: searchable, filter, selectable, pageSize, bulkActions, rowMenu, toolbarRight, emptyState
+```
+
+### Table
+
+Static table primitives — no sorting, filtering, search, or pagination. Use `DataTable` above when you need that; use `Table` for a fixed comparison table or small dataset.
+
+```tsx
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Ingrediens</TableHead>
+      <TableHead align="right">For 8</TableHead>
+      <TableHead align="right">For 14</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow highlight>
+      <TableCell>Laks, filet</TableCell>
+      <TableCell align="right">3,2 kg</TableCell>
+      <TableCell align="right" tone="accent">5,6 kg</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+`TableHead`/`TableCell` take `align?: 'left' | 'center' | 'right'`. `TableRow` takes `highlight?: boolean`. `TableCell` takes `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'` to color a computed value.
+
+### Timeline
+
+```tsx
+<Timeline items={[{ id: '1', time: '14:32', title: 'Deploy started', status: 'online' }]} active loading={false} />
+
+{/* variant="flat" (≥ 4.16.0) — no connector line, timestamp below the title — for activity/audit-log lists. title accepts ReactNode, status accepts 'info' */}
+<Timeline
+  variant="flat"
+  items={[{ id: '1', time: '12 min siden', title: <><strong>Karoline</strong> krysset av «Laks, filet»</>, status: 'online' }]}
+/>
 ```
 
 `render` is always `(value, row) => …` (≥ 4.8.40) — write `(_v, row) => …` when you only need the row. The old single-parameter `(row) => …` form was removed; migrate by prepending `_v, `. Sortable headers are real `<button>`s (keyboard-operable, ≥ 4.8.40). With `selectable`, always provide stable row keys via an `id`/`key` field or `rowKey`. Since ≥ 4.8.57 the horizontal scroll wrapper no longer uses `touch-pan-x`, so vertical page scroll works on mobile when a swipe starts on table rows (horizontal scroll for wide tables is unchanged).
@@ -784,6 +832,10 @@ All form fields (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`,
 #### Sidebar scroll (≥ 4.8.16)
 
 `SidebarNav` nav content area now scrolls when items overflow the viewport. Earlier versions clipped nav items with no scroll on short viewports — a flex `min-h-0` fix.
+
+#### Table primitives, per-region Card accent, StatCard tone (≥ 4.16.0)
+
+New static `Table`/`TableHeader`/`TableBody`/`TableFooter`/`TableRow`/`TableHead`/`TableCell`/`TableCaption` — no sort/filter/search/pagination; use `DataTable` for that. `CardHeader`/`CardContent`/`CardFooter` gain their own `accent?: boolean | 'filled'` overriding the parent `Card`'s accent for just that region. `StatCard` gains `tone?: 'success' | 'error' | 'warning' | 'info'` for the value/border, independent of `accent`. `Timeline`'s `title` is now `ReactNode` (was `string`); it gains `variant?: 'connected' | 'flat'` (flat drops the connector line, timestamp moves below the title) and an `info` status. `StatusDot` gains a static blue `info` status. All additions are opt-in — no breaking changes.
 
 **Consumer styling / recipes / guardrails** (no version bump required for docs-only): also sync `GETTING_STARTED.md`, relevant `docs-app/components/pages/page-*.jsx`, `docs-app/lib/docs-routes.js`, and `docs-app/lib/component-catalog.js` — see [CONTRIBUTING.md](CONTRIBUTING.md) and `.cursor/rules/consumer-styling-docs.mdc`.
 

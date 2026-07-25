@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.15.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.16.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -30,7 +30,7 @@ Use this map to pick the right layer — not every app needs infra widgets or gl
 |--------|------------|-------------------------|
 | **Core** | `Button`, `Card`, `Badge`, `Input`, `Select`, `Checkbox`, `Switch`, `Textarea`, `FormRow`, `Container`, `StatusDot`, `Kbd`, `CodeBlock`, `StatCard` | Building any screen — actions, forms, layout, status |
 | **Overlays & navigation** | `Dialog`, `Sheet`, `Drawer`, `DropdownMenu`, `Tabs`, `Tooltip`, `CommandMenu`, `Alert`, `Empty`, `Toaster` | Modals, menus, multi-step flows, command palette, toasts |
-| **Data & patterns** | `DataTable`, `ActionRow`, `Timeline`, `LogViewer`, `BentoDashboard` | Tables, logs, dashboards assembled from primitives |
+| **Data & patterns** | `DataTable`, `Table`, `ActionRow`, `Timeline`, `LogViewer`, `BentoDashboard` | Tables, logs, dashboards assembled from primitives |
 | **Infra / ops** | `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `AlertInbox`, `RollbackPlan`, `BackupStatusPanel`, `ActionDiff` | Homelab, fleet, incident, and approval UIs |
 | **Visual & marketing** | `TimeSeriesChart`, `HeroBlock`, `FeatureCard`, `CTABand`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `GlowCard`, `BentoDashboard` | Landing sections, charts, marketing blocks |
 | **Optional visual** | `NoirGlowBackground` (+ `@paper-design/shaders-react` peer) | Hero backgrounds with WebGL glow — optional install |
@@ -46,7 +46,7 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 
 **Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogBody`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`, `DialogPanel`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Drawer`, `Toaster` (Sonner), `ToastProvider` / `useToast`, `Empty` (+ compound parts), `EmptyState`, `Skeleton`, `Progress`, `Spinner`
 
-**Data & infra:** `DataTable`, `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `ActionDiff`, `LogViewer`, `AlertInbox`, `Timeline`, `RollbackPlan`, `BackupStatusPanel`
+**Data & infra:** `DataTable`, `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`, `HostCard`, `ServiceHealthCard`, `DockerStackCard`, `IncidentCard`, `ApprovalCard`, `ActionDiff`, `LogViewer`, `AlertInbox`, `Timeline`, `RollbackPlan`, `BackupStatusPanel`
 
 **Visual & marketing:** `Monogram`, `GlowCard`, `NoirGlowBackground`, `BentoDashboard`, `TimeSeriesChart`, `TIME_SERIES_PRESETS`, `formatChartDecimal`, `formatChartNumber`, `formatChartDateShort`, `formatChartDateLong`, `BarChart`, `AreaChart`, `Donut`, `Sparkline`, `HeroBlock`, `FeatureCard`, `CTABand`
 
@@ -222,7 +222,7 @@ Props: `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. C
 | `.tollerud-card border-tollerud-yellow/25` | `<Card accent>` | accent: `true` |
 | `.tollerud-card border-tollerud-yellow/25 bg-tollerud-yellow/5` | `<Card accent="filled">` | accent: `"filled"` |
 
-Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. `CardHeader` accepts `actions` (≥ 4.9.7). `CardChange` (≥ 4.9.7). `accent={true}` tints header/footer bands subtly (≥ 4.9.8); `accent="filled"` tints all regions more strongly.
+Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. `CardHeader` accepts `actions` (≥ 4.9.7). `CardChange` (≥ 4.9.7). `accent={true}` tints header/footer bands subtly (≥ 4.9.8); `accent="filled"` tints all regions more strongly. `CardHeader`/`CardContent`/`CardFooter` each also take their own `accent?: boolean | 'filled'` (≥ 4.16.0), overriding the parent `Card`'s accent for just that region — leave unset to keep inheriting.
 
 ```jsx
 <Card>
@@ -252,6 +252,13 @@ Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardC
   <CardContent>
     <p className="text-2xl font-bold">42</p>
   </CardContent>
+</Card>
+{/* Per-region accent (v4.16.0) — only the header is tinted, Card itself stays plain */}
+<Card>
+  <CardHeader accent="filled">
+    <CardTitle>Brukt av budsjett</CardTitle>
+  </CardHeader>
+  <CardContent>12 930 kr / 2 700 kr</CardContent>
 </Card>
 ```
 
@@ -308,10 +315,12 @@ Props: `href?: string`, `highlight?: "cheapest" | false`, `external?: boolean`.
 | offline | `#EF4444` | — |
 | warning | `#E8D500` | 6px yellow glow |
 | idle | `#666666` | — |
+| info (v4.16.0) | `#3B82F6` | — (no pulse, like `idle`) |
 
 ```jsx
 <StatusDot status="online" label="SSH Connected" />
 <StatusDot status="warning" label="CPU 87%" />
+<StatusDot status="info" label="Note added" />
 ```
 
 ## Input
@@ -339,12 +348,15 @@ Variants: `outline` · `solid` · `accent`. CSS classes: `.tollerud-pill`, `.tol
 <StatCard label="Active Sessions" value={42} icon={<Activity size={14} />}
   change={{ value: '+12%', direction: 'up' }} />
 
-// tone overrides the default up=success / down=error color
+// change.tone overrides the default up=success / down=error color
 <StatCard label="Price change" value="-3.2%" icon={<TrendingDown size={14} />}
   change={{ value: '-3.2%', direction: 'down', tone: 'success' }} />
+
+// tone (v4.16.0) colors the value + border independently of accent — for a status-carrying figure
+<StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" />
 ```
 
-Props: `label`, `value`, `icon?: ReactNode`, `accent?`, `change?: { value?: string, direction: 'up' | 'down' | 'flat', tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`.
+Props: `label`, `value`, `icon?: ReactNode`, `accent?: boolean`, `tone?: 'success' | 'error' | 'warning' | 'info'`, `change?: { value?: string, direction: 'up' | 'down' | 'flat', tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`.
 
 ## CodeBlock
 
@@ -600,9 +612,18 @@ Features: severity count badges, hover-to-acknowledge, severity filter, scrollab
     { id: '3', time: '14:30', title: 'SSH connection failed', description: 'emma refused connection', status: 'offline' },
   ]}
 />
+
+{/* variant="flat" (v4.16.0) — no connector line, timestamp below the title; title accepts ReactNode; status accepts 'info' */}
+<Timeline
+  variant="flat"
+  items={[
+    { id: '1', time: '12 min siden', title: <><strong>Karoline</strong> krysset av «Laks, filet»</>, status: 'online' },
+    { id: '2', time: '1 t siden', title: <><strong>Mathias</strong> la til Kenneth Granstrøm</>, status: 'info' },
+  ]}
+/>
 ```
 
-Features: status-colored dots, connecting vertical lines, animated pulse for active items, metadata badges, icon support.
+Features: status-colored dots (`online`/`offline`/`warning`/`idle`/`info`), connecting vertical lines, animated pulse for active items, metadata badges, icon support. `title` accepts `ReactNode` (v4.16.0), so an item can mix rich content — e.g. a bolded actor name — with plain text. `variant="flat"` (v4.16.0) drops the connector line, divides rows with a hairline border, and moves the timestamp below the title — suited to activity/audit-log lists; default `variant="connected"` is the original chronological-trail look shown above.
 
 ### RollbackPlan
 
@@ -1483,6 +1504,44 @@ Config-driven table with optional search, segmented filter, selection, bulk acti
 **`render` signature (breaking in 4.8.40)** — `render` is always `(value, row) => …`; `value` is `row[key]`. The old single-parameter `(row) => …` form (auto-detected from `fn.length`) was removed because default/rest parameters made detection unreliable. **Migration:** prepend `_v, ` to row-only callbacks — `render: (row) => row.name` becomes `render: (_v, row) => row.name`. TypeScript flags un-migrated callbacks (a typed row parameter is not assignable to `unknown`); in plain JS the callback silently receives the cell value instead of the row.
 
 **Accessibility (≥ 4.8.40)** — sortable headers render a real `<button>` inside the `<th>` (Tab + Enter/Space sorts; `aria-sort` reflects state). With `selectable`, provide stable row keys (`id`/`key` field or `rowKey`) — index-fallback keys collide across pages and break selection state.
+
+## Table
+
+New in v4.16.0. Plain static table primitives — no sorting, filtering, search, or pagination, and no internal state at all. Use `DataTable` above when you need that interactivity; use `Table` for a fixed comparison table, a summary grid, or any small dataset that doesn't need a toolbar.
+
+```tsx
+<Table>
+  <TableCaption>Skalert for 14 gjester</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Ingrediens</TableHead>
+      <TableHead align="right">For 8</TableHead>
+      <TableHead align="right">For 14 (i dag)</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow highlight>
+      <TableCell>Laks, filet</TableCell>
+      <TableCell align="right">3,2 kg</TableCell>
+      <TableCell align="right" tone="accent">5,6 kg</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Sitron</TableCell>
+      <TableCell align="right">4 stk</TableCell>
+      <TableCell align="right" tone="accent">7,0 stk</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+| Part | Props |
+|------|-------|
+| `Table` | Standard `<table>` attributes. Wraps in a `overflow-x-auto` div for narrow viewports. |
+| `TableHeader` / `TableBody` / `TableFooter` | Standard `<thead>`/`<tbody>`/`<tfoot>` attributes. |
+| `TableRow` | `highlight?: boolean` — tints the row, e.g. the item that triggered a custom override. |
+| `TableHead` | `align?: 'left' \| 'center' \| 'right'`. |
+| `TableCell` | `align?: 'left' \| 'center' \| 'right'`, `tone?: 'success' \| 'error' \| 'warning' \| 'info' \| 'accent'` — colors the value to call out a computed or changed figure, same tone vocabulary as `StatCard` and `Meter`. |
+| `TableCaption` | Standard `<caption>` attributes. |
 
 ## Skeleton
 

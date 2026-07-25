@@ -7,6 +7,26 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.16.0 — 2026-07-25 — Table primitives, per-region Card accent, StatCard tone
+
+### Added
+
+- `Table` — new static table primitives (`Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`) for fixed comparison tables and small datasets with no sorting, filtering, search, or pagination. Use `DataTable` when that interactivity is needed; use `Table` for everything else. `TableRow` takes a `highlight` boolean to tint a row; `TableCell` takes `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'` to color a computed or changed value (e.g. a scaled quantity), matching the tone vocabulary already used by `StatCard` and `Meter`.
+
+- `CardHeader`, `CardContent`, and `CardFooter` each gain their own optional `accent?: boolean | 'filled'`, independent of the parent `Card`'s `accent`. Left unset, a region keeps inheriting the parent `Card`'s accent exactly as before. Set explicitly (including `accent={false}`), it overrides the cascade for just that region — so a single header, content area, or footer can be tinted (or excluded) regardless of the rest of the card.
+
+- `StatCard` gains a `tone?: 'success' | 'error' | 'warning' | 'info'` prop that colors the value text and border, independent of the existing `accent` boolean. Use it for a status-carrying figure — e.g. an over-budget total in red — without needing the yellow brand-accent treatment.
+
+- `Timeline`'s `TimelineItemData.title` is now `ReactNode` instead of `string`, so an item can mix rich content (e.g. a bolded actor name) with plain text.
+
+- `Timeline` gains a `variant?: 'connected' | 'flat'` prop. `'connected'` (default) is the existing behavior — a vertical line between dots, timestamp beside the title. `'flat'` drops the connector, divides rows with a hairline border, and puts the timestamp on its own line below the title — suited to activity/audit-log style lists.
+
+- `Timeline` status dots support a new `info` status (blue), matching the addition to `StatusDot` below.
+
+- `StatusDot` gains a new `info` status — a static blue dot (no pulse animation, like `idle`) using the existing `--tollerud-info` token.
+
+No breaking changes — every addition above is opt-in and existing usage is unaffected.
+
 ## 4.15.0 — 2026-07-21 — SegmentBarChart + DataTable toolbar alignment
 
 ### Added

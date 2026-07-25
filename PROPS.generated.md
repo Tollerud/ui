@@ -142,14 +142,26 @@
 - `direction: CardChangeDirection`
 - `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'`
 
+## Card — `CardContentProps` extends extends HTMLAttributes<HTMLDivElement>
+
+- `accent?: boolean | 'filled'`
+
+## Card — `CardFooterProps` extends extends HTMLAttributes<HTMLDivElement>
+
+- `accent?: boolean | 'filled'`
+
 ## Card — `CardHeaderProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `actions?: ReactNode`
+- `accent?: boolean | 'filled'`
 
 ## Card — `CardProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `* `true` — yellow border tint (`border-tollerud-yellow/25`), no fill.`
 - `* `"filled"` — yellow border + subtle yellow background fill (`bg-tollerud-yellow/5`). Use for callout boxes, cheapest-item highlights, and CTAs.`
+- `*`
+- `* Cascades to `CardHeader`/`CardContent`/`CardFooter` tinting. Any of those parts can`
+- `* set their own `accent` prop to override the cascade for just that region.`
 - `*/`
 - `accent?: boolean | 'filled'`
 - `density?: 'comfortable' | 'compact'`
@@ -865,6 +877,7 @@
 - `tone?: 'success' | 'error' | 'warning' | 'info' | 'accent'`
 - `}`
 - `accent?: boolean`
+- `tone?: StatCardTone`
 - `icon?: ReactNode`
 
 ## StatsSection — `StatsSectionProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
@@ -892,6 +905,19 @@
 
 - `label?: string`
 
+## Table — `TableCellProps` extends extends TdHTMLAttributes<HTMLTableCellElement>
+
+- `align?: 'left' | 'center' | 'right'`
+- `tone?: TableCellTone`
+
+## Table — `TableHeadProps` extends extends ThHTMLAttributes<HTMLTableCellElement>
+
+- `align?: 'left' | 'center' | 'right'`
+
+## Table — `TableRowProps` extends extends HTMLAttributes<HTMLTableRowElement>
+
+- `highlight?: boolean`
+
 ## TagInput — `TagInputProps`
 
 - `value?: string[]`
@@ -915,6 +941,12 @@
 - `items: TimelineItemData[]`
 - `active?: boolean`
 - `loading?: boolean`
+- `* `'connected'` (default) draws a vertical line between dots and shows the timestamp`
+- `* beside the title — a chronological trail. `'flat'` drops the connector, divides rows`
+- `* with a hairline border, and puts the timestamp on its own line below the title —`
+- `* suited to activity/audit logs.`
+- `*/`
+- `variant?: 'connected' | 'flat'`
 
 ## TimeSeriesChart — `TimeSeriesChartProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'children'>
 

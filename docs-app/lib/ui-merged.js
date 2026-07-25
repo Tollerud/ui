@@ -93,6 +93,17 @@ export {
 
 export { DataTable as PackageDataTable } from '@tollerud/ui'
 
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from '@tollerud/ui'
+
 export { PriceDisplay, ListCard, PromoSection } from '@tollerud/ui'
 
 export { FeatureCard, PricingCard } from './docs-adapters'

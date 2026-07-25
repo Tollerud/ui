@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, ButtonGroup, Card, CardChange, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard, PromoSection } = __p
+const { Button, ButtonGroup, Card, CardChange, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard, PromoSection, Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } = __p
 
 /* @tollerud/ui docs — Components gallery */
 function PageComponents({ go }) {
@@ -174,7 +174,7 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="Card" component="Card" permalink="components/card" desc="The default surface. accent={true} adds a yellow border tint. accent='filled' adds a yellow border + subtle yellow fill. Optional CardHeader / CardContent / CardFooter compound parts. CardHeader accepts an actions slot — use CardChange for StatCard-style up/down deltas.">
+      <Section title="Card" component="Card" permalink="components/card" desc="The default surface. accent={true} adds a yellow border tint. accent='filled' adds a yellow border + subtle yellow fill. Optional CardHeader / CardContent / CardFooter compound parts. CardHeader accepts an actions slot — use CardChange for StatCard-style up/down deltas. Each of CardHeader/CardContent/CardFooter also takes its own accent to override the parent Card's accent for just that region.">
         <Demo name="cards" code={`<Card>
   <Stack gap="sm">
     <StatusDot status="online" label="emma — ready" />
@@ -266,6 +266,23 @@ export function ButtonGlowRoot() {
             <CardContent>
               <Badge variant="warning">Attention</Badge>
             </CardContent>
+          </Card>
+        </Demo>
+        <Demo
+          name="card-region-accent"
+          desc="CardHeader/CardContent/CardFooter each take their own accent (v4.16.0), overriding the parent Card's accent for just that region — omit it to keep inheriting."
+          code={`<Card>
+  <CardHeader accent="filled">
+    <CardTitle>Brukt av budsjett</CardTitle>
+  </CardHeader>
+  <CardContent>12 930 kr / 2 700 kr</CardContent>
+</Card>`}
+        >
+          <Card style={{ maxWidth: 320 }}>
+            <CardHeader accent="filled">
+              <CardTitle>Brukt av budsjett</CardTitle>
+            </CardHeader>
+            <CardContent>12 930 kr / 2 700 kr</CardContent>
           </Card>
         </Demo>
         <Demo
@@ -455,11 +472,13 @@ export function ButtonGlowRoot() {
         <Demo name="status" variant="center" code={`<StatusDot status="online" label="emma — ready" />
 <StatusDot status="warning" label="CPU 87%" />
 <StatusDot status="offline" label="pia — unreachable" />
-<StatusDot status="idle" label="iris — idle" />`}>
+<StatusDot status="idle" label="iris — idle" />
+<StatusDot status="info" label="Note added" />`}>
           <StatusDot status="online" label="emma — ready"/>
           <StatusDot status="warning" label="CPU 87%"/>
           <StatusDot status="offline" label="pia — unreachable"/>
           <StatusDot status="idle" label="iris — idle"/>
+          <StatusDot status="info" label="Note added"/>
         </Demo>
         <Demo name="kbd" variant="center" code={`<Kbd keys="⌘+K" />
 <Kbd keys={["⌘","⇧","S"]} />
@@ -470,7 +489,7 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="Stat card" component="StatCard" permalink="components/stat-card" desc="Compact metric tiles for dashboards, with optional trend.">
+      <Section title="Stat card" component="StatCard" permalink="components/stat-card" desc="Compact metric tiles for dashboards, with optional trend. tone colors the value + border independently of accent — for a status-carrying figure.">
         <Demo name="stats" code={`<StatCard label="Active Sessions" value="42" change={{ value: "12%", direction: "up" }} icon={<Icons.activity />} />
 <StatCard label="CPU Load" value="63%" change={{ value: "4%", direction: "down" }} icon={<Icons.cpu />} />
 <StatCard label="Storage" value="1.2 TB" icon={<Icons.database />} />`}>
@@ -479,6 +498,13 @@ export function ButtonGlowRoot() {
             <StatCard label="CPU Load" value="63%" change={{ value: '4%', direction: 'down' }} icon={<Icons.cpu />}/>
             <StatCard label="Storage" value="1.2 TB" icon={<Icons.database />}/>
           </div>
+        </Demo>
+        <Demo
+          name="stats-tone"
+          desc="tone (v4.16.0): success / error / warning / info — colors the value + border independently of accent."
+          code={`<StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" />`}
+        >
+          <StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" />
         </Demo>
       </Section>
 
@@ -566,7 +592,7 @@ export function ButtonGlowRoot() {
         </Demo>
       </Section>
 
-      <Section title="Timeline" permalink="components/timeline" desc="Vertical activity feed with status-colored dots and metadata.">
+      <Section title="Timeline" permalink="components/timeline" desc="Vertical activity feed with status-colored dots and metadata. variant='flat' (v4.16.0) drops the connector line for a divided activity/audit-log list, and title accepts rich content.">
         <Demo name="timeline" variant="col" code={`<Timeline items={[
   { time: '14:32', title: 'Deployed hermes v2.0', description: 'Rolled out to emma', status: 'online', meta: ['success','3s'] },
   { time: '14:31', title: 'Restarted nginx', description: 'Config reloaded', status: 'warning', meta: ['warning'] },
@@ -578,6 +604,80 @@ export function ButtonGlowRoot() {
               { time: '14:31', title: 'Restarted nginx', description: 'Config reloaded', status: 'warning', meta: ['warning'] },
               { time: '14:30', title: 'SSH connection failed', description: 'emma refused connection', status: 'offline' },
             ]}/>
+          </div>
+        </Demo>
+        <Demo
+          name="timeline-flat"
+          variant="col"
+          desc="variant='flat': no connector line, timestamp below the title, hairline dividers between rows. title accepts ReactNode (e.g. a bolded actor name) and status accepts 'info'."
+          code={`<Timeline
+  variant="flat"
+  items={[
+    { time: '12 min siden', title: <><strong>Karoline</strong> krysset av «Laks, filet»</>, status: 'online' },
+    { time: '1 t siden', title: <><strong>Mathias</strong> la til Kenneth Granstrøm</>, status: 'info' },
+  ]}
+/>`}
+        >
+          <div style={{ width: '100%', maxWidth: 520 }}>
+            <Timeline
+              variant="flat"
+              items={[
+                { time: '12 min siden', title: <><strong>Karoline</strong> krysset av «Laks, filet»</>, status: 'online' },
+                { time: '1 t siden', title: <><strong>Mathias</strong> la til Kenneth Granstrøm</>, status: 'info' },
+              ]}
+            />
+          </div>
+        </Demo>
+      </Section>
+
+      <Section title="Table" component="Table" permalink="components/table" desc="Plain static table primitives — no sorting, filtering, search, or pagination. Use DataTable for that; use Table for a fixed comparison table or small dataset.">
+        <Demo
+          name="table"
+          variant="col"
+          code={`<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Ingrediens</TableHead>
+      <TableHead align="right">For 8</TableHead>
+      <TableHead align="right">For 14</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow highlight>
+      <TableCell>Laks, filet</TableCell>
+      <TableCell align="right">3,2 kg</TableCell>
+      <TableCell align="right" tone="accent">5,6 kg</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Sitron</TableCell>
+      <TableCell align="right">4 stk</TableCell>
+      <TableCell align="right" tone="accent">7,0 stk</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>`}
+        >
+          <div style={{ width: '100%', maxWidth: 520 }}>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Ingrediens</TableHead>
+                  <TableHead align="right">For 8</TableHead>
+                  <TableHead align="right">For 14</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow highlight>
+                  <TableCell>Laks, filet</TableCell>
+                  <TableCell align="right">3,2 kg</TableCell>
+                  <TableCell align="right" tone="accent">5,6 kg</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell>Sitron</TableCell>
+                  <TableCell align="right">4 stk</TableCell>
+                  <TableCell align="right" tone="accent">7,0 stk</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
           </div>
         </Demo>
       </Section>

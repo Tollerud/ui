@@ -20,7 +20,14 @@ export {
   CardContent,
   CardFooter,
 } from './Card'
-export type { CardProps, CardChangeProps, CardChangeDirection, CardHeaderProps } from './Card'
+export type {
+  CardProps,
+  CardChangeProps,
+  CardChangeDirection,
+  CardHeaderProps,
+  CardContentProps,
+  CardFooterProps,
+} from './Card'
 
 export { Badge } from './Badge'
 export type { BadgeProps } from './Badge'
@@ -230,6 +237,28 @@ export {
   SheetTitle,
   SheetDescription,
 } from './Sheet'
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption,
+} from './Table'
+export type {
+  TableProps,
+  TableHeaderProps,
+  TableBodyProps,
+  TableFooterProps,
+  TableRowProps,
+  TableHeadProps,
+  TableCellProps,
+  TableCellTone,
+  TableCaptionProps,
+} from './Table'
 
 export { DataTable } from './DataTable'
 export type {

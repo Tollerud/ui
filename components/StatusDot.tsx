@@ -5,13 +5,14 @@ import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { motionDuration, motionEase } from '@/lib/motion'
 
-type Status = 'online' | 'offline' | 'warning' | 'idle'
+type Status = 'online' | 'offline' | 'warning' | 'idle' | 'info'
 
 const statusColors: Record<Status, string> = {
   online: 'bg-tollerud-success',
   offline: 'bg-tollerud-error',
   warning: 'bg-tollerud-yellow',
   idle: 'bg-tollerud-noir-400',
+  info: 'bg-tollerud-info',
 }
 
 const pulseColors: Partial<Record<Status, string>> = {

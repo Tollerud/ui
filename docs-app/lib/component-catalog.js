@@ -28,6 +28,7 @@ export const DEEP_LINKS = [
   { page: 'components', section: 'alert', title: 'Alert', component: 'Alert' },
   { page: 'components', section: 'tabs-and-accordion', title: 'Tabs & Accordion', component: 'Tabs' },
   { page: 'components', section: 'timeline', title: 'Timeline', component: 'Timeline' },
+  { page: 'components', section: 'table', title: 'Table', component: 'Table', keywords: ['static', 'comparison'] },
   { page: 'components', section: 'panel', title: 'Panel', component: 'Panel' },
   { page: 'components', section: 'meter', title: 'Meter', component: 'Meter' },
   { page: 'components', section: 'stepper', title: 'Stepper', component: 'Stepper' },

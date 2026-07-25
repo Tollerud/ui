@@ -945,6 +945,23 @@
   .tollerud-timeline__dot--idle {
     background: var(--tollerud-noir-400);
   }
+  .tollerud-timeline__dot--info {
+    background: var(--tollerud-info);
+    box-shadow: 0 0 6px rgba(59, 130, 246, 0.5);
+  }
+  .tollerud-timeline--flat .tollerud-timeline__item {
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .tollerud-timeline--flat .tollerud-timeline__item:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+  .tollerud-timeline__time--below {
+    margin-top: 0.125rem;
+  }
   @keyframes tollerud-timeline-pulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,0,0.4); }
     50%      { box-shadow: 0 0 0 6px rgba(255,255,0,0); }

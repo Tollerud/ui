@@ -12,6 +12,9 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * `true` — yellow border tint (`border-tollerud-yellow/25`), no fill.
    * `"filled"` — yellow border + subtle yellow background fill (`bg-tollerud-yellow/5`). Use for callout boxes, cheapest-item highlights, and CTAs.
+   *
+   * Cascades to `CardHeader`/`CardContent`/`CardFooter` tinting. Any of those parts can
+   * set their own `accent` prop to override the cascade for just that region.
    */
   accent?: boolean | 'filled'
   density?: 'comfortable' | 'compact'
@@ -32,6 +35,18 @@ export interface CardChangeProps extends HTMLAttributes<HTMLSpanElement> {
 export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
   /** Trailing header content — change chip, buttons, badge, etc. */
   actions?: ReactNode
+  /** Tint just this header. Omit to inherit the parent `Card`'s `accent`. */
+  accent?: boolean | 'filled'
+}
+
+export interface CardContentProps extends HTMLAttributes<HTMLDivElement> {
+  /** Tint just this content region. Omit to inherit the parent `Card`'s `accent`. */
+  accent?: boolean | 'filled'
+}
+
+export interface CardFooterProps extends HTMLAttributes<HTMLDivElement> {
+  /** Tint just this footer. Omit to inherit the parent `Card`'s `accent`. */
+  accent?: boolean | 'filled'
 }
 
 const STRUCTURED_CARD_PARTS = new Set([
@@ -61,6 +76,20 @@ const cardBodyBg =
 /** Neutral band by default; subtle yellow tint when `accent`, stronger when `accent="filled"`. */
 const cardBandBg =
   'bg-[color-mix(in_srgb,var(--tollerud-black)_6%,var(--tollerud-surface-raised))] group-data-[accent=accent]/card:bg-[color-mix(in_srgb,var(--tollerud-yellow)_4%,var(--tollerud-surface-raised))] group-data-[accent=filled]/card:bg-[color-mix(in_srgb,var(--tollerud-black)_5%,var(--tollerud-yellow)_5%)]'
+
+/** Same band tint as `cardBandBg`, computed directly from a prop instead of the ancestor `Card`'s cascade — used when a part overrides `accent` for just itself. */
+function regionBandBg(accent: boolean | 'filled' | undefined) {
+  if (accent === 'filled') return 'bg-[color-mix(in_srgb,var(--tollerud-black)_5%,var(--tollerud-yellow)_5%)]'
+  if (accent) return 'bg-[color-mix(in_srgb,var(--tollerud-yellow)_4%,var(--tollerud-surface-raised))]'
+  return 'bg-[color-mix(in_srgb,var(--tollerud-black)_6%,var(--tollerud-surface-raised))]'
+}
+
+/** Same body tint as `cardBodyBg`, computed directly from a prop — used when `CardContent` overrides `accent` for just itself. */
+function regionBodyBg(accent: boolean | 'filled' | undefined) {
+  if (accent === 'filled') return 'bg-tollerud-yellow/5'
+  if (accent) return 'bg-tollerud-yellow/[0.03]'
+  return 'bg-tollerud-surface-raised'
+}
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, accent, density, asChild = false, children, ...props }, ref) => {
@@ -152,12 +181,12 @@ const CardChange = forwardRef<HTMLSpanElement, CardChangeProps>(
 CardChange.displayName = 'CardChange'
 
 const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
-  ({ className, actions, children, ...props }, ref) => (
+  ({ className, actions, accent, children, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
         'shrink-0 border-b border-tollerud-border/20',
-        cardBandBg,
+        accent !== undefined ? regionBandBg(accent) : cardBandBg,
         cardRegionPadding,
         className
       )}
@@ -196,24 +225,29 @@ const CardDescription = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLPara
 )
 CardDescription.displayName = 'CardDescription'
 
-const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
+  ({ className, accent, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('flex-1', cardBodyBg, cardRegionPadding, className)}
+      className={cn(
+        'flex-1',
+        accent !== undefined ? regionBodyBg(accent) : cardBodyBg,
+        cardRegionPadding,
+        className
+      )}
       {...props}
     />
   )
 )
 CardContent.displayName = 'CardContent'
 
-const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
+  ({ className, accent, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
         'flex shrink-0 flex-wrap items-center gap-2 border-t border-tollerud-border/20',
-        cardBandBg,
+        accent !== undefined ? regionBandBg(accent) : cardBandBg,
         cardRegionPadding,
         className
       )}
