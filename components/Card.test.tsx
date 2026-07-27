@@ -144,4 +144,37 @@ describe('Card', () => {
     expect(screen.getByTestId('change')).toHaveClass('text-tollerud-info')
     expect(screen.getByTestId('change')).toHaveTextContent('—')
   })
+
+  it('forces structured layout via explicit prop even without CardHeader/CardContent children', () => {
+    render(
+      <Card structured data-testid="card">
+        <div>Opaque child — no displayName to auto-detect</div>
+      </Card>,
+    )
+
+    expect(screen.getByTestId('card')).toHaveClass('p-0')
+    expect(screen.getByTestId('card')).not.toHaveClass('p-6')
+  })
+
+  it('forces unstructured layout via explicit prop even with CardHeader/CardContent children', () => {
+    render(
+      <Card structured={false} data-testid="card">
+        <CardHeader>Header</CardHeader>
+        <CardContent>Body</CardContent>
+      </Card>,
+    )
+
+    expect(screen.getByTestId('card')).toHaveClass('p-6')
+    expect(screen.getByTestId('card')).not.toHaveClass('p-0')
+  })
+
+  it('does not forward the structured prop to the DOM element', () => {
+    render(
+      <Card structured data-testid="card">
+        <div>Content</div>
+      </Card>,
+    )
+
+    expect(screen.getByTestId('card')).not.toHaveAttribute('structured')
+  })
 })

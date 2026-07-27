@@ -18,7 +18,8 @@ export const DEEP_LINKS = [
   // Components — core primitives
   { page: 'components', section: 'button', title: 'Button', component: 'Button', keywords: ['cta', 'terminal'] },
   { page: 'components', section: 'button-group', title: 'Button group', component: 'ButtonGroup', keywords: ['toolbar', 'actions', 'fused'] },
-  { page: 'components', section: 'card', title: 'Card', component: 'Card', keywords: ['surface'] },
+  { page: 'components', section: 'card', title: 'Card', component: 'Card', keywords: ['surface', 'structured'] },
+  { page: 'components', section: 'card', title: 'Structured card', component: 'StructuredCard', keywords: ['card', 'server component', 'rsc'] },
   { page: 'components', section: 'divider', title: 'Divider' },
   { page: 'components', section: 'badge-and-pill', title: 'Badge & Pill', component: 'Badge', keywords: ['tag'] },
   { page: 'components', section: 'status-and-kbd', title: 'Status & Kbd', component: 'StatusDot', keywords: ['keyboard'] },
@@ -112,6 +113,9 @@ export const DEEP_LINKS = [
   { page: 'charts', section: 'bar-chart', title: 'BarChart', component: 'BarChart', keywords: ['bar', 'comparison'] },
   { page: 'charts', section: 'donut', title: 'Donut', component: 'Donut', keywords: ['pie', 'segment'] },
   { page: 'charts', section: 'segment-bar', title: 'SegmentBarChart', component: 'SegmentBarChart', keywords: ['stacked', 'proportion', 'breakdown', 'horizontal'] },
+
+  // Examples — auth
+  { page: 'auth', section: 'auth-split-layout', title: 'Auth split layout', component: 'AuthSplitLayout', keywords: ['sign in', 'sign up', 'reset password', 'hero'] },
 ]
 
 export function deepLinkPath(link) {

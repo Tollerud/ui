@@ -106,6 +106,8 @@ export {
 
 export { PriceDisplay, ListCard, PromoSection } from '@tollerud/ui'
 
+export { StructuredCard, AuthSplitLayout } from '@tollerud/ui'
+
 export { FeatureCard, PricingCard } from './docs-adapters'
 
 export const {

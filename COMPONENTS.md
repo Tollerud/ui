@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.16.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.17.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -161,6 +161,18 @@ These components assemble common page structures from the layout primitives and 
 | `EmptyPage` | First-run, no-results, or error pages |
 | `FeatureSection` | Marketing/product feature grids |
 | `StatsSection` | Metric overview sections |
+| `AuthSplitLayout` | Two-panel hero/form auth screen (sign-in, sign-up, reset-password) — new in ≥ 4.17.0 |
+
+```tsx
+<AuthSplitLayout
+  projectName="Butikkpils"
+  title="Track"
+  highlight="every price."
+  description="Crowdsourced beer prices, updated daily."
+>
+  <SignInForm />
+</AuthSplitLayout>
+```
 
 ## Button
 
@@ -222,7 +234,7 @@ Props: `size?: 'sm' | 'md' | 'lg'`, `orientation?: 'horizontal' | 'vertical'`. C
 | `.tollerud-card border-tollerud-yellow/25` | `<Card accent>` | accent: `true` |
 | `.tollerud-card border-tollerud-yellow/25 bg-tollerud-yellow/5` | `<Card accent="filled">` | accent: `"filled"` |
 
-Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. `CardHeader` accepts `actions` (≥ 4.9.7). `CardChange` (≥ 4.9.7). `accent={true}` tints header/footer bands subtly (≥ 4.9.8); `accent="filled"` tints all regions more strongly. `CardHeader`/`CardContent`/`CardFooter` each also take their own `accent?: boolean | 'filled'` (≥ 4.16.0), overriding the parent `Card`'s accent for just that region — leave unset to keep inheriting.
+Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`. `CardHeader` accepts `actions` (≥ 4.9.7). `CardChange` (≥ 4.9.7). `accent={true}` tints header/footer bands subtly (≥ 4.9.8); `accent="filled"` tints all regions more strongly. `CardHeader`/`CardContent`/`CardFooter` each also take their own `accent?: boolean | 'filled'` (≥ 4.16.0), overriding the parent `Card`'s accent for just that region — leave unset to keep inheriting. `Card` also takes an explicit `structured?: boolean` (≥ 4.17.0) to bypass its `displayName`-based auto-detection of `CardHeader`/`CardContent`/`CardFooter` children, which can fail across a Next.js Server/Client Component boundary.
 
 ```jsx
 <Card>
@@ -260,6 +272,27 @@ Compound parts (≥ 4.9.4): `CardHeader`, `CardTitle`, `CardDescription`, `CardC
   </CardHeader>
   <CardContent>12 930 kr / 2 700 kr</CardContent>
 </Card>
+{/* structured (v4.17.0) — explicit, safe across a Server/Client boundary */}
+<Card structured>
+  <CardHeader><CardTitle>Deploy</CardTitle></CardHeader>
+  <CardContent>Body</CardContent>
+</Card>
+```
+
+## StructuredCard
+
+`Card` + `CardHeader` + `CardTitle` + `CardContent` composed with `structured` set explicitly — the common title+actions+body shape, safe to render from a Server Component. New in ≥ 4.17.0.
+
+| Prop | Type |
+|------|------|
+| `title` | `ReactNode` |
+| `actions` | `ReactNode` |
+| `contentClassName` | `string` |
+
+```jsx
+<StructuredCard title="Deploy" actions={<CardChange value="+12%" direction="up" />}>
+  Body content
+</StructuredCard>
 ```
 
 ## PriceDisplay
@@ -354,9 +387,15 @@ Variants: `outline` · `solid` · `accent`. CSS classes: `.tollerud-pill`, `.tol
 
 // tone (v4.16.0) colors the value + border independently of accent — for a status-carrying figure
 <StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" />
+
+// secondaryValue (v4.17.0) — a second unit shown as a Badge under the main value
+<StatCard label="Price" value="23,90 kr" secondaryValue="47,80 kr/l" secondaryTone="accent" />
+
+// value (v4.17.0) is now ReactNode — drop in your own <Input> for an inline-editable tile
+<StatCard label="Ticket price" value={<Input defaultValue="150" onBlur={save} />} />
 ```
 
-Props: `label`, `value`, `icon?: ReactNode`, `accent?: boolean`, `tone?: 'success' | 'error' | 'warning' | 'info'`, `change?: { value?: string, direction: 'up' | 'down' | 'flat', tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`.
+Props: `label`, `value: ReactNode` (v4.17.0 — was `string | number`), `icon?: ReactNode`, `accent?: boolean`, `tone?: 'success' | 'error' | 'warning' | 'info'`, `change?: { value?: string, direction: 'up' | 'down' | 'flat', tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `secondaryValue?: ReactNode` (v4.17.0), `secondaryTone?: 'default' | 'accent' | 'success' | 'error' | 'warning' | 'info'` (v4.17.0).
 
 ## CodeBlock
 

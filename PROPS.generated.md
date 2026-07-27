@@ -65,6 +65,18 @@
 - `ariaLabel?: string`
 - `srTable?: boolean`
 
+## AuthSplitLayout — `AuthSplitLayoutProps`
+
+- `projectName: string`
+- `eyebrow?: string`
+- `title: string`
+- `highlight: string`
+- `description: string`
+- `decoration?: ReactNode`
+- `glow?: boolean`
+- `homeHref?: string`
+- `children: ReactNode`
+
 ## Avatar — `AvatarGroupProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `max?: number`
@@ -166,6 +178,12 @@
 - `accent?: boolean | 'filled'`
 - `density?: 'comfortable' | 'compact'`
 - `asChild?: boolean`
+- `* Force structured layout (no shell padding, header/content/footer own their padding) on or off.`
+- `* Omit to auto-detect from `CardHeader`/`CardContent`/`CardFooter` children — that detection reads`
+- `* `child.type.displayName`, which can fail to survive a Next.js Server/Client Component boundary.`
+- `* Set this explicitly when composing across that boundary instead of relying on auto-detection.`
+- `*/`
+- `structured?: boolean`
 
 ## CardGrid — `CardGridProps` extends extends HTMLAttributes<HTMLDivElement>
 
@@ -870,7 +888,7 @@
 ## StatCard — `StatCardProps` extends extends HTMLAttributes<HTMLDivElement>
 
 - `label: string`
-- `value: string | number`
+- `value: ReactNode`
 - `change?: {`
 - `value?: string`
 - `direction: CardChangeDirection`
@@ -879,6 +897,8 @@
 - `accent?: boolean`
 - `tone?: StatCardTone`
 - `icon?: ReactNode`
+- `secondaryValue?: ReactNode`
+- `secondaryTone?: 'default' | 'accent' | 'success' | 'error' | 'warning' | 'info'`
 
 ## StatsSection — `StatsSectionProps` extends extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
@@ -900,6 +920,13 @@
 - `steps: StepperStep[]`
 - `current: number`
 - `orientation?: 'horizontal' | 'vertical'`
+
+## StructuredCard — `StructuredCardProps`
+
+- `title: ReactNode`
+- `actions?: ReactNode`
+- `contentClassName?: string`
+- `children: ReactNode`
 
 ## Switch — `SwitchProps` extends extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>
 

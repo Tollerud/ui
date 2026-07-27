@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, ButtonGroup, Card, CardChange, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard, PromoSection, Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption } = __p
+const { Button, ButtonGroup, Card, CardChange, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, PasswordStrength, passwordRules, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, Stack, Cluster, CardGrid, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, PriceDisplay, ListCard, PromoSection, Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, TableCaption, StructuredCard } = __p
 
 /* @tollerud/ui docs — Components gallery */
 function PageComponents({ go }) {
@@ -329,6 +329,28 @@ export function ButtonGlowRoot() {
             <a href="#" style={{ color: 'inherit', textDecoration: 'none' }}>Visit docs →</a>
           </Card>
         </Demo>
+        <Demo
+          name="card-structured-prop"
+          desc="structured (v4.17.0) forces layout on or off instead of auto-detecting from CardHeader/CardContent children's displayName — set it explicitly when composing Card across a Next.js Server/Client Component boundary, where that auto-detection can silently fail."
+          code={`<Card structured>
+  <CardHeader><CardTitle>Deploy</CardTitle></CardHeader>
+  <CardContent>Body</CardContent>
+</Card>
+
+<StructuredCard title="Deploy" actions={<CardChange value="+12%" direction="up" />}>
+  Body content
+</StructuredCard>`}
+        >
+          <div className="ds-col" style={{ gap: 12, maxWidth: 320 }}>
+            <Card structured>
+              <CardHeader><CardTitle>Deploy</CardTitle></CardHeader>
+              <CardContent>Body</CardContent>
+            </Card>
+            <StructuredCard title="Deploy" actions={<CardChange value="+12%" direction="up" />}>
+              Body content
+            </StructuredCard>
+          </div>
+        </Demo>
       </Section>
 
       <Section title="PriceDisplay" component="PriceDisplay" permalink="components/price-display" desc="Compact price display: a primary value with an optional secondary Badge below it. Use highlight='cheapest' for success coloring. size='sm' | 'md' | 'lg' scales the block for table cells or prominent rows. Defaults to right-aligned.">
@@ -505,6 +527,17 @@ export function ButtonGlowRoot() {
           code={`<StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" />`}
         >
           <StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" />
+        </Demo>
+        <Demo
+          name="stats-secondary-value"
+          desc="secondaryValue (v4.17.0) renders a second unit as a small Badge under the main value — e.g. price per liter next to a kr price. value now accepts ReactNode, so a consumer can drop in their own <Input> for an inline-editable tile."
+          code={`<StatCard label="Price" value="23,90 kr" secondaryValue="47,80 kr/l" secondaryTone="accent" />
+<StatCard label="Ticket price" value={<Input defaultValue="150" style={{ width: 96 }} />} />`}
+        >
+          <div className="ds-grid-3" style={{ width: '100%' }}>
+            <StatCard label="Price" value="23,90 kr" secondaryValue="47,80 kr/l" secondaryTone="accent" />
+            <StatCard label="Ticket price" value={<Input defaultValue="150" style={{ width: 96 }} />} />
+          </div>
         </Demo>
       </Section>
 

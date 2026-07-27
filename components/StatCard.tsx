@@ -1,12 +1,14 @@
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
+import { Badge } from './Badge'
 import { CardChange, type CardChangeDirection } from './Card'
 
 export type StatCardTone = 'success' | 'error' | 'warning' | 'info'
 
 export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
   label: string
-  value: string | number
+  /** Usually a string or number. Accepts any node — e.g. an `<Input>` for an inline-editable tile. */
+  value: ReactNode
   change?: {
     value?: string
     direction: CardChangeDirection
@@ -17,6 +19,10 @@ export interface StatCardProps extends HTMLAttributes<HTMLDivElement> {
   /** Colors the value and border to signal status (e.g. an over-budget figure). Independent of `accent`; takes precedence when both are set. */
   tone?: StatCardTone
   icon?: ReactNode
+  /** A secondary unit/value shown as a badge under the main value — e.g. price per liter next to a kr price. */
+  secondaryValue?: ReactNode
+  /** `Badge` variant for `secondaryValue`. Defaults to `'default'`. */
+  secondaryTone?: 'default' | 'accent' | 'success' | 'error' | 'warning' | 'info'
 }
 
 const toneStyles: Record<StatCardTone, { border: string; line: string; value: string }> = {
@@ -43,7 +49,10 @@ const toneStyles: Record<StatCardTone, { border: string; line: string; value: st
 }
 
 const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
-  ({ className, label, value, change, accent, tone, icon, ...props }, ref) => {
+  (
+    { className, label, value, change, accent, tone, icon, secondaryValue, secondaryTone, ...props },
+    ref
+  ) => {
     const toneStyle = tone ? toneStyles[tone] : undefined
 
     return (
@@ -96,6 +105,12 @@ const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
         >
           {value}
         </p>
+
+        {secondaryValue != null && (
+          <Badge variant={secondaryTone ?? 'default'} className="mt-2 w-fit tabular-nums">
+            {secondaryValue}
+          </Badge>
+        )}
       </div>
     )
   }

@@ -29,6 +29,9 @@ export type {
   CardFooterProps,
 } from './Card'
 
+export { StructuredCard } from './StructuredCard'
+export type { StructuredCardProps } from './StructuredCard'
+
 export { Badge } from './Badge'
 export type { BadgeProps } from './Badge'
 
@@ -81,6 +84,9 @@ export type { MainContentProps, MainContentWidth, MainContentSpacing, MainConten
 
 export { PageHeader, PageHeaderShimmer } from './PageHeader'
 export type { PageHeaderProps, PageHeaderAlign, PageHeaderSize, PageHeaderShimmerProps } from './PageHeader'
+
+export { AuthSplitLayout } from './AuthSplitLayout'
+export type { AuthSplitLayoutProps } from './AuthSplitLayout'
 
 export { TopNav, TopNavAction } from './TopNav'
 export type { TopNavProps, TopNavItem, TopNavMaxWidth, TopNavActionProps, TopNavActionMobile } from './TopNav'

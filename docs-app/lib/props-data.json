@@ -99,6 +99,22 @@
       ]
     }
   ],
+  "AuthSplitLayout": [
+    {
+      "name": "AuthSplitLayoutProps",
+      "props": [
+        "projectName: string",
+        "eyebrow?: string",
+        "title: string",
+        "highlight: string",
+        "description: string",
+        "decoration?: ReactNode",
+        "glow?: boolean",
+        "homeHref?: string",
+        "children: ReactNode"
+      ]
+    }
+  ],
   "Avatar": [
     {
       "name": "AvatarProps",
@@ -239,7 +255,13 @@
         "*/",
         "accent?: boolean | 'filled'",
         "density?: 'comfortable' | 'compact'",
-        "asChild?: boolean"
+        "asChild?: boolean",
+        "* Force structured layout (no shell padding, header/content/footer own their padding) on or off.",
+        "* Omit to auto-detect from `CardHeader`/`CardContent`/`CardFooter` children — that detection reads",
+        "* `child.type.displayName`, which can fail to survive a Next.js Server/Client Component boundary.",
+        "* Set this explicitly when composing across that boundary instead of relying on auto-detection.",
+        "*/",
+        "structured?: boolean"
       ]
     },
     {
@@ -1304,7 +1326,7 @@
       "extends": "extends HTMLAttributes<HTMLDivElement>",
       "props": [
         "label: string",
-        "value: string | number",
+        "value: ReactNode",
         "change?: {",
         "value?: string",
         "direction: CardChangeDirection",
@@ -1312,7 +1334,9 @@
         "}",
         "accent?: boolean",
         "tone?: StatCardTone",
-        "icon?: ReactNode"
+        "icon?: ReactNode",
+        "secondaryValue?: ReactNode",
+        "secondaryTone?: 'default' | 'accent' | 'success' | 'error' | 'warning' | 'info'"
       ]
     }
   ],
@@ -1349,6 +1373,17 @@
         "steps: StepperStep[]",
         "current: number",
         "orientation?: 'horizontal' | 'vertical'"
+      ]
+    }
+  ],
+  "StructuredCard": [
+    {
+      "name": "StructuredCardProps",
+      "props": [
+        "title: ReactNode",
+        "actions?: ReactNode",
+        "contentClassName?: string",
+        "children: ReactNode"
       ]
     }
   ],

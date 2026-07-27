@@ -7,6 +7,26 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.17.0 — 2026-07-26 — StructuredCard, StatCard secondary value, AuthSplitLayout
+
+### Added
+
+- `Card` gains an explicit `structured?: boolean` prop. Previously, whether `Card` renders shell padding or delegates it to `CardHeader`/`CardContent`/`CardFooter` was auto-detected from `child.type.displayName` — a mechanism that can fail to survive a Next.js Server/Client Component boundary. Set `structured` explicitly to bypass that detection.
+
+- `StructuredCard` — new convenience component composing `Card` (with `structured` set explicitly) + `CardHeader` + `CardTitle` + `CardContent`, for the common "title + actions + body" card shape, safe to compose across a Server/Client boundary.
+
+- `StatCard`'s `value` prop now accepts `ReactNode` instead of only `string | number`, so a consumer can pass their own `<Input>` for an inline-editable tile without the library owning save/loading state.
+
+- `StatCard` gains `secondaryValue?: ReactNode` and `secondaryTone?: 'default' | 'accent' | 'success' | 'error' | 'warning' | 'info'` — renders a secondary value (e.g. a per-unit price) as a small `Badge` under the main value.
+
+- `AuthSplitLayout` — new component composing `Monogram` + `PageHeader` (with `shimmer`) + optional `NoirGlowBackground` into the two-panel hero/form auth screen layout (sign-in, sign-up, reset-password). Takes `projectName`, `eyebrow?`, `title`, `highlight`, `description`, an optional `decoration` slot for a flourish element in the hero panel, and `glow?: boolean` (default `true`).
+
+### Documentation
+
+- `SKILL.md` and `AGENTS.md`'s "Color tokens" tables now list `tollerud-success`/`tollerud-warning`/`tollerud-error`/`tollerud-info` — these tokens already existed and were already used by `Badge`, `CardChange`, `StatusDot`, and `Table`, but were missing from the consumer-facing token reference.
+
+No breaking changes — every addition above is opt-in and existing usage is unaffected.
+
 ## 4.16.0 — 2026-07-25 — Table primitives, per-region Card accent, StatCard tone
 
 ### Added

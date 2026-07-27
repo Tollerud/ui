@@ -20,6 +20,13 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   density?: 'comfortable' | 'compact'
   /** Render as the single child element instead of a `<div>`, merging props and styles onto it. */
   asChild?: boolean
+  /**
+   * Force structured layout (no shell padding, header/content/footer own their padding) on or off.
+   * Omit to auto-detect from `CardHeader`/`CardContent`/`CardFooter` children — that detection reads
+   * `child.type.displayName`, which can fail to survive a Next.js Server/Client Component boundary.
+   * Set this explicitly when composing across that boundary instead of relying on auto-detection.
+   */
+  structured?: boolean
 }
 
 export type CardChangeDirection = 'up' | 'down' | 'flat'
@@ -92,8 +99,8 @@ function regionBodyBg(accent: boolean | 'filled' | undefined) {
 }
 
 const Card = forwardRef<HTMLDivElement, CardProps>(
-  ({ className, accent, density, asChild = false, children, ...props }, ref) => {
-    const structured = usesStructuredLayout(children)
+  ({ className, accent, density, asChild = false, structured: structuredProp, children, ...props }, ref) => {
+    const structured = structuredProp ?? usesStructuredLayout(children)
     const Comp = asChild ? Slot : 'div'
     return (
       <Comp

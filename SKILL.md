@@ -172,6 +172,12 @@ For a real `<button>` (form submit, logout, toggle, dialog/menu trigger), just u
 | `tollerud-text-primary` | `#F5F5F5` | Body text |
 | `tollerud-text-secondary` | `#AAAAAA` | Secondary text / labels |
 | `tollerud-text-muted` | `#666666` | Placeholders, hints |
+| `tollerud-success` | `#22C55E` | Positive status text/border (up changes, success badges) |
+| `tollerud-warning` | `#E8D500` | Caution status text/border |
+| `tollerud-error` | `#EF4444` | Negative status text/border (down changes, destructive states) |
+| `tollerud-info` | `#3B82F6` | Neutral/informational status text/border |
+
+Used directly (`text-tollerud-success`, `border-tollerud-error/25`, etc.) in custom components — don't hardcode status hex like `#22C55E`. Also the `tone` vocabulary for `Badge`, `CardChange`, `StatCard`, `StatusDot`, and `Table`'s `TableCell`.
 
 Standard focus ring (apply to every interactive element): `focus-visible:outline-2 focus-visible:outline-tollerud-yellow focus-visible:outline-offset-2`
 
@@ -210,7 +216,7 @@ import {
   Card, Badge, StatusDot, Kbd,
   Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio,
   PasswordInput, Combobox, TagInput, Slider, FormRow,
-  Container, CodeBlock, StatCard, ActionRow, CommandMenu,
+  Container, CodeBlock, StatCard, StructuredCard, ActionRow, CommandMenu,
 } from '@tollerud/ui'
 ```
 
@@ -259,7 +265,7 @@ import {
 import {
   PageHeader, TopNav, TopNavAction, DashboardShell, SettingsLayout,
   FormPanel, ResourceList, DetailPage, EmptyPage,
-  FeatureSection, StatsSection,
+  FeatureSection, StatsSection, AuthSplitLayout,
 } from '@tollerud/ui'
 ```
 
@@ -277,6 +283,7 @@ Use these before rebuilding common pages with raw Tailwind:
 - **EmptyPage** — full-page empty state using `EmptyState` on a `PageShell`.
 - **FeatureSection** — section header + `features` rendered with `FeatureCard`.
 - **StatsSection** — section header + `stats` rendered with `StatCard`.
+- **AuthSplitLayout** (≥ 4.17.0) — two-panel hero/form auth screen. See full prop docs above under `StatCard`/`StructuredCard`/`AuthSplitLayout`.
 
 ```tsx
 <ResourceList
@@ -357,7 +364,7 @@ Opt-in on any element: add class `tollerud-btn-glow`. Subpath: `import { initBut
 </ButtonGroup>
 ```
 
-**Card** — `accent?: boolean | 'filled'`, `density?: 'comfortable' | 'compact'`. `accent={true}` = yellow border + subtle yellow header/footer band tint on structured cards (≥ 4.9.8); `accent="filled"` = yellow border + stronger yellow fill on all regions. Plain `<div>` wrapper — safe to nest in `<Link>`. Compound parts: `CardHeader` (`actions`), `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`, `CardChange`. `CardHeader`/`CardContent`/`CardFooter` each also take their own `accent?: boolean | 'filled'` (≥ 4.16.0) that overrides the parent `Card`'s accent for just that region — omit it to keep inheriting.
+**Card** — `accent?: boolean | 'filled'`, `density?: 'comfortable' | 'compact'`, `structured?: boolean` (≥ 4.17.0). `accent={true}` = yellow border + subtle yellow header/footer band tint on structured cards (≥ 4.9.8); `accent="filled"` = yellow border + stronger yellow fill on all regions. Plain `<div>` wrapper — safe to nest in `<Link>`. Compound parts: `CardHeader` (`actions`), `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`, `CardChange`. `CardHeader`/`CardContent`/`CardFooter` each also take their own `accent?: boolean | 'filled'` (≥ 4.16.0) that overrides the parent `Card`'s accent for just that region — omit it to keep inheriting. By default `Card` auto-detects "structured" layout (no shell padding, delegated to `CardHeader`/`CardContent`/`CardFooter`) from `child.type.displayName` — that detection can fail to survive a Next.js Server/Client Component boundary. Pass `structured` explicitly (`true` or `false`) to bypass the auto-detection when composing `Card` across that boundary, or use `StructuredCard` for the common case.
 ```tsx
 <Card accent>Highlighted with yellow border</Card>
 <Card accent="filled">Callout with yellow fill</Card>
@@ -436,12 +443,34 @@ const [open, setOpen] = useState(false)
 />
 ```
 
-**StatCard** — `label`, `value`, `icon?: ReactNode`, `change?: { value?: string; direction: 'up' | 'down' | 'flat'; tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `accent?: boolean`, `tone?: 'success' | 'error' | 'warning' | 'info'` (≥ 4.16.0). `change.tone` overrides the default color (up=success, down=error, flat=info). `flat` defaults label to `—` when `value` is omitted. `tone` colors the value text + border independently of `accent` — use it for a status-carrying figure (e.g. an over-budget total) without the yellow brand-accent look; `tone` takes precedence if both are somehow set, so pick one per card.
+**StatCard** — `label`, `value: ReactNode` (≥ 4.17.0 — was `string | number`), `icon?: ReactNode`, `change?: { value?: string; direction: 'up' | 'down' | 'flat'; tone?: 'success' | 'error' | 'warning' | 'info' | 'accent' }`, `accent?: boolean`, `tone?: 'success' | 'error' | 'warning' | 'info'` (≥ 4.16.0), `secondaryValue?: ReactNode`, `secondaryTone?: 'default' | 'accent' | 'success' | 'error' | 'warning' | 'info'` (≥ 4.17.0). `change.tone` overrides the default color (up=success, down=error, flat=info). `flat` defaults label to `—` when `value` is omitted. `tone` colors the value text + border independently of `accent` — use it for a status-carrying figure (e.g. an over-budget total) without the yellow brand-accent look; `tone` takes precedence if both are somehow set, so pick one per card. Pass a `ReactNode` `value` (e.g. an `<Input>`) for an inline-editable tile — `StatCard` renders it as-is and doesn't own save state. `secondaryValue` renders as a small `Badge` under the value — use it for a second unit (e.g. price per liter next to a kr price).
 ```tsx
 <StatCard label="Active Sessions" value={42} icon={<Activity size={14} />} change={{ value: '+12%', direction: 'up' }} />
 <StatCard label="Endring siste periode" value="-3.2%" change={{ value: '-3.2%', direction: 'down', tone: 'success' }} />
 <StatCard label="Uptime" value="99.9%" change={{ direction: 'flat' }} />
 <StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" />
+<StatCard label="Price" value="23,90 kr" secondaryValue="47,80 kr/l" secondaryTone="accent" />
+<StatCard label="Ticket price" value={<Input defaultValue="150" onBlur={save} />} />
+```
+
+**StructuredCard** (≥ 4.17.0) — `title: ReactNode`, `actions?: ReactNode`, `contentClassName?: string`. Composes `Card` (with `structured` set explicitly) + `CardHeader` + `CardTitle` + `CardContent` — the common "title + actions + body" shape, safe to render from a Server Component and pass across a Client boundary (see `Card`'s `structured` prop below).
+```tsx
+<StructuredCard title="Deploy" actions={<CardChange value="+12%" direction="up" />}>
+  Body content
+</StructuredCard>
+```
+
+**AuthSplitLayout** (≥ 4.17.0) — two-panel hero/form auth screen. `projectName: string`, `eyebrow?: string`, `title: string`, `highlight: string` (shimmered word(s) in `title`, passed to `PageHeader`'s `shimmer`), `description: string`, `decoration?: ReactNode` (flourish element in the hero panel), `glow?: boolean` (default `true`, renders `NoirGlowBackground`), `homeHref?: string`.
+```tsx
+<AuthSplitLayout
+  projectName="Butikkpils"
+  eyebrow="41 priser fra 13 butikker"
+  title="Track"
+  highlight="every price."
+  description="Crowdsourced beer prices, updated daily."
+>
+  <SignInForm />
+</AuthSplitLayout>
 ```
 
 **CodeBlock** — `code?`, `promptPrefix?`, `showCopy?`. Renders a `<pre>`.
@@ -905,6 +934,8 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 ---
 
 ## Version notes
+
+- **`StructuredCard`, `StatCard` secondary value, `AuthSplitLayout` (≥ 4.17.0)** — `Card` gains an explicit `structured?: boolean` to bypass its `displayName`-based auto-detection (unreliable across a Next.js Server/Client boundary); `StructuredCard` is a new convenience component for the common title+actions+body shape. `StatCard`'s `value` now accepts `ReactNode` (was `string | number`) and it gains `secondaryValue`/`secondaryTone` for a badge under the main value. `AuthSplitLayout` composes `Monogram`+`PageHeader`+`NoirGlowBackground` into the two-panel auth-screen layout. Also: `SKILL.md`/`AGENTS.md` Color tokens tables now list the pre-existing `tollerud-success`/`warning`/`error`/`info` tokens. No breaking changes — all opt-in.
 
 - **`Table` primitives, per-region `Card` accent, `StatCard` tone (≥ 4.16.0)** — new static `Table`/`TableHeader`/`TableBody`/`TableFooter`/`TableRow`/`TableHead`/`TableCell`/`TableCaption` (no sort/filter/search/pagination — use `DataTable` for that). `CardHeader`/`CardContent`/`CardFooter` gain their own `accent?: boolean | 'filled'` that overrides the parent `Card`'s accent for just that region. `StatCard` gains `tone?: 'success' | 'error' | 'warning' | 'info'` for coloring the value independently of `accent`. `Timeline`'s `title` is now `ReactNode` (was `string`) and it gains `variant?: 'connected' | 'flat'` (flat drops the connector line, puts the timestamp below the title) plus an `info` status. `StatusDot` gains an `info` status (static blue dot). No breaking changes — all opt-in.
 

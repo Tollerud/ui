@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.16.0",
+  "version": "4.17.0",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -1457,6 +1457,35 @@
       ],
       "registryDependencies": [
         "pill"
+      ],
+      "type": "components:ui"
+    },
+    "structured-card": {
+      "name": "StructuredCard",
+      "description": "Card + CardHeader + CardTitle + CardContent composed with structured layout forced explicitly, safe across a Server/Client boundary",
+      "files": [
+        "components/StructuredCard.tsx"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "card"
+      ],
+      "type": "components:ui"
+    },
+    "auth-split-layout": {
+      "name": "AuthSplitLayout",
+      "description": "Two-panel hero/form auth screen layout composed from Monogram, PageHeader, and NoirGlowBackground",
+      "files": [
+        "components/AuthSplitLayout.tsx"
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [
+        "monogram",
+        "page-header",
+        "noir-glow-background"
       ],
       "type": "components:ui"
     }

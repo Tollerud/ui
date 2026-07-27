@@ -174,6 +174,12 @@ When contributing **to this repository**, changing `components/*.tsx` is expecte
 | `tollerud-text-primary` | `#F5F5F5` | Body text |
 | `tollerud-text-secondary` | `#AAAAAA` | Secondary / labels |
 | `tollerud-text-muted` | `#666666` | Placeholders, hints |
+| `tollerud-success` | `#22C55E` | Positive status |
+| `tollerud-warning` | `#E8D500` | Caution status |
+| `tollerud-error` | `#EF4444` | Negative status |
+| `tollerud-info` | `#3B82F6` | Neutral status |
+
+Use these directly in custom components (`text-tollerud-success`, `border-tollerud-error/25`) instead of hardcoding status hex.
 
 ## Motion Tokens
 
@@ -208,7 +214,7 @@ import { PasswordInput, Combobox, TagInput, Slider, FormRow } from '@tollerud/ui
 // Layout primitives (added in 4.2.0)
 import { PageShell, Section, Stack, Cluster, Grid, CardGrid, ScrollRail, Split, MainContent } from '@tollerud/ui'
 // Screen patterns (added in 4.3.0)
-import { PageHeader, TopNav, TopNavAction, SidebarNav, DashboardTopBar, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection } from '@tollerud/ui'
+import { PageHeader, TopNav, TopNavAction, SidebarNav, DashboardTopBar, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, AuthSplitLayout, StructuredCard } from '@tollerud/ui'
 // Primitives & navigation (added in 1.0.9)
 import { Divider, Pill, Avatar, AvatarGroup } from '@tollerud/ui'
 import { Breadcrumb, Pagination, Segmented, Stepper } from '@tollerud/ui'
@@ -350,6 +356,18 @@ Sizes: `sm` · `md` · `lg`
   </CardHeader>
   <CardContent>12 930 kr / 2 700 kr</CardContent>
 </Card>
+
+{/* structured (≥ 4.17.0) — bypasses displayName auto-detection; use when composing Card/CardHeader/
+    CardContent across a Next.js Server/Client boundary, where auto-detection can silently fail */}
+<Card structured>
+  <CardHeader><CardTitle>Deploy</CardTitle></CardHeader>
+  <CardContent>Body</CardContent>
+</Card>
+
+{/* StructuredCard (≥ 4.17.0) — same shape, sets `structured` for you */}
+<StructuredCard title="Deploy" actions={<CardChange value="+12%" direction="up" />}>
+  Body content
+</StructuredCard>
 ```
 
 `CardContent` keeps `bg-tollerud-surface-raised` on the body band (≥ 4.9.5). Header/footer bands use a subtle surface darken (≥ 4.9.6). `accent={true}` adds a light yellow band tint on header/footer (≥ 4.9.8); `accent="filled"` tints all regions more strongly. `CardHeader`/`CardContent`/`CardFooter` each also take their own `accent?: boolean | 'filled'` (≥ 4.16.0) that overrides the parent `Card`'s accent for just that one region — leave it unset to keep inheriting.
@@ -480,6 +498,25 @@ Built-in `⌘K` / `Ctrl+K` listener, arrow navigation, Esc to close, search acro
 <StatCard label="Active Sessions" value={42} change={{ value: "+12%", direction: "up" }} />
 <StatCard label="Endring siste periode" value="-3.2%" change={{ value: "-3.2%", direction: "down", tone: "success" }} />
 <StatCard label="Brukt av budsjett" value="12 930 kr / 2 700 kr" tone="error" /> {/* ≥ 4.16.0 — tone colors the value + border independently of accent */}
+<StatCard label="Price" value="23,90 kr" secondaryValue="47,80 kr/l" secondaryTone="accent" /> {/* ≥ 4.17.0 — secondaryValue renders as a Badge under value */}
+<StatCard label="Ticket price" value={<Input defaultValue="150" onBlur={save} />} /> {/* ≥ 4.17.0 — value is now ReactNode, e.g. for an inline-editable tile */}
+```
+
+### AuthSplitLayout
+
+Two-panel hero/form auth screen. New in ≥ 4.17.0.
+
+```tsx
+import { AuthSplitLayout } from '@tollerud/ui'
+
+<AuthSplitLayout
+  projectName="Butikkpils"
+  title="Track"
+  highlight="every price."
+  description="Crowdsourced beer prices, updated daily."
+>
+  <SignInForm />
+</AuthSplitLayout>
 ```
 
 ### CodeBlock
@@ -832,6 +869,10 @@ All form fields (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`,
 #### Sidebar scroll (≥ 4.8.16)
 
 `SidebarNav` nav content area now scrolls when items overflow the viewport. Earlier versions clipped nav items with no scroll on short viewports — a flex `min-h-0` fix.
+
+#### StructuredCard, StatCard secondary value, AuthSplitLayout (≥ 4.17.0)
+
+`Card` gains an explicit `structured?: boolean` to bypass its `displayName`-based auto-detection, which can fail across a Next.js Server/Client boundary; `StructuredCard` is a new convenience component for the common title+actions+body shape. `StatCard`'s `value` now accepts `ReactNode` (was `string | number`) and it gains `secondaryValue`/`secondaryTone` for a badge under the main value. `AuthSplitLayout` composes `Monogram`+`PageHeader`+`NoirGlowBackground` into a two-panel auth-screen layout. Color Tokens table above now lists the pre-existing `tollerud-success`/`warning`/`error`/`info` tokens. All additions are opt-in — no breaking changes.
 
 #### Table primitives, per-region Card accent, StatCard tone (≥ 4.16.0)
 

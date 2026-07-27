@@ -23,4 +23,31 @@ describe('StatCard', () => {
 
     expect(screen.getByText('—')).toHaveClass('text-tollerud-info')
   })
+
+  it('accepts a ReactNode value for inline-editable tiles', () => {
+    render(<StatCard label="Ticket price" value={<input aria-label="Price" defaultValue="150" />} />)
+
+    expect(screen.getByLabelText('Price')).toBeInTheDocument()
+  })
+
+  it('renders a secondary value as a tinted badge', () => {
+    render(
+      <StatCard
+        label="Price"
+        value="23,90 kr"
+        secondaryValue="47,80 kr/l"
+        secondaryTone="accent"
+      />,
+    )
+
+    const badge = screen.getByText('47,80 kr/l')
+    expect(badge).toBeInTheDocument()
+    expect(badge).toHaveClass('text-tollerud-yellow')
+  })
+
+  it('omits the secondary badge when secondaryValue is not set', () => {
+    render(<StatCard label="Price" value="23,90 kr" />)
+
+    expect(screen.queryByText(/kr\/l/)).not.toBeInTheDocument()
+  })
 })

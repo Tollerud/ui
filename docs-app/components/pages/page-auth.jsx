@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import { Monogram } from '@/components/brand'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
+const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, AuthSplitLayout } = __p
 
 /* @tollerud/ui docs — Auth build example */
 function PageAuth() {
@@ -91,6 +91,42 @@ function PageAuth() {
             </div>
           </div>
         </div>
+      </Section>
+
+      <Section
+        title="Auth split layout"
+        component="AuthSplitLayout"
+        permalink="components/auth-split-layout"
+        desc="Two-panel hero/form auth screen — new in v4.17.0. Composes Monogram, PageHeader (with shimmer), and NoirGlowBackground. decoration renders an optional flourish element in the hero panel; glow toggles the live shader background."
+      >
+        <Demo
+          name="auth-split-layout"
+          desc="Shown at a reduced height here — it fills the viewport (min-h-screen) in a real page."
+          code={`<AuthSplitLayout
+  projectName="Butikkpils"
+  eyebrow="41 priser fra 13 butikker"
+  title="Track"
+  highlight="every price."
+  description="Crowdsourced beer prices, updated daily."
+>
+  <SignInForm />
+</AuthSplitLayout>`}
+        >
+          <div style={{ height: 420, width: '100%', overflow: 'hidden', borderRadius: 12, border: '1px solid var(--border)' }}>
+            <AuthSplitLayout
+              projectName="Butikkpils"
+              eyebrow="41 priser fra 13 butikker"
+              title="Track"
+              highlight="every price."
+              description="Crowdsourced beer prices, updated daily."
+            >
+              <div className="ds-col" style={{ gap: 12, width: '100%' }}>
+                <Input label="Email" placeholder="you@example.com" />
+                <Button variant="primary" style={{ width: '100%' }}>Sign in</Button>
+              </div>
+            </AuthSplitLayout>
+          </div>
+        </Demo>
       </Section>
     </div>
   );
