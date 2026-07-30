@@ -196,16 +196,12 @@ export { Dialog, DialogPortal, DialogOverlay, DialogClose, DialogTrigger, Dialog
 export type { DialogContentProps, DialogPanelProps, DialogSize } from './Dialog'
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './Tooltip'
-export type { } from './Tooltip'
 
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './Tabs'
-export type { } from './Tabs'
 
 export { Skeleton } from './Skeleton'
-export type { } from './Skeleton'
 
 export { Progress } from './Progress'
-export type { } from './Progress'
 
 export { Toaster } from './Toaster'
 export type { TollerudToasterProps } from './Toaster'
@@ -214,7 +210,6 @@ export { ToastProvider, useToast } from './Toast'
 export type { ToastProviderProps, ToastInput, ToastTone } from './Toast'
 
 export { Empty, EmptyHeader, EmptyIcon, EmptyTitle, EmptyDescription, EmptyContent } from './Empty'
-export type { } from './Empty'
 
 export { EmptyState } from './EmptyState'
 export type { EmptyStateProps, EmptyStateIconName } from './EmptyState'

@@ -1,15 +1,16 @@
 'use client'
+/* eslint-disable no-unused-vars -- intentionally over-broad shared import; see docs-app/lib/provide-pages.js */
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import { Monogram } from '@/components/brand'
 import * as __p from '@/lib/provide-pages'
 const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu, AuthSplitLayout } = __p
+/* eslint-enable no-unused-vars */
 
 /* @tollerud/ui docs — Auth build example */
 function PageAuth() {
   const toast = useToast();
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
-  const [show, setShow] = useState(false);
   const [touched, setTouched] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -75,7 +76,7 @@ function PageAuth() {
                   <Input label="Email" type="email" placeholder="tia@tollerud.no" value={email} onChange={e => setEmail(e.target.value)} error={emailErr}/>
                   <PasswordInput label="Password" id="pw" placeholder="••••••••" value={pw}
                     onChange={e => setPw(e.target.value)} error={pwErr}
-                    labelAction={<a href="#" onClick={e => { e.preventDefault(); toast({ tone: 'info', title: 'Reset link sent' }); }} style={{ fontSize: 12, color: 'var(--accent-text)' }}>Forgot?</a>}/>
+                    labelAction={<button type="button" onClick={() => toast({ tone: 'info', title: 'Reset link sent' })} style={{ fontSize: 12, color: 'var(--accent-text)', background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer' }}>Forgot?</button>}/>
                   <div className="ds-row" style={{ justifyContent: 'space-between' }}>
                     <Checkbox label="Remember me" defaultChecked/>
                   </div>
@@ -85,7 +86,7 @@ function PageAuth() {
                 </form>
 
                 <p style={{ fontSize: 12.5, color: 'var(--text-muted)', textAlign: 'center', marginTop: 18 }}>
-                  No account? <a href="#" onClick={e => { e.preventDefault(); toast({ tone: 'info', title: 'Request access' }); }} style={{ color: 'var(--accent-text)' }}>Request access</a>
+                  No account? <button type="button" onClick={() => toast({ tone: 'info', title: 'Request access' })} style={{ color: 'var(--accent-text)', background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer' }}>Request access</button>
                 </p>
               </div>
             </div>

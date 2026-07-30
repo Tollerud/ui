@@ -114,6 +114,11 @@ function buildDeepLinkCommands(go) {
 function useTheme() {
   const [theme, setTheme] = useState('dark')
   useEffect(() => {
+    // Deliberately effect-based, not a lazy useState initializer: localStorage
+    // isn't available during SSR, so the initial render (server and client's
+    // first pass) must both use the 'dark' default to avoid a hydration
+    // mismatch. The real persisted value is applied once mounted.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(localStorage.getItem('tollerud-theme') || 'dark')
   }, [])
   useEffect(() => {
@@ -134,10 +139,20 @@ export function DocsShell({ slug: slugProp }) {
   const deepLink = sectionSlug ? findDeepLink(page, sectionSlug) : null
   const [theme, toggleTheme] = useTheme()
   const toggleThemeRef = useRef(toggleTheme)
-  toggleThemeRef.current = toggleTheme
+  useEffect(() => {
+    toggleThemeRef.current = toggleTheme
+  })
   const [navOpen, setNavOpen] = useState(false)
   const [cmdOpen, setCmdOpen] = useState(false)
   const sidebarNavRef = useRef(null)
+  // Close the mobile nav when navigation changes. Adjusted during render
+  // (React's documented pattern for resetting state on a prop change) rather
+  // than in an effect, so it closes before paint instead of after.
+  const [prevNavKey, setPrevNavKey] = useState([page, sectionSlug])
+  if (prevNavKey[0] !== page || prevNavKey[1] !== sectionSlug) {
+    setPrevNavKey([page, sectionSlug])
+    setNavOpen(false)
+  }
 
   const go = useCallback(
     (id) => {
@@ -162,10 +177,6 @@ export function DocsShell({ slug: slugProp }) {
     }
     const t = setTimeout(() => tryJump(), 100)
     return () => clearTimeout(t)
-  }, [page, sectionSlug])
-
-  useEffect(() => {
-    setNavOpen(false)
   }, [page, sectionSlug])
 
   useEffect(() => {
@@ -237,7 +248,12 @@ export function DocsShell({ slug: slugProp }) {
   return (
     <ToastProvider>
       <div className="ds-shell">
-        <div className={`ds-nav-scrim ${navOpen ? 'is-open' : ''}`} onClick={() => setNavOpen(false)} />
+        {/* Decorative click-outside-to-dismiss backdrop; Escape (handled above) is the keyboard equivalent, so it's hidden from assistive tech rather than made artificially focusable. */}
+        <div
+          className={`ds-nav-scrim ${navOpen ? 'is-open' : ''}`}
+          onClick={() => setNavOpen(false)}
+          aria-hidden="true"
+        />
         <aside className={`ds-sidebar ds-themed ${navOpen ? 'ds-sidebar--open' : ''}`}>
           <div className="ds-sidebar__brand">
             <Monogram className="ds-sidebar__logo" alt="" />

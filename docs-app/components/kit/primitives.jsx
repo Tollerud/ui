@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { Icons } from './icons'
 import propsData from '../../lib/props-data.json'
 
@@ -172,7 +172,6 @@ function SubHead({ children }) { return <h3 className="ds-subhead">{children}</h
 
 /* ── Swatch + token tables ── */
 function Swatch({ name, value, varName }) {
-  const isVar = value && value.startsWith('var');
   return (
     <div className="ds-swatch ds-themed">
       <div className="ds-swatch__chip" style={{ background: value }}/>

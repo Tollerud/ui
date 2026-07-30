@@ -1,7 +1,9 @@
 'use client'
+/* eslint-disable no-unused-vars -- intentionally over-broad shared import; see docs-app/lib/provide-pages.js */
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
 const { Button, Card, Badge, Pill, StatusDot, Kbd, Input, Textarea, Select, Checkbox, Switch, RadioGroup, Radio, StatCard, Progress, Skeleton, Avatar, Divider, Tabs, Segmented, Tooltip, Alert, Accordion, Breadcrumb, Pagination, Slider, DropdownMenu, Dialog, EmptyState, LogViewer, Spinner, Panel, Meter, Stepper, PasswordInput, FormRow, PricingCard, Drawer, Combobox, AvatarGroup, Timeline, DatePicker, FileUpload, TagInput, CodeBlock, Container, ActionRow, GlowCard, PackageDataTable, Toaster, toast, Footer, BentoDashboard, NoirGlowBackground, CopyButton, Demo, CodeSnippet, PageHeader, Section, SubHead, Swatch, TokenTable, ToastProvider, useToast, Icons, Ico, DataTable, BarChart, AreaChart, Donut, Sparkline, HeroBlock, FeatureCard, CTABand, HostCard, ServiceHealthCard, DockerStackCard, IncidentCard, AlertInbox, ApprovalCard, RollbackPlan, BackupStatusPanel, ActionDiff, initMotion, CountUp, Typewriter, PageTOC, MOTION_REDUCED, slugify, jumpToSection, goToSection, buildSectionCommands, matchesCommandQuery, Squares, GrainGradient, PageBackgrounds, BgFrame, GradientReadabilityDemo, CommandMenu } = __p
+/* eslint-enable no-unused-vars */
 
 /* @tollerud/ui docs — Console build example */
 
@@ -191,7 +193,7 @@ function Terminal() {
     { type: 'out', lines: ['Tollerud shell · type \u0027help\u0027 to get started.'] },
   ]);
   const [input, setInput] = useState('');
-  const [past, setPast] = useState([]);
+  const [, setPast] = useState([]);
   const [ptr, setPtr] = useState(-1);
   const bodyRef = useRef(null);
   const inputRef = useRef(null);
@@ -228,6 +230,7 @@ function Terminal() {
   };
 
   return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- click-anywhere-to-focus convenience; the real input below stays in the natural tab order, so keyboard users are unaffected
     <div className="tollerud-card ds-themed ds-console__term" style={{ padding: 0, overflow: 'hidden' }} onClick={() => inputRef.current && inputRef.current.focus()}>
       <div className="ds-row" style={{ gap: 8, padding: '9px 14px', borderBottom: '1px solid var(--border)', background: 'var(--card)' }}>
         <span style={{ display: 'flex', gap: 6 }}>

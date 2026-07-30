@@ -1,7 +1,9 @@
 'use client'
+/* eslint-disable no-unused-vars -- intentionally over-broad shared import; see docs-app/lib/provide-pages.js */
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
 const { Button, Card, Badge, StatusDot, Switch, Input, FormRow, PackagePageHeader, TopNav, TopNavAction, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, Stack, Cluster, CardGrid, Demo, CodeSnippet, PageHeader, Section, Icons } = __p
+/* eslint-enable no-unused-vars */
 
 /* @tollerud/ui docs — Screen patterns */
 

@@ -121,4 +121,3 @@ export {
   EmptyDescription,
   EmptyContent,
 }
-export type { }

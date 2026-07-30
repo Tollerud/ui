@@ -32,6 +32,32 @@ export default tseslint.config(
     },
   },
   {
+    // docs-app's .jsx page/component files aren't matched by the tsx block
+    // above (typescript-eslint's parser only claims .ts/.tsx), so without
+    // this block ESLint silently skips them entirely when running `eslint .`
+    // ("ignored because no matching configuration was supplied") rather than
+    // linting them with the plain-JS rules from js.configs.recommended.
+    files: ['**/*.jsx'],
+    plugins: {
+      'react-hooks': reactHooks,
+    },
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+      },
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      // typescript-eslint's recommended config turns this on everywhere (only
+      // its parser is scoped to .ts/.tsx), so on plain .jsx it'd double-report
+      // every unused var alongside base no-unused-vars below.
+      '@typescript-eslint/no-unused-vars': 'off',
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    },
+  },
+  {
     files: ['scripts/**/*.mjs', 'packages/*/scripts/**/*.mjs', 'playwright.config.ts', 'e2e/**/*.ts'],
     languageOptions: {
       globals: globals.node,

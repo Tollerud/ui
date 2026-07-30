@@ -1,7 +1,9 @@
 'use client'
+/* eslint-disable no-unused-vars -- intentionally over-broad shared import; see docs-app/lib/provide-pages.js */
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
 const { Button, Card, Badge, StatusDot, CodeBlock, PageShell, LayoutSection, Stack, Cluster, Grid, CardGrid, ScrollRail, Split, MainContent, Demo, PageHeader, Section, Icons } = __p
+/* eslint-enable no-unused-vars */
 
 /* @tollerud/ui docs — Layout primitives */
 

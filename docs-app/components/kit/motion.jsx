@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { initButtonGlow } from '@tollerud/ui'
 import { jumpToSection } from './cmd-registry'
 
@@ -78,6 +78,10 @@ function CountUp({ value, duration = 1100, prefix = '', suffix = '', decimals = 
   const ref = useRef(null);
   const [disp, setDisp] = useState(REDUCED ? value : 0);
   useEffect(() => {
+    // Jump straight to the new value on prop change when reduced-motion is
+    // on (no animation to run); the initial mount value is already handled
+    // by the useState initializer above.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (REDUCED) { setDisp(value); return; }
     const el = ref.current; if (!el) return;
     let raf, started = false;
@@ -107,7 +111,7 @@ function CountUp({ value, duration = 1100, prefix = '', suffix = '', decimals = 
    ─────────────────────────────────────────────────────────────── */
 function Typewriter({ lines, typeSpeed = 52, pause = 1400, className, style }) {
   const [text, setText] = useState(REDUCED ? lines[0] : '');
-  const [i, setI] = useState(0);
+  const [, setI] = useState(0);
   useEffect(() => {
     if (REDUCED) return;
     let timer; let phase = 'typing'; let pos = 0; let cur = 0;
@@ -127,6 +131,10 @@ function Typewriter({ lines, typeSpeed = 52, pause = 1400, className, style }) {
     };
     timer = setTimeout(run, 500);
     return () => clearTimeout(timer);
+    // Intentionally mount-only: `lines` is passed as a fresh array literal
+    // at every call site, so depending on it would restart the typing loop
+    // on every render of the parent.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <span className={className} style={style}>{text}<span className="ds-caret" aria-hidden="true"/></span>;
 }
