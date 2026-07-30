@@ -7,6 +7,12 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.17.1 — 2026-07-30 — Fix dropdown-search autofocus in floating popovers
+
+### Fixed
+
+- `FloatingDropdownPortal` (shared by `Combobox`, `Select`, `DatePicker`, and `Segmented`) hid its panel before Floating UI finished positioning by setting `visibility: hidden`. Browsers treat `visibility: hidden` descendants as unfocusable, so any `.focus()` call made as the panel mounted — notably `Combobox`'s `searchPlacement="dropdown"` autofocus of its search input — silently failed, leaving focus stuck on the trigger. The panel is now hidden with `opacity: 0` + `pointer-events: none` instead, which hides it identically without blocking focus.
+
 ## 4.17.0 — 2026-07-26 — StructuredCard, StatCard secondary value, AuthSplitLayout
 
 ### Added

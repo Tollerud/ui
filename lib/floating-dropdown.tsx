@@ -168,8 +168,13 @@ export function FloatingDropdownPortal({
       style={{
         ...floatingStyles,
         zIndex: 50,
-        // Avoid a flash at (0,0) before the first measurement resolves.
-        visibility: isPositioned ? 'visible' : 'hidden',
+        // Avoid a flash at (0,0) before the first measurement resolves. Uses
+        // opacity rather than visibility: visibility:hidden makes descendants
+        // unfocusable, which silently breaks callers (e.g. Combobox's
+        // dropdown search input) that focus a child as soon as it mounts,
+        // before `isPositioned` flips true.
+        opacity: isPositioned ? 1 : 0,
+        pointerEvents: isPositioned ? 'auto' : 'none',
         ...style,
       }}
     >

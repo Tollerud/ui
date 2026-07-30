@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.8.39** — Combobox `searchPlacement="dropdown"` focus fully fixed inside Dialog: capture-phase `focusout` stop added to escape hatch to block Radix's second focus-redirection handler. Full Dialog support: dropdowns no longer close the dialog on click, focus trap no longer blocks portalled inputs. `aria-invalid`/`aria-describedby`/`aria-required` on all form fields; `Button` `loading` prop; `Tooltip` keyboard focus; `Card` `asChild`; `FileUpload` and `Combobox` `forwardRef`.
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.17.1** — Combobox `searchPlacement="dropdown"` autofocus fixed: `FloatingDropdownPortal` hid its panel with `visibility: hidden` until Floating UI finished positioning, and browsers won't focus `visibility: hidden` descendants, so the search input's autofocus silently failed. Now hidden with `opacity: 0` + `pointer-events: none` instead, which doesn't block focus. Affects every floating popover (`Combobox`, `Select`, `DatePicker`, `Segmented`), not just inside a Dialog.
 
 ---
 
@@ -24,8 +24,8 @@ npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
   @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip \
   lucide-react framer-motion sonner
 # Optional — only if using NoirGlowBackground.
-# Pinned by @tollerud/ui's peer (^0.0.77) — install the matching version, don't bump it independently.
-npm install @paper-design/shaders-react@0.0.77
+# Pinned by @tollerud/ui's peer (^0.0.78) — install the matching version, don't bump it independently.
+npm install @paper-design/shaders-react@0.0.78
 ```
 
 For the footer alone (no full Tollerud UI dependency):
