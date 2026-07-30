@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.17.1**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.18.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -786,10 +786,11 @@ Props: `steps: string[] | { label, description? }[]`, `current` (0-indexed), `or
 
 ### PasswordInput
 
-A password field with a show/hide toggle. Same API as `Input` (`label`, `error`, `id`, …) plus native `<input>` props.
+A password field with a show/hide toggle. Same API as `Input` (`label`, `error`, `id`, …) plus native `<input>` props and `labelAction?: ReactNode` — rendered at the right edge of the label row, for a "Forgot?" link next to the label.
 
 ```tsx
-<PasswordInput label="Password" placeholder="••••••••" error={pwError} />
+<PasswordInput label="Password" placeholder="••••••••" error={pwError}
+  labelAction={<button type="button" onClick={onForgot}>Forgot?</button>} />
 ```
 
 ### PasswordStrength

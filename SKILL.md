@@ -480,7 +480,7 @@ const [open, setOpen] = useState(false)
 
 **Container** — `as?: 'div' | 'section' | 'article' | 'main' | 'header' | 'footer'`, capped width + padding.
 
-**PasswordInput** — same API as `Input` (label, error, id, …) plus built-in show/hide toggle.
+**PasswordInput** — same API as `Input` (label, error, id, …) plus built-in show/hide toggle and `labelAction?: ReactNode`, rendered at the right edge of the label row (e.g. a "Forgot?" link).
 
 **PasswordStrength** — `value`, `rules?: PasswordRule[]`. Strength bar + rule checklist for signup/change-password flows. Compose below a `PasswordInput`. Default rules: min 8 chars, uppercase, lowercase, number, special character. Export `passwordRules` to extend the defaults.
 ```tsx
@@ -934,6 +934,8 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 ---
 
 ## Version notes
+
+- **`PasswordInput` `labelAction` (≥ 4.18.0)** — new `labelAction?: ReactNode` prop, rendered at the right edge of the label row (e.g. a "Forgot?" link next to "Password"). Both docs demos already passed this prop, but it was silently dropped onto the native `<input>` via `...props` — `PasswordInputProps` never declared it. No breaking changes.
 
 - **Dropdown-search autofocus fix (≥ 4.17.1)** — `Combobox`'s `searchPlacement="dropdown"` search input (and any other autofocus-on-mount behavior inside a floating popover — `Select`, `DatePicker`, `Segmented`) now actually receives focus when the popover opens. `FloatingDropdownPortal` previously hid its panel with `visibility: hidden` until Floating UI finished positioning; browsers refuse to focus `visibility: hidden` descendants, so the focus call silently failed and focus stayed on the trigger. It now hides with `opacity: 0` + `pointer-events: none` instead. No API change.
 

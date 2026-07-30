@@ -666,6 +666,7 @@
 ## PasswordInput — `PasswordInputProps` extends extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>
 
 - `label?: string`
+- `labelAction?: ReactNode`
 - `error?: string`
 
 ## PasswordStrength — `PasswordStrengthProps`
