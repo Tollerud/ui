@@ -870,6 +870,15 @@ All form fields (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`,
 
 `SidebarNav` nav content area now scrolls when items overflow the viewport. Earlier versions clipped nav items with no scroll on short viewports — a flex `min-h-0` fix.
 
+#### PasswordInput labelAction (≥ 4.18.0)
+
+`PasswordInput` gains `labelAction?: ReactNode`, rendered at the right edge of the label row (e.g. a "Forgot?" link next to "Password"). Opt-in — no breaking changes.
+
+```tsx
+<PasswordInput label="Password" value={pw} onChange={e => setPw(e.target.value)}
+  labelAction={<button type="button" onClick={onForgot}>Forgot?</button>} />
+```
+
 #### StructuredCard, StatCard secondary value, AuthSplitLayout (≥ 4.17.0)
 
 `Card` gains an explicit `structured?: boolean` to bypass its `displayName`-based auto-detection, which can fail across a Next.js Server/Client boundary; `StructuredCard` is a new convenience component for the common title+actions+body shape. `StatCard`'s `value` now accepts `ReactNode` (was `string | number`) and it gains `secondaryValue`/`secondaryTone` for a badge under the main value. `AuthSplitLayout` composes `Monogram`+`PageHeader`+`NoirGlowBackground` into a two-panel auth-screen layout. Color Tokens table above now lists the pre-existing `tollerud-success`/`warning`/`error`/`info` tokens. All additions are opt-in — no breaking changes.

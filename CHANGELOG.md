@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.18.0 — 2026-07-31 — PasswordInput labelAction
+
+### Added
+
+- `PasswordInput` gains a `labelAction?: ReactNode` prop, rendered at the right edge of the label row (e.g. a "Forgot?" link next to "Password"). Both docs demos (`docs-app/components/pages/page-auth.jsx`, `docs-app/components/pages/page-forms.jsx`) already passed this prop, but it was silently dropped — `PasswordInputProps` never declared it, so it fell through to `...props` on the underlying native `<input>` instead of rendering.
+
+No breaking changes — this is an opt-in addition.
+
 ## 4.17.1 — 2026-07-30 — Fix dropdown-search autofocus in floating popovers
 
 ### Fixed

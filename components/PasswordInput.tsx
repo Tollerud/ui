@@ -1,27 +1,33 @@
 'use client'
 
-import { type InputHTMLAttributes, forwardRef, useId, useState } from 'react'
+import { type InputHTMLAttributes, type ReactNode, forwardRef, useId, useState } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label?: string
+  labelAction?: ReactNode
   error?: string
 }
 
 const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  ({ className, label, error, id, required, ...props }, ref) => {
+  ({ className, label, labelAction, error, id, required, ...props }, ref) => {
     const [visible, setVisible] = useState(false)
     const autoErrorId = useId()
     const errorId = error ? autoErrorId : undefined
 
     return (
       <div className="flex flex-col gap-1">
-        {label && (
-          <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
-            {label}
-            {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
-          </label>
+        {(label || labelAction) && (
+          <div className="flex items-center justify-between gap-2">
+            {label && (
+              <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
+                {label}
+                {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
+              </label>
+            )}
+            {labelAction}
+          </div>
         )}
         <div className="relative">
           <input

@@ -984,6 +984,7 @@
       "extends": "extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>",
       "props": [
         "label?: string",
+        "labelAction?: ReactNode",
         "error?: string"
       ]
     }
