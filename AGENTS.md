@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.19.0** — `TopNavItem` gains `items?: TopNavItem[]` for flyout groups (desktop `NavigationMenu`, mobile accordion); this **requires installing the new peer dependency `@radix-ui/react-navigation-menu`** even if you don't use `items`, since `TopNav` now imports it unconditionally. `TopNav`'s mobile panel also moved to `framer-motion` (async unmount, same as `Sheet` below). (v4.18.1: `CommandMenu` traps `Tab` focus inside the open palette. v4.18.0: `Sheet`/`Drawer` animate with `framer-motion` instead of CSS `@keyframes` — closing now unmounts asynchronously, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously.)
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v5.0.0 — BREAKING** — `SidebarNav` is removed, replaced by the `Sidebar` primitive family (`SidebarProvider`/`Sidebar`/`SidebarMenu`/etc., see the "Sidebar primitive family" version note below); `DashboardTopBar`'s `menuOpen`/`onMenuToggle` are replaced by a `menuTrigger` slot. `DashboardShell`'s own props are unchanged. (v4.19.0: `TopNavItem` gains `items?: TopNavItem[]` for flyout groups — **requires installing the new peer dependency `@radix-ui/react-navigation-menu`** even if you don't use `items`. v4.18.1: `CommandMenu` traps `Tab` focus. v4.18.0: `Sheet`/`Drawer` animate with `framer-motion` — closing now unmounts asynchronously, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously.)
 
 ---
 
@@ -214,7 +214,9 @@ import { PasswordInput, Combobox, TagInput, Slider, FormRow } from '@tollerud/ui
 // Layout primitives (added in 4.2.0)
 import { PageShell, Section, Stack, Cluster, Grid, CardGrid, ScrollRail, Split, MainContent } from '@tollerud/ui'
 // Screen patterns (added in 4.3.0)
-import { PageHeader, TopNav, TopNavAction, SidebarNav, DashboardTopBar, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, AuthSplitLayout, StructuredCard } from '@tollerud/ui'
+import { PageHeader, TopNav, TopNavAction, DashboardTopBar, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, AuthSplitLayout, StructuredCard } from '@tollerud/ui'
+// Sidebar primitive family (≥ 5.0.0, replaces SidebarNav)
+import { SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, useSidebar } from '@tollerud/ui'
 // Primitives & navigation (added in 1.0.9)
 import { Divider, Pill, Avatar, AvatarGroup } from '@tollerud/ui'
 import { Breadcrumb, Pagination, Segmented, Stepper } from '@tollerud/ui'
@@ -884,6 +886,41 @@ All form fields (`Input`, `PasswordInput`, `Combobox`, `DatePicker`, `Textarea`,
 #### Sidebar scroll (≥ 4.8.16)
 
 `SidebarNav` nav content area now scrolls when items overflow the viewport. Earlier versions clipped nav items with no scroll on short viewports — a flex `min-h-0` fix.
+
+#### Sidebar primitive family replaces SidebarNav — breaking (≥ 5.0.0)
+
+`SidebarNav` is removed. In its place: `SidebarProvider`/`Sidebar`/`SidebarTrigger`/`SidebarInset`/`SidebarHeader`/`SidebarContent`/`SidebarFooter`/`SidebarGroup`/`SidebarGroupLabel`/`SidebarGroupContent`/`SidebarMenu`/`SidebarMenuItem`/`SidebarMenuButton`/`SidebarMenuAction`/`SidebarMenuBadge`/`SidebarMenuSub`/`SidebarMenuSubItem`/`SidebarMenuSubButton`/`useSidebar` — a shadcn-style composable sidebar with a sticky desktop `<aside>`, a `Sheet`-based mobile off-canvas panel, and `collapsible="icon"` support. `SidebarNavItem`/`SidebarNavGroup` **types** are unchanged and re-exported from `./Sidebar` for source compatibility. `DashboardShell`'s public props (`sidebarGroups`/`sidebarItems`) are unchanged — it builds the new composition internally.
+
+**Breaking**: `DashboardTopBar`'s `menuOpen`/`onMenuToggle` props are replaced by a single `menuTrigger?: ReactNode` slot (e.g. `<SidebarTrigger className="lg:hidden" />`) — only relevant if you use `DashboardTopBar` directly outside `DashboardShell`.
+
+Migration for direct `SidebarNav` usage:
+```tsx
+// Before
+<SidebarNav projectName="Project" groups={groups} onItemSelect={close} />
+
+// After
+<SidebarProvider>
+  <Sidebar>
+    <SidebarHeader>{/* brand lockup */}</SidebarHeader>
+    <SidebarContent>
+      {groups.map(g => (
+        <SidebarGroup key={g.label}>
+          {g.label && <SidebarGroupLabel>{g.label}</SidebarGroupLabel>}
+          <SidebarMenu>
+            {g.items.map(item => (
+              <SidebarMenuItem key={item.id}>
+                <SidebarMenuButton isActive={item.active} icon={item.icon} onClick={close}>
+                  {item.label}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+      ))}
+    </SidebarContent>
+  </Sidebar>
+</SidebarProvider>
+```
 
 #### StructuredCard, StatCard secondary value, AuthSplitLayout (≥ 4.17.0)
 

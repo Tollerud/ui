@@ -7,6 +7,26 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.0.0 — 2026-07-31 — Sidebar primitive family replaces SidebarNav
+
+### Breaking
+
+- `SidebarNav` is removed. In its place, a shadcn-style composable sidebar primitive family: `SidebarProvider`, `Sidebar`, `SidebarTrigger`, `SidebarInset`, `SidebarHeader`, `SidebarContent`, `SidebarFooter`, `SidebarGroup`, `SidebarGroupLabel`, `SidebarGroupContent`, `SidebarMenu`, `SidebarMenuItem`, `SidebarMenuButton`, `SidebarMenuAction`, `SidebarMenuBadge`, `SidebarMenuSub`, `SidebarMenuSubItem`, `SidebarMenuSubButton`, and the `useSidebar()` hook. `SidebarNavItem`/`SidebarNavGroup` **types** are unchanged and still exported (now from `./Sidebar`), so `DashboardShell`'s `sidebarGroups`/`sidebarItems` props stay source-compatible — `DashboardShell` now builds this composition internally instead of rendering the old `SidebarNav`.
+
+  New capabilities over the old `SidebarNav`: a real mobile off-canvas panel built on `Sheet` (full focus-trap/Escape/`aria-modal`, replacing `DashboardShell`'s previous hand-rolled `translate-x-full` drawer, which had neither), `collapsible="icon"` mode (collapses to an icon-only rail with `SidebarMenuButton`'s `tooltip` prop shown on hover/focus), and a `Cmd`/`Ctrl+B` keyboard shortcut (`SidebarProvider`'s `keyboardShortcut` prop, default on).
+
+  Migration for direct `SidebarNav` usage — see `AGENTS.md`'s "Sidebar primitive family replaces SidebarNav" version note for a full before/after example.
+
+- `DashboardTopBar`'s `menuOpen`/`onMenuToggle` props are replaced by a single `menuTrigger?: ReactNode` slot (e.g. `<SidebarTrigger className="lg:hidden" />`). Only relevant if you use `DashboardTopBar` directly — `DashboardShell` wires this internally, no change needed there.
+
+- New peer-adjacent internal dependencies: `@radix-ui/react-slot` and `@radix-ui/react-use-controllable-state` are used by `Sidebar` (both already peer/explicit dependencies from earlier releases — no new install required).
+
+### Fixed
+
+- `lib/bypass-modal-scroll-lock.ts` (the scroll-lock workaround `DropdownMenu` uses so its portalled content isn't swallowed by a Dialog/Sheet's document-level scroll lock) is rewritten as a ref callback instead of a `useLayoutEffect` keyed off a `useRef` object. The previous implementation only attempted to attach its listeners once, at the wrapper component's initial mount — but `DropdownMenuContent`'s actual DOM node doesn't exist until the dropdown first opens, which is almost always *after* that mount. In the common case (a dropdown that starts closed), the bypass silently never attached. It now reattaches correctly on every open via the ref callback, which React invokes exactly when the real node mounts and unmounts. `lib/floating-dropdown.tsx` (the shared engine behind `Combobox`/`Select`/`DatePicker`/`Segmented`) is updated to the same API; its own usage happened to work before by coincidence (it recomputed `isOpen` on every toggle, which incidentally re-triggered the old effect) but is more robust with the new callback-ref design regardless.
+
+No compatibility shim is provided for `SidebarNav` — per this project's stated preference, this ships as a clean break with a documented migration path rather than a deprecated wrapper.
+
 ## 4.19.0 — 2026-07-31 — TopNav flyout groups + framer-motion mobile menu
 
 ### Added

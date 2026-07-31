@@ -91,8 +91,37 @@ export type { AuthSplitLayoutProps } from './AuthSplitLayout'
 export { TopNav, TopNavAction } from './TopNav'
 export type { TopNavProps, TopNavItem, TopNavMaxWidth, TopNavActionProps, TopNavActionMobile } from './TopNav'
 
-export { SidebarNav } from './SidebarNav'
-export type { SidebarNavProps, SidebarNavItem, SidebarNavGroup } from './SidebarNav'
+export {
+  useSidebar,
+  SidebarProvider,
+  Sidebar,
+  SidebarTrigger,
+  SidebarInset,
+  SidebarHeader,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
+} from './Sidebar'
+export type {
+  SidebarSide,
+  SidebarCollapsible,
+  SidebarProviderProps,
+  SidebarProps,
+  SidebarMenuButtonProps,
+  SidebarMenuSubButtonProps,
+  SidebarNavItem,
+  SidebarNavGroup,
+} from './Sidebar'
 
 export { DashboardTopBar } from './DashboardTopBar'
 export type { DashboardTopBarProps } from './DashboardTopBar'

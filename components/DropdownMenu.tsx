@@ -2,7 +2,7 @@
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { useComposedRefs } from '@radix-ui/react-compose-refs'
-import { forwardRef, useRef } from 'react'
+import { forwardRef } from 'react'
 import { useBypassModalScrollLock } from '@/lib/bypass-modal-scroll-lock'
 import { cn } from '@/lib/utils'
 
@@ -15,10 +15,8 @@ const DropdownMenuContent = forwardRef<
   React.ComponentRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
 >(({ className, sideOffset = 4, collisionPadding = 8, ...props }, forwardedRef) => {
-  const contentRef = useRef<HTMLDivElement>(null)
-  const composedRefs = useComposedRefs(forwardedRef, contentRef)
-
-  useBypassModalScrollLock(contentRef, true)
+  const bypassScrollLockRef = useBypassModalScrollLock(true)
+  const composedRefs = useComposedRefs(forwardedRef, bypassScrollLockRef)
 
   return (
   <DropdownMenuPrimitive.Portal>

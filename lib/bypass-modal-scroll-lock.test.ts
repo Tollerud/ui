@@ -1,33 +1,91 @@
+import { act, render } from '@testing-library/react'
+import { createElement, type RefCallback } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { useBypassModalScrollLock } from './bypass-modal-scroll-lock'
+
+/** Renders the hook inside a throwaway component and captures its return value. */
+function renderBypassRef(enabled: boolean) {
+  let refCallback: RefCallback<HTMLElement> | undefined
+  function TestComponent({ enabled: isEnabled }: { enabled: boolean }) {
+    refCallback = useBypassModalScrollLock(isEnabled)
+    return null
+  }
+  const { rerender } = render(createElement(TestComponent, { enabled }))
+  return {
+    getRef: () => refCallback!,
+    setEnabled: (next: boolean) => rerender(createElement(TestComponent, { enabled: next })),
+  }
+}
 
 describe('useBypassModalScrollLock', () => {
   it('exports a hook function', () => {
     expect(useBypassModalScrollLock).toBeTypeOf('function')
   })
 
-  it('stops propagation on native wheel events', () => {
+  it('stops wheel/touchmove propagation on the element the ref callback attaches to', () => {
+    const { getRef } = renderBypassRef(true)
+
     const element = document.createElement('div')
-    const stopImmediatePropagation = vi.fn()
-    const stopPropagation = vi.fn()
+    document.body.appendChild(element)
+    act(() => {
+      getRef()(element)
+    })
 
-    const stopCapture = (event: Event) => {
-      event.stopImmediatePropagation()
-    }
-    const stopBubble = (event: Event) => {
-      event.stopPropagation()
-    }
+    const documentWheel = vi.fn()
+    document.addEventListener('wheel', documentWheel)
 
-    element.addEventListener('wheel', stopCapture, { capture: true })
-    element.addEventListener('wheel', stopBubble)
+    element.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true }))
+    expect(documentWheel).not.toHaveBeenCalled()
 
-    const event = new WheelEvent('wheel', { bubbles: true, cancelable: true })
-    Object.defineProperty(event, 'stopImmediatePropagation', { value: stopImmediatePropagation })
-    Object.defineProperty(event, 'stopPropagation', { value: stopPropagation })
+    document.removeEventListener('wheel', documentWheel)
+    document.body.removeChild(element)
+  })
 
-    element.dispatchEvent(event)
+  it('reattaches to a new element on every mount (open -> close -> reopen)', () => {
+    const { getRef } = renderBypassRef(true)
 
-    expect(stopImmediatePropagation).toHaveBeenCalled()
-    expect(stopPropagation).toHaveBeenCalled()
+    const first = document.createElement('div')
+    document.body.appendChild(first)
+    act(() => {
+      getRef()(first)
+    })
+    act(() => {
+      getRef()(null) // unmount, as Radix does on close
+    })
+
+    const second = document.createElement('div')
+    document.body.appendChild(second)
+    act(() => {
+      getRef()(second) // remount, as Radix does on reopen
+    })
+
+    const documentWheel = vi.fn()
+    document.addEventListener('wheel', documentWheel)
+
+    second.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true }))
+    expect(documentWheel).not.toHaveBeenCalled()
+
+    document.removeEventListener('wheel', documentWheel)
+    document.body.removeChild(first)
+    document.body.removeChild(second)
+  })
+
+  it('does not attach when disabled', () => {
+    const { getRef } = renderBypassRef(false)
+
+    const element = document.createElement('div')
+    document.body.appendChild(element)
+    act(() => {
+      getRef()(element)
+    })
+
+    const documentWheel = vi.fn()
+    document.addEventListener('wheel', documentWheel)
+
+    element.dispatchEvent(new WheelEvent('wheel', { bubbles: true, cancelable: true }))
+    expect(documentWheel).toHaveBeenCalled()
+
+    document.removeEventListener('wheel', documentWheel)
+    document.body.removeChild(element)
   })
 })

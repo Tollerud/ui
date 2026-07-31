@@ -35,7 +35,12 @@ describe('PageShell', () => {
 })
 
 describe('DashboardShell sidebar', () => {
-  it('sidebar wrapper opts out of flex stretch so it can stick (lg:self-start)', () => {
+  // Regression: the sidebar must not be stretched by the flex row's default
+  // align-items:stretch, or it loses its scroll travel room and can't stick.
+  // The Sidebar primitive avoids this with an explicit h-screen (not a
+  // parent-relative h-full), so it sticks unconditionally rather than
+  // needing a self-start opt-out on the wrapper.
+  it('sidebar has an explicit h-screen height so it sticks without being stretched', () => {
     const { container } = render(
       <DashboardShell
         projectName="Butikkpils"
@@ -44,9 +49,10 @@ describe('DashboardShell sidebar', () => {
         content
       </DashboardShell>
     )
-    const wrapper = container.querySelector('.lg\\:sticky') as HTMLElement
+    const wrapper = container.querySelector('aside') as HTMLElement
     expect(wrapper).toBeTruthy()
-    expect(wrapper.className).toContain('lg:self-start')
-    expect(wrapper.className).toContain('lg:top-0')
+    expect(wrapper.className).toContain('sticky')
+    expect(wrapper.className).toContain('top-0')
+    expect(wrapper.className).toContain('h-screen')
   })
 })

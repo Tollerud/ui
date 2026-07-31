@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "4.19.0",
+  "version": "5.0.0",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -284,43 +284,46 @@
       ],
       "dependencies": [
         "clsx",
-        "tailwind-merge",
-        "lucide-react"
+        "tailwind-merge"
       ],
       "registryDependencies": [
         "page-shell",
-        "sidebar-nav",
+        "sidebar",
+        "monogram",
         "dashboard-top-bar",
         "main-content",
         "top-nav"
       ],
       "type": "components:ui"
     },
-    "sidebar-nav": {
-      "name": "SidebarNav",
-      "description": "Sidebar brand lockup with grouped navigation links, icons, and active states",
+    "sidebar": {
+      "name": "Sidebar",
+      "description": "Collapsible sidebar primitive family — provider, offcanvas/icon collapse, mobile sheet, grouped menu composition",
       "files": [
-        "components/SidebarNav.tsx"
+        "components/Sidebar.tsx"
       ],
       "dependencies": [
         "clsx",
-        "tailwind-merge"
+        "tailwind-merge",
+        "lucide-react",
+        "@radix-ui/react-slot",
+        "@radix-ui/react-use-controllable-state"
       ],
       "registryDependencies": [
-        "monogram"
+        "sheet",
+        "tooltip"
       ],
       "type": "components:ui"
     },
     "dashboard-top-bar": {
       "name": "DashboardTopBar",
-      "description": "Context top bar with breadcrumb, page title, mobile menu toggle, and action slots",
+      "description": "Context top bar with breadcrumb, page title, mobile menu trigger slot, and action slots",
       "files": [
         "components/DashboardTopBar.tsx"
       ],
       "dependencies": [
         "clsx",
-        "tailwind-merge",
-        "lucide-react"
+        "tailwind-merge"
       ],
       "registryDependencies": [
         "monogram",

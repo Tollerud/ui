@@ -1,12 +1,30 @@
 'use client'
 
-import { type HTMLAttributes, type ReactNode, forwardRef, useState } from 'react'
+import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 import { PageShell } from './PageShell'
 import { TopNav, type TopNavItem } from './TopNav'
-import { SidebarNav, type SidebarNavGroup, type SidebarNavItem } from './SidebarNav'
 import { DashboardTopBar } from './DashboardTopBar'
 import { MainContent, type MainContentDensity } from './MainContent'
+import { Monogram } from './Monogram'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+  type SidebarNavGroup,
+  type SidebarNavItem,
+  useSidebar,
+} from './Sidebar'
 
 export type DashboardShellVariant = 'sidebar' | 'topnav'
 
@@ -54,6 +72,45 @@ function resolveSidebarGroups(
   return undefined
 }
 
+/** Renders the structured nav groups; lives inside SidebarProvider so it can
+ *  close the mobile sheet on item select via useSidebar(). */
+function DashboardSidebarNav({ groups }: { groups: SidebarNavGroup[] }) {
+  const { setOpenMobile } = useSidebar()
+
+  return (
+    <SidebarContent>
+      {groups.map((group, groupIndex) => (
+        <SidebarGroup key={group.label ? String(group.label) : groupIndex}>
+          {group.label && <SidebarGroupLabel>{group.label}</SidebarGroupLabel>}
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {group.items.map((item) => (
+                <SidebarMenuItem key={item.id}>
+                  <SidebarMenuButton
+                    asChild={!!item.href}
+                    isActive={item.active}
+                    icon={item.icon}
+                    onClick={() => {
+                      item.onSelect?.()
+                      setOpenMobile(false)
+                    }}
+                  >
+                    {item.href ? <a href={item.href}>{item.label}</a> : item.label}
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      ))}
+    </SidebarContent>
+  )
+}
+
+function DashboardMobileTrigger() {
+  return <SidebarTrigger className="lg:hidden" />
+}
+
 const DashboardShell = forwardRef<HTMLDivElement, DashboardShellProps>(
   (
     {
@@ -78,9 +135,7 @@ const DashboardShell = forwardRef<HTMLDivElement, DashboardShellProps>(
     },
     ref
   ) => {
-    const [mobileNavOpen, setMobileNavOpen] = useState(false)
     const resolvedGroups = resolveSidebarGroups(sidebarGroups, sidebarItems, navItems)
-    const closeMobileNav = () => setMobileNavOpen(false)
 
     if (variant === 'topnav') {
       return (
@@ -116,54 +171,49 @@ const DashboardShell = forwardRef<HTMLDivElement, DashboardShellProps>(
 
     return (
       <PageShell as="div" background="plain" density={density}>
-        <div ref={ref} className={cn('flex min-h-screen', className)} {...props}>
-          <button
-            type="button"
-            aria-label="Close navigation"
-            className={cn(
-              'fixed inset-0 z-40 bg-black/50 backdrop-blur-[2px] transition-opacity lg:hidden',
-              mobileNavOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
-            )}
-            onClick={closeMobileNav}
-          />
-          <div
-            className={cn(
-              // lg:self-start: the flex row stretches children to the full content
-              // column height by default, leaving a sticky sidebar zero travel room.
-              // self-start collapses the wrapper to the aside's h-screen so it can
-              // stick. No effect below lg where the wrapper is position:fixed.
-              'fixed inset-y-0 left-0 z-50 transition-transform duration-normal ease-out lg:sticky lg:top-0 lg:z-30 lg:translate-x-0 lg:self-start',
-              mobileNavOpen ? 'translate-x-0' : '-translate-x-full'
-            )}
-          >
-            <SidebarNav
-              projectName={projectName}
-              projectSubtitle={projectSubtitle}
-              homeHref={homeHref}
-              groups={resolvedGroups}
-              onItemSelect={closeMobileNav}
-              className="h-screen shadow-[0_0_40px_rgba(0,0,0,0.5)] lg:shadow-none"
-            >
-              {sidebar}
-            </SidebarNav>
+        <SidebarProvider>
+          <div ref={ref} className={cn('flex min-h-screen w-full', className)} {...props}>
+            <Sidebar collapsible="offcanvas" mobileTitle="Navigation menu">
+              <SidebarHeader>
+                <a
+                  href={homeHref}
+                  className="tollerud-focus-ring flex min-w-0 items-center gap-[11px] no-underline"
+                >
+                  <Monogram color="yellow" className="h-[26px] w-auto" />
+                  <div className="min-w-0">
+                    <div className="truncate text-[15px] font-bold leading-tight tracking-[-0.01em] text-tollerud-text-primary">
+                      {projectName}
+                    </div>
+                    {projectSubtitle && (
+                      <div className="truncate font-mono text-[10px] text-tollerud-text-muted">
+                        {projectSubtitle}
+                      </div>
+                    )}
+                  </div>
+                </a>
+              </SidebarHeader>
+              {resolvedGroups && resolvedGroups.length > 0 && (
+                <DashboardSidebarNav groups={resolvedGroups} />
+              )}
+              {sidebar && <SidebarFooter>{sidebar}</SidebarFooter>}
+            </Sidebar>
+            <SidebarInset>
+              <DashboardTopBar
+                projectName={projectName}
+                homeHref={homeHref}
+                breadcrumb={breadcrumb ?? projectName}
+                pageTitle={pageTitle}
+                actions={topActions}
+                menuTrigger={<DashboardMobileTrigger />}
+                showMobileLogo={showMobileLogo}
+              />
+              <MainContent as="div" width={contentWidth} spacing="lg" density={density}>
+                {header && <div className="mb-8">{header}</div>}
+                {children}
+              </MainContent>
+            </SidebarInset>
           </div>
-          <div className="flex min-w-0 flex-1 flex-col">
-            <DashboardTopBar
-              projectName={projectName}
-              homeHref={homeHref}
-              breadcrumb={breadcrumb ?? projectName}
-              pageTitle={pageTitle}
-              actions={topActions}
-              menuOpen={mobileNavOpen}
-              onMenuToggle={() => setMobileNavOpen((open) => !open)}
-              showMobileLogo={showMobileLogo}
-            />
-            <MainContent as="div" width={contentWidth} spacing="lg" density={density}>
-              {header && <div className="mb-8">{header}</div>}
-              {children}
-            </MainContent>
-          </div>
-        </div>
+        </SidebarProvider>
       </PageShell>
     )
   }

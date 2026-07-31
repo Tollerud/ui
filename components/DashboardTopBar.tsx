@@ -1,7 +1,6 @@
 'use client'
 
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react'
-import { Menu, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Monogram } from './Monogram'
 import { Cluster } from './Cluster'
@@ -12,8 +11,8 @@ export interface DashboardTopBarProps extends HTMLAttributes<HTMLElement> {
   breadcrumb?: ReactNode
   pageTitle?: ReactNode
   actions?: ReactNode
-  menuOpen?: boolean
-  onMenuToggle?: () => void
+  /** Mobile menu trigger slot, e.g. `<SidebarTrigger className="lg:hidden" />`. */
+  menuTrigger?: ReactNode
   sticky?: boolean
   showMobileLogo?: boolean
 }
@@ -27,8 +26,7 @@ const DashboardTopBar = forwardRef<HTMLElement, DashboardTopBarProps>(
       breadcrumb,
       pageTitle,
       actions,
-      menuOpen = false,
-      onMenuToggle,
+      menuTrigger,
       sticky = true,
       showMobileLogo = true,
       ...props
@@ -45,17 +43,7 @@ const DashboardTopBar = forwardRef<HTMLElement, DashboardTopBarProps>(
         )}
         {...props}
       >
-        {onMenuToggle && (
-          <button
-            type="button"
-            className="tollerud-focus-ring inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-md border border-tollerud-border bg-tollerud-noir-900 text-tollerud-text-secondary transition-colors hover:border-tollerud-noir-500 hover:text-tollerud-text-primary lg:hidden"
-            onClick={onMenuToggle}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
-          >
-            {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
-        )}
+        {menuTrigger}
         {showMobileLogo && (
           <a
             href={homeHref}

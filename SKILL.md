@@ -267,14 +267,24 @@ import {
   FormPanel, ResourceList, DetailPage, EmptyPage,
   FeatureSection, StatsSection, AuthSplitLayout,
 } from '@tollerud/ui'
+// Sidebar primitive family (≥ 5.0.0, replaces SidebarNav)
+import {
+  SidebarProvider, Sidebar, SidebarTrigger, SidebarInset,
+  SidebarHeader, SidebarContent, SidebarFooter,
+  SidebarGroup, SidebarGroupLabel, SidebarGroupContent,
+  SidebarMenu, SidebarMenuItem, SidebarMenuButton,
+  SidebarMenuAction, SidebarMenuBadge,
+  SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton,
+  useSidebar,
+} from '@tollerud/ui'
 ```
 
 Use these before rebuilding common pages with raw Tailwind:
 
 - **PageHeader** — title block with `eyebrow`, `description`, `actions`, `meta`, `align`, `size`. Use `shimmer` (or `titleAccent`) to shimmer one word mid-sentence when `title` is a string — e.g. `title="Keep beer prices honest." shimmer="honest"`. Use `titleShimmer` for a second full shimmer line, or `PageHeaderShimmer` inside `title` for full control.
 - **TopNav** — branded monogram lockup with `projectName`, `navItems`, `actions`, `sticky`, `maxWidth` (`default` | `wide` | `full` | `false`). Below `lg`, nav links and menu actions open in a modal overlay (backdrop, focus trap, Esc to close). Wrap actions in `TopNavAction` with `mobile?: 'inline' | 'menu' | 'hidden'` (default `menu`) to keep a primary CTA inline next to the menu toggle. Use `mobileMenuExtra?: ReactNode` to inject content at the bottom of the mobile sheet, below all nav items and actions, separated by a divider — consumer controls all markup.
-- **SidebarNav** — sidebar brand lockup with `projectName`, `projectSubtitle`, `groups` / `items`, icons, and active states.
-- **DashboardTopBar** — context top bar with `breadcrumb`, `pageTitle`, `actions`, mobile menu toggle. `showMobileLogo?: boolean` (default `true`) hides the mobile monogram when the consumer renders its own.
+- **Sidebar** (≥ 5.0.0, replaces `SidebarNav`) — `SidebarProvider`/`Sidebar`/`SidebarTrigger`/`SidebarInset`/`SidebarHeader`/`SidebarContent`/`SidebarFooter`/`SidebarGroup`/`SidebarGroupLabel`/`SidebarGroupContent`/`SidebarMenu`/`SidebarMenuItem`/`SidebarMenuButton`/`SidebarMenuAction`/`SidebarMenuBadge`/`SidebarMenuSub`/`SidebarMenuSubItem`/`SidebarMenuSubButton`/`useSidebar`. Sticky `<aside>` on desktop, `Sheet`-based off-canvas on mobile. `collapsible?: 'offcanvas' | 'icon' | 'none'` (default `offcanvas`); `'icon'` collapses `SidebarMenuButton` to icon-only with a `tooltip` prop. `Cmd/Ctrl+B` toggles by default.
+- **DashboardTopBar** — context top bar with `breadcrumb`, `pageTitle`, `actions`, `menuTrigger?: ReactNode` slot (≥ 5.0.0, replaces `menuOpen`/`onMenuToggle` — e.g. `<SidebarTrigger className="lg:hidden" />`). `showMobileLogo?: boolean` (default `true`) hides the mobile monogram when the consumer renders its own.
 - **DashboardShell** — docs-aligned app frame (default `variant="sidebar"`) with `sidebarGroups`, `sidebarItems`, `pageTitle`, `topActions`, `header`, `contentWidth`, `density`, `showMobileLogo`. Use `variant="topnav"` for horizontal TopNav layout. The sidebar sticks on `lg+` (≥ 4.8.41 — earlier versions scrolled it away with the page).
 - **SettingsLayout** — settings page with `title`, `description`, `actions`, `navItems`, `activeId`, `onNavSelect`, and optional `tone="danger"` on nav items.
 - **FormPanel** — titled form surface with `description`, `actions`, `footer`, `children`.
@@ -934,6 +944,8 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 ---
 
 ## Version notes
+
+- **`Sidebar` primitive family replaces `SidebarNav` — Breaking (≥ 5.0.0)** — `SidebarNav` is removed. Use `SidebarProvider`/`Sidebar`/`SidebarTrigger`/`SidebarInset`/`SidebarHeader`/`SidebarContent`/`SidebarFooter`/`SidebarGroup`/`SidebarGroupLabel`/`SidebarGroupContent`/`SidebarMenu`/`SidebarMenuItem`/`SidebarMenuButton`/`SidebarMenuAction`/`SidebarMenuBadge`/`SidebarMenuSub`/`SidebarMenuSubItem`/`SidebarMenuSubButton`/`useSidebar` instead — a shadcn-style composable sidebar (sticky desktop `<aside>`, `Sheet`-based mobile off-canvas, `collapsible="icon"` support, `Cmd/Ctrl+B` shortcut). `SidebarNavItem`/`SidebarNavGroup` types are unchanged and still exported (now from `./Sidebar`). `DashboardShell`'s public props (`sidebarGroups`/`sidebarItems`) are unchanged — it builds the new composition internally. **Breaking**: `DashboardTopBar`'s `menuOpen`/`onMenuToggle` are replaced by a `menuTrigger?: ReactNode` slot — only relevant if you use `DashboardTopBar` directly outside `DashboardShell`. Also fixed: `lib/bypass-modal-scroll-lock.ts` (used by `DropdownMenu`) is rewritten as a ref callback — the previous `useLayoutEffect`-based version only attempted to attach once, at the wrapper's initial mount, which is almost always before a dropdown's first open, so it silently never worked in the common case; it now reattaches correctly on every open.
 
 - **`TopNav` flyout groups (≥ 4.19.0)** — `TopNavItem` gains `items?: TopNavItem[]`; setting it turns an entry into a flyout group (desktop: `NavigationMenu` trigger + panel; mobile: accordion section in the hamburger menu). **Requires a new peer dependency**, `@radix-ui/react-navigation-menu` — install it alongside the other Radix peers even if you don't use `items` yet, since `TopNav` now imports it unconditionally. The mobile hamburger panel also moved from CSS `@keyframes` to `framer-motion` (same async-unmount note as `Sheet` in 4.18.0). No change to existing `href`-only nav items.
 

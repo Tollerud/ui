@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { axe } from 'vitest-axe'
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Button } from './Button'
 import { Input } from './Input'
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from './Dialog'
@@ -9,6 +9,18 @@ import { CommandMenu } from './CommandMenu'
 import { Combobox } from './Combobox'
 import { DatePicker } from './DatePicker'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './Sheet'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from './Sidebar'
+import { DashboardShell } from './DashboardShell'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './Tabs'
 import { TopNav } from './TopNav'
 import { TimeSeriesChart } from './TimeSeriesChart'
@@ -16,6 +28,22 @@ import { AreaChart } from './AreaChart'
 import { BarChart } from './BarChart'
 import { Donut } from './Donut'
 import { Sparkline } from './Sparkline'
+
+function mockMobile(matches: boolean) {
+  vi.mocked(window.matchMedia).mockImplementation(
+    (query: string) =>
+      ({
+        matches: query === '(max-width: 767px)' ? matches : false,
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      }) as MediaQueryList
+  )
+}
 
 const commandGroups = [
   {
@@ -25,6 +53,10 @@ const commandGroups = [
 ]
 
 describe('accessibility', () => {
+  beforeEach(() => {
+    mockMobile(false)
+  })
+
   it('Button has no axe violations', async () => {
     const { container } = render(<Button variant="primary">Deploy</Button>)
     expect(await axe(container)).toHaveNoViolations()
@@ -140,6 +172,73 @@ describe('accessibility', () => {
     await user.keyboard('{Enter}')
     expect(await screen.findByRole('link', { name: 'API' })).toBeInTheDocument()
 
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('Sidebar (desktop, expanded) has no axe violations', async () => {
+    const { container } = render(
+      <SidebarProvider>
+        <Sidebar mobileTitle="Navigation menu">
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarGroupLabel>Servers</SidebarGroupLabel>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton isActive>Emma</SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>Miriam</SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroup>
+          </SidebarContent>
+        </Sidebar>
+        <SidebarTrigger />
+      </SidebarProvider>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('Sidebar (mobile, open) has no axe violations', async () => {
+    mockMobile(true)
+    const user = userEvent.setup()
+    const { container } = render(
+      <SidebarProvider>
+        <Sidebar mobileTitle="Navigation menu">
+          <SidebarContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton isActive>Emma</SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarContent>
+        </Sidebar>
+        <SidebarTrigger />
+      </SidebarProvider>
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Toggle sidebar' }))
+    expect(screen.getByRole('dialog', { name: 'Navigation menu' })).toBeInTheDocument()
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('DashboardShell (mobile nav open) has no axe violations', async () => {
+    mockMobile(true)
+    const user = userEvent.setup()
+    const { container } = render(
+      <DashboardShell
+        projectName="Mission Control"
+        sidebarItems={[
+          { id: 'overview', label: 'Overview', href: '/overview', active: true },
+          { id: 'services', label: 'Services', href: '/services' },
+        ]}
+      >
+        content
+      </DashboardShell>
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Toggle sidebar' }))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
     expect(await axe(container)).toHaveNoViolations()
   })
 

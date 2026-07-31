@@ -291,8 +291,7 @@
 - `breadcrumb?: ReactNode`
 - `pageTitle?: ReactNode`
 - `actions?: ReactNode`
-- `menuOpen?: boolean`
-- `onMenuToggle?: () => void`
+- `menuTrigger?: ReactNode`
 - `sticky?: boolean`
 - `showMobileLogo?: boolean`
 
@@ -825,15 +824,30 @@
 - `onOpenChange?: (open: boolean) => void`
 - `children: ReactNode`
 
-## SidebarNav — `SidebarNavProps` extends extends HTMLAttributes<HTMLElement>
+## Sidebar — `SidebarMenuButtonProps` extends extends ButtonHTMLAttributes<HTMLButtonElement>
 
-- `projectName: ReactNode`
-- `projectSubtitle?: ReactNode`
-- `homeHref?: string`
-- `groups?: SidebarNavGroup[]`
-- `items?: SidebarNavItem[]`
-- `onItemSelect?: (item: SidebarNavItem) => void`
-- `children?: ReactNode`
+- `asChild?: boolean`
+- `isActive?: boolean`
+- `icon?: ReactNode`
+- `tooltip?: ReactNode`
+
+## Sidebar — `SidebarMenuSubButtonProps` extends extends ButtonHTMLAttributes<HTMLButtonElement>
+
+- `asChild?: boolean`
+- `isActive?: boolean`
+
+## Sidebar — `SidebarProps` extends extends HTMLAttributes<HTMLElement>
+
+- `side?: SidebarSide`
+- `collapsible?: SidebarCollapsible`
+- `mobileTitle?: string`
+
+## Sidebar — `SidebarProviderProps` extends extends HTMLAttributes<HTMLDivElement>
+
+- `open?: boolean`
+- `defaultOpen?: boolean`
+- `onOpenChange?: (open: boolean) => void`
+- `keyboardShortcut?: boolean`
 
 ## Skeleton — `SkeletonProps` extends extends React.HTMLAttributes<HTMLDivElement>
 
