@@ -1015,7 +1015,7 @@
 - `children: ReactNode`
 - `mobile?: TopNavActionMobile`
 
-## TopNav — `TopNavProps` extends extends HTMLAttributes<HTMLElement>
+## TopNav — `TopNavProps` extends extends Omit<HTMLAttributes<HTMLElement>, 'defaultValue' | 'dir'>
 
 - `projectName: ReactNode`
 - `homeHref?: string`

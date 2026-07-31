@@ -1518,7 +1518,7 @@
     },
     {
       "name": "TopNavProps",
-      "extends": "extends HTMLAttributes<HTMLElement>",
+      "extends": "extends Omit<HTMLAttributes<HTMLElement>, 'defaultValue' | 'dir'>",
       "props": [
         "projectName: ReactNode",
         "homeHref?: string",

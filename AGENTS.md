@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.18.1** — `CommandMenu` now traps `Tab` focus inside the open palette (via `@radix-ui/react-focus-scope`); no prop change. (v4.18.0: `Sheet`/`Drawer` now animate with `framer-motion` instead of CSS `@keyframes` — props unchanged; closing now unmounts asynchronously after the exit transition, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously.)
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.19.0** — `TopNavItem` gains `items?: TopNavItem[]` for flyout groups (desktop `NavigationMenu`, mobile accordion); this **requires installing the new peer dependency `@radix-ui/react-navigation-menu`** even if you don't use `items`, since `TopNav` now imports it unconditionally. `TopNav`'s mobile panel also moved to `framer-motion` (async unmount, same as `Sheet` below). (v4.18.1: `CommandMenu` traps `Tab` focus inside the open palette. v4.18.0: `Sheet`/`Drawer` animate with `framer-motion` instead of CSS `@keyframes` — closing now unmounts asynchronously, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously.)
 
 ---
 
@@ -628,6 +628,21 @@ The monogram must always appear left of the project name with `gap-2`. Never sho
 ```
 
 Monogram sizing is handled automatically by `TopNav` and `Footer`. If you build a custom layout inside `@tollerud/ui`, use top bar/sidebar expanded → `h-5`, sidebar collapsed → `h-6`, footer → `h-4`.
+
+Give a `navItems` entry `items: TopNavItem[]` instead of `href` to turn it into a flyout group (desktop `NavigationMenu` trigger, mobile accordion) — requires the `@radix-ui/react-navigation-menu` peer dependency (≥ 4.19.0):
+
+```tsx
+<TopNav
+  projectName="Project Name"
+  navItems={[
+    { label: 'Overview', href: '/overview', active: true },
+    { label: 'Services', items: [
+      { label: 'API', href: '/services/api' },
+      { label: 'Worker', href: '/services/worker' },
+    ] },
+  ]}
+/>
+```
 
 ### Grid background
 

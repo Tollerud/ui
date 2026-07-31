@@ -57,6 +57,12 @@ The `Kbd` component displays a keyboard shortcut chip. It accepts any string or 
 - Hover follows keyboard selection
 - `Tab` / `Shift+Tab` are trapped inside the palette while open (≥ 4.18.1, via `@radix-ui/react-focus-scope`) — focus can no longer leave via keyboard
 
+### TopNav (flyout groups ≥ 4.19.0)
+
+- Mobile hamburger: `Esc` closes, focus trapped/returned via Radix `Dialog` (unchanged)
+- Desktop flyout groups (`navItems` entries with `items`): `Enter`/`Space` opens the trigger, arrow keys move between top-level triggers, `Esc` closes the open flyout and returns focus to its trigger — all via `@radix-ui/react-navigation-menu`, no custom keyboard code
+- Mobile flyout groups render as an `Accordion` section — `Enter`/`Space` toggles, matching `Accordion`'s existing contract
+
 ### Charts (TimeSeriesChart ≥ 4.8.42; AreaChart & Sparkline ≥ 4.8.43; BarChart & Donut ≥ 4.8.44 — all with `interactive`)
 
 Interactive charts share one keyboard contract. Single-SVG charts (TimeSeriesChart, AreaChart, Sparkline) keep focus on the SVG and announce via a live region (`lib/chart-interaction.tsx`); BarChart bars and Donut legend rows are individually focusable with a roving tabindex, so their aria-labels are announced natively on focus. Donut also accepts ↑/↓ (vertical list):

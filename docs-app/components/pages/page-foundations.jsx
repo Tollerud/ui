@@ -198,7 +198,14 @@ function PageFoundations() {
             projectName="Dashboard"
             navItems={[
               { label: 'Overview', href: '#', active: true },
-              { label: 'Services', href: '#' },
+              {
+                label: 'Services',
+                items: [
+                  { label: 'API', href: '#' },
+                  { label: 'Worker', href: '#' },
+                  { label: 'Scheduler', href: '#' },
+                ],
+              },
               { label: 'Logs', href: '#' },
             ]}
             actions={<Button size="sm" variant="primary">Deploy</Button>}
@@ -212,7 +219,15 @@ function PageFoundations() {
   projectName="Dashboard"
   navItems={[
     { label: 'Overview', href: '/', active: true },
-    { label: 'Services', href: '/services' },
+    {
+      label: 'Services',
+      // 'items' turns a link into a flyout group — a NavigationMenu
+      // trigger on desktop, an accordion in the mobile menu.
+      items: [
+        { label: 'API', href: '/services/api' },
+        { label: 'Worker', href: '/services/worker' },
+      ],
+    },
     { label: 'Logs', href: '/logs' },
   ]}
   actions={<Button size="sm" variant="primary">Deploy</Button>}

@@ -7,6 +7,22 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.19.0 — 2026-07-31 — TopNav flyout groups + framer-motion mobile menu
+
+### Added
+
+- `TopNavItem` gains an optional `items?: TopNavItem[]`. Setting it turns an entry into a flyout group instead of a direct link: on desktop it renders as a `NavigationMenu` trigger + flyout panel (arrow-key/Home/End/Escape navigation, direction-aware slide animation, built on `@radix-ui/react-navigation-menu`); on mobile it renders as a collapsible accordion section inside the existing hamburger menu (reusing the `Accordion` component — no new mobile primitive). One level of nesting; a group item omits `href`.
+
+**Requires a new peer dependency**: `@radix-ui/react-navigation-menu` (`^1.2.0`). Existing `TopNav` usage without any grouped `items` still works exactly as before, but the package now imports this primitive unconditionally, so it must be installed alongside the other Radix peers (`@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, etc.) — run `npm install @radix-ui/react-navigation-menu`.
+
+### Changed
+
+- `TopNav`'s mobile hamburger panel now animates with `framer-motion` (the same `forceMount` + `AnimatePresence` recipe as `Sheet`, see 4.18.0) instead of CSS `@keyframes`. Closing now unmounts asynchronously after the exit transition — the same test-timing note from 4.18.0 applies here too (`await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())`).
+
+- The dead `.tollerud-topnav-menu-overlay[data-state]`/`.tollerud-topnav-menu-panel[data-state]` CSS keyframe rules in `globals-layers.css` were removed (superseded by framer-motion, same as Sheet's in 4.18.0). The static box-styling rules for those classes are unchanged.
+
+No breaking changes to existing props — `items` is opt-in and everything else is source-compatible. The new required peer dependency is the one install-time action existing consumers need to take.
+
 ## 4.18.1 — 2026-07-31 — CommandMenu traps Tab focus
 
 ### Fixed

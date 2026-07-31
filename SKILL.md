@@ -935,6 +935,8 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 
 ## Version notes
 
+- **`TopNav` flyout groups (≥ 4.19.0)** — `TopNavItem` gains `items?: TopNavItem[]`; setting it turns an entry into a flyout group (desktop: `NavigationMenu` trigger + panel; mobile: accordion section in the hamburger menu). **Requires a new peer dependency**, `@radix-ui/react-navigation-menu` — install it alongside the other Radix peers even if you don't use `items` yet, since `TopNav` now imports it unconditionally. The mobile hamburger panel also moved from CSS `@keyframes` to `framer-motion` (same async-unmount note as `Sheet` in 4.18.0). No change to existing `href`-only nav items.
+
 - **`CommandMenu` traps Tab focus (≥ 4.18.1)** — `Tab`/`Shift+Tab` can no longer move keyboard focus outside the open command palette (via `@radix-ui/react-focus-scope`). Previously only `Escape`/click-outside closed it and `Tab` could leak focus into the page behind it. No prop change.
 
 - **`Sheet` animates with framer-motion (≥ 4.18.0)** — `Sheet`/`Drawer` overlay + panel now animate via `framer-motion` (the peer dependency was previously declared but unused) instead of CSS `@keyframes`, using the same `--motion-duration-*`/`--motion-ease-*` timings. Closing now unmounts asynchronously after the exit transition finishes rather than synchronously — tests reading the DOM right after close should `await` removal (`await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())`). `prefers-reduced-motion` behavior is unchanged. No prop changes.

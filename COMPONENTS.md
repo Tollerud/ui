@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.18.1**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.19.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -150,7 +150,7 @@ These components assemble common page structures from the layout primitives and 
 | Component | Use for |
 |-----------|---------|
 | `PageHeader` | Page title, eyebrow, description, metadata, and actions |
-| `TopNav` | Branded monogram lockup, nav links, and top-level actions; `TopNavAction` controls mobile placement; `mobileMenuExtra` injects a slot at the bottom of the mobile sheet |
+| `TopNav` | Branded monogram lockup, nav links, and top-level actions; `TopNavAction` controls mobile placement; `mobileMenuExtra` injects a slot at the bottom of the mobile sheet. A `navItems` entry with `items: TopNavItem[]` becomes a flyout group (desktop `NavigationMenu`, mobile accordion) — requires the `@radix-ui/react-navigation-menu` peer (≥ 4.19.0) |
 | `SidebarNav` | Sidebar brand lockup and grouped navigation links |
 | `DashboardTopBar` | Context top bar with breadcrumb, page title, and actions. `showMobileLogo={false}` hides the mobile monogram. |
 | `DashboardShell` | Docs-aligned app shell with sidebar nav and context top bar. Threads `showMobileLogo` to `DashboardTopBar`. Sidebar sticks on `lg+` (≥ 4.8.41). |
