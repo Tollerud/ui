@@ -1,5 +1,6 @@
 "use client"
 
+import { FocusScope } from '@radix-ui/react-focus-scope'
 import {
   forwardRef,
   type KeyboardEvent,
@@ -201,117 +202,124 @@ const CommandMenu = forwardRef<HTMLDivElement, CommandMenuProps>(
       />
 
       {/* Command Menu */}
-      <div
-        ref={ref}
-        className={cn('tollerud-cmd', className)}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Command palette"
+      <FocusScope
+        asChild
+        trapped
+        loop
+        onMountAutoFocus={(event) => event.preventDefault()}
       >
-        {/* Search Input */}
-        <div className="tollerud-cmd__header">
-          <span className="tollerud-cmd__search-icon">
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-          </span>
-          <input
-            ref={inputRef}
-            type="text"
-            className="tollerud-cmd__input"
-            role="combobox"
-            aria-expanded={true}
-            aria-autocomplete="list"
-            aria-controls={listId}
-            aria-activedescendant={
-              currentFlat.length > 0
-                ? `${listId}-option-${Math.min(selectedIndex, currentFlat.length - 1)}`
-                : undefined
-            }
-            placeholder={placeholder}
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value)
-              setSelectedIndex(0)
-            }}
-            onKeyDown={handleKeyDown}
-            autoComplete="off"
-            spellCheck={false}
-          />
+        <div
+          ref={ref}
+          className={cn('tollerud-cmd', className)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Command palette"
+        >
+          {/* Search Input */}
+          <div className="tollerud-cmd__header">
+            <span className="tollerud-cmd__search-icon">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+            </span>
+            <input
+              ref={inputRef}
+              type="text"
+              className="tollerud-cmd__input"
+              role="combobox"
+              aria-expanded={true}
+              aria-autocomplete="list"
+              aria-controls={listId}
+              aria-activedescendant={
+                currentFlat.length > 0
+                  ? `${listId}-option-${Math.min(selectedIndex, currentFlat.length - 1)}`
+                  : undefined
+              }
+              placeholder={placeholder}
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value)
+                setSelectedIndex(0)
+              }}
+              onKeyDown={handleKeyDown}
+              autoComplete="off"
+              spellCheck={false}
+            />
+          </div>
+
+          {/* Results */}
+          <div ref={listRef} id={listId} className="tollerud-cmd__list" role="listbox" aria-label="Commands" tabIndex={-1}>
+            {filteredGroups.length === 0 && (
+              <div className="tollerud-cmd__empty">{emptyMessage}</div>
+            )}
+
+            {filteredGroups.map((group, gi) => {
+              // Calculate flat offset for this group
+              const flatOffset = filteredGroups
+                .slice(0, gi)
+                .reduce((acc, g) => acc + g.items.length, 0)
+
+              return (
+                <div key={group.label} className="tollerud-cmd__group">
+                  <div className="tollerud-cmd__group-label">{group.label}</div>
+                  {group.items.map((item, ii) => {
+                    const flatIndex = flatOffset + ii
+                    return (
+                      <ActionRow
+                        key={item.id}
+                        id={`${listId}-option-${flatIndex}`}
+                        action={item}
+                        highlighted={selectedIndex === flatIndex}
+                        onClick={() => {
+                          item.onSelect?.()
+                          onAction?.(item)
+                          onOpenChange(false)
+                        }}
+                        onMouseEnter={() => setSelectedIndex(flatIndex)}
+                      />
+                    )
+                  })}
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Footer hints */}
+          <div className="tollerud-cmd__footer">
+            <span className="tollerud-cmd__hint">
+              <span className="tollerud-kbd tollerud-kbd--sm">
+                <span className="tollerud-kbd__key">↑</span>
+              </span>
+              <span className="tollerud-kbd tollerud-kbd--sm">
+                <span className="tollerud-kbd__key">↓</span>
+              </span>
+              <span className="tollerud-cmd__hint-text">navigate</span>
+            </span>
+            <span className="tollerud-cmd__hint">
+              <span className="tollerud-kbd tollerud-kbd--sm">
+                <span className="tollerud-kbd__key">↵</span>
+              </span>
+              <span className="tollerud-cmd__hint-text">select</span>
+            </span>
+            <span className="tollerud-cmd__hint">
+              <span className="tollerud-kbd tollerud-kbd--sm">
+                <span className="tollerud-kbd__key">Esc</span>
+              </span>
+              <span className="tollerud-cmd__hint-text">close</span>
+            </span>
+          </div>
         </div>
-
-        {/* Results */}
-        <div ref={listRef} id={listId} className="tollerud-cmd__list" role="listbox" aria-label="Commands" tabIndex={-1}>
-          {filteredGroups.length === 0 && (
-            <div className="tollerud-cmd__empty">{emptyMessage}</div>
-          )}
-
-          {filteredGroups.map((group, gi) => {
-            // Calculate flat offset for this group
-            const flatOffset = filteredGroups
-              .slice(0, gi)
-              .reduce((acc, g) => acc + g.items.length, 0)
-
-            return (
-              <div key={group.label} className="tollerud-cmd__group">
-                <div className="tollerud-cmd__group-label">{group.label}</div>
-                {group.items.map((item, ii) => {
-                  const flatIndex = flatOffset + ii
-                  return (
-                    <ActionRow
-                      key={item.id}
-                      id={`${listId}-option-${flatIndex}`}
-                      action={item}
-                      highlighted={selectedIndex === flatIndex}
-                      onClick={() => {
-                        item.onSelect?.()
-                        onAction?.(item)
-                        onOpenChange(false)
-                      }}
-                      onMouseEnter={() => setSelectedIndex(flatIndex)}
-                    />
-                  )
-                })}
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Footer hints */}
-        <div className="tollerud-cmd__footer">
-          <span className="tollerud-cmd__hint">
-            <span className="tollerud-kbd tollerud-kbd--sm">
-              <span className="tollerud-kbd__key">↑</span>
-            </span>
-            <span className="tollerud-kbd tollerud-kbd--sm">
-              <span className="tollerud-kbd__key">↓</span>
-            </span>
-            <span className="tollerud-cmd__hint-text">navigate</span>
-          </span>
-          <span className="tollerud-cmd__hint">
-            <span className="tollerud-kbd tollerud-kbd--sm">
-              <span className="tollerud-kbd__key">↵</span>
-            </span>
-            <span className="tollerud-cmd__hint-text">select</span>
-          </span>
-          <span className="tollerud-cmd__hint">
-            <span className="tollerud-kbd tollerud-kbd--sm">
-              <span className="tollerud-kbd__key">Esc</span>
-            </span>
-            <span className="tollerud-cmd__hint-text">close</span>
-          </span>
-        </div>
-      </div>
+      </FocusScope>
     </>
   )
 }

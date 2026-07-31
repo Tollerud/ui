@@ -55,6 +55,7 @@ The `Kbd` component displays a keyboard shortcut chip. It accepts any string or 
 - Body scroll lock while open
 - Click outside to close
 - Hover follows keyboard selection
+- `Tab` / `Shift+Tab` are trapped inside the palette while open (≥ 4.18.1, via `@radix-ui/react-focus-scope`) — focus can no longer leave via keyboard
 
 ### Charts (TimeSeriesChart ≥ 4.8.42; AreaChart & Sparkline ≥ 4.8.43; BarChart & Donut ≥ 4.8.44 — all with `interactive`)
 

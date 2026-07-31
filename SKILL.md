@@ -935,6 +935,8 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 
 ## Version notes
 
+- **`CommandMenu` traps Tab focus (≥ 4.18.1)** — `Tab`/`Shift+Tab` can no longer move keyboard focus outside the open command palette (via `@radix-ui/react-focus-scope`). Previously only `Escape`/click-outside closed it and `Tab` could leak focus into the page behind it. No prop change.
+
 - **`Sheet` animates with framer-motion (≥ 4.18.0)** — `Sheet`/`Drawer` overlay + panel now animate via `framer-motion` (the peer dependency was previously declared but unused) instead of CSS `@keyframes`, using the same `--motion-duration-*`/`--motion-ease-*` timings. Closing now unmounts asynchronously after the exit transition finishes rather than synchronously — tests reading the DOM right after close should `await` removal (`await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())`). `prefers-reduced-motion` behavior is unchanged. No prop changes.
 
 - **Dropdown-search autofocus fix (≥ 4.17.1)** — `Combobox`'s `searchPlacement="dropdown"` search input (and any other autofocus-on-mount behavior inside a floating popover — `Select`, `DatePicker`, `Segmented`) now actually receives focus when the popover opens. `FloatingDropdownPortal` previously hid its panel with `visibility: hidden` until Floating UI finished positioning; browsers refuse to focus `visibility: hidden` descendants, so the focus call silently failed and focus stayed on the trigger. It now hides with `opacity: 0` + `pointer-events: none` instead. No API change.

@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.18.0** — `Sheet`/`Drawer` now animate with `framer-motion` instead of CSS `@keyframes` (props unchanged); closing now unmounts asynchronously after the exit transition, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously.
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.18.1** — `CommandMenu` now traps `Tab` focus inside the open palette (via `@radix-ui/react-focus-scope`); no prop change. (v4.18.0: `Sheet`/`Drawer` now animate with `framer-motion` instead of CSS `@keyframes` — props unchanged; closing now unmounts asynchronously after the exit transition, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously.)
 
 ---
 

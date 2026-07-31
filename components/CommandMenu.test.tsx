@@ -82,4 +82,35 @@ describe('CommandMenu', () => {
     )
     expect(container).toBeEmptyDOMElement()
   })
+
+  it('traps Tab focus inside the palette', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <>
+        <button type="button">Outside before</button>
+        <CommandMenu open onOpenChange={vi.fn()} groups={groups} />
+        <button type="button">Outside after</button>
+      </>
+    )
+
+    const dialog = screen.getByRole('dialog', { name: 'Command palette' })
+    const input = screen.getByPlaceholderText('Type a command…')
+    input.focus()
+    expect(input).toHaveFocus()
+
+    // Tabbing forward from the last focusable row must not escape to
+    // "Outside after" — it should cycle back inside the dialog.
+    for (let i = 0; i < 6; i++) {
+      await user.tab()
+      expect(dialog.contains(document.activeElement)).toBe(true)
+    }
+
+    // Shift+Tab from the first focusable element must not escape to
+    // "Outside before" either.
+    for (let i = 0; i < 6; i++) {
+      await user.tab({ shift: true })
+      expect(dialog.contains(document.activeElement)).toBe(true)
+    }
+  })
 })

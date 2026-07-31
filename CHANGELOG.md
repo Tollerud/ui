@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.18.1 — 2026-07-31 — CommandMenu traps Tab focus
+
+### Fixed
+
+- `CommandMenu` now traps `Tab`/`Shift+Tab` inside the palette while it's open, via `@radix-ui/react-focus-scope`. Previously only `Escape` and click-outside closed the palette — `Tab` could move keyboard focus out into the page behind it while the palette was still visually open, which violated the "focus management matters" contract in `KEYBOARD.md` that every other overlay (`Dialog`, `Sheet`) already met via Radix. No prop or behavior change beyond the trap itself — auto-focus-on-open, arrow-key navigation, and close-on-Escape are unchanged.
+
+No breaking changes.
+
 ## 4.18.0 — 2026-07-31 — Sheet now animates with framer-motion
 
 ### Changed
