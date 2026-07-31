@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.17.1**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v4.18.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1313,6 +1313,8 @@ Radix-based slide-over panel for detail views and forms. Use the compound API (`
 ```
 
 `SheetContent` accepts `side?: 'left' | 'right'`. Closes on Esc or overlay click. Prefer **`Drawer`** when you want a single controlled component with `open` / `onClose` / `footer`.
+
+Overlay and panel animate with `framer-motion` (≥ 4.18.0) using the repo's `--motion-duration-*`/`--motion-ease-*` timings, and respect `prefers-reduced-motion`. Closing unmounts asynchronously once the exit transition finishes — code that reads the DOM immediately after closing should wait for removal.
 
 ### Dialog, Tooltip, Tabs, DropdownMenu
 

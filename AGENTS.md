@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.17.1** — Combobox `searchPlacement="dropdown"` autofocus fixed: `FloatingDropdownPortal` hid its panel with `visibility: hidden` until Floating UI finished positioning, and browsers won't focus `visibility: hidden` descendants, so the search input's autofocus silently failed. Now hidden with `opacity: 0` + `pointer-events: none` instead, which doesn't block focus. Affects every floating popover (`Combobox`, `Select`, `DatePicker`, `Segmented`), not just inside a Dialog.
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v4.18.0** — `Sheet`/`Drawer` now animate with `framer-motion` instead of CSS `@keyframes` (props unchanged); closing now unmounts asynchronously after the exit transition, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously.
 
 ---
 

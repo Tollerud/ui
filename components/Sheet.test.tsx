@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { Button } from './Button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './Sheet'
 
@@ -68,7 +68,9 @@ describe('Sheet', () => {
     expect(screen.getByRole('dialog')).toBeVisible()
 
     await user.keyboard('{Escape}')
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    })
     expect(document.querySelector('.tollerud-sheet-overlay')).not.toBeInTheDocument()
   })
 
@@ -84,5 +86,49 @@ describe('Sheet', () => {
     )
 
     expect(document.querySelector('.tollerud-sheet-overlay')).not.toBeInTheDocument()
+  })
+
+  describe('prefers-reduced-motion', () => {
+    const originalMatchMedia = window.matchMedia
+
+    afterEach(() => {
+      window.matchMedia = originalMatchMedia
+    })
+
+    it('closes instantly when the user prefers reduced motion', async () => {
+      window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+        matches: query.includes('prefers-reduced-motion'),
+        media: query,
+        onchange: null,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      }))
+
+      const user = userEvent.setup()
+
+      render(
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="secondary">Open</Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Deploy logs</SheetTitle>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+      )
+
+      await user.click(screen.getByRole('button', { name: 'Open' }))
+      expect(screen.getByRole('dialog')).toBeVisible()
+
+      await user.keyboard('{Escape}')
+      await waitFor(() => {
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+      })
+    })
   })
 })

@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 4.18.0 — 2026-07-31 — Sheet now animates with framer-motion
+
+### Changed
+
+- `Sheet` (and `Drawer`, which wraps it) now animates its overlay and panel with `framer-motion` instead of plain CSS `@keyframes`, using the same `--motion-duration-*`/`--motion-ease-*` timings as before. `framer-motion` was already a peer dependency of `@tollerud/ui` but was unused until now.
+
+- Closing a `Sheet`/`Drawer` now unmounts asynchronously, after its exit transition finishes, instead of synchronously on `onOpenChange(false)`. Consumers reading the DOM immediately after closing (e.g. in tests) should `await` the removal — see `Sheet.test.tsx`'s `closes on Escape` test for the pattern (`await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())`).
+
+- `Sheet` respects `prefers-reduced-motion: reduce` the same as before — the animation is skipped (zero duration) rather than removed, so behavior is unchanged for reduced-motion users.
+
+- The dead `.tollerud-sheet-overlay[data-state]`/`.tollerud-sheet-panel[data-state]` CSS keyframe rules in `globals-layers.css` were removed now that `Sheet` no longer drives its animation off `data-state` CSS selectors. `TopNav`'s mobile menu still uses the CSS-keyframe approach for now (planned to migrate in a follow-up release).
+
+### Internal
+
+- `@radix-ui/react-compose-refs`, `@radix-ui/react-focus-scope`, and `@radix-ui/react-use-controllable-state` are now declared as explicit `dependencies` — they were already resolving transitively via `@radix-ui/react-dialog`/`@radix-ui/react-dropdown-menu`, so this is a documentation fix with zero install-size impact, not a new footprint.
+
+No breaking changes — every consumer-facing prop is unchanged; only the close-unmount timing and the animation engine changed.
+
 ## 4.17.1 — 2026-07-30 — Fix dropdown-search autofocus in floating popovers
 
 ### Fixed

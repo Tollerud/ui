@@ -821,6 +821,7 @@
 ## Sheet — `SheetProps`
 
 - `open?: boolean`
+- `defaultOpen?: boolean`
 - `onOpenChange?: (open: boolean) => void`
 - `children: ReactNode`
 
