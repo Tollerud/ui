@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v5.0.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v5.0.1**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1352,6 +1352,8 @@ Collapsible sidebar primitive family (≥ 5.0.0, replaces the removed `SidebarNa
 `collapsible`: `'offcanvas'` (default — collapses to width 0), `'icon'` (collapses to icon-only rail, `SidebarMenuButton`'s label becomes `sr-only` and `tooltip` shows on hover/focus), or `'none'` (always expanded). `SidebarTrigger` calls `toggleSidebar()` from `useSidebar()`; `Cmd/Ctrl+B` also toggles by default (`keyboardShortcut={false}` on `SidebarProvider` to disable). `SidebarMenuButton`/`SidebarMenuSubButton` accept `asChild` (via `@radix-ui/react-slot`, e.g. for `next/link`) and `isActive` (sets `aria-current="page"` + yellow accent). `SidebarMenuSub`/`SidebarMenuSubItem`/`SidebarMenuSubButton` render one level of nested links under a `SidebarMenuItem`.
 
 `DashboardShell`'s `sidebarGroups`/`sidebarItems` props are unchanged — it builds this composition internally.
+
+The desktop rail's height defaults to `100vh` via the `--sidebar-height` CSS custom property (≥ 5.0.1) so `position: sticky` works without being stretched by the surrounding flex row. Override it on any ancestor (e.g. `style={{ '--sidebar-height': '420px' }}` on `SidebarProvider` or `DashboardShell`) when embedding `Sidebar` in a shorter, bounded container — a real page shell never needs this.
 
 ### Dialog, Tooltip, Tabs, DropdownMenu
 

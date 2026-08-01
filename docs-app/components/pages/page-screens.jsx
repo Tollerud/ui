@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars -- intentionally over-broad shared import; see docs-app/lib/provide-pages.js */
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, StatusDot, Switch, Input, FormRow, PackagePageHeader, TopNav, TopNavAction, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, Stack, Cluster, CardGrid, Demo, CodeSnippet, PageHeader, Section, Icons } = __p
+const { Button, Card, Badge, StatusDot, Switch, Input, FormRow, PackagePageHeader, TopNav, TopNavAction, SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, Stack, Cluster, CardGrid, Demo, CodeSnippet, PageHeader, Section, Icons } = __p
 /* eslint-enable no-unused-vars */
 
 /* @tollerud/ui docs — Screen patterns */
@@ -134,6 +134,83 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
+      <Section title="Sidebar" component="Sidebar" permalink="screens/sidebar" desc="Collapsible sidebar primitive family — SidebarProvider owns expand/collapse state (Cmd/Ctrl+B toggles by default) and exposes it via useSidebar(). Sidebar renders a sticky rail on desktop and a Sheet-based off-canvas panel on mobile — both inherit real focus-trap/Escape handling from Sheet. collapsible=&quot;icon&quot; collapses to an icon-only rail; SidebarMenuButton's tooltip prop then shows on hover/focus. DashboardShell is built on this primitive — reach for Sidebar directly when you need a custom shell.">
+        <Demo
+          name="sidebar"
+          variant="col"
+          code={`<SidebarProvider>
+  <Sidebar collapsible="icon">
+    <SidebarHeader>
+      <span className="text-sm font-semibold">Mission Control</span>
+    </SidebarHeader>
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Servers</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton isActive icon={<Icons.server size={15} />} tooltip="Emma">
+                Emma
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton icon={<Icons.server size={15} />} tooltip="Pia">
+                Pia
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </SidebarContent>
+  </Sidebar>
+  <SidebarInset>
+    <div className="flex h-14 shrink-0 items-center gap-3 border-b px-4">
+      <SidebarTrigger />
+      <span className="text-sm text-tollerud-text-muted">Cmd/Ctrl+B also toggles</span>
+    </div>
+    {/* page content */}
+  </SidebarInset>
+</SidebarProvider>`}
+        >
+          <SidebarProvider
+            className="min-h-[360px] overflow-hidden rounded-lg border border-tollerud-border"
+            style={{ '--sidebar-height': '360px' }}
+          >
+            <Sidebar collapsible="icon">
+              <SidebarHeader>
+                <span className="text-sm font-semibold text-tollerud-text-primary">Mission Control</span>
+              </SidebarHeader>
+              <SidebarContent>
+                <SidebarGroup>
+                  <SidebarGroupLabel>Servers</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive icon={<Icons.server size={15} />} tooltip="Emma">
+                          Emma
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton icon={<Icons.server size={15} />} tooltip="Pia">
+                          Pia
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
+              </SidebarContent>
+            </Sidebar>
+            <SidebarInset>
+              <div className="flex h-14 shrink-0 items-center gap-3 border-b border-tollerud-border px-4">
+                <SidebarTrigger />
+                <span className="text-sm text-tollerud-text-muted">Cmd/Ctrl+B also toggles</span>
+              </div>
+              <div className="p-4 text-sm text-tollerud-text-secondary">Page content goes here.</div>
+            </SidebarInset>
+          </SidebarProvider>
+        </Demo>
+      </Section>
+
       <Section title="DashboardShell" component="DashboardShell" permalink="screens/dashboard-shell" desc="Docs-aligned app shell: sidebar brand lockup, structured nav, context top bar, and main content. The sidebar stays pinned while the content scrolls on lg+ (≥ 4.8.41 — earlier versions scrolled it away: PageShell's overflow-hidden root disabled sticky for all descendants, and the flex row stretched the sidebar to full content height). Use variant=&quot;topnav&quot; for the legacy horizontal TopNav layout. Pass showMobileLogo={false} to hide the mobile monogram when the consumer renders its own logo.">
         <Demo
           name="dashboard-shell"
@@ -168,6 +245,7 @@ function PageScreens({ go }) {
             topActions={<Button size="sm" variant="primary">Deploy</Button>}
             header={<PackagePageHeader title="Overview" description="Fleet health at a glance." />}
             className="min-h-[420px] overflow-hidden rounded-lg border border-tollerud-border"
+            style={{ '--sidebar-height': '420px' }}
           >
             <StatsSection
               stats={[

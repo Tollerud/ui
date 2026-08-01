@@ -7,6 +7,20 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.0.1 — 2026-08-01 — Sidebar height is now overridable; docs coverage added
+
+### Fixed
+
+- `Sidebar`'s desktop rail used a bare `h-screen` (always exactly 100vh, absolute and non-overridable). That's correct for the common case — a `Sidebar` filling a real page — but it silently broke the moment `Sidebar` was embedded in a shorter, bounded container (e.g. a docs preview box): the rail ignored the container entirely and rendered at full viewport height. It's now `h-[var(--sidebar-height,100vh)]` — same 100vh by default, but any ancestor can override it by setting the `--sidebar-height` custom property (CSS custom properties inherit, so no new prop is needed). This is the same bug that was already visible in this repo's own docs — see the next entry.
+
+### Documentation
+
+- Found and fixed while auditing this repo's own docs-app coverage: the `DashboardShell` demo on the docs site's Screen patterns page was silently rendering its embedded sidebar at full viewport height instead of the intended ~420px preview box, because of the `h-screen` issue above. Fixed via the new `--sidebar-height` override.
+
+- `Sidebar` itself — a major new export surface from 5.0.0 — had no live demo anywhere in docs-app, despite the release-checklist requirement to add one for new/changed components. Added a dedicated "Sidebar" section to the Screen patterns page demonstrating the raw `SidebarProvider`/`Sidebar`/`SidebarMenu` composition and the `collapsible="icon"` mode via a real `SidebarTrigger`.
+
+No breaking changes — `--sidebar-height` is a pure addition; every existing `Sidebar`/`DashboardShell` usage renders identically since it already implicitly resolved to 100vh.
+
 ## 5.0.0 — 2026-07-31 — Sidebar primitive family replaces SidebarNav
 
 ### Breaking

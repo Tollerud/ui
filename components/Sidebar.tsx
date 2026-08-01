@@ -173,7 +173,13 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
           data-collapsible={collapsible}
           style={{ width }}
           className={cn(
-            'sticky top-0 flex h-screen shrink-0 flex-col overflow-hidden border-tollerud-border bg-tollerud-noir-900 transition-[width] duration-normal ease-out',
+            // Absolute (viewport-relative) height, not h-full — a flex row's
+            // default align-items:stretch would otherwise stretch this to
+            // match SidebarInset's content height, defeating `sticky` (see
+            // PageShell.test.tsx). --sidebar-height lets an embedding context
+            // (e.g. a bounded docs demo box) override it without needing a
+            // new prop — CSS custom properties inherit through any ancestor.
+            'sticky top-0 flex h-[var(--sidebar-height,100vh)] shrink-0 flex-col overflow-hidden border-tollerud-border bg-tollerud-noir-900 transition-[width] duration-normal ease-out',
             side === 'left' ? 'border-r' : 'border-l',
             collapsedIcon && 'items-center',
             className

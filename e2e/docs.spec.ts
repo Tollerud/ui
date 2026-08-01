@@ -106,4 +106,31 @@ test.describe('docs site', () => {
     await dialog.getByRole('button', { name: 'Close' }).click()
     await expect(dialog).not.toBeVisible({ timeout: 3000 })
   })
+
+  // Regression: Sidebar's desktop rail uses an absolute height so it can
+  // stick without being stretched by its flex row (see PageShell.test.tsx).
+  // Embedded in a bounded demo box, that height must respect the box's
+  // --sidebar-height override rather than filling the viewport.
+  test('Sidebar demo on the screens page is bounded by its demo box, not the viewport', async ({ page }) => {
+    await page.goto('/screens/sidebar/')
+    const heading = page.getByRole('heading', { name: 'Sidebar', exact: true })
+    await expect(heading).toBeVisible()
+    const demoAside = page.locator('#sidebar aside')
+    await expect(demoAside).toBeVisible()
+    const box = await demoAside.boundingBox()
+    const viewport = page.viewportSize()
+    expect(box.height).toBeLessThan(viewport.height)
+  })
+
+  test('Sidebar demo collapses to an icon-only rail via SidebarTrigger', async ({ page }) => {
+    await page.goto('/screens/sidebar/')
+    const demoAside = page.locator('#sidebar aside')
+    await expect(demoAside).toHaveAttribute('data-state', 'expanded')
+    const expandedBox = await demoAside.boundingBox()
+
+    await page.locator('#sidebar').getByRole('button', { name: 'Toggle sidebar' }).click()
+    await expect(demoAside).toHaveAttribute('data-state', 'collapsed')
+    const collapsedBox = await demoAside.boundingBox()
+    expect(collapsedBox.width).toBeLessThan(expandedBox.width)
+  })
 })
