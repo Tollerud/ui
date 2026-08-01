@@ -1131,87 +1131,64 @@
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }
-  .tollerud-sheet-overlay[data-state='open'] {
-    animation: tollerud-sheet-overlay-in var(--motion-duration-normal) var(--motion-ease-out) forwards;
+  /* ═══ TopNav flyout (NavigationMenu) ═══ */
+  .tollerud-topnav-viewport {
+    position: relative;
+    margin-top: 0.5rem;
+    width: var(--radix-navigation-menu-viewport-width);
+    height: var(--radix-navigation-menu-viewport-height);
+    overflow: hidden;
+    border-radius: 0.5rem;
+    transition: width var(--motion-duration-fast) var(--motion-ease-out),
+      height var(--motion-duration-fast) var(--motion-ease-out);
   }
-  .tollerud-sheet-overlay[data-state='closed'] {
-    animation: tollerud-sheet-overlay-out var(--motion-duration-normal) var(--motion-ease-in) forwards;
-    pointer-events: none;
+  .tollerud-topnav-viewport[data-state='open'] {
+    animation: tollerud-topnav-viewport-in var(--motion-duration-fast) var(--motion-ease-out) forwards;
   }
-  .tollerud-topnav-menu-overlay[data-state='open'] {
-    animation: tollerud-sheet-overlay-in var(--motion-duration-normal) var(--motion-ease-out) forwards;
+  .tollerud-topnav-viewport[data-state='closed'] {
+    animation: tollerud-topnav-viewport-out var(--motion-duration-fast) var(--motion-ease-in) forwards;
   }
-  .tollerud-topnav-menu-overlay[data-state='closed'] {
-    animation: tollerud-sheet-overlay-out var(--motion-duration-normal) var(--motion-ease-in) forwards;
+  @keyframes tollerud-topnav-viewport-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
   }
-  @keyframes tollerud-sheet-overlay-in {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-  @keyframes tollerud-sheet-overlay-out {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-  }
-
-  .tollerud-sheet-panel[data-state='open'] {
-    animation-duration: var(--motion-duration-normal);
-    animation-timing-function: var(--motion-ease-out);
-    animation-fill-mode: forwards;
-  }
-  .tollerud-sheet-panel[data-state='closed'] {
-    animation-duration: var(--motion-duration-normal);
-    animation-timing-function: var(--motion-ease-in);
-    animation-fill-mode: forwards;
-  }
-  .tollerud-sheet-panel--right[data-state='open'] {
-    animation-name: tollerud-sheet-in-right;
-  }
-  .tollerud-sheet-panel--right[data-state='closed'] {
-    animation-name: tollerud-sheet-out-right;
-  }
-  .tollerud-sheet-panel--left[data-state='open'] {
-    animation-name: tollerud-sheet-in-left;
-  }
-  .tollerud-sheet-panel--left[data-state='closed'] {
-    animation-name: tollerud-sheet-out-left;
+  @keyframes tollerud-topnav-viewport-out {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(0.96); }
   }
 
-  .tollerud-topnav-menu-panel[data-state='open'] {
-    animation: tollerud-topnav-menu-in var(--motion-duration-normal) var(--motion-ease-out) forwards;
+  .tollerud-topnav-flyout-content[data-motion='from-start'] {
+    animation: tollerud-topnav-flyout-in-from-left var(--motion-duration-fast) var(--motion-ease-out) forwards;
   }
-  .tollerud-topnav-menu-panel[data-state='closed'] {
-    animation: tollerud-topnav-menu-out var(--motion-duration-normal) var(--motion-ease-in) forwards;
+  .tollerud-topnav-flyout-content[data-motion='from-end'] {
+    animation: tollerud-topnav-flyout-in-from-right var(--motion-duration-fast) var(--motion-ease-out) forwards;
   }
-  @keyframes tollerud-topnav-menu-in {
-    from { opacity: 0; transform: translateY(-0.5rem); }
-    to   { opacity: 1; transform: translateY(0); }
+  .tollerud-topnav-flyout-content[data-motion='to-start'] {
+    animation: tollerud-topnav-flyout-out-to-left var(--motion-duration-fast) var(--motion-ease-in) forwards;
   }
-  @keyframes tollerud-topnav-menu-out {
-    from { opacity: 1; transform: translateY(0); }
-    to   { opacity: 0; transform: translateY(-0.5rem); }
+  .tollerud-topnav-flyout-content[data-motion='to-end'] {
+    animation: tollerud-topnav-flyout-out-to-right var(--motion-duration-fast) var(--motion-ease-in) forwards;
+  }
+  @keyframes tollerud-topnav-flyout-in-from-left {
+    from { opacity: 0; transform: translateX(-1rem); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes tollerud-topnav-flyout-in-from-right {
+    from { opacity: 0; transform: translateX(1rem); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes tollerud-topnav-flyout-out-to-left {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(-1rem); }
+  }
+  @keyframes tollerud-topnav-flyout-out-to-right {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(1rem); }
   }
 
-  @keyframes tollerud-sheet-in-right {
-    from { transform: translateX(100%); }
-    to   { transform: translateX(0); }
-  }
-  @keyframes tollerud-sheet-out-right {
-    from { transform: translateX(0); }
-    to   { transform: translateX(100%); }
-  }
-  @keyframes tollerud-sheet-in-left {
-    from { transform: translateX(-100%); }
-    to   { transform: translateX(0); }
-  }
-  @keyframes tollerud-sheet-out-left {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-100%); }
-  }
   @media (prefers-reduced-motion: reduce) {
-    .tollerud-sheet-overlay[data-state],
-    .tollerud-topnav-menu-overlay[data-state],
-    .tollerud-sheet-panel[data-state],
-    .tollerud-topnav-menu-panel[data-state] {
+    .tollerud-topnav-viewport[data-state],
+    .tollerud-topnav-flyout-content[data-motion] {
       animation: none !important;
     }
   }

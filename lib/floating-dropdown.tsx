@@ -142,15 +142,17 @@ export function FloatingDropdownPortal({
     refs.setReference(anchorRef.current)
   }, [refs, anchorRef, open])
 
-  // One ref on the portal element must feed both the caller's popoverRef (used
-  // by the outside-click / Dialog-escape helpers) and Floating UI's floating slot.
+  const isOpen = open && isPositioned
+  const bypassScrollLockRef = useBypassModalScrollLock(isOpen)
+
+  // One ref on the portal element must feed the caller's popoverRef (used by
+  // the outside-click / Dialog-escape helpers), Floating UI's floating slot,
+  // and the scroll-lock bypass — all three need the same live DOM node.
   const setFloatingRef = useMemo(
-    () => mergeRefs<HTMLElement>(popoverRef, refs.setFloating),
-    [popoverRef, refs],
+    () => mergeRefs<HTMLElement>(popoverRef, refs.setFloating, bypassScrollLockRef),
+    [popoverRef, refs, bypassScrollLockRef],
   )
 
-  const isOpen = open && isPositioned
-  useBypassModalScrollLock(popoverRef, isOpen)
   useDialogEscapeHatch(popoverRef, isOpen)
 
   if (!open || typeof document === 'undefined') return null

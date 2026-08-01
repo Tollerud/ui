@@ -12,6 +12,23 @@ import {
   initMotion,
   PageTOC,
   jumpToSection,
+  SidebarProvider,
+  Sidebar,
+  SidebarTrigger,
+  SidebarInset,
+  SidebarHeader,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
+  DashboardTopBar,
+  useSidebar,
 } from '@/lib/provide-pages'
 import { Monogram } from '@/components/brand'
 import { adaptCommandGroups, docsCommandFilter } from '@/lib/adapt-command-groups'
@@ -79,10 +96,6 @@ function navHref(id) {
   return id === 'overview' ? '/' : `/${id}/`
 }
 
-function navLinkClass(id, page) {
-  return `ds-navlink${page === id ? ' ds-navlink--active' : ''}`
-}
-
 function slugFromPathname(pathname) {
   const parts = pathname.replace(/^\//, '').replace(/\/$/, '').split('/').filter(Boolean)
   return parts.length ? parts : null
@@ -128,7 +141,62 @@ function useTheme() {
   return [theme, () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))]
 }
 
-export function DocsShell({ slug: slugProp }) {
+/** Sidebar nav content — a child of SidebarProvider so it can close the
+ *  mobile sheet on item select via useSidebar(). */
+function DocsSidebarNav({ page, sidebarContentRef }) {
+  const { setOpenMobile } = useSidebar()
+  const close = () => setOpenMobile(false)
+
+  return (
+    <SidebarContent ref={sidebarContentRef}>
+      {NAV.map((g) => (
+        <SidebarGroup key={g.group || 'meta'}>
+          {g.group && <SidebarGroupLabel>{g.group}</SidebarGroupLabel>}
+          <SidebarGroupContent>
+            {g.items?.length ? (
+              <SidebarMenu>
+                {g.items.map((it) => {
+                  const I = Icons[it.icon]
+                  return (
+                    <SidebarMenuItem key={it.id}>
+                      <SidebarMenuButton asChild isActive={it.id === page} icon={<I size={15} />} onClick={close}>
+                        <Link href={navHref(it.id)}>{it.label}</Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )
+                })}
+              </SidebarMenu>
+            ) : null}
+            {g.subgroups?.map((sub, subIndex) => (
+              <div key={sub.label || sub.items[0]?.id || subIndex}>
+                {sub.label && <SidebarGroupLabel className="mt-3">{sub.label}</SidebarGroupLabel>}
+                <SidebarMenuSub className="ml-0 border-l-0 pl-0">
+                  {sub.items.map((it) => {
+                    const I = Icons[it.icon]
+                    return (
+                      <SidebarMenuSubItem key={it.id}>
+                        <SidebarMenuSubButton asChild isActive={it.id === page} onClick={close}>
+                          <Link href={navHref(it.id)}>
+                            <span className="mr-2 inline-flex h-[15px] w-[15px] items-center justify-center text-current">
+                              <I size={15} />
+                            </span>
+                            {it.label}
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    )
+                  })}
+                </SidebarMenuSub>
+              </div>
+            ))}
+          </SidebarGroupContent>
+        </SidebarGroup>
+      ))}
+    </SidebarContent>
+  )
+}
+
+function DocsShellInner({ slug: slugProp }) {
   const pathname = usePathname()
   const router = useRouter()
   const { page: rawPage, section: sectionSlug, parts } = useMemo(
@@ -142,17 +210,17 @@ export function DocsShell({ slug: slugProp }) {
   useEffect(() => {
     toggleThemeRef.current = toggleTheme
   })
-  const [navOpen, setNavOpen] = useState(false)
   const [cmdOpen, setCmdOpen] = useState(false)
-  const sidebarNavRef = useRef(null)
-  // Close the mobile nav when navigation changes. Adjusted during render
-  // (React's documented pattern for resetting state on a prop change) rather
-  // than in an effect, so it closes before paint instead of after.
-  const [prevNavKey, setPrevNavKey] = useState([page, sectionSlug])
-  if (prevNavKey[0] !== page || prevNavKey[1] !== sectionSlug) {
-    setPrevNavKey([page, sectionSlug])
-    setNavOpen(false)
-  }
+  const sidebarContentRef = useRef(null)
+  const { setOpenMobile } = useSidebar()
+
+  // Close the mobile nav sheet when navigation changes. This crosses into
+  // SidebarProvider's state (an ancestor), so it can't use the render-time
+  // adjustment pattern (safe only for a component's own state) — an effect
+  // is the correct, safe way to react to a route change here.
+  useEffect(() => {
+    setOpenMobile(false)
+  }, [page, sectionSlug, setOpenMobile])
 
   const go = useCallback(
     (id) => {
@@ -180,10 +248,10 @@ export function DocsShell({ slug: slugProp }) {
   }, [page, sectionSlug])
 
   useEffect(() => {
-    const nav = sidebarNavRef.current
+    const nav = sidebarContentRef.current
     if (!nav) return
     const id = requestAnimationFrame(() => {
-      nav.querySelector('.ds-navlink--active')?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+      nav.querySelector('[data-active]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
     })
     return () => cancelAnimationFrame(id)
   }, [page, sectionSlug])
@@ -193,7 +261,6 @@ export function DocsShell({ slug: slugProp }) {
 
   useEffect(() => {
     const h = (e) => {
-      if (e.key === 'Escape') setNavOpen(false)
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'l') {
         e.preventDefault()
         toggleThemeRef.current()
@@ -248,111 +315,60 @@ export function DocsShell({ slug: slugProp }) {
   return (
     <ToastProvider>
       <div className="ds-shell">
-        {/* Decorative click-outside-to-dismiss backdrop; Escape (handled above) is the keyboard equivalent, so it's hidden from assistive tech rather than made artificially focusable. */}
-        <div
-          className={`ds-nav-scrim ${navOpen ? 'is-open' : ''}`}
-          onClick={() => setNavOpen(false)}
-          aria-hidden="true"
-        />
-        <aside className={`ds-sidebar ds-themed ${navOpen ? 'ds-sidebar--open' : ''}`}>
-          <div className="ds-sidebar__brand">
+        <Sidebar mobileTitle="Navigation menu" className="ds-themed">
+          <SidebarHeader>
             <Monogram className="ds-sidebar__logo" alt="" />
             <div>
               <div className="ds-sidebar__title">Tollerud</div>
               <div className="ds-sidebar__ver">user interface · v{PACKAGE_VERSION}</div>
             </div>
-          </div>
-          <nav className="ds-sidebar__nav" ref={sidebarNavRef}>
-            {NAV.map((g) => (
-              <div className="ds-navgroup" key={g.group || 'meta'}>
-                {g.group && <div className="ds-navgroup__label">{g.group}</div>}
-                {g.items?.map((it) => {
-                  const I = Icons[it.icon]
-                  return (
-                    <Link
-                      key={it.id}
-                      href={navHref(it.id)}
-                      className={navLinkClass(it.id, page)}
-                      onClick={() => setNavOpen(false)}
-                    >
-                      <span className="ds-navlink__icon"><I size={15} /></span>
-                      {it.label}
-                    </Link>
-                  )
-                })}
-                {g.subgroups?.map((sub, subIndex) => (
-                  <div className="ds-navsubgroup" key={sub.label || sub.items[0]?.id || subIndex}>
-                    {sub.label && <div className="ds-navsubgroup__label">{sub.label}</div>}
-                    {sub.items.map((it) => {
-                      const I = Icons[it.icon]
-                      return (
-                        <Link
-                          key={it.id}
-                          href={navHref(it.id)}
-                          className={navLinkClass(it.id, page)}
-                          onClick={() => setNavOpen(false)}
-                        >
-                          <span className="ds-navlink__icon"><I size={15} /></span>
-                          {it.label}
-                        </Link>
-                      )
-                    })}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </nav>
-        </aside>
+          </SidebarHeader>
+          <DocsSidebarNav page={page} sidebarContentRef={sidebarContentRef} />
+        </Sidebar>
 
-        <div className="ds-main">
-          <header className="ds-topbar ds-themed">
-            <button
-              className="ds-iconbtn ds-topbar__menu"
-              onClick={() => setNavOpen((o) => !o)}
-              aria-label="Menu"
-              aria-expanded={navOpen}
-            >
-              {navOpen ? <Icons.x /> : <Icons.menu />}
-            </button>
-            <Monogram className="ds-topbar__logo" alt="Tollerud" onClick={() => go('overview')} />
-            <span className="ds-topbar__crumb">
-              <span className="ds-topbar__crumb-prefix">
-                Tollerud UI <span style={{ opacity: 0.4, margin: '0 6px' }}>/</span>{' '}
-              </span>
-              <b>{crumbTitle}</b>
-            </span>
-            <span className="ds-topbar__spacer" />
-            <button className="ds-topbar__cmd" onClick={() => setCmdOpen(true)} title="Command palette">
-              <Icons.search size={14} />
-              <span className="ds-topbar__cmd-text">Search</span>
-              <Kbd keys="⌘+K" size="sm" />
-            </button>
-            <a
-              className="ds-iconbtn"
-              href="https://github.com/Tollerud/ui"
-              target="_blank"
-              rel="noreferrer"
-              title="Repository"
-            >
-              <Icons.github />
-            </a>
-            <button
-              className="ds-iconbtn"
-              onClick={toggleTheme}
-              title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
-            >
-              <span className="ds-theme-icon" key={theme}>
-                {theme === 'dark' ? <Icons.sun /> : <Icons.moon />}
-              </span>
-            </button>
-          </header>
+        <SidebarInset>
+          <DashboardTopBar
+            projectName="Tollerud"
+            homeHref="/"
+            className="ds-themed"
+            menuTrigger={<SidebarTrigger className="lg:hidden" aria-label="Menu" />}
+            breadcrumb="Tollerud UI"
+            pageTitle={crumbTitle}
+            actions={
+              <>
+                <button className="ds-topbar__cmd" onClick={() => setCmdOpen(true)} title="Command palette">
+                  <Icons.search size={14} />
+                  <span className="ds-topbar__cmd-text">Search</span>
+                  <Kbd keys="⌘+K" size="sm" />
+                </button>
+                <a
+                  className="ds-iconbtn"
+                  href="https://github.com/Tollerud/ui"
+                  target="_blank"
+                  rel="noreferrer"
+                  title="Repository"
+                >
+                  <Icons.github />
+                </a>
+                <button
+                  className="ds-iconbtn"
+                  onClick={toggleTheme}
+                  title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
+                >
+                  <span className="ds-theme-icon" key={theme}>
+                    {theme === 'dark' ? <Icons.sun /> : <Icons.moon />}
+                  </span>
+                </button>
+              </>
+            }
+          />
           <main className="ds-content">
             <div className="ds-page" key={pageKey}>
               {PAGES_WITH_GO.has(page) ? <Page go={go} /> : <Page />}
             </div>
             <PageTOC route={page} />
           </main>
-        </div>
+        </SidebarInset>
       </div>
       <CommandMenu
         open={cmdOpen}
@@ -362,5 +378,13 @@ export function DocsShell({ slug: slugProp }) {
         placeholder="Search pages, sections, components…"
       />
     </ToastProvider>
+  )
+}
+
+export function DocsShell({ slug }) {
+  return (
+    <SidebarProvider>
+      <DocsShellInner slug={slug} />
+    </SidebarProvider>
   )
 }

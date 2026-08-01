@@ -9,6 +9,7 @@ These work **everywhere** in an app built with `@tollerud/ui`.
 | Shortcut | Action | Component |
 |----------|--------|-----------|
 | `⌘K` / `Ctrl+K` | Open/close command palette | `CommandMenu` |
+| `⌘B` / `Ctrl+B` | Toggle sidebar (expand/collapse desktop, open/close mobile) | `Sidebar` (via `SidebarProvider`, ≥ 5.0.0 — set `keyboardShortcut={false}` to disable) |
 | `/` | Focus search / log filter | `LogViewer` (search), app-level search inputs |
 | `?` | Show keyboard shortcuts | App-level shortcut overlay (build with `Dialog`/`Sheet` + `Kbd`) |
 | `Esc` | Close overlay / cancel | `CommandMenu`, `Dialog`, `Sheet` |
@@ -55,6 +56,19 @@ The `Kbd` component displays a keyboard shortcut chip. It accepts any string or 
 - Body scroll lock while open
 - Click outside to close
 - Hover follows keyboard selection
+- `Tab` / `Shift+Tab` are trapped inside the palette while open (≥ 4.18.1, via `@radix-ui/react-focus-scope`) — focus can no longer leave via keyboard
+
+### TopNav (flyout groups ≥ 4.19.0)
+
+- Mobile hamburger: `Esc` closes, focus trapped/returned via Radix `Dialog` (unchanged)
+- Desktop flyout groups (`navItems` entries with `items`): `Enter`/`Space` opens the trigger, arrow keys move between top-level triggers, `Esc` closes the open flyout and returns focus to its trigger — all via `@radix-ui/react-navigation-menu`, no custom keyboard code
+- Mobile flyout groups render as an `Accordion` section — `Enter`/`Space` toggles, matching `Accordion`'s existing contract
+
+### Sidebar (≥ 5.0.0, replaces SidebarNav)
+
+- `⌘B` / `Ctrl+B` toggles expand/collapse (desktop) or open/close (mobile) — disable via `keyboardShortcut={false}` on `SidebarProvider`
+- Mobile: renders via `Sheet` — same `Esc`-closes / focus-trap / focus-return contract as `Sheet`/`Dialog`
+- Desktop: a normal focusable region — `Tab` moves through `SidebarMenuButton`s in DOM order like any nav list
 
 ### Charts (TimeSeriesChart ≥ 4.8.42; AreaChart & Sparkline ≥ 4.8.43; BarChart & Donut ≥ 4.8.44 — all with `interactive`)
 

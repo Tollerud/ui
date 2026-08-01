@@ -7,6 +7,82 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.0.1 — 2026-08-01 — Sidebar height is now overridable; docs coverage added
+
+### Fixed
+
+- `Sidebar`'s desktop rail used a bare `h-screen` (always exactly 100vh, absolute and non-overridable). That's correct for the common case — a `Sidebar` filling a real page — but it silently broke the moment `Sidebar` was embedded in a shorter, bounded container (e.g. a docs preview box): the rail ignored the container entirely and rendered at full viewport height. It's now `h-[var(--sidebar-height,100vh)]` — same 100vh by default, but any ancestor can override it by setting the `--sidebar-height` custom property (CSS custom properties inherit, so no new prop is needed). This is the same bug that was already visible in this repo's own docs — see the next entry.
+
+### Documentation
+
+- Found and fixed while auditing this repo's own docs-app coverage: the `DashboardShell` demo on the docs site's Screen patterns page was silently rendering its embedded sidebar at full viewport height instead of the intended ~420px preview box, because of the `h-screen` issue above. Fixed via the new `--sidebar-height` override.
+
+- `Sidebar` itself — a major new export surface from 5.0.0 — had no live demo anywhere in docs-app, despite the release-checklist requirement to add one for new/changed components. Added a dedicated "Sidebar" section to the Screen patterns page demonstrating the raw `SidebarProvider`/`Sidebar`/`SidebarMenu` composition and the `collapsible="icon"` mode via a real `SidebarTrigger`.
+
+No breaking changes — `--sidebar-height` is a pure addition; every existing `Sidebar`/`DashboardShell` usage renders identically since it already implicitly resolved to 100vh.
+
+## 5.0.0 — 2026-07-31 — Sidebar primitive family replaces SidebarNav
+
+### Breaking
+
+- `SidebarNav` is removed. In its place, a shadcn-style composable sidebar primitive family: `SidebarProvider`, `Sidebar`, `SidebarTrigger`, `SidebarInset`, `SidebarHeader`, `SidebarContent`, `SidebarFooter`, `SidebarGroup`, `SidebarGroupLabel`, `SidebarGroupContent`, `SidebarMenu`, `SidebarMenuItem`, `SidebarMenuButton`, `SidebarMenuAction`, `SidebarMenuBadge`, `SidebarMenuSub`, `SidebarMenuSubItem`, `SidebarMenuSubButton`, and the `useSidebar()` hook. `SidebarNavItem`/`SidebarNavGroup` **types** are unchanged and still exported (now from `./Sidebar`), so `DashboardShell`'s `sidebarGroups`/`sidebarItems` props stay source-compatible — `DashboardShell` now builds this composition internally instead of rendering the old `SidebarNav`.
+
+  New capabilities over the old `SidebarNav`: a real mobile off-canvas panel built on `Sheet` (full focus-trap/Escape/`aria-modal`, replacing `DashboardShell`'s previous hand-rolled `translate-x-full` drawer, which had neither), `collapsible="icon"` mode (collapses to an icon-only rail with `SidebarMenuButton`'s `tooltip` prop shown on hover/focus), and a `Cmd`/`Ctrl+B` keyboard shortcut (`SidebarProvider`'s `keyboardShortcut` prop, default on).
+
+  Migration for direct `SidebarNav` usage — see `AGENTS.md`'s "Sidebar primitive family replaces SidebarNav" version note for a full before/after example.
+
+- `DashboardTopBar`'s `menuOpen`/`onMenuToggle` props are replaced by a single `menuTrigger?: ReactNode` slot (e.g. `<SidebarTrigger className="lg:hidden" />`). Only relevant if you use `DashboardTopBar` directly — `DashboardShell` wires this internally, no change needed there.
+
+- New peer-adjacent internal dependencies: `@radix-ui/react-slot` and `@radix-ui/react-use-controllable-state` are used by `Sidebar` (both already peer/explicit dependencies from earlier releases — no new install required).
+
+### Fixed
+
+- `lib/bypass-modal-scroll-lock.ts` (the scroll-lock workaround `DropdownMenu` uses so its portalled content isn't swallowed by a Dialog/Sheet's document-level scroll lock) is rewritten as a ref callback instead of a `useLayoutEffect` keyed off a `useRef` object. The previous implementation only attempted to attach its listeners once, at the wrapper component's initial mount — but `DropdownMenuContent`'s actual DOM node doesn't exist until the dropdown first opens, which is almost always *after* that mount. In the common case (a dropdown that starts closed), the bypass silently never attached. It now reattaches correctly on every open via the ref callback, which React invokes exactly when the real node mounts and unmounts. `lib/floating-dropdown.tsx` (the shared engine behind `Combobox`/`Select`/`DatePicker`/`Segmented`) is updated to the same API; its own usage happened to work before by coincidence (it recomputed `isOpen` on every toggle, which incidentally re-triggered the old effect) but is more robust with the new callback-ref design regardless.
+
+No compatibility shim is provided for `SidebarNav` — per this project's stated preference, this ships as a clean break with a documented migration path rather than a deprecated wrapper.
+
+## 4.19.0 — 2026-07-31 — TopNav flyout groups + framer-motion mobile menu
+
+### Added
+
+- `TopNavItem` gains an optional `items?: TopNavItem[]`. Setting it turns an entry into a flyout group instead of a direct link: on desktop it renders as a `NavigationMenu` trigger + flyout panel (arrow-key/Home/End/Escape navigation, direction-aware slide animation, built on `@radix-ui/react-navigation-menu`); on mobile it renders as a collapsible accordion section inside the existing hamburger menu (reusing the `Accordion` component — no new mobile primitive). One level of nesting; a group item omits `href`.
+
+**Requires a new peer dependency**: `@radix-ui/react-navigation-menu` (`^1.2.0`). Existing `TopNav` usage without any grouped `items` still works exactly as before, but the package now imports this primitive unconditionally, so it must be installed alongside the other Radix peers (`@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, etc.) — run `npm install @radix-ui/react-navigation-menu`.
+
+### Changed
+
+- `TopNav`'s mobile hamburger panel now animates with `framer-motion` (the same `forceMount` + `AnimatePresence` recipe as `Sheet`, see 4.18.1) instead of CSS `@keyframes`. Closing now unmounts asynchronously after the exit transition — the same test-timing note from 4.18.1 applies here too (`await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())`).
+
+- The dead `.tollerud-topnav-menu-overlay[data-state]`/`.tollerud-topnav-menu-panel[data-state]` CSS keyframe rules in `globals-layers.css` were removed (superseded by framer-motion, same as Sheet's in 4.18.1). The static box-styling rules for those classes are unchanged.
+
+No breaking changes to existing props — `items` is opt-in and everything else is source-compatible. The new required peer dependency is the one install-time action existing consumers need to take.
+
+## 4.18.2 — 2026-07-31 — CommandMenu traps Tab focus
+
+### Fixed
+
+- `CommandMenu` now traps `Tab`/`Shift+Tab` inside the palette while it's open, via `@radix-ui/react-focus-scope`. Previously only `Escape` and click-outside closed the palette — `Tab` could move keyboard focus out into the page behind it while the palette was still visually open, which violated the "focus management matters" contract in `KEYBOARD.md` that every other overlay (`Dialog`, `Sheet`) already met via Radix. No prop or behavior change beyond the trap itself — auto-focus-on-open, arrow-key navigation, and close-on-Escape are unchanged.
+
+No breaking changes.
+
+## 4.18.1 — 2026-07-31 — Sheet now animates with framer-motion
+
+### Changed
+
+- `Sheet` (and `Drawer`, which wraps it) now animates its overlay and panel with `framer-motion` instead of plain CSS `@keyframes`, using the same `--motion-duration-*`/`--motion-ease-*` timings as before. `framer-motion` was already a peer dependency of `@tollerud/ui` but was unused until now.
+
+- Closing a `Sheet`/`Drawer` now unmounts asynchronously, after its exit transition finishes, instead of synchronously on `onOpenChange(false)`. Consumers reading the DOM immediately after closing (e.g. in tests) should `await` the removal — see `Sheet.test.tsx`'s `closes on Escape` test for the pattern (`await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())`).
+
+- `Sheet` respects `prefers-reduced-motion: reduce` the same as before — the animation is skipped (zero duration) rather than removed, so behavior is unchanged for reduced-motion users.
+
+- The dead `.tollerud-sheet-overlay[data-state]`/`.tollerud-sheet-panel[data-state]` CSS keyframe rules in `globals-layers.css` were removed now that `Sheet` no longer drives its animation off `data-state` CSS selectors. `TopNav`'s mobile menu still uses the CSS-keyframe approach for now (planned to migrate in a follow-up release).
+
+### Internal
+
+- `@radix-ui/react-compose-refs`, `@radix-ui/react-focus-scope`, and `@radix-ui/react-use-controllable-state` are now declared as explicit `dependencies` — they were already resolving transitively via `@radix-ui/react-dialog`/`@radix-ui/react-dropdown-menu`, so this is a documentation fix with zero install-size impact, not a new footprint.
+
+No breaking changes — every consumer-facing prop is unchanged; only the close-unmount timing and the animation engine changed.
+
 ## 4.18.0 — 2026-07-31 — PasswordInput labelAction
 
 ### Added

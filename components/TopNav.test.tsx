@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { Button } from './Button'
@@ -61,7 +61,9 @@ describe('TopNav', () => {
 
     await user.click(within(menu).getByRole('link', { name: 'Hosts' }))
     expect(menuButton).toHaveAttribute('aria-expanded', 'false')
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    })
   })
 
   it('closes the mobile menu on Escape', async () => {
@@ -78,7 +80,9 @@ describe('TopNav', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument()
 
     await user.keyboard('{Escape}')
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    })
   })
 
   it('keeps TopNavAction mobile="inline" in the header bar on mobile', async () => {
@@ -109,6 +113,66 @@ describe('TopNav', () => {
     const menu = screen.getByRole('dialog', { name: 'Navigation menu' })
     expect(within(menu).getByRole('button', { name: 'Sign in' })).toBeInTheDocument()
     expect(within(menu).queryByRole('button', { name: 'Deploy' })).not.toBeInTheDocument()
+  })
+
+  it('opens a desktop flyout group with Enter and closes with Escape', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <TopNav
+        projectName="Mission Control"
+        navItems={[
+          { label: 'Overview', href: '/overview' },
+          {
+            label: 'Services',
+            items: [
+              { label: 'API', href: '/services/api' },
+              { label: 'Worker', href: '/services/worker' },
+            ],
+          },
+        ]}
+      />
+    )
+
+    const trigger = screen.getByRole('button', { name: 'Services' })
+    trigger.focus()
+    await user.keyboard('{Enter}')
+
+    expect(await screen.findByRole('link', { name: 'API' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Worker' })).toBeInTheDocument()
+
+    await user.keyboard('{Escape}')
+    await waitFor(() => {
+      expect(screen.queryByRole('link', { name: 'API' })).not.toBeInTheDocument()
+    })
+  })
+
+  it('renders a flyout group as a mobile accordion', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <TopNav
+        projectName="Mission Control"
+        navItems={[
+          {
+            label: 'Services',
+            items: [
+              { label: 'API', href: '/services/api' },
+              { label: 'Worker', href: '/services/worker' },
+            ],
+          },
+        ]}
+      />
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Toggle navigation menu' }))
+    const menu = screen.getByRole('dialog', { name: 'Navigation menu' })
+
+    expect(within(menu).queryByRole('link', { name: 'API' })).not.toBeInTheDocument()
+
+    await user.click(within(menu).getByRole('button', { name: 'Services' }))
+    expect(within(menu).getByRole('link', { name: 'API' })).toBeInTheDocument()
+    expect(within(menu).getByRole('link', { name: 'Worker' })).toBeInTheDocument()
   })
 
   it('hides TopNavAction mobile="hidden" on mobile but shows on desktop', () => {

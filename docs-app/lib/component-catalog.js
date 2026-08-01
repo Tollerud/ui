@@ -55,7 +55,7 @@ export const DEEP_LINKS = [
   { page: 'screens', section: 'page-header', title: 'PageHeader', component: 'PageHeader', keywords: ['title', 'heading', 'actions'] },
   { page: 'screens', section: 'top-nav', title: 'TopNav', component: 'TopNav', keywords: ['nav', 'monogram', 'lockup'] },
   { page: 'screens', section: 'dashboard-shell', title: 'DashboardShell', component: 'DashboardShell', keywords: ['app shell', 'sidebar'] },
-  { page: 'screens', section: 'dashboard-shell', title: 'SidebarNav', component: 'SidebarNav', keywords: ['sidebar', 'nav', 'brand'] },
+  { page: 'screens', section: 'sidebar', title: 'Sidebar', component: 'Sidebar', keywords: ['sidebar', 'nav', 'brand', 'collapsible', 'icon'] },
   { page: 'screens', section: 'dashboard-shell', title: 'DashboardTopBar', component: 'DashboardTopBar', keywords: ['top bar', 'breadcrumb', 'context'] },
   { page: 'screens', section: 'settings-form', title: 'SettingsLayout', component: 'SettingsLayout', keywords: ['settings', 'forms'] },
   { page: 'screens', section: 'settings-form', title: 'FormPanel', component: 'FormPanel', keywords: ['forms', 'panel'] },

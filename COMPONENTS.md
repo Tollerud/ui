@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v4.18.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v5.0.1**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -42,7 +42,7 @@ All symbols below resolve from `import { … } from '@tollerud/ui'` unless noted
 
 **Core & forms:** `Button`, `ButtonGroup`, `buttonVariants`, `cn`, `Card`, `Badge`, `StatusDot`, `Kbd`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `RadioGroup`, `Radio`, `PasswordInput`, `PasswordStrength`, `passwordRules`, `Combobox`, `TagInput`, `Slider`, `FormRow`, `Container`, `CodeBlock`, `StatCard`, `ActionRow`, `CommandMenu`
 
-**Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `ScrollRail`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `SidebarNav`, `DashboardTopBar`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Gauge`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
+**Navigation & layout:** `PageShell`, `Section`, `Stack`, `Cluster`, `Grid`, `CardGrid`, `ScrollRail`, `Split`, `MainContent`, `PageHeader`, `TopNav`, `SidebarProvider`, `Sidebar`, `SidebarTrigger`, `SidebarInset`, `SidebarHeader`, `SidebarContent`, `SidebarFooter`, `SidebarGroup`, `SidebarGroupLabel`, `SidebarGroupContent`, `SidebarMenu`, `SidebarMenuItem`, `SidebarMenuButton`, `SidebarMenuAction`, `SidebarMenuBadge`, `SidebarMenuSub`, `SidebarMenuSubItem`, `SidebarMenuSubButton`, `useSidebar`, `DashboardTopBar`, `DashboardShell`, `SettingsLayout`, `FormPanel`, `ResourceList`, `DetailPage`, `EmptyPage`, `FeatureSection`, `StatsSection`, `Divider`, `Pill`, `Avatar`, `AvatarGroup`, `Breadcrumb`, `Pagination`, `Segmented`, `Stepper`, `Panel`, `Meter`, `Gauge`, `Accordion`, `AccordionItem`, `AccordionTrigger`, `AccordionContent`, `DatePicker`, `FileUpload`, `PricingCard`
 
 **Overlays & feedback:** `Alert`, `Dialog` (+ `DialogTrigger`, `DialogContent`, `DialogHeader`, `DialogBody`, `DialogFooter`, `DialogTitle`, `DialogDescription`, `DialogClose`, `DialogPanel`), `Tooltip` (+ `TooltipTrigger`, `TooltipContent`, `TooltipProvider`), `Tabs` (+ `TabsList`, `TabsTrigger`, `TabsContent`), `DropdownMenu` (+ trigger/content/item/label/separator), `Sheet` (+ `SheetTrigger`, `SheetContent`, `SheetHeader`, `SheetTitle`, `SheetDescription`, `SheetClose`), `Drawer`, `Toaster` (Sonner), `ToastProvider` / `useToast`, `Empty` (+ compound parts), `EmptyState`, `Skeleton`, `Progress`, `Spinner`
 
@@ -150,10 +150,10 @@ These components assemble common page structures from the layout primitives and 
 | Component | Use for |
 |-----------|---------|
 | `PageHeader` | Page title, eyebrow, description, metadata, and actions |
-| `TopNav` | Branded monogram lockup, nav links, and top-level actions; `TopNavAction` controls mobile placement; `mobileMenuExtra` injects a slot at the bottom of the mobile sheet |
-| `SidebarNav` | Sidebar brand lockup and grouped navigation links |
-| `DashboardTopBar` | Context top bar with breadcrumb, page title, and actions. `showMobileLogo={false}` hides the mobile monogram. |
-| `DashboardShell` | Docs-aligned app shell with sidebar nav and context top bar. Threads `showMobileLogo` to `DashboardTopBar`. Sidebar sticks on `lg+` (≥ 4.8.41). |
+| `TopNav` | Branded monogram lockup, nav links, and top-level actions; `TopNavAction` controls mobile placement; `mobileMenuExtra` injects a slot at the bottom of the mobile sheet. A `navItems` entry with `items: TopNavItem[]` becomes a flyout group (desktop `NavigationMenu`, mobile accordion) — requires the `@radix-ui/react-navigation-menu` peer (≥ 4.19.0) |
+| `Sidebar` | Collapsible sidebar primitive family (`SidebarProvider`/`Sidebar`/`SidebarMenu`/etc., ≥ 5.0.0) — replaces the removed `SidebarNav`. Sticky `<aside>` on desktop, `Sheet`-based off-canvas on mobile; `collapsible="icon"` collapses to an icon rail with tooltips. See the [Sidebar section](#sidebar) below. |
+| `DashboardTopBar` | Context top bar with breadcrumb, page title, and actions. `menuTrigger` slot renders the mobile menu button (e.g. `<SidebarTrigger className="lg:hidden" />`, ≥ 5.0.0 — replaces `menuOpen`/`onMenuToggle`). `showMobileLogo={false}` hides the mobile monogram. |
+| `DashboardShell` | Docs-aligned app shell built on `Sidebar`/`SidebarProvider` internally; `sidebarGroups`/`sidebarItems` props unchanged. Sidebar sticks on `lg+`. |
 | `SettingsLayout` | Settings pages with section navigation |
 | `FormPanel` | Titled form surface with actions and footer |
 | `ResourceList` | List/table pages with filters, count, and empty state |
@@ -1314,6 +1314,47 @@ Radix-based slide-over panel for detail views and forms. Use the compound API (`
 ```
 
 `SheetContent` accepts `side?: 'left' | 'right'`. Closes on Esc or overlay click. Prefer **`Drawer`** when you want a single controlled component with `open` / `onClose` / `footer`.
+
+Overlay and panel animate with `framer-motion` (≥ 4.18.0) using the repo's `--motion-duration-*`/`--motion-ease-*` timings, and respect `prefers-reduced-motion`. Closing unmounts asynchronously once the exit transition finishes — code that reads the DOM immediately after closing should wait for removal.
+
+### Sidebar
+
+Collapsible sidebar primitive family (≥ 5.0.0, replaces the removed `SidebarNav`). Shadcn-style composition: `SidebarProvider` owns state and exposes `--sidebar-width`/`--sidebar-width-icon`/`--sidebar-width-mobile` CSS vars; `Sidebar` renders a sticky `<aside>` on desktop and a `Sheet`-based off-canvas panel on mobile (via the existing `lib/use-mobile.ts`).
+
+```tsx
+<SidebarProvider>
+  <Sidebar collapsible="icon">
+    <SidebarHeader>
+      <Monogram color="yellow" className="h-[26px] w-auto" />
+      <span>Project</span>
+    </SidebarHeader>
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Servers</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild isActive icon={<Icons.server size={15} />} tooltip="Emma">
+                <Link href="/hosts/emma">Emma</Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </SidebarContent>
+  </Sidebar>
+  <SidebarInset>
+    <DashboardTopBar projectName="Project" menuTrigger={<SidebarTrigger className="lg:hidden" />} />
+    {/* page content */}
+  </SidebarInset>
+</SidebarProvider>
+```
+
+`collapsible`: `'offcanvas'` (default — collapses to width 0), `'icon'` (collapses to icon-only rail, `SidebarMenuButton`'s label becomes `sr-only` and `tooltip` shows on hover/focus), or `'none'` (always expanded). `SidebarTrigger` calls `toggleSidebar()` from `useSidebar()`; `Cmd/Ctrl+B` also toggles by default (`keyboardShortcut={false}` on `SidebarProvider` to disable). `SidebarMenuButton`/`SidebarMenuSubButton` accept `asChild` (via `@radix-ui/react-slot`, e.g. for `next/link`) and `isActive` (sets `aria-current="page"` + yellow accent). `SidebarMenuSub`/`SidebarMenuSubItem`/`SidebarMenuSubButton` render one level of nested links under a `SidebarMenuItem`.
+
+`DashboardShell`'s `sidebarGroups`/`sidebarItems` props are unchanged — it builds this composition internally.
+
+The desktop rail's height defaults to `100vh` via the `--sidebar-height` CSS custom property (≥ 5.0.1) so `position: sticky` works without being stretched by the surrounding flex row. Override it on any ancestor (e.g. `style={{ '--sidebar-height': '420px' }}` on `SidebarProvider` or `DashboardShell`) when embedding `Sidebar` in a shorter, bounded container — a real page shell never needs this.
 
 ### Dialog, Tooltip, Tabs, DropdownMenu
 

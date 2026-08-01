@@ -82,4 +82,55 @@ test.describe('docs site', () => {
     await page.getByRole('button', { name: 'Switch to dark' }).click()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
   })
+
+  // Regression coverage for the Sidebar primitive's mobile off-canvas panel
+  // (built on Sheet's framer-motion forceMount/AnimatePresence recipe) — a
+  // real browser is needed here since the exit-animation-then-unmount timing
+  // isn't reliably observable through jsdom.
+  test('mobile sidebar sheet closes on Escape', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 })
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Menu' }).click()
+    const dialog = page.getByRole('dialog')
+    await expect(dialog).toBeVisible()
+    await page.keyboard.press('Escape')
+    await expect(dialog).not.toBeVisible({ timeout: 3000 })
+  })
+
+  test('mobile sidebar sheet closes on X click', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 })
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Menu' }).click()
+    const dialog = page.getByRole('dialog')
+    await expect(dialog).toBeVisible()
+    await dialog.getByRole('button', { name: 'Close' }).click()
+    await expect(dialog).not.toBeVisible({ timeout: 3000 })
+  })
+
+  // Regression: Sidebar's desktop rail uses an absolute height so it can
+  // stick without being stretched by its flex row (see PageShell.test.tsx).
+  // Embedded in a bounded demo box, that height must respect the box's
+  // --sidebar-height override rather than filling the viewport.
+  test('Sidebar demo on the screens page is bounded by its demo box, not the viewport', async ({ page }) => {
+    await page.goto('/screens/sidebar/')
+    const heading = page.getByRole('heading', { name: 'Sidebar', exact: true })
+    await expect(heading).toBeVisible()
+    const demoAside = page.locator('#sidebar aside')
+    await expect(demoAside).toBeVisible()
+    const box = await demoAside.boundingBox()
+    const viewport = page.viewportSize()
+    expect(box.height).toBeLessThan(viewport.height)
+  })
+
+  test('Sidebar demo collapses to an icon-only rail via SidebarTrigger', async ({ page }) => {
+    await page.goto('/screens/sidebar/')
+    const demoAside = page.locator('#sidebar aside')
+    await expect(demoAside).toHaveAttribute('data-state', 'expanded')
+    const expandedBox = await demoAside.boundingBox()
+
+    await page.locator('#sidebar').getByRole('button', { name: 'Toggle sidebar' }).click()
+    await expect(demoAside).toHaveAttribute('data-state', 'collapsed')
+    const collapsedBox = await demoAside.boundingBox()
+    expect(collapsedBox.width).toBeLessThan(expandedBox.width)
+  })
 })

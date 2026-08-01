@@ -21,6 +21,18 @@ export default defineConfig({
     // packages/email is standalone (not a workspace) and has its own vitest —
     // see `npm run test:email`. Its render tests need @react-email/*, which the
     // root install does not provide, so keep them out of the root run.
-    exclude: ['**/node_modules/**', '**/dist/**', 'docs', 'docs-app', 'e2e', 'packages/email/**'],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      'docs',
+      'docs-app',
+      'e2e',
+      'packages/email/**',
+      // Claude Code session worktrees (.claude/worktrees/*) are separate git
+      // checkouts that can contain their own copies of the test suite —
+      // picking them up double-runs tests against stale code and leaks jsdom
+      // state across files.
+      '.claude/**',
+    ],
   },
 })

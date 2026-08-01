@@ -1,7 +1,9 @@
 'use client'
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Menu, X } from 'lucide-react'
+import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { ChevronDown, Menu, X } from 'lucide-react'
 import {
   Children,
   Fragment,
@@ -13,16 +15,21 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { motionDuration, motionEase } from '@/lib/motion'
 import { cn } from '@/lib/utils'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './Accordion'
 import { DialogDescription, DialogTitle } from './Dialog'
 import { Monogram } from './Monogram'
 import { Cluster } from './Cluster'
 
 export interface TopNavItem {
   label: ReactNode
-  href: string
+  /** Omit when `items` is set — a group trigger isn't itself a direct link. */
+  href?: string
   active?: boolean
   external?: boolean
+  /** Child links shown in a flyout (desktop) / accordion (mobile). One level of nesting. */
+  items?: TopNavItem[]
 }
 
 export type TopNavMaxWidth = 'default' | 'wide' | 'full' | false
@@ -83,7 +90,19 @@ function partitionActions(actions: ReactNode | undefined) {
   return { inline, menu, desktop }
 }
 
-export interface TopNavProps extends HTMLAttributes<HTMLElement> {
+function isTopNavGroup(item: TopNavItem): item is TopNavItem & { items: TopNavItem[] } {
+  return !!item.items && item.items.length > 0
+}
+
+function topNavItemKey(item: TopNavItem, prefix = '') {
+  return `${prefix}${item.href ?? ''}-${String(item.label)}`
+}
+
+// `defaultValue`/`dir` are generic HTMLAttributes but collide in meaning with
+// NavigationMenuPrimitive.Root's own semantic props of the same name (which
+// item is initially active / reading direction) — omit so `{...props}` below
+// stays assignable to NavigationMenuPrimitive.Root.
+export interface TopNavProps extends Omit<HTMLAttributes<HTMLElement>, 'defaultValue' | 'dir'> {
   projectName: ReactNode
   homeHref?: string
   navItems?: TopNavItem[]
@@ -148,6 +167,14 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
     const hasMobileMenuContent = hasNavItems || mobileMenuActions.length > 0 || !!mobileMenuExtra
     const closeMobileMenu = () => setMobileOpen(false)
 
+    const prefersReducedMotion = useReducedMotion()
+    const enterTransition = prefersReducedMotion
+      ? { duration: 0 }
+      : { duration: motionDuration.normal, ease: motionEase.out }
+    const exitTransition = prefersReducedMotion
+      ? { duration: 0 }
+      : { duration: motionDuration.normal, ease: motionEase.in }
+
     const headerBar = (
       <div
         className={cn(
@@ -164,11 +191,46 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
         </a>
 
         {hasNavItems && (
-          <Cluster as="div" gap="md" className="ml-2 hidden min-w-0 lg:flex">
-            {navItems.map((item) => (
-              <TopNavLink key={`${item.href}-${String(item.label)}`} item={item} />
-            ))}
-          </Cluster>
+          <NavigationMenuPrimitive.List className="ml-2 hidden min-w-0 flex-wrap items-center gap-4 lg:flex">
+            {navItems.map((item) =>
+              isTopNavGroup(item) ? (
+                <NavigationMenuPrimitive.Item key={topNavItemKey(item)}>
+                  <NavigationMenuPrimitive.Trigger
+                    className={cn(
+                      'tollerud-focus-ring group flex items-center gap-1 rounded-sm text-sm text-tollerud-text-secondary transition-colors hover:text-tollerud-text-primary',
+                      item.active && 'text-tollerud-yellow'
+                    )}
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className="h-3 w-3 shrink-0 transition-transform duration-fast group-data-[state=open]:rotate-180"
+                      aria-hidden="true"
+                    />
+                  </NavigationMenuPrimitive.Trigger>
+                  <NavigationMenuPrimitive.Content className="tollerud-topnav-flyout-content">
+                    <ul className="flex min-w-[12rem] flex-col gap-1 p-2">
+                      {item.items.map((child) => (
+                        <li key={topNavItemKey(child)}>
+                          <NavigationMenuPrimitive.Link asChild active={child.active}>
+                            <TopNavLink
+                              item={child}
+                              className="block rounded-md px-2 py-1.5 hover:bg-tollerud-surface-hover hover:text-tollerud-text-primary"
+                            />
+                          </NavigationMenuPrimitive.Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuPrimitive.Content>
+                </NavigationMenuPrimitive.Item>
+              ) : (
+                <NavigationMenuPrimitive.Item key={topNavItemKey(item)}>
+                  <NavigationMenuPrimitive.Link asChild active={item.active}>
+                    <TopNavLink item={item} />
+                  </NavigationMenuPrimitive.Link>
+                </NavigationMenuPrimitive.Item>
+              )
+            )}
+          </NavigationMenuPrimitive.List>
         )}
 
         {hasDesktopActions && (
@@ -201,88 +263,128 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
       </div>
     )
 
-    const mobileMenu = hasMobileMenuContent ? (
-      <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="tollerud-topnav-menu-overlay lg:hidden" />
-        <DialogPrimitive.Content
-          onOpenAutoFocus={(event) => event.preventDefault()}
-          className={cn(
-            'tollerud-topnav-menu-panel fixed inset-x-0 top-14 z-50 max-h-[calc(100vh-3.5rem)] overflow-y-auto border-b border-tollerud-border bg-tollerud-noir-950 px-6 py-4 shadow-xl outline-none lg:hidden',
-            maxWidth && 'mx-auto w-full',
-            maxWidth && maxWidthClasses[maxWidth]
-          )}
-        >
-          <DialogTitle className="tollerud-sr-only">{mobileMenuTitle}</DialogTitle>
-          <DialogDescription className="tollerud-sr-only">
-            Site navigation links and actions
-          </DialogDescription>
-          <div className="flex flex-col gap-4">
-            {hasNavItems && (
-              <Cluster as="div" gap="sm" className="flex-col items-stretch">
-                {navItems.map((item) => (
-                  <TopNavLink
-                    key={`mobile-${item.href}-${String(item.label)}`}
-                    item={item}
-                    className="px-1 py-2"
-                    onNavigate={closeMobileMenu}
-                  />
-                ))}
-              </Cluster>
-            )}
-            {mobileMenuActions.length > 0 && (
-              <Cluster
-                as="div"
-                gap="sm"
-                className={cn(
-                  'flex-col items-stretch',
-                  hasNavItems && 'border-t border-tollerud-border pt-4'
-                )}
-                onClick={closeMobileMenu}
-              >
-                {mobileMenuActions}
-              </Cluster>
-            )}
-            {mobileMenuExtra && (
-              <div className="border-t border-tollerud-border pt-4">
-                {mobileMenuExtra}
-              </div>
-            )}
-          </div>
-        </DialogPrimitive.Content>
-      </DialogPrimitive.Portal>
+    const viewport = hasNavItems ? (
+      <div className="tollerud-topnav-viewport-wrapper absolute inset-x-0 top-full hidden justify-center lg:flex">
+        <NavigationMenuPrimitive.Viewport className="tollerud-topnav-viewport border border-tollerud-border/30 bg-tollerud-noir-850 shadow-lg" />
+      </div>
     ) : null
+
+    const mobileMenu = hasMobileMenuContent ? (
+      <AnimatePresence>
+        {mobileOpen && (
+          <DialogPrimitive.Portal forceMount>
+            <DialogPrimitive.Overlay asChild forceMount>
+              <motion.div
+                className="tollerud-topnav-menu-overlay lg:hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1, transition: enterTransition }}
+                exit={{ opacity: 0, transition: exitTransition }}
+              />
+            </DialogPrimitive.Overlay>
+            <DialogPrimitive.Content
+              asChild
+              forceMount
+              onOpenAutoFocus={(event) => event.preventDefault()}
+            >
+              <motion.div
+                className={cn(
+                  'tollerud-topnav-menu-panel fixed inset-x-0 top-14 z-50 max-h-[calc(100vh-3.5rem)] overflow-y-auto border-b border-tollerud-border bg-tollerud-noir-950 px-6 py-4 shadow-xl outline-none lg:hidden',
+                  maxWidth && 'mx-auto w-full',
+                  maxWidth && maxWidthClasses[maxWidth]
+                )}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0, transition: enterTransition }}
+                exit={{ opacity: 0, y: -8, transition: exitTransition }}
+              >
+                <DialogTitle className="tollerud-sr-only">{mobileMenuTitle}</DialogTitle>
+                <DialogDescription className="tollerud-sr-only">
+                  Site navigation links and actions
+                </DialogDescription>
+                <div className="flex flex-col gap-4">
+                  {hasNavItems && (
+                    <Cluster as="div" gap="sm" className="flex-col items-stretch">
+                      {navItems.map((item) =>
+                        isTopNavGroup(item) ? (
+                          <Accordion
+                            key={topNavItemKey(item, 'mobile-group-')}
+                            className="rounded-none border-0 divide-y-0"
+                          >
+                            <AccordionItem value={topNavItemKey(item, 'mobile-group-')}>
+                              <AccordionTrigger className="rounded-sm px-1 py-2 text-sm font-normal text-tollerud-text-secondary hover:bg-transparent hover:text-tollerud-text-primary">
+                                {item.label}
+                              </AccordionTrigger>
+                              <AccordionContent className="flex flex-col gap-1 px-0 pb-1 pt-0">
+                                {item.items.map((child) => (
+                                  <TopNavLink
+                                    key={topNavItemKey(child, 'mobile-')}
+                                    item={child}
+                                    className="px-3 py-2 text-tollerud-text-secondary"
+                                    onNavigate={closeMobileMenu}
+                                  />
+                                ))}
+                              </AccordionContent>
+                            </AccordionItem>
+                          </Accordion>
+                        ) : (
+                          <TopNavLink
+                            key={topNavItemKey(item, 'mobile-')}
+                            item={item}
+                            className="px-1 py-2"
+                            onNavigate={closeMobileMenu}
+                          />
+                        )
+                      )}
+                    </Cluster>
+                  )}
+                  {mobileMenuActions.length > 0 && (
+                    <Cluster
+                      as="div"
+                      gap="sm"
+                      className={cn(
+                        'flex-col items-stretch',
+                        hasNavItems && 'border-t border-tollerud-border pt-4'
+                      )}
+                      onClick={closeMobileMenu}
+                    >
+                      {mobileMenuActions}
+                    </Cluster>
+                  )}
+                  {mobileMenuExtra && (
+                    <div className="border-t border-tollerud-border pt-4">
+                      {mobileMenuExtra}
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            </DialogPrimitive.Content>
+          </DialogPrimitive.Portal>
+        )}
+      </AnimatePresence>
+    ) : null
+
+    const navClassName = cn(
+      'relative z-30 border-b border-tollerud-border bg-tollerud-noir-950/85 backdrop-blur-[20px]',
+      sticky && 'sticky top-0',
+      className
+    )
 
     if (hasMobileMenuContent) {
       return (
         <DialogPrimitive.Root open={mobileOpen} onOpenChange={setMobileOpen}>
-          <nav
-            ref={ref}
-            className={cn(
-              'z-30 border-b border-tollerud-border bg-tollerud-noir-950/85 backdrop-blur-[20px]',
-              sticky && 'sticky top-0',
-              className
-            )}
-            {...props}
-          >
+          <NavigationMenuPrimitive.Root ref={ref} className={navClassName} {...props}>
             {headerBar}
+            {viewport}
             {mobileMenu}
-          </nav>
+          </NavigationMenuPrimitive.Root>
         </DialogPrimitive.Root>
       )
     }
 
     return (
-      <nav
-        ref={ref}
-        className={cn(
-          'z-30 border-b border-tollerud-border bg-tollerud-noir-950/85 backdrop-blur-[20px]',
-          sticky && 'sticky top-0',
-          className
-        )}
-        {...props}
-      >
+      <NavigationMenuPrimitive.Root ref={ref} className={navClassName} {...props}>
         {headerBar}
-      </nav>
+        {viewport}
+      </NavigationMenuPrimitive.Root>
     )
   }
 )

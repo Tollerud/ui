@@ -436,8 +436,7 @@
         "breadcrumb?: ReactNode",
         "pageTitle?: ReactNode",
         "actions?: ReactNode",
-        "menuOpen?: boolean",
-        "onMenuToggle?: () => void",
+        "menuTrigger?: ReactNode",
         "sticky?: boolean",
         "showMobileLogo?: boolean"
       ]
@@ -1220,23 +1219,48 @@
       "name": "SheetProps",
       "props": [
         "open?: boolean",
+        "defaultOpen?: boolean",
         "onOpenChange?: (open: boolean) => void",
         "children: ReactNode"
       ]
     }
   ],
-  "SidebarNav": [
+  "Sidebar": [
     {
-      "name": "SidebarNavProps",
+      "name": "SidebarProviderProps",
+      "extends": "extends HTMLAttributes<HTMLDivElement>",
+      "props": [
+        "open?: boolean",
+        "defaultOpen?: boolean",
+        "onOpenChange?: (open: boolean) => void",
+        "keyboardShortcut?: boolean"
+      ]
+    },
+    {
+      "name": "SidebarProps",
       "extends": "extends HTMLAttributes<HTMLElement>",
       "props": [
-        "projectName: ReactNode",
-        "projectSubtitle?: ReactNode",
-        "homeHref?: string",
-        "groups?: SidebarNavGroup[]",
-        "items?: SidebarNavItem[]",
-        "onItemSelect?: (item: SidebarNavItem) => void",
-        "children?: ReactNode"
+        "side?: SidebarSide",
+        "collapsible?: SidebarCollapsible",
+        "mobileTitle?: string"
+      ]
+    },
+    {
+      "name": "SidebarMenuButtonProps",
+      "extends": "extends ButtonHTMLAttributes<HTMLButtonElement>",
+      "props": [
+        "asChild?: boolean",
+        "isActive?: boolean",
+        "icon?: ReactNode",
+        "tooltip?: ReactNode"
+      ]
+    },
+    {
+      "name": "SidebarMenuSubButtonProps",
+      "extends": "extends ButtonHTMLAttributes<HTMLButtonElement>",
+      "props": [
+        "asChild?: boolean",
+        "isActive?: boolean"
       ]
     }
   ],
@@ -1518,7 +1542,7 @@
     },
     {
       "name": "TopNavProps",
-      "extends": "extends HTMLAttributes<HTMLElement>",
+      "extends": "extends Omit<HTMLAttributes<HTMLElement>, 'defaultValue' | 'dir'>",
       "props": [
         "projectName: ReactNode",
         "homeHref?: string",
