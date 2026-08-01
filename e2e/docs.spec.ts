@@ -82,4 +82,28 @@ test.describe('docs site', () => {
     await page.getByRole('button', { name: 'Switch to dark' }).click()
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark')
   })
+
+  // Regression coverage for the Sidebar primitive's mobile off-canvas panel
+  // (built on Sheet's framer-motion forceMount/AnimatePresence recipe) — a
+  // real browser is needed here since the exit-animation-then-unmount timing
+  // isn't reliably observable through jsdom.
+  test('mobile sidebar sheet closes on Escape', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 })
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Menu' }).click()
+    const dialog = page.getByRole('dialog')
+    await expect(dialog).toBeVisible()
+    await page.keyboard.press('Escape')
+    await expect(dialog).not.toBeVisible({ timeout: 3000 })
+  })
+
+  test('mobile sidebar sheet closes on X click', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 })
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Menu' }).click()
+    const dialog = page.getByRole('dialog')
+    await expect(dialog).toBeVisible()
+    await dialog.getByRole('button', { name: 'Close' }).click()
+    await expect(dialog).not.toBeVisible({ timeout: 3000 })
+  })
 })
