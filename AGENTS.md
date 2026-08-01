@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v5.0.1** — `Sidebar`'s desktop rail height is now driven by an overridable `--sidebar-height` CSS custom property (default `100vh`, was a bare `h-screen`) — set it on an ancestor to embed `Sidebar` in a shorter container; no change for normal full-page usage. (v5.0.0 — BREAKING — `SidebarNav` is removed, replaced by the `Sidebar` primitive family (`SidebarProvider`/`Sidebar`/`SidebarMenu`/etc., see the "Sidebar primitive family" version note below); `DashboardTopBar`'s `menuOpen`/`onMenuToggle` are replaced by a `menuTrigger` slot. `DashboardShell`'s own props are unchanged. v4.19.0: `TopNavItem` gains `items?: TopNavItem[]` for flyout groups — **requires installing the new peer dependency `@radix-ui/react-navigation-menu`** even if you don't use `items`. v4.18.1: `CommandMenu` traps `Tab` focus. v4.18.0: `Sheet`/`Drawer` animate with `framer-motion` — closing now unmounts asynchronously, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously.)
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v5.0.1** — `Sidebar`'s desktop rail height is now driven by an overridable `--sidebar-height` CSS custom property (default `100vh`, was a bare `h-screen`) — set it on an ancestor to embed `Sidebar` in a shorter container; no change for normal full-page usage. (v5.0.0 — BREAKING — `SidebarNav` is removed, replaced by the `Sidebar` primitive family (`SidebarProvider`/`Sidebar`/`SidebarMenu`/etc., see the "Sidebar primitive family" version note below); `DashboardTopBar`'s `menuOpen`/`onMenuToggle` are replaced by a `menuTrigger` slot. `DashboardShell`'s own props are unchanged. v4.19.0: `TopNavItem` gains `items?: TopNavItem[]` for flyout groups — **requires installing the new peer dependency `@radix-ui/react-navigation-menu`** even if you don't use `items`. v4.18.2: `CommandMenu` traps `Tab` focus. v4.18.1: `Sheet`/`Drawer` animate with `framer-motion` — closing now unmounts asynchronously, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously. v4.18.0: `PasswordInput` gains `labelAction?: ReactNode`.)
 
 ---
 
@@ -920,6 +920,15 @@ Migration for direct `SidebarNav` usage:
     </SidebarContent>
   </Sidebar>
 </SidebarProvider>
+```
+
+#### PasswordInput labelAction (≥ 4.18.0)
+
+`PasswordInput` gains `labelAction?: ReactNode`, rendered at the right edge of the label row (e.g. a "Forgot?" link next to "Password"). Opt-in — no breaking changes.
+
+```tsx
+<PasswordInput label="Password" value={pw} onChange={e => setPw(e.target.value)}
+  labelAction={<button type="button" onClick={onForgot}>Forgot?</button>} />
 ```
 
 #### StructuredCard, StatCard secondary value, AuthSplitLayout (≥ 4.17.0)

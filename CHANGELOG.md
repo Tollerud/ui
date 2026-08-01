@@ -51,13 +51,13 @@ No compatibility shim is provided for `SidebarNav` — per this project's stated
 
 ### Changed
 
-- `TopNav`'s mobile hamburger panel now animates with `framer-motion` (the same `forceMount` + `AnimatePresence` recipe as `Sheet`, see 4.18.0) instead of CSS `@keyframes`. Closing now unmounts asynchronously after the exit transition — the same test-timing note from 4.18.0 applies here too (`await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())`).
+- `TopNav`'s mobile hamburger panel now animates with `framer-motion` (the same `forceMount` + `AnimatePresence` recipe as `Sheet`, see 4.18.1) instead of CSS `@keyframes`. Closing now unmounts asynchronously after the exit transition — the same test-timing note from 4.18.1 applies here too (`await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())`).
 
-- The dead `.tollerud-topnav-menu-overlay[data-state]`/`.tollerud-topnav-menu-panel[data-state]` CSS keyframe rules in `globals-layers.css` were removed (superseded by framer-motion, same as Sheet's in 4.18.0). The static box-styling rules for those classes are unchanged.
+- The dead `.tollerud-topnav-menu-overlay[data-state]`/`.tollerud-topnav-menu-panel[data-state]` CSS keyframe rules in `globals-layers.css` were removed (superseded by framer-motion, same as Sheet's in 4.18.1). The static box-styling rules for those classes are unchanged.
 
 No breaking changes to existing props — `items` is opt-in and everything else is source-compatible. The new required peer dependency is the one install-time action existing consumers need to take.
 
-## 4.18.1 — 2026-07-31 — CommandMenu traps Tab focus
+## 4.18.2 — 2026-07-31 — CommandMenu traps Tab focus
 
 ### Fixed
 
@@ -65,7 +65,7 @@ No breaking changes to existing props — `items` is opt-in and everything else 
 
 No breaking changes.
 
-## 4.18.0 — 2026-07-31 — Sheet now animates with framer-motion
+## 4.18.1 — 2026-07-31 — Sheet now animates with framer-motion
 
 ### Changed
 
@@ -82,6 +82,14 @@ No breaking changes.
 - `@radix-ui/react-compose-refs`, `@radix-ui/react-focus-scope`, and `@radix-ui/react-use-controllable-state` are now declared as explicit `dependencies` — they were already resolving transitively via `@radix-ui/react-dialog`/`@radix-ui/react-dropdown-menu`, so this is a documentation fix with zero install-size impact, not a new footprint.
 
 No breaking changes — every consumer-facing prop is unchanged; only the close-unmount timing and the animation engine changed.
+
+## 4.18.0 — 2026-07-31 — PasswordInput labelAction
+
+### Added
+
+- `PasswordInput` gains a `labelAction?: ReactNode` prop, rendered at the right edge of the label row (e.g. a "Forgot?" link next to "Password"). Both docs demos (`docs-app/components/pages/page-auth.jsx`, `docs-app/components/pages/page-forms.jsx`) already passed this prop, but it was silently dropped — `PasswordInputProps` never declared it, so it fell through to `...props` on the underlying native `<input>` instead of rendering.
+
+No breaking changes — this is an opt-in addition.
 
 ## 4.17.1 — 2026-07-30 — Fix dropdown-search autofocus in floating popovers
 

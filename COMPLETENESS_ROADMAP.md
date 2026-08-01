@@ -1,6 +1,6 @@
 # Tollerud User Interface — Roadmap
 
-Last updated: 2026-07-26
+Last updated: 2026-07-31
 
 Living roadmap for `@tollerud/ui`. Completed planning docs: [docs/archive/](docs/archive/).
 
