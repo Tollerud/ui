@@ -28,8 +28,18 @@ export interface TopNavItem {
   href?: string
   active?: boolean
   external?: boolean
+  /** Shown in flyout/dropdown and mobile rows. Not rendered in the top bar itself. */
+  icon?: ReactNode
   /** Child links shown in a flyout (desktop) / accordion (mobile). One level of nesting. */
   items?: TopNavItem[]
+}
+
+/** A labeled group of rows appended to the mobile menu, below nav items/actions —
+ *  e.g. "recent stores" or an account section. Renders with the same row styling
+ *  as nav item dropdowns, so ad-hoc consumer markup doesn't drift from the system. */
+export interface TopNavSection {
+  label?: ReactNode
+  items: TopNavItem[]
 }
 
 export type TopNavMaxWidth = 'default' | 'wide' | 'full' | false
@@ -112,7 +122,9 @@ export interface TopNavProps extends Omit<HTMLAttributes<HTMLElement>, 'defaultV
   maxWidth?: TopNavMaxWidth
   /** Screen reader title for the mobile menu dialog. */
   mobileMenuTitle?: string
-  /** Slot rendered at the bottom of the mobile nav sheet, below nav items and actions, separated by a divider. Consumer controls all markup. */
+  /** Labeled row groups appended below nav items/actions (e.g. recent items, account links) — styled consistently with the rest of the menu. Rendered before `mobileMenuExtra`. */
+  mobileMenuSections?: TopNavSection[]
+  /** Freeform slot rendered at the bottom of the mobile nav sheet, below nav items, actions, and `mobileMenuSections`, separated by a divider. Consumer controls all markup. */
   mobileMenuExtra?: ReactNode
 }
 
@@ -143,6 +155,58 @@ function TopNavLink({
   )
 }
 
+/** Button-styled row used everywhere a dropdown/list of items appears: desktop flyout
+ *  panels, the mobile menu, and mobile accordion groups — one consistent row language
+ *  (icon slot, full-width hover/active surface) instead of each surface inventing its own. */
+function TopNavMenuRow({
+  item,
+  className,
+  onNavigate,
+}: {
+  item: TopNavItem
+  className?: string
+  onNavigate?: () => void
+}) {
+  return (
+    <a
+      href={item.href}
+      target={item.external ? '_blank' : undefined}
+      rel={item.external ? 'noreferrer' : undefined}
+      aria-current={item.active ? 'page' : undefined}
+      onClick={onNavigate}
+      className={cn(
+        'tollerud-focus-ring flex min-h-[40px] items-center gap-2.5 rounded-md px-2.5 py-2 text-[13.5px] font-medium text-tollerud-text-secondary no-underline transition-colors duration-fast',
+        'hover:bg-tollerud-surface-hover hover:text-tollerud-text-primary',
+        item.active &&
+          'bg-tollerud-yellow/10 text-tollerud-text-primary shadow-[inset_2px_0_0_0] shadow-tollerud-yellow',
+        className
+      )}
+    >
+      {item.icon && (
+        <span
+          className={cn(
+            'flex h-[15px] w-[15px] shrink-0 items-center justify-center text-tollerud-text-muted',
+            item.active && 'text-tollerud-yellow'
+          )}
+        >
+          {item.icon}
+        </span>
+      )}
+      <span className="truncate">{item.label}</span>
+    </a>
+  )
+}
+
+/** SidebarGroupLabel's exact styling — same "muted uppercase eyebrow" language for
+ *  labeled row groups wherever they appear, so Sidebar and TopNav read as one system. */
+function TopNavGroupLabel({ children }: { children: ReactNode }) {
+  return (
+    <div className="px-2.5 pb-1.5 text-[10.5px] font-semibold uppercase tracking-[0.09em] text-tollerud-text-muted">
+      {children}
+    </div>
+  )
+}
+
 const TopNav = forwardRef<HTMLElement, TopNavProps>(
   (
     {
@@ -154,6 +218,7 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
       sticky = true,
       maxWidth = false,
       mobileMenuTitle = 'Navigation menu',
+      mobileMenuSections,
       mobileMenuExtra,
       ...props
     },
@@ -164,7 +229,9 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
     const { inline: mobileInlineActions, menu: mobileMenuActions, desktop: desktopActions } =
       useMemo(() => partitionActions(actions), [actions])
     const hasDesktopActions = desktopActions.length > 0
-    const hasMobileMenuContent = hasNavItems || mobileMenuActions.length > 0 || !!mobileMenuExtra
+    const hasMobileSections = !!mobileMenuSections && mobileMenuSections.length > 0
+    const hasMobileMenuContent =
+      hasNavItems || mobileMenuActions.length > 0 || hasMobileSections || !!mobileMenuExtra
     const closeMobileMenu = () => setMobileOpen(false)
 
     const prefersReducedMotion = useReducedMotion()
@@ -208,14 +275,11 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
                     />
                   </NavigationMenuPrimitive.Trigger>
                   <NavigationMenuPrimitive.Content className="tollerud-topnav-flyout-content">
-                    <ul className="flex min-w-[12rem] flex-col gap-1 p-2">
+                    <ul className="flex min-w-[12rem] flex-col gap-0.5 p-2">
                       {item.items.map((child) => (
                         <li key={topNavItemKey(child)}>
                           <NavigationMenuPrimitive.Link asChild active={child.active}>
-                            <TopNavLink
-                              item={child}
-                              className="block rounded-md px-2 py-1.5 hover:bg-tollerud-surface-hover hover:text-tollerud-text-primary"
-                            />
+                            <TopNavMenuRow item={child} />
                           </NavigationMenuPrimitive.Link>
                         </li>
                       ))}
@@ -302,7 +366,7 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
                 </DialogDescription>
                 <div className="flex flex-col gap-4">
                   {hasNavItems && (
-                    <Cluster as="div" gap="sm" className="flex-col items-stretch">
+                    <div className="flex flex-col gap-0.5">
                       {navItems.map((item) =>
                         isTopNavGroup(item) ? (
                           <Accordion
@@ -310,31 +374,43 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
                             className="rounded-none border-0 divide-y-0"
                           >
                             <AccordionItem value={topNavItemKey(item, 'mobile-group-')}>
-                              <AccordionTrigger className="rounded-sm px-1 py-2 text-sm font-normal text-tollerud-text-secondary hover:bg-transparent hover:text-tollerud-text-primary">
-                                {item.label}
+                              <AccordionTrigger
+                                className={cn(
+                                  'min-h-[40px] gap-2.5 rounded-md px-2.5 py-2 text-[13.5px] font-medium text-tollerud-text-secondary transition-colors duration-fast hover:bg-tollerud-surface-hover hover:text-tollerud-text-primary',
+                                  item.active && 'text-tollerud-yellow'
+                                )}
+                              >
+                                <span className="flex min-w-0 flex-1 items-center gap-2.5">
+                                  {item.icon && (
+                                    <span className="flex h-[15px] w-[15px] shrink-0 items-center justify-center text-tollerud-text-muted">
+                                      {item.icon}
+                                    </span>
+                                  )}
+                                  <span className="truncate">{item.label}</span>
+                                </span>
                               </AccordionTrigger>
-                              <AccordionContent className="flex flex-col gap-1 px-0 pb-1 pt-0">
-                                {item.items.map((child) => (
-                                  <TopNavLink
-                                    key={topNavItemKey(child, 'mobile-')}
-                                    item={child}
-                                    className="px-3 py-2 text-tollerud-text-secondary"
-                                    onNavigate={closeMobileMenu}
-                                  />
-                                ))}
+                              <AccordionContent className="px-0 pb-1 pt-0.5">
+                                <div className="ml-[19px] flex flex-col gap-0.5 border-l border-tollerud-border py-0.5 pl-3">
+                                  {item.items.map((child) => (
+                                    <TopNavMenuRow
+                                      key={topNavItemKey(child, 'mobile-')}
+                                      item={child}
+                                      onNavigate={closeMobileMenu}
+                                    />
+                                  ))}
+                                </div>
                               </AccordionContent>
                             </AccordionItem>
                           </Accordion>
                         ) : (
-                          <TopNavLink
+                          <TopNavMenuRow
                             key={topNavItemKey(item, 'mobile-')}
                             item={item}
-                            className="px-1 py-2"
                             onNavigate={closeMobileMenu}
                           />
                         )
                       )}
-                    </Cluster>
+                    </div>
                   )}
                   {mobileMenuActions.length > 0 && (
                     <Cluster
@@ -349,8 +425,38 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
                       {mobileMenuActions}
                     </Cluster>
                   )}
+                  {hasMobileSections && (
+                    <div
+                      className={cn(
+                        'flex flex-col gap-[18px]',
+                        (hasNavItems || mobileMenuActions.length > 0) &&
+                          'border-t border-tollerud-border pt-4'
+                      )}
+                    >
+                      {mobileMenuSections!.map((section, i) => (
+                        <div
+                          key={section.label ? String(section.label) : `mobile-section-${i}`}
+                          className="flex flex-col gap-0.5"
+                        >
+                          {section.label && <TopNavGroupLabel>{section.label}</TopNavGroupLabel>}
+                          {section.items.map((item) => (
+                            <TopNavMenuRow
+                              key={topNavItemKey(item, `mobile-section-${i}-`)}
+                              item={item}
+                              onNavigate={closeMobileMenu}
+                            />
+                          ))}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                   {mobileMenuExtra && (
-                    <div className="border-t border-tollerud-border pt-4">
+                    <div
+                      className={cn(
+                        (hasNavItems || mobileMenuActions.length > 0 || hasMobileSections) &&
+                          'border-t border-tollerud-border pt-4'
+                      )}
+                    >
                       {mobileMenuExtra}
                     </div>
                   )}

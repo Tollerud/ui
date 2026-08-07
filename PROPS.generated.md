@@ -1039,4 +1039,5 @@
 - `sticky?: boolean`
 - `maxWidth?: TopNavMaxWidth`
 - `mobileMenuTitle?: string`
+- `mobileMenuSections?: TopNavSection[]`
 - `mobileMenuExtra?: ReactNode`

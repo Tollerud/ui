@@ -1,10 +1,10 @@
 # Tollerud User Interface — Roadmap
 
-Last updated: 2026-07-31
+Last updated: 2026-08-08
 
 Living roadmap for `@tollerud/ui`. Completed planning docs: [docs/archive/](docs/archive/).
 
-## npm package (components/*.tsx) — v5.0.1
+## npm package (components/*.tsx) — v5.1.0
 
 Shipped exports are documented in [SKILL.md](SKILL.md) and [COMPONENTS.md](COMPONENTS.md). Live demos: [design.tollerud.dev](https://design.tollerud.dev/).
 

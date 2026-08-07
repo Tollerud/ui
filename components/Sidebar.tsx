@@ -144,8 +144,9 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
             <SheetContent
               side={side}
               title={mobileTitle}
+              style={{ '--sidebar-width-mobile': '288px' } as CSSProperties}
               className={cn(
-                'flex w-[--sidebar-width-mobile] max-w-[--sidebar-width-mobile] flex-col gap-0 border-0 p-0',
+                'flex w-[var(--sidebar-width-mobile)] max-w-[var(--sidebar-width-mobile)] flex-col gap-0 border-0 p-0',
                 side === 'left' ? 'border-r' : 'border-l',
                 className
               )}
