@@ -227,7 +227,7 @@ h1,h2,h3,h4,h5,h6,p { margin: 0; }
 /* ─────────────────────────────────────────────────────────────
    App shell: sidebar + content
    ───────────────────────────────────────────────────────────── */
-.ds-shell { display: flex; min-height: 100vh; background: var(--background); }
+.ds-shell { display: flex; width: 100%; min-height: 100vh; background: var(--background); }
 
 /* Brand lockup inside <SidebarHeader> — the sidebar box/nav-link/scrim
    styling itself now comes from the @tollerud/ui Sidebar primitive. */

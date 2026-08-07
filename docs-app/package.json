@@ -10,7 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@paper-design/shaders-react": "^0.0.78",
+    "@paper-design/shaders-react": "^0.0.79",
     "@tollerud/ui": "file:..",
     "clsx": "^2.1.1",
     "lucide-react": "^1.18.0",

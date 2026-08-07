@@ -7,6 +7,24 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.1.0 — 2026-08-08 — TopNav mobile menu rows + grouped sections; Sidebar mobile drawer width fix
+
+### Added
+
+- `TopNavItem` gains `icon?: ReactNode`, rendered in dropdown/mobile rows (desktop flyout panels, the mobile menu, and mobile accordion groups). Not rendered in the top bar itself — that stays plain text, matching the existing horizontal-nav convention.
+
+- `TopNav` gains `mobileMenuSections?: TopNavSection[]` — labeled row groups appended below nav items/actions in the mobile sheet (e.g. recent items, an account section), styled consistently with the rest of the menu (same "muted uppercase eyebrow" label as `SidebarGroupLabel`, one divider, no ad-hoc markup needed). Previously the only way to add this kind of content was the freeform `mobileMenuExtra` slot, which forced every consumer to hand-roll their own dividers/labels/row styling — inconsistently. `mobileMenuExtra` is unchanged and still available for truly custom content, rendered after `mobileMenuSections`.
+
+### Fixed
+
+- `TopNav`'s mobile menu never got the button-row treatment `Sidebar`'s composable primitives shipped in 5.0.0 — rows were bare `<a>` tags with no hover background, no consistent height, and accordion group triggers explicitly suppressed their own hover state (`hover:bg-transparent`). All dropdown/list surfaces (desktop flyout content, mobile nav rows, mobile accordion children, and the new `mobileMenuSections`) now share one row component: 40px min-height, rounded hover/active surface, optional icon slot, and the same yellow inset-shadow active indicator `SidebarMenuButton` uses. Accordion group children are now indented under a left guide-line matching `SidebarMenuSub`.
+
+- `Sidebar`'s mobile off-canvas panel was rendering at the wrong width — roughly 59% of the viewport instead of the intended 288px (`--sidebar-width-mobile`), because `w-[--sidebar-width-mobile]`/`max-w-[--sidebar-width-mobile]` used Tailwind v3's square-bracket CSS-variable shorthand, which this project's Tailwind v4 no longer supports (v4 requires either `w-(--foo)` or an explicit `w-[var(--foo)]`). The utility silently produced no `width` rule at all, so the panel just shrank to fit its content. Fixed with the explicit `var()` form, plus the width variable is now also set inline on the sheet content itself so it no longer depends on inheriting through the `SidebarProvider` div — a Radix `Dialog.Portal` renders the mobile sheet directly under `<body>`, outside that div's subtree, so the CSS custom property was never in scope there regardless of the Tailwind syntax issue.
+
+- The docs site's own layout (`docs-app`) had a large empty strip on the right at wide viewports: `.ds-shell` is a flex item inside a `w-full` wrapper but had no `width: 100%` of its own, so it shrank to its content's natural width instead of filling the viewport. No consumer impact — internal to `docs-app`, not part of the published package.
+
+No breaking changes. Existing `TopNav`/`Sidebar` usage is visually improved with no prop changes required; `icon`/`mobileMenuSections` are additive.
+
 ## 5.0.1 — 2026-08-01 — Sidebar height is now overridable; docs coverage added
 
 ### Fixed

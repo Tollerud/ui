@@ -71,7 +71,7 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle. Pass mobileMenuExtra to inject an extra slot at the bottom of the mobile sheet, below all nav items and actions, separated by a divider — consumer controls all markup.">
+      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle. TopNavItem accepts an optional icon, shown in dropdown/mobile rows (not the top bar). Pass mobileMenuSections for labeled row groups appended to the mobile sheet (e.g. an account section) — styled consistently, no hand-rolled dividers needed. Pass mobileMenuExtra for anything more custom, injected at the very bottom of the mobile sheet, separated by a divider — consumer controls all markup.">
         <Demo name="top-nav" variant="col" code={`<TopNav
   projectName="Mission Control"
   maxWidth="default"
@@ -129,6 +129,41 @@ function PageScreens({ go }) {
             mobileMenuExtra={
               <p style={{ fontSize: 13, color: 'var(--text-muted)', margin: 0 }}>Signed in as ops@tollerud.dev</p>
             }
+            className="rounded-lg border border-tollerud-border"
+          />
+        </Demo>
+        <Demo name="top-nav-mobile-sections" variant="col" desc="icon + mobileMenuSections — labeled row groups in the mobile sheet, styled consistently (open on a narrow viewport to see it)" code={`<TopNav
+  projectName="Mission Control"
+  navItems={[
+    { label: 'Overview', href: '/', active: true, icon: <Icons.home size={15} /> },
+    { label: 'Hosts', href: '/hosts', icon: <Icons.server size={15} /> },
+  ]}
+  mobileMenuSections={[
+    {
+      label: 'Account',
+      items: [
+        { label: 'Settings', href: '/settings', icon: <Icons.settings size={15} /> },
+        { label: 'Sign out', href: '/logout', icon: <Icons.logout size={15} /> },
+      ],
+    },
+  ]}
+/>`}>
+          <TopNav
+            sticky={false}
+            projectName="Mission Control"
+            navItems={[
+              { label: 'Overview', href: '#', active: true, icon: <Icons.home size={15} /> },
+              { label: 'Hosts', href: '#', icon: <Icons.server size={15} /> },
+            ]}
+            mobileMenuSections={[
+              {
+                label: 'Account',
+                items: [
+                  { label: 'Settings', href: '#', icon: <Icons.settings size={15} /> },
+                  { label: 'Sign out', href: '#', icon: <Icons.logout size={15} /> },
+                ],
+              },
+            ]}
             className="rounded-lg border border-tollerud-border"
           />
         </Demo>

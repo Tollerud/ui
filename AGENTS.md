@@ -1,6 +1,6 @@
 # Tollerud User Interface — AI Agent Guide
 
-Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v5.0.1** — `Sidebar`'s desktop rail height is now driven by an overridable `--sidebar-height` CSS custom property (default `100vh`, was a bare `h-screen`) — set it on an ancestor to embed `Sidebar` in a shorter container; no change for normal full-page usage. (v5.0.0 — BREAKING — `SidebarNav` is removed, replaced by the `Sidebar` primitive family (`SidebarProvider`/`Sidebar`/`SidebarMenu`/etc., see the "Sidebar primitive family" version note below); `DashboardTopBar`'s `menuOpen`/`onMenuToggle` are replaced by a `menuTrigger` slot. `DashboardShell`'s own props are unchanged. v4.19.0: `TopNavItem` gains `items?: TopNavItem[]` for flyout groups — **requires installing the new peer dependency `@radix-ui/react-navigation-menu`** even if you don't use `items`. v4.18.2: `CommandMenu` traps `Tab` focus. v4.18.1: `Sheet`/`Drawer` animate with `framer-motion` — closing now unmounts asynchronously, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously. v4.18.0: `PasswordInput` gains `labelAction?: ReactNode`.)
+Guidance for AI coding assistants (Claude Code, Cursor, GitHub Copilot, Codex, etc.) working in projects that use `@tollerud/ui`. **v5.1.0** — `TopNav`'s dropdown/mobile rows (desktop flyout content, mobile nav rows, mobile accordion children) now share one button-styled row instead of bare unstyled links — matching `SidebarMenuButton`'s row language from 5.0.0. New `TopNavItem.icon?: ReactNode` and `TopNav`'s `mobileMenuSections?: TopNavSection[]` prop for labeled row groups in the mobile sheet (use instead of hand-rolling markup inside `mobileMenuExtra`). Also fixed: `Sidebar`'s mobile off-canvas panel was rendering at ~59% of viewport width instead of the intended 288px (a Tailwind v4 arbitrary-value syntax issue — `w-[--foo]` silently produced no `width` rule). No breaking changes. (v5.0.1 — `Sidebar`'s desktop rail height is now driven by an overridable `--sidebar-height` CSS custom property (default `100vh`, was a bare `h-screen`) — set it on an ancestor to embed `Sidebar` in a shorter container; no change for normal full-page usage. v5.0.0 — BREAKING — `SidebarNav` is removed, replaced by the `Sidebar` primitive family (`SidebarProvider`/`Sidebar`/`SidebarMenu`/etc., see the "Sidebar primitive family" version note below); `DashboardTopBar`'s `menuOpen`/`onMenuToggle` are replaced by a `menuTrigger` slot. `DashboardShell`'s own props are unchanged. v4.19.0: `TopNavItem` gains `items?: TopNavItem[]` for flyout groups — **requires installing the new peer dependency `@radix-ui/react-navigation-menu`** even if you don't use `items`. v4.18.2: `CommandMenu` traps `Tab` focus. v4.18.1: `Sheet`/`Drawer` animate with `framer-motion` — closing now unmounts asynchronously, so tests/consumers reading the DOM right after `onOpenChange(false)` should `await` the removal instead of asserting synchronously. v4.18.0: `PasswordInput` gains `labelAction?: ReactNode`.)
 
 ---
 
@@ -642,6 +642,24 @@ Give a `navItems` entry `items: TopNavItem[]` instead of `href` to turn it into 
       { label: 'API', href: '/services/api' },
       { label: 'Worker', href: '/services/worker' },
     ] },
+  ]}
+/>
+```
+
+`TopNavItem.icon?: ReactNode` (≥ 5.1.0) shows in dropdown/mobile rows (not the top bar). Use `mobileMenuSections?: TopNavSection[]` for labeled row groups appended below nav items/actions in the mobile sheet — e.g. an account section — instead of hand-rolling markup inside `mobileMenuExtra`:
+
+```tsx
+<TopNav
+  projectName="Project Name"
+  navItems={[{ label: 'Overview', href: '/overview', active: true, icon: <Icons.home size={15} /> }]}
+  mobileMenuSections={[
+    {
+      label: 'Account',
+      items: [
+        { label: 'Settings', href: '/settings', icon: <Icons.settings size={15} /> },
+        { label: 'Sign out', href: '/logout', icon: <Icons.logout size={15} /> },
+      ],
+    },
   ]}
 />
 ```
