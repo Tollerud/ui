@@ -1041,3 +1041,4 @@
 - `mobileMenuTitle?: string`
 - `mobileMenuSections?: TopNavSection[]`
 - `mobileMenuExtra?: ReactNode`
+- `userMenu?: TopNavUserMenu`

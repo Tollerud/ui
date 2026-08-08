@@ -1552,7 +1552,8 @@
         "maxWidth?: TopNavMaxWidth",
         "mobileMenuTitle?: string",
         "mobileMenuSections?: TopNavSection[]",
-        "mobileMenuExtra?: ReactNode"
+        "mobileMenuExtra?: ReactNode",
+        "userMenu?: TopNavUserMenu"
       ]
     }
   ]

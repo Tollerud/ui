@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { Button } from './Button'
 import { TopNav, TopNavAction } from './TopNav'
 
@@ -173,6 +173,42 @@ describe('TopNav', () => {
     await user.click(within(menu).getByRole('button', { name: 'Services' }))
     expect(within(menu).getByRole('link', { name: 'API' })).toBeInTheDocument()
     expect(within(menu).getByRole('link', { name: 'Worker' })).toBeInTheDocument()
+  })
+
+  it('renders userMenu as a desktop DropdownMenu and appends its sections to the mobile sheet', async () => {
+    const user = userEvent.setup()
+    const handleSignOut = vi.fn()
+
+    render(
+      <TopNav
+        projectName="Mission Control"
+        navItems={[{ label: 'Overview', href: '/overview' }]}
+        userMenu={{
+          trigger: 'Ada',
+          triggerLabel: 'Account menu',
+          sections: [
+            {
+              label: 'Account',
+              items: [
+                { label: 'Settings', href: '/settings' },
+                { label: 'Sign out', onClick: handleSignOut },
+              ],
+            },
+          ],
+        }}
+      />
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Account menu' }))
+    expect(await screen.findByText('Account')).toBeInTheDocument()
+    expect(screen.getByRole('menuitem', { name: 'Settings' })).toBeInTheDocument()
+    await user.click(screen.getByRole('menuitem', { name: 'Sign out' }))
+    expect(handleSignOut).toHaveBeenCalledTimes(1)
+
+    await user.click(screen.getByRole('button', { name: 'Toggle navigation menu' }))
+    const menu = screen.getByRole('dialog', { name: 'Navigation menu' })
+    expect(within(menu).getByRole('link', { name: 'Settings' })).toBeInTheDocument()
+    expect(within(menu).getByRole('button', { name: 'Sign out' })).toBeInTheDocument()
   })
 
   it('hides TopNavAction mobile="hidden" on mobile but shows on desktop', () => {
