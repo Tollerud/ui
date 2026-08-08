@@ -7,6 +7,14 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.6.0 — 2026-08-09 — TopNav userMenu placement
+
+### Added
+
+- `TopNavUserMenu` gains `placement?: 'start' | 'end'` (default `'end'`, unchanged behavior) — set `'start'` to render the desktop `userMenu` dropdown before other `actions` in the cluster instead of after.
+
+No breaking changes.
+
 ## 5.5.0 — 2026-08-09 — TopNav flyout: fix close-on-hover-out, pixel-perfect row alignment
 
 ### Fixed

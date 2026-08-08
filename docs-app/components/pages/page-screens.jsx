@@ -71,7 +71,7 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle. TopNavItem accepts an optional icon, shown in dropdown/mobile rows (not the top bar), and an optional onClick — renders the row as a button instead of a link, for actions like sign out (ignored if href is set). Desktop flyout groups (items) are click-to-open and position their panel with Floating UI, anchored directly to the trigger that opened it. Pass mobileMenuSections for labeled row groups appended to the mobile sheet (e.g. an account section) — styled consistently, no hand-rolled dividers needed, and collapsed behind their label by default (same accordion treatment as flyout groups) so several sections don't turn into a wall of rows; set defaultOpen on a section to start it expanded, or collapsible={false} to always show it. Pass userMenu for a single account/user menu rendered from one data structure — a DropdownMenu next to the desktop actions, and the same sections appended to the mobile sheet automatically, so the two can't drift out of sync. Pass mobileMenuExtra for anything more custom, injected at the very bottom of the mobile sheet, separated by a divider — consumer controls all markup.">
+      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle. TopNavItem accepts an optional icon, shown in dropdown/mobile rows (not the top bar), and an optional onClick — renders the row as a button instead of a link, for actions like sign out (ignored if href is set). Desktop flyout groups (items) are click-to-open and position their panel with Floating UI, anchored directly to the trigger that opened it. Pass mobileMenuSections for labeled row groups appended to the mobile sheet (e.g. an account section) — styled consistently, no hand-rolled dividers needed, and collapsed behind their label by default (same accordion treatment as flyout groups) so several sections don't turn into a wall of rows; set defaultOpen on a section to start it expanded, or collapsible={false} to always show it. Pass userMenu for a single account/user menu rendered from one data structure — a DropdownMenu next to the desktop actions, and the same sections appended to the mobile sheet automatically, so the two can't drift out of sync; set placement: 'start' to render it before other actions instead of after (the default). Pass mobileMenuExtra for anything more custom, injected at the very bottom of the mobile sheet, separated by a divider — consumer controls all markup.">
         <Demo name="top-nav" variant="col" code={`<TopNav
   projectName="Mission Control"
   maxWidth="default"
@@ -172,7 +172,7 @@ function PageScreens({ go }) {
             className="rounded-lg border border-tollerud-border"
           />
         </Demo>
-        <Demo name="top-nav-user-menu" variant="col" desc="userMenu — one data structure rendered as a desktop DropdownMenu and appended to the mobile sheet's sections, so the two can't drift out of sync. Its section collapses behind the label by default on mobile, same as mobileMenuSections (open on a narrow viewport, tap the label to expand)" code={`<TopNav
+        <Demo name="top-nav-user-menu" variant="col" desc="userMenu — one data structure rendered as a desktop DropdownMenu and appended to the mobile sheet's sections, so the two can't drift out of sync. Its section collapses behind the label by default on mobile, same as mobileMenuSections (open on a narrow viewport, tap the label to expand). placement: 'start' renders it before other actions instead of after (the default)" code={`<TopNav
   projectName="Mission Control"
   navItems={[{ label: 'Overview', href: '/', active: true }]}
   userMenu={{
@@ -183,6 +183,7 @@ function PageScreens({ go }) {
       </>
     ),
     triggerLabel: 'Account menu',
+    placement: 'start',
     sections: [
       {
         label: 'Account',
@@ -193,6 +194,7 @@ function PageScreens({ go }) {
       },
     ],
   }}
+  actions={<Button size="sm" variant="secondary">Invite</Button>}
 />`}>
           <TopNav
             sticky={false}
@@ -206,6 +208,7 @@ function PageScreens({ go }) {
                 </>
               ),
               triggerLabel: 'Account menu',
+              placement: 'start',
               sections: [
                 {
                   label: 'Account',
@@ -216,6 +219,7 @@ function PageScreens({ go }) {
                 },
               ],
             }}
+            actions={<Button size="sm" variant="secondary">Invite</Button>}
             className="rounded-lg border border-tollerud-border"
           />
         </Demo>

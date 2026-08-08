@@ -74,6 +74,8 @@ export interface TopNavUserMenu {
   triggerLabel?: string
   /** Same shape as `mobileMenuSections` — rendered as `DropdownMenuLabel`/`DropdownMenuItem` groups on desktop. */
   sections: TopNavSection[]
+  /** Position within the desktop actions cluster, relative to `actions`. Default `'end'` (after). */
+  placement?: 'start' | 'end'
 }
 
 export type TopNavMaxWidth = 'default' | 'wide' | 'full' | false
@@ -552,8 +554,9 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
 
         {(hasDesktopActions || userMenu) && (
           <Cluster as="div" gap="sm" justify="end" className="ml-auto hidden shrink-0 lg:flex">
+            {userMenu?.placement === 'start' && <TopNavUserMenuDropdown userMenu={userMenu} />}
             {desktopActions}
-            {userMenu && <TopNavUserMenuDropdown userMenu={userMenu} />}
+            {userMenu && userMenu.placement !== 'start' && <TopNavUserMenuDropdown userMenu={userMenu} />}
           </Cluster>
         )}
 

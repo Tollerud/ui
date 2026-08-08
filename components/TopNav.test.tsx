@@ -213,6 +213,20 @@ describe('TopNav', () => {
     expect(within(menu).getByRole('button', { name: 'Sign out' })).toBeInTheDocument()
   })
 
+  it('places userMenu before other desktop actions when placement is "start"', () => {
+    const { container } = render(
+      <TopNav
+        projectName="Mission Control"
+        userMenu={{ trigger: 'Ada', triggerLabel: 'Account menu', placement: 'start', sections: [] }}
+        actions={<Button size="sm" variant="primary">Deploy</Button>}
+      />
+    )
+
+    const cluster = container.querySelector('.ml-auto.hidden.shrink-0.lg\\:flex') as HTMLElement
+    const buttons = within(cluster).getAllByRole('button').map((b) => b.textContent)
+    expect(buttons).toEqual(['Ada', 'Deploy'])
+  })
+
   it('collapses mobileMenuSections behind their label by default, honors defaultOpen, and can opt out via collapsible: false', async () => {
     const user = userEvent.setup()
 
