@@ -207,8 +207,41 @@ describe('TopNav', () => {
 
     await user.click(screen.getByRole('button', { name: 'Toggle navigation menu' }))
     const menu = screen.getByRole('dialog', { name: 'Navigation menu' })
+    // Sections collapse behind their label by default — expand it first.
+    await user.click(within(menu).getByRole('button', { name: 'Account' }))
     expect(within(menu).getByRole('link', { name: 'Settings' })).toBeInTheDocument()
     expect(within(menu).getByRole('button', { name: 'Sign out' })).toBeInTheDocument()
+  })
+
+  it('collapses mobileMenuSections behind their label by default, honors defaultOpen, and can opt out via collapsible: false', async () => {
+    const user = userEvent.setup()
+
+    render(
+      <TopNav
+        projectName="Mission Control"
+        navItems={[{ label: 'Overview', href: '/overview' }]}
+        mobileMenuSections={[
+          { label: 'Recent', items: [{ label: 'Emma', href: '/hosts/emma' }] },
+          { label: 'Account', defaultOpen: true, items: [{ label: 'Settings', href: '/settings' }] },
+          { label: 'Shortcuts', collapsible: false, items: [{ label: 'New host', href: '/hosts/new' }] },
+        ]}
+      />
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Toggle navigation menu' }))
+    const menu = screen.getByRole('dialog', { name: 'Navigation menu' })
+
+    // Collapsed by default — the row isn't visible until its label is tapped.
+    expect(within(menu).queryByRole('link', { name: 'Emma' })).not.toBeInTheDocument()
+    await user.click(within(menu).getByRole('button', { name: 'Recent' }))
+    expect(within(menu).getByRole('link', { name: 'Emma' })).toBeInTheDocument()
+
+    // defaultOpen: true — already expanded, no tap needed.
+    expect(within(menu).getByRole('link', { name: 'Settings' })).toBeInTheDocument()
+
+    // collapsible: false — always visible, label isn't a button.
+    expect(within(menu).getByRole('link', { name: 'New host' })).toBeInTheDocument()
+    expect(within(menu).queryByRole('button', { name: 'Shortcuts' })).not.toBeInTheDocument()
   })
 
   it('hides TopNavAction mobile="hidden" on mobile but shows on desktop', () => {

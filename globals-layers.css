@@ -1131,67 +1131,10 @@
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }
-  /* ═══ TopNav flyout (NavigationMenu) ═══ */
-  .tollerud-topnav-viewport {
-    position: relative;
-    margin-top: 0.5rem;
-    width: var(--radix-navigation-menu-viewport-width);
-    height: var(--radix-navigation-menu-viewport-height);
-    overflow: hidden;
-    border-radius: 0.5rem;
-    transition: width var(--motion-duration-fast) var(--motion-ease-out),
-      height var(--motion-duration-fast) var(--motion-ease-out);
-  }
-  .tollerud-topnav-viewport[data-state='open'] {
-    animation: tollerud-topnav-viewport-in var(--motion-duration-fast) var(--motion-ease-out) forwards;
-  }
-  .tollerud-topnav-viewport[data-state='closed'] {
-    animation: tollerud-topnav-viewport-out var(--motion-duration-fast) var(--motion-ease-in) forwards;
-  }
-  @keyframes tollerud-topnav-viewport-in {
-    from { opacity: 0; transform: scale(0.96); }
-    to   { opacity: 1; transform: scale(1); }
-  }
-  @keyframes tollerud-topnav-viewport-out {
-    from { opacity: 1; transform: scale(1); }
-    to   { opacity: 0; transform: scale(0.96); }
-  }
-
-  .tollerud-topnav-flyout-content[data-motion='from-start'] {
-    animation: tollerud-topnav-flyout-in-from-left var(--motion-duration-fast) var(--motion-ease-out) forwards;
-  }
-  .tollerud-topnav-flyout-content[data-motion='from-end'] {
-    animation: tollerud-topnav-flyout-in-from-right var(--motion-duration-fast) var(--motion-ease-out) forwards;
-  }
-  .tollerud-topnav-flyout-content[data-motion='to-start'] {
-    animation: tollerud-topnav-flyout-out-to-left var(--motion-duration-fast) var(--motion-ease-in) forwards;
-  }
-  .tollerud-topnav-flyout-content[data-motion='to-end'] {
-    animation: tollerud-topnav-flyout-out-to-right var(--motion-duration-fast) var(--motion-ease-in) forwards;
-  }
-  @keyframes tollerud-topnav-flyout-in-from-left {
-    from { opacity: 0; transform: translateX(-1rem); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes tollerud-topnav-flyout-in-from-right {
-    from { opacity: 0; transform: translateX(1rem); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes tollerud-topnav-flyout-out-to-left {
-    from { opacity: 1; transform: translateX(0); }
-    to   { opacity: 0; transform: translateX(-1rem); }
-  }
-  @keyframes tollerud-topnav-flyout-out-to-right {
-    from { opacity: 1; transform: translateX(0); }
-    to   { opacity: 0; transform: translateX(1rem); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .tollerud-topnav-viewport[data-state],
-    .tollerud-topnav-flyout-content[data-motion] {
-      animation: none !important;
-    }
-  }
+  /* TopNav's desktop flyout panels are positioned by Floating UI (lib/floating-dropdown.tsx),
+     the same engine behind Combobox/Select — see components/TopNav.tsx's TopNavFlyoutGroup.
+     Radix NavigationMenu's own Viewport centers content under the whole nav bar rather than
+     the trigger that opened it, which no longer matches this component's markup. */
 
   /* ═══ Command Menu ═══ */
   .tollerud-cmd-overlay {

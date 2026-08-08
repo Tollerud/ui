@@ -7,6 +7,20 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.4.0 — 2026-08-09 — TopNav flyout groups rebuilt on Floating UI; collapsible mobile sections
+
+### Fixed
+
+- `TopNav`'s desktop flyout groups (`navItems` entries with `items`) are rebuilt on Floating UI — the same positioning engine behind `Combobox`/`Select`/`DatePicker` — instead of `@radix-ui/react-navigation-menu`'s own `Content`/`Viewport`. Reported live: hovering a trigger opened the panel, but it then animated "smaller and smaller" until it collapsed to a line and vanished, and a detached gray arrow below the trigger's text made it sit visibly higher than sibling nav items. Root cause: Radix's `Viewport` centers content under the *whole* nav bar rather than the trigger that opened it, so for any trigger not near the bar's center, the panel renders away from the cursor — the pointer leaves the trigger before reaching the panel, so Radix starts closing it mid-open-animation, and it never finishes opening before closing again. The `NavigationMenuIndicator` caret added in 5.2.0 to bridge that gap never reliably initialized (it needs a `ResizeObserver` callback to compute its position) and could render as a plain in-flow flex item instead, which is what pushed the trigger row's height. The panel is now anchored directly to its own trigger (Floating UI's `flip`/`shift`), which structurally removes the mismatch rather than papering over it — the `Indicator` bridge is no longer needed and has been removed. `Escape` and outside-click-to-close, previously handled by Radix's `Content`, are reimplemented directly (mirroring `Select`'s pattern) since they're no longer rendered.
+
+- The flyout trigger, the `userMenu` dropdown trigger, and the mobile menu toggle button were all missing `cursor: pointer` (native `<button>`s don't get it by default, and `Button` is the only component in this codebase that sets it explicitly) — on top of the flyout bug above, this made the trigger look non-interactive, likely why hovering was the only thing tried before clicking. All three now set it.
+
+### Added
+
+- `TopNavSection` (used by both `mobileMenuSections` and `userMenu`) gains `collapsible?: boolean` (default `true`) and `defaultOpen?: boolean` (default `false`) — sections now collapse behind their label as a tap-to-expand accordion by default, the same treatment flyout groups already had, instead of always rendering fully expanded. A mobile sheet with a nav list plus a store-list section plus an account section was turning into a long wall of rows with no way to skim it; collapsing by default cuts the visible row count roughly in half without hiding anything. Set `collapsible: false` on a section to keep the old always-expanded behavior, or `defaultOpen: true` to start a specific section open (e.g. keep "Account" visible, collapse a longer "Recent stores" list).
+
+No breaking changes — `TopNavItem`/`TopNavProps` types are unchanged; this is a visual fix plus additive section options.
+
 ## 5.3.0 — 2026-08-08 — TopNav userMenu — one data structure for desktop + mobile
 
 ### Added
