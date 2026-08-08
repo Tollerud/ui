@@ -7,6 +7,18 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.5.0 — 2026-08-09 — TopNav flyout: fix close-on-hover-out, pixel-perfect row alignment
+
+### Fixed
+
+- 5.4.0's Floating UI rebuild of the desktop flyout panel fixed the original hover-flicker bug, but introduced a worse one: moving the mouse from the trigger toward the panel to click a row closed the panel before the click could land, because Radix's `NavigationMenuPrimitive.Trigger` still runs its own hover-close timer on `pointerleave` — previously cancelled by its matching `Content` calling back in as the pointer entered it, which no longer exists. The trigger is now click-to-open only (its `onPointerEnter`/`onPointerMove`/`onPointerLeave` call `preventDefault()`, which skips Radix's internal hover handlers via `composeEventHandlers`'s check), matching how every other dropdown in this system already behaves — `DropdownMenu`, `Select`, `Combobox` are all click-triggered, not hover-triggered.
+
+- The top-level nav row ("Overview", "Hosts", …) sat ~3px, then (after a first pass) exactly 1px, off the baseline of a flyout trigger like "Services" next to it. Root cause, in two parts: a bare `<a>` is a `display: inline` box, whose rendered height comes from font ascent/descent metrics rather than `line-height` — shorter than a `flex` trigger's line-height-driven height by a few px. Fixing that with `inline-flex` closed most of the gap but left exactly 1px, because `inline-flex` is still an *inline-level* box from its parent `<li>`'s perspective — the `<li>` wraps it in an inline formatting line box, adding asymmetric half-leading space a true block-level `flex` child never gets. Both are now `flex` with an explicit height, removing the ambiguity outright; verified pixel-identical (`top`/`bottom`/`height` matching to four decimal places).
+
+- The mobile accordion for flyout groups (e.g. "Services" collapsed on the mobile sheet) indented its rows with a left guide-line (`border-l`, matching `SidebarMenuSub`), while `mobileMenuSections`/`userMenu`'s accordion sections used a plain flat style with no line. Reported live as visually inconsistent — unified both to the flat style; the guide-line is gone.
+
+No breaking changes.
+
 ## 5.4.0 — 2026-08-09 — TopNav flyout groups rebuilt on Floating UI; collapsible mobile sections
 
 ### Fixed
