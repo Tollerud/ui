@@ -7,6 +7,31 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.3.0 — 2026-08-08 — TopNav userMenu — one data structure for desktop + mobile
+
+### Added
+
+- `TopNav` gains `userMenu?: TopNavUserMenu` — a single account/user menu rendered from one data structure on both surfaces: a `DropdownMenu` next to the desktop actions, and the same `sections` (reusing the `TopNavSection[]` shape from `mobileMenuSections`) appended to the mobile sheet automatically. Previously a desktop dropdown and its mobile equivalent had to be hand-built and kept in sync separately — found while reviewing Butikkpils' real usage, where the avatar dropdown (home stores, display name, settings, admin, sign out) was defined twice, once via `DropdownMenu`/`DropdownMenuItem` for desktop and again via `mobileMenuSections`/`mobileMenuExtra` for mobile.
+
+```tsx
+<TopNav
+  userMenu={{
+    trigger: <><span>Ada</span><Avatar name="Ada Lovelace" size="sm" /></>,
+    triggerLabel: 'Account menu',
+    sections: [
+      { label: 'Account', items: [
+        { label: 'Settings', href: '/settings', icon: <Settings size={15} /> },
+        { label: 'Sign out', onClick: handleSignOut, icon: <LogOut size={15} /> },
+      ] },
+    ],
+  }}
+/>
+```
+
+`TopNavItem`'s existing `href`/`onClick`/`icon`/`external`/`active` fields all work inside `userMenu.sections` exactly as they do in `mobileMenuSections` — the desktop `DropdownMenuItem` renders a link or a `onSelect` action accordingly.
+
+No breaking changes. `userMenu` is additive; existing `actions`/`mobileMenuSections`/`mobileMenuExtra` usage is unaffected and composes alongside it.
+
 ## 5.2.0 — 2026-08-08 — TopNav onClick rows, flyout indicator; dvh viewport fixes
 
 ### Added

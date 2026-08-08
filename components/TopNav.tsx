@@ -19,6 +19,14 @@ import { motionDuration, motionEase } from '@/lib/motion'
 import { cn } from '@/lib/utils'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './Accordion'
 import { DialogDescription, DialogTitle } from './Dialog'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './DropdownMenu'
 import { Monogram } from './Monogram'
 import { Cluster } from './Cluster'
 
@@ -42,6 +50,20 @@ export interface TopNavItem {
 export interface TopNavSection {
   label?: ReactNode
   items: TopNavItem[]
+}
+
+/** A single account/user menu, rendered from one data structure on both surfaces:
+ *  a `DropdownMenu` next to the desktop actions, and appended to the mobile sheet's
+ *  sections (same row styling, right alongside any `mobileMenuSections`). Keeps a
+ *  desktop dropdown and its mobile equivalent from drifting out of sync — the two
+ *  were previously always hand-duplicated by consumers. */
+export interface TopNavUserMenu {
+  /** Desktop dropdown trigger content — e.g. an avatar + name. Wrapped in a focusable button. */
+  trigger: ReactNode
+  /** Accessible label for the trigger button. Defaults to `'User menu'`. */
+  triggerLabel?: string
+  /** Same shape as `mobileMenuSections` — rendered as `DropdownMenuLabel`/`DropdownMenuItem` groups on desktop. */
+  sections: TopNavSection[]
 }
 
 export type TopNavMaxWidth = 'default' | 'wide' | 'full' | false
@@ -124,10 +146,12 @@ export interface TopNavProps extends Omit<HTMLAttributes<HTMLElement>, 'defaultV
   maxWidth?: TopNavMaxWidth
   /** Screen reader title for the mobile menu dialog. */
   mobileMenuTitle?: string
-  /** Labeled row groups appended below nav items/actions (e.g. recent items, account links) — styled consistently with the rest of the menu. Rendered before `mobileMenuExtra`. */
+  /** Labeled row groups appended below nav items/actions (e.g. recent items, account links) — styled consistently with the rest of the menu. Rendered before `userMenu`'s sections, then `mobileMenuExtra`. */
   mobileMenuSections?: TopNavSection[]
-  /** Freeform slot rendered at the bottom of the mobile nav sheet, below nav items, actions, and `mobileMenuSections`, separated by a divider. Consumer controls all markup. */
+  /** Freeform slot rendered at the bottom of the mobile nav sheet, below nav items, actions, `mobileMenuSections`, and `userMenu`'s sections, separated by a divider. Consumer controls all markup. */
   mobileMenuExtra?: ReactNode
+  /** A single account/user menu rendered from one data structure — a `DropdownMenu` next to the desktop actions, and appended to the mobile sheet's sections. See `TopNavUserMenu`. */
+  userMenu?: TopNavUserMenu
 }
 
 function TopNavLink({
@@ -238,6 +262,66 @@ function TopNavGroupLabel({ children }: { children: ReactNode }) {
   )
 }
 
+function TopNavUserMenuItem({ item }: { item: TopNavItem }) {
+  const content = (
+    <>
+      {item.icon && (
+        <span className="flex h-[15px] w-[15px] shrink-0 items-center justify-center text-tollerud-text-muted">
+          {item.icon}
+        </span>
+      )}
+      <span className="truncate">{item.label}</span>
+    </>
+  )
+  if (item.onClick && !item.href) {
+    return (
+      <DropdownMenuItem onSelect={item.onClick} className="gap-2">
+        {content}
+      </DropdownMenuItem>
+    )
+  }
+  return (
+    <DropdownMenuItem asChild className="gap-2">
+      <a
+        href={item.href}
+        target={item.external ? '_blank' : undefined}
+        rel={item.external ? 'noreferrer' : undefined}
+      >
+        {content}
+      </a>
+    </DropdownMenuItem>
+  )
+}
+
+/** Desktop half of `userMenu` — a `DropdownMenu` built from the same `TopNavSection[]`
+ *  shape the mobile sheet renders, so the two surfaces can't drift out of sync. */
+function TopNavUserMenuDropdown({ userMenu }: { userMenu: TopNavUserMenu }) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button
+          type="button"
+          className="tollerud-focus-ring inline-flex items-center gap-2 rounded-full"
+          aria-label={userMenu.triggerLabel ?? 'User menu'}
+        >
+          {userMenu.trigger}
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {userMenu.sections.map((section, i) => (
+          <Fragment key={section.label ? String(section.label) : `user-menu-section-${i}`}>
+            {i > 0 && <DropdownMenuSeparator />}
+            {section.label && <DropdownMenuLabel>{section.label}</DropdownMenuLabel>}
+            {section.items.map((item) => (
+              <TopNavUserMenuItem key={topNavItemKey(item, `user-menu-${i}-`)} item={item} />
+            ))}
+          </Fragment>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
 const TopNav = forwardRef<HTMLElement, TopNavProps>(
   (
     {
@@ -251,6 +335,7 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
       mobileMenuTitle = 'Navigation menu',
       mobileMenuSections,
       mobileMenuExtra,
+      userMenu,
       ...props
     },
     ref
@@ -260,7 +345,11 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
     const { inline: mobileInlineActions, menu: mobileMenuActions, desktop: desktopActions } =
       useMemo(() => partitionActions(actions), [actions])
     const hasDesktopActions = desktopActions.length > 0
-    const hasMobileSections = !!mobileMenuSections && mobileMenuSections.length > 0
+    const allMobileSections = useMemo(
+      () => [...(mobileMenuSections ?? []), ...(userMenu?.sections ?? [])],
+      [mobileMenuSections, userMenu]
+    )
+    const hasMobileSections = allMobileSections.length > 0
     const hasMobileMenuContent =
       hasNavItems || mobileMenuActions.length > 0 || hasMobileSections || !!mobileMenuExtra
     const closeMobileMenu = () => setMobileOpen(false)
@@ -331,9 +420,10 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
           </NavigationMenuPrimitive.List>
         )}
 
-        {hasDesktopActions && (
+        {(hasDesktopActions || userMenu) && (
           <Cluster as="div" gap="sm" justify="end" className="ml-auto hidden shrink-0 lg:flex">
             {desktopActions}
+            {userMenu && <TopNavUserMenuDropdown userMenu={userMenu} />}
           </Cluster>
         )}
 
@@ -467,7 +557,7 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
                           'border-t border-tollerud-border pt-4'
                       )}
                     >
-                      {mobileMenuSections!.map((section, i) => (
+                      {allMobileSections.map((section, i) => (
                         <div
                           key={section.label ? String(section.label) : `mobile-section-${i}`}
                           className="flex flex-col gap-0.5"

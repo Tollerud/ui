@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars -- intentionally over-broad shared import; see docs-app/lib/provide-pages.js */
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, createContext } from 'react'
 import * as __p from '@/lib/provide-pages'
-const { Button, Card, Badge, StatusDot, Switch, Input, FormRow, PackagePageHeader, TopNav, TopNavAction, SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, Stack, Cluster, CardGrid, Demo, CodeSnippet, PageHeader, Section, Icons } = __p
+const { Button, Card, Badge, StatusDot, Switch, Input, FormRow, PackagePageHeader, TopNav, TopNavAction, Avatar, SidebarProvider, Sidebar, SidebarTrigger, SidebarInset, SidebarHeader, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, DashboardShell, SettingsLayout, FormPanel, ResourceList, DetailPage, EmptyPage, FeatureSection, StatsSection, Stack, Cluster, CardGrid, Demo, CodeSnippet, PageHeader, Section, Icons } = __p
 /* eslint-enable no-unused-vars */
 
 /* @tollerud/ui docs — Screen patterns */
@@ -71,7 +71,7 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle. TopNavItem accepts an optional icon, shown in dropdown/mobile rows (not the top bar), and an optional onClick — renders the row as a button instead of a link, for actions like sign out (ignored if href is set). Desktop flyout groups (items) show a small indicator caret tracking the open trigger. Pass mobileMenuSections for labeled row groups appended to the mobile sheet (e.g. an account section) — styled consistently, no hand-rolled dividers needed. Pass mobileMenuExtra for anything more custom, injected at the very bottom of the mobile sheet, separated by a divider — consumer controls all markup.">
+      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle. TopNavItem accepts an optional icon, shown in dropdown/mobile rows (not the top bar), and an optional onClick — renders the row as a button instead of a link, for actions like sign out (ignored if href is set). Desktop flyout groups (items) show a small indicator caret tracking the open trigger. Pass mobileMenuSections for labeled row groups appended to the mobile sheet (e.g. an account section) — styled consistently, no hand-rolled dividers needed. Pass userMenu for a single account/user menu rendered from one data structure — a DropdownMenu next to the desktop actions, and the same sections appended to the mobile sheet automatically, so the two can't drift out of sync. Pass mobileMenuExtra for anything more custom, injected at the very bottom of the mobile sheet, separated by a divider — consumer controls all markup.">
         <Demo name="top-nav" variant="col" code={`<TopNav
   projectName="Mission Control"
   maxWidth="default"
@@ -169,6 +169,53 @@ function PageScreens({ go }) {
                 ],
               },
             ]}
+            className="rounded-lg border border-tollerud-border"
+          />
+        </Demo>
+        <Demo name="top-nav-user-menu" variant="col" desc="userMenu — one data structure rendered as a desktop DropdownMenu and appended to the mobile sheet's sections, so the two can't drift out of sync (open on a narrow viewport to see the mobile side)" code={`<TopNav
+  projectName="Mission Control"
+  navItems={[{ label: 'Overview', href: '/', active: true }]}
+  userMenu={{
+    trigger: (
+      <>
+        <span className="text-sm text-tollerud-text-secondary">Ada</span>
+        <Avatar name="Ada Lovelace" size="sm" />
+      </>
+    ),
+    triggerLabel: 'Account menu',
+    sections: [
+      {
+        label: 'Account',
+        items: [
+          { label: 'Settings', href: '/settings', icon: <Icons.settings size={15} /> },
+          { label: 'Sign out', onClick: handleSignOut, icon: <Icons.logout size={15} /> },
+        ],
+      },
+    ],
+  }}
+/>`}>
+          <TopNav
+            sticky={false}
+            projectName="Mission Control"
+            navItems={[{ label: 'Overview', href: '#', active: true }]}
+            userMenu={{
+              trigger: (
+                <>
+                  <span style={{ fontSize: 13, color: 'var(--text-secondary)' }}>Ada</span>
+                  <Avatar name="Ada Lovelace" size="sm" />
+                </>
+              ),
+              triggerLabel: 'Account menu',
+              sections: [
+                {
+                  label: 'Account',
+                  items: [
+                    { label: 'Settings', href: '#', icon: <Icons.settings size={15} /> },
+                    { label: 'Sign out', onClick: () => alert('Signed out (demo)'), icon: <Icons.logout size={15} /> },
+                  ],
+                },
+              ],
+            }}
             className="rounded-lg border border-tollerud-border"
           />
         </Demo>
