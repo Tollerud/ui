@@ -71,7 +71,7 @@ function PageScreens({ go }) {
         </Demo>
       </Section>
 
-      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle. TopNavItem accepts an optional icon, shown in dropdown/mobile rows (not the top bar). Pass mobileMenuSections for labeled row groups appended to the mobile sheet (e.g. an account section) — styled consistently, no hand-rolled dividers needed. Pass mobileMenuExtra for anything more custom, injected at the very bottom of the mobile sheet, separated by a divider — consumer controls all markup.">
+      <Section title="TopNav" component="TopNav" permalink="screens/top-nav" desc="Branded monogram lockup with nav links and actions. Below lg, links and menu actions open in a modal overlay with backdrop; wrap actions in TopNavAction to keep a primary CTA inline next to the menu toggle. TopNavItem accepts an optional icon, shown in dropdown/mobile rows (not the top bar), and an optional onClick — renders the row as a button instead of a link, for actions like sign out (ignored if href is set). Desktop flyout groups (items) show a small indicator caret tracking the open trigger. Pass mobileMenuSections for labeled row groups appended to the mobile sheet (e.g. an account section) — styled consistently, no hand-rolled dividers needed. Pass mobileMenuExtra for anything more custom, injected at the very bottom of the mobile sheet, separated by a divider — consumer controls all markup.">
         <Demo name="top-nav" variant="col" code={`<TopNav
   projectName="Mission Control"
   maxWidth="default"
@@ -98,6 +98,11 @@ function PageScreens({ go }) {
               { label: 'Overview', href: '#', active: true },
               { label: 'Hosts', href: '#' },
               { label: 'Logs', href: '#' },
+              { label: 'Services', items: [
+                { label: 'API', href: '#', icon: <Icons.server size={15} /> },
+                { label: 'Worker', href: '#', icon: <Icons.cpu size={15} /> },
+                { label: 'Scheduler', href: '#', icon: <Icons.clock size={15} /> },
+              ] },
             ]}
             actions={
               <>
@@ -132,7 +137,7 @@ function PageScreens({ go }) {
             className="rounded-lg border border-tollerud-border"
           />
         </Demo>
-        <Demo name="top-nav-mobile-sections" variant="col" desc="icon + mobileMenuSections — labeled row groups in the mobile sheet, styled consistently (open on a narrow viewport to see it)" code={`<TopNav
+        <Demo name="top-nav-mobile-sections" variant="col" desc="icon + mobileMenuSections + onClick — labeled row groups in the mobile sheet, styled consistently; onClick renders a row as a button instead of a link, e.g. sign out (open on a narrow viewport to see it)" code={`<TopNav
   projectName="Mission Control"
   navItems={[
     { label: 'Overview', href: '/', active: true, icon: <Icons.home size={15} /> },
@@ -143,7 +148,7 @@ function PageScreens({ go }) {
       label: 'Account',
       items: [
         { label: 'Settings', href: '/settings', icon: <Icons.settings size={15} /> },
-        { label: 'Sign out', href: '/logout', icon: <Icons.logout size={15} /> },
+        { label: 'Sign out', onClick: handleSignOut, icon: <Icons.logout size={15} /> },
       ],
     },
   ]}
@@ -160,7 +165,7 @@ function PageScreens({ go }) {
                 label: 'Account',
                 items: [
                   { label: 'Settings', href: '#', icon: <Icons.settings size={15} /> },
-                  { label: 'Sign out', href: '#', icon: <Icons.logout size={15} /> },
+                  { label: 'Sign out', onClick: () => alert('Signed out (demo)'), icon: <Icons.logout size={15} /> },
                 ],
               },
             ]}

@@ -26,6 +26,8 @@ export interface TopNavItem {
   label: ReactNode
   /** Omit when `items` is set — a group trigger isn't itself a direct link. */
   href?: string
+  /** Renders the row as a `<button>` instead of a link — e.g. sign out. Ignored if `href` is set. */
+  onClick?: () => void
   active?: boolean
   external?: boolean
   /** Shown in flyout/dropdown and mobile rows. Not rendered in the top bar itself. */
@@ -137,18 +139,30 @@ function TopNavLink({
   className?: string
   onNavigate?: () => void
 }) {
+  const handleClick = () => {
+    item.onClick?.()
+    onNavigate?.()
+  }
+  const rowClassName = cn(
+    'tollerud-focus-ring rounded-sm text-sm text-tollerud-text-secondary no-underline transition-colors hover:text-tollerud-text-primary',
+    item.active && 'text-tollerud-yellow',
+    className
+  )
+  if (item.onClick && !item.href) {
+    return (
+      <button type="button" onClick={handleClick} className={cn(rowClassName, 'text-left')}>
+        {item.label}
+      </button>
+    )
+  }
   return (
     <a
       href={item.href}
       target={item.external ? '_blank' : undefined}
       rel={item.external ? 'noreferrer' : undefined}
       aria-current={item.active ? 'page' : undefined}
-      onClick={onNavigate}
-      className={cn(
-        'tollerud-focus-ring rounded-sm text-sm text-tollerud-text-secondary no-underline transition-colors hover:text-tollerud-text-primary',
-        item.active && 'text-tollerud-yellow',
-        className
-      )}
+      onClick={handleClick}
+      className={rowClassName}
     >
       {item.label}
     </a>
@@ -167,21 +181,19 @@ function TopNavMenuRow({
   className?: string
   onNavigate?: () => void
 }) {
-  return (
-    <a
-      href={item.href}
-      target={item.external ? '_blank' : undefined}
-      rel={item.external ? 'noreferrer' : undefined}
-      aria-current={item.active ? 'page' : undefined}
-      onClick={onNavigate}
-      className={cn(
-        'tollerud-focus-ring flex min-h-[40px] items-center gap-2.5 rounded-md px-2.5 py-2 text-[13.5px] font-medium text-tollerud-text-secondary no-underline transition-colors duration-fast',
-        'hover:bg-tollerud-surface-hover hover:text-tollerud-text-primary',
-        item.active &&
-          'bg-tollerud-yellow/10 text-tollerud-text-primary shadow-[inset_2px_0_0_0] shadow-tollerud-yellow',
-        className
-      )}
-    >
+  const handleClick = () => {
+    item.onClick?.()
+    onNavigate?.()
+  }
+  const rowClassName = cn(
+    'tollerud-focus-ring flex min-h-[40px] w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-[13.5px] font-medium text-tollerud-text-secondary no-underline transition-colors duration-fast',
+    'hover:bg-tollerud-surface-hover hover:text-tollerud-text-primary',
+    item.active &&
+      'bg-tollerud-yellow/10 text-tollerud-text-primary shadow-[inset_2px_0_0_0] shadow-tollerud-yellow',
+    className
+  )
+  const content = (
+    <>
       {item.icon && (
         <span
           className={cn(
@@ -193,6 +205,25 @@ function TopNavMenuRow({
         </span>
       )}
       <span className="truncate">{item.label}</span>
+    </>
+  )
+  if (item.onClick && !item.href) {
+    return (
+      <button type="button" onClick={handleClick} className={rowClassName}>
+        {content}
+      </button>
+    )
+  }
+  return (
+    <a
+      href={item.href}
+      target={item.external ? '_blank' : undefined}
+      rel={item.external ? 'noreferrer' : undefined}
+      aria-current={item.active ? 'page' : undefined}
+      onClick={handleClick}
+      className={rowClassName}
+    >
+      {content}
     </a>
   )
 }
@@ -294,6 +325,9 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
                 </NavigationMenuPrimitive.Item>
               )
             )}
+            <NavigationMenuPrimitive.Indicator className="top-full z-10 flex h-2 items-end justify-center overflow-hidden transition-opacity duration-fast data-[state=hidden]:opacity-0 data-[state=visible]:opacity-100">
+              <div className="relative top-1/2 h-2.5 w-2.5 rotate-45 rounded-tl-[2px] bg-tollerud-border shadow-sm" />
+            </NavigationMenuPrimitive.Indicator>
           </NavigationMenuPrimitive.List>
         )}
 
@@ -352,7 +386,7 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
             >
               <motion.div
                 className={cn(
-                  'tollerud-topnav-menu-panel fixed inset-x-0 top-14 z-50 max-h-[calc(100vh-3.5rem)] overflow-y-auto border-b border-tollerud-border bg-tollerud-noir-950 px-6 py-4 shadow-xl outline-none lg:hidden',
+                  'tollerud-topnav-menu-panel fixed inset-x-0 top-14 z-50 max-h-[calc(100dvh-3.5rem)] overflow-y-auto border-b border-tollerud-border bg-tollerud-noir-950 px-6 py-4 shadow-xl outline-none lg:hidden',
                   maxWidth && 'mx-auto w-full',
                   maxWidth && maxWidthClasses[maxWidth]
                 )}
