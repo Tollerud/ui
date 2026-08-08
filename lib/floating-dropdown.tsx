@@ -88,8 +88,8 @@ export interface FloatingDropdownPortalProps {
   className?: string
   style?: CSSProperties
   placementOptions?: DropdownPlacementOptions
-  /** Match trigger width (default) or a fixed px width. */
-  width?: number | 'anchor'
+  /** Match trigger width (default), a fixed px width, or size to content (`'auto'`). */
+  width?: number | 'anchor' | 'auto'
   id?: string
   role?: string
   'aria-label'?: string
@@ -129,8 +129,10 @@ export function FloatingDropdownPortal({
       size({
         padding: 8,
         apply({ rects, availableHeight, elements }) {
-          elements.floating.style.width =
-            width === 'anchor' ? `${rects.reference.width}px` : `${width}px`
+          if (width !== 'auto') {
+            elements.floating.style.width =
+              width === 'anchor' ? `${rects.reference.width}px` : `${width}px`
+          }
           elements.floating.style.maxHeight = `${Math.min(maxHeight, availableHeight)}px`
         },
       }),

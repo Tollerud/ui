@@ -12,9 +12,13 @@ import {
   type ReactNode,
   forwardRef,
   isValidElement,
+  useEffect,
+  useId,
   useMemo,
+  useRef,
   useState,
 } from 'react'
+import { FloatingDropdownPortal, isOutsideFloatingDropdown } from '@/lib/floating-dropdown'
 import { motionDuration, motionEase } from '@/lib/motion'
 import { cn } from '@/lib/utils'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './Accordion'
@@ -50,6 +54,12 @@ export interface TopNavItem {
 export interface TopNavSection {
   label?: ReactNode
   items: TopNavItem[]
+  /** Collapse behind the label as a tap-to-expand accordion, same as flyout groups — keeps a mobile
+   *  sheet with several sections from turning into a wall of rows. Default `true`. Has no effect
+   *  without `label` (there'd be nothing to tap). */
+  collapsible?: boolean
+  /** Start expanded when `collapsible`. Default `false` — collapsed, matching flyout groups. */
+  defaultOpen?: boolean
 }
 
 /** A single account/user menu, rendered from one data structure on both surfaces:
@@ -262,6 +272,49 @@ function TopNavGroupLabel({ children }: { children: ReactNode }) {
   )
 }
 
+/** A `mobileMenuSections`/`userMenu` section in the mobile sheet. Collapses behind its label as a
+ *  tap-to-expand accordion by default — the same treatment flyout groups already get — so a sheet
+ *  with several sections doesn't turn into one long wall of rows. Falls back to always-expanded
+ *  when there's no label to tap, or when a section opts out via `collapsible: false`. */
+function TopNavMobileSection({
+  section,
+  sectionKey,
+  itemKeyPrefix,
+  onNavigate,
+}: {
+  section: TopNavSection
+  sectionKey: string
+  itemKeyPrefix: string
+  onNavigate: () => void
+}) {
+  const rows = section.items.map((item) => (
+    <TopNavMenuRow key={topNavItemKey(item, itemKeyPrefix)} item={item} onNavigate={onNavigate} />
+  ))
+
+  if (!section.label || section.collapsible === false) {
+    return (
+      <div className="flex flex-col gap-0.5">
+        {section.label && <TopNavGroupLabel>{section.label}</TopNavGroupLabel>}
+        {rows}
+      </div>
+    )
+  }
+
+  return (
+    <Accordion
+      defaultOpen={section.defaultOpen ? sectionKey : undefined}
+      className="rounded-none border-0 divide-y-0"
+    >
+      <AccordionItem value={sectionKey}>
+        <AccordionTrigger className="rounded-sm px-2.5 py-1.5 text-[10.5px] font-semibold uppercase tracking-[0.09em] text-tollerud-text-muted hover:bg-transparent hover:text-tollerud-text-secondary [&_svg]:h-3 [&_svg]:w-3">
+          {section.label}
+        </AccordionTrigger>
+        <AccordionContent className="flex flex-col gap-0.5 px-0 pb-1 pt-0.5">{rows}</AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}
+
 function TopNavUserMenuItem({ item }: { item: TopNavItem }) {
   const content = (
     <>
@@ -301,7 +354,7 @@ function TopNavUserMenuDropdown({ userMenu }: { userMenu: TopNavUserMenu }) {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className="tollerud-focus-ring inline-flex items-center gap-2 rounded-full"
+          className="tollerud-focus-ring inline-flex cursor-pointer items-center gap-2 rounded-full"
           aria-label={userMenu.triggerLabel ?? 'User menu'}
         >
           {userMenu.trigger}
@@ -319,6 +372,87 @@ function TopNavUserMenuDropdown({ userMenu }: { userMenu: TopNavUserMenu }) {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  )
+}
+
+/** Desktop flyout group. `NavigationMenuPrimitive.Trigger` owns hover/click/keyboard open
+ *  state entirely on its own (confirmed — it doesn't need a matching `Content`/`Viewport`
+ *  to function); the panel itself is positioned with the same Floating UI engine behind
+ *  Combobox/Select, anchored to this trigger specifically. Radix's own Viewport centers
+ *  content under the *whole* nav bar rather than the trigger that opened it — for a trigger
+ *  that isn't near the bar's center, the panel renders far from the cursor, which both looks
+ *  disconnected and makes the hover area impossible to bridge (the pointer leaves the trigger
+ *  before reaching the panel, so it closes mid-open — the "shrinks to a line" glitch). */
+function TopNavFlyoutGroup({
+  item,
+  value,
+  isOpen,
+  onClose,
+}: {
+  item: TopNavItem & { items: TopNavItem[] }
+  value: string
+  isOpen: boolean
+  onClose: () => void
+}) {
+  const anchorRef = useRef<HTMLButtonElement>(null)
+  const popoverRef = useRef<HTMLDivElement>(null)
+  const popoverId = useId()
+
+  // Radix's Trigger owns hover/click/keyboard *opening*, but closing on Escape or an
+  // outside click was previously Content's job (via its own DismissableLayer) — now that
+  // the panel is a Floating UI portal instead, both need reimplementing here directly.
+  useEffect(() => {
+    if (!isOpen) return
+    const handlePointerDown = (e: PointerEvent) => {
+      if (isOutsideFloatingDropdown(e.target as Node, anchorRef, popoverRef)) onClose()
+    }
+    document.addEventListener('pointerdown', handlePointerDown)
+    return () => document.removeEventListener('pointerdown', handlePointerDown)
+  }, [isOpen, onClose])
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key !== 'Escape') return
+    e.preventDefault()
+    e.stopPropagation()
+    onClose()
+    anchorRef.current?.focus()
+  }
+
+  return (
+    <NavigationMenuPrimitive.Item value={value} onKeyDown={handleKeyDown}>
+      <NavigationMenuPrimitive.Trigger
+        ref={anchorRef}
+        aria-controls={isOpen ? popoverId : undefined}
+        className={cn(
+          'tollerud-focus-ring group flex cursor-pointer items-center gap-1 rounded-sm text-sm text-tollerud-text-secondary transition-colors hover:text-tollerud-text-primary',
+          item.active && 'text-tollerud-yellow'
+        )}
+      >
+        {item.label}
+        <ChevronDown
+          className="h-3 w-3 shrink-0 transition-transform duration-fast group-data-[state=open]:rotate-180"
+          aria-hidden="true"
+        />
+      </NavigationMenuPrimitive.Trigger>
+      <FloatingDropdownPortal
+        open={isOpen}
+        anchorRef={anchorRef}
+        popoverRef={popoverRef}
+        id={popoverId}
+        width="auto"
+        role="menu"
+        aria-label={typeof item.label === 'string' ? item.label : undefined}
+        className="rounded-lg border border-tollerud-border/30 bg-tollerud-noir-850"
+      >
+        <ul className="flex min-w-[12rem] flex-col gap-0.5 p-2">
+          {item.items.map((child) => (
+            <li key={topNavItemKey(child)}>
+              <TopNavMenuRow item={child} />
+            </li>
+          ))}
+        </ul>
+      </FloatingDropdownPortal>
+    </NavigationMenuPrimitive.Item>
   )
 }
 
@@ -341,6 +475,7 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
     ref
   ) => {
     const [mobileOpen, setMobileOpen] = useState(false)
+    const [openGroup, setOpenGroup] = useState('')
     const hasNavItems = navItems.length > 0
     const { inline: mobileInlineActions, menu: mobileMenuActions, desktop: desktopActions } =
       useMemo(() => partitionActions(actions), [actions])
@@ -381,31 +516,13 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
           <NavigationMenuPrimitive.List className="ml-2 hidden min-w-0 flex-wrap items-center gap-4 lg:flex">
             {navItems.map((item) =>
               isTopNavGroup(item) ? (
-                <NavigationMenuPrimitive.Item key={topNavItemKey(item)}>
-                  <NavigationMenuPrimitive.Trigger
-                    className={cn(
-                      'tollerud-focus-ring group flex items-center gap-1 rounded-sm text-sm text-tollerud-text-secondary transition-colors hover:text-tollerud-text-primary',
-                      item.active && 'text-tollerud-yellow'
-                    )}
-                  >
-                    {item.label}
-                    <ChevronDown
-                      className="h-3 w-3 shrink-0 transition-transform duration-fast group-data-[state=open]:rotate-180"
-                      aria-hidden="true"
-                    />
-                  </NavigationMenuPrimitive.Trigger>
-                  <NavigationMenuPrimitive.Content className="tollerud-topnav-flyout-content">
-                    <ul className="flex min-w-[12rem] flex-col gap-0.5 p-2">
-                      {item.items.map((child) => (
-                        <li key={topNavItemKey(child)}>
-                          <NavigationMenuPrimitive.Link asChild active={child.active}>
-                            <TopNavMenuRow item={child} />
-                          </NavigationMenuPrimitive.Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </NavigationMenuPrimitive.Content>
-                </NavigationMenuPrimitive.Item>
+                <TopNavFlyoutGroup
+                  key={topNavItemKey(item)}
+                  item={item}
+                  value={topNavItemKey(item)}
+                  isOpen={openGroup === topNavItemKey(item)}
+                  onClose={() => setOpenGroup('')}
+                />
               ) : (
                 <NavigationMenuPrimitive.Item key={topNavItemKey(item)}>
                   <NavigationMenuPrimitive.Link asChild active={item.active}>
@@ -414,9 +531,6 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
                 </NavigationMenuPrimitive.Item>
               )
             )}
-            <NavigationMenuPrimitive.Indicator className="top-full z-10 flex h-2 items-end justify-center overflow-hidden transition-opacity duration-fast data-[state=hidden]:opacity-0 data-[state=visible]:opacity-100">
-              <div className="relative top-1/2 h-2.5 w-2.5 rotate-45 rounded-tl-[2px] bg-tollerud-border shadow-sm" />
-            </NavigationMenuPrimitive.Indicator>
           </NavigationMenuPrimitive.List>
         )}
 
@@ -438,7 +552,7 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
               <DialogPrimitive.Trigger asChild>
                 <button
                   type="button"
-                  className="tollerud-focus-ring inline-flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-md border border-tollerud-border bg-tollerud-noir-900 text-tollerud-text-secondary transition-colors hover:border-tollerud-noir-500 hover:text-tollerud-text-primary"
+                  className="tollerud-focus-ring inline-flex h-[34px] w-[34px] shrink-0 cursor-pointer items-center justify-center rounded-md border border-tollerud-border bg-tollerud-noir-900 text-tollerud-text-secondary transition-colors hover:border-tollerud-noir-500 hover:text-tollerud-text-primary"
                   aria-label="Toggle navigation menu"
                   aria-expanded={mobileOpen}
                 >
@@ -450,12 +564,6 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
         )}
       </div>
     )
-
-    const viewport = hasNavItems ? (
-      <div className="tollerud-topnav-viewport-wrapper absolute inset-x-0 top-full hidden justify-center lg:flex">
-        <NavigationMenuPrimitive.Viewport className="tollerud-topnav-viewport border border-tollerud-border/30 bg-tollerud-noir-850 shadow-lg" />
-      </div>
-    ) : null
 
     const mobileMenu = hasMobileMenuContent ? (
       <AnimatePresence>
@@ -557,21 +665,18 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
                           'border-t border-tollerud-border pt-4'
                       )}
                     >
-                      {allMobileSections.map((section, i) => (
-                        <div
-                          key={section.label ? String(section.label) : `mobile-section-${i}`}
-                          className="flex flex-col gap-0.5"
-                        >
-                          {section.label && <TopNavGroupLabel>{section.label}</TopNavGroupLabel>}
-                          {section.items.map((item) => (
-                            <TopNavMenuRow
-                              key={topNavItemKey(item, `mobile-section-${i}-`)}
-                              item={item}
-                              onNavigate={closeMobileMenu}
-                            />
-                          ))}
-                        </div>
-                      ))}
+                      {allMobileSections.map((section, i) => {
+                        const sectionKey = section.label ? String(section.label) : `mobile-section-${i}`
+                        return (
+                          <TopNavMobileSection
+                            key={sectionKey}
+                            section={section}
+                            sectionKey={sectionKey}
+                            itemKeyPrefix={`mobile-section-${i}-`}
+                            onNavigate={closeMobileMenu}
+                          />
+                        )
+                      })}
                     </div>
                   )}
                   {mobileMenuExtra && (
@@ -601,9 +706,14 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
     if (hasMobileMenuContent) {
       return (
         <DialogPrimitive.Root open={mobileOpen} onOpenChange={setMobileOpen}>
-          <NavigationMenuPrimitive.Root ref={ref} className={navClassName} {...props}>
+          <NavigationMenuPrimitive.Root
+            ref={ref}
+            className={navClassName}
+            value={openGroup}
+            onValueChange={setOpenGroup}
+            {...props}
+          >
             {headerBar}
-            {viewport}
             {mobileMenu}
           </NavigationMenuPrimitive.Root>
         </DialogPrimitive.Root>
@@ -611,9 +721,14 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
     }
 
     return (
-      <NavigationMenuPrimitive.Root ref={ref} className={navClassName} {...props}>
+      <NavigationMenuPrimitive.Root
+        ref={ref}
+        className={navClassName}
+        value={openGroup}
+        onValueChange={setOpenGroup}
+        {...props}
+      >
         {headerBar}
-        {viewport}
       </NavigationMenuPrimitive.Root>
     )
   }
