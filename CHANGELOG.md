@@ -7,6 +7,22 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.2.0 — 2026-08-08 — TopNav onClick rows, flyout indicator; dvh viewport fixes
+
+### Added
+
+- `TopNavItem` gains `onClick?: () => void`. When set without `href`, the row renders as a `<button>` instead of a link, with identical styling — for actions like sign out that were previously impossible to express as a first-class, styled row and forced consumers to hand-roll unstyled markup via `mobileMenuExtra`.
+
+- `TopNav`'s desktop flyout groups now render a `NavigationMenuIndicator` — a small caret that tracks the currently open trigger's horizontal position and bridges the gap into the panel below it, so the dropdown reads as anchored to the button that opened it rather than a disconnected floating box centered under the whole nav bar.
+
+- Added a live "Services" flyout-group demo to the `TopNav` docs page — previously the flyout-group feature (shipped since 4.19.0) had no demo anywhere in docs-app.
+
+### Fixed
+
+- `Sidebar` (`SidebarProvider`'s root and the desktop rail's `--sidebar-height` default) and `TopNav`'s mobile menu panel used `100vh`/`min-h-screen`. On mobile browsers, `vh` is computed against the viewport with the address bar collapsed — taller than what's actually visible whenever the bar is showing. This made pages taller than the visible window (an unwanted scroll even on short pages) and caused sticky elements to visibly jump as the address bar auto-hides/shows mid-scroll. Switched to `dvh` (dynamic viewport height) throughout.
+
+No breaking changes. All additive/visual fixes; existing usage renders and behaves identically aside from the mobile viewport-height correction.
+
 ## 5.1.0 — 2026-08-08 — TopNav mobile menu rows + grouped sections; Sidebar mobile drawer width fix
 
 ### Added

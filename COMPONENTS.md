@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v5.1.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v5.2.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -150,7 +150,7 @@ These components assemble common page structures from the layout primitives and 
 | Component | Use for |
 |-----------|---------|
 | `PageHeader` | Page title, eyebrow, description, metadata, and actions |
-| `TopNav` | Branded monogram lockup, nav links, and top-level actions; `TopNavAction` controls mobile placement. `TopNavItem.icon` (≥ 5.1.0) shows in dropdown/mobile rows. `mobileMenuSections` (≥ 5.1.0) adds labeled row groups to the mobile sheet; `mobileMenuExtra` injects fully custom content at the bottom. A `navItems` entry with `items: TopNavItem[]` becomes a flyout group (desktop `NavigationMenu`, mobile accordion) — requires the `@radix-ui/react-navigation-menu` peer (≥ 4.19.0) |
+| `TopNav` | Branded monogram lockup, nav links, and top-level actions; `TopNavAction` controls mobile placement. `TopNavItem.icon` (≥ 5.1.0) shows in dropdown/mobile rows; `TopNavItem.onClick` (≥ 5.2.0) renders the row as a button instead of a link, e.g. sign out. `mobileMenuSections` (≥ 5.1.0) adds labeled row groups to the mobile sheet; `mobileMenuExtra` injects fully custom content at the bottom. A `navItems` entry with `items: TopNavItem[]` becomes a flyout group (desktop `NavigationMenu` with a trigger-tracking indicator caret, mobile accordion) — requires the `@radix-ui/react-navigation-menu` peer (≥ 4.19.0) |
 | `Sidebar` | Collapsible sidebar primitive family (`SidebarProvider`/`Sidebar`/`SidebarMenu`/etc., ≥ 5.0.0) — replaces the removed `SidebarNav`. Sticky `<aside>` on desktop, `Sheet`-based off-canvas on mobile; `collapsible="icon"` collapses to an icon rail with tooltips. See the [Sidebar section](#sidebar) below. |
 | `DashboardTopBar` | Context top bar with breadcrumb, page title, and actions. `menuTrigger` slot renders the mobile menu button (e.g. `<SidebarTrigger className="lg:hidden" />`, ≥ 5.0.0 — replaces `menuOpen`/`onMenuToggle`). `showMobileLogo={false}` hides the mobile monogram. |
 | `DashboardShell` | Docs-aligned app shell built on `Sidebar`/`SidebarProvider` internally; `sidebarGroups`/`sidebarItems` props unchanged. Sidebar sticks on `lg+`. |

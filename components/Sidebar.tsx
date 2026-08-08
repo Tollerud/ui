@@ -113,7 +113,7 @@ const SidebarProvider = forwardRef<HTMLDivElement, SidebarProviderProps>(
                 ...style,
               } as CSSProperties
             }
-            className={cn('flex min-h-screen w-full', className)}
+            className={cn('flex min-h-dvh w-full', className)}
             {...props}
           >
             {children}
@@ -180,7 +180,7 @@ const Sidebar = forwardRef<HTMLElement, SidebarProps>(
             // PageShell.test.tsx). --sidebar-height lets an embedding context
             // (e.g. a bounded docs demo box) override it without needing a
             // new prop — CSS custom properties inherit through any ancestor.
-            'sticky top-0 flex h-[var(--sidebar-height,100vh)] shrink-0 flex-col overflow-hidden border-tollerud-border bg-tollerud-noir-900 transition-[width] duration-normal ease-out',
+            'sticky top-0 flex h-[var(--sidebar-height,100dvh)] shrink-0 flex-col overflow-hidden border-tollerud-border bg-tollerud-noir-900 transition-[width] duration-normal ease-out',
             side === 'left' ? 'border-r' : 'border-l',
             collapsedIcon && 'items-center',
             className
