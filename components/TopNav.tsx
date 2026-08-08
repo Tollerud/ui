@@ -178,7 +178,13 @@ function TopNavLink({
     onNavigate?.()
   }
   const rowClassName = cn(
-    'tollerud-focus-ring rounded-sm text-sm text-tollerud-text-secondary no-underline transition-colors hover:text-tollerud-text-primary',
+    // flex, not inline-flex: this <a> sits inside a bare <li> (a block box), and an inline-flex
+    // child is still an *inline-level* box from that block container's perspective — the <li>
+    // wraps it in an inline formatting "line box", which adds phantom half-leading space around
+    // it that a true block-level flex child (the neighboring flyout <button>) never gets. That
+    // asymmetric leading, not the element's own measured height, was the source of the 1px
+    // misalignment against sibling nav items. h-5 pins the height explicitly either way.
+    'tollerud-focus-ring flex h-5 items-center rounded-sm text-sm text-tollerud-text-secondary no-underline transition-colors hover:text-tollerud-text-primary',
     item.active && 'text-tollerud-yellow',
     className
   )
@@ -423,8 +429,18 @@ function TopNavFlyoutGroup({
       <NavigationMenuPrimitive.Trigger
         ref={anchorRef}
         aria-controls={isOpen ? popoverId : undefined}
+        // Click-to-open only, like every other dropdown in this system (DropdownMenu, Select,
+        // Combobox) — preventDefault skips Radix's own hover open/close (composeEventHandlers
+        // runs this first; Radix's internal handler only fires if the event isn't already
+        // defaultPrevented). Radix's hover-close fires on pointer-leaving the *trigger*, which
+        // is unconditional on the mouse's next stop — moving toward the panel to click a row
+        // leaves the trigger first, closing the panel before the click ever lands.
+        onPointerEnter={(e) => e.preventDefault()}
+        onPointerMove={(e) => e.preventDefault()}
+        onPointerLeave={(e) => e.preventDefault()}
         className={cn(
-          'tollerud-focus-ring group flex cursor-pointer items-center gap-1 rounded-sm text-sm text-tollerud-text-secondary transition-colors hover:text-tollerud-text-primary',
+          // h-5 explicit for the same reason as TopNavLink's rowClassName — see its comment.
+          'tollerud-focus-ring group flex h-5 cursor-pointer items-center gap-1 rounded-sm text-sm text-tollerud-text-secondary transition-colors hover:text-tollerud-text-primary',
           item.active && 'text-tollerud-yellow'
         )}
       >
@@ -621,16 +637,14 @@ const TopNav = forwardRef<HTMLElement, TopNavProps>(
                                   <span className="truncate">{item.label}</span>
                                 </span>
                               </AccordionTrigger>
-                              <AccordionContent className="px-0 pb-1 pt-0.5">
-                                <div className="ml-[19px] flex flex-col gap-0.5 border-l border-tollerud-border py-0.5 pl-3">
-                                  {item.items.map((child) => (
-                                    <TopNavMenuRow
-                                      key={topNavItemKey(child, 'mobile-')}
-                                      item={child}
-                                      onNavigate={closeMobileMenu}
-                                    />
-                                  ))}
-                                </div>
+                              <AccordionContent className="flex flex-col gap-0.5 px-0 pb-1 pt-0.5">
+                                {item.items.map((child) => (
+                                  <TopNavMenuRow
+                                    key={topNavItemKey(child, 'mobile-')}
+                                    item={child}
+                                    onNavigate={closeMobileMenu}
+                                  />
+                                ))}
                               </AccordionContent>
                             </AccordionItem>
                           </Accordion>
