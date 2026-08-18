@@ -136,7 +136,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
-    "@changesets/cli": "^2.29.8",
+    "@changesets/cli": "^3.0.0",
     "@eslint/js": "^9.39.4",
     "@floating-ui/react-dom": "^2.1.8",
     "@playwright/test": "^1.60.0",
