@@ -596,7 +596,7 @@ export function ButtonGlowRoot() {
         </Alert>
       </Section>
 
-      <Section title="Tabs & Accordion" permalink="components/tabs-and-accordion" desc="Organize content. Tabs ship pill and underline variants.">
+      <Section title="Tabs & Accordion" permalink="components/tabs-and-accordion" desc="Organize content. Tabs ship pill and underline variants. Accordion is built on Base UI (≥ 5.7.0).">
         <Demo name="tabs" variant="col" code={`<Tabs tabs={[
   { id: 'overview', label: 'Overview', content: '...' },
   { id: 'logs', label: 'Logs', content: '...' },

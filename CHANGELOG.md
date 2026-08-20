@@ -7,6 +7,30 @@
      • Never write bold mid-paragraph as a heading substitute — it merges into surrounding text
 -->
 
+## 5.7.0 — 2026-08-20 — Select, Combobox, DatePicker, Accordion, Checkbox, Switch, RadioGroup, Slider rebuilt on Base UI
+
+### Added
+
+- New required peer dependency `@base-ui/react` (`^1.7.0`), alongside the existing Radix peers. `@floating-ui/react-dom` is now also a required peer instead of a bundled dependency — see Changed below.
+
+### Changed
+
+- `Select`, `Combobox`, `DatePicker`, `Accordion`, `Checkbox`, `Switch`, `RadioGroup`/`Radio`, and `Slider` are internally rebuilt on [Base UI](https://base-ui.com) instead of hand-rolled state/keyboard handling. Every export name is unchanged, and every prop consumers actually use in documented usage (`Radio` always nested inside `RadioGroup`) keeps working the same way — see the one narrower type below.
+
+- `Checkbox`'s `indeterminate` is now driven natively by Base UI instead of a manual DOM property hack.
+
+- `RadioGroup`'s children-cloning wiring is replaced by Base UI's own group context — no observable change for the documented usage (`Radio` nested inside `RadioGroup`). `Radio`'s type no longer accepts a standalone `checked` prop — Base UI's `Radio` always derives its checked state from the enclosing `RadioGroup`'s value, which was already the only documented usage pattern.
+
+- `Select`, `Combobox`, and `DatePicker` no longer use the internal `FloatingDropdownPortal` positioning engine (`lib/floating-dropdown.tsx`) — each now uses Base UI's own portal/positioner. `TopNav`'s desktop flyout is unaffected and keeps using `FloatingDropdownPortal` directly.
+
+- `Accordion` triggers keep their existing Tab-based keyboard contract — Base UI's current accordion implementation follows the updated WAI-ARIA APG guidance that removed roving-tabindex arrow-key navigation between triggers, so this is parity, not a new capability.
+
+- **New**: `DatePicker`'s calendar grid gains real keyboard navigation — arrow keys move focus by day, `Home`/`End` jump to the start/end of the current week, `PageUp`/`PageDown` move a month at a time (carrying keyboard focus with them), and `Enter`/`Space` select the focused day. Previously the grid had no keyboard support at all beyond `Tab`.
+
+- `Combobox` gains an "Escape while closed clears the current selection" behavior (from Base UI), reported through the existing `onChange` callback with an empty string, matching this component's "no selection" convention.
+
+No breaking changes.
+
 ## 5.6.0 — 2026-08-09 — TopNav userMenu placement
 
 ### Added

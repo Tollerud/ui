@@ -1,6 +1,6 @@
 {
   "name": "Tollerud User Interface",
-  "version": "5.6.0",
+  "version": "5.7.0",
   "description": "Dark, monochrome React components with a single yellow accent — built for dashboards, tools, and homelab UIs.",
   "components": {
     "button": {
@@ -678,52 +678,56 @@
     },
     "select": {
       "name": "Select",
-      "description": "Styled native select dropdown with custom chevron",
+      "description": "Custom listbox dropdown with a styled trigger and chevron, built on Base UI",
       "files": [
         "components/Select.tsx"
       ],
       "dependencies": [
         "clsx",
-        "tailwind-merge"
+        "tailwind-merge",
+        "@base-ui/react"
       ],
       "registryDependencies": [],
       "type": "components:ui"
     },
     "checkbox": {
       "name": "Checkbox",
-      "description": "Custom-styled checkbox with checkmark SVG and label",
+      "description": "Custom-styled checkbox with checkmark SVG and label, built on Base UI",
       "files": [
         "components/Checkbox.tsx"
       ],
       "dependencies": [
         "clsx",
-        "tailwind-merge"
+        "tailwind-merge",
+        "@base-ui/react"
       ],
       "registryDependencies": [],
       "type": "components:ui"
     },
     "switch": {
       "name": "Switch",
-      "description": "Toggle switch with role=switch accessibility",
+      "description": "Toggle switch with role=switch accessibility, built on Base UI",
       "files": [
         "components/Switch.tsx"
       ],
       "dependencies": [
         "clsx",
-        "tailwind-merge"
+        "tailwind-merge",
+        "@base-ui/react"
       ],
       "registryDependencies": [],
       "type": "components:ui"
     },
     "radio-group": {
       "name": "RadioGroup",
-      "description": "Fieldset-based radio group with custom dot indicator",
+      "description": "Fieldset-based radio group with custom dot indicator, built on Base UI",
       "files": [
         "components/RadioGroup.tsx"
       ],
       "dependencies": [
         "clsx",
-        "tailwind-merge"
+        "tailwind-merge",
+        "@base-ui/react"
       ],
       "registryDependencies": [],
       "type": "components:ui"
@@ -772,14 +776,15 @@
     },
     "accordion": {
       "name": "Accordion",
-      "description": "Collapsible accordion with single or multiple open items",
+      "description": "Collapsible accordion with single or multiple open items, built on Base UI",
       "files": [
         "components/Accordion.tsx"
       ],
       "dependencies": [
         "clsx",
         "tailwind-merge",
-        "lucide-react"
+        "lucide-react",
+        "@base-ui/react"
       ],
       "registryDependencies": [],
       "type": "components:ui"
@@ -831,14 +836,15 @@
     },
     "combobox": {
       "name": "Combobox",
-      "description": "Searchable single-select combobox with optional grouped section titles and full keyboard navigation",
+      "description": "Searchable single-select combobox with optional grouped section titles and full keyboard navigation, built on Base UI",
       "files": [
         "components/Combobox.tsx"
       ],
       "dependencies": [
         "clsx",
         "tailwind-merge",
-        "lucide-react"
+        "lucide-react",
+        "@base-ui/react"
       ],
       "registryDependencies": [],
       "type": "components:ui"
@@ -871,14 +877,15 @@
     },
     "date-picker": {
       "name": "DatePicker",
-      "description": "Calendar date picker with month navigation",
+      "description": "Calendar date picker with month navigation and full keyboard support, overlay built on Base UI",
       "files": [
         "components/DatePicker.tsx"
       ],
       "dependencies": [
         "clsx",
         "tailwind-merge",
-        "lucide-react"
+        "lucide-react",
+        "@base-ui/react"
       ],
       "registryDependencies": [],
       "type": "components:ui"
@@ -1158,13 +1165,14 @@
     },
     "slider": {
       "name": "Slider",
-      "description": "Range slider with optional label and live value display",
+      "description": "Range slider with optional label and live value display, built on Base UI",
       "files": [
         "components/Slider.tsx"
       ],
       "dependencies": [
         "clsx",
-        "tailwind-merge"
+        "tailwind-merge",
+        "@base-ui/react"
       ],
       "registryDependencies": [],
       "type": "components:ui"

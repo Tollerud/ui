@@ -101,7 +101,7 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Textarea & Select" desc="Multiline entry and a styled native select with custom chevron.">
+      <Section title="Textarea & Select" desc="Multiline entry and a custom listbox dropdown (built on Base UI) with a styled trigger and chevron — not a native select.">
         <Demo name="textarea-select" code={`<Textarea label="Description" placeholder="Enter details…" rows={4} />
 <Select label="Server" placeholder="Select a server" options={servers} />`}>
           <div className="ds-grid-2" style={{ width: '100%', alignItems: 'start' }}>
@@ -111,7 +111,7 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Toggles" desc="Checkbox, switch and radio group — all keyboard accessible with custom indicators. Checkbox supports indeterminate for mixed select-all states (≥ 4.8.40); DataTable's header checkbox uses it automatically.">
+      <Section title="Toggles" desc="Checkbox, switch and radio group — all keyboard accessible with custom indicators, built on Base UI (≥ 5.7.0). Checkbox supports indeterminate for mixed select-all states (≥ 4.8.40); DataTable's header checkbox uses it automatically.">
         <Demo name="toggles" code={`<Checkbox label="Enable backups" defaultChecked />
 <Checkbox label="Select all (partial)" indeterminate />
 <Switch label="Dark mode" defaultChecked />
@@ -141,13 +141,13 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Slider" desc="Range input with a yellow thumb and a live value readout.">
+      <Section title="Slider" desc="Range input with a yellow thumb and a live value readout, built on Base UI (≥ 5.7.0).">
         <Demo name="slider" variant="col" code={`<Slider min={0} max={100} defaultValue={64} />`}>
           <div style={{ maxWidth: 360 }}><Slider min={0} max={100} defaultValue={64}/></div>
         </Demo>
       </Section>
 
-      <Section title="Date picker" desc="A calendar popover for date selection — the control native HTML handles poorly.">
+      <Section title="Date picker" desc="A calendar popover for date selection — the control native HTML handles poorly. The popover shell is built on Base UI (≥ 5.7.0); the calendar grid has full keyboard navigation — arrow keys move by day, Home/End jump to the start/end of the week, PageUp/PageDown move a month at a time, Enter/Space selects.">
         <Demo name="datepicker" variant="col" code={`<DatePicker placeholder="Pick a date" />`}>
           <div style={{ maxWidth: 280 }}><DatePicker placeholder="Pick a date"/></div>
         </Demo>
@@ -176,7 +176,7 @@ function PageForms() {
         </Demo>
       </Section>
 
-      <Section title="Combobox" permalink="forms/combobox" desc="Searchable select with keyboard navigation (↑/↓/Enter/Esc), optional grouped sections, and a no-results state. Two search modes: searchPlacement='trigger' (default) keeps the search input as the trigger field; searchPlacement='dropdown' moves the search inside the popover so the trigger looks like a standard Select button. Both modes work inside Radix Dialog — the dropdown auto-focuses its search input on open and does not close or steal focus from the dialog, and Esc closes only the dropdown (the dialog stays open). The arrow-key highlight is announced to screen readers via aria-activedescendant and scrolls into view in long lists (≥ 4.8.40). On iOS Safari (≥ 4.8.53) the in-dropdown search field renders at ≥16px so focusing it does not auto-zoom, and the popover no longer closes on the focus/zoom scroll iOS emits — only a genuine touch drag dismisses it. Since 4.8.56 the popover is positioned by Floating UI (the same engine as Radix Popover / shadcn): it flips, shifts, clamps its height, and stays glued to the trigger across scroll, resize, and mobile viewport changes (iOS keyboard/zoom/address bar). On touch it stays open and repositions while scrolling; outside-click and Esc still dismiss it. Since 4.14.0, onCreateOption opts into a 'Create «query»' row for fields where the value a user wants may not exist yet — e.g. a category picker.">
+      <Section title="Combobox" permalink="forms/combobox" desc="Searchable select with keyboard navigation (↑/↓/Enter/Esc), optional grouped sections, and a no-results state. Two search modes: searchPlacement='trigger' (default) keeps the search input as the trigger field; searchPlacement='dropdown' moves the search inside the popover so the trigger looks like a standard Select button. Both modes work inside Radix Dialog — the dropdown auto-focuses its search input on open and does not close or steal focus from the dialog, and Esc closes only the dropdown (the dialog stays open). The arrow-key highlight is announced to screen readers via aria-activedescendant and scrolls into view in long lists (≥ 4.8.40). On iOS Safari (≥ 4.8.53) the in-dropdown search field renders at ≥16px so focusing it does not auto-zoom, and the popover no longer closes on the focus/zoom scroll iOS emits — only a genuine touch drag dismisses it. Since 4.8.56 the popover is positioned by Floating UI (the same engine as Radix Popover / shadcn); as of 5.7.0 the whole positioning/keyboard engine is built on Base UI instead of a custom implementation, and it flips, shifts, clamps its height, and stays glued to the trigger across scroll, resize, and mobile viewport changes (iOS keyboard/zoom/address bar). On touch it stays open and repositions while scrolling; outside-click and Esc still dismiss it — pressing Esc again while already closed clears the current selection (≥ 5.7.0). Since 4.14.0, onCreateOption opts into a 'Create «query»' row for fields where the value a user wants may not exist yet — e.g. a category picker.">
         <Demo name="combobox" variant="col" code={`// Flat list — type to filter hosts
 <Combobox
   label="Connect to host"

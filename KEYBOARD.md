@@ -83,6 +83,23 @@ Interactive charts share one keyboard contract. Single-SVG charts (TimeSeriesCha
 - Line/area charts also render a visually-hidden data table (`srTable`, ≥ 4.8.45) so screen-reader users can browse every point's value, not just hear the live-region announcements
 - Multi-series `TimeSeriesChart` (`series` prop, ≥ 4.8.46): the same crosshair spans all series; the stacked tooltip, live-region announcement, and SR table cover every series at the active point
 
+### Select, Combobox, Accordion, Checkbox, Switch, RadioGroup, Slider (≥ 5.7.0, built on Base UI)
+
+- **Select / Combobox**: `↓` opens and highlights the first option; `↑`/`↓` move the highlight; `Enter` selects the highlighted option; `Esc` closes the popup without propagating to a surrounding `Dialog` (a second `Esc` after the popup is already closed propagates normally). `Combobox` additionally: while closed, `Esc` clears the current selection.
+- **Accordion**: `Tab` moves between triggers in DOM order; `Enter`/`Space` toggles the focused trigger's panel — unchanged from before 5.7.0 (Base UI's current accordion follows the updated WAI-ARIA APG guidance, which removed roving-tabindex arrow-key navigation between triggers).
+- **Checkbox / Switch / RadioGroup**: standard native-control contract — `Tab` moves between controls, `Space` toggles a `Checkbox`/`Switch`, arrow keys move between `Radio`s in a `RadioGroup` and select the newly focused one.
+- **Slider**: `Tab` focuses the thumb; `←`/`→` (or `↓`/`↑`) step by `step`; `Home`/`End` jump to `min`/`max`.
+
+### DatePicker calendar grid (≥ 5.7.0, new)
+
+Previously mouse-only; the calendar grid now has a full keyboard contract (roving tabindex over day cells):
+
+- `←` / `→` move focus one day back/forward
+- `↑` / `↓` move focus one week back/forward
+- `Home` / `End` jump to the start/end of the focused day's week
+- `PageUp` / `PageDown` move focus back/forward one month, changing the visible month and carrying keyboard focus with it
+- `Enter` / `Space` selects the focused day and closes the popup
+
 ## Implementation rules
 
 1. **Every overlay must close on `Esc`.** If it doesn't, it's a bug.

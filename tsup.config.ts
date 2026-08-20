@@ -49,6 +49,8 @@ export default defineConfig({
     '@radix-ui/react-tabs',
     '@radix-ui/react-tooltip',
     '@radix-ui/react-slot',
+    '@base-ui/react',
+    '@floating-ui/react-dom',
     'class-variance-authority',
     'framer-motion',
     'lucide-react',
@@ -58,6 +60,7 @@ export default defineConfig({
   esbuildOptions(options) {
     options.alias = {
       '@/lib/utils': './lib/utils.ts',
+      '@/lib/form-field-variants': './lib/form-field-variants.ts',
       '@/lib/motion': './lib/motion.ts',
       '@/lib/floating-dropdown': './lib/floating-dropdown.tsx',
       '@/lib/bypass-modal-scroll-lock': './lib/bypass-modal-scroll-lock.ts',

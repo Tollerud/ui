@@ -235,16 +235,17 @@ describe('DataTable', () => {
       />
     )
 
-    const selectAll = screen.getByRole('checkbox', { name: 'Select all rows on page' }) as HTMLInputElement
-    expect(selectAll.indeterminate).toBe(false)
+    const selectAll = screen.getByRole('checkbox', { name: 'Select all rows on page' })
+    expect(selectAll).not.toHaveAttribute('data-indeterminate')
+    expect(selectAll).toHaveAttribute('aria-checked', 'false')
 
     await user.click(screen.getByRole('checkbox', { name: /select row 1/i }))
-    expect(selectAll.indeterminate).toBe(true)
-    expect(selectAll.checked).toBe(false)
+    expect(selectAll).toHaveAttribute('data-indeterminate')
+    expect(selectAll).toHaveAttribute('aria-checked', 'mixed')
 
     await user.click(screen.getByRole('checkbox', { name: /select row 2/i }))
-    expect(selectAll.indeterminate).toBe(false)
-    expect(selectAll.checked).toBe(true)
+    expect(selectAll).not.toHaveAttribute('data-indeterminate')
+    expect(selectAll).toHaveAttribute('aria-checked', 'true')
   })
 
   it('combines sort, search, filter, pagination, and selection in rich mode', async () => {
@@ -288,8 +289,8 @@ describe('DataTable', () => {
     await user.click(screen.getByRole('button', { name: /next page|next/i }))
     bodyRows = screen.getAllByRole('row').slice(1)
     expect(bodyRows[0]).toHaveTextContent('delta')
-    const selectAll = screen.getByRole('checkbox', { name: 'Select all rows on page' }) as HTMLInputElement
-    expect(selectAll.checked).toBe(false)
+    const selectAll = screen.getByRole('checkbox', { name: 'Select all rows on page' })
+    expect(selectAll).toHaveAttribute('aria-checked', 'false')
 
     // Search narrows within the active filter
     await user.type(screen.getByPlaceholderText('Search…'), 'alp')

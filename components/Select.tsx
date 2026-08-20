@@ -1,8 +1,9 @@
 'use client'
 
-import { type HTMLAttributes, forwardRef, useState, useRef, useEffect, useCallback, useId } from 'react'
+import { type HTMLAttributes, forwardRef, useId } from 'react'
+import { Select as BaseSelect } from '@base-ui/react/select'
 import { cn } from '@/lib/utils'
-import { FloatingDropdownPortal } from '@/lib/floating-dropdown'
+import { formFieldTriggerVariants } from '@/lib/form-field-variants'
 
 export interface SelectOption {
   value: string
@@ -24,104 +25,15 @@ export interface SelectProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onCha
 
 const Select = forwardRef<HTMLDivElement, SelectProps>(
   ({ className, label, error, placeholder, options = [], value, onChange, layout = 'stacked', size = 'md', required, ...props }, ref) => {
-    const [open, setOpen] = useState(false)
-    const [highlightedIdx, setHighlightedIdx] = useState(0)
-    const containerRef = useRef<HTMLDivElement>(null)
-    const listRef = useRef<HTMLDivElement>(null)
-    const outerRef = useRef<HTMLDivElement>(null)
-
-    const selectedOption = options.find((o) => o.value === value)
-
-    const setOuterRef = useCallback(
-      (node: HTMLDivElement | null) => {
-        outerRef.current = node
-        if (typeof ref === 'function') ref(node)
-        else if (ref) ref.current = node
-      },
-      [ref],
-    )
-
-    // Close on click outside
-    useEffect(() => {
-      if (!open) return
-      const handleClick = (e: MouseEvent) => {
-        const target = e.target as Node
-        if (outerRef.current?.contains(target)) return
-        if (listRef.current?.contains(target)) return
-        setOpen(false)
-      }
-      document.addEventListener('mousedown', handleClick)
-      return () => document.removeEventListener('mousedown', handleClick)
-    }, [open])
-
-    // Reset highlight when opening
-    useEffect(() => {
-      if (open) {
-        const idx = value ? options.findIndex((o) => o.value === value) : -1
-        setHighlightedIdx(idx >= 0 ? idx : 0)
-      }
-    }, [open, options, value])
-
-    // Scroll highlighted option into view
-    useEffect(() => {
-      if (open && listRef.current) {
-        const item = listRef.current.children[highlightedIdx] as HTMLElement | undefined
-        item?.scrollIntoView({ block: 'nearest' })
-      }
-    }, [open, highlightedIdx])
-
-    const selectOption = useCallback(
-      (opt: SelectOption) => {
-        onChange?.(opt.value)
-        setOpen(false)
-      },
-      [onChange]
-    )
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-      if (!open) {
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
-          e.preventDefault()
-          setOpen(true)
-        }
-        return
-      }
-
-      switch (e.key) {
-        case 'Escape':
-          // Consume the event so a surrounding Dialog stays open.
-          e.preventDefault()
-          e.stopPropagation()
-          setOpen(false)
-          break
-        case 'ArrowDown':
-          e.preventDefault()
-          setHighlightedIdx((prev) => Math.min(prev + 1, options.length - 1))
-          break
-        case 'ArrowUp':
-          e.preventDefault()
-          setHighlightedIdx((prev) => Math.max(prev - 1, 0))
-          break
-        case 'Enter':
-          e.preventDefault()
-          if (options[highlightedIdx]) {
-            selectOption(options[highlightedIdx])
-          }
-          break
-      }
-    }
-
     const triggerId = useId()
     const autoErrorId = useId()
     const errorId = error ? autoErrorId : undefined
-    const listboxId = `${triggerId}-listbox`
-    const activeOptionId =
-      open && options.length > 0 ? `${triggerId}-option-${highlightedIdx}` : undefined
+    const selectedOption = options.find((o) => o.value === value)
 
     return (
       <div
+        ref={ref}
         className={cn(layout === 'inline' ? 'flex items-center gap-2' : 'flex flex-col gap-1.5')}
-        ref={setOuterRef}
         {...props}
       >
         {label && (
@@ -136,95 +48,49 @@ const Select = forwardRef<HTMLDivElement, SelectProps>(
             {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
           </label>
         )}
-        <div ref={containerRef} className={cn('relative', layout === 'inline' && 'min-w-0')}>
-          {/* Trigger */}
-          <button
-            id={triggerId}
-            type="button"
-            onClick={() => setOpen(!open)}
-            onKeyDown={handleKeyDown}
-            role="combobox"
-            aria-haspopup="listbox"
-            aria-expanded={open}
-            aria-controls={listboxId}
-            aria-activedescendant={activeOptionId}
-            aria-describedby={errorId}
-            aria-label={layout === 'inline' && label ? `${label}: ${selectedOption?.label ?? placeholder ?? 'Select'}` : undefined}
-            className={cn(
-              'font-sans w-full flex items-center justify-between rounded',
-              size === 'sm' ? 'px-2.5 py-1.5 text-xs' : 'px-3 py-2.5 text-base',
-              'bg-tollerud-surface-raised',
-              'text-tollerud-text-primary text-left',
-              'transition-all duration-fast ease-out cursor-pointer',
-              error
-                ? 'border-tollerud-error/70 focus:border-tollerud-error focus:shadow-[0_0_0_1px_var(--tollerud-error,#EF4444)]'
-                : 'border-tollerud-border focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
-              'border hover:border-tollerud-noir-400',
-              'focus:outline-none',
-              className
-            )}
-          >
-            <span className={cn(!selectedOption && 'text-tollerud-text-muted')}>
-              {selectedOption ? selectedOption.label : placeholder || 'Select…'}
-            </span>
-            <svg
-              className={cn(
-                'h-4 w-4 text-tollerud-text-muted transition-transform duration-fast flex-shrink-0',
-                open && 'rotate-180'
-              )}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              aria-hidden="true"
+        <div className={cn('relative', layout === 'inline' && 'min-w-0')}>
+          <BaseSelect.Root items={options} value={value ?? null} onValueChange={(next) => onChange?.(next ?? '')} required={required}>
+            <BaseSelect.Trigger
+              id={triggerId}
+              aria-describedby={errorId}
+              aria-label={layout === 'inline' && label ? `${label}: ${selectedOption?.label ?? placeholder ?? 'Select'}` : undefined}
+              className={cn(formFieldTriggerVariants({ size, error: Boolean(error) }), className)}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
-            </svg>
-          </button>
-
-          {/* Dropdown — portalled so scroll containers (e.g. DataTable) do not clip */}
-          <FloatingDropdownPortal
-            open={open}
-            anchorRef={containerRef}
-            popoverRef={listRef}
-            id={listboxId}
-            role="listbox"
-            placementOptions={{ maxHeight: 240 }}
-            className={cn(
-              'overflow-y-auto py-1',
-              'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
-            )}
-          >
-            {options.length === 0 && (
-              <div className="px-3 py-2 text-xs text-tollerud-text-muted text-center">
-                No options
-              </div>
-            )}
-            {options.map((opt, idx) => (
-              <button
-                key={opt.value}
-                type="button"
-                id={`${triggerId}-option-${idx}`}
-                role="option"
-                aria-selected={opt.value === value}
-                onClick={() => selectOption(opt)}
-                onMouseEnter={() => setHighlightedIdx(idx)}
-                className={cn(
-                  'w-full text-sm text-left px-3 py-2 transition-colors duration-fast',
-                  'cursor-pointer',
-                  opt.value === value
-                    ? 'text-tollerud-yellow'
-                    : 'text-tollerud-text-primary',
-                  idx === highlightedIdx && !(opt.value === value)
-                    ? 'bg-tollerud-noir-700'
-                    : 'hover:bg-tollerud-noir-700/60',
-                  opt.value === value && highlightedIdx === idx && 'bg-tollerud-noir-700'
-                )}
+              <BaseSelect.Value placeholder={placeholder || 'Select…'} />
+              <BaseSelect.Icon className="h-4 w-4 text-tollerud-text-muted transition-transform duration-fast flex-shrink-0 data-[popup-open]:rotate-180">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+                </svg>
+              </BaseSelect.Icon>
+            </BaseSelect.Trigger>
+            <BaseSelect.Portal>
+              <BaseSelect.Positioner
+                sideOffset={4}
+                className="pointer-events-auto z-50 outline-none"
+                style={{ pointerEvents: 'auto' }}
               >
-                {opt.label}
-              </button>
-            ))}
-          </FloatingDropdownPortal>
+                <BaseSelect.Popup className="max-h-[240px] overflow-y-auto py-1 rounded-lg border border-tollerud-border bg-tollerud-surface-overlay">
+                  {options.length === 0 && (
+                    <div className="px-3 py-2 text-xs text-tollerud-text-muted text-center">
+                      No options
+                    </div>
+                  )}
+                  {options.map((opt) => (
+                    <BaseSelect.Item
+                      key={opt.value}
+                      value={opt.value}
+                      className={cn(
+                        'w-full text-sm text-left px-3 py-2 transition-colors duration-fast cursor-pointer',
+                        'text-tollerud-text-primary data-[selected]:text-tollerud-yellow data-[highlighted]:bg-tollerud-noir-700'
+                      )}
+                    >
+                      <BaseSelect.ItemText>{opt.label}</BaseSelect.ItemText>
+                    </BaseSelect.Item>
+                  ))}
+                </BaseSelect.Popup>
+              </BaseSelect.Positioner>
+            </BaseSelect.Portal>
+          </BaseSelect.Root>
         </div>
         {error && (
           <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>

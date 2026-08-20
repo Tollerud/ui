@@ -45,7 +45,7 @@ describe('Select', () => {
     await user.click(screen.getByRole('combobox', { name: 'Rows: 25' }))
 
     const listbox = screen.getByRole('listbox')
-    expect(listbox).toHaveAttribute('data-placement', 'top')
+    expect(listbox.closest('[data-side]')).toHaveAttribute('data-side', 'top')
     expect(document.body.contains(listbox)).toBe(true)
   })
 

@@ -23,12 +23,13 @@ Copy-paste — installs `@tollerud/ui` and all required peers:
 npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
   @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress \
   @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip \
+  @base-ui/react @floating-ui/react-dom \
   lucide-react framer-motion sonner
 ```
 
 Looks long — most apps only do this once. Peers stay in your app so you control versions.
 
-As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peer dependencies**. The design system bundles only `class-variance-authority`.
+As of **v5.7.0**, `@base-ui/react` and `@floating-ui/react-dom` are **required peer dependencies** — `Select`, `Combobox`, `DatePicker`, `Accordion`, `Checkbox`, `Switch`, `RadioGroup`, and `Slider` are built on Base UI; `@floating-ui/react-dom` powers `TopNav`'s desktop flyout. As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peer dependencies**. The design system bundles only `class-variance-authority`.
 
 `@paper-design/shaders-react` is an **optional** peer dependency — only needed if you use `NoirGlowBackground`. All other components work without it.
 
@@ -42,6 +43,7 @@ npm install @paper-design/shaders-react
 |--------|----------|------------|
 | **Always** | `react`, `react-dom`, `clsx`, `tailwind-merge`, `tailwindcss` | Every integration |
 | **Overlays & navigation** | `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-tabs`, `@radix-ui/react-tooltip`, `@radix-ui/react-slot`, `@radix-ui/react-progress` | Dialog, Sheet, Drawer, DropdownMenu, Tabs, Tooltip, Progress, Button `asChild` |
+| **Form controls & positioning** | `@base-ui/react`, `@floating-ui/react-dom` | Select, Combobox, DatePicker, Accordion, Checkbox, Switch, RadioGroup, Slider (Base UI); `TopNav` desktop flyout (Floating UI) |
 | **Icons** | `lucide-react` | Components with built-in icons |
 | **Motion** | `framer-motion` | Animated components (e.g. GlowCard, charts) |
 | **Toasts** | `sonner` | `<Toaster />` / toast API — mount once at app root |
@@ -91,7 +93,7 @@ Set up a new Next.js App Router project with @tollerud/ui (Tollerud User Interfa
 Requirements:
 1. Use Next.js with App Router and Tailwind CSS v4 (PostCSS).
 2. Install @tollerud/ui and all required peers:
-   npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip lucide-react framer-motion sonner
+   npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip @base-ui/react @floating-ui/react-dom lucide-react framer-motion sonner
 3. In app/globals.css, import BOTH:
    @import "@tollerud/ui/globals.css";
    @import "@tollerud/ui/source.css";
@@ -115,7 +117,7 @@ Add @tollerud/ui (Tollerud User Interface / Tollerud UI) to this existing projec
 
 Requirements:
 1. Install @tollerud/ui and required peers if missing:
-   npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip lucide-react framer-motion sonner
+   npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip @base-ui/react @floating-ui/react-dom lucide-react framer-motion sonner
 2. Ensure the Tailwind entry CSS imports BOTH:
    @import "@tollerud/ui/globals.css";
    @import "@tollerud/ui/source.css";

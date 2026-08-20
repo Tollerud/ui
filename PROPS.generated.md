@@ -11,6 +11,7 @@
 
 - `multiple?: boolean`
 - `defaultOpen?: string | string[]`
+- `children?: ReactNode`
 
 ## ActionDiff — `ActionDiffProps` extends extends HTMLAttributes<HTMLDivElement>
 
@@ -195,9 +196,9 @@
 
 - `label?: string`
 - `* Mixed state — e.g. a select-all checkbox with only some rows selected.`
-- `* Sets the native `indeterminate` property (announced as "mixed" by screen`
-- `* readers) and shows a dash instead of a checkmark. Visual precedence over`
-- `* `checked`; cleared automatically when the user clicks the checkbox.`
+- `* Announced as "mixed" by screen readers and shows a dash instead of a`
+- `* checkmark. Visual precedence over `checked`; cleared automatically when`
+- `* the user clicks the checkbox.`
 - `*/`
 - `indeterminate?: boolean`
 
@@ -725,11 +726,11 @@
 - `value?: string`
 - `onChange?: (value: string) => void`
 - `name?: string`
-- `children?: React.ReactNode`
+- `children?: ReactNode`
 - `className?: string`
 - `required?: boolean`
 
-## RadioGroup — `RadioProps` extends extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>
+## RadioGroup — `RadioProps` extends extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'checked'>
 
 - `label?: string`
 

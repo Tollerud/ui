@@ -1,6 +1,7 @@
 'use client'
 
-import { type InputHTMLAttributes, forwardRef, useId, useState } from 'react'
+import { type ChangeEvent, type InputHTMLAttributes, forwardRef, useCallback, useEffect, useId, useRef } from 'react'
+import { Switch as BaseSwitch } from '@base-ui/react/switch'
 import { cn } from '@/lib/utils'
 
 export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -8,12 +9,27 @@ export interface SwitchProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
 }
 
 const Switch = forwardRef<HTMLInputElement, SwitchProps>(
-  ({ className, label, id: idProp, checked, defaultChecked, onChange, ...props }, ref) => {
+  ({ className, label, id: idProp, disabled, onChange, value, ...rest }, ref) => {
     const autoId = useId()
     const id = idProp ?? autoId
-    const isControlled = checked !== undefined
-    const [internalChecked, setInternalChecked] = useState(!!defaultChecked)
-    const isOn = isControlled ? checked : internalChecked
+    const inputRef = useRef<HTMLInputElement | null>(null)
+
+    const setInputRef = useCallback(
+      (node: HTMLInputElement | null) => {
+        inputRef.current = node
+        if (typeof ref === 'function') ref(node)
+        else if (ref) (ref as React.RefObject<HTMLInputElement | null>).current = node
+      },
+      [ref]
+    )
+
+    useEffect(() => {
+      const node = inputRef.current
+      if (!node || !onChange) return
+      const handleChange = (event: Event) => onChange(event as unknown as ChangeEvent<HTMLInputElement>)
+      node.addEventListener('change', handleChange)
+      return () => node.removeEventListener('change', handleChange)
+    }, [onChange])
 
     return (
       <label
@@ -21,38 +37,20 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>(
         className={cn(
           'inline-flex items-center gap-2.5 cursor-pointer select-none group',
           'text-sm text-tollerud-text-primary',
-          props.disabled && 'opacity-40 pointer-events-none cursor-not-allowed',
+          disabled && 'opacity-40 pointer-events-none cursor-not-allowed',
           className
         )}
       >
-        <span
-          className={cn(
-            'relative inline-flex items-center h-5 w-9 flex-shrink-0 rounded-full',
-            'transition-colors duration-fast ease-out',
-            isOn ? 'bg-tollerud-yellow group-hover:bg-tollerud-yellow-warm' : 'bg-tollerud-noir-600 group-hover:bg-tollerud-noir-500'
-          )}
+        <BaseSwitch.Root
+          id={id}
+          inputRef={setInputRef}
+          disabled={disabled}
+          value={value === undefined ? undefined : String(value)}
+          {...(rest as Omit<typeof rest, keyof React.DOMAttributes<HTMLInputElement>>)}
+          className="relative inline-flex h-5 w-9 flex-shrink-0 items-center rounded-full transition-colors duration-fast ease-out bg-tollerud-noir-600 group-hover:bg-tollerud-noir-500 data-[checked]:bg-tollerud-yellow data-[checked]:group-hover:bg-tollerud-yellow-warm"
         >
-          <input
-            ref={ref}
-            id={id}
-            type="checkbox"
-            role="switch"
-            checked={isOn}
-            className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
-            onChange={(e) => {
-              if (!isControlled) setInternalChecked(e.target.checked)
-              onChange?.(e)
-            }}
-            {...props}
-          />
-          <span
-            className={cn(
-              'block h-3.5 w-3.5 rounded-full shadow-sm pointer-events-none',
-              'transition-all duration-fast ease-out',
-              isOn ? 'translate-x-[18px] bg-tollerud-black' : 'translate-x-[3px] bg-tollerud-white'
-            )}
-          />
-        </span>
+          <BaseSwitch.Thumb className="block h-3.5 w-3.5 translate-x-[3px] rounded-full bg-tollerud-white shadow-sm transition-all duration-fast ease-out data-[checked]:translate-x-[18px] data-[checked]:bg-tollerud-black" />
+        </BaseSwitch.Root>
         {label && <span>{label}</span>}
       </label>
     )

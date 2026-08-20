@@ -1,9 +1,10 @@
 'use client'
 
-import { forwardRef, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
+import { forwardRef, useCallback, useId, useMemo, useState } from 'react'
+import { Combobox as BaseCombobox } from '@base-ui/react/combobox'
 import { Check, ChevronDown, Plus, Search } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { FloatingDropdownPortal } from '@/lib/floating-dropdown'
+import { formFieldTriggerVariants } from '@/lib/form-field-variants'
 
 export interface ComboboxOption {
   value: string
@@ -52,6 +53,8 @@ export interface ComboboxProps {
   required?: boolean
 }
 
+const CREATE_VALUE = '__tollerud_combobox_create__'
+
 const defaultFilter = (option: ComboboxOption, query: string) =>
   option.label.toLowerCase().includes(query.toLowerCase())
 
@@ -99,16 +102,12 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
   const id = useId()
   const autoErrorId = useId()
   const errorId = error ? autoErrorId : undefined
-  const internalRootRef = useRef<HTMLDivElement>(null)
-  const anchorRef = useRef<HTMLDivElement>(null)
-  const listRef = useRef<HTMLDivElement>(null)
   const isControlled = valueProp !== undefined
   const [internalValue, setInternalValue] = useState(defaultValue)
   const value = isControlled ? valueProp : internalValue
 
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const [activeIndex, setActiveIndex] = useState(0)
   const [createdOptions, setCreatedOptions] = useState<ComboboxOption[]>([])
 
   const isGrouped = Boolean(groups && groups.length > 0)
@@ -135,362 +134,207 @@ const Combobox = forwardRef<HTMLDivElement, ComboboxProps>(function Combobox(
     Boolean(onCreateOption) &&
     trimmedQuery !== '' &&
     !lookupOptions.some((option) => option.label.toLowerCase() === trimmedQuery.toLowerCase())
-  const rowCount = filtered.length + (showCreateOption ? 1 : 0)
-  const createRowIndex = filtered.length
-
-  const highlightedIndex = rowCount === 0 ? 0 : Math.min(activeIndex, rowCount - 1)
-  const activeOptionId =
-    open && rowCount > 0
-      ? highlightedIndex === createRowIndex && showCreateOption
-        ? `${id}-option-create`
-        : `${id}-option-${highlightedIndex}`
-      : undefined
 
   const selected = lookupOptions.find((option) => option.value === value)
 
-  const setRootRef = useCallback(
-    (node: HTMLDivElement | null) => {
-      internalRootRef.current = node
-      if (typeof ref === 'function') ref(node)
-      else if (ref) ref.current = node
-    },
-    [ref]
-  )
-
-  useEffect(() => {
-    if (!open) return
-    function onClickOutside(e: MouseEvent) {
-      const target = e.target as Node
-      if (internalRootRef.current?.contains(target)) return
-      if (listRef.current?.contains(target)) return
+  const commit = useCallback(
+    (optionValue: string) => {
+      const option = lookupOptions.find((o) => o.value === optionValue)
+      if (!option || option.disabled) return
+      if (!isControlled) setInternalValue(option.value)
+      onChange?.(option.value)
       setOpen(false)
       setQuery('')
-    }
-    document.addEventListener('mousedown', onClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', onClickOutside)
-    }
-  }, [open])
+    },
+    [isControlled, lookupOptions, onChange]
+  )
 
-  // Keep the highlighted option visible while arrowing through a list taller
-  // than the dropdown. The options live in a portal, so resolve them by id.
-  useEffect(() => {
-    if (!activeOptionId) return
-    document.getElementById(activeOptionId)?.scrollIntoView({ block: 'nearest' })
-  }, [activeOptionId])
-
-  // Focus the search input as soon as it mounts (the portal renders null until
-  // coords are computed, so a dep-effect on `open` always fires one render too
-  // early). queueMicrotask defers until after React's layout effects, ensuring
-  // FloatingDropdownPortal's useDialogEscapeHatch (useLayoutEffect) has already
-  // attached its focusin stopPropagation before the focus event fires.
-  const dropdownSearchCallbackRef = useCallback((node: HTMLInputElement | null) => {
-    if (node && searchPlacement === 'dropdown') {
-      queueMicrotask(() => node.focus())
-    }
-  }, [searchPlacement])
-
-  const commit = (option: ComboboxOption) => {
-    if (option.disabled) return
-    if (!isControlled) setInternalValue(option.value)
-    onChange?.(option.value)
-    setOpen(false)
-    setQuery('')
-  }
-
-  const commitCreate = () => {
-    const label = trimmedQuery
-    if (!label) return
-    const returned = onCreateOption?.(label)
-    const newValue = typeof returned === 'string' && returned ? returned : label
-    setCreatedOptions((prev) =>
-      prev.some((o) => o.value === newValue) ? prev : [...prev, { value: newValue, label }]
-    )
+  const commitCreate = useCallback(() => {
+    const newLabel = trimmedQuery
+    if (!newLabel) return
+    const returned = onCreateOption?.(newLabel)
+    const newValue = typeof returned === 'string' && returned ? returned : newLabel
+    setCreatedOptions((prev) => (prev.some((o) => o.value === newValue) ? prev : [...prev, { value: newValue, label: newLabel }]))
     if (!isControlled) setInternalValue(newValue)
     onChange?.(newValue)
     setOpen(false)
     setQuery('')
-  }
+  }, [isControlled, onChange, trimmedQuery, onCreateOption])
 
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      setOpen(true)
-      setActiveIndex((index) => Math.min(index + 1, rowCount - 1))
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      setActiveIndex((index) => Math.max(index - 1, 0))
-    } else if (e.key === 'Enter') {
-      e.preventDefault()
-      if (showCreateOption && highlightedIndex === createRowIndex) {
-        commitCreate()
-        return
-      }
-      const option = filtered[highlightedIndex]
-      if (option) commit(option)
-    } else if (e.key === 'Escape') {
-      // Close only the innermost layer: consume the event while the dropdown
-      // is open so a surrounding Dialog stays open; let it through otherwise.
-      if (open) {
-        e.preventDefault()
-        e.stopPropagation()
-        setOpen(false)
-        setQuery('')
-      }
-    }
-  }
+  // Root needs the create-row's sentinel value in its own item accounting for
+  // keyboard navigation/selection to reach it — grouped mode omits it since
+  // Root's `items` can't mix flat and grouped shapes; the create row still
+  // renders, just outside Root's filtered-item count in that combination.
+  const itemsForRoot = isGrouped
+    ? filteredGroups.map((g) => ({ label: g.label, items: g.options }))
+    : showCreateOption
+      ? [...filtered, { value: CREATE_VALUE, label: createOptionLabel(trimmedQuery) }]
+      : filtered
 
-  let flatIndex = 0
+  const triggerClassName = cn(
+    formFieldTriggerVariants({ error: Boolean(error) }),
+    'pr-9',
+    disabled && 'opacity-50 pointer-events-none',
+    className
+  )
+
+  const renderItem = (option: ComboboxOption) => (
+    <BaseCombobox.Item
+      key={option.value}
+      value={option.value}
+      disabled={option.disabled}
+      className={cn(
+        'flex items-center justify-between gap-2 px-3 py-2 text-sm cursor-pointer text-tollerud-text-secondary',
+        'data-[highlighted]:bg-tollerud-surface-hover data-[highlighted]:text-tollerud-text-primary',
+        option.disabled && 'opacity-40 pointer-events-none'
+      )}
+    >
+      {option.label}
+      {option.value === value && <Check size={14} className="text-tollerud-yellow" />}
+    </BaseCombobox.Item>
+  )
 
   const optionList = (
-    <ul className="m-0 list-none p-0">
+    <>
       {filtered.length === 0 && !showCreateOption && (
-        <li className="px-3 py-2 text-sm text-tollerud-text-muted">No results</li>
+        <div className="px-3 py-2 text-sm text-tollerud-text-muted">No results</div>
       )}
 
       {isGrouped
         ? filteredGroups.map((group) => (
-            <li key={group.label} role="presentation">
-              <div className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-tollerud-text-muted">
+            <BaseCombobox.Group key={group.label} items={group.options} className="pb-1">
+              <BaseCombobox.GroupLabel className="px-3 pb-1 pt-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-tollerud-text-muted">
                 {group.label}
-              </div>
-              <ul role="group" aria-label={group.label}>
-                {group.options.map((option) => {
-                  const index = flatIndex++
-                  const isSelected = option.value === value
-                  return (
-                    <li
-                      key={option.value}
-                      id={`${id}-option-${index}`}
-                      role="option"
-                      aria-selected={isSelected}
-                      onMouseDown={(e) => {
-                        e.preventDefault()
-                        commit(option)
-                      }}
-                      onMouseEnter={() => setActiveIndex(index)}
-                      className={cn(
-                        'flex items-center justify-between gap-2 px-3 py-2 text-sm cursor-pointer',
-                        index === highlightedIndex
-                          ? 'bg-tollerud-surface-hover text-tollerud-text-primary'
-                          : 'text-tollerud-text-secondary',
-                        option.disabled && 'opacity-40 pointer-events-none'
-                      )}
-                    >
-                      {option.label}
-                      {isSelected && <Check size={14} className="text-tollerud-yellow" />}
-                    </li>
-                  )
-                })}
-              </ul>
-            </li>
+              </BaseCombobox.GroupLabel>
+              {group.options.map(renderItem)}
+            </BaseCombobox.Group>
           ))
-        : filtered.map((option, index) => {
-            const isSelected = option.value === value
-            return (
-              <li
-                key={option.value}
-                id={`${id}-option-${index}`}
-                role="option"
-                aria-selected={isSelected}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                  commit(option)
-                }}
-                onMouseEnter={() => setActiveIndex(index)}
-                className={cn(
-                  'flex items-center justify-between gap-2 px-3 py-2 text-sm cursor-pointer',
-                  index === highlightedIndex
-                    ? 'bg-tollerud-surface-hover text-tollerud-text-primary'
-                    : 'text-tollerud-text-secondary',
-                  option.disabled && 'opacity-40 pointer-events-none'
-                )}
-              >
-                {option.label}
-                {isSelected && <Check size={14} className="text-tollerud-yellow" />}
-              </li>
-            )
-          })}
+        : filtered.map(renderItem)}
 
       {showCreateOption && (
-        <li
-          id={`${id}-option-create`}
-          role="option"
-          aria-selected={false}
-          onMouseDown={(e) => {
-            e.preventDefault()
-            commitCreate()
-          }}
-          onMouseEnter={() => setActiveIndex(createRowIndex)}
-          className={cn(
-            'flex items-center gap-2 px-3 py-2 text-sm cursor-pointer',
-            createRowIndex === highlightedIndex
-              ? 'bg-tollerud-surface-hover text-tollerud-text-primary'
-              : 'text-tollerud-text-secondary'
-          )}
+        <BaseCombobox.Item
+          value={CREATE_VALUE}
+          className="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer text-tollerud-text-secondary data-[highlighted]:bg-tollerud-surface-hover data-[highlighted]:text-tollerud-text-primary"
         >
           <Plus size={14} className="shrink-0 text-tollerud-yellow" />
           {createOptionLabel(trimmedQuery)}
-        </li>
+        </BaseCombobox.Item>
       )}
-    </ul>
+    </>
   )
 
   return (
-    <div ref={setRootRef} className={cn('relative flex flex-col gap-1', className)}>
+    <div ref={ref} className={cn('relative flex flex-col gap-1')}>
       {label && (
         <label htmlFor={id} className="text-xs font-medium text-tollerud-text-muted">
           {label}
           {required && <span aria-hidden="true" className="ml-0.5 text-tollerud-error">*</span>}
         </label>
       )}
-      <div ref={anchorRef} className="relative">
-        {searchPlacement === 'dropdown' ? (
-          <button
-            id={id}
-            type="button"
-            role="combobox"
-            aria-expanded={open}
-            aria-controls={`${id}-listbox`}
-            aria-haspopup="listbox"
-            aria-required={required || undefined}
-            aria-invalid={error ? true : undefined}
-            aria-describedby={errorId}
-            disabled={disabled}
-            onClick={() => {
-              if (open) {
-                setOpen(false)
-                setQuery('')
-              } else {
-                setOpen(true)
-                setActiveIndex(0)
-              }
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault()
-                setOpen(true)
-                setActiveIndex(0)
-              } else if (e.key === 'Escape') {
-                if (open) {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  setOpen(false)
-                  setQuery('')
-                }
-              }
-            }}
-            className={cn(
-              'w-full font-sans text-base px-3 py-2.5 rounded text-left flex items-center justify-between gap-2',
-              'bg-tollerud-surface-raised border',
-              'transition-[border-color] duration-fast',
-              'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
-              error ? 'border-tollerud-error' : 'border-tollerud-border',
-              disabled && 'opacity-50 pointer-events-none'
-            )}
-          >
-            <span className={selected ? 'text-tollerud-text-primary' : 'text-tollerud-text-muted'}>
-              {selected?.label ?? placeholder}
-            </span>
-            <ChevronDown
-              size={15}
-              className={cn(
-                'shrink-0 text-tollerud-text-muted transition-transform duration-fast',
-                open && 'rotate-180'
-              )}
-            />
-          </button>
-        ) : (
-          <>
-            <input
+
+      <BaseCombobox.Root
+        items={isGrouped ? groups?.map((g) => ({ label: g.label, items: g.options })) : allOptions}
+        filteredItems={itemsForRoot}
+        value={value ? value : null}
+        inputValue={query}
+        onInputValueChange={(next) => setQuery(next)}
+        open={open}
+        onOpenChange={setOpen}
+        disabled={disabled}
+        required={required}
+        // 'always' (highlight the first item as soon as the list opens, matching
+        // this component's pre-migration behavior) is supported at runtime but
+        // narrowed out of Combobox.Root's public prop type, which only exposes
+        // boolean — cast around that gap rather than losing the behavior.
+        autoHighlight={'always' as unknown as true}
+        onValueChange={(next) => {
+          if (next === CREATE_VALUE) {
+            commitCreate()
+          } else if (typeof next === 'string') {
+            commit(next)
+          } else if (next === null) {
+            // Escape-while-closed clears the current selection.
+            if (!isControlled) setInternalValue(undefined)
+            onChange?.('')
+          }
+        }}
+      >
+        <div className="relative">
+          {searchPlacement === 'dropdown' ? (
+            <BaseCombobox.Trigger
               id={id}
-              role="combobox"
-              aria-expanded={open}
-              aria-autocomplete="list"
-              aria-controls={`${id}-listbox`}
-              aria-activedescendant={activeOptionId}
               aria-required={required || undefined}
               aria-invalid={error ? true : undefined}
               aria-describedby={errorId}
-              disabled={disabled}
-              value={open ? query : selected?.label ?? ''}
-              placeholder={selected ? selected.label : placeholder}
-              onFocus={() => {
-                setOpen(true)
-                setActiveIndex(0)
-              }}
-              onChange={(e) => {
-                setQuery(e.target.value)
-                setActiveIndex(0)
-                if (!open) setOpen(true)
-              }}
-              onKeyDown={onKeyDown}
-              className={cn(
-                'w-full font-sans text-base px-3 py-2.5 pr-9 rounded',
-                'bg-tollerud-surface-raised border',
-                'text-tollerud-text-primary placeholder:text-tollerud-text-muted',
-                'transition-[border-color] duration-fast',
-                'focus:outline-none focus:border-tollerud-yellow focus:shadow-[0_0_0_1px_var(--tollerud-yellow-warm,#E8D500)]',
-                error ? 'border-tollerud-error' : 'border-tollerud-border',
-                disabled && 'opacity-50 pointer-events-none'
-              )}
-            />
-            <ChevronDown
-              size={15}
-              className={cn(
-                'pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-tollerud-text-muted transition-transform duration-fast',
-                open && 'rotate-180'
-              )}
-            />
-          </>
-        )}
-      </div>
-
-      <FloatingDropdownPortal
-        open={open}
-        anchorRef={anchorRef}
-        popoverRef={listRef}
-        id={`${id}-listbox`}
-        role="listbox"
-        placementOptions={{ maxHeight: 320 }}
-        className={cn(
-          'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
-          searchPlacement === 'dropdown' ? 'overflow-hidden' : 'overflow-auto py-1'
-        )}
-      >
-        {searchPlacement === 'dropdown' ? (
-          <>
-            <div className="flex items-center gap-2 border-b border-tollerud-border px-3 py-2">
-              <Search size={13} className="shrink-0 text-tollerud-text-muted" />
-              <input
-                ref={dropdownSearchCallbackRef}
-                type="text"
-                role="combobox"
-                aria-expanded={true}
-                aria-autocomplete="list"
-                aria-controls={`${id}-listbox`}
-                aria-activedescendant={activeOptionId}
-                placeholder={placeholder}
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value)
-                  setActiveIndex(0)
-                }}
-                onKeyDown={onKeyDown}
-                // pointer-coarse:text-base forces ≥16px on touch devices so iOS
-                // Safari does not auto-zoom (and trigger a scroll) when the field
-                // is focused on open. Desktop keeps the 14px (text-sm) sizing.
-                className="w-full bg-transparent text-sm pointer-coarse:text-base text-tollerud-text-primary placeholder:text-tollerud-text-muted focus:outline-none"
+              // The search Input lives inside the popup in this mode, so it
+              // doesn't exist yet for Trigger's default focus-to-open behavior
+              // to reach — open explicitly instead.
+              onClick={() => setOpen((prev) => !prev)}
+              className={cn(triggerClassName, 'pr-3')}
+            >
+              <span className={selected ? 'text-tollerud-text-primary' : 'text-tollerud-text-muted'}>
+                {selected?.label ?? placeholder}
+              </span>
+              <ChevronDown
+                size={15}
+                className="shrink-0 text-tollerud-text-muted transition-transform duration-fast data-[popup-open]:rotate-180"
               />
-            </div>
-            <div className="overflow-auto py-1" style={{ maxHeight: 256 }}>
-              {optionList}
-            </div>
-          </>
-        ) : (
-          optionList
-        )}
-      </FloatingDropdownPortal>
+            </BaseCombobox.Trigger>
+          ) : (
+            <>
+              <BaseCombobox.Input
+                id={id}
+                aria-required={required || undefined}
+                aria-invalid={error ? true : undefined}
+                aria-describedby={errorId}
+                placeholder={selected ? selected.label : placeholder}
+                className={triggerClassName}
+              />
+              <ChevronDown
+                size={15}
+                className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-tollerud-text-muted transition-transform duration-fast"
+              />
+            </>
+          )}
+        </div>
+
+        <BaseCombobox.Portal>
+          <BaseCombobox.Positioner
+            sideOffset={4}
+            className="pointer-events-auto z-50 outline-none"
+            style={{ pointerEvents: 'auto' }}
+          >
+            <BaseCombobox.Popup
+              // Base UI gives the popup `role="dialog"` when it contains its
+              // own search input (searchPlacement="dropdown") since that
+              // input isn't the combobox's own anchor — needs its own name.
+              aria-label={searchPlacement === 'dropdown' ? label || placeholder : undefined}
+              className={cn(
+                'rounded-lg border border-tollerud-border bg-tollerud-surface-overlay',
+                searchPlacement === 'dropdown' && 'overflow-hidden'
+              )}
+            >
+              {searchPlacement === 'dropdown' && (
+                <div className="flex items-center gap-2 border-b border-tollerud-border px-3 py-2">
+                  <Search size={13} className="shrink-0 text-tollerud-text-muted" />
+                  <BaseCombobox.Input
+                    placeholder={placeholder}
+                    // pointer-coarse:text-base forces ≥16px on touch devices so iOS
+                    // Safari does not auto-zoom (and trigger a scroll) when the field
+                    // is focused on open. Desktop keeps the 14px (text-sm) sizing.
+                    className="w-full bg-transparent text-sm pointer-coarse:text-base text-tollerud-text-primary placeholder:text-tollerud-text-muted focus:outline-none"
+                  />
+                </div>
+              )}
+              <BaseCombobox.List
+                className={cn('overflow-auto py-1', searchPlacement === 'dropdown' ? 'max-h-[256px]' : 'max-h-[320px]')}
+              >
+                {optionList}
+              </BaseCombobox.List>
+            </BaseCombobox.Popup>
+          </BaseCombobox.Positioner>
+        </BaseCombobox.Portal>
+      </BaseCombobox.Root>
 
       {error && <p id={errorId} className="text-xs text-tollerud-error mt-0.5">{error}</p>}
     </div>

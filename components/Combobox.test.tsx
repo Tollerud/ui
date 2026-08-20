@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { Combobox } from './Combobox'
+import { Dialog, DialogContent, DialogTitle } from './Dialog'
 
 describe('Combobox', () => {
   it('filters and selects an option', async () => {
@@ -104,6 +105,47 @@ describe('Combobox', () => {
     // Second Escape: dropdown closed, so it propagates (a Dialog would close)
     await user.keyboard('{Escape}')
     expect(onOuterKeyDown).toHaveBeenCalledTimes(1)
+  })
+
+  it('works inside a Dialog — opening the dropdown does not close or steal focus from the dialog, and Escape closes only the dropdown', async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+
+    render(
+      <Dialog open>
+        <DialogContent>
+          <DialogTitle>Assign host</DialogTitle>
+          <Combobox
+            label="Host"
+            value=""
+            onChange={onChange}
+            options={[
+              { value: 'emma', label: 'emma.tollerud.no' },
+              { value: 'iris', label: 'iris.tollerud.no' },
+            ]}
+          />
+        </DialogContent>
+      </Dialog>
+    )
+
+    expect(screen.getByRole('dialog', { name: 'Assign host' })).toBeInTheDocument()
+
+    const input = screen.getByRole('combobox')
+    await user.click(input)
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Assign host' })).toBeInTheDocument()
+    expect(input).toHaveFocus()
+
+    await user.click(screen.getByRole('option', { name: 'iris.tollerud.no' }))
+    expect(onChange).toHaveBeenCalledWith('iris')
+    expect(screen.getByRole('dialog', { name: 'Assign host' })).toBeInTheDocument()
+
+    // Reopen, then Escape should close only the dropdown, not the dialog.
+    await user.click(input)
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Assign host' })).toBeInTheDocument()
   })
 
   it('moves highlight with ArrowDown before selecting', async () => {

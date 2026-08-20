@@ -1,6 +1,6 @@
 # Tollerud User Interface — Component Library
 
-Human-oriented usage guide for `@tollerud/ui` **v5.6.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
+Human-oriented usage guide for `@tollerud/ui` **v5.7.0**. Components ship as React `.tsx` modules with matching CSS in `globals.css` / `tokens.css`.
 
 **New here?** Install and wire Tailwind first — **[GETTING_STARTED.md](GETTING_STARTED.md)**. Then come back here for examples.
 
@@ -1177,6 +1177,8 @@ With `collapseMobile`, viewports below Tailwind `md` show only the selected opti
 
 Props: `multiple?`, `defaultOpen?: string | string[]`. Items use `value` to identify panels.
 
+As of **v5.7.0**, built on Base UI internally — no prop or export changes.
+
 ## Advanced forms
 
 ### TagInput
@@ -1193,11 +1195,15 @@ Chip-style multi-value input. Enter or comma to add; Backspace removes the last 
 <Slider label="Alert threshold" showValue value={threshold} onChange={setThreshold} min={0} max={100} />
 ```
 
+As of **v5.7.0**, built on Base UI internally — no prop or export changes.
+
 ### DatePicker
 
 ```tsx
 <DatePicker label="Schedule deployment" value={date} onChange={setDate} placeholder="Pick a date" />
 ```
+
+As of **v5.7.0**, built on Base UI (`Popover`) internally for the overlay shell — the calendar grid is still hand-built, but now has full keyboard navigation: arrow keys move by day, `Home`/`End` jump to the start/end of the week, `PageUp`/`PageDown` move a month at a time, `Enter`/`Space` selects. No prop or export changes.
 
 ### FileUpload
 
@@ -1440,6 +1446,8 @@ Props: `options?: { value, label, disabled? }[]`, `groups?: { label, options }[]
 `searchPlacement="dropdown"` turns the trigger into a Select-style button and moves the search input inside the popover — useful when the combobox sits next to other Select fields or when a cleaner trigger is preferred. The search input auto-focuses when the popover opens (fixed in 4.17.1 — earlier versions left focus on the trigger). On touch devices (≥ 4.8.53) the in-dropdown search field renders at ≥16px so iOS Safari does not auto-zoom on focus, and the popover no longer closes on the focus/zoom scroll that zoom emits — only a real touch drag dismisses it. Since 4.8.56 the popover is positioned by Floating UI (the same engine as Radix Popover / shadcn), so it flips, shifts, clamps its height, and stays glued to the trigger across scroll, resize, and mobile viewport changes (iOS keyboard/zoom/address bar). On touch it now stays open and repositions while scrolling rather than closing; outside-click and Escape still dismiss it.
 
 `onCreateOption` (≥ 4.14.0) opts into a "create a new option" row — useful for fields like category pickers where the value a user wants may not exist yet. A `Create "<query>"` row appears at the end of the list whenever the search text has no exact (case-insensitive) label match, shown alongside partial matches rather than only on a true empty result. Selecting it calls `onCreateOption(label)`; return a string to use as the new option's value, or return nothing to use the typed label as the value. `createOptionLabel` customizes the row's text.
+
+As of **v5.7.0**, built on Base UI internally instead of the previous hand-rolled positioning/keyboard engine — no prop or export changes. New: pressing `Escape` while the dropdown is already closed clears the current selection (reported via `onChange('')`).
 
 ### Avatar / AvatarGroup
 
@@ -1696,31 +1704,36 @@ Multiline text input with label and error state.
 
 ## Select
 
-Styled native `<select>` dropdown with custom chevron.
+Custom listbox dropdown (not a native `<select>`) with a styled trigger and chevron. Built on Base UI as of v5.7.0.
 
 ```tsx
 <Select
   label="Server"
   placeholder="Select a server"
+  value={value}
+  onChange={setValue}
   options={[
     { value: 'emma', label: 'Emma' },
     { value: 'miriam', label: 'Miriam' },
     { value: 'iris', label: 'Iris' },
   ]}
 />
-<Select label="Status" error="Required">
-  <option value="running">Running</option>
-  <option value="stopped">Stopped</option>
-</Select>
+<Select label="Status" error="Required" value={status} onChange={setStatus} options={statusOptions} />
 ```
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `label` | `string` | — | Label text |
 | `error` | `string` | — | Error message |
-| `placeholder` | `string` | — | Disabled placeholder option |
-| `options` | `{value, label}[]` | — | Option items (alternative to children) |
-| All native `<select>` props | — | — | value, onChange, disabled, etc. |
+| `placeholder` | `string` | — | Placeholder shown when no option is selected |
+| `options` | `{value, label}[]` | — | Option items |
+| `value` | `string` | — | Selected option's value |
+| `onChange` | `(value: string) => void` | — | Called with the newly selected value |
+| `layout` | `'stacked' \| 'inline'` | `'stacked'` | `inline` keeps the label on one row with the trigger |
+| `size` | `'md' \| 'sm'` | `'md'` | Trigger size |
+| `required` | `boolean` | `false` | Shows a required marker next to the label |
+
+As of **v5.7.0**, built on Base UI internally — no prop or export changes.
 
 ## Checkbox
 
@@ -1736,8 +1749,10 @@ Custom-styled checkbox with checkmark SVG and label.
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
 | `label` | `string` | — | Label text (wraps input) |
-| `indeterminate` | `boolean` | `false` | Mixed state (≥ 4.8.40) — dash indicator + native `indeterminate` property (announced as "mixed"). Use for select-all with partial selection. |
+| `indeterminate` | `boolean` | `false` | Mixed state (≥ 4.8.40) — dash indicator, announced as "mixed" via `aria-checked`. Use for select-all with partial selection. |
 | All `<input type="checkbox">` props | — | — | checked, defaultChecked, disabled, onChange |
+
+As of **v5.7.0**, built on Base UI internally (native `indeterminate` support, replacing a manual DOM hack) — no prop or export changes.
 
 ## Switch
 
@@ -1754,6 +1769,8 @@ Toggle switch with `role="switch"` accessibility.
 | `label` | `string` | — | Label text |
 | All `<input type="checkbox">` props | — | — | checked, defaultChecked, disabled, onChange |
 
+As of **v5.7.0**, built on Base UI internally — no prop or export changes.
+
 ## RadioGroup / Radio
 
 Fieldset-based radio group with custom dot indicator.
@@ -1765,6 +1782,8 @@ Fieldset-based radio group with custom dot indicator.
   <Radio value="canary" label="Canary" disabled name="target" />
 </RadioGroup>
 ```
+
+As of **v5.7.0**, built on Base UI internally (the per-radio `cloneElement` wiring is replaced by Base UI's own group context) — no prop or export changes.
 
 | RadioGroup Prop | Type | Default | Description |
 |-----------------|------|---------|-------------|

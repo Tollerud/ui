@@ -502,36 +502,6 @@
     margin: 0;
   }
 
-  /* ═══ Range slider ═══ */
-  .tollerud-slider {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 6px;
-    border-radius: 999px;
-    background: var(--muted);
-    outline: none;
-  }
-  .tollerud-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--tollerud-yellow);
-    border: 2px solid var(--card);
-    cursor: pointer;
-    box-shadow: 0 0 0 1px var(--border);
-  }
-  .tollerud-slider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--tollerud-yellow);
-    border: 2px solid var(--card);
-    cursor: pointer;
-  }
-
   /* ═══ Form row (settings layout) ═══ */
   .tollerud-formrow {
     display: grid;

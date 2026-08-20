@@ -21,6 +21,8 @@ Border colors are decorative and exempt from contrast requirements. Never put ye
 - No keyboard traps
 - Skiplink pattern for layouts with navigation
 
+`Select`, `Combobox`, `DatePicker`, `Accordion`, `Checkbox`, `Switch`, `RadioGroup`, and `Slider` are built on [Base UI](https://base-ui.com) (≥ 5.7.0) for their interaction/keyboard handling — see [KEYBOARD.md](KEYBOARD.md) for each component's key contract.
+
 ## Touch Targets
 
 - Interactive targets ≥ 44×44px on touch devices

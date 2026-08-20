@@ -16,13 +16,14 @@ describe('Checkbox', () => {
     expect(onChange).toHaveBeenCalled()
   })
 
-  it('sets the native indeterminate property for mixed state', () => {
+  it('exposes mixed state via aria-checked for indeterminate', () => {
     const { rerender } = render(<Checkbox label="Select all" indeterminate />)
 
-    const input = screen.getByRole('checkbox', { name: 'Select all' }) as HTMLInputElement
-    expect(input.indeterminate).toBe(true)
+    const box = screen.getByRole('checkbox', { name: 'Select all' })
+    expect(box).toHaveAttribute('aria-checked', 'mixed')
+    expect(box).toHaveAttribute('data-indeterminate')
 
     rerender(<Checkbox label="Select all" indeterminate={false} />)
-    expect(input.indeterminate).toBe(false)
+    expect(box).not.toHaveAttribute('data-indeterminate')
   })
 })

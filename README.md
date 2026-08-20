@@ -23,6 +23,7 @@ Dark, monochrome React components with a single yellow accent. Noir aesthetic me
 npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
   @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress \
   @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip \
+  @base-ui/react @floating-ui/react-dom \
   lucide-react framer-motion sonner
 ```
 
@@ -83,6 +84,7 @@ Full setup, migration, and edge cases: **[GETTING_STARTED.md](GETTING_STARTED.md
 |--------|----------|------------|
 | **Always** | `react`, `react-dom`, `clsx`, `tailwind-merge`, `tailwindcss` | Every integration |
 | **Overlays & navigation** | `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-tabs`, `@radix-ui/react-tooltip`, `@radix-ui/react-slot`, `@radix-ui/react-progress` | Dialog, Sheet, Drawer, DropdownMenu, Tabs, Tooltip, Progress, Button `asChild` |
+| **Form controls & positioning** | `@base-ui/react`, `@floating-ui/react-dom` | Select, Combobox, DatePicker, Accordion, Checkbox, Switch, RadioGroup, Slider (Base UI); `TopNav` desktop flyout (Floating UI) |
 | **Icons** | `lucide-react` | Components with built-in icons |
 | **Motion** | `framer-motion` | Animated components (e.g. GlowCard, charts) |
 | **Toasts** | `sonner` | `<Toaster />` / toast API — mount once at app root |

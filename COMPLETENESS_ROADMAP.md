@@ -1,20 +1,22 @@
 # Tollerud User Interface — Roadmap
 
-Last updated: 2026-08-09
+Last updated: 2026-08-20
 
 Living roadmap for `@tollerud/ui`. Completed planning docs: [docs/archive/](docs/archive/).
 
-## npm package (components/*.tsx) — v5.6.0
+## npm package (components/*.tsx) — v5.7.0
 
 Shipped exports are documented in [SKILL.md](SKILL.md) and [COMPONENTS.md](COMPONENTS.md). Live demos: [design.tollerud.dev](https://design.tollerud.dev/).
 
 ### Open items
 
-- [ ] Broader unit + a11y test coverage on interactive components (Combobox, DatePicker, CommandMenu)
+- [ ] Broader unit + a11y test coverage on interactive components (CommandMenu) — Combobox and DatePicker closed as of v5.7.0
 - [ ] Extend Playwright for subpath-import smoke page in docs or fixture
 - [ ] `@tollerud/email` — expand template set (magic-link, invoice, digest) and add cross-client snapshot checks
 
 ### Recently completed
+
+**Base UI migration** (v5.7.0) — `Select`, `Combobox`, `DatePicker`, `Accordion`, `Checkbox`, `Switch`, `RadioGroup`, `Slider` rebuilt on [Base UI](https://base-ui.com) instead of hand-rolled state/keyboard handling, closing the a11y-test-coverage gap for Combobox/DatePicker and adding new DatePicker calendar-grid keyboard navigation. No prop or export changes. See [CHANGELOG.md](CHANGELOG.md).
 
 **@tollerud/email** (v4.10.0) — new sibling package for on-brand HTML email built on React Email: email-safe primitives + ready templates, sharing tokens (not components) with `@tollerud/ui` via the generated `lib/tokens.ts`. See [CHANGELOG.md](CHANGELOG.md).
 

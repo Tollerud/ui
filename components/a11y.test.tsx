@@ -4,9 +4,15 @@ import { axe } from 'vitest-axe'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Button } from './Button'
 import { Input } from './Input'
+import { Checkbox } from './Checkbox'
+import { Switch } from './Switch'
+import { Radio, RadioGroup } from './RadioGroup'
+import { Slider } from './Slider'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './Accordion'
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from './Dialog'
 import { CommandMenu } from './CommandMenu'
 import { Combobox } from './Combobox'
+import { Select } from './Select'
 import { DatePicker } from './DatePicker'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './Sheet'
 import {
@@ -67,6 +73,70 @@ describe('accessibility', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 
+  it('Checkbox has no axe violations, including indeterminate', async () => {
+    const { container, rerender } = render(<Checkbox label="Enable backups" />)
+    expect(await axe(container)).toHaveNoViolations()
+
+    rerender(<Checkbox label="Enable backups" indeterminate />)
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('Switch has no axe violations', async () => {
+    const { container } = render(<Switch label="Auto-restart" />)
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('RadioGroup has no axe violations', async () => {
+    const { container } = render(
+      <RadioGroup label="Restart policy" value="always">
+        <Radio value="always" label="Always" />
+        <Radio value="never" label="Never" />
+      </RadioGroup>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('Slider has no axe violations', async () => {
+    const { container } = render(<Slider label="Concurrency" defaultValue={4} min={0} max={10} />)
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('Accordion has no axe violations, closed and open', async () => {
+    const { container } = render(
+      <Accordion>
+        <AccordionItem value="a">
+          <AccordionTrigger>Backup schedule</AccordionTrigger>
+          <AccordionContent>Nightly at 02:00</AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    )
+    expect(await axe(container)).toHaveNoViolations()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Backup schedule' }))
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('Select has no axe violations, closed and open', async () => {
+    const { container } = render(
+      <Select
+        label="Region"
+        value="eu"
+        options={[
+          { value: 'eu', label: 'EU' },
+          { value: 'us', label: 'US' },
+        ]}
+      />
+    )
+    expect(await axe(container)).toHaveNoViolations()
+
+    await userEvent.click(screen.getByRole('combobox'))
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+    // Base UI portals the popup to document.body, outside the render `container` —
+    // scan the whole body to cover it. `region` is a page-landmark rule that's
+    // irrelevant to an isolated component fragment with no page shell.
+    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations()
+  })
+
   it('Dialog with title has no axe violations', async () => {
     const { container } = render(
       <Dialog open>
@@ -102,11 +172,36 @@ describe('accessibility', () => {
     expect(await axe(container)).toHaveNoViolations()
   })
 
+  it('Combobox has no axe violations when open, in both searchPlacement modes', async () => {
+    const options = [
+      { value: 'emma', label: 'emma.tollerud.no' },
+      { value: 'iris', label: 'iris.tollerud.no' },
+    ]
+
+    const first = render(<Combobox label="Host" value="" onChange={vi.fn()} options={options} />)
+    await userEvent.click(screen.getByRole('combobox'))
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations()
+    first.unmount()
+
+    render(<Combobox label="Host" value="" onChange={vi.fn()} options={options} searchPlacement="dropdown" />)
+    await userEvent.click(screen.getByRole('combobox'))
+    expect(screen.getByRole('listbox')).toBeInTheDocument()
+    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations()
+  })
+
   it('DatePicker with label has no axe violations when closed', async () => {
     const { container } = render(
       <DatePicker label="Maintenance window" placeholder="Pick a date" />
     )
     expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('DatePicker has no axe violations when open', async () => {
+    render(<DatePicker label="Maintenance window" placeholder="Pick a date" />)
+    await userEvent.click(screen.getByRole('button', { name: /maintenance window/i }))
+    expect(screen.getByRole('dialog', { name: 'Choose date' })).toBeInTheDocument()
+    expect(await axe(document.body, { rules: { region: { enabled: false } } })).toHaveNoViolations()
   })
 
   it('Sheet with title has no axe violations when open', async () => {

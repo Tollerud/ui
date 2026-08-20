@@ -5,7 +5,7 @@ description: Use @tollerud/ui (Tollerud User Interface / Tollerud UI) correctly 
 
 # @tollerud/ui — Tollerud UI Skill
 
-Dark, monochrome + single yellow-accent UI library ("noir" aesthetic). **v4.8.39** — Combobox dropdown search focus fully fixed inside Dialog (focusout capture-phase interception). This skill documents the package's **actual current exports** (verified against `components/index.ts` in the source repo) — not aspirational docs. If you see a component referenced elsewhere that isn't listed below, it does not exist yet; don't import it.
+Dark, monochrome + single yellow-accent UI library ("noir" aesthetic). **v5.7.0** — `Select`, `Combobox`, `DatePicker`, `Accordion`, `Checkbox`, `Switch`, `RadioGroup`, `Slider` rebuilt on Base UI (internals only, no prop/export changes — see Version notes). This skill documents the package's **actual current exports** (verified against `components/index.ts` in the source repo) — not aspirational docs. If you see a component referenced elsewhere that isn't listed below, it does not exist yet; don't import it.
 
 ---
 
@@ -15,12 +15,13 @@ Dark, monochrome + single yellow-accent UI library ("noir" aesthetic). **v4.8.39
 npm install @tollerud/ui clsx tailwind-merge tailwindcss@4 \
   @radix-ui/react-dialog @radix-ui/react-dropdown-menu @radix-ui/react-progress \
   @radix-ui/react-slot @radix-ui/react-tabs @radix-ui/react-tooltip \
+  @base-ui/react @floating-ui/react-dom \
   lucide-react framer-motion sonner
 # Optional — only if using NoirGlowBackground
 npm install @paper-design/shaders-react
 ```
 
-As of **v4.0.1**, install is **npm-only** — `import { Button } from '@tollerud/ui'` or subpaths like `@tollerud/ui/button`. Copy-via-shadcn registry CLI is unsupported. As of **v4.0.0**, `@tollerud/ui/globals-v4.css` is removed — use `globals.css` only. Brand assets live at `@tollerud/ui/brand/*`. As of **v3.1.1**, `.tollerud-display-shimmer` ships in `globals.css` for animated hero accent text. As of **v3.1.0**, `Monogram` ships as an inline SVG component (`color`: `yellow` | `black` | `white`). As of **v3.0.0**, the package is **ESM-only** (no CJS `require` entry). As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peers** (not bundled).
+As of **v5.7.0**, `@base-ui/react` and `@floating-ui/react-dom` are **required peers** — `Select`, `Combobox`, `DatePicker`, `Accordion`, `Checkbox`, `Switch`, `RadioGroup`, and `Slider` are built on Base UI; `@floating-ui/react-dom` powers `TopNav`'s desktop flyout. As of **v4.0.1**, install is **npm-only** — `import { Button } from '@tollerud/ui'` or subpaths like `@tollerud/ui/button`. Copy-via-shadcn registry CLI is unsupported. As of **v4.0.0**, `@tollerud/ui/globals-v4.css` is removed — use `globals.css` only. Brand assets live at `@tollerud/ui/brand/*`. As of **v3.1.1**, `.tollerud-display-shimmer` ships in `globals.css` for animated hero accent text. As of **v3.1.0**, `Monogram` ships as an inline SVG component (`color`: `yellow` | `black` | `white`). As of **v3.0.0**, the package is **ESM-only** (no CJS `require` entry). As of **v2.0.0**, Radix, Lucide, Framer Motion, and Sonner are **required peers** (not bundled).
 
 Apply the Tailwind preset when you need extra utilities from `@tollerud/ui/preset` — `globals.css` already includes tokens and component layers for v4:
 
@@ -944,6 +945,8 @@ Shadow scale: `--shadow-sm` `--shadow-md` `--shadow-lg` `--shadow-xl` `--shadow-
 ---
 
 ## Version notes
+
+- **`Select`, `Combobox`, `DatePicker`, `Accordion`, `Checkbox`, `Switch`, `RadioGroup`, `Slider` rebuilt on Base UI (≥ 5.7.0)** — internals swap only; every prop, event signature, and export name is unchanged. New required peer `@base-ui/react` (`^1.7.0`); `@floating-ui/react-dom` is now also a required peer (was previously bundled). `DatePicker`'s calendar grid gains real keyboard navigation (arrow keys, `Home`/`End`, `PageUp`/`PageDown`, `Enter`/`Space` — previously mouse-only). `Combobox` gains "Escape while closed clears the selection" (reports through `onChange('')`). `Select`/`Combobox`/`DatePicker` no longer use the internal `FloatingDropdownPortal` engine; `TopNav`'s flyout is unaffected. No breaking changes.
 
 - **`TopNav` `userMenu` `placement` (≥ 5.6.0)** — `TopNavUserMenu.placement?: 'start' | 'end'` (default `'end'`, unchanged) controls whether the desktop `userMenu` dropdown renders before or after `actions` in the cluster. No breaking changes.
 
