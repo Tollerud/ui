@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#0A0A0A;color:#F5F5F5;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:#FFFF00;color:#0A0A0A}
+  @keyframes tsh{to{background-position:-220% 0}}
+  @keyframes tglow{0%{transform:scale(1.04) translate3d(-2%,-1%,0) rotate(0deg);filter:saturate(1.05) contrast(1.04)}50%{transform:scale(1.12) translate3d(2%,1.2%,0) rotate(1deg);filter:saturate(1.25) contrast(1.14)}100%{transform:scale(1.06) translate3d(2.4%,-1.8%,0) rotate(-.8deg);filter:saturate(1.1) contrast(1.08)}}
+  @keyframes tmarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+</style>
+</head>
+<body>
+<div style="min-width:0">
+
+  <header style="position:sticky;top:0;z-index:40;display:flex;height:64px;align-items:center;gap:28px;border-bottom:1px solid #333333;background:rgba(10,10,10,.86);padding:0 32px;backdrop-filter:blur(20px)">
+    <a href="#top" style="display:flex;align-items:center;gap:8px;flex:none">
+      <img src="tollerud-logo.svg" alt="" style="height:20px;width:auto;display:block">
+      <span style="font-family:'Archivo',sans-serif;font-size:15px;font-weight:600;letter-spacing:-.005em;color:#F5F5F5">Tollerud UI</span>
+    </a>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#666666;flex:none;border:1px solid #252525;padding:3px 7px">v5.6.0</span>
+    <nav style="display:flex;align-items:center;gap:22px;font-size:13.5px;font-weight:500;color:#AAAAAA;flex:1">
+      <a href="#system">System</a>
+      <a href="#agents">For agents</a>
+      <a href="#specimens">Components</a>
+      <a href="#install">Install</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:10px;flex:none">
+      <button style="display:inline-flex;align-items:center;gap:9px;height:34px;padding:0 10px 0 11px;border:1px solid #333333;background:#121212;color:#666666;cursor:pointer;font-size:13px;font-family:inherit">
+        Search
+        <span style="display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#AAAAAA;background:#1A1A1A;border:1px solid #333333">⌘K</span>
+      </button>
+      <a href="#" style="display:inline-flex;align-items:center;height:34px;padding:0 16px;background:#FFFF00;color:#0A0A0A;font-size:13px;font-weight:700;letter-spacing:-.01em">Read the docs</a>
+    </div>
+  </header>
+
+  <section id="top" style="position:relative;overflow:hidden;background:#000;border-bottom:1px solid #333333">
+    <div style="position:absolute;inset:0;background:radial-gradient(70% 75% at 100% 0%, hsl(56,100%,80%) 0%, transparent 70%),radial-gradient(80% 85% at 0% 100%, hsl(56,100%,50%) 0%, transparent 72%),radial-gradient(60% 65% at 0% 0%, hsl(54,85%,66%) 0%, transparent 68%),#000;opacity:.42;animation:tglow 32s cubic-bezier(.4,0,.2,1) infinite alternate"></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 120% at 20% 40%, rgba(0,0,0,.72) 0%, rgba(0,0,0,.42) 45%, rgba(0,0,0,.78) 100%)"></div>
+    <div style="position:absolute;inset:0;opacity:.5;background-image:linear-gradient(rgba(232,213,0,.05) 1px, transparent 1px),linear-gradient(90deg, rgba(232,213,0,.05) 1px, transparent 1px);background-size:64px 64px"></div>
+
+    <div style="position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:104px 32px 0">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:12px;color:#FFFF00;margin-bottom:34px">
+        <span style="border:1px solid rgba(255,255,0,.4);background:rgba(255,255,0,.06);padding:5px 10px">noir + yellow</span>
+        <span style="color:rgba(245,245,245,.45)">105 registry components · 12 foundation topics · 55 color tokens</span>
+      </div>
+
+      <h1 style="margin:0;font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(52px,10.4vw,168px);line-height:.82;letter-spacing:-.045em;text-transform:uppercase;color:#F5F5F5;text-wrap:balance">One accent.<br>Zero<br><span style="background:linear-gradient(100deg,#FFFF00 32%,#FFFDE6 50%,#FFFF00 68%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:tsh 5s linear infinite">rebuilds.</span></h1>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:56px;align-items:end;margin-top:48px;padding-bottom:56px">
+        <p style="margin:0;font-size:19px;line-height:1.55;color:rgba(245,245,245,.72);max-width:620px">A dark, monochrome React system for tools, dashboards and homelab consoles. Near-black surfaces, one high-voltage yellow, and a documented export for every screen your agent needs to build.</p>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;gap:10px;border:1px solid rgba(245,245,245,.16);background:rgba(0,0,0,.62);padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:14px">
+            <span style="color:#FFFF00">❯</span>
+            <span style="color:#E5E5E5;white-space:nowrap;overflow:hidden;flex:1">npm i @tollerud/ui</span>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a href="#install" style="display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 26px;background:#FFFF00;color:#0A0A0A;font-size:15px;font-weight:700;letter-spacing:-.01em">Get started</a>
+            <a href="#specimens" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 24px;border:1px solid #333333;background:rgba(18,18,18,.7);color:#F5F5F5;font-size:15px;font-weight:600">Browse components →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="overflow:hidden;background:#FFFF00;border-bottom:1px solid #0A0A0A">
+    <div style="display:flex;width:max-content;animation:tmarquee 34s linear infinite">
+      <div style="display:flex;align-items:center;gap:34px;padding:12px 17px;font-family:'Archivo',sans-serif;font-weight:900;font-size:22px;letter-spacing:-.02em;text-transform:uppercase;color:#0A0A0A;white-space:nowrap">
+        <span>105 components</span><span style="opacity:.4">✦</span><span>Tailwind v4</span><span style="opacity:.4">✦</span><span>TypeScript included</span><span style="opacity:.4">✦</span><span>dark-first</span><span style="opacity:.4">✦</span><span>copy-paste ready</span><span style="opacity:.4">✦</span><span>agent-documented</span><span style="opacity:.4">✦</span><span>MIT source</span><span style="opacity:.4">✦</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:34px;padding:12px 17px;font-family:'Archivo',sans-serif;font-weight:900;font-size:22px;letter-spacing:-.02em;text-transform:uppercase;color:#0A0A0A;white-space:nowrap">
+        <span>105 components</span><span style="opacity:.4">✦</span><span>Tailwind v4</span><span style="opacity:.4">✦</span><span>TypeScript included</span><span style="opacity:.4">✦</span><span>dark-first</span><span style="opacity:.4">✦</span><span>copy-paste ready</span><span style="opacity:.4">✦</span><span>agent-documented</span><span style="opacity:.4">✦</span><span>MIT source</span><span style="opacity:.4">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <section style="border-bottom:1px solid #333333;background:#0A0A0A">
+    <div style="max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))">
+      <div style="border-right:1px solid #333333;padding:44px 32px 40px"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:76px;line-height:.85;letter-spacing:-.05em;color:#FFFF00">105</div><div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#666666">registry components</div></div>
+      <div style="border-right:1px solid #333333;padding:44px 32px 40px"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:76px;line-height:.85;letter-spacing:-.05em;color:#F5F5F5">12</div><div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#666666">foundation topics</div></div>
+      <div style="border-right:1px solid #333333;padding:44px 32px 40px"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:76px;line-height:.85;letter-spacing:-.05em;color:#F5F5F5">55</div><div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#666666">color tokens</div></div>
+      <div style="padding:44px 32px 40px"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-size:76px;line-height:.85;letter-spacing:-.05em;color:#F5F5F5">2</div><div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#666666">themes · light &amp; dark</div></div>
+    </div>
+  </section>
+
+  <section id="system" style="background:#FFFF00;color:#0A0A0A;border-bottom:1px solid #0A0A0A">
+    <div style="max-width:1400px;margin:0 auto;padding:88px 32px 96px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:64px;align-items:start">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:26px;opacity:.6">the rule</div>
+        <h2 style="margin:0;font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(40px,6vw,92px);line-height:.86;letter-spacing:-.04em;text-transform:uppercase">If it's yellow,<br>you can<br>click it.</h2>
+        <p style="margin:32px 0 0;font-size:18px;line-height:1.55;max-width:520px;font-weight:500">Yellow is not decoration — it is the interaction layer. Everything else is near-black, grey and one hairline rule. That single constraint is what keeps 105 components looking like one product.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:34px">
+          <span style="display:inline-flex;align-items:center;height:34px;padding:0 14px;border:1.5px solid #0A0A0A;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;background:#0A0A0A;color:#FFFF00">#FFFF00</span>
+          <span style="display:inline-flex;align-items:center;height:34px;padding:0 14px;border:1.5px solid #0A0A0A;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600">#0A0A0A</span>
+          <span style="display:inline-flex;align-items:center;height:34px;padding:0 14px;border:1.5px solid #0A0A0A;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600">#121212</span>
+          <span style="display:inline-flex;align-items:center;height:34px;padding:0 14px;border:1.5px solid #0A0A0A;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600">#333333</span>
+          <span style="display:inline-flex;align-items:center;height:34px;padding:0 14px;border:1.5px solid #0A0A0A;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600">#AAAAAA</span>
+          <span style="display:inline-flex;align-items:center;height:34px;padding:0 14px;border:1.5px solid #0A0A0A;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600">#F5F5F5</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;border-top:1.5px solid #0A0A0A">
+        <div style="display:flex;gap:20px;padding:22px 0;border-bottom:1px solid rgba(10,10,10,.25)"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;opacity:.5;flex:none;width:28px">01</span><div><div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.02em;text-transform:uppercase">Dark-first</div><p style="margin:5px 0 0;font-size:14.5px;line-height:1.5;font-weight:500;opacity:.78">Design starts in the dark. Light mode is a faithful translation, not the default.</p></div></div>
+        <div style="display:flex;gap:20px;padding:22px 0;border-bottom:1px solid rgba(10,10,10,.25)"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;opacity:.5;flex:none;width:28px">02</span><div><div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.02em;text-transform:uppercase">One color pop</div><p style="margin:5px 0 0;font-size:14.5px;line-height:1.5;font-weight:500;opacity:.78">No rainbows. State colors stay muted so the signal never competes with noise.</p></div></div>
+        <div style="display:flex;gap:20px;padding:22px 0;border-bottom:1px solid rgba(10,10,10,.25)"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;opacity:.5;flex:none;width:28px">03</span><div><div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.02em;text-transform:uppercase">Sharp when it counts</div><p style="margin:5px 0 0;font-size:14.5px;line-height:1.5;font-weight:500;opacity:.78">Subtle radius, full-round only for pills. Sharp corners hold the noir feel.</p></div></div>
+        <div style="display:flex;gap:20px;padding:22px 0;border-bottom:1px solid rgba(10,10,10,.25)"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;opacity:.5;flex:none;width:28px">04</span><div><div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.02em;text-transform:uppercase">Glow with purpose</div><p style="margin:5px 0 0;font-size:14.5px;line-height:1.5;font-weight:500;opacity:.78">Yellow glow appears on hover and active states only. Never ambient.</p></div></div>
+        <div style="display:flex;gap:20px;padding:22px 0"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;opacity:.5;flex:none;width:28px">05</span><div><div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.02em;text-transform:uppercase">Terminal personality</div><p style="margin:5px 0 0;font-size:14.5px;line-height:1.5;font-weight:500;opacity:.78">The ❯ prefix and mono type signal: this is a tool, not a brochure.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="agents" style="background:#FAFAF7;color:#15140F;border-bottom:1px solid #333333">
+    <div style="max-width:1400px;margin:0 auto;padding:88px 32px 96px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap;border-bottom:1.5px solid #15140F;padding-bottom:26px;margin-bottom:44px">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#8A7A00;margin-bottom:18px">built for agents</div>
+          <h2 style="margin:0;font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(36px,5.4vw,76px);line-height:.88;letter-spacing:-.04em;text-transform:uppercase;max-width:16ch">Machine-readable by design</h2>
+        </div>
+        <p style="margin:0;font-size:16.5px;line-height:1.6;color:#56544A;max-width:420px">Every export, prop table and gotcha is generated and version-checked — so a coding agent composes screens from the system instead of rebuilding buttons from scratch.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1px solid #E4E2DA;background:#FFFFFF">
+        <div style="border-right:1px solid #E4E2DA;padding:30px 26px 32px"><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;margin-bottom:8px">SKILL.md</div><p style="margin:0;font-size:13.5px;line-height:1.55;color:#56544A">The export catalog and gotchas — source of truth agents read first.</p></div>
+        <div style="border-right:1px solid #E4E2DA;padding:30px 26px 32px"><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;margin-bottom:8px">PROPS.generated.md</div><p style="margin:0;font-size:13.5px;line-height:1.55;color:#56544A">Machine-checked prop tables, regenerated on every release.</p></div>
+        <div style="border-right:1px solid #E4E2DA;padding:30px 26px 32px"><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;margin-bottom:8px">registry.json</div><p style="margin:0;font-size:13.5px;line-height:1.55;color:#56544A">105 entries with a drift test, so docs and code cannot disagree.</p></div>
+        <div style="padding:30px 26px 32px"><div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;margin-bottom:8px">npx tollerud-ui-audit</div><p style="margin:0;font-size:13.5px;line-height:1.55;color:#56544A">One command flags copied clones, hardcoded brand colors and missing setup.</p></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;margin-top:44px;border:1px solid #E4E2DA">
+        <div style="padding:34px 32px;background:#FFFFFF">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#8B897C;margin-bottom:18px">the wrong way</div>
+          <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;color:#56544A;white-space:pre-wrap">&lt;div className="rounded-lg border
+  border-[#333] bg-[#121212] p-6"&gt;
+  &lt;button className="bg-[#FFFF00]
+    px-4 py-2 text-black"&gt;Deploy&lt;/button&gt;
+&lt;/div&gt;</pre>
+          <div style="margin-top:20px;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#DC2626">✕ drifts on every token change</div>
+        </div>
+        <div style="padding:34px 32px;background:#121212;border-left:1px solid #E4E2DA">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#FFFF00;margin-bottom:18px">the system way</div>
+          <pre style="margin:0;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;color:#D4D4D4;white-space:pre-wrap">import { Button, Card } from '@tollerud/ui'
+
+&lt;<span style="color:#6FB3E0">Card</span> accent&gt;
+  &lt;<span style="color:#6FB3E0">Button</span> <span style="color:#9CCC7C">variant</span>=<span style="color:#C8A05A">"terminal"</span>&gt;deploy&lt;/<span style="color:#6FB3E0">Button</span>&gt;
+&lt;/<span style="color:#6FB3E0">Card</span>&gt;</pre>
+          <div style="margin-top:20px;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#FFFF00">✓ tracks the tokens forever</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="specimens" style="background:#0A0A0A;border-bottom:1px solid #333333">
+    <div style="max-width:1400px;margin:0 auto;padding:88px 32px 96px">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;flex-wrap:wrap;border-bottom:1px solid #333333;padding-bottom:26px;margin-bottom:0">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#FFFF00;margin-bottom:18px">specimens</div>
+          <h2 style="margin:0;font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(36px,5.4vw,76px);line-height:.88;letter-spacing:-.04em;text-transform:uppercase">The parts, up close</h2>
+        </div>
+        <a href="#" style="display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#FFFF00">all 105 components →</a>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-left:1px solid #333333">
+        <div style="border-right:1px solid #333333;border-bottom:1px solid #333333;padding:30px 28px 34px;display:flex;flex-direction:column;gap:18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#666666">Button</div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <button style="display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;font-size:15px;font-weight:600;border-radius:4px;background:#FFFF00;color:#0A0A0A;border:1px solid #FFFF00;cursor:pointer;font-family:inherit">Deploy</button>
+            <button style="display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;font-size:15px;font-weight:600;border-radius:4px;background:#121212;color:#F5F5F5;border:1px solid #333333;cursor:pointer;font-family:inherit">Cancel</button>
+            <button style="display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500;border-radius:4px;background:transparent;color:#FFFF00;border:1px solid rgba(232,213,0,.25);cursor:pointer"><span style="opacity:.7">❯</span>open_dashboard</button>
+          </div>
+        </div>
+        <div style="border-right:1px solid #333333;border-bottom:1px solid #333333;padding:30px 28px 34px;display:flex;flex-direction:column;gap:18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#666666">Badge · Pill · StatusDot</div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <span style="display:inline-flex;align-items:center;padding:2px 8px;font-size:12px;font-weight:500;border-radius:4px;letter-spacing:.02em;background:rgba(232,213,0,.15);color:#FFFF00">New</span>
+            <span style="display:inline-flex;align-items:center;padding:2px 8px;font-size:12px;font-weight:500;border-radius:4px;letter-spacing:.02em;background:rgba(34,197,94,.15);color:#22C55E">Online</span>
+            <span style="display:inline-flex;align-items:center;padding:2px 8px;font-size:12px;font-weight:500;border-radius:4px;letter-spacing:.02em;background:rgba(239,68,68,.15);color:#EF4444">Offline</span>
+            <span style="display:inline-flex;align-items:center;padding:6px 16px;font-size:11px;font-weight:500;border-radius:3px;border:1px solid rgba(232,213,0,.35);background:rgba(232,213,0,.06);color:#FFFF00">v5.6.0</span>
+            <span style="display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#AAAAAA"><span style="width:8px;height:8px;border-radius:50%;background:#22C55E;box-shadow:0 0 6px rgba(34,197,94,.6);display:inline-block"></span>emma — ready</span>
+          </div>
+        </div>
+        <div style="border-right:1px solid #333333;border-bottom:1px solid #333333;padding:30px 28px 34px;display:flex;flex-direction:column;gap:18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#666666">Input · Kbd</div>
+          <input placeholder="search hosts…" style="font-family:inherit;font-size:15px;padding:8px 12px;background:#121212;border:1px solid #333333;border-radius:4px;color:#F5F5F5;width:100%">
+          <div style="display:inline-flex;align-items:center;gap:2px"><span style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 5px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:#AAAAAA;background:#1A1A1A;border:1px solid #333333;border-radius:4px;box-shadow:0 1px 0 #333333">⌘</span><span style="display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 5px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;color:#AAAAAA;background:#1A1A1A;border:1px solid #333333;border-radius:4px;box-shadow:0 1px 0 #333333">K</span></div>
+        </div>
+        <div style="border-right:1px solid #333333;border-bottom:1px solid #333333;padding:30px 28px 34px;display:flex;flex-direction:column;gap:18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#666666">Progress · Meter</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div><div style="display:flex;justify-content:space-between;font-size:12.5px;color:#AAAAAA;margin-bottom:7px"><span>cpu</span><span style="font-family:'JetBrains Mono',monospace;color:#F5F5F5">62%</span></div><div style="height:6px;border-radius:999px;background:#252525;overflow:hidden"><div style="width:62%;height:100%;border-radius:999px;background:#FFFF00"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:12.5px;color:#AAAAAA;margin-bottom:7px"><span>memory</span><span style="font-family:'JetBrains Mono',monospace;color:#F5F5F5">28%</span></div><div style="height:6px;border-radius:999px;background:#252525;overflow:hidden"><div style="width:28%;height:100%;border-radius:999px;background:#FFFF00"></div></div></div>
+          </div>
+        </div>
+        <div style="border-right:1px solid #333333;border-bottom:1px solid #333333;padding:30px 28px 34px;display:flex;flex-direction:column;gap:18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#666666">Card</div>
+          <div style="background:#121212;border:1px solid #333333;border-radius:8px;padding:20px">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px"><span style="font-size:14.5px;font-weight:600;color:#F5F5F5">tia-agent</span><span style="display:inline-flex;align-items:center;padding:2px 8px;font-size:12px;background:rgba(34,197,94,.15);color:#22C55E;border-radius:4px">healthy</span></div>
+            <p style="margin:0;font-size:13px;line-height:1.55;color:#AAAAAA">uptime 41d · 0 restarts · 12ms p95</p>
+          </div>
+        </div>
+        <div style="border-right:1px solid #333333;border-bottom:1px solid #333333;padding:30px 28px 34px;display:flex;flex-direction:column;gap:18px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#666666">LogViewer</div>
+          <div style="background:#0E0E0E;border:1px solid #333333;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.7;padding:12px 14px;color:#AAAAAA;overflow:hidden">
+            <div><span style="color:#4A4A4A">12:04:11</span> <span style="color:#22C55E;font-weight:600">INFO</span> <span style="color:#FFFF00;opacity:.85">agent</span> heartbeat ok</div>
+            <div><span style="color:#4A4A4A">12:04:19</span> <span style="color:#E8D500;font-weight:600">WARN</span> <span style="color:#FFFF00;opacity:.85">docker</span> restart policy drift</div>
+            <div><span style="color:#4A4A4A">12:04:26</span> <span style="color:#EF4444;font-weight:600">ERR </span> <span style="color:#FFFF00;opacity:.85">backup</span> snapshot failed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install" style="background:#0A0A0A;border-bottom:1px solid #333333">
+    <div style="max-width:1400px;margin:0 auto;padding:88px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:64px;align-items:start">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#FFFF00;margin-bottom:18px">install</div>
+        <h2 style="margin:0;font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(36px,5vw,68px);line-height:.88;letter-spacing:-.04em;text-transform:uppercase">Two imports<br>and you're in</h2>
+        <p style="margin:26px 0 0;font-size:17px;line-height:1.6;color:#AAAAAA;max-width:460px">Peers stay in your app so you control versions. <span style="color:#F5F5F5">source.css</span> resolves the package's Tailwind sources — without it, component styles get purged in production.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:32px">
+          <a href="#" style="display:inline-flex;align-items:center;height:48px;padding:0 24px;background:#FFFF00;color:#0A0A0A;font-size:15px;font-weight:700">Getting started</a>
+          <a href="https://github.com/Tollerud/ui" style="display:inline-flex;align-items:center;gap:9px;height:48px;padding:0 22px;border:1px solid #333333;color:#F5F5F5;font-size:15px;font-weight:600">Source on GitHub</a>
+        </div>
+      </div>
+      <div style="border:1px solid #333333;background:#121212">
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 12px 9px 16px;border-bottom:1px solid #333333">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#666666;flex:1">app/globals.css</span>
+        </div>
+        <pre style="margin:0;padding:18px 20px;background:#0E0E0E;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#D4D4D4;overflow-x:auto">@import <span style="color:#C8A05A">'@tollerud/ui/globals.css'</span>;
+@import <span style="color:#C8A05A">'@tollerud/ui/source.css'</span>;</pre>
+        <div style="display:flex;align-items:center;gap:8px;padding:9px 12px 9px 16px;border-top:1px solid #333333;border-bottom:1px solid #333333">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#666666;flex:1">app/page.tsx</span>
+        </div>
+        <pre style="margin:0;padding:18px 20px;background:#0E0E0E;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.75;color:#D4D4D4;overflow-x:auto">import { <span style="color:#6FB3E0">HeroBlock</span>, <span style="color:#6FB3E0">Button</span> } from <span style="color:#C8A05A">'@tollerud/ui'</span>
+
+&lt;<span style="color:#6FB3E0">HeroBlock</span>
+  <span style="color:#9CCC7C">eyebrow</span>=<span style="color:#C8A05A">"homelab control plane"</span>
+  <span style="color:#9CCC7C">title</span>=<span style="color:#C8A05A">"Run your stack like production."</span>
+  <span style="color:#9CCC7C">actions</span>={&lt;<span style="color:#6FB3E0">Button</span> <span style="color:#9CCC7C">variant</span>=<span style="color:#C8A05A">"terminal"</span> <span style="color:#9CCC7C">size</span>=<span style="color:#C8A05A">"lg"</span>&gt;open_dashboard&lt;/<span style="color:#6FB3E0">Button</span>&gt;}
+/&gt;</pre>
+      </div>
+    </div>
+  </section>
+
+  <section style="position:relative;overflow:hidden;background:#FFFF00;color:#0A0A0A">
+    <div style="position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:80px 32px;display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap">
+      <div>
+        <h2 style="margin:0;font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(34px,5vw,68px);line-height:.88;letter-spacing:-.04em;text-transform:uppercase">Start in the dark</h2>
+        <p style="margin:16px 0 0;font-size:17px;font-weight:600;max-width:480px">One install, 105 components, and an accent that tells your users exactly where to click.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div style="display:inline-flex;align-items:center;gap:10px;background:#0A0A0A;color:#F5F5F5;padding:16px 20px;font-family:'JetBrains Mono',monospace;font-size:15px"><span style="color:#FFFF00">❯</span>npm i @tollerud/ui</div>
+        <a href="#" style="display:inline-flex;align-items:center;height:54px;padding:0 26px;border:1.5px solid #0A0A0A;font-size:15px;font-weight:700;color:#0A0A0A">Read the docs</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#0A0A0A;border-top:1px solid #333333">
+    <div style="max-width:1400px;margin:0 auto;padding:44px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:8px">
+        <img src="tollerud-logo.svg" alt="" style="height:16px;width:auto;display:block">
+        <span style="font-size:12px;color:#AAAAAA">Tollerud UI · v5.6.0</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:24px;font-size:12.5px;color:#666666;flex-wrap:wrap">
+        <a href="#">Foundations</a><a href="#">Components</a><a href="#">Recipes</a><a href="#">Changelog</a><a href="https://github.com/Tollerud/ui">GitHub</a>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#666666">MIT source · brand assets proprietary</div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,6 +1,8 @@
 # Tollerud UI v6 — shadcn rebase
 
-**Status:** approved, Phase 0 gate passed (§7.5) — ready to start Phase 1.
+**Status:** approved; Phase 0 gate corrected 2026-09-03 (§7.6) after the first
+attempt was found to understate the design — awaiting your confirmation that
+the corrected reproduction matches before Phase 1 starts.
 **Author:** drafted 2026-09-03, updated 2026-09-03 with design-bundle findings
 **Target:** `@tollerud/ui` v6.0.0 (lockstep with `@tollerud/footer`, `@tollerud/email`)
 
@@ -146,9 +148,14 @@ input, label, pagination, popover, progress, radio-group, scroll-area, select,
 separator, sheet, sidebar, skeleton, slider, sonner, switch, table, tabs,
 textarea, tooltip`
 
-**Tier 2 — Tollerud signature (~8):**
+**Tier 2 — Tollerud signature (~9):**
 `monogram, kbd, terminal-button (a Button variant, not a component),
-noir-glow-background, glow-card, stat-card, status-dot, page-header`
+noir-glow-background, glow-card, stat-card, status-dot, page-header,
+marquee-ticker`
+
+`marquee-ticker` added 2026-09-03 (§7.6) — present in the upgraded landing
+mockup, wasn't in either tier list, would have drifted into a per-project
+rebuild otherwise.
 
 Everything else in today's export list is Tier 3 or Tier 4.
 
@@ -457,19 +464,57 @@ those are exactly the Tier 2/3 items already scoped in §2.2. **Reading: the
 thesis holds.** The gap is bounded and already accounted for in the plan; it
 does not surface a hidden Tier 2 item outside what §2.2 already lists.
 
-### 7.5 Gate result — built, 2026-09-03
+### 7.5 First gate attempt — built 2026-09-03, retracted same day
 
-Built and rendered the three reference screens under `docs/phase0-preview/`
-(`dashboard.html`, `docs.html`, `landing.html` + `tokens.css` + PNG
-screenshots): plain, unmodified shadcn/ui component markup (button, card,
-badge, table, tabs, switch, progress, input, avatar) with **only** the
-existing `--background`/`--primary`/`--border`/`--radius`/… values from
-`globals-layers.css` applied — no `.tollerud-*` class, no new color, on any
-element.
+First pass built `docs/phase0-preview/dashboard.html`, `docs.html`,
+`landing.html`: stock shadcn markup with only token values applied, no
+source-mockup content. **User review: "they look nothing like the Claude
+design made."** Correct call — kept anyway for the record, but do not treat
+as evidence; see §7.6.
 
-**Gate: passed.** All three read as unmistakably Tollerud — near-black
-surface, one high-voltage yellow doing all the interaction signaling, flat
-4px corners, hairline borders — with zero custom components. This confirms
-§7.1–7.4: the redesign is a token-application problem, not a
-component-library problem. Phase 1 (theme bridge) is now de-risked to "wire
-the plumbing that already has the right values on both ends."
+The first attempt used shadcn's *default scale* — 36–44px buttons, modest
+type, restrained spacing — which is a legitimate shadcn look but is not what
+the mockups specify. It under-tested the thesis: it showed that tokens alone
+produce "a dark admin theme with a yellow accent," not that they produce
+*this* design. §7.1's finding that "no new palette is needed" is still true,
+but it does not imply the design is just a token-application problem — that
+was an overreach the first gate result made too easily.
+
+### 7.6 Corrected gate result — built 2026-09-03
+
+Rebuilt as `docs/phase0-preview/landing-real.html` and `docs-real.html`:
+markup transcribed directly from `Tollerud UI - Upgraded Landing.dc.html` and
+`Tollerud Docs - Upgraded.dc.html` (stripped of the design tool's `<x-dc>` /
+`<sc-if>` / templating scaffolding, values otherwise untouched — real hero
+copy at `clamp(52px,10.4vw,168px)` weight 900, the yellow marquee ticker, the
+full-bleed `#FFFF00` "system" section, the light `#FAFAF7` "for agents"
+section, the specimen grid; real 272px sidebar with the `#FFFF00` solid
+active-item block). Screenshots in the same folder.
+
+**Corrected finding: the token layer is necessary but not sufficient.** What
+actually carries "Tollerud" at this bolder scale is the combination of:
+
+1. §7.1's token values (still correct, still free — no new colors needed), **and**
+2. A specific, deliberately-authored set of Tier 2/3 patterns applied
+   consistently: the oversized uppercase display-type scale (§7.3), full-bleed
+   single-color section blocks (yellow *and* light, not just dark), the
+   marquee ticker, and hairline-dense specimen grids.
+
+Item 2 is real build work, not a byproduct of Phase 1. **Gap found in the
+existing Tier 2/3 lists (§2.2): the marquee ticker pattern isn't in either
+list.** It needs a slot — likely Tier 2 alongside `noir-glow-background`
+(same category: a self-contained brand-motion component) — before Phase 3
+starts, or it'll get built ad hoc per project, which is exactly the drift
+this plan exists to prevent. The full-bleed light-section pattern (§ "for
+agents") is arguably covered by generalizing `promo-section` (Tier 3), but
+should be confirmed rather than assumed.
+
+**Revised gate read:** stock shadcn primitives (button, card, badge, table,
+tabs) still only need tokens — §7.5's screens prove that part fine. But
+"does the *design* survive on primitives alone" is the wrong question to ask
+for a landing page or docs shell, because those were never primitive-only
+surfaces in the source mockups — they're built from Tier 2/3 blocks by
+design. The real gate for Phase 0 is now: **does §7.6's reproduction match
+the source `.dc.html` well enough that a reviewer confirms it, side by
+side?** That confirmation is what should happen next, not an automatic
+"passed."
