@@ -1,0 +1,55 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  .shell { display:grid; grid-template-columns:260px 1fr; min-height:600px; }
+  .sidebar { border-right:1px solid var(--border); padding:20px 0; }
+  .sidebar-group { padding:0 16px; margin-bottom:20px; }
+  .sidebar-label { font-family:var(--font-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted-foreground); margin-bottom:8px; }
+  .sidebar-item { display:block; padding:6px 10px; border-radius:var(--radius); font-size:13.5px; color:var(--foreground); margin-bottom:2px; }
+  .sidebar-item--active { background:var(--primary); color:var(--primary-foreground); font-weight:600; }
+  .content { padding:40px 48px; max-width:800px; }
+  h1 { font-family:var(--font-display); font-weight:800; font-size:36px; margin:0 0 8px; letter-spacing:-.02em; }
+  .lede { color:var(--muted-foreground); font-size:15px; margin-bottom:32px; }
+  h2 { font-family:var(--font-display); font-weight:700; font-size:20px; margin:32px 0 12px; }
+  p { line-height:1.6; font-size:14.5px; color:var(--foreground); }
+  pre { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; font-family:var(--font-mono); font-size:13px; overflow:auto; }
+</style>
+</head>
+<body>
+  <div class="shell">
+    <div class="sidebar">
+      <div class="sidebar-group">
+        <div class="sidebar-label">Getting started</div>
+        <a class="sidebar-item sidebar-item--active">Installation</a>
+        <a class="sidebar-item">Theming</a>
+        <a class="sidebar-item">CLI</a>
+      </div>
+      <div class="sidebar-group">
+        <div class="sidebar-label">Components</div>
+        <a class="sidebar-item">Button</a>
+        <a class="sidebar-item">Card</a>
+        <a class="sidebar-item">Dialog</a>
+        <a class="sidebar-item">Table</a>
+        <a class="sidebar-item">Tabs</a>
+      </div>
+    </div>
+    <div class="content">
+      <h1>Installation</h1>
+      <p class="lede">Add components to your project using the CLI.</p>
+      <h2>Add a component</h2>
+      <pre>npx shadcn@latest add button</pre>
+      <p>This adds <code>button.tsx</code> to your <code>components/ui</code> folder, wired to your project's existing tokens — no extra configuration.</p>
+      <h2>Usage</h2>
+      <div style="display:flex;gap:10px;margin:16px 0">
+        <button class="sc-btn sc-btn--primary">Primary</button>
+        <button class="sc-btn sc-btn--outline">Outline</button>
+        <button class="sc-btn sc-btn--secondary">Secondary</button>
+        <button class="sc-btn sc-btn--ghost">Ghost</button>
+      </div>
+      <p>Every variant reads its colors from your <code>tokens.css</code> — nothing is hardcoded in the component.</p>
+    </div>
+  </div>
+</body></html>

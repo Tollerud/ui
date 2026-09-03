@@ -1,0 +1,106 @@
+/* Phase 0.3 proof — exact values pulled from Tollerud/ui's globals-layers.css.
+   Nothing here is new; this is the existing shadcn contract block. */
+:root {
+  --background: #0A0A0A;
+  --foreground: #F5F5F5;
+  --card: #121212;
+  --card-foreground: #F5F5F5;
+  --popover: #1A1A1A;
+  --popover-foreground: #F5F5F5;
+  --primary: #FFFF00;
+  --primary-foreground: #0A0A0A;
+  --secondary: #252525;
+  --secondary-foreground: #AAAAAA;
+  --muted: #252525;
+  --muted-foreground: #888888;
+  --accent: #FFB800;
+  --accent-foreground: #0A0A0A;
+  --destructive: #EF4444;
+  --destructive-foreground: #F5F5F5;
+  --border: #333333;
+  --input: #333333;
+  --ring: #FFFF00;
+  --radius: 0.25rem;
+  --chart-1: #FFFF00;
+  --chart-2: #FFB800;
+  --chart-3: #22C55E;
+  --chart-4: #3B82F6;
+  --chart-5: #EF4444;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Archivo', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ---- everything below is stock shadcn/ui component CSS, unmodified,
+   wired only to the variables above. No Tollerud-specific classes. ---- */
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sc-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; white-space: nowrap; border-radius: var(--radius);
+  font-size: 14px; font-weight: 500; height: 36px; padding: 0 16px;
+  border: 1px solid transparent; cursor: pointer; transition: all .15s ease;
+}
+.sc-btn--primary { background: var(--primary); color: var(--primary-foreground); }
+.sc-btn--primary:hover { opacity: .9; }
+.sc-btn--secondary { background: var(--secondary); color: var(--secondary-foreground); }
+.sc-btn--outline { background: transparent; border-color: var(--border); color: var(--foreground); }
+.sc-btn--destructive { background: var(--destructive); color: var(--destructive-foreground); }
+.sc-btn--ghost { background: transparent; color: var(--foreground); }
+
+.sc-badge {
+  display: inline-flex; align-items: center; border-radius: 999px;
+  padding: 2px 10px; font-size: 12px; font-weight: 600; border: 1px solid transparent;
+}
+.sc-badge--default { background: var(--primary); color: var(--primary-foreground); }
+.sc-badge--secondary { background: var(--secondary); color: var(--secondary-foreground); }
+.sc-badge--outline { background: transparent; border-color: var(--border); color: var(--foreground); }
+.sc-badge--destructive { background: var(--destructive); color: var(--destructive-foreground); }
+
+.sc-card {
+  background: var(--card); color: var(--card-foreground);
+  border: 1px solid var(--border); border-radius: var(--radius);
+}
+.sc-card-header { padding: 20px 20px 0; }
+.sc-card-title { font-size: 16px; font-weight: 600; margin: 0; }
+.sc-card-desc { font-size: 13px; color: var(--muted-foreground); margin: 4px 0 0; }
+.sc-card-content { padding: 20px; }
+.sc-card-footer { padding: 0 20px 20px; display: flex; gap: 8px; }
+
+.sc-input {
+  height: 36px; width: 100%; border-radius: var(--radius);
+  border: 1px solid var(--input); background: transparent; color: var(--foreground);
+  padding: 0 12px; font-size: 14px; font-family: inherit;
+}
+.sc-input::placeholder { color: var(--muted-foreground); }
+.sc-input:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+.sc-label { font-size: 13px; font-weight: 500; color: var(--foreground); display: block; margin-bottom: 6px; }
+
+.sc-tabs-list { display: inline-flex; background: var(--muted); border-radius: var(--radius); padding: 3px; gap: 2px; }
+.sc-tabs-trigger { padding: 6px 14px; border-radius: calc(var(--radius) - 2px); font-size: 13px; font-weight: 500; color: var(--muted-foreground); cursor: pointer; }
+.sc-tabs-trigger--active { background: var(--background); color: var(--foreground); }
+
+.sc-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.sc-table th { text-align: left; color: var(--muted-foreground); font-weight: 500; padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 12.5px; }
+.sc-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.sc-table tr:last-child td { border-bottom: none; }
+
+.sc-separator { height: 1px; background: var(--border); border: none; margin: 0; }
+
+.sc-avatar { width: 32px; height: 32px; border-radius: 999px; background: var(--secondary); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--secondary-foreground); }
+
+.sc-progress { height: 8px; width: 100%; background: var(--secondary); border-radius: 999px; overflow: hidden; }
+.sc-progress > div { height: 100%; background: var(--primary); }
+
+.sc-switch { width: 36px; height: 20px; border-radius: 999px; background: var(--secondary); position: relative; display: inline-block; }
+.sc-switch--on { background: var(--primary); }
+.sc-switch::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 999px; background: var(--foreground); transition: left .15s; }
+.sc-switch--on::after { left: 18px; background: var(--primary-foreground); }

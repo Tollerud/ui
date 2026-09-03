@@ -1,6 +1,6 @@
 # Tollerud UI v6 — shadcn rebase
 
-**Status:** approved — all open decisions (§6.2–6.5) resolved 2026-09-03. Next: Phase 0.3 (reference screens) or straight to Phase 1, per go-ahead.
+**Status:** approved, Phase 0 gate passed (§7.5) — ready to start Phase 1.
 **Author:** drafted 2026-09-03, updated 2026-09-03 with design-bundle findings
 **Target:** `@tollerud/ui` v6.0.0 (lockstep with `@tollerud/footer`, `@tollerud/email`)
 
@@ -457,5 +457,19 @@ those are exactly the Tier 2/3 items already scoped in §2.2. **Reading: the
 thesis holds.** The gap is bounded and already accounted for in the plan; it
 does not surface a hidden Tier 2 item outside what §2.2 already lists.
 
-Actually building the three reference screens (Phase 0 step 3) is the first
-implementation step and hasn't been done yet — pending sign-off below.
+### 7.5 Gate result — built, 2026-09-03
+
+Built and rendered the three reference screens under `docs/phase0-preview/`
+(`dashboard.html`, `docs.html`, `landing.html` + `tokens.css` + PNG
+screenshots): plain, unmodified shadcn/ui component markup (button, card,
+badge, table, tabs, switch, progress, input, avatar) with **only** the
+existing `--background`/`--primary`/`--border`/`--radius`/… values from
+`globals-layers.css` applied — no `.tollerud-*` class, no new color, on any
+element.
+
+**Gate: passed.** All three read as unmistakably Tollerud — near-black
+surface, one high-voltage yellow doing all the interaction signaling, flat
+4px corners, hairline borders — with zero custom components. This confirms
+§7.1–7.4: the redesign is a token-application problem, not a
+component-library problem. Phase 1 (theme bridge) is now de-risked to "wire
+the plumbing that already has the right values on both ends."

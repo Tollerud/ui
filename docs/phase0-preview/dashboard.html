@@ -1,0 +1,104 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body { padding: 0; }
+  .topbar { display:flex; align-items:center; justify-content:space-between; height:56px; padding:0 24px; border-bottom:1px solid var(--border); }
+  .brand { font-family: var(--font-display); font-weight:700; font-size:15px; }
+  .grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:16px; padding:24px; max-width:1200px; margin:0 auto; }
+  .stat { font-family: var(--font-display); font-weight:900; font-size:32px; }
+  .row { display:grid; grid-template-columns: 2fr 1fr; gap:16px; padding: 0 24px 24px; max-width:1200px; margin:0 auto; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:20px">
+      <span class="brand">Acme Console</span>
+      <span style="color:var(--muted-foreground);font-size:13px">Overview</span>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="sc-btn sc-btn--outline">Export</button>
+      <button class="sc-btn sc-btn--primary">New service</button>
+      <div class="sc-avatar">MT</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="sc-card"><div class="sc-card-content">
+      <div style="color:var(--muted-foreground);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Services</div>
+      <div class="stat">128</div>
+      <span class="sc-badge sc-badge--default" style="margin-top:8px">+4 today</span>
+    </div></div>
+    <div class="sc-card"><div class="sc-card-content">
+      <div style="color:var(--muted-foreground);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Uptime</div>
+      <div class="stat">99.98%</div>
+      <span class="sc-badge sc-badge--outline" style="margin-top:8px">30d</span>
+    </div></div>
+    <div class="sc-card"><div class="sc-card-content">
+      <div style="color:var(--muted-foreground);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Alerts</div>
+      <div class="stat">3</div>
+      <span class="sc-badge sc-badge--destructive" style="margin-top:8px">2 critical</span>
+    </div></div>
+    <div class="sc-card"><div class="sc-card-content">
+      <div style="color:var(--muted-foreground);font-size:12px;text-transform:uppercase;letter-spacing:.04em">Spend</div>
+      <div class="stat">$4.2k</div>
+      <span class="sc-badge sc-badge--secondary" style="margin-top:8px">this month</span>
+    </div></div>
+  </div>
+
+  <div class="row">
+    <div class="sc-card">
+      <div class="sc-card-header">
+        <p class="sc-card-title">Recent deployments</p>
+        <p class="sc-card-desc">Last 5 releases across all services</p>
+      </div>
+      <div class="sc-card-content" style="padding-top:16px">
+        <table class="sc-table">
+          <thead><tr><th>Service</th><th>Status</th><th>Version</th><th>Deployed</th></tr></thead>
+          <tbody>
+            <tr><td>api-gateway</td><td><span class="sc-badge sc-badge--default">healthy</span></td><td style="font-family:var(--font-mono);font-size:12px">v2.4.1</td><td style="color:var(--muted-foreground)">2m ago</td></tr>
+            <tr><td>worker-queue</td><td><span class="sc-badge sc-badge--default">healthy</span></td><td style="font-family:var(--font-mono);font-size:12px">v1.9.0</td><td style="color:var(--muted-foreground)">1h ago</td></tr>
+            <tr><td>edge-cache</td><td><span class="sc-badge sc-badge--destructive">degraded</span></td><td style="font-family:var(--font-mono);font-size:12px">v3.1.2</td><td style="color:var(--muted-foreground)">3h ago</td></tr>
+            <tr><td>auth-service</td><td><span class="sc-badge sc-badge--default">healthy</span></td><td style="font-family:var(--font-mono);font-size:12px">v0.8.4</td><td style="color:var(--muted-foreground)">6h ago</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sc-card">
+      <div class="sc-card-header">
+        <p class="sc-card-title">Settings</p>
+      </div>
+      <div class="sc-card-content" style="display:flex;flex-direction:column;gap:16px">
+        <div>
+          <label class="sc-label">Service name</label>
+          <input class="sc-input" value="edge-cache" />
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:13px">Auto-scaling</span>
+          <div class="sc-switch sc-switch--on"></div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font-size:13px">Debug logging</span>
+          <div class="sc-switch"></div>
+        </div>
+        <hr class="sc-separator" />
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted-foreground);margin-bottom:6px"><span>CPU</span><span>62%</span></div>
+          <div class="sc-progress"><div style="width:62%"></div></div>
+        </div>
+        <div class="sc-tabs-list" style="align-self:flex-start">
+          <span class="sc-tabs-trigger sc-tabs-trigger--active">Metrics</span>
+          <span class="sc-tabs-trigger">Logs</span>
+          <span class="sc-tabs-trigger">Config</span>
+        </div>
+      </div>
+      <div class="sc-card-footer">
+        <button class="sc-btn sc-btn--outline" style="flex:1">Cancel</button>
+        <button class="sc-btn sc-btn--primary" style="flex:1">Save</button>
+      </div>
+    </div>
+  </div>
+</body></html>
