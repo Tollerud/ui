@@ -1,6 +1,6 @@
 # Tollerud UI v6 — shadcn rebase
 
-**Status:** proposal, awaiting sign-off — Phase 0 design-file blocker resolved, see §7
+**Status:** approved — all open decisions (§6.2–6.5) resolved 2026-09-03. Next: Phase 0.3 (reference screens) or straight to Phase 1, per go-ahead.
 **Author:** drafted 2026-09-03, updated 2026-09-03 with design-bundle findings
 **Target:** `@tollerud/ui` v6.0.0 (lockstep with `@tollerud/footer`, `@tollerud/email`)
 
@@ -348,23 +348,21 @@ Phase 6                               ███ ongoing
 handoff bundle (`chats/chat1.md` + the three `.dc.html` prototypes). See §7 for
 the extracted values and the Phase 0 gate read.
 
-**6.2 — Light mode?** shadcn assumes `:root` light + `.dark`. Tollerud is
-dark-only today. Options: (a) stay dark-only and document it, (b) full light
-theme, (c) light tokens defined but unsupported. Recommendation: **(a)** unless
-a project actually needs light — it halves the Phase 1 and 3 work and a
-half-done light mode is worse than none.
+**6.2 — Light mode?** ✅ **Decided 2026-09-03: stay dark-only**, `:root`/`.dark`
+keep sharing one block as today. Revisit only if a project actually needs
+light mode.
 
-**6.3 — Where do the 11 domain cards go?** A `tollerud/blocks` registry, or
-archived and re-copied into whichever app still uses them? Recommendation:
-**archive**; if one turns out to be needed in two apps, it earns a Tier 3 slot.
+**6.3 — Where do the 11 domain cards go?** ✅ **Decided 2026-09-03: archive.**
+Removed from `@tollerud/ui` at Phase 5; re-copied into a Tier 3 slot only if a
+component turns out to be needed in 2+ apps.
 
-**6.4 — v5 deprecation window.** Ship `@tollerud/ui/v5` frozen for one major,
-or hard-break at v6? Recommendation: **one major**, given the `DataTable` and
-chart migrations are non-mechanical.
+**6.4 — v5 deprecation window.** ✅ **Decided 2026-09-03: freeze
+`@tollerud/ui/v5` for one major.** A compat entrypoint ships alongside v6,
+given the `DataTable` and chart migrations are non-mechanical.
 
-**6.5 — Tailwind v3 support.** `tollerud-preset.cjs` and `globals-v3.css` exist
-for v3.4. Current shadcn is v4-first. Recommendation: **drop v3 at v6** and cut
-the preset, unless a consumer is pinned.
+**6.5 — Tailwind v3 support.** ✅ **Decided 2026-09-03: drop v3 at v6.** Cut
+`tollerud-preset.cjs` and `globals-v3.css`; no known consumer pinned to v3 was
+flagged as a blocker.
 
 ---
 
