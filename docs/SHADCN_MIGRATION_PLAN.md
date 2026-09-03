@@ -1,7 +1,7 @@
 # Tollerud UI v6 — shadcn rebase
 
-**Status:** proposal, awaiting sign-off
-**Author:** drafted 2026-09-03
+**Status:** proposal, awaiting sign-off — Phase 0 design-file blocker resolved, see §7
+**Author:** drafted 2026-09-03, updated 2026-09-03 with design-bundle findings
 **Target:** `@tollerud/ui` v6.0.0 (lockstep with `@tollerud/footer`, `@tollerud/email`)
 
 Goal: keep the Tollerud look, drop the Tollerud *machinery*. Base the system on
@@ -344,15 +344,9 @@ Phase 6                               ███ ongoing
 
 ## 6. Open decisions
 
-**6.1 — Design files (blocking Phase 0).**
-`Tollerud Docs - Upgraded.dc.html`, `Tollerud UI - Upgraded Landing.dc.html`,
-`github.md`, `support.js`, `tollerud-logo.svg` are not reachable from this
-session: DesignSync has no design-system authorization here and the
-`claude.ai/design` URL returns 403 to an unauthenticated fetch. Needed: either
-"Send to Claude Code Web" from Claude Design to seed them into the workspace, or
-`/design-login` from an interactive session on this machine, or the files
-committed to the repo. Everything in §1–§5 holds regardless; only the *values*
-in Phase 0 depend on them.
+**6.1 — Design files.** ✅ Resolved 2026-09-03 — received as a Claude Design
+handoff bundle (`chats/chat1.md` + the three `.dc.html` prototypes). See §7 for
+the extracted values and the Phase 0 gate read.
 
 **6.2 — Light mode?** shadcn assumes `:root` light + `.dark`. Tollerud is
 dark-only today. Options: (a) stay dark-only and document it, (b) full light
@@ -371,3 +365,99 @@ chart migrations are non-mechanical.
 **6.5 — Tailwind v3 support.** `tollerud-preset.cjs` and `globals-v3.css` exist
 for v3.4. Current shadcn is v4-first. Recommendation: **drop v3 at v6** and cut
 the preset, unless a consumer is pinned.
+
+---
+
+## 7. Phase 0 findings — design bundle, 2026-09-03
+
+Source: `chats/chat1.md` (the design conversation) plus
+`Tollerud Docs - Current.dc.html`, `Tollerud Docs - Upgraded.dc.html`,
+`Tollerud UI - Upgraded Landing.dc.html`. The Claude Design session that built
+these worked directly from this repo's `tokens.css`, `docs.css`, `Sidebar.tsx`
+and `DashboardTopBar.tsx` (not from memory), which is confirmed below — the hex
+values in the prototypes are a 1:1 match to what's already in the repo.
+
+### 7.1 The headline finding: there is no new palette
+
+Tallied every `#RRGGBB` literal across both upgraded files (Landing: 31 distinct
+values across 250+ occurrences; Docs Upgraded: 22 distinct values across 400+
+occurrences) and diffed against `tokens.css` / `globals-layers.css`. Every
+single one resolves to an existing `--tollerud-*` value — noir 50–900, the
+yellow family, the four state colors. Shadows and animation easing match
+`--tollerud-shadow-*` / `--tollerud-shadow-glow` exactly (e.g.
+`0 4px 6px -1px rgba(0,0,0,.5), 0 2px 4px -2px rgba(0,0,0,.3)`, the glow band's
+`0 0 15px rgba(255,255,0,.3), 0 0 30px rgba(255,255,0,.1)`). The Foundations
+page's spacing specimen literally renders the existing `--tollerud-space-1…8`
+scale (0.25rem → 2rem) as its worked example.
+
+**Consequence for the plan:** Phase 1 (theme bridge) needs zero new color,
+shadow, or spacing values. `globals-layers.css` already declares the full
+shadcn contract block (`--background` … `--chart-5`) with values that match the
+upgraded design, including **`--radius: 0.25rem`** — see §7.2. The remaining
+gap between "stock shadcn + our tokens" and "the upgraded design" is almost
+entirely at the pattern/composition level (§7.3), not the token level. That
+lowers the risk on Phase 1 specifically: it's close to pure plumbing.
+
+### 7.2 Radius: the design already went flatter, and the contract already has it
+
+Border-radius tally, by file:
+
+| File | Dominant value | Distribution |
+|---|---|---|
+| Docs — Current (today's app) | 6–8px | 29× 8px, 24× 6px, 14× 4px |
+| Docs — Upgraded | **4px** | 11× 4px, 3× 999px (pills), 3× 50% (avatars), 1× 8px |
+| Landing — Upgraded | **4px** | 11× 4px, 4× 999px, 1× 8px |
+
+The upgrade drops the house radius from 6–8px to the smallest existing step
+(4px = `--tollerud-radius-sm`/`0.25rem`), reserving 999px for pills/dots and
+50% for circular avatars only — everything else reads as hairline-square. This
+*is already* `globals-layers.css`'s `--radius: 0.25rem` contract value, so no
+change needed there; it's confirmation the existing shadcn-contract block was
+set correctly, not a new decision.
+
+### 7.3 What's actually new: type scale, one layout constant, motion patterns
+
+Not tokens — additive patterns for Tier 2/3, to design in Phase 0.3 /
+Phase 3, not Phase 1:
+
+- **Display type scale.** New oversized Archivo steps, all weight 900,
+  uppercase, tight-to-negative tracking, using `clamp()` for fluid sizing:
+  `clamp(52px,10.4vw,168px)` (hero H1), `clamp(40px,6vw,92px)` (section H2),
+  `clamp(36px,5.4vw,76px)` and `clamp(34–36px,5vw,68px)` (subsection), plus a
+  fixed `76px` for stat-band numbers. Tracking tightens with size: `-.045em`
+  at the largest step down to `-.02em` at body-adjacent sizes. Today's
+  `--tollerud-text-*` scale tops out at `text-7xl` (4.5rem/72px) with no
+  weight-900/uppercase/negative-tracking display convention — this scale
+  should be added as `--tollerud-display-*` steps in Phase 1 alongside the
+  theme bridge, since it's additive and non-breaking.
+- **One layout constant changed:** sidebar width 272px in the upgraded docs
+  shell vs. 264px today (`Sidebar.tsx`). Topbar height (56px→64px on the
+  marketing header only) and the 1248px docs content grid are otherwise
+  unchanged; the marketing page uses a separate 1400px max-width, which is new
+  because the current app has no marketing-page pattern to compare against.
+- **New motion patterns, not new durations.** `tglow` (32s, shader hero
+  ambient drift), `tnoise` (1.6s steps, film-grain texture), `tmarquee` (34s
+  linear, ticker band), `tsh` (5s, text shimmer on the "rebuilds." headline),
+  `tblink` (1.05s steps, terminal cursor). These are self-contained keyframe
+  animations for specific Tier 2 components (`noir-glow-background`, a
+  marquee block, the typed-text hero line) — they don't imply changes to
+  `--tollerud-motion-*` durations used elsewhere.
+- **Active nav treatment:** the upgraded docs sidebar renders the active item
+  as a solid yellow block (yellow background, black text) rather than today's
+  accent-border-plus-tint. Confirmed against `Sidebar.tsx` in the chat's tool
+  trace; carries no new token, just a different application of `--primary`.
+
+### 7.4 Gate read
+
+The Phase 0 gate asks: *do three reference screens built from stock
+`npx shadcn add` components plus only a token file read as unmistakably
+Tollerud?* Given §7.1–7.2, the token layer clearly carries the brand
+(near-black + one yellow + hairline borders + flat radius is distinctive
+enough on its own). What stock shadcn components will *not* give you for free
+is the display-type scale, the shader hero, the marquee, and the stat band —
+those are exactly the Tier 2/3 items already scoped in §2.2. **Reading: the
+thesis holds.** The gap is bounded and already accounted for in the plan; it
+does not surface a hidden Tier 2 item outside what §2.2 already lists.
+
+Actually building the three reference screens (Phase 0 step 3) is the first
+implementation step and hasn't been done yet — pending sign-off below.
