@@ -518,3 +518,36 @@ design. The real gate for Phase 0 is now: **does §7.6's reproduction match
 the source `.dc.html` well enough that a reviewer confirms it, side by
 side?** That confirmation is what should happen next, not an automatic
 "passed."
+
+### 7.7 Font bug found and fixed — 2026-09-03
+
+User review of §7.6's screenshots: "think you use wrong font." Correct again
+— diagnosed and fixed.
+
+Root cause: this sandbox's network proxy accepts plain `curl` requests to
+`fonts.googleapis.com`/`fonts.gstatic.com` (used to research §7.1–7.3) but
+actively kills Chromium's own connections to the same hosts
+(`ws_closed_mid_exchange` after a partial TLS handshake — confirmed via the
+proxy's own status endpoint). Playwright's headless Chromium therefore never
+loaded Archivo/Inter/JetBrains Mono for *any* of the earlier screenshots
+(§7.5 and the first pass of §7.6) — `document.fonts` was empty at render
+time in every case. Every prior screenshot was silently rendering in the
+system fallback sans-serif, not the specified typefaces. This was invisible
+without checking `document.fonts` directly; the pages looked "plausible"
+enough not to trigger obvious suspicion on a first look.
+
+Fix: downloaded the actual `.woff2` files (`docs/phase0-preview/fonts/`) via
+the shell (where fetching works) and pointed `landing-real.html` /
+`docs-real.html` at a local `@font-face` sheet (`fonts/local-fonts.css`)
+instead of the Google Fonts CDN, removing the runtime network dependency
+entirely. Re-verified `document.fonts` shows the faces actually in use as
+`loaded` before capturing new screenshots — real Archivo now renders (visibly
+narrower, more geometric letterforms, especially in the 900-weight display
+headings, versus the system-sans fallback used before).
+
+**Process note for the rest of this plan:** any future rendered comparison
+(Phase 3 visual regression baselines, Playwright screenshot tests mentioned
+in §4's risk table) must self-host fonts or explicitly verify
+`document.fonts` status before trusting a render in this environment — the
+CDN-fetch failure mode here is silent, not an error, so it will not surface
+on its own.
